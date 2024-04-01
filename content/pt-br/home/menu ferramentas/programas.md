@@ -14,16 +14,13 @@ design:
 
 <font size="6">
 
-## Jmol
-
-<!--- Jmol --->
-{{< icon name="list-group-item" pack="fa fa-pencil fa-fw" >}} {{< staticref "uploads/JmolBook/index.html" >}}Estrutura & Jmol{{< /staticref >}}
+<i class="fa-solid fa-dna"></i> {{< staticref "uploads/JmolBook/index.html" >}}Estrutura & Jmol{{< /staticref >}}
 
 <!--- RStudio --->
-{{< icon name="list-group-item" pack="fa fa-pencil fa-fw" >}} {{< staticref "uploads/biqBook/index.html" >}}Função & R{{< /staticref >}} 
+<i class="fa-solid fa-chart-line"></i> {{< staticref "uploads/biqBook/index.html" >}}Função & R{{< /staticref >}} 
 
 <!---Sisma --->
-{{< icon name="list-group-item" pack="fa fa-pencil fa-fw" >}} {{< staticref "uploads/SismaBook/index.html" >}}Dinâmica & Sisma{{< /staticref >}}
+<i class="fa-brands fa-battle-net"></i> {{< staticref "uploads/SismaBook/index.html" >}}Dinâmica & Sisma{{< /staticref >}}
 
 <!---Outras --->
 {{< icon name="list-group-item" pack="fa fa-pencil fa-fw" >}} {{< staticref "uploads/Outras/index.html" >}}Outras{{< /staticref >}}
