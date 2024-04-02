@@ -28,13 +28,10 @@ superuser: yes
   
 &nbsp;&nbsp;&nbsp;&nbsp;Alternativamente, pode-se acessar um conteúdo sobre temas em *Bioquímica* extraído do livro [**Bioquímica básica, de gente, de bicho, e de planta**](https://bioquanti.netlify.app/uploads/textbook/index.html) (ISBN 978-65-00-90366-9), sobre diversos temas na área.
   
-
-
-
-<!---## Em desenvolvimento <i class="fa-solid fa-database"></i>
-  
-&nbsp;&nbsp;&nbsp;&nbsp;Atualmente, encontra-se em desenvolvimento um tutorial para a produção de [documentos dinâmicos](https://bioquanti.netlify.app/uploads/ERbook/index.html) utilizando-se o *RStudio* e o pacote *Quarto*, a partir dos conceitos de [programação letrada](https://academic.oup.com/comjnl/article/27/2/97/343244?login=true). *Documentos dinâmicos* produzidos dessa forma permitem a execução de códigos juntamente à produção do texto, e com produto final com qualidade de publicação, tanto para a pesquisa científica (**Pesquisa Reproduzível**), como para o ensino (**Ensino Reprodutível**), nas mais diversas áreas e níveis.--->   
-
   _____________________________________________________________________
   _____________________________________________________________________
   
+
+#### Pequeno tutorial para elaboração de um *documento dinâmico* <i class="fa-solid fa-book-open-reader"></i>
+
+&nbsp;&nbsp;&nbsp;&nbsp;*Documentos dinâmicos* produzidos utilizando-se o *RStudio* e o pacote *Quarto*, a partir dos conceitos de [programação letrada](https://academic.oup.com/comjnl/article/27/2/97/343244?login=true), permitem a execução de códigos juntamente à produção do texto, e com produto final com qualidade de publicação, tanto para a pesquisa científica (**Pesquisa Reproduzível**), como para o ensino (**Ensino Reprodutível**), nas mais diversas áreas e níveis. Nessa direção segue um [pequeno tutorial](https://bioquanti.netlify.app/uploads/ERbook/docdim.html) para auxílio na confecção de um *documento dinâmico* nos moldes acima. 
