@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Elaboração de Documento Dinâmico Pelo Pacote Quarto do RStudio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="docdim_files/libs/clipboard/clipboard.min.js"></script>
+<script src="docdim_files/libs/quarto-html/quarto.js"></script>
+<script src="docdim_files/libs/quarto-html/popper.min.js"></script>
+<script src="docdim_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="docdim_files/libs/quarto-html/anchor.min.js"></script>
+<link href="docdim_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="docdim_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="docdim_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="docdim_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="docdim_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#documentos-dinâmicos" id="toc-documentos-dinâmicos" class="nav-link active" data-scroll-target="#documentos-dinâmicos">Documentos dinâmicos</a></li>
+  <li><a href="#aspectos-gerais-de-um-documento-dinâmico-pelo-r-rstudio" id="toc-aspectos-gerais-de-um-documento-dinâmico-pelo-r-rstudio" class="nav-link" data-scroll-target="#aspectos-gerais-de-um-documento-dinâmico-pelo-r-rstudio"><span class="header-section-number">1</span> Aspectos gerais de um documento dinâmico pelo R &amp; RStudio</a></li>
+  <li><a href="#criação-do-projeto-pelo-rstudio" id="toc-criação-do-projeto-pelo-rstudio" class="nav-link" data-scroll-target="#criação-do-projeto-pelo-rstudio"><span class="header-section-number">2</span> Criação do projeto pelo <code>RStudio</code></a></li>
+  <li><a href="#compilando-o-projeto" id="toc-compilando-o-projeto" class="nav-link" data-scroll-target="#compilando-o-projeto"><span class="header-section-number">3</span> Compilando o projeto</a></li>
+  <li><a href="#cabeçalho" id="toc-cabeçalho" class="nav-link" data-scroll-target="#cabeçalho"><span class="header-section-number">4</span> Cabeçalho</a></li>
+  <li><a href="#compilando-o-documento" id="toc-compilando-o-documento" class="nav-link" data-scroll-target="#compilando-o-documento"><span class="header-section-number">5</span> Compilando o documento</a></li>
+  <li><a href="#referências-bibliográficas" id="toc-referências-bibliográficas" class="nav-link" data-scroll-target="#referências-bibliográficas"><span class="header-section-number">6</span> Referências bibliográficas</a></li>
+  <li><a href="#texto-formatado" id="toc-texto-formatado" class="nav-link" data-scroll-target="#texto-formatado"><span class="header-section-number">7</span> Texto formatado</a>
+  <ul class="collapse">
+  <li><a href="#subtítulos" id="toc-subtítulos" class="nav-link" data-scroll-target="#subtítulos"><span class="header-section-number">7.1</span> Subtítulos</a></li>
+  <li><a href="#comentários" id="toc-comentários" class="nav-link" data-scroll-target="#comentários"><span class="header-section-number">7.2</span> Comentários</a></li>
+  <li><a href="#texto-estilizado" id="toc-texto-estilizado" class="nav-link" data-scroll-target="#texto-estilizado"><span class="header-section-number">7.3</span> Texto estilizado</a></li>
+  <li><a href="#listas" id="toc-listas" class="nav-link" data-scroll-target="#listas"><span class="header-section-number">7.4</span> Listas</a></li>
+  <li><a href="#cores" id="toc-cores" class="nav-link" data-scroll-target="#cores"><span class="header-section-number">7.5</span> Cores</a></li>
+  </ul></li>
+  <li><a href="#elementos-visuais" id="toc-elementos-visuais" class="nav-link" data-scroll-target="#elementos-visuais"><span class="header-section-number">8</span> Elementos Visuais</a>
+  <ul class="collapse">
+  <li><a href="#imagens" id="toc-imagens" class="nav-link" data-scroll-target="#imagens"><span class="header-section-number">8.1</span> Imagens</a></li>
+  <li><a href="#equações" id="toc-equações" class="nav-link" data-scroll-target="#equações"><span class="header-section-number">8.2</span> Equações</a></li>
+  <li><a href="#tabelas" id="toc-tabelas" class="nav-link" data-scroll-target="#tabelas"><span class="header-section-number">8.3</span> Tabelas</a></li>
+  </ul></li>
+  <li><a href="#trechos-de-códigos-chunks" id="toc-trechos-de-códigos-chunks" class="nav-link" data-scroll-target="#trechos-de-códigos-chunks"><span class="header-section-number">9</span> Trechos de códigos (<em>chunks</em>)</a>
+  <ul class="collapse">
+  <li><a href="#opções-de-chunk" id="toc-opções-de-chunk" class="nav-link" data-scroll-target="#opções-de-chunk"><span class="header-section-number">9.1</span> Opções de <em>chunk</em></a></li>
+  <li><a href="#inserindo-um-script-do-r-num-chunk" id="toc-inserindo-um-script-do-r-num-chunk" class="nav-link" data-scroll-target="#inserindo-um-script-do-r-num-chunk"><span class="header-section-number">9.2</span> Inserindo um <em>script</em> do <code>R</code> num chunk</a></li>
+  <li><a href="#inserção-inline-de-equações-e-resultados" id="toc-inserção-inline-de-equações-e-resultados" class="nav-link" data-scroll-target="#inserção-inline-de-equações-e-resultados"><span class="header-section-number">9.3</span> Inserção <em>inline</em> de equações e resultados</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Elaboração de Documento Dinâmico Pelo Pacote <code>Quarto</code> do RStudio</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="documentos-dinâmicos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="documentos-dinâmicos">Documentos dinâmicos</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O termo “<em>documentos dinâmicos</em>” abrange um conceito baseado em <a href="https://academic.oup.com/comjnl/article/27/2/97/343244?login=true">programação letrada</a>, ou “<em>literate programming</em>”, e que resume-se à oferta simultânea de <em>texto estilizado</em> combinado a <em>códigos de programação</em> para enriquecer o conteúdo de um tema específico. Nesse sentido, um <em>documento dinâmico</em> permite que se interprete o texto juntamente à execução de códigos que resultem em texto estilizado contendo chamadas em hipertexto e <em>links</em>, bem como gráficos, tabelas, animações, áudios, vídeos, entre outros recursos.</p>
+</section>
+<section id="aspectos-gerais-de-um-documento-dinâmico-pelo-r-rstudio" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="aspectos-gerais-de-um-documento-dinâmico-pelo-r-rstudio"><span class="header-section-number">1</span> Aspectos gerais de um documento dinâmico pelo R &amp; RStudio</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para a criação de um <em>documento dinâmico</em> no <em>R &amp; RStudio</em> busca-se cumprir um esboço, tal como segue:</p>
+<ol type="1">
+<li>Cria-se o documento no <code>RStudio</code>;</li>
+<li>Customiza-se (ou não) o arquivo de cabeçalho (*_quarto_yaml*);</li>
+<li>Prepara-se um arquivo para inserir referências bibliográficas;</li>
+<li>Redige-se o texto com subtópicos numerados e formatações (ex: itálico, negrito, sub e superescrito, <em>links</em> de internete, citações);</li>
+<li>Insere-se elementos visuais (imagens, equações, tabelas)</li>
+<li>Insere-se trechos de código (<em>chunks</em>) pra criação de gráficos e cálculos, bem como de elementos visuais mais complexos e/ou com referenciação (equações, tabelas, simulações, animações).</li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cada ítem acima pode ser configurado de diversas maneiras, e customizado em função de preferências de seu idealizador. Contudo, segue abaixo uma descrição rápida de cada ítem para emprego direto. Para detalhes mais completos, consultar o portal que referencia o pacote <a href="https://quarto.org/">Quarto</a> do <code>R</code>.</p>
+</section>
+<section id="criação-do-projeto-pelo-rstudio" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="criação-do-projeto-pelo-rstudio"><span class="header-section-number">2</span> Criação do projeto pelo <code>RStudio</code></h2>
+<ol type="1">
+<li>Clique em <em>File</em> (ou em sua tradução para Português, dependendo da instalação do programa);</li>
+<li>Selecione na sequência, <em>New File</em>, <em>Quarto document</em>;</li>
+</ol>
+</section>
+<section id="compilando-o-projeto" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="compilando-o-projeto"><span class="header-section-number">3</span> Compilando o projeto</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para visualizar o documento do projeto em formato específico (HTML, PDF, DOCX), compile o documento; alternativamente:</p>
+<ol type="1">
+<li>Clicando o atalho, <em>Ctrl + Shift + K</em> (<em>K</em> de <em>knitr</em>, a máquina por traz do algoritmo…ou vice-versa);</li>
+<li>Clicando em <em>File</em>, <em>Render Document</em>;</li>
+<li>Clicando no ícone de uma seta azul seguido de <em>Render</em>, abaixo do <em>menu</em> principal.</li>
+</ol>
+</section>
+<section id="cabeçalho" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="cabeçalho"><span class="header-section-number">4</span> Cabeçalho</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O cabeçalho de um documento dinâmico nada mais é que uma sequência de informações para sua formatação, tais como título, fonte, autor, data, arquivo e estilo de referências, entre outros. Segue um exemplo de cabeçalho para uso em um documento. Basta substituir o conteúdo daquele que foi gerado pelo <code>Rstudio</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Meu projeto"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">"Eu"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">"today"</span> <span class="co"># há diversas customizações para data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span> html    <span class="co"># ou pdf, docx, epub</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>editor<span class="sc">:</span> source <span class="co"># ou visual  </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>number<span class="sc">-</span>sections<span class="sc">:</span> true <span class="co"># níveis para o índice automático</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>number<span class="sc">-</span>depth<span class="sc">:</span> <span class="dv">3</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>lang<span class="sc">:</span> pt <span class="co"># linguagem para os textos automáticos (ex: Sumário)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>bibliography<span class="sc">:</span> referencias.bib <span class="co"># arquivo texto a ser criado</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>csl<span class="sc">:</span> universidade<span class="sc">-</span>federal<span class="sc">-</span>de<span class="sc">-</span>alfenas<span class="sc">-</span>abnt<span class="sc">-</span>autor<span class="sc">-</span>data.csl <span class="co"># estilo de formatação bibliográfica</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>toc<span class="sc">:</span> true <span class="co"># inserção de Sumário (ou "Table of Contents")</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>linestretch<span class="sc">:</span> <span class="fl">1.5</span>  <span class="co"># espacejamento entre linhas</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>fontsize<span class="sc">:</span> 12pt <span class="co"># tamanho da fonte</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>papersize<span class="sc">:</span> a4 <span class="co"># dimensão de saída (papel)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>abstract<span class="sc">:</span> <span class="st">"esse é o resumo"</span> <span class="co"># resumo do trabalho</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vale ressaltar a importância da linguagem do texto. Se não for inserida a linha <code>lang: pt</code>, o texto terá alguns termos em inglês, como padrão, tais como <em>Figure</em>, <em>Table</em>, <em>Table of Contents</em>; ao invés de <em>Figura</em>, <em>Tabela</em>, <em>Sumário</em>.</p>
+</section>
+<section id="compilando-o-documento" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="compilando-o-documento"><span class="header-section-number">5</span> Compilando o documento</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para visualizar o documento do projeto em formato específico (HTML, PDF, DOCX), compile o documento; alternativamente:</p>
+<ol type="1">
+<li>Clicando-se o atalho, <em>Ctrl + Shift + K</em> (<em>K</em> de <em>knitr</em>, a máquina por traz do algoritmo…ou vice-versa);</li>
+<li>Clicando-se em <em>File</em>, <em>Render Document</em>;</li>
+<li>Clicando-se no ícone de uma seta azul seguido de <em>Render</em>, abaixo do <em>menu</em> principal.</li>
+</ol>
+</section>
+<section id="referências-bibliográficas" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="referências-bibliográficas"><span class="header-section-number">6</span> Referências bibliográficas</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O pacote <code>quarto</code>do <code>R</code> em que estamos exercendo a criação do <em>documento dinâmico</em>, permite a inserção de citações ao longo do texto e geração automática de bibliografia formatada ao final deste.</p>
+<ol type="1">
+<li>Crie um documento de texto vazio e salve-o com atributo “<em>.bib</em>” na pasta de seu trabalho (ex: referencias.bib);</li>
+<li>Vá ao <a href="https://scholar.google.com/">Google Acadêmico</a> e selecione uma referência;</li>
+<li>Clique em <em>Citar</em> e escolha a opção <em>BibTex</em>;</li>
+<li>Copie o texto gerado, cole-o no arquivo <em>.bib</em> criado, e salve-o (ex: referencias.bib);</li>
+<li>Coloque o arquivo de estilos de referências na pasta do trabalho (<em>universidade-federal-de-alfenas-abnt-autor-data.csl</em>; pode-se escolher qualquer outro se o objetivo for um periódico específico; para isso, consulte os disponíveis no <a href="https://www.zotero.org/styles">repositório CSL do Zotero</a>;</li>
+<li>Ao final do documento coloque um subtítulo para a bibliografia, tal como:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Referências {#unnumbered}</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pronto ! Agora o arquivo <em>BibTex</em> está pronto para a inserção de citações Para tal, insira no local em que se deseja a citação o símbolo <em><span class="citation" data-cites="*"></span> seguido do identificador </em>BibTex*, logo à direita do tipo de publicação. Veja o exemplo abaixo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">@</span>article{knuth1984literate,  <span class="co"># knuth1984literate é o identificador</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  title<span class="ot">=</span>{Literate programming},</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  author<span class="ot">=</span>{Knuth, Donald Ervin},</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  journal<span class="ot">=</span>{The computer journal},</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  volume<span class="ot">=</span>{<span class="dv">27</span>},</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  number<span class="ot">=</span>{<span class="dv">2</span>},</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  pages<span class="ot">=</span>{<span class="dv">97</span><span class="sc">--</span><span class="dv">111</span>},</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  year<span class="ot">=</span>{<span class="dv">1984</span>},</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  publisher<span class="ot">=</span>{Oxford University Press}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para citar a referência, algo como:</p>
+<p>…a programação letrada avaliada por <span class="citation" data-cites="knuth1984literate">Knuth (<a href="#ref-knuth1984literate" role="doc-biblioref">1984</a>)</span> tem sido considerada…</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Referências múltiplas são citadas entre <em>[…]</em>, e com “<em>;</em>” entre cada uma.</p>
+</section>
+<section id="texto-formatado" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="texto-formatado"><span class="header-section-number">7</span> Texto formatado</h2>
+<section id="subtítulos" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="subtítulos"><span class="header-section-number">7.1</span> Subtítulos</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subtítulos são inseridos automaticamente em sequência numérica e com fontes estilizadas (negrito) de tamanhos distintos. São alocados simplesmente por número de <em>hashtag</em>s inseridos antes. Existem 6 níveis (ex: <em>1.2</em>, <em>2.4.1</em>, etc), e que são indexados por <em>#</em>, <em>##</em>, <em>###</em>, <em>####</em>, <em>#####</em>, <em>######</em>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Desejando-se que a numeração não apareça no subtítulo, ou que não seja listada no sumário inicial (quando a opção de docuemnto é <em>livro</em>; TOC (<em>Table of Contents</em>), bastas os comandos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## subtítulo {.unnumbered} # não aparece no título</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## subtítulo {.unlisted .unnumbered} # não é listada no TOC (Sumário)</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para referenciar um subtópico, exemplifica-se:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Capítulo 1 {#sec-capUm}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>... e no texto...<span class="st">"...pode ser relembrado pela leitura do @sec-capUm"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Testando o trecho acima:</p>
+<section id="sec-capUm" class="level4" data-number="7.1.1">
+<h4 data-number="7.1.1" class="anchored" data-anchor-id="sec-capUm"><span class="header-section-number">7.1.1</span> Seção 1</h4>
+<p>“…pode ser relembrado pela leitura da <a href="#sec-capUm">Seção&nbsp;7.1.1</a>”</p>
+</section>
+</section>
+<section id="comentários" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="comentários"><span class="header-section-number">7.2</span> Comentários</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;É sempre desejável conhecer o significado de um conjunto de comandos, ou a essência de uma solução para um problema, uma lista de afazeres (<em>ToDo</em>), um trecho que se está experimentando, ou que foi colado de outra fonte para observação, ou qualquer informação que não se deseja visualizar no documento final, ou em preparação.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A inserção de comentários dá-se pelo atalho <em>Shift + Ctrl + C</em>, ao iniciar uma linha (pra um subtítulo, por ex), ao final dessa (pra uma explicação sobre o código), ou para um trecho selecionado. Para desfazer o comentário, basta repetir o atalho.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Se preferir introduzir o comentário de forma direta, digite:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;!---</span>comentário<span class="sc">--</span><span class="ot">-&gt;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="texto-estilizado" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="texto-estilizado"><span class="header-section-number">7.3</span> Texto estilizado</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Usando-se a linguagem <em>Rmarkdown</em> do <code>RStudio</code> é possível estabelecer com facilidade termos em negrito, itálico, etc, tal como segue:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span>itálico<span class="sc">*</span> <span class="co"># itálico</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="er">**</span>negrito<span class="sc">**</span> <span class="co"># negrito</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="er">~~</span>cortado<span class="sc">~</span><span class="er">~</span> <span class="co"># cortado</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="er">***</span>itálico<span class="sc">&amp;</span>negrito<span class="sc">**</span><span class="er">*</span> <span class="co"># itálico e negrito</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="er">^</span><span class="dv">2</span><span class="sc">^</span> <span class="co"># superescrito</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="er">***</span> <span class="co"># linha horizontal</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="listas" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="listas"><span class="header-section-number">7.4</span> Listas</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listas podem apresentar-se com ou sem numeração. Para as últimas, ítens e subítens podem explicitar-se como segue:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> item <span class="dv">1</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> item <span class="dv">2</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> subitem <span class="dv">1</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> subitem <span class="dv">2</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O resultado do trecho acima fica:</p>
+<ul>
+<li>item 1</li>
+<li>item 2</li>
+<li>subitem 1</li>
+<li>subitem 2</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Já para uma lista numerada pode-se espelhar o exemplo acima. Pode-se elaborá-la enumerando-se manualmente ou, de forma mais prática, automaticamente, nesse caso bastando-se inserir <em>“1.”</em> para todos os ítens da lista.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> item <span class="dv">1</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> item <span class="dv">2</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> subitem <span class="dv">1</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> subitem <span class="dv">2</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>O resultado ficará como:</p>
+<ol type="1">
+<li>item 1</li>
+<li>item 2</li>
+</ol>
+<ul>
+<li>subitem 1</li>
+<li>subitem 2</li>
+</ul>
+</section>
+<section id="cores" class="level3" data-number="7.5">
+<h3 data-number="7.5" class="anchored" data-anchor-id="cores"><span class="header-section-number">7.5</span> Cores</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Se desejar alterar a cor de um texto, tente, por exemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Se documento em HTML<span class="sc">:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  ...conforme listado no <span class="sc">&lt;</span>span style<span class="ot">=</span><span class="st">"color: red;"</span><span class="sc">&gt;</span>Anexo <span class="dv">2</span><span class="sc">&lt;</span><span class="er">/</span>span<span class="sc">&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Se documento em PDF<span class="sc">:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  ...conforme listado no \textcolor{red}{Anexo <span class="dv">2</span>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Teste o trecho acima com saída em HTML ou PDF</p>
+</section>
+</section>
+<section id="elementos-visuais" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="elementos-visuais"><span class="header-section-number">8</span> Elementos Visuais</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O ecossistema do <code>R</code> possui diversos pacotes para a criação de gráficos, tabelas, animações, simulações, diagramas, fluxogramas, etc. Contudo, dado o objetivo deste texto, são elencados na sequências os elementos visuais mais simples para inserção em um <em>documento dinâmico</em> pelo <code>R</code>.</p>
+<section id="imagens" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="imagens"><span class="header-section-number">8.1</span> Imagens</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O modo mais simples para inserção de uma figura é realizado com o símbolo de interrogação <em>!</em> seguido por sua legenda entre <em>” [ ] </em>”, e que pode ser exemplificado como:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span>[Figura <span class="dv">1</span><span class="sc">-</span> Estrutura da molécula](molec.png){<span class="co">#fig-figura1}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  ... e para citar...</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">" A figura @fig-figura1 apresenta os dados de..."</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>   Obs<span class="sc">:</span> o arquivo da imagem tem que estar no mesmo diretório do projeto</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="equações" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="equações"><span class="header-section-number">8.2</span> Equações</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equações podem ser inseridas em um ambiente próprio, ou de forma mais simples, diretamente no documento. Um exemplo de inserção direta de equação:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>       A equação quadrática encontrada foi <span class="sc">$</span>y <span class="ot">=</span> a<span class="sc">*</span>x<span class="sc">^</span>{<span class="dv">2</span>}<span class="sc">/</span><span class="fu">sqrt</span>(x)<span class="sc">$</span>.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O exemplo acima será compilado como:</p>
+<p>…A equação quadrática encontrada foi <span class="math inline">\(y = a*x^{2}/\sqrt(x)\)</span>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Se desejar a inserção de equações mais complexas, ou com referenciação no texto, deve-se proceder a inserção dessas em um ambiente próprio. Exemplificando:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span><span class="er">$</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> \frace{a}{b}<span class="sc">+</span>x<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="fu">sin</span>(c)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span><span class="er">$</span> {<span class="co">#eq-equacao1}</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>... Segundo a <span class="co">#eq-equacao1 acima...</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assim, o trecho acima ficará como:</p>
+<p><span id="eq-equacao1"><span class="math display">\[
+y = \frac{a}{b}+x^2*\sqrt{(sin(c))}
+\tag{1}\]</span></span></p>
+<p>… Segundo a <a href="#eq-equacao1">Equação&nbsp;1</a> acima…</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vale também ressaltar que a linguagem <code>Rmarkdown</code> utilizada pelo pacote <code>Quarto</code> utiliza a sintaxe de código <em>LaTex</em> para equações. Se quiser algums comandos adicionais experimente <a href="https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf">esta fonte</a> da <em>Rice University</em> (Houston, TX).</p>
+</section>
+<section id="tabelas" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="tabelas"><span class="header-section-number">8.3</span> Tabelas</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assim como equações, tabelas podem ser criadas e formatadas a partir de diversos pacotes do <code>R</code>. Pela simplicidade buscada nesse texto, contudo, optou-se por uma inserção e referenciação mais simples, exemplificada abaixo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span>       A tabela abaixo descreve os tratamentos<span class="sc">:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="er">|</span> controle <span class="sc">|</span> tratam. A <span class="sc">|</span> tratam. B <span class="sc">|</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="er">|</span><span class="sc">----------</span><span class="er">|</span><span class="sc">-----------</span><span class="er">|</span><span class="sc">-----------</span><span class="er">|</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="er">|</span> A        <span class="sc">|</span> B         <span class="sc">|</span> C         <span class="sc">|</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="er">|</span> E        <span class="sc">|</span> F         <span class="sc">|</span> G         <span class="sc">|</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="er">|</span> A        <span class="sc">|</span> G         <span class="sc">|</span> G         <span class="sc">|</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="er">:</span> Tratamentos A e B em relação ao grupo controle {<span class="co">#tbl-tabela1}</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>...e para referenciá<span class="sc">-</span>la...</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  Observe que a <span class="sc">@</span>tbl<span class="sc">-</span>tabela1 traz os resultados de ....</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pela formatação acima, o trecho ficará como:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A tabela abaixo descreve os tratamentos:</p>
+<div id="tbl-tabela1" class="anchored">
+<table class="table">
+<caption>Tabela&nbsp;1: Tratamentos A e B em relação ao grupo controle</caption>
+<thead>
+<tr class="header">
+<th>controle</th>
+<th>tratam. A</th>
+<th>tratam. B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>B</td>
+<td>C</td>
+</tr>
+<tr class="even">
+<td>E</td>
+<td>F</td>
+<td>G</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>G</td>
+<td>G</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>…e para referenciá-la…</p>
+<p>Observe que a <a href="#tbl-tabela1">Tabela&nbsp;1</a> traz os resultados de ….</p>
+</section>
+</section>
+<section id="trechos-de-códigos-chunks" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="trechos-de-códigos-chunks"><span class="header-section-number">9</span> Trechos de códigos (<em>chunks</em>)</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <em>alma</em> da programação letrada (<em>literate programming</em>; <span class="citation" data-cites="knuth84">(<a href="#ref-knuth84" role="doc-biblioref"><strong>knuth84?</strong></a>)</span>) consiste em unir em um mesmo documento texto estilizado e linguagem de programação. À esta última cabe a inserção de <em>chunks</em> ou trechos de códigos (algoritmo) que são compilados pelo <code>R</code>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para inserir um <em>chunk</em> duas opções simples:</p>
+<ol type="1">
+<li>Por atalho: <em>Ctrl + Alt + I</em> ;</li>
+<li>Por digitação: insere-se uma tripla crase, * ```*, tanto pra abrir o trecho, como para fechá-lo, seguido de chaves, como segue.</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>```{ } # inserção de *chunk*</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>linhas de comando</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="opções-de-chunk" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="opções-de-chunk"><span class="header-section-number">9.1</span> Opções de <em>chunk</em></h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As opções de trechos de códigos (<em>chunks</em>) permitem que se visualize ou não as linhas, ou que se execute ou não os códigos (<em>TRUE</em> ou <em>FALSE</em>), e diversas outras. Exemplificando:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">{r, eval = FALSE} # previne-se avaliar a linha </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">```</span>{r, echo <span class="ot">=</span> <span class="cn">FALSE</span>} <span class="co"># previne-se apresentar a linha</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">{r, output = FALSE} # evita a apresentação de resultados</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="inserindo-um-script-do-r-num-chunk" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="inserindo-um-script-do-r-num-chunk"><span class="header-section-number">9.2</span> Inserindo um <em>script</em> do <code>R</code> num chunk</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;É possível também alocar as linhas de comando para um cálculo, gráfico, ou análise, em um <em>chunk</em>, como segue.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O resultado ficará como:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="docdim_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="inserção-inline-de-equações-e-resultados" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="inserção-inline-de-equações-e-resultados"><span class="header-section-number">9.3</span> Inserção <em>inline</em> de equações e resultados</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Os resultados obtidos a partir de uma análise de dados pode ser alocado após a compilação de um <em>chunk</em>. Por vezes, porém, é interessante alocar esse resultado na própria linha de texto, espelhando o que ocorre manualmente com editores de texto comuns.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Essa situação, em que se aloca um conteúdo de um <em>chunk</em> não no próprio, mas numa sequência textual, é denominada por inserção <em>em linha</em> de informações. As principais inserções <em>em linha</em> constituem equações rápidas ou resultados de análises computacionais.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A inserção em linha é efetuada alocando-se o conteúdo dentro da sintaxe ” <code>r</code> “, como segue:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span><span class="dv">7</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>b<span class="ot">=</span><span class="dv">5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>...a equação deverá resultar numa relação tal que <span class="st">`</span><span class="at">r a^2+b</span><span class="st">`</span> seja o resultado da expressão... </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A expressão acima tem por resultado:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;“A equação deverá resultar numa relação tal que 74 seja o resultado da expressão…”</p>
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-knuth1984literate" class="csl-entry" role="listitem">
+Knuth, Donald Ervin. 1984. <span>«Literate programming»</span>. <em>The computer journal</em> 27 (2): 97–111.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
