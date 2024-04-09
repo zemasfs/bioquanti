@@ -77,6 +77,8 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="language">Language</h3>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <em>Menu</em> language and command output (results) can be changed as below. Remembering, however, that the commands themselves refer to computational algorithms; therefore, it is not possible to change the language of the commands.</p>
 <pre><code>set language = code # pt (portuguese), es (spanish), en (english), fr (french), de (germany), etc...</code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If no success, initialize Jmol by opening a CMD (Windows) or Terminal (Linux) in the program’s directory folder, and type, for Portuguese:”</p>
+<pre><code>java -Duser.language=pt -jar Jmol.jar</code></pre>
 </section>
 </section>
 <section id="folder" class="level2">
@@ -171,6 +173,7 @@ Function: Removes the Jmol logo from the displayed image.</code></pre>
 <section id="model-rotation" class="level3">
 <h3 class="anchored" data-anchor-id="model-rotation">Model Rotation:</h3>
 <pre><code>spin 10 (Sets rotation speed to 10 degrees per frame)
+spin z -15 # (z axis)
 rotate 20 (Rotates the model 20 degrees)
 rotate x 90 (Rotates the model 90 degrees around the x-axis)</code></pre>
 </section>
@@ -405,25 +408,19 @@ select within(3.0, _Fe) # all atoms within 3 Angstroms of the iron atom</code></
 </section>
 <section id="zooming" class="level2">
 <h2 class="anchored" data-anchor-id="zooming">Zooming</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There are two basic commands in <em>Jmol</em> for scaling:</p>
+<ol type="1">
+<li><em>zoom</em>: (expression) size</li>
+<li><em>zoomTo</em> : time (expression) size</li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The second command allows animation of the model, which is why it will be explained in the homonymous section below. Following some examples for the <em>zoom</em> command:</p>
 <pre><code>2x magnification: zoom in
 3x magnification: zoom *3
 2x reduction: zoom out
 3x reduction: zoom /3
 Delete magnification: zoom off
-Ligand restriction and amplification: restrict ligand; zoom 0</code></pre>
-</section>
-<section id="animated-magnification-zoomto" class="level2">
-<h2 class="anchored" data-anchor-id="animated-magnification-zoomto">Animated magnification (<em>zoomto</em>)</h2>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This feature allows you to visualize in a temporally expanded way some parts of interest in the model, such as ligand interaction sites or prosthetic groups. The expression syntax is:</p>
-<pre><code>zoomto or zoomTo (atom/group expression) size
-or...
-
-zoomto time (atom/group expression) size</code></pre>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Examples:</p>
-<pre><code>Zoom in by 3x, half a second at a time: zoomto 0.5 *3
-Zoom in by 4x, half a second at a time: zoomto 0.5 400
-Focus on a ligand at 2x magnification: zoomto 2(ligand) 0
-Focus on a ligand at 4x magnification, half a second at a time: zoom to 0.5(ligand) *4</code></pre>
+Ligand restriction and amplification: restrict ligand; zoom 0
+zoom 100: restore the initial size </code></pre>
 </section>
 <section id="surfaces" class="level2">
 <h2 class="anchored" data-anchor-id="surfaces">Surfaces</h2>
@@ -487,21 +484,47 @@ Note: To visualize the surfaces including the solvent, you can use the "set solv
 <pre><code>Focusing on the Fe atom in myoglobin:
    select hem; wireframe only; wireframe 70# group exclusive rendering
    zooto 2(_Fe) 0 # 2x magnification</code></pre>
+</section>
+<section id="magnification-zoomto" class="level2">
+<h2 class="anchored" data-anchor-id="magnification-zoomto">Magnification (<em>zoomto</em>)</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This feature allows you to visualize in a temporally expanded way some parts of interest in the model, such as ligand interaction sites or prosthetic groups. The expression syntax is:</p>
+<pre><code>zoomto or zoomTo (atom/group expression) size
+or...
+
+zoomto time (atom/group expression) size</code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Examples:</p>
+<pre><code>Zoom in by 3x, half a second at a time: zoomto 0.5 *3
+Zoom in by 4x, half a second at a time: zoomto 0.5 400
+Focus on a ligand at 2x magnification: zoomto 2(ligand) 0
+Focus on a ligand at 4x magnification, half a second at a time: zoom to 0.5(ligand) *4</code></pre>
+<section id="delay" class="level3">
+<h3 class="anchored" data-anchor-id="delay">Delay</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Command that allows you to wait a period of time in seconds before the next action. Normally used in the sequence of commands by the <em>Console</em>, throughout a <em>script</em>.</p>
+</section>
 <section id="move" class="level3">
 <h3 class="anchored" data-anchor-id="move">Move</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <em>move</em> and <em>moveTo</em> commands allow you to combine rotation, translation, and magnification actions in the models. The move command reorients the model from the current coordinates and has the syntax:</p>
+<pre><code>move rotX rotY rotZ zoom dX dy dZ slab time</code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Where rot represents the rotation in a certain axis, and d the translation in the axis. Examples:</p>
+<pre><code>move 90 0 0 0 0 0 0 0 1 - rotates the model 90 degrees in the X axis;
+move 0 720 0 0 0 0 0 0 1 - rotates the model two full turns around the Y axis, for 1 s;
+move 90 15 0 100 0 20 0 0 2 - for 2 s, rotates the model 90 degrees. in the X axis and 15 degrees. in the Y axis, increases its size to 100, and translates it by 20% of the height of the panel, all at the same time.</code></pre>
 </section>
 <section id="moveto" class="level3">
 <h3 class="anchored" data-anchor-id="moveto">MoveTo</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It results in absolute orientation of the model, not depending on its previous coordinates. Its insertion is not simple, as it depends on the model’s orientation data when loaded for the first time, which can be obtained by:</p>
+<pre><code>moveto /* time, axisAngle */ 1.0 { 616 -708 -346 47.68} /* zoom, translation */ 400.0 0.0 0.0 /* center, rotationRadius */ {15.174467 28.719118 4.726837} 35.148052 /* navigation center, translation, depth */ {0 0 0} 0 0 0 /* cameraDepth, cameraX, cameraY */ 3.0 0.0 0.0;
+#OR
+#Follows Z-Y-Z convention for Euler angles
+reset;center {15.174467 28.719118 4.726837}; rotate z 130.27; rotate y 44.57; rotate z -147.67; zoom 400.0;</code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Notice that there are two sets of commands, one by <em>moveTo</em> and the other by <em>reset, center, rotate and translate</em>. To get the model in the original coordinates, simply copy one or the other set of data.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Using the 1st set (moveTo), copy the line and change the animation time, in this case the value 1.0 in “axisAngle */ 1.0”.</p>
 </section>
 <section id="compare" class="level3">
 <h3 class="anchored" data-anchor-id="compare">Compare</h3>
 </section>
 <section id="navigate" class="level3">
 <h3 class="anchored" data-anchor-id="navigate">Navigate</h3>
-</section>
-<section id="delay" class="level3">
-<h3 class="anchored" data-anchor-id="delay">Delay</h3>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Command that allows you to wait a period of time in seconds before the next action. Normally used in the sequence of commands by the <em>Console</em>, throughout a <em>script</em>.</p>
 </section>
 </section>
 <section id="programming" class="level2">
