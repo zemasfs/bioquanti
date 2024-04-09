@@ -232,13 +232,18 @@ All Connections and Distances: measure allconnected (*)(*)</code></pre>
 <section id="changing-model-representation" class="level2">
 <h2 class="anchored" data-anchor-id="changing-model-representation">Changing Model Representation</h2>
 <p>Jmol offers various ways to visualize structures. Here are some common commands:</p>
-<pre><code>Wireframe, backbone, trace, strands, cartoon, ribbons, meshriboon, rockets, cpk (spacefill), ball&amp;stick
+<pre><code>wireframe, backbone, trace, strands, cartoon, ribbons, meshriboon, rockets, cpk (spacefill), ball&amp;stick
 
 To view a single shape: wireframe only
 
 To hide a shape: &lt;shape&gt; off (e.g., backbone off)
 
 To render as "ball&amp;stick": Combine wireframe only; wireframe reset; spacefill reset</code></pre>
+<section id="cuts-and-shading" class="level3">
+<h3 class="anchored" data-anchor-id="cuts-and-shading">Cuts and shading</h3>
+<pre><code>Cut in view: slab one; slab 30
+Depth vision: depth 30</code></pre>
+</section>
 </section>
 <section id="controlling-molecular-representation-size" class="level2">
 <h2 class="anchored" data-anchor-id="controlling-molecular-representation-size">Controlling Molecular Representation Size</h2>
@@ -250,13 +255,64 @@ backbone 50: Sets the backbone thickness to 50/250 Angstrom, which equals 0.2 An
 cartoon 50%: Increases the cartoon thickness by 50% compared to the default setting.
 spacefill 2: Sets the spacefill radius to 2/250 Angstrom, which is approximately 0.008 Angstrom (no decimal point indicates relative value).
 spacefill 2.0: Sets the spacefill radius to 2.0 Angstrom (decimal point indicates absolute value).</code></pre>
-</section>
-<section id="additional-notes" class="level2">
-<h2 class="anchored" data-anchor-id="additional-notes">Additional Notes:</h2>
+<section id="additional-notes" class="level3">
+<h3 class="anchored" data-anchor-id="additional-notes">Additional Notes:</h3>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The provided commands demonstrate how to control the size of various representations. Jmol offers a wider range of visualization styles beyond those shown here.</p>
 </section>
-<section id="colors" class="level2">
-<h2 class="anchored" data-anchor-id="colors">Colors</h2>
+</section>
+<section id="visualizing-hydrogen" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-hydrogen">Visualizing Hydrogen</h2>
+<pre><code>Insert into model: set pdbAddHydrogens
+Remove from model: set pdbAddHydrogens false</code></pre>
+</section>
+<section id="visualizing-disulfide-bonds-proteins" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-disulfide-bonds-proteins">Visualizing disulfide bonds (Proteins)</h2>
+<pre><code>    Turn on/off disulfide bond visualization: ssbonds on or ssbonds off
+    Change disulfide bond visualization style:
+        ssbonds 40: Renders as sticks with a diameter of 40/250 Angstroms
+        ssbonds 0.5: Renders at 0.2 Angstrom diameter</code></pre>
+</section>
+<section id="experimenting-with-commands-in-jsmol" class="level2">
+<h2 class="anchored" data-anchor-id="experimenting-with-commands-in-jsmol">Experimenting with Commands in JSmol</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use the JSmol applet at the following <a href="https://chemapps.stolaf.edu/jmol/jsmol/simple.htm">link</a> from the <a href="St.%20Olaf%20College">St.&nbsp;Olaf College</a>(MN, EUA). Experiment with the commands listed above to visualize and manipulate molecules in 3D.</p>
+</section>
+<section id="selecting-colors" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-colors">Selecting Colors</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The standard option for model colors is CPK (Corey, Pauling, Koltun):</p>
+<pre><code>        To change colors: color or colour
+        
+        Carbon: gray
+        Nitrogen: blue
+        Phosphorus or sulfur: yellow
+        Hydrogen: white
+        Iodine: violet
+        etc.</code></pre>
+<section id="example-commands" class="level3">
+<h3 class="anchored" data-anchor-id="example-commands">Example commands:</h3>
+<pre><code>color [255,125,350]: Specific color
+color bonds: applies the color without specifying the representation
+color [xFF00FF]: specific color
+color cpk: program default
+color molecule: all atoms connected by a bond
+color formalcharge: formal charges
+color partialcharge: partial charges
+color amino: for amino acids
+color structure: secondary structure
+    Proteins:
+        Red: alpha helix
+        Yellow: beta sheets
+        Blue: turns
+        White: remainder
+    Nucleic acids:
+        Violet: DNA
+        Reddish: RNA
+color chain: chains
+color inherit: objects inherit the color of their associated atoms
+color shapely: color scheme that includes nucleotides
+color group: rainbow gradient (blue: N- or 5'-terminus; red: C- or 3'-terminus)</code></pre>
+</section>
+<section id="specific-colors" class="level3">
+<h3 class="anchored" data-anchor-id="specific-colors">Specific colors</h3>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An atom or set of these can also be assigned a specific color, as follows:</p>
 <pre><code>AliceBlue,AntiqueWhite,Aqua,Aquamarine,Azure,Beige,Bisque,Black,
 BlanchedAlmond,Blue,BlueViolet,Brown,BurlyWood,CadetBlue,Chartreuse,
@@ -278,6 +334,7 @@ PowderBlue,Purple,Red,RosyBrown,RoyalBlue,SaddleBrown,Salmon,SandyBrown,
 SeaGreen,SeaShell,Sienna,Silver,SkyBlue,SlateBlue,SlateGray,SlateGrey,Snow,
 SpringGreen,SteelBlue,Tan,Teal,Thistle,Tomato,Turquoise,Violet,Wheat,White,
 WhiteSmoke,Yellow,YellowGreen.</code></pre>
+</section>
 </section>
 <section id="model-labelling-label" class="level2">
 <h2 class="anchored" data-anchor-id="model-labelling-label">Model labelling (<em>label</em>)</h2>
@@ -309,28 +366,26 @@ Left-click on the first atom in the desired group.
 Drag the mouse while holding down the Shift key to encompass the rest of the group.</code></pre>
 <section id="nature" class="level3">
 <h3 class="anchored" data-anchor-id="nature">Nature:</h3>
-<p>all, none, protein, nucleic, dna, rna, carbohydrate, hetero, ligand, solvent, water ou hoh, ions, hem, amino</p>
+<pre><code>all, none, protein, nucleic, dna, rna, carbohydrate, hetero, ligand, solvent, water ou hoh, ions, hem, amino</code></pre>
 </section>
 <section id="chemical-element" class="level3">
 <h3 class="anchored" data-anchor-id="chemical-element">Chemical element:</h3>
-<ul>
-<li>By name: oxygen, nitrogen, carbon</li>
-<li>By symbol: _N, _C, _Fe</li>
-<li>By atomic number: elemNo=7, ou atomNo=5</li>
-<li>By identifier number in the sequence (serial): atomNo&lt;50</li>
-</ul>
+<pre><code>By name: oxygen, nitrogen, carbon
+By symbol: \_N, \_C, \_Fe
+By atomic number: elemNo=7, ou atomNo=5
+By identifier number in the sequence (serial): atomNo\&lt;50</code></pre>
 </section>
 <section id="parts-of-the-molecule" class="level3">
 <h3 class="anchored" data-anchor-id="parts-of-the-molecule">Parts of the molecule:</h3>
-<p>backbone, sidechain, :b (for chains), spine</p>
+<pre><code>backbone, sidechain, :b (for chains), spine</code></pre>
 </section>
 <section id="residue-type" class="level3">
 <h3 class="anchored" data-anchor-id="residue-type">Residue type</h3>
-<p>3-letter abbreviation of amino acids, acidic, basic, polar, neutral, charged, purine, pyrimidine, large, small, buried, surface, cyclic, hydrophilic, hydrophobic, aromatic, cystine, aliphatic, spine, base</p>
+<pre><code>3-letter abbreviation of amino acids, acidic, basic, polar, neutral, charged, purine, pyrimidine, large, small, buried, surface, cyclic, hydrophilic, hydrophobic, aromatic, cystine, aliphatic, spine, base</code></pre>
 </section>
 <section id="secondary-structure-of-proteins" class="level3">
 <h3 class="anchored" data-anchor-id="secondary-structure-of-proteins">Secondary structure of proteins</h3>
-<p>helix, sheet, turn</p>
+<pre><code>helix, sheet, turn</code></pre>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The general commands for using the above expressions or combinations of these are, basically:</p>
 <pre><code>select, restrict, hide, display, delete</code></pre>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each expression must be enclosed in parentheses. You can also apply <em>Boolean operations</em> (<em>or, and, but not</em>, or <em>=, &lt;, &gt;, &lt;=, &gt;=, !=</em>).</p>
@@ -342,6 +397,7 @@ Drag the mouse while holding down the Shift key to encompass the rest of the gro
 <h2 class="anchored" data-anchor-id="command-restrict">Command restrict</h2>
 <pre><code>*   restrict helix # only the helices of the secondary structure remain
 *   restrict ligand # only the ligand
+*   select BGC,ANP # select both ligands
 *   restrict not ligand # only proteins without prosthetic groups
 *   restrict 42-60 # only the indicated residue sequence remains
 *   restrict f6p # only the identified group remains (a linker, in this case)
@@ -354,11 +410,14 @@ Drag the mouse while holding down the Shift key to encompass the rest of the gro
   select all 
   select none
   select hem and :b # only the hem group of the "b" chain
+  select (bmp, amp) # select two ligands
+  select (bmp, amp) and oxygen 
   select hem and not iron :b # selects the heme group of the "b" chain, except the Fe atom in "b" chain
   select */2 # all atoms in model 2
 select connected(oxygen) # all atoms linked to an oxygen
    select ser70 :A .ca # serine alpha carbon no. 70 of chain A
    select hetero and not solvent # heteroatoms except water
+   select remove group hetero and not water # only water
    select hetero and not ligand # heteroatoms except ligand
    select buried only # only residues from the protein core
    select helix or backbone # select helices or protein backbone
@@ -390,15 +449,18 @@ select connected(oxygen) # all atoms linked to an oxygen
 <section id="within-command" class="level3">
 <h3 class="anchored" data-anchor-id="within-command"><em>within</em> command</h3>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This command allows a recursive selection, that is, a selection within a selection.</p>
-<pre><code>select within (5,(bca,amp)) # selects two ligands that are 5 Angstroms away from the selected group of atoms
+<pre><code>select within (5, (bca,amp))) # selects two ligands that are 5 Angstroms away from the selected group of atoms
 
 select within(3.0, _Fe) # all atoms within 3 Angstroms of the iron atom</code></pre>
 </section>
 </section>
 <section id="command-define" class="level2">
 <h2 class="anchored" data-anchor-id="command-define">Command <em>define</em></h2>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Allows you to define a group of atoms for specific rendering or observation.</p>
-<pre><code>   defines Site within(3.0, _Cu) # 3 Angstroms away from copper atom
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Allows you to define a group of atoms for specific rendering or observation. After definition, just use <em>select</em> or another command to change the model.</p>
+<pre><code>    define teste (arg10) # select only Arg10
+  define teste (arg10 or asn46) # select both residues
+  define teste (ser195 or asp102 or his57)
+  defines Site within(3.0, _Cu) # 3 Angstroms away from copper atom
    defines PointX within(5.0,arg31) # 5 Angstroms away from Arg31
    defines neighbors selected # previously selected</code></pre>
 </section>
@@ -460,8 +522,16 @@ Note: To visualize the surfaces including the solvent, you can use the "set solv
 <section id="creating-and-reading-scripts" class="level2">
 <h2 class="anchored" data-anchor-id="creating-and-reading-scripts">Creating and reading scripts</h2>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scripting allows the observation and analysis of a specific part of the model under study, by composing code snippets as command lines. In this way, the <em>script</em> resembles an <em>algorithm</em> with a succession of commands. A <em>script</em> can be loaded by calling the program’s files (<em>File, Open</em>), or even by dragging the file to the program’s screen area.</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The creation of the <em>script</em> can be done in a simple text file, saving it as **.spt<em>. On the other hand,</em> Jmol* has its own construction and testing environment, <em>Script Editor</em>, accessible through the main <em>Menu</em>. In this environment it is possible to open, create, check, and run a <em>script</em>. It is also valid to copy/paste some code snippet into <em>Console</em> or <em>Jmol/JSmol</em>, separating the commands with <em>semicolons</em> on successive lines. This way the <em>Script Editor</em> is simulated in the <em>Console</em> itself.</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is also possible through <em>Jmol</em> to define an initial <em>script</em> to be run when the program opens. For this:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The creation of the <em>script</em> can be done in a simple text file, saving it as <em>.spt</em>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <em>Jmol</em> <em>script</em> is based on a dialect of <em>Java Script</em>, and can be driven by a sequence of commands on each line of a simple text file, saving it as <em>.spt</em>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On the other hand, <em>Jmol</em> has its own construction and testing environment, <em>Script Editor</em>, accessible through the main <em>Menu</em>. In this environment it is possible to open, create, check, and run a <em>script</em>. It is also valid to copy/paste some code snippet into <em>Console</em> or <em>Jmol/JSmol</em>, separating the commands with <em>semicolons</em> on successive lines. This way the <em>Script Editor</em> is simulated in the <em>Console</em> itself.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <em>Editor</em> can be used when you have several command lines, to better visualize the algorithmic sequence. In this case, it is also possible to include <em>comments</em>, using:</p>
+<pre><code>/* comment */
+or
+// comment //</code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In the <em>Programming</em> section, some <em>scripts</em> created in the <em>Editor</em> will be presented.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is also valid to copy/paste some code snippet into <em>Console</em> or <em>Jmol/JSmol</em>, separating the commands with <em>semicolons</em> on successive lines. This way the <em>Script Editor</em> is simulated in the <em>Console</em> itself.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Additionally, it is also possible through <em>Jmol</em> to define an initial <em>script</em> to be run when the program opens. For this:</p>
 <pre><code>set defaultLoadScript "commands"</code></pre>
 </section>
 <section id="mutation" class="level2">
@@ -530,8 +600,38 @@ reset;center {15.174467 28.719118 4.726837}; rotate z 130.27; rotate y 44.57; ro
 <section id="programming" class="level2">
 <h2 class="anchored" data-anchor-id="programming">Programming</h2>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Programming and loop commands (<em>loop</em>) implemented in <em>Jmol</em>:</p>
-<pre><code>IF    FOR   WHILE   STEP    BREAK   WAIT    PAUSE   
+<pre><code>LOOP  IF   FOR   WHILE   STEP    BREAK   WAIT    PAUSE   
 BREAK   CASE    CONTINUE    QUIT</code></pre>
+<section id="loop" class="level3">
+<h3 class="anchored" data-anchor-id="loop">Loop</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Allows you to execute a command line repeatedly.</p>
+<pre><code>color bonds red; delay 3; color bonds green; loop 1 # loop is executed every 1 s</code></pre>
+</section>
+</section>
+<section id="molecular-modeling" class="level2">
+<h2 class="anchored" data-anchor-id="molecular-modeling">Molecular modeling</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Although quite limited as a tool for the purpose of molecular modeling, <em>Jmol</em> allows for some didactic approaches. The <em>script</em> that follows exemplifies the modeling tool. It can be copied and pasted into the <em>Script Editor</em> window, or loaded from a text file.</p>
+<pre><code>/* Molecular modelling */
+
+load =3fgu /* carrega estrutura */
+cartoon only
+hide water
+select(BGC,ANP)
+wireframe only
+
+select MG
+spacefill 100
+color palegreen
+define ligbind (ANP,BGC,MG)
+
+select remove hetero and not water
+connect 3.3(ligbind and (oxygen or nitrogen)) (selected and (oxygen or nitrogen)) strut yellow /* cria varas de lig.H da proteína com os ligantes */
+zoomTo 0.5(ligbind) *4 /* amplia a cada meio segundo, até 4x no sítio do ligante */
+zoom 0; center
+navigate 2 DEPTH 30 / ROTATE 120
+zoomto (mg) *7
+
+/* Obs: adapted from Procko, K., Bakheet, S., Beckham, J. T., Franzen, M. A., Jakubowski, H., &amp; Novak, W. R. (2021). Modeling an Enzyme Active Site using Molecular Visualization Freeware. JoVE (Journal of Visualized Experiments), (178), e63170.*/ </code></pre>
 </section>
 <section id="configurations-set" class="level2">
 <h2 class="anchored" data-anchor-id="configurations-set">Configurations (<em>set</em>)</h2>
