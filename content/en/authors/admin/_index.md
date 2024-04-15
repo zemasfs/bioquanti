@@ -15,7 +15,7 @@ superuser: yes
 
 ## Purpose <i class="fa-solid fa-bullseye"></i>
 
-&nbsp;&nbsp;&nbsp;&nbsp;This webpage aims to facilitate the teaching and learning of *Biochemistry* content and related fields within the framework of **Reproducible Education (RE)** with *Open Educational Resources (OER)*. It provides self-directed learning materials that integrate topic exploration with the execution of freely available software. These software tools, including [R](https://www.r-project.org/), [RStudio](https://posit.co/), [Jmol](http://jmol.sourceforge.net/), and {{< staticref "uploads/SismaBook/index-en.html" "newtab" >}}Sisma{{< /staticref >}}, offer functionalities for generating graphs, analyses, tables, simulations, and animations. Notably, *Sisma*, developed at UNIFAL-MG (Brazil), allows for dynamic observation of responses and metabolic networks.
+&nbsp;&nbsp;&nbsp;&nbsp;This webpage aims to facilitate the teaching and learning of *Biochemistry* content and related fields within the framework of **Reproducible Education (RE)** with *Open Educational Resources (OER)*. It provides self-directed learning materials that integrate topic exploration with the execution of freely available software. These software tools, including [R](https://www.r-project.org/), [RStudio](https://posit.co/), [Jmol](http://jmol.sourceforge.net/), and {{< staticref "uploads/SismaBook/index-en.html" "newtab" >}}Sisma{{< /staticref >}}, offer functionalities for generating graphs, analyses, tables, simulations, and animations. Notably, {{< staticref "uploads/SismaBook/index-en.html" "newtab" >}}Sisma{{< /staticref >}}, developed at UNIFAL-MG (Brazil), allows for dynamic observation of responses and metabolic networks.
 
 ## Toolbox <i class="fa-solid fa-toolbox"></i> 
 

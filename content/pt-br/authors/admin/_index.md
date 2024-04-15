@@ -15,7 +15,7 @@ superuser: yes
 
 ## Objetivo <i class="fa-solid fa-bullseye"></i>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Página elaborada no intuito de contribuir para o ensino-aprendizagem de conteúdos de Bioquímica e áreas correlatas, e esboçada para tangenciar um **Ensino Reprodutível (ER)** com *Recursos Educacionais Abertos (REA)*. O *material autoinstrucional* permite o estudo dos temas juntamente à execução de códigos de programas de livre distribuição para gráficos, análises e tabelas, simulações e animações ([R](https://cran.r-project.org/) & [RStudio](https://www.rstudio.com/)), como para o estudo e visualização tridimensional de biomoléculas ([Jmol](http://jmol.sourceforge.net/)), e para a observação dinâmica de reações e redes metabólicas, {{< staticref "uploads/SismaBook/index.html" "newtab" >}}Sisma{{< /staticref >}}, desenvolvido na UNIFAL-MG).
+&nbsp;&nbsp;&nbsp;&nbsp;Página elaborada no intuito de contribuir para o ensino-aprendizagem de conteúdos de Bioquímica e áreas correlatas, e esboçada para tangenciar um **Ensino Reprodutível (ER)** com *Recursos Educacionais Abertos (REA)*. O *material autoinstrucional* permite o estudo dos temas juntamente à execução de códigos de programas de livre distribuição para gráficos, análises e tabelas, simulações e animações ([R](https://cran.r-project.org/) & [RStudio](https://www.rstudio.com/)), como para o estudo e visualização tridimensional de biomoléculas ([Jmol](http://jmol.sourceforge.net/)), e para a observação dinâmica de reações e redes metabólicas ({{< staticref "uploads/SismaBook/index.html" "newtab" >}}Sisma{{< /staticref >}}, desenvolvido na UNIFAL-MG).
   
   <!---  ![ texto](unifal3.jpg)--->
 
