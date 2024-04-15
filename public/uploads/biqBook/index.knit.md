@@ -1,0 +1,70 @@
+---
+title: "R & Rstudio - Relações Matemáticas & Gráficas"
+# author: "null"
+# date: "null"
+categories: R
+tags:
+- R Markdown
+- plot
+- regression
+---
+
+
+
+<!-- Google tag (gtag.js) ## se não funcionar o default, tem que colocar essa tag em cada página do sítio--> 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+
+<body style="background-color:  #e6e6ff;"> 
+
+<font size="4">
+
+|   [R](https://cran.r-project.org/) é um software gratuito desenvolvido para computação estatística e gráficos. Roda-se o *R* em diversas interfaces de usuário (GUI), dentre as quais destaca-se o [RStudio](https://www.rstudio.com/), um ambiente de desenvolvimento integrado (IDE) também gratuito. O *Rstudio* possui também uma *versão online* gratuita, acessível pelo sítio [RStudio Cloud](https://rstudio.cloud/).
+
+
+## Bioquímica Quantitativa & R
+
+|       Para acessar os conteúdos desenvolvidos com **R** e **RStudio** para **Bioquímica** e temas afins pode-se alternativamente descarregar o *ebook* [Bioquímica Quantitativa & R](.\bioquantiR.pdf) (ISBN 978-65-00-52125-2), ou acessar os tópicos individualmente abaixo, mais atualizados. Nesse caso, é possível reproduzir as atividades em qualquer tema tratado, bastando-se clicar no canto superior direito do trecho de código contendo um ícone de cópia ![ copiar ](icon_copiar.png){width=2%}, e colando-o em uma sessão instalada do *RStudio*, ou em sua versão *online* [RStudio Cloud](https://login.rstudio.cloud/). Este [**tutorial rápido**](https://youtu.be/LF99kO8DE6Y){target="\_blank"} em *vídeo* ilustra a dica.
+
+### Conteúdo
+
+[Introdução](.\introdução.html){target="_blank"}
+
+[Biomoléculas e dimensões](.\biomol.html){target="_blank"}
+
+[Tampões biológicos](.\tampões-biológicos.html){target="_blank"}
+
+[Aminoácidos & peptídios](.\AAcido.html){target="_blank"}
+
+[Proteínas](.\Proteinas.html){target="_blank"}
+
+[Enzimas](.\Enzimas.html){target="_blank"}
+
+[Membranas](.\membranas.html){target="_blank"}
+
+[Interação bimolecular](.\Binding.html){target="_blank"}
+
+[Ácidos nucleicos](.\acNucl.html){target="_blank"}
+
+[Bioenergética & soluções matriciais](.\Bioenerg.html){target="_blank"}
+
+[Metabolismo](.\Metabolismo.html){target="_blank"}
+
+[Redes metabólicas](.\redesMet.html){target="_blank"}
+
+[Referências](.\referencias.html){target="_blank"}
+
+
+
+![](r.logo.jpeg){width=20%}
+![](rstudio.png){width=20%}
+
+</font>
+
+</body> 
