@@ -17,7 +17,7 @@ This webpage aims to facilitate the teaching and learning of *Biochemistry* cont
 
 The selection of these software programs adheres to the principles of *RE*. Emphasis is placed on features such as flexibility, expandability, a user-friendly learning curve, intuitive usability, interactive elements, ease of installation or web browser accessibility, and broad applicability for both teaching (in various formats such as in-person, remote, hybrid, or distance learning) and research endeavors.
 
-Alternatively, users can access some diverse content on *Biochemistry* topics from the textbook [**Bioquímica básica, de gente, de bicho, e de planta**](https://bioquanti.netlify.app/uploads/textbook/index.html) (ISBN: 978-65-00-90366-9), still in Portuguese. 
+<!---Alternatively, users can access some diverse content on *Biochemistry* topics from the textbook [**Bioquímica básica, de gente, de bicho, e de planta**](https://bioquanti.netlify.app/uploads/textbook/index.html) (ISBN: 978-65-00-90366-9), still in Portuguese,--->
 
   _____________________________________________________________________
   _____________________________________________________________________
