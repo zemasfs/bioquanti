@@ -17,12 +17,10 @@ This webpage aims to facilitate the teaching and learning of *Biochemistry* cont
 
 The selection of these software programs adheres to the principles of *RE*. Emphasis is placed on features such as flexibility, expandability, a user-friendly learning curve, intuitive usability, interactive elements, ease of installation or web browser accessibility, and broad applicability for both teaching (in various formats such as in-person, remote, hybrid, or distance learning) and research endeavors.
 
-<!---Alternatively, users can access some diverse content on *Biochemistry* topics from the textbook [**Bioquímica básica, de gente, de bicho, e de planta**](https://bioquanti.netlify.app/uploads/textbook/index.html) (ISBN: 978-65-00-90366-9), still in Portuguese,--->
+Alternatively, users can access some diverse content on *Biochemistry* topics from the textbook [**Bioquímica básica, de gente, de bicho, e de planta**](https://bioquanti.netlify.app/uploads/textbook/index.html) (ISBN: 978-65-00-90366-9), still in Portuguese.
 
   _____________________________________________________________________
   _____________________________________________________________________
   
 
-In development there is also a [material](https://bioquanti.netlify.app/uploads/ERbook/index.html), also still in Portuguese, for creating texts and teaching objects aligned with *RE* principles. This initiative involves the generation of **dynamic documents** with *R and RStudio*, drawing upon the concept of [literate programming](https://academic.oup.com/comjnl/article/27/2/97/343244?login=true).
-
-  
+<!---In development there is also a [material](https://bioquanti.netlify.app/uploads/ERbook/index.html), also still in Portuguese, for creating texts and teaching objects aligned with *RE* principles. This initiative involves the generation of **dynamic documents** with *R and RStudio*, drawing upon the concept of [literate programming](https://academic.oup.com/comjnl/article/27/2/97/343244?login=true).--->
