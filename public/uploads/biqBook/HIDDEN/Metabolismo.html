@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 9 Metabolismo | Bioquímica Quantitativa &amp; R</title>
+  <meta name="description" content="não sei." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 9 Metabolismo | Bioquímica Quantitativa &amp; R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="não sei." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 9 Metabolismo | Bioquímica Quantitativa &amp; R" />
+  
+  <meta name="twitter:description" content="não sei." />
+  
+
+<meta name="author" content="José Maurício Schneedorf FS" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Bioenerg.html"/>
+<link rel="next" href="redesMet.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bioquímica Quantitativa & R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i>Introdução</a></li>
+<li class="chapter" data-level="1" data-path="biomol.html"><a href="biomol.html"><i class="fa fa-check"></i><b>1</b> Biomoléculas e dimensões</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="biomol.html"><a href="biomol.html#conversão-de-unidades"><i class="fa fa-check"></i><b>1.1</b> Conversão de unidades</a></li>
+<li class="chapter" data-level="1.2" data-path="biomol.html"><a href="biomol.html#versatilidade-estrutural-em-biopolímeros"><i class="fa fa-check"></i><b>1.2</b> Versatilidade estrutural em biopolímeros</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html"><i class="fa fa-check"></i><b>2</b> Tampões biológicos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-acetato"><i class="fa fa-check"></i><b>2.1</b> Sistema acetato</a></li>
+<li class="chapter" data-level="2.2" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-bicarbonato"><i class="fa fa-check"></i><b>2.2</b> Sistema bicarbonato</a></li>
+<li class="chapter" data-level="2.3" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-fosfato"><i class="fa fa-check"></i><b>2.3</b> Sistema fosfato</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#titulação-de-sistemas-em-geral-com-programação-do-r"><i class="fa fa-check"></i><b>2.3.1</b> Titulação de sistemas em geral com programação do R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="AAcido.html"><a href="AAcido.html"><i class="fa fa-check"></i><b>3</b> Aminoácidos &amp; Peptídios</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="AAcido.html"><a href="AAcido.html#ponto-isoelétrico-aminoácidos"><i class="fa fa-check"></i><b>3.1</b> Ponto isoelétrico &amp; aminoácidos</a></li>
+<li class="chapter" data-level="3.2" data-path="AAcido.html"><a href="AAcido.html#ponto-isoiônico-biopolímeros"><i class="fa fa-check"></i><b>3.2</b> Ponto isoiônico &amp; biopolímeros</a></li>
+<li class="chapter" data-level="3.3" data-path="AAcido.html"><a href="AAcido.html#ponto-isoiônico-bibliotecas-do-r"><i class="fa fa-check"></i><b>3.3</b> Ponto isoiônico &amp; bibliotecas do R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Proteinas.html"><a href="Proteinas.html"><i class="fa fa-check"></i><b>4</b> Proteínas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Proteinas.html"><a href="Proteinas.html#composição-de-aminoácidos"><i class="fa fa-check"></i><b>4.1</b> Composição de aminoácidos</a></li>
+<li class="chapter" data-level="4.2" data-path="Proteinas.html"><a href="Proteinas.html#tabela-de-purificação-de-proteínas-r-como-planilha-eletrônica"><i class="fa fa-check"></i><b>4.2</b> Tabela de Purificação de Proteínas &amp; R como planilha eletrônica</a></li>
+<li class="chapter" data-level="4.3" data-path="Proteinas.html"><a href="Proteinas.html#interação-de-oxigênio-com-mioglobina-e-hemoglobina"><i class="fa fa-check"></i><b>4.3</b> Interação de oxigênio com mioglobina e hemoglobina</a></li>
+<li class="chapter" data-level="4.4" data-path="Proteinas.html"><a href="Proteinas.html#alguns-pacotes-do-r-para-estudo-de-proteínas"><i class="fa fa-check"></i><b>4.4</b> Alguns pacotes do R para estudo de proteínas</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Enzimas.html"><a href="Enzimas.html"><i class="fa fa-check"></i><b>5</b> Enzimas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Enzimas.html"><a href="Enzimas.html#obtenção-de-parâmetros-cinéticos-a-partir-de-dados-expermentais-simulados"><i class="fa fa-check"></i><b>5.1</b> Obtenção de parâmetros cinéticos a partir de dados expermentais simulados</a></li>
+<li class="chapter" data-level="5.2" data-path="Enzimas.html"><a href="Enzimas.html#linearizações-e-ajustes"><i class="fa fa-check"></i><b>5.2</b> Linearizações e ajustes</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="Enzimas.html"><a href="Enzimas.html#linearização-por-transformação-de-lineweaver-burk"><i class="fa fa-check"></i><b>5.2.1</b> Linearização por transformação de Lineweaver-Burk</a></li>
+<li class="chapter" data-level="5.2.2" data-path="Enzimas.html"><a href="Enzimas.html#linearização-por-transformação-de-eadie-hofstee"><i class="fa fa-check"></i><b>5.2.2</b> Linearização por transformação de Eadie-Hofstee</a></li>
+<li class="chapter" data-level="5.2.3" data-path="Enzimas.html"><a href="Enzimas.html#distribuição-de-erros-nas-linearizações-de-michaelis-mentem"><i class="fa fa-check"></i><b>5.2.3</b> Distribuição de erros nas linearizações de Michaelis-Mentem</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="Enzimas.html"><a href="Enzimas.html#ajuste-não-linear"><i class="fa fa-check"></i><b>5.3</b> Ajuste não-linear</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="Enzimas.html"><a href="Enzimas.html#ajuste-não-linear-da-equação-de-michaelis-mentem"><i class="fa fa-check"></i><b>5.3.1</b> Ajuste não-linear da equação de Michaelis-Mentem</a></li>
+<li class="chapter" data-level="5.3.2" data-path="Enzimas.html"><a href="Enzimas.html#algumas-vantagens-do-modelo-linear-sobre-o-não-linear"><i class="fa fa-check"></i><b>5.3.2</b> Algumas vantagens do modelo linear sobre o não-linear</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="Enzimas.html"><a href="Enzimas.html#enzimas-alostéricas"><i class="fa fa-check"></i><b>5.4</b> Enzimas alostéricas</a></li>
+<li class="chapter" data-level="5.5" data-path="Enzimas.html"><a href="Enzimas.html#inibição-enzimática"><i class="fa fa-check"></i><b>5.5</b> Inibição Enzimática</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="Enzimas.html"><a href="Enzimas.html#inibição-pelo-substrato"><i class="fa fa-check"></i><b>5.5.1</b> Inibição pelo substrato</a></li>
+<li class="chapter" data-level="5.5.2" data-path="Enzimas.html"><a href="Enzimas.html#modelos-de-inibição-enzimática"><i class="fa fa-check"></i><b>5.5.2</b> Modelos de inibição enzimática</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="Enzimas.html"><a href="Enzimas.html#diagnóstico-estatístico-de-inibição-enzimática"><i class="fa fa-check"></i><b>5.6</b> Diagnóstico estatístico de inibição enzimática</a></li>
+<li class="chapter" data-level="5.7" data-path="Enzimas.html"><a href="Enzimas.html#cinética-de-estado-pré-estacionário"><i class="fa fa-check"></i><b>5.7</b> Cinética de estado pré-estacionário</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Binding.html"><a href="Binding.html"><i class="fa fa-check"></i><b>6</b> Interação Bimolecular</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="Binding.html"><a href="Binding.html#modelos-de-interação-e-representações-lineares"><i class="fa fa-check"></i><b>6.1</b> Modelos de Interação e Representações Lineares</a></li>
+<li class="chapter" data-level="6.2" data-path="Binding.html"><a href="Binding.html#ajuste-não-linear-em-interação-ligante-proteína"><i class="fa fa-check"></i><b>6.2</b> Ajuste Não-Linear Em Interação Ligante-Proteína</a></li>
+<li class="chapter" data-level="6.3" data-path="Binding.html"><a href="Binding.html#sistemas-gráficos-no-r"><i class="fa fa-check"></i><b>6.3</b> Sistemas Gráficos no R</a></li>
+<li class="chapter" data-level="6.4" data-path="Binding.html"><a href="Binding.html#solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína"><i class="fa fa-check"></i><b>6.4</b> Solução Numérica Para o Equilíbrio de Complexos Ligante-Proteína</a></li>
+<li class="chapter" data-level="6.5" data-path="Binding.html"><a href="Binding.html#cinética-de-interação-ligante-proteína-e-solução-numérica"><i class="fa fa-check"></i><b>6.5</b> Cinética de Interação Ligante-Proteína e Solução Numérica</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="acNucl.html"><a href="acNucl.html"><i class="fa fa-check"></i><b>7</b> Ácidos Nucleicos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="acNucl.html"><a href="acNucl.html#análise-de-sequências"><i class="fa fa-check"></i><b>7.1</b> Análise de sequências</a></li>
+<li class="chapter" data-level="7.2" data-path="acNucl.html"><a href="acNucl.html#termoestabilidade-de-dna"><i class="fa fa-check"></i><b>7.2</b> Termoestabilidade de DNA</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="Bioenerg.html"><a href="Bioenerg.html"><i class="fa fa-check"></i><b>8</b> Bioenergética &amp; Soluções Matriciais</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Bioenerg.html"><a href="Bioenerg.html#solução-de-sistema-de-equações-lineares-no-r"><i class="fa fa-check"></i><b>8.1</b> Solução de sistema de equações lineares no R</a></li>
+<li class="chapter" data-level="8.2" data-path="Bioenerg.html"><a href="Bioenerg.html#matrizes-e-r"><i class="fa fa-check"></i><b>8.2</b> Matrizes e <code>R</code></a></li>
+<li class="chapter" data-level="8.3" data-path="Bioenerg.html"><a href="Bioenerg.html#solução-de-parâmetros-termodinâmicos-de-estabilidade-enzimática"><i class="fa fa-check"></i><b>8.3</b> Solução de parâmetros termodinâmicos de estabilidade enzimática</a></li>
+<li class="chapter" data-level="8.4" data-path="Bioenerg.html"><a href="Bioenerg.html#entalpia-de-reação-por-matrizes"><i class="fa fa-check"></i><b>8.4</b> Entalpia De Reação Por Matrizes</a></li>
+<li class="chapter" data-level="8.5" data-path="Bioenerg.html"><a href="Bioenerg.html#quantidades-termodinâmicas-por-ajuste-polinomial"><i class="fa fa-check"></i><b>8.5</b> Quantidades Termodinâmicas Por Ajuste Polinomial</a></li>
+<li class="chapter" data-level="8.6" data-path="Bioenerg.html"><a href="Bioenerg.html#estabilidade-termodinâmica-de-biopolímeros"><i class="fa fa-check"></i><b>8.6</b> Estabilidade Termodinâmica de Biopolímeros</a></li>
+<li class="chapter" data-level="8.7" data-path="Bioenerg.html"><a href="Bioenerg.html#relação-quantitativa-estrutura-função-qsar-e-ajuste-multilinear"><i class="fa fa-check"></i><b>8.7</b> Relação Quantitativa Estrutura-Função (QSAR) e Ajuste Multilinear</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="Bioenerg.html"><a href="Bioenerg.html#ajuste-linear-múltiplo-por-função-lm"><i class="fa fa-check"></i><b>8.7.1</b> Ajuste linear múltiplo por função <code>lm</code>:</a></li>
+<li class="chapter" data-level="8.7.2" data-path="Bioenerg.html"><a href="Bioenerg.html#ajuste-linear-múltiplo-por-matrizes"><i class="fa fa-check"></i><b>8.7.2</b> Ajuste linear múltiplo por matrizes:</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="Bioenerg.html"><a href="Bioenerg.html#rendimento-de-reação-planejamento-fatorial-22"><i class="fa fa-check"></i><b>8.8</b> Rendimento de Reação &amp; Planejamento Fatorial 2<span class="math inline">\(^{2}\)</span></a></li>
+<li class="chapter" data-level="8.9" data-path="Bioenerg.html"><a href="Bioenerg.html#metodologia-de-superfície-de-resposta-msr"><i class="fa fa-check"></i><b>8.9</b> Metodologia de Superfície de Resposta (MSR)</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="Bioenerg.html"><a href="Bioenerg.html#superfície-quadrática-de-resposta"><i class="fa fa-check"></i><b>8.9.1</b> Superfície Quadrática de Resposta</a></li>
+<li class="chapter" data-level="8.9.2" data-path="Bioenerg.html"><a href="Bioenerg.html#uma-palavra-sobre-matrizes-e-aplicações"><i class="fa fa-check"></i><b>8.9.2</b> Uma palavra sobre matrizes e aplicações</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Metabolismo.html"><a href="Metabolismo.html"><i class="fa fa-check"></i><b>9</b> Metabolismo</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Metabolismo.html"><a href="Metabolismo.html#rotas-metabólicas-balanceamento-de-reações"><i class="fa fa-check"></i><b>9.1</b> Rotas metabólicas &amp; Balanceamento de Reações</a></li>
+<li class="chapter" data-level="9.2" data-path="Metabolismo.html"><a href="Metabolismo.html#operação-matricial"><i class="fa fa-check"></i><b>9.2</b> Operação matricial</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="Metabolismo.html"><a href="Metabolismo.html#obtenção-do-vetor-de-rota-metabólica-para-a-glicólise-aeróbia"><i class="fa fa-check"></i><b>9.2.1</b> Obtenção do vetor de rota metabólica para a glicólise aeróbia:</a></li>
+<li class="chapter" data-level="9.2.2" data-path="Metabolismo.html"><a href="Metabolismo.html#obtenção-do-balanceamento-de-atp-adp-pi-e-coenzimas-de-oxi-redução-na-glicólise"><i class="fa fa-check"></i><b>9.2.2</b> Obtenção do balanceamento de ATP, ADP, Pi e coenzimas de oxi-redução na glicólise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="redesMet.html"><a href="redesMet.html"><i class="fa fa-check"></i><b>10</b> Redes Metabólicas</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="redesMet.html"><a href="redesMet.html#solução-numérica-para-sistema-de-equações-diferenciais"><i class="fa fa-check"></i><b>10.1</b> Solução numérica para sistema de equações diferenciais</a></li>
+<li class="chapter" data-level="10.2" data-path="redesMet.html"><a href="redesMet.html#algumas-reações-do-metabolismo-da-glicose"><i class="fa fa-check"></i><b>10.2</b> Algumas reações do metabolismo da glicose</a></li>
+<li class="chapter" data-level="10.3" data-path="redesMet.html"><a href="redesMet.html#cinética-do-metabolismo-de-6-mercaptopurina"><i class="fa fa-check"></i><b>10.3</b> Cinética do metabolismo de 6-mercaptopurina</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referências.html"><a href="referências.html"><i class="fa fa-check"></i>Referências</a></li>
+<li class="chapter" data-level="" data-path="apêndice-a.html"><a href="apêndice-a.html"><i class="fa fa-check"></i>Apêndice A</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bioquímica Quantitativa &amp; R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Metabolismo" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Capítulo 9</span> Metabolismo<a href="Metabolismo.html#Metabolismo" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="rotas-metabólicas-balanceamento-de-reações" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Rotas metabólicas &amp; Balanceamento de Reações<a href="Metabolismo.html#rotas-metabólicas-balanceamento-de-reações" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- - enzima alostérica -->
+<!-- - variação de deltaG, talvez -->
+<!-- - análise de dados 2 (estatística de tratamento2) -->
+<!-- balanceamento de reações eletroquímicas -->
+<!-- equações diferenciais e rede de reações bioquímicas -->
+<!-- balanceamento de pilhas metabólicas -->
+<div class="line-block">      O metabolismo se dá uma intrincada rede de reações químicas catalisadas (ou não) por enzimas diversas, resultando numa rede equilibrada e dinâmica de processos autocatalíticos. Por vezes essa teia de reações pode ser observada no sem número dos chamados <em>mapas metabólicos</em> disponíveis, impressos ou na internet. Não obstante, os caminhos metabólicos são classificados para melhor compreensão em subconjuntos de reações pertinentes a determinado grupo de nutrientes ou compostos biológicos, como carboidratos, lipídios e ácidos nucleicos, por ex.<br />
+      E numa visão mais ampliada desses subconjuntos, uma classificação ulterior resulta por diversas em reações bioquímicas sequenciais e interdependentes, as chamadas <em>vias ou rotas metabólicas</em>. Essas vias metabólicas sumarizam processos <em>catabólicos</em> ou <em>anabólicos</em> envolvendo substratos, produtos, enzimas, cofatores e coenzimas, tal como ilustrado na <em>glicólise, gliconeogênese, glicogenólise, ciclo do ácido cítrico, cadeia respiratória, via das pentoses, <span class="math inline">\(\beta\)</span>-oxidação de ácidos graxos,</em> entre outras.<br />
+      Dessa forma pode-se considerar uma rota metabólica como uma <em>combinação linear de reações</em> catalisadas enzimaticamente (ex: glicólise anaeróbia). Em adição, também pode-se considerar as <em>reações bioquímicas como equações bioquímicas</em>, e portanto como um <em>sistema linear de equações</em> bioqumímicas com resolução por <em>álgebra linear</em>. Assim, pode-se empregar <em>relações matriciais</em> para solucionar o balanceamento estequiométrico (massa e carga), obtendo-se a reação líquida final a partir de um conjunto de reações conhecidas. Em síntese, <em>equações bioquímicas</em> como <em>equações matriciais</em> <span class="citation">(<a href="#ref-alberty1991chemical" role="doc-biblioref">Alberty 1991</a>)</span>.</div>
+</div>
+<div id="operação-matricial" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Operação matricial<a href="Metabolismo.html#operação-matricial" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      Aplicando-se álgebra linear é possível obter-se o balanceamento final de reações sequenciais pela relação que segue, também vista no capítulo <a href="Bioenerg.html#Bioenerg">8</a>:</div>
+<span class="math display" id="eq:mtrxGlic">\[\begin{equation}
+A =
+\begin{pmatrix}
+a_{11} &amp; a_{12} &amp; a_{13} &amp; ... &amp; a_{1n}   \\
+a_{21} &amp; a_{22} &amp; a_{23} &amp; ... &amp; a_{2n}   \\
+a_{31} &amp; a_{32} &amp; a_{33} &amp; ... &amp; a_{3n}   \\
+... &amp; ... &amp; ... &amp; ... &amp; a_{jn}\\
+\end{pmatrix} ,\
+b =
+\begin{pmatrix}
+b_1 \\
+b_2 \\
+b_3 \\
+...  \\
+b_n \\
+\end{pmatrix} ,\
+y =
+\begin{pmatrix}
+y_1 \\
+y_2 \\
+y_3 \\
+...  \\
+y_n \\
+\end{pmatrix}
+\tag{9.1}
+\end{equation}\]</span>
+<div class="line-block">      Nesse caso, <em>A</em> representa a <em>matriz estequiométrica de reações</em> e compostos, <em>b</em> o <em>vetor de rota metabólica</em>, e <em>y</em> o <em>vetor da reação líquida</em> balanceado. O vetor de rota indica o número de vezes necessário para cada reação ocorrer, de modo a produzir a reação líquida final. A matriz <em>A</em> é disposta de tal forma a apresentar cada reação em cada coluna, e cada reagente em cada linha, prenchendo-a com os <em>coeficientes estequiométricos</em> de reagentes e produtos. Para esses, é necessário apresentar sinal positivo para produtos (são formados) e negativo para reagentes (são consumidos).<br />
+      A operação matricial para a obtenção da reação líquida envolve apenas um produto cruzado, tal que:</div>
+<span class="math display" id="eq:eqMtrxDot">\[\begin{equation}
+A * b = y
+\tag{9.2}
+\end{equation}\]</span>
+<div id="obtenção-do-vetor-de-rota-metabólica-para-a-glicólise-aeróbia" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Obtenção do vetor de rota metabólica para a glicólise aeróbia:<a href="Metabolismo.html#obtenção-do-vetor-de-rota-metabólica-para-a-glicólise-aeróbia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="line-block">      Supondo-se conhecer a reação líquida resumida para um conjunto de reações metabólicas, como a glicólise aeróbia (por sua vez agregando glicólise anaeróbia, ciclo do ácido cítrico e fosforilação oxidativa), pode-se facilmente obter-se o vetor de rotas. A partir desse vetor de rotas calculado, é possível obter-se o a reação líquida final do conjunto reações mais detalhado. Na prática, esse detalhamento envolve a participação de coenzimas de oxi-redução, ADP, ATP, e Pi.</div>
+<div class="line-block">      Exemplificando, considere as reações abaixo, referentes à uma síntese da glicólise <span class="citation">(<a href="#ref-alberty1996calculation" role="doc-biblioref">Alberty 1996</a>)</span>:</div>
+<span class="math display" id="eq:eqGlicoSimp">\[\begin{equation}
+glicose \rightleftarrows 2\,piruvato \\
+piruvato + CoA \rightleftarrows acetil \, CoA + CO_2 \\
+acetil \, CoA + 3 H_2O \rightleftarrows 2 CO_2+CoA \\
+\frac{1}{2} O_2 \rightleftarrows H_2O \\
+\tag{9.3}
+\end{equation}\]</span>
+<div class="line-block">      As reações sequenciais acima possuem como reação líquida resultante:</div>
+<span class="math display" id="eq:eqGlicoSimpFin">\[\begin{equation}
+glicose + 6O_2 \rightleftarrows 6 CO_2 + 6 H_2O
+\tag{9.4}
+\end{equation}\]</span>
+<div class="line-block">      Para se obter o vetor de rotas então, é necessário elaborar a relação matricial, tal que:</div>
+<span class="math display" id="eq:mtrxGlicSimp">\[\begin{equation}
+A =
+\begin{pmatrix}
+-1 &amp; 0 &amp; 0 &amp; 0 \\
+2 &amp; -1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; -3 &amp; 1 \\
+0 &amp; -1 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; -1 &amp; 0 \\
+0 &amp; 1 &amp; 2 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; -1/2 \\
+\end{pmatrix}
+\tag{9.5}
+\end{equation}\]</span>
+<span class="math display" id="eq:mtrxGlicSimp2">\[\begin{equation}
+y =
+\begin{pmatrix}
+-1 \\
+0 \\
+6 \\
+0 \\
+0 \\
+6 \\
+-6 \\
+\end{pmatrix}
+\tag{9.6}
+\end{equation}\]</span>
+<div class="line-block">      Dessa forma, a solução para o vetor de rotas fica:</div>
+<span class="math display" id="eq:eqMtrxGlicSimp">\[\begin{equation}
+b = A^{-1} * y
+\tag{9.7}
+\end{equation}\]</span>
+<div class="line-block">      Ocorre que o sistema linear para o conjunto de equações da via glicolítica é sobrestimado (há mais equações do que incógnitas), não permitindo a solução pela função <code>solve</code> de forma direta, como ilustrada no capítulo <a href="Bioenerg.html#Bioenerg">8</a>. Nesse caso, o vetor <em>b</em> pode ser obtido por solução de mínimos quadrados:</div>
+<span class="math display" id="eq:eqMtrxGlicMinQuad">\[\begin{equation}
+b = (A^{T}*A)^{-1}*A^T * y
+\tag{9.8}
+\end{equation}\]</span>
+<div class="line-block">      Resolvendo o vetor de rotas no <code>R</code>:</div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="Metabolismo.html#cb311-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>),<span class="at">nrow=</span><span class="dv">7</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>) <span class="co"># matriz A de estequiometria de reações</span></span>
+<span id="cb311-2"><a href="Metabolismo.html#cb311-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(A) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;glicose&quot;</span>,<span class="st">&quot;piruvato&quot;</span>,<span class="st">&quot;H2O&quot;</span>,<span class="st">&quot;CoA&quot;</span>,<span class="st">&quot;acetil CoA&quot;</span>,<span class="st">&quot;CO2&quot;</span>,<span class="st">&quot;O2&quot;</span>) <span class="co"># etiquetas dos reagentes</span></span>
+<span id="cb311-3"><a href="Metabolismo.html#cb311-3" aria-hidden="true" tabindex="-1"></a>A <span class="co"># matriz A de reações</span></span></code></pre></div>
+<pre><code>##            [,1] [,2] [,3] [,4]
+## glicose      -1    0    0  0.0
+## piruvato      2   -1    0  0.0
+## H2O           0    0   -3  1.0
+## CoA           0   -1    1  0.0
+## acetil CoA    0    1   -1  0.0
+## CO2           0    1    2  0.0
+## O2            0    0    0 -0.5</code></pre>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="Metabolismo.html#cb313-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">6</span>,<span class="sc">-</span><span class="dv">6</span>) <span class="co"># vetor y de rotas</span></span>
+<span id="cb313-2"><a href="Metabolismo.html#cb313-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb313-3"><a href="Metabolismo.html#cb313-3" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(A)<span class="sc">%*%</span>A)<span class="sc">%*%</span><span class="fu">t</span>(A)<span class="sc">%*%</span>y</span></code></pre></div>
+<pre><code>##      [,1]
+## [1,]    1
+## [2,]    2
+## [3,]    2
+## [4,]   12</code></pre>
+</div>
+<div id="obtenção-do-balanceamento-de-atp-adp-pi-e-coenzimas-de-oxi-redução-na-glicólise" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Obtenção do balanceamento de ATP, ADP, Pi e coenzimas de oxi-redução na glicólise<a href="Metabolismo.html#obtenção-do-balanceamento-de-atp-adp-pi-e-coenzimas-de-oxi-redução-na-glicólise" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="line-block">      Com o vetor de rotas obtido (<em>{1,2,2,12}</em>), agora é possível aplicá-lo a um conjunto mais extenso de equações da glicólise, para dessa vez solucionar o balanceamento das reações envolvendo coenzimas de oxi-redução, ATP, ADP, e Pi:</div>
+<span class="math display" id="eq:eqGlicoPlus">\[\begin{equation}
+glicose+2Pi+2ADP+2NAD^+ \rightleftarrows 2 \,piruvato+2ATP+2NADH+2H_2O \, , \\
+glicólise \, anaeróbia,\\
+piruvato+CoA+NAD^+ \rightleftarrows acetil-CoA+CO_2+NADH \\
+acetil-CoA + 4NAD^++ADP+Pi+2H_2O \rightleftarrows2CO_2+4NADH+ATP+CoA \, , \\
+complexo\, da \, piruvato \, desidrogenase\\
+NADH+ \frac{1}{2}O_2+3Pi+3ADP \rightleftarrows NAD^++4H_2O+3ATP \, ,\\
+oxidação \, fosforilativa
+\tag{9.9}
+\end{equation}\]</span>
+<div class="line-block">      Vale ressaltar uma simplificação pela substituição de GTP e GDP por ATP e ADP (ciclo de Krebs), uma vez que são interconversíveis no metabolismo. Também se assume para simplificação a interconversão de FAD e NAD na reação líquida <span class="citation">(<a href="#ref-alberty1996calculation" role="doc-biblioref">Alberty 1996</a>)</span> :</div>
+<span class="math display" id="eq:eqNadFad">\[\begin{equation}
+FADH + NAD^+ \rightleftarrows FAD + NADH
+\tag{9.10}
+\end{equation}\]</span>
+<div class="line-block">      De posse das reações presentes na Eq.<a href="Metabolismo.html#eq:eqGlicoPlus">(9.9)</a> e do vetor de rotas obtido anteriormente, pode-se construir a nova matriz estequiométrica e aplicar a solução de mínimos quadrados (Eq. @(eq:eqMtrxGlicMinQuad) para se obter a reação líquida da glicólise. E para isso basta aplicar a Eq. @(eq:eqMtrxDot) de produto cruzado:</div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="Metabolismo.html#cb315-1" aria-hidden="true" tabindex="-1"></a>A<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">3</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">3</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>),<span class="at">nrow=</span><span class="dv">12</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>) <span class="co"># matriz A de estequiometria de reações</span></span>
+<span id="cb315-2"><a href="Metabolismo.html#cb315-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(A) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;glicose&quot;</span>,<span class="st">&quot;Pi&quot;</span>,<span class="st">&quot;ADP&quot;</span>,<span class="st">&quot;NAD&quot;</span>,<span class="st">&quot;piruvato&quot;</span>,<span class="st">&quot;ATP&quot;</span>,<span class="st">&quot;NADH&quot;</span>,<span class="st">&quot;H2O&quot;</span>,<span class="st">&quot;CoA&quot;</span>,<span class="st">&quot;acetil CoA&quot;</span>,<span class="st">&quot;CO2&quot;</span>,<span class="st">&quot;O2&quot;</span>) <span class="co"># etiquetas dos reagentes</span></span>
+<span id="cb315-3"><a href="Metabolismo.html#cb315-3" aria-hidden="true" tabindex="-1"></a>A <span class="co"># matriz A de reações</span></span></code></pre></div>
+<pre><code>##            [,1] [,2] [,3] [,4]
+## glicose      -1    0    0  0.0
+## Pi           -2    0   -1 -3.0
+## ADP          -2    0   -1 -3.0
+## NAD          -2   -1   -4  1.0
+## piruvato      2   -1    0  0.0
+## ATP           2    0    1  3.0
+## NADH          2    1    4 -1.0
+## H2O           2    0   -2  4.0
+## CoA           0   -1    1  0.0
+## acetil CoA    0    1   -1  0.0
+## CO2           0    1    2  0.0
+## O2            0    0    0 -0.5</code></pre>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="Metabolismo.html#cb317-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">12</span>) <span class="co"># vetor y de rotas</span></span>
+<span id="cb317-2"><a href="Metabolismo.html#cb317-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb317-3"><a href="Metabolismo.html#cb317-3" aria-hidden="true" tabindex="-1"></a>A<span class="sc">%*%</span>y</span></code></pre></div>
+<pre><code>##            [,1]
+## glicose      -1
+## Pi          -40
+## ADP         -40
+## NAD           0
+## piruvato      0
+## ATP          40
+## NADH          0
+## H2O          46
+## CoA           0
+## acetil CoA    0
+## CO2           6
+## O2           -6</code></pre>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="Metabolismo.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="co"># solve(t(A)%*%A)%*%t(A)%*%y</span></span></code></pre></div>
+<div class="line-block">      A partir desse resultado pode-se montar a reação líquida final da via glicolítica como:</div>
+<span class="math display" id="eq:eqBalGlico">\[\begin{equation}
+glicose + 6O_2 + 40 ADP + 40 Pi \rightleftarrows 6CO_2+ 40ATP
+\tag{9.11}
+\end{equation}\]</span>
+<div class="line-block">      O exemplo acima ilustra o emprego de álgebra matricial para a solução de problemas de balanceamento de reações bioquímicas. Por sua natureza trata-se de método abrangente e de natureza algorítmica (portanto, programável), embora não seja o único. Outras propostas de solução para o balanceamento e conservação de massa e carga englobam a <em>inspeção direta</em> por triagem e erro a partir de regras mnemônicas, o balanceamento por <em>método de meia-equação</em>, e o <em>método de número de oxidação</em>, não discutidos aqui.</div>
+
+<!-- Google tag (gtag.js)-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-alberty1991chemical" class="csl-entry">
+Alberty, Robert A. 1991. <span>“Chemical Equations Are Actually Matrix Equations.”</span> <em>Journal of Chemical Education</em> 68 (12): 984.
+</div>
+<div id="ref-alberty1996calculation" class="csl-entry">
+———. 1996. <span>“Calculation of Biochemical Net Reactions and Pathways by Using Matrix Operations.”</span> <em>Biophysical Journal</em> 71 (1): 507–15.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Bioenerg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="redesMet.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Bioquímica Quantitativa & R.pdf", "Bioquímica Quantitativa & R.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 10 Redes Metabólicas | Bioquímica Quantitativa &amp; R</title>
+  <meta name="description" content="não sei." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 10 Redes Metabólicas | Bioquímica Quantitativa &amp; R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="não sei." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 10 Redes Metabólicas | Bioquímica Quantitativa &amp; R" />
+  
+  <meta name="twitter:description" content="não sei." />
+  
+
+<meta name="author" content="José Maurício Schneedorf FS" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Metabolismo.html"/>
+<link rel="next" href="referências.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bioquímica Quantitativa & R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i>Introdução</a></li>
+<li class="chapter" data-level="1" data-path="biomol.html"><a href="biomol.html"><i class="fa fa-check"></i><b>1</b> Biomoléculas e dimensões</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="biomol.html"><a href="biomol.html#conversão-de-unidades"><i class="fa fa-check"></i><b>1.1</b> Conversão de unidades</a></li>
+<li class="chapter" data-level="1.2" data-path="biomol.html"><a href="biomol.html#versatilidade-estrutural-em-biopolímeros"><i class="fa fa-check"></i><b>1.2</b> Versatilidade estrutural em biopolímeros</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html"><i class="fa fa-check"></i><b>2</b> Tampões biológicos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-acetato"><i class="fa fa-check"></i><b>2.1</b> Sistema acetato</a></li>
+<li class="chapter" data-level="2.2" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-bicarbonato"><i class="fa fa-check"></i><b>2.2</b> Sistema bicarbonato</a></li>
+<li class="chapter" data-level="2.3" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-fosfato"><i class="fa fa-check"></i><b>2.3</b> Sistema fosfato</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#titulação-de-sistemas-em-geral-com-programação-do-r"><i class="fa fa-check"></i><b>2.3.1</b> Titulação de sistemas em geral com programação do R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="AAcido.html"><a href="AAcido.html"><i class="fa fa-check"></i><b>3</b> Aminoácidos &amp; Peptídios</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="AAcido.html"><a href="AAcido.html#ponto-isoelétrico-aminoácidos"><i class="fa fa-check"></i><b>3.1</b> Ponto isoelétrico &amp; aminoácidos</a></li>
+<li class="chapter" data-level="3.2" data-path="AAcido.html"><a href="AAcido.html#ponto-isoiônico-biopolímeros"><i class="fa fa-check"></i><b>3.2</b> Ponto isoiônico &amp; biopolímeros</a></li>
+<li class="chapter" data-level="3.3" data-path="AAcido.html"><a href="AAcido.html#ponto-isoiônico-bibliotecas-do-r"><i class="fa fa-check"></i><b>3.3</b> Ponto isoiônico &amp; bibliotecas do R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Proteinas.html"><a href="Proteinas.html"><i class="fa fa-check"></i><b>4</b> Proteínas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Proteinas.html"><a href="Proteinas.html#composição-de-aminoácidos"><i class="fa fa-check"></i><b>4.1</b> Composição de aminoácidos</a></li>
+<li class="chapter" data-level="4.2" data-path="Proteinas.html"><a href="Proteinas.html#tabela-de-purificação-de-proteínas-r-como-planilha-eletrônica"><i class="fa fa-check"></i><b>4.2</b> Tabela de Purificação de Proteínas &amp; R como planilha eletrônica</a></li>
+<li class="chapter" data-level="4.3" data-path="Proteinas.html"><a href="Proteinas.html#interação-de-oxigênio-com-mioglobina-e-hemoglobina"><i class="fa fa-check"></i><b>4.3</b> Interação de oxigênio com mioglobina e hemoglobina</a></li>
+<li class="chapter" data-level="4.4" data-path="Proteinas.html"><a href="Proteinas.html#alguns-pacotes-do-r-para-estudo-de-proteínas"><i class="fa fa-check"></i><b>4.4</b> Alguns pacotes do R para estudo de proteínas</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Enzimas.html"><a href="Enzimas.html"><i class="fa fa-check"></i><b>5</b> Enzimas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Enzimas.html"><a href="Enzimas.html#obtenção-de-parâmetros-cinéticos-a-partir-de-dados-expermentais-simulados"><i class="fa fa-check"></i><b>5.1</b> Obtenção de parâmetros cinéticos a partir de dados expermentais simulados</a></li>
+<li class="chapter" data-level="5.2" data-path="Enzimas.html"><a href="Enzimas.html#linearizações-e-ajustes"><i class="fa fa-check"></i><b>5.2</b> Linearizações e ajustes</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="Enzimas.html"><a href="Enzimas.html#linearização-por-transformação-de-lineweaver-burk"><i class="fa fa-check"></i><b>5.2.1</b> Linearização por transformação de Lineweaver-Burk</a></li>
+<li class="chapter" data-level="5.2.2" data-path="Enzimas.html"><a href="Enzimas.html#linearização-por-transformação-de-eadie-hofstee"><i class="fa fa-check"></i><b>5.2.2</b> Linearização por transformação de Eadie-Hofstee</a></li>
+<li class="chapter" data-level="5.2.3" data-path="Enzimas.html"><a href="Enzimas.html#distribuição-de-erros-nas-linearizações-de-michaelis-mentem"><i class="fa fa-check"></i><b>5.2.3</b> Distribuição de erros nas linearizações de Michaelis-Mentem</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="Enzimas.html"><a href="Enzimas.html#ajuste-não-linear"><i class="fa fa-check"></i><b>5.3</b> Ajuste não-linear</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="Enzimas.html"><a href="Enzimas.html#ajuste-não-linear-da-equação-de-michaelis-mentem"><i class="fa fa-check"></i><b>5.3.1</b> Ajuste não-linear da equação de Michaelis-Mentem</a></li>
+<li class="chapter" data-level="5.3.2" data-path="Enzimas.html"><a href="Enzimas.html#algumas-vantagens-do-modelo-linear-sobre-o-não-linear"><i class="fa fa-check"></i><b>5.3.2</b> Algumas vantagens do modelo linear sobre o não-linear</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="Enzimas.html"><a href="Enzimas.html#enzimas-alostéricas"><i class="fa fa-check"></i><b>5.4</b> Enzimas alostéricas</a></li>
+<li class="chapter" data-level="5.5" data-path="Enzimas.html"><a href="Enzimas.html#inibição-enzimática"><i class="fa fa-check"></i><b>5.5</b> Inibição Enzimática</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="Enzimas.html"><a href="Enzimas.html#inibição-pelo-substrato"><i class="fa fa-check"></i><b>5.5.1</b> Inibição pelo substrato</a></li>
+<li class="chapter" data-level="5.5.2" data-path="Enzimas.html"><a href="Enzimas.html#modelos-de-inibição-enzimática"><i class="fa fa-check"></i><b>5.5.2</b> Modelos de inibição enzimática</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="Enzimas.html"><a href="Enzimas.html#diagnóstico-estatístico-de-inibição-enzimática"><i class="fa fa-check"></i><b>5.6</b> Diagnóstico estatístico de inibição enzimática</a></li>
+<li class="chapter" data-level="5.7" data-path="Enzimas.html"><a href="Enzimas.html#cinética-de-estado-pré-estacionário"><i class="fa fa-check"></i><b>5.7</b> Cinética de estado pré-estacionário</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Binding.html"><a href="Binding.html"><i class="fa fa-check"></i><b>6</b> Interação Bimolecular</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="Binding.html"><a href="Binding.html#modelos-de-interação-e-representações-lineares"><i class="fa fa-check"></i><b>6.1</b> Modelos de Interação e Representações Lineares</a></li>
+<li class="chapter" data-level="6.2" data-path="Binding.html"><a href="Binding.html#ajuste-não-linear-em-interação-ligante-proteína"><i class="fa fa-check"></i><b>6.2</b> Ajuste Não-Linear Em Interação Ligante-Proteína</a></li>
+<li class="chapter" data-level="6.3" data-path="Binding.html"><a href="Binding.html#sistemas-gráficos-no-r"><i class="fa fa-check"></i><b>6.3</b> Sistemas Gráficos no R</a></li>
+<li class="chapter" data-level="6.4" data-path="Binding.html"><a href="Binding.html#solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína"><i class="fa fa-check"></i><b>6.4</b> Solução Numérica Para o Equilíbrio de Complexos Ligante-Proteína</a></li>
+<li class="chapter" data-level="6.5" data-path="Binding.html"><a href="Binding.html#cinética-de-interação-ligante-proteína-e-solução-numérica"><i class="fa fa-check"></i><b>6.5</b> Cinética de Interação Ligante-Proteína e Solução Numérica</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="acNucl.html"><a href="acNucl.html"><i class="fa fa-check"></i><b>7</b> Ácidos Nucleicos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="acNucl.html"><a href="acNucl.html#análise-de-sequências"><i class="fa fa-check"></i><b>7.1</b> Análise de sequências</a></li>
+<li class="chapter" data-level="7.2" data-path="acNucl.html"><a href="acNucl.html#termoestabilidade-de-dna"><i class="fa fa-check"></i><b>7.2</b> Termoestabilidade de DNA</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="Bioenerg.html"><a href="Bioenerg.html"><i class="fa fa-check"></i><b>8</b> Bioenergética &amp; Soluções Matriciais</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Bioenerg.html"><a href="Bioenerg.html#solução-de-sistema-de-equações-lineares-no-r"><i class="fa fa-check"></i><b>8.1</b> Solução de sistema de equações lineares no R</a></li>
+<li class="chapter" data-level="8.2" data-path="Bioenerg.html"><a href="Bioenerg.html#matrizes-e-r"><i class="fa fa-check"></i><b>8.2</b> Matrizes e <code>R</code></a></li>
+<li class="chapter" data-level="8.3" data-path="Bioenerg.html"><a href="Bioenerg.html#solução-de-parâmetros-termodinâmicos-de-estabilidade-enzimática"><i class="fa fa-check"></i><b>8.3</b> Solução de parâmetros termodinâmicos de estabilidade enzimática</a></li>
+<li class="chapter" data-level="8.4" data-path="Bioenerg.html"><a href="Bioenerg.html#entalpia-de-reação-por-matrizes"><i class="fa fa-check"></i><b>8.4</b> Entalpia De Reação Por Matrizes</a></li>
+<li class="chapter" data-level="8.5" data-path="Bioenerg.html"><a href="Bioenerg.html#quantidades-termodinâmicas-por-ajuste-polinomial"><i class="fa fa-check"></i><b>8.5</b> Quantidades Termodinâmicas Por Ajuste Polinomial</a></li>
+<li class="chapter" data-level="8.6" data-path="Bioenerg.html"><a href="Bioenerg.html#estabilidade-termodinâmica-de-biopolímeros"><i class="fa fa-check"></i><b>8.6</b> Estabilidade Termodinâmica de Biopolímeros</a></li>
+<li class="chapter" data-level="8.7" data-path="Bioenerg.html"><a href="Bioenerg.html#relação-quantitativa-estrutura-função-qsar-e-ajuste-multilinear"><i class="fa fa-check"></i><b>8.7</b> Relação Quantitativa Estrutura-Função (QSAR) e Ajuste Multilinear</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="Bioenerg.html"><a href="Bioenerg.html#ajuste-linear-múltiplo-por-função-lm"><i class="fa fa-check"></i><b>8.7.1</b> Ajuste linear múltiplo por função <code>lm</code>:</a></li>
+<li class="chapter" data-level="8.7.2" data-path="Bioenerg.html"><a href="Bioenerg.html#ajuste-linear-múltiplo-por-matrizes"><i class="fa fa-check"></i><b>8.7.2</b> Ajuste linear múltiplo por matrizes:</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="Bioenerg.html"><a href="Bioenerg.html#rendimento-de-reação-planejamento-fatorial-22"><i class="fa fa-check"></i><b>8.8</b> Rendimento de Reação &amp; Planejamento Fatorial 2<span class="math inline">\(^{2}\)</span></a></li>
+<li class="chapter" data-level="8.9" data-path="Bioenerg.html"><a href="Bioenerg.html#metodologia-de-superfície-de-resposta-msr"><i class="fa fa-check"></i><b>8.9</b> Metodologia de Superfície de Resposta (MSR)</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="Bioenerg.html"><a href="Bioenerg.html#superfície-quadrática-de-resposta"><i class="fa fa-check"></i><b>8.9.1</b> Superfície Quadrática de Resposta</a></li>
+<li class="chapter" data-level="8.9.2" data-path="Bioenerg.html"><a href="Bioenerg.html#uma-palavra-sobre-matrizes-e-aplicações"><i class="fa fa-check"></i><b>8.9.2</b> Uma palavra sobre matrizes e aplicações</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Metabolismo.html"><a href="Metabolismo.html"><i class="fa fa-check"></i><b>9</b> Metabolismo</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Metabolismo.html"><a href="Metabolismo.html#rotas-metabólicas-balanceamento-de-reações"><i class="fa fa-check"></i><b>9.1</b> Rotas metabólicas &amp; Balanceamento de Reações</a></li>
+<li class="chapter" data-level="9.2" data-path="Metabolismo.html"><a href="Metabolismo.html#operação-matricial"><i class="fa fa-check"></i><b>9.2</b> Operação matricial</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="Metabolismo.html"><a href="Metabolismo.html#obtenção-do-vetor-de-rota-metabólica-para-a-glicólise-aeróbia"><i class="fa fa-check"></i><b>9.2.1</b> Obtenção do vetor de rota metabólica para a glicólise aeróbia:</a></li>
+<li class="chapter" data-level="9.2.2" data-path="Metabolismo.html"><a href="Metabolismo.html#obtenção-do-balanceamento-de-atp-adp-pi-e-coenzimas-de-oxi-redução-na-glicólise"><i class="fa fa-check"></i><b>9.2.2</b> Obtenção do balanceamento de ATP, ADP, Pi e coenzimas de oxi-redução na glicólise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="redesMet.html"><a href="redesMet.html"><i class="fa fa-check"></i><b>10</b> Redes Metabólicas</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="redesMet.html"><a href="redesMet.html#solução-numérica-para-sistema-de-equações-diferenciais"><i class="fa fa-check"></i><b>10.1</b> Solução numérica para sistema de equações diferenciais</a></li>
+<li class="chapter" data-level="10.2" data-path="redesMet.html"><a href="redesMet.html#algumas-reações-do-metabolismo-da-glicose"><i class="fa fa-check"></i><b>10.2</b> Algumas reações do metabolismo da glicose</a></li>
+<li class="chapter" data-level="10.3" data-path="redesMet.html"><a href="redesMet.html#cinética-do-metabolismo-de-6-mercaptopurina"><i class="fa fa-check"></i><b>10.3</b> Cinética do metabolismo de 6-mercaptopurina</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referências.html"><a href="referências.html"><i class="fa fa-check"></i>Referências</a></li>
+<li class="chapter" data-level="" data-path="apêndice-a.html"><a href="apêndice-a.html"><i class="fa fa-check"></i>Apêndice A</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bioquímica Quantitativa &amp; R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="redesMet" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Capítulo 10</span> Redes Metabólicas<a href="redesMet.html#redesMet" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="line-block">      Podemos considerar o metabolismo celular como uma rede de vias metabólicas retroalimentadas homeostaticamente. Se observarmos com ampliação qualquer uma das reações bioquímicas envolvidas nessa teia complexo, poderemos identificar uma <em>caixa preta</em> comum a todas:</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:blackb"></span>
+<img src="figures/blackbox.png" alt="Uma representação da caixa preta de reações enzimáticas. E = enzima c,d = cofatores, coenzimas, modificadores; f,g = compostos secundários resultantes da catálise ." width="40%" />
+<p class="caption">
+Figura 10.1: Uma representação da caixa preta de reações enzimáticas. E = enzima c,d = cofatores, coenzimas, modificadores; f,g = compostos secundários resultantes da catálise .
+</p>
+</div>
+<div class="line-block">      Ainda que a representação acima possa envolver reações em equilíbrio (duplas setas), ou mesmo a ausência do catalisador, a imagem generaliza reações bioquímicas individuais partícipes de qualquer <em>mapa metabólico</em>. Se desejarmos agora avaliar o consumo do composto <em>A</em> (reagente, substrato) e resultante formação do composto <em>B</em> (produto), ou seja, os teores dos compostos num intervalo de tempo, podemos considerar, como visto no capítulo <a href="Enzimas.html#Enzimas">5</a>, a reação acima como de 1a. ordem em ambos, reagente e produto:</div>
+<span class="math display" id="eq:ABirrev">\[\begin{equation}
+A
+\begin{array}{c}
+_{k}\\
+\rightarrow \\
+  ^{}\end{array} B
+\tag{10.1}
+\end{equation}\]</span>
+<div class="line-block">      Dessa forma, pode-se considerar a velocidade de reação como a variação de <em>A</em> ou <em>B</em> no tempo como:</div>
+<span class="math display" id="eq:dydx">\[\begin{equation}
+v=\frac{dy}{dx}=-\frac{dA}{dt}=\frac{dB}{dt}
+\tag{10.2}
+\end{equation}\]</span>
+<div class="line-block">  Ou seja, quando há consumo, a taxa de variação apresenta-se negativa, e quando há formação, positiva. Separando as duas taxas:</div>
+<span class="math display" id="eq:dAdt">\[\begin{equation}
+\frac{dA}{dt}= -k*A;\\
+\frac{db}{dt} = k*B
+\tag{10.3}
+\end{equation}\]</span>
+<div class="line-block">E dessa forma, para se calcular a variação em cada composto ao longo de um intervalo de tempo:</div>
+<span class="math display" id="eq:dAdB">\[\begin{equation}
+dA=-k*A*dt;\\
+dB=k*A*dt
+\tag{10.4}
+\end{equation}\]</span>
+<div class="line-block">      Observe que estamos diante de um <em>sistema de equações diferenciais</em>, nominalmente <em>ordinárias</em>, já que as alterações no tempos ocorrem um função de um único parâmetro (concentração das espécies). Caso constituisse de um sistema dependente em mais de um parâmetro, estaríamos tratando de equações diferenciais <em>parciais</em> (comuns nas relações termodinâmicas que envolvem modificações com variação de volume, temperatura, e pressão).<br />
+      Algumas equações diferenciais podem ser analiticamente resolvidas, como as que envolvem o crescimento exponencial bacteriano:</div>
+<span class="math display" id="eq:expDecay">\[\begin{equation}
+\frac{dN}{dt}=-k*N; \, N(t) = N_0*e^{-kt}; (N=N_0 \,em \, t=0)
+\tag{10.5}
+\end{equation}\]</span>
+<div id="solução-numérica-para-sistema-de-equações-diferenciais" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Solução numérica para sistema de equações diferenciais<a href="redesMet.html#solução-numérica-para-sistema-de-equações-diferenciais" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      Por outro lado, quando uma equação ou sistema de equações diferenciais possui certa complexidade para a solução analítica, busca-se a solução numérica. Ainda que existam diversas bibliotecas para a solução de equações diferenciais pelo <code>R</code> (<code>deSolve</code>,<code>pracma</code>, <code>lsoda</code>), alguns sistemas simples podem ser resolvidos com os pacotes básicos de instalação:<br />
+      O procedimento mais simples emprega o <em>método de Euler</em>. A ideia básica do método consiste em integrar uma função diferencial de variação infinitesimal na variável independente (no caso, o tempo), para uma relação real, e a partir de valores iniciais fornecidos. Simplificando, o valor da função corresponderá ao acréscimo do incremento <em>dy</em> para cada intervalo <em>dx</em>, a partir da relação de cada reação envolvida na transformação dos compostos. Exemplificando para as reações presentes na Eq. <a href="redesMet.html#eq:dAdB">(10.4)</a>:</div>
+<p><br />
+</p>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="redesMet.html#cb320-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">=</span> <span class="fl">0.5</span> <span class="co"># constante cinética de catálise</span></span>
+<span id="cb320-2"><a href="redesMet.html#cb320-2" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">=</span> .<span class="dv">005</span>; tmax <span class="ot">=</span> <span class="dv">3</span> <span class="co"># intervalo de tempo &amp; tempo máximo</span></span>
+<span id="cb320-3"><a href="redesMet.html#cb320-3" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,tmax,dt) <span class="co"># vetor de tempo</span></span>
+<span id="cb320-4"><a href="redesMet.html#cb320-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> tmax<span class="sc">/</span>dt<span class="sc">+</span><span class="dv">1</span> <span class="co"># no. de pontos da simulação (necessário o acréscimo de 1 para que vetores fiquem de mesmo tamanho)</span></span>
+<span id="cb320-5"><a href="redesMet.html#cb320-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">2</span><span class="sc">*</span>n),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">ncol=</span>n) <span class="co"># construção da matriz de uma linha pra cada composto, e uma coluna pra cada tempo dt</span></span>
+<span id="cb320-6"><a href="redesMet.html#cb320-6" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">1</span>; x[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">0</span> <span class="co"># valores iniciais de concentração</span></span>
+<span id="cb320-7"><a href="redesMet.html#cb320-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
+<span id="cb320-8"><a href="redesMet.html#cb320-8" aria-hidden="true" tabindex="-1"></a>  dA <span class="ot">=</span> <span class="sc">-</span>k<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt; <span class="co"># dA</span></span>
+<span id="cb320-9"><a href="redesMet.html#cb320-9" aria-hidden="true" tabindex="-1"></a>  dB <span class="ot">=</span> k<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt; <span class="co"># dB</span></span>
+<span id="cb320-10"><a href="redesMet.html#cb320-10" aria-hidden="true" tabindex="-1"></a>  x[<span class="dv">1</span>,i] <span class="ot">=</span> x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dA; <span class="co"># variação em A com acrécimo dA</span></span>
+<span id="cb320-11"><a href="redesMet.html#cb320-11" aria-hidden="true" tabindex="-1"></a>  x[<span class="dv">2</span>,i] <span class="ot">=</span> x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dB <span class="co"># variação em B com acréscimo dB</span></span>
+<span id="cb320-12"><a href="redesMet.html#cb320-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># laço que acrescenta a cada intervalo dt o valor do novo teor para cada composto</span></span>
+<span id="cb320-13"><a href="redesMet.html#cb320-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb320-14"><a href="redesMet.html#cb320-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,x[<span class="dv">1</span>,],<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">lty=</span><span class="dv">1</span>,</span>
+<span id="cb320-15"><a href="redesMet.html#cb320-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;tempo, s&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;[espécie], M&quot;</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">1.025</span>),</span>
+<span id="cb320-16"><a href="redesMet.html#cb320-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">bty=</span><span class="st">&quot;l&quot;</span>) <span class="co"># gráfico do composto 1</span></span>
+<span id="cb320-17"><a href="redesMet.html#cb320-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,x[<span class="dv">2</span>,],<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">2</span>) <span class="co"># adição do gráfico do composto 2</span></span>
+<span id="cb320-18"><a href="redesMet.html#cb320-18" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="dv">5</span>,<span class="at">y=</span><span class="dv">1</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">cex=</span><span class="dv">1</span>,</span>
+<span id="cb320-19"><a href="redesMet.html#cb320-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-84"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-84-1.png" alt="Solução de sistema de equações diferenciais por método de Euler para conversão de 1a. ordem da espécie A em B, a uma taxa cinética k." width="672" />
+<p class="caption">
+Figura 10.2: Solução de sistema de equações diferenciais por método de Euler para conversão de 1a. ordem da espécie A em B, a uma taxa cinética k.
+</p>
+</div>
+<div class="line-block">      Experimente variar a constante cinética <em>k</em>, ou os valores iniciais para cada composto, e observe o efeito resultante. As reações metabólicas por diversas vezes apresentam interconversões entre compostos, tal que um substrato da reação também pode configurar-se como produto de catálise da mesma, e com taxas cinéticas de síntese (<em>k</em>) e degradação (<em>km</em>, ou <em>k minus</em>) para cada composto, como segue:</div>
+<span class="math display" id="eq:ABrever">\[\begin{equation}
+A \begin{array}{c}
+_{k}\\
+\rightleftharpoons\\
+^{km} \end{array} B
+\tag{10.6}
+\end{equation}\]</span>
+<div class="line-block">      Nesse caso, o sistema de equações diferenciais ficará:</div>
+<span class="math display" id="eq:dABrev">\[\begin{equation}
+dA=-k*A*dt+km*B*dt;\\
+dB=k*A*dt-km*B*dt
+\tag{10.7}
+\end{equation}\]</span>
+<div class="line-block">      Implementando-se o trecho de código no <code>R</code>:</div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="redesMet.html#cb321-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">=</span> <span class="fl">0.5</span>; km <span class="ot">=</span> <span class="fl">0.5</span> <span class="co"># constantes cinéticas de catálise</span></span>
+<span id="cb321-2"><a href="redesMet.html#cb321-2" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">=</span> .<span class="dv">005</span>; tmax <span class="ot">=</span> <span class="dv">10</span> <span class="co"># intervalo de tempo &amp; tempo máximo</span></span>
+<span id="cb321-3"><a href="redesMet.html#cb321-3" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,tmax,dt) <span class="co"># define vetor de tempo</span></span>
+<span id="cb321-4"><a href="redesMet.html#cb321-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> tmax<span class="sc">/</span>dt<span class="sc">+</span><span class="dv">1</span> <span class="co"># define no. de pontos </span></span>
+<span id="cb321-5"><a href="redesMet.html#cb321-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">2</span><span class="sc">*</span>n),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">ncol=</span>n) <span class="co"># constroi matriz de uma linha pra cada composto, e uma coluna pra cada tempo dt</span></span>
+<span id="cb321-6"><a href="redesMet.html#cb321-6" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">1</span>; x[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">1</span> <span class="co"># valores iniciais de concetração</span></span>
+<span id="cb321-7"><a href="redesMet.html#cb321-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
+<span id="cb321-8"><a href="redesMet.html#cb321-8" aria-hidden="true" tabindex="-1"></a>  dA <span class="ot">=</span> <span class="sc">-</span>k<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">+</span>km<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb321-9"><a href="redesMet.html#cb321-9" aria-hidden="true" tabindex="-1"></a>  dB <span class="ot">=</span> k<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>km<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb321-10"><a href="redesMet.html#cb321-10" aria-hidden="true" tabindex="-1"></a>  x[<span class="dv">1</span>,i] <span class="ot">=</span> x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dA;</span>
+<span id="cb321-11"><a href="redesMet.html#cb321-11" aria-hidden="true" tabindex="-1"></a>  x[<span class="dv">2</span>,i] <span class="ot">=</span> x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dB;</span>
+<span id="cb321-12"><a href="redesMet.html#cb321-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># laço que acrescenta a cada intervalo dt o valor de novo teor para cada composto</span></span>
+<span id="cb321-13"><a href="redesMet.html#cb321-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb321-14"><a href="redesMet.html#cb321-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,x[<span class="dv">1</span>,],<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">lty=</span><span class="dv">1</span>,</span>
+<span id="cb321-15"><a href="redesMet.html#cb321-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;tempo, s&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;[espécie], M&quot;</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>),<span class="at">bty=</span><span class="st">&quot;l&quot;</span>) <span class="co"># gráfico do composto 1</span></span>
+<span id="cb321-16"><a href="redesMet.html#cb321-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,x[<span class="dv">2</span>,],<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">2</span>) <span class="co"># adição do gráfico do composto 2</span></span>
+<span id="cb321-17"><a href="redesMet.html#cb321-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="dv">5</span>,<span class="at">y=</span><span class="dv">2</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">cex=</span><span class="dv">1</span>,</span>
+<span id="cb321-18"><a href="redesMet.html#cb321-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-85"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-85-1.png" alt="Solução numérica para a conversão reversível da espécie A em B. k = km = 0,5; Ao e Bo = 1 (teores iniciais)." width="672" />
+<p class="caption">
+Figura 10.3: Solução numérica para a conversão reversível da espécie A em B. k = km = 0,5; Ao e Bo = 1 (teores iniciais).
+</p>
+</div>
+<div class="line-block">      Observe que os teores de A e B permanecem constantes ao longo do intervalo. Isso decorre dos valores idênticos das constantes cinéticas para cada reação direta e reversa, bem como dos teores iniciais para cada composto. Ilustrando uma variação desses:</div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="redesMet.html#cb322-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">=</span> <span class="fl">0.5</span>; km <span class="ot">=</span> <span class="fl">0.1</span> <span class="co"># constantes cinéticas de catálise</span></span>
+<span id="cb322-2"><a href="redesMet.html#cb322-2" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">=</span> .<span class="dv">005</span>; tmax <span class="ot">=</span> <span class="dv">10</span> <span class="co"># intervalo de tempo &amp; tempo máximo</span></span>
+<span id="cb322-3"><a href="redesMet.html#cb322-3" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,tmax,dt) <span class="co"># define vetor de tempo</span></span>
+<span id="cb322-4"><a href="redesMet.html#cb322-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> tmax<span class="sc">/</span>dt<span class="sc">+</span><span class="dv">1</span> <span class="co"># define no. de pontos </span></span>
+<span id="cb322-5"><a href="redesMet.html#cb322-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">2</span><span class="sc">*</span>n),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">ncol=</span>n) <span class="co"># constroi matriz de uma linha pra cada composto, e uma coluna pra cada tempo dt</span></span>
+<span id="cb322-6"><a href="redesMet.html#cb322-6" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">1</span>; x[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="fl">0.2</span> <span class="co"># valores iniciais de concetração</span></span>
+<span id="cb322-7"><a href="redesMet.html#cb322-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
+<span id="cb322-8"><a href="redesMet.html#cb322-8" aria-hidden="true" tabindex="-1"></a>  dA <span class="ot">=</span> <span class="sc">-</span>k<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">+</span>km<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb322-9"><a href="redesMet.html#cb322-9" aria-hidden="true" tabindex="-1"></a>  dB <span class="ot">=</span> k<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>km<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb322-10"><a href="redesMet.html#cb322-10" aria-hidden="true" tabindex="-1"></a>  x[<span class="dv">1</span>,i] <span class="ot">=</span> x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dA;</span>
+<span id="cb322-11"><a href="redesMet.html#cb322-11" aria-hidden="true" tabindex="-1"></a>  x[<span class="dv">2</span>,i] <span class="ot">=</span> x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dB;</span>
+<span id="cb322-12"><a href="redesMet.html#cb322-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># laço que acrescenta a cada intervalo dt o valor de novo teor para cada composto</span></span>
+<span id="cb322-13"><a href="redesMet.html#cb322-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb322-14"><a href="redesMet.html#cb322-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,x[<span class="dv">1</span>,],<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">lty=</span><span class="dv">1</span>,</span>
+<span id="cb322-15"><a href="redesMet.html#cb322-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;tempo, s&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;[espécie], M&quot;</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>),<span class="at">bty=</span><span class="st">&quot;l&quot;</span>) <span class="co"># gráfico do composto 1</span></span>
+<span id="cb322-16"><a href="redesMet.html#cb322-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,x[<span class="dv">2</span>,],<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">2</span>) <span class="co"># adição do gráfico do composto 2</span></span>
+<span id="cb322-17"><a href="redesMet.html#cb322-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="dv">5</span>,<span class="at">y=</span><span class="dv">2</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">cex=</span><span class="dv">1</span>,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-86"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-86-1.png" alt="Solução numérica para a conversão reversível da espécie A em B. k = 0,5; km = 0,1; Ao = 1; Bo = 0,2 (teores iniciais)." width="672" />
+<p class="caption">
+Figura 10.4: Solução numérica para a conversão reversível da espécie A em B. k = 0,5; km = 0,1; Ao = 1; Bo = 0,2 (teores iniciais).
+</p>
+</div>
+<div class="line-block">      Agora podemos imaginar uma reação um pouco mais complexa, como a ilustrada na Eq. <a href="redesMet.html#eq:kinMM">(10.8)</a> abaixo:</div>
+<span class="math display" id="eq:kinMM">\[\begin{equation}
+A \begin{array}{c}
+_{k1}\\
+\rightleftharpoons\\
+^{km1} \end{array} B
+\begin{array}{c}
+_{k2}\\
+\rightarrow \\
+  ^{}\end{array}C
+\tag{10.8}
+\end{equation}\]</span>
+<div class="line-block">      Nesse caso, o sistema de equações diferenciais será:</div>
+<span class="math display" id="eq:dMMkin">\[\begin{equation}
+dA=-k1*A*dt+km1*B*dt;\\
+dB=k1*A*dt-km1*B*dt-k2*B*dt;\\
+dC=k2*B
+\tag{10.9}
+\end{equation}\]</span>
+<div class="line-block">      Implementando-se o trecho de código:</div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="redesMet.html#cb323-1" aria-hidden="true" tabindex="-1"></a>k1 <span class="ot">=</span> <span class="fl">0.5</span>; km1 <span class="ot">=</span> <span class="fl">0.1</span>; k2 <span class="ot">=</span> <span class="dv">1</span> <span class="co"># constantes cinéticas de catálise</span></span>
+<span id="cb323-2"><a href="redesMet.html#cb323-2" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">=</span> .<span class="dv">005</span>; tmax <span class="ot">=</span> <span class="dv">3</span> <span class="co"># intervalo de tempo &amp; tempo máximo</span></span>
+<span id="cb323-3"><a href="redesMet.html#cb323-3" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,tmax,dt) <span class="co"># define vetor de tempo</span></span>
+<span id="cb323-4"><a href="redesMet.html#cb323-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> tmax<span class="sc">/</span>dt<span class="sc">+</span><span class="dv">1</span> <span class="co"># define no. de pontos </span></span>
+<span id="cb323-5"><a href="redesMet.html#cb323-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">3</span><span class="sc">*</span>n),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">ncol=</span>n) <span class="co"># constroi matriz de uma linha pra cada composto, e uma coluna pra cada tempo dt</span></span>
+<span id="cb323-6"><a href="redesMet.html#cb323-6" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">1</span>; x[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">0</span>; x[<span class="dv">3</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">0</span> <span class="co"># valores iniciais de concentração</span></span>
+<span id="cb323-7"><a href="redesMet.html#cb323-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
+<span id="cb323-8"><a href="redesMet.html#cb323-8" aria-hidden="true" tabindex="-1"></a>  dA <span class="ot">=</span> <span class="sc">-</span>k1<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">+</span>km1<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb323-9"><a href="redesMet.html#cb323-9" aria-hidden="true" tabindex="-1"></a>  dB <span class="ot">=</span> k1<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>(km1<span class="sc">+</span>k2)<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb323-10"><a href="redesMet.html#cb323-10" aria-hidden="true" tabindex="-1"></a>  dC <span class="ot">=</span> k2<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb323-11"><a href="redesMet.html#cb323-11" aria-hidden="true" tabindex="-1"></a>  x[<span class="dv">1</span>,i] <span class="ot">=</span> x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dA;</span>
+<span id="cb323-12"><a href="redesMet.html#cb323-12" aria-hidden="true" tabindex="-1"></a>  x[<span class="dv">2</span>,i] <span class="ot">=</span> x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dB;</span>
+<span id="cb323-13"><a href="redesMet.html#cb323-13" aria-hidden="true" tabindex="-1"></a>  x[<span class="dv">3</span>,i] <span class="ot">=</span> x[<span class="dv">3</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dC; <span class="co"># laço que acrescenta a cada intervalo dt o valor de novo teor para cada composto</span></span>
+<span id="cb323-14"><a href="redesMet.html#cb323-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb323-15"><a href="redesMet.html#cb323-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,x[<span class="dv">1</span>,],<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">lty=</span><span class="dv">1</span>,</span>
+<span id="cb323-16"><a href="redesMet.html#cb323-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;tempo, s&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;[espécie], M&quot;</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">1.025</span>),<span class="at">bty=</span><span class="st">&quot;l&quot;</span>) <span class="co"># gráfico do composto 1</span></span>
+<span id="cb323-17"><a href="redesMet.html#cb323-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,x[<span class="dv">2</span>,],<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">2</span>) <span class="co"># adição do gráfico do composto 2</span></span>
+<span id="cb323-18"><a href="redesMet.html#cb323-18" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,x[<span class="dv">3</span>,],<span class="at">lty=</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">3</span>) <span class="co"># adição do gráfico do composto 3</span></span>
+<span id="cb323-19"><a href="redesMet.html#cb323-19" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="dv">5</span>,<span class="at">y=</span><span class="dv">1</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),<span class="at">cex=</span><span class="dv">1</span>,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:MMdiffeq"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/MMdiffeq-1.png" alt="Solução de Euler para uma cinética de 3 compostos. k1 = 0,5; k2 = 1; km1 = 0,1. Teores iniciais: Ao = 1; Bo = 0; Co = 0." width="672" />
+<p class="caption">
+Figura 10.5: Solução de Euler para uma cinética de 3 compostos. k1 = 0,5; k2 = 1; km1 = 0,1. Teores iniciais: Ao = 1; Bo = 0; Co = 0.
+</p>
+</div>
+<div class="line-block">      Observe que a Eq. <a href="redesMet.html#eq:dMMkin">(10.9)</a> acima reflete uma catálise de Michaelis-Mentem, embora considerando o teor da enzima <em>E</em> como constante e, portanto, independente da reação (ordem zero). E observe também que o gráfico <a href="redesMet.html#fig:MMdiffeq">10.5</a> traduz, de certa forma, a condição Briggs-Haldane do estado estacionário tratada no capítulo <a href="Enzimas.html#Enzimas">5</a> sobre <em>Enzimas</em>. Note que a variação de <em>B</em>, refletida nessa condição como o complexo <em>ES</em>, mantém-se relativamente constante por determinado intervalo de tempo, sendo produzida pela colisão com a enzima <em>E</em>, e desconstruida tanto por sua conversão a <em>E + P</em> (no caso, <em>C</em>), como por sua reversão a <em>E + S</em> (no caso, <em>A</em>).</div>
+<div class="line-block">Para uma reação um pouco mais complexa:</div>
+<span class="math display" id="eq:ABCrev">\[\begin{equation}
+A \begin{array}{c}
+_{k1}\\
+\rightleftharpoons\\
+^{km1} \end{array} B
+\begin{array}{c}
+_{k2}\\
+\rightleftharpoons\\
+  ^{km2}\end{array}C
+\tag{10.10}
+\end{equation}\]</span>
+<div class="line-block">      O que sugere o seguinte trecho de código no <code>R</code>:</div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="redesMet.html#cb324-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># Forward and reverse rate constants</span></span>
+<span id="cb324-2"><a href="redesMet.html#cb324-2" aria-hidden="true" tabindex="-1"></a>   k1 <span class="ot">=</span> <span class="dv">3</span>; km1 <span class="ot">=</span> <span class="dv">1</span>; k2 <span class="ot">=</span> <span class="dv">4</span>; km2 <span class="ot">=</span> <span class="fl">0.7</span></span>
+<span id="cb324-3"><a href="redesMet.html#cb324-3" aria-hidden="true" tabindex="-1"></a>   dt <span class="ot">=</span> .<span class="dv">005</span>; tmax <span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb324-4"><a href="redesMet.html#cb324-4" aria-hidden="true" tabindex="-1"></a>   t <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,tmax,dt); n <span class="ot">=</span> tmax<span class="sc">/</span>dt<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb324-5"><a href="redesMet.html#cb324-5" aria-hidden="true" tabindex="-1"></a>   x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">3</span><span class="sc">*</span>n),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">ncol=</span>n)</span>
+<span id="cb324-6"><a href="redesMet.html#cb324-6" aria-hidden="true" tabindex="-1"></a>   x[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">1</span>; x[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">0</span>; x[<span class="dv">3</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">0</span> </span>
+<span id="cb324-7"><a href="redesMet.html#cb324-7" aria-hidden="true" tabindex="-1"></a>     <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
+<span id="cb324-8"><a href="redesMet.html#cb324-8" aria-hidden="true" tabindex="-1"></a>      dA <span class="ot">=</span> <span class="sc">-</span>k1<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">+</span>km1<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb324-9"><a href="redesMet.html#cb324-9" aria-hidden="true" tabindex="-1"></a>      dB <span class="ot">=</span> k1<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>(km1<span class="sc">+</span>k2)<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">+</span></span>
+<span id="cb324-10"><a href="redesMet.html#cb324-10" aria-hidden="true" tabindex="-1"></a>        km2<span class="sc">*</span>x[<span class="dv">3</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb324-11"><a href="redesMet.html#cb324-11" aria-hidden="true" tabindex="-1"></a>      dC <span class="ot">=</span> k2<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>km2<span class="sc">*</span>x[<span class="dv">3</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb324-12"><a href="redesMet.html#cb324-12" aria-hidden="true" tabindex="-1"></a>      x[<span class="dv">1</span>,i] <span class="ot">=</span> x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dA;</span>
+<span id="cb324-13"><a href="redesMet.html#cb324-13" aria-hidden="true" tabindex="-1"></a>      x[<span class="dv">2</span>,i] <span class="ot">=</span> x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dB;</span>
+<span id="cb324-14"><a href="redesMet.html#cb324-14" aria-hidden="true" tabindex="-1"></a>      x[<span class="dv">3</span>,i] <span class="ot">=</span> x[<span class="dv">3</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dC;</span>
+<span id="cb324-15"><a href="redesMet.html#cb324-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb324-16"><a href="redesMet.html#cb324-16" aria-hidden="true" tabindex="-1"></a>     <span class="fu">plot</span>(t,x[<span class="dv">1</span>,],<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">lty=</span><span class="dv">1</span>,</span>
+<span id="cb324-17"><a href="redesMet.html#cb324-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab=</span><span class="st">&quot;tempo, s&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;[espécie], mol/L&quot;</span></span>
+<span id="cb324-18"><a href="redesMet.html#cb324-18" aria-hidden="true" tabindex="-1"></a>          ,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">1.025</span>),<span class="at">bty=</span><span class="st">&quot;l&quot;</span>)</span>
+<span id="cb324-19"><a href="redesMet.html#cb324-19" aria-hidden="true" tabindex="-1"></a>     <span class="fu">lines</span>(t,x[<span class="dv">2</span>,],<span class="at">col=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb324-20"><a href="redesMet.html#cb324-20" aria-hidden="true" tabindex="-1"></a>     <span class="fu">lines</span>(t,x[<span class="dv">3</span>,],<span class="at">col=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb324-21"><a href="redesMet.html#cb324-21" aria-hidden="true" tabindex="-1"></a>     <span class="fu">legend</span>(<span class="at">x=</span><span class="dv">8</span>,<span class="at">y=</span><span class="fl">0.6</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),<span class="at">cex=</span><span class="dv">1</span>,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-87"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-87-1.png" alt="Solução de Euler para uma cinética reversível de 3 compostos. k1 = 1; km1 = 3; k2 = 5; km1 = 0,1. Teores iniciais: Ao = 1; Bo = 0; Co = 0." width="672" />
+<p class="caption">
+Figura 10.6: Solução de Euler para uma cinética reversível de 3 compostos. k1 = 1; km1 = 3; k2 = 5; km1 = 0,1. Teores iniciais: Ao = 1; Bo = 0; Co = 0.
+</p>
+</div>
+<div class="line-block">      Agora, suponha uma cadeia mais complexa de reações bioquímicas, com moduladores alostéricos negativos (inibição, <em>ki</em>) e positivos (ativação, <em>ka</em>) para determinadas enzimas. O exemplo abaixo ilustra essa situação:</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:redeMetab1"></span>
+<img src="figures/redeMetab1.png" alt="Um exemplo de reações bioquímicas em rota metabólica fictícia. As setas pontilhadas juntamente aos valores de ki e ka representam modulações alostéricas com respectivas constantes de inibição e ativação enzimáticas. " width="60%" />
+<p class="caption">
+Figura 10.7: Um exemplo de reações bioquímicas em rota metabólica fictícia. As setas pontilhadas juntamente aos valores de ki e ka representam modulações alostéricas com respectivas constantes de inibição e ativação enzimáticas.
+</p>
+</div>
+<div class="line-block">      Assim, o conjunto de reações da rede metabólica acima pode ser equacionado como:</div>
+<span class="math display" id="eq:drede1">\[\begin{equation}
+dA=-k1*A*dt+ka*F*dt;\\
+dB=k1*A*dt+km3*D*dt-k3*B*dt-k2*B*dt-ki*E*dt;\\
+dC=k2*B*dt;\\
+dD=k3*B*dt-km3*D*dt-k4*D*dt;\\
+dE=k4*D*dt-k5*E*dt;\\
+dF=k5*E*dt-ka*F*dt
+\tag{10.11}
+\end{equation}\]</span>
+<pre><code>   Pode-se elaborar o trecho de código que segue para a solução numérica de Euler que envolve as equações diferenciais elencadas acima como:</code></pre>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="redesMet.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Constantes cinéticas e alostéricas</span></span>
+<span id="cb326-2"><a href="redesMet.html#cb326-2" aria-hidden="true" tabindex="-1"></a>k1 <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb326-3"><a href="redesMet.html#cb326-3" aria-hidden="true" tabindex="-1"></a>k2 <span class="ot">=</span> <span class="fl">0.5</span></span>
+<span id="cb326-4"><a href="redesMet.html#cb326-4" aria-hidden="true" tabindex="-1"></a>k3 <span class="ot">=</span> <span class="fl">0.7</span></span>
+<span id="cb326-5"><a href="redesMet.html#cb326-5" aria-hidden="true" tabindex="-1"></a>km3 <span class="ot">=</span> <span class="fl">0.3</span></span>
+<span id="cb326-6"><a href="redesMet.html#cb326-6" aria-hidden="true" tabindex="-1"></a>k4 <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb326-7"><a href="redesMet.html#cb326-7" aria-hidden="true" tabindex="-1"></a>k5 <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb326-8"><a href="redesMet.html#cb326-8" aria-hidden="true" tabindex="-1"></a>ki <span class="ot">=</span> <span class="fl">0.3</span> <span class="co"># constante de inibição</span></span>
+<span id="cb326-9"><a href="redesMet.html#cb326-9" aria-hidden="true" tabindex="-1"></a>ka <span class="ot">=</span> <span class="fl">0.2</span> <span class="co"># constante de ativação</span></span>
+<span id="cb326-10"><a href="redesMet.html#cb326-10" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">=</span> .<span class="dv">005</span>; tmax <span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb326-11"><a href="redesMet.html#cb326-11" aria-hidden="true" tabindex="-1"></a>   t <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,tmax,dt); n <span class="ot">=</span> tmax<span class="sc">/</span>dt<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb326-12"><a href="redesMet.html#cb326-12" aria-hidden="true" tabindex="-1"></a>   x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">6</span><span class="sc">*</span>n),<span class="at">nrow=</span><span class="dv">6</span>,<span class="at">ncol=</span>n)</span>
+<span id="cb326-13"><a href="redesMet.html#cb326-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores iniciais dos compostos</span></span>
+<span id="cb326-14"><a href="redesMet.html#cb326-14" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">1</span>; x[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">0</span>; x[<span class="dv">3</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">0</span>; x[<span class="dv">4</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">1</span>; x[<span class="dv">5</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">0</span>; x[<span class="dv">6</span>,<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb326-15"><a href="redesMet.html#cb326-15" aria-hidden="true" tabindex="-1"></a>     <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n){</span>
+<span id="cb326-16"><a href="redesMet.html#cb326-16" aria-hidden="true" tabindex="-1"></a><span class="co"># sistema de equações inserido na matriz dos intervalos</span></span>
+<span id="cb326-17"><a href="redesMet.html#cb326-17" aria-hidden="true" tabindex="-1"></a>  dA<span class="ot">=</span><span class="sc">-</span>k1<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">+</span>ka<span class="sc">*</span>x[<span class="dv">6</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb326-18"><a href="redesMet.html#cb326-18" aria-hidden="true" tabindex="-1"></a>  dB<span class="ot">=</span>k1<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">+</span>km3<span class="sc">*</span>x[<span class="dv">4</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>k3<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>k2<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>ki<span class="sc">*</span>x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb326-19"><a href="redesMet.html#cb326-19" aria-hidden="true" tabindex="-1"></a>  dC<span class="ot">=</span>k2<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb326-20"><a href="redesMet.html#cb326-20" aria-hidden="true" tabindex="-1"></a>  dD<span class="ot">=</span>k3<span class="sc">*</span>x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>km3<span class="sc">*</span>x[<span class="dv">4</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>k4<span class="sc">*</span>x[<span class="dv">4</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb326-21"><a href="redesMet.html#cb326-21" aria-hidden="true" tabindex="-1"></a>  dE<span class="ot">=</span>k4<span class="sc">*</span>x[<span class="dv">4</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>k5<span class="sc">*</span>x[<span class="dv">5</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt;</span>
+<span id="cb326-22"><a href="redesMet.html#cb326-22" aria-hidden="true" tabindex="-1"></a>  dF<span class="ot">=</span>k5<span class="sc">*</span>x[<span class="dv">5</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt<span class="sc">-</span>ka<span class="sc">*</span>x[<span class="dv">6</span>,i<span class="dv">-1</span>]<span class="sc">*</span>dt</span>
+<span id="cb326-23"><a href="redesMet.html#cb326-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Adição dy aos valores de y</span></span>
+<span id="cb326-24"><a href="redesMet.html#cb326-24" aria-hidden="true" tabindex="-1"></a>      x[<span class="dv">1</span>,i] <span class="ot">=</span> x[<span class="dv">1</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dA;</span>
+<span id="cb326-25"><a href="redesMet.html#cb326-25" aria-hidden="true" tabindex="-1"></a>      x[<span class="dv">2</span>,i] <span class="ot">=</span> x[<span class="dv">2</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dB;</span>
+<span id="cb326-26"><a href="redesMet.html#cb326-26" aria-hidden="true" tabindex="-1"></a>      x[<span class="dv">3</span>,i] <span class="ot">=</span> x[<span class="dv">3</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dC;</span>
+<span id="cb326-27"><a href="redesMet.html#cb326-27" aria-hidden="true" tabindex="-1"></a>      x[<span class="dv">4</span>,i] <span class="ot">=</span> x[<span class="dv">4</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dD;</span>
+<span id="cb326-28"><a href="redesMet.html#cb326-28" aria-hidden="true" tabindex="-1"></a>      x[<span class="dv">5</span>,i] <span class="ot">=</span> x[<span class="dv">5</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dE;</span>
+<span id="cb326-29"><a href="redesMet.html#cb326-29" aria-hidden="true" tabindex="-1"></a>      x[<span class="dv">6</span>,i] <span class="ot">=</span> x[<span class="dv">6</span>,i<span class="dv">-1</span>]<span class="sc">+</span>dF</span>
+<span id="cb326-30"><a href="redesMet.html#cb326-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb326-31"><a href="redesMet.html#cb326-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Elaboração dos gráficos cinéticos</span></span>
+<span id="cb326-32"><a href="redesMet.html#cb326-32" aria-hidden="true" tabindex="-1"></a>     <span class="fu">plot</span>(t,x[<span class="dv">1</span>,],<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">lty=</span><span class="dv">1</span>,</span>
+<span id="cb326-33"><a href="redesMet.html#cb326-33" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab=</span><span class="st">&quot;tempo,s&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;[espécie], mol/L&quot;</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">1.025</span>),<span class="at">bty=</span><span class="st">&quot;l&quot;</span>)</span>
+<span id="cb326-34"><a href="redesMet.html#cb326-34" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,x[<span class="dv">2</span>,],<span class="at">col=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb326-35"><a href="redesMet.html#cb326-35" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,x[<span class="dv">3</span>,],<span class="at">col=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb326-36"><a href="redesMet.html#cb326-36" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,x[<span class="dv">4</span>,],<span class="at">col=</span><span class="dv">4</span>,<span class="at">lty=</span><span class="dv">4</span>)</span>
+<span id="cb326-37"><a href="redesMet.html#cb326-37" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,x[<span class="dv">5</span>,],<span class="at">col=</span><span class="dv">5</span>,<span class="at">lty=</span><span class="dv">5</span>)</span>
+<span id="cb326-38"><a href="redesMet.html#cb326-38" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,x[<span class="dv">6</span>,],<span class="at">col=</span><span class="dv">6</span>,<span class="at">lty=</span><span class="dv">6</span>)</span>
+<span id="cb326-39"><a href="redesMet.html#cb326-39" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="fl">6.5</span>,<span class="at">y=</span><span class="fl">0.65</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>,<span class="st">&quot;D&quot;</span>,<span class="st">&quot;E&quot;</span>,<span class="st">&quot;F&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>),<span class="at">cex=</span><span class="dv">1</span>,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-88"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-88-1.png" alt="Solução para uma via metabólica fictícia apresentando inibição (ki) e ativação (ka) alostéricas. Taxas cinéticas: k1 = 2, k2 = 0,5, k3 = 0,7, km3 = 0,3, k4 = 5, k5 = 1, ki = 0,3, ka = 0.2. Valores iniciais dos compostos: A=1; B, C, D, E, F = 0" width="672" />
+<p class="caption">
+Figura 10.8: Solução para uma via metabólica fictícia apresentando inibição (ki) e ativação (ka) alostéricas. Taxas cinéticas: k1 = 2, k2 = 0,5, k3 = 0,7, km3 = 0,3, k4 = 5, k5 = 1, ki = 0,3, ka = 0.2. Valores iniciais dos compostos: A=1; B, C, D, E, F = 0
+</p>
+</div>
+<div class="line-block">      Altere as constantes cinéticas e/ou alostéricas do sistema acima e observe o efeito em cada um dos compostos. De modo geral, a solução de Euler aplicada a sistemas de complexidade crescente, como uma rede metabólica, pode apresentar desvios centrados na seleção do valor de <em>dt</em>, ou mesmo produzir valores inconsistentes. Para contornar essa situação utiliza-se outros algoritmos, tais como de <em>Runge-Kutta de 2a., 3a, ou 4a. ordem</em>, presentes nos pacotes do <code>R</code>, ou ainda por <em>análise de sistemas</em>.</div>
+</div>
+<div id="algumas-reações-do-metabolismo-da-glicose" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Algumas reações do metabolismo da glicose<a href="redesMet.html#algumas-reações-do-metabolismo-da-glicose" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      Para uma aplicação do método de <em>Runge-Kutta de 4a. ordem</em> é necessário instalar o pacote <code>deSolve</code> ou similar para a solução de sistema de equações diferenciais ordinárias de 1a. ordem ou diferenciais parciais. A biblioteca agrega funções que permitem um código mais enxuto e simples para a solução do sistema. Ilustrando sua aplicação, seguem algumas das muitas relações simples da rede metabólica que envolve a <em>glicólise, gliconeogênese, e via das pentoses</em> nas células:</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:redeMetab2"></span>
+<img src="figures/redeMetab2.png" alt="Algumas relações metabólicas envolvidas na glicólise, gliconeogênese e vias das pentoses." width="80%" />
+<p class="caption">
+Figura 10.9: Algumas relações metabólicas envolvidas na glicólise, gliconeogênese e vias das pentoses.
+</p>
+</div>
+<div class="line-block">      Pode-se atribuir a essas relações as seguintes reações do metabolismo:</div>
+<span class="math display" id="eq:redeMetab1">\[\begin{equation}
+G6P
+\begin{array}{c}
+_{k1}\\
+\rightarrow \\
+  ^{}\end{array} R5P\\
+G3P+DHCP
+\begin{array}{c}
+_{k2}\\
+\rightarrow \\
+  ^{}\end{array} PEP\\
+2G3P
+\begin{array}{c}
+_{k3}\\
+\rightarrow \\
+  ^{}\end{array} 6GP\\
+R5P
+\begin{array}{c}
+_{k4}\\
+\rightarrow \\
+  ^{}\end{array} G3P\\
+2PEP
+\begin{array}{c}
+_{k5}\\
+\rightarrow \\
+  ^{}\end{array} G6P
+   \tag{10.12}
+\end{equation}\]</span>
+<div class="line-block">    O trecho de código para a solução por Runge-Kutta pode ser o exemplificado a seguir, com resultados em dois gráficos; inicialmente com as curvas isoladas, e depois reunidas.</div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="redesMet.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb327-2"><a href="redesMet.html#cb327-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Parâmetros das reações</span></span>
+<span id="cb327-3"><a href="redesMet.html#cb327-3" aria-hidden="true" tabindex="-1"></a>k1 <span class="ot">=</span> <span class="fl">0.1</span>; k2 <span class="ot">=</span> <span class="fl">0.5</span>; k3 <span class="ot">=</span> <span class="fl">0.05</span>; k4 <span class="ot">=</span> <span class="fl">0.5</span>; k5 <span class="ot">=</span> <span class="fl">0.2</span></span>
+<span id="cb327-4"><a href="redesMet.html#cb327-4" aria-hidden="true" tabindex="-1"></a>parms <span class="ot">=</span> <span class="fu">c</span>(k1, k2, k3, k4, k5)</span>
+<span id="cb327-5"><a href="redesMet.html#cb327-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb327-6"><a href="redesMet.html#cb327-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores iniciais para cada composto</span></span>
+<span id="cb327-7"><a href="redesMet.html#cb327-7" aria-hidden="true" tabindex="-1"></a>G6P0<span class="ot">=</span><span class="dv">1</span>;R5P0<span class="ot">=</span><span class="dv">0</span>;G3P0<span class="ot">=</span><span class="fl">0.3</span>;DHCP0<span class="ot">=</span><span class="fl">0.1</span>;PEP0<span class="ot">=</span><span class="dv">0</span></span>
+<span id="cb327-8"><a href="redesMet.html#cb327-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Intervalo de tempo</span></span>
+<span id="cb327-9"><a href="redesMet.html#cb327-9" aria-hidden="true" tabindex="-1"></a>tmin <span class="ot">=</span> <span class="dv">0</span>; tmax <span class="ot">=</span> <span class="dv">20</span>; dt <span class="ot">=</span> <span class="fl">0.01</span></span>
+<span id="cb327-10"><a href="redesMet.html#cb327-10" aria-hidden="true" tabindex="-1"></a>tempo <span class="ot">=</span> <span class="fu">seq</span>(tmin, tmax, dt)</span>
+<span id="cb327-11"><a href="redesMet.html#cb327-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para as derivadas das espécies no tempo</span></span>
+<span id="cb327-12"><a href="redesMet.html#cb327-12" aria-hidden="true" tabindex="-1"></a>eq.dif <span class="ot">=</span> <span class="cf">function</span>(tempo, x, parms) {</span>
+<span id="cb327-13"><a href="redesMet.html#cb327-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># especificação dos compostos</span></span>
+<span id="cb327-14"><a href="redesMet.html#cb327-14" aria-hidden="true" tabindex="-1"></a>  G6P <span class="ot">=</span> x[<span class="dv">1</span>]</span>
+<span id="cb327-15"><a href="redesMet.html#cb327-15" aria-hidden="true" tabindex="-1"></a>  R5P <span class="ot">=</span> x[<span class="dv">2</span>]</span>
+<span id="cb327-16"><a href="redesMet.html#cb327-16" aria-hidden="true" tabindex="-1"></a>  G3P <span class="ot">=</span> x[<span class="dv">3</span>]</span>
+<span id="cb327-17"><a href="redesMet.html#cb327-17" aria-hidden="true" tabindex="-1"></a>  DHCP <span class="ot">=</span> x[<span class="dv">4</span>]</span>
+<span id="cb327-18"><a href="redesMet.html#cb327-18" aria-hidden="true" tabindex="-1"></a>  PEP <span class="ot">=</span> x[<span class="dv">5</span>]</span>
+<span id="cb327-19"><a href="redesMet.html#cb327-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># equações diferenciais</span></span>
+<span id="cb327-20"><a href="redesMet.html#cb327-20" aria-hidden="true" tabindex="-1"></a>  dG6P <span class="ot">=</span> <span class="sc">-</span>k1<span class="sc">*</span>G6P<span class="sc">+</span>k3<span class="sc">*</span>G3P<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k5<span class="sc">*</span>PEP<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb327-21"><a href="redesMet.html#cb327-21" aria-hidden="true" tabindex="-1"></a>  dR5P <span class="ot">=</span> k1<span class="sc">*</span>G6P<span class="sc">-</span>k4<span class="sc">*</span>R5P</span>
+<span id="cb327-22"><a href="redesMet.html#cb327-22" aria-hidden="true" tabindex="-1"></a>  dG3P <span class="ot">=</span> <span class="sc">-</span>k2<span class="sc">*</span>G3P<span class="sc">*</span>DHCP<span class="sc">-</span>k3<span class="sc">*</span>G3P<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>k4<span class="sc">*</span>R5P</span>
+<span id="cb327-23"><a href="redesMet.html#cb327-23" aria-hidden="true" tabindex="-1"></a>  dDHCP <span class="ot">=</span> <span class="sc">-</span>k2<span class="sc">*</span>G3P<span class="sc">*</span>DHCP</span>
+<span id="cb327-24"><a href="redesMet.html#cb327-24" aria-hidden="true" tabindex="-1"></a>  dPEP <span class="ot">=</span> k2<span class="sc">*</span>G3P<span class="sc">*</span>DHCP<span class="sc">-</span>k5<span class="sc">*</span>PEP<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb327-25"><a href="redesMet.html#cb327-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="fu">c</span>(dG6P,dR5P, dG3P, dDHCP, dPEP)) <span class="co"># incrementos das espécies</span></span>
+<span id="cb327-26"><a href="redesMet.html#cb327-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb327-27"><a href="redesMet.html#cb327-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Rotina de lsoda pra solução diferencial ordinária</span></span>
+<span id="cb327-28"><a href="redesMet.html#cb327-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb327-29"><a href="redesMet.html#cb327-29" aria-hidden="true" tabindex="-1"></a>out <span class="ot">=</span> <span class="fu">lsoda</span>(<span class="fu">c</span>(G6P0,R5P0,G3P0,DHCP0,PEP0),tempo,eq.dif, parms,</span>
+<span id="cb327-30"><a href="redesMet.html#cb327-30" aria-hidden="true" tabindex="-1"></a>            <span class="at">rtol=</span><span class="fl">1e-4</span>, <span class="at">atol=</span> <span class="fl">1e-6</span>)</span>
+<span id="cb327-31"><a href="redesMet.html#cb327-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Saída do resultado em vetores pra cada quantidade (tempo e espécies)</span></span>
+<span id="cb327-32"><a href="redesMet.html#cb327-32" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> out[,<span class="dv">1</span>]; G6P <span class="ot">=</span> out[,<span class="dv">2</span>]; R5P <span class="ot">=</span> out[,<span class="dv">3</span>]; G3P <span class="ot">=</span> out[,<span class="dv">4</span>];</span>
+<span id="cb327-33"><a href="redesMet.html#cb327-33" aria-hidden="true" tabindex="-1"></a>DHCP <span class="ot">=</span> out[,<span class="dv">5</span>]; PEP <span class="ot">=</span> out[,<span class="dv">6</span>];</span>
+<span id="cb327-34"><a href="redesMet.html#cb327-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Elaboração de gráficos verticais</span></span>
+<span id="cb327-35"><a href="redesMet.html#cb327-35" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>))</span>
+<span id="cb327-36"><a href="redesMet.html#cb327-36" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,G6P,<span class="at">type=</span><span class="st">&quot;l&quot;</span>) </span>
+<span id="cb327-37"><a href="redesMet.html#cb327-37" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,R5P,<span class="at">type=</span><span class="st">&quot;l&quot;</span>) </span>
+<span id="cb327-38"><a href="redesMet.html#cb327-38" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,G3P,<span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span>
+<span id="cb327-39"><a href="redesMet.html#cb327-39" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,DHCP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span>
+<span id="cb327-40"><a href="redesMet.html#cb327-40" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,PEP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-89-1"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-89-1.png" alt="Cinética de conversões para uma rede metabólica simples envolvendo algumas reações da glicólise, gliconeogênese e via das pentoses. Valores das constantes cinéticas: k1 = 0,1; k2 = 0,5; k3 = 0,05; k4 = 0,5; k5 = 0,2. Valores iniciais dos compostos: G6P = 1; para os demais, 0." width="672" />
+<p class="caption">
+Figura 10.10: Cinética de conversões para uma rede metabólica simples envolvendo algumas reações da glicólise, gliconeogênese e via das pentoses. Valores das constantes cinéticas: k1 = 0,1; k2 = 0,5; k3 = 0,05; k4 = 0,5; k5 = 0,2. Valores iniciais dos compostos: G6P = 1; para os demais, 0.
+</p>
+</div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="redesMet.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Elaboração de gráfico com todas as espécies</span></span>
+<span id="cb328-2"><a href="redesMet.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb328-3"><a href="redesMet.html#cb328-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,G6P,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">1</span>,<span class="at">lty=</span><span class="dv">1</span>,<span class="at">ylab=</span><span class="st">&quot;[espécie]&quot;</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb328-4"><a href="redesMet.html#cb328-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,R5P,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb328-5"><a href="redesMet.html#cb328-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,G3P,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb328-6"><a href="redesMet.html#cb328-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,DHCP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">4</span>,<span class="at">lty=</span><span class="dv">4</span>)</span>
+<span id="cb328-7"><a href="redesMet.html#cb328-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,PEP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">5</span>,<span class="at">lty=</span><span class="dv">5</span>)</span>
+<span id="cb328-8"><a href="redesMet.html#cb328-8" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="dv">10</span>,<span class="at">y=</span><span class="dv">1</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;G6P&quot;</span>,<span class="st">&quot;R5P&quot;</span>,<span class="st">&quot;G3P&quot;</span>,<span class="st">&quot;DHCP&quot;</span>,<span class="st">&quot;PEP&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>),<span class="at">cex=</span><span class="dv">1</span>,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-89-2"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-89-2.png" alt="Cinética de conversões para uma rede metabólica simples envolvendo algumas reações da glicólise, gliconeogênese e via das pentoses. Valores das constantes cinéticas: k1 = 0,1; k2 = 0,5; k3 = 0,05; k4 = 0,5; k5 = 0,2. Valores iniciais dos compostos: G6P = 1; para os demais, 0." width="672" />
+<p class="caption">
+Figura 10.11: Cinética de conversões para uma rede metabólica simples envolvendo algumas reações da glicólise, gliconeogênese e via das pentoses. Valores das constantes cinéticas: k1 = 0,1; k2 = 0,5; k3 = 0,05; k4 = 0,5; k5 = 0,2. Valores iniciais dos compostos: G6P = 1; para os demais, 0.
+</p>
+</div>
+<div class="line-block">      Perceba que, pelas quantidades oferecidas à simulação, ou seja, constantes cinéticas e valores iniciais, G3P e PEP registram um intervalo significativo em elevação, também coincidente por sua presença em várias das relações da Eq. <a href="redesMet.html#eq:redeMetab1">(10.12)</a></div>
+</div>
+<div id="cinética-do-metabolismo-de-6-mercaptopurina" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Cinética do metabolismo de 6-mercaptopurina<a href="redesMet.html#cinética-do-metabolismo-de-6-mercaptopurina" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      Elevando um pouco a complexidade de redes metabólicas, pode-se exemplificar o metabolismo celular da 6-mercaptopurina (6-MP) em função do teor de ATP celular <span class="citation">(<a href="#ref-lavrova2017ordinary" role="doc-biblioref">Lavrova et al. 2017</a>)</span>. Como antagonista da purina, o fármaco é empregado na quimioterapia para o tratamento de leucemia linfocítica, interrompendo o crescimento celular, embora produzindo efeitos colaterais citotóxicos advindos de reações com o grupo tiol.</div>
+<div class="line-block">      A Figura <a href="redesMet.html#fig:6MP">10.12</a> representa um esquema simplificado do metabolismo de 6-MP. As concentrações das espécies e constantes cinéticas originam-se dos valores de concentração em <span class="math inline">\(\mu\)</span>mol/mL, e tempo em dias.</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:6MP"></span>
+<img src="figures/6mercaptopurina.png" alt="Metabolismo esquemático simplificado para o metabolismo de 6-mercaptopurina (adaptado de Lavrova et al., 2017)." width="80%" />
+<p class="caption">
+Figura 10.12: Metabolismo esquemático simplificado para o metabolismo de 6-mercaptopurina (adaptado de Lavrova et al., 2017).
+</p>
+</div>
+<div class="line-block">      Para as 10 reações referentes às ODEs que compõem a representação do metabolismo de 6-MP <span class="citation">(<a href="#ref-lavrova2017ordinary" role="doc-biblioref">Lavrova et al. 2017</a>)</span>, o trecho de código abaixo implementa a solução por Runge-Kutta de 4a. ordem pela função <code>lsoda</code>:</div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="redesMet.html#cb329-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(deSolve)</span>
+<span id="cb329-2"><a href="redesMet.html#cb329-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Parâmetros</span></span>
+<span id="cb329-3"><a href="redesMet.html#cb329-3" aria-hidden="true" tabindex="-1"></a>k0<span class="ot">=</span><span class="dv">5</span>;k1<span class="ot">=</span><span class="dv">10</span>;k2<span class="ot">=</span><span class="dv">10</span>;k3<span class="ot">=</span><span class="dv">5</span>;k4<span class="ot">=</span><span class="fl">1e-5</span>;k7<span class="ot">=</span><span class="fl">0.01</span>;k8<span class="ot">=</span><span class="fl">0.5</span>;km7<span class="ot">=</span><span class="dv">1</span>;km1<span class="ot">=</span><span class="fl">0.01</span>;km2<span class="ot">=</span><span class="dv">4</span>;km3<span class="ot">=</span><span class="fl">0.01</span>;km4<span class="ot">=</span><span class="fl">0.1</span>;km8<span class="ot">=</span><span class="fl">0.01</span>;VPUR<span class="ot">=</span><span class="fl">0.01</span>;VD<span class="ot">=</span><span class="fl">0.9</span>;VOUT<span class="ot">=</span><span class="fl">1e-4</span></span>
+<span id="cb329-4"><a href="redesMet.html#cb329-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lista de parâmetros</span></span>
+<span id="cb329-5"><a href="redesMet.html#cb329-5" aria-hidden="true" tabindex="-1"></a>parms <span class="ot">=</span> <span class="fu">c</span>(k0,k1,k2,k3,k4,k7,k8,km7,km1,km2,km3,km4,km8,VPUR,VD,VOUT)</span>
+<span id="cb329-6"><a href="redesMet.html#cb329-6" aria-hidden="true" tabindex="-1"></a><span class="co"># especificação dos compostos</span></span>
+<span id="cb329-7"><a href="redesMet.html#cb329-7" aria-hidden="true" tabindex="-1"></a>MPex<span class="ot">=</span>x[<span class="dv">1</span>]</span>
+<span id="cb329-8"><a href="redesMet.html#cb329-8" aria-hidden="true" tabindex="-1"></a>MPin<span class="ot">=</span>x[<span class="dv">2</span>]</span>
+<span id="cb329-9"><a href="redesMet.html#cb329-9" aria-hidden="true" tabindex="-1"></a>TIMP<span class="ot">=</span>x[<span class="dv">3</span>]</span>
+<span id="cb329-10"><a href="redesMet.html#cb329-10" aria-hidden="true" tabindex="-1"></a>TXMP<span class="ot">=</span>x[<span class="dv">4</span>]</span>
+<span id="cb329-11"><a href="redesMet.html#cb329-11" aria-hidden="true" tabindex="-1"></a>TGMP<span class="ot">=</span>x[<span class="dv">5</span>]</span>
+<span id="cb329-12"><a href="redesMet.html#cb329-12" aria-hidden="true" tabindex="-1"></a>meTGMP<span class="ot">=</span>x[<span class="dv">6</span>]</span>
+<span id="cb329-13"><a href="redesMet.html#cb329-13" aria-hidden="true" tabindex="-1"></a>TITP<span class="ot">=</span>x[<span class="dv">7</span>]</span>
+<span id="cb329-14"><a href="redesMet.html#cb329-14" aria-hidden="true" tabindex="-1"></a>ATP<span class="ot">=</span>x[<span class="dv">8</span>]</span>
+<span id="cb329-15"><a href="redesMet.html#cb329-15" aria-hidden="true" tabindex="-1"></a>AMP<span class="ot">=</span>x[<span class="dv">9</span>]</span>
+<span id="cb329-16"><a href="redesMet.html#cb329-16" aria-hidden="true" tabindex="-1"></a>PP<span class="ot">=</span>x[<span class="dv">10</span>]</span>
+<span id="cb329-17"><a href="redesMet.html#cb329-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Concentrações iniciais das espécies</span></span>
+<span id="cb329-18"><a href="redesMet.html#cb329-18" aria-hidden="true" tabindex="-1"></a>reag0<span class="ot">=</span><span class="fu">c</span>(<span class="at">MPex0=</span><span class="fl">0.68</span>,<span class="at">MPin0=</span><span class="dv">0</span>,<span class="at">TIMP0=</span><span class="dv">0</span>,<span class="at">TXMP0=</span><span class="dv">0</span>,<span class="at">TGMP0=</span><span class="dv">0</span>,<span class="at">meTGMP0=</span><span class="dv">0</span>,<span class="at">TITP0=</span><span class="dv">0</span>,<span class="at">ATP0=</span><span class="fl">0.2</span>,<span class="at">AMP0=</span><span class="dv">0</span>,<span class="at">PP0=</span><span class="dv">0</span>)</span>
+<span id="cb329-19"><a href="redesMet.html#cb329-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb329-20"><a href="redesMet.html#cb329-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Definição do intervalo de tempo</span></span>
+<span id="cb329-21"><a href="redesMet.html#cb329-21" aria-hidden="true" tabindex="-1"></a>tmin <span class="ot">=</span> <span class="dv">0</span>; tmax <span class="ot">=</span> <span class="dv">2</span>; dt <span class="ot">=</span> <span class="fl">0.01</span></span>
+<span id="cb329-22"><a href="redesMet.html#cb329-22" aria-hidden="true" tabindex="-1"></a>tempo <span class="ot">=</span> <span class="fu">seq</span>(tmin, tmax, dt)</span>
+<span id="cb329-23"><a href="redesMet.html#cb329-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para as derivadas de cada espécie</span></span>
+<span id="cb329-24"><a href="redesMet.html#cb329-24" aria-hidden="true" tabindex="-1"></a>eq.dif <span class="ot">=</span> <span class="cf">function</span>(tempo, x, parms) {</span>
+<span id="cb329-25"><a href="redesMet.html#cb329-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Definição de parâmetros</span></span>
+<span id="cb329-26"><a href="redesMet.html#cb329-26" aria-hidden="true" tabindex="-1"></a>  MPex<span class="ot">=</span>x[<span class="dv">1</span>]</span>
+<span id="cb329-27"><a href="redesMet.html#cb329-27" aria-hidden="true" tabindex="-1"></a>  MPin<span class="ot">=</span>x[<span class="dv">2</span>]</span>
+<span id="cb329-28"><a href="redesMet.html#cb329-28" aria-hidden="true" tabindex="-1"></a>  TIMP<span class="ot">=</span>x[<span class="dv">3</span>]</span>
+<span id="cb329-29"><a href="redesMet.html#cb329-29" aria-hidden="true" tabindex="-1"></a>  TXMP<span class="ot">=</span>x[<span class="dv">4</span>]</span>
+<span id="cb329-30"><a href="redesMet.html#cb329-30" aria-hidden="true" tabindex="-1"></a>  TGMP<span class="ot">=</span>x[<span class="dv">5</span>]</span>
+<span id="cb329-31"><a href="redesMet.html#cb329-31" aria-hidden="true" tabindex="-1"></a>  meTGMP<span class="ot">=</span>x[<span class="dv">6</span>]</span>
+<span id="cb329-32"><a href="redesMet.html#cb329-32" aria-hidden="true" tabindex="-1"></a>  TITP<span class="ot">=</span>x[<span class="dv">7</span>]</span>
+<span id="cb329-33"><a href="redesMet.html#cb329-33" aria-hidden="true" tabindex="-1"></a>  ATP<span class="ot">=</span>x[<span class="dv">8</span>]</span>
+<span id="cb329-34"><a href="redesMet.html#cb329-34" aria-hidden="true" tabindex="-1"></a>  AMP<span class="ot">=</span>x[<span class="dv">9</span>]</span>
+<span id="cb329-35"><a href="redesMet.html#cb329-35" aria-hidden="true" tabindex="-1"></a>  PP<span class="ot">=</span>x[<span class="dv">10</span>]</span>
+<span id="cb329-36"><a href="redesMet.html#cb329-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Equações diferenciais</span></span>
+<span id="cb329-37"><a href="redesMet.html#cb329-37" aria-hidden="true" tabindex="-1"></a>  dMPex <span class="ot">=</span> <span class="sc">-</span>k0<span class="sc">*</span>MPex</span>
+<span id="cb329-38"><a href="redesMet.html#cb329-38" aria-hidden="true" tabindex="-1"></a>  dMPin <span class="ot">=</span> <span class="sc">-</span>(VPUR <span class="sc">+</span> k1)<span class="sc">*</span>MPin <span class="sc">+</span> k0<span class="sc">*</span>MPex <span class="sc">+</span> km1<span class="sc">*</span>TIMP</span>
+<span id="cb329-39"><a href="redesMet.html#cb329-39" aria-hidden="true" tabindex="-1"></a>  dTIMP <span class="ot">=</span> k1<span class="sc">*</span>MPin <span class="sc">+</span> km8<span class="sc">*</span>TITP <span class="sc">-</span> (k2 <span class="sc">+</span> k7<span class="sc">*</span>ATP <span class="sc">+</span> km1 <span class="sc">+</span> k8<span class="sc">*</span>PP)<span class="sc">*</span>TIMP<span class="sc">+</span>km2<span class="sc">*</span>TXMP <span class="sc">+</span> km7<span class="sc">*</span>TITP<span class="sc">*</span>AMP</span>
+<span id="cb329-40"><a href="redesMet.html#cb329-40" aria-hidden="true" tabindex="-1"></a>  dTXMP <span class="ot">=</span> k2<span class="sc">*</span>TIMP <span class="sc">-</span> k3<span class="sc">*</span>TXMP<span class="sc">*</span>ATP <span class="sc">-</span> km2<span class="sc">*</span>TXMP <span class="sc">+</span> km3<span class="sc">*</span>TGMP<span class="sc">*</span>AMP<span class="sc">*</span> PP</span>
+<span id="cb329-41"><a href="redesMet.html#cb329-41" aria-hidden="true" tabindex="-1"></a>  dTGMP <span class="ot">=</span> k3<span class="sc">*</span>TXMP<span class="sc">*</span>ATP <span class="sc">-</span> (k4 <span class="sc">+</span> VD)<span class="sc">*</span>TGMP <span class="sc">-</span> km3<span class="sc">*</span>TGMP<span class="sc">*</span>AMP<span class="sc">*</span>PP <span class="sc">+</span> km4<span class="sc">*</span>meTGMP</span>
+<span id="cb329-42"><a href="redesMet.html#cb329-42" aria-hidden="true" tabindex="-1"></a>  dmeTGMP <span class="ot">=</span> k4<span class="sc">*</span>TGMP <span class="sc">-</span> VOUT<span class="sc">*</span>meTGMP <span class="sc">-</span> km4<span class="sc">*</span>meTGMP</span>
+<span id="cb329-43"><a href="redesMet.html#cb329-43" aria-hidden="true" tabindex="-1"></a>  dTITP <span class="ot">=</span> k8<span class="sc">*</span>TIMP<span class="sc">*</span>PP <span class="sc">-</span> km8<span class="sc">*</span>TITP <span class="sc">+</span> k7<span class="sc">*</span>TIMP<span class="sc">*</span>ATP <span class="sc">-</span> km7<span class="sc">*</span>TITP<span class="sc">*</span>AMP</span>
+<span id="cb329-44"><a href="redesMet.html#cb329-44" aria-hidden="true" tabindex="-1"></a>  dATP <span class="ot">=</span> <span class="sc">-</span>k7<span class="sc">*</span>TIMP<span class="sc">*</span>ATP <span class="sc">+</span> km3<span class="sc">*</span>TGMP<span class="sc">*</span>AMP<span class="sc">*</span>PP <span class="sc">-</span> k3<span class="sc">*</span>TXMP<span class="sc">*</span>ATP <span class="sc">+</span> km7<span class="sc">*</span>TITP<span class="sc">*</span>AMP</span>
+<span id="cb329-45"><a href="redesMet.html#cb329-45" aria-hidden="true" tabindex="-1"></a>  dAMP <span class="ot">=</span> <span class="sc">-</span>km3<span class="sc">*</span>TGMP<span class="sc">*</span>AMP<span class="sc">*</span>PP <span class="sc">+</span> k3<span class="sc">*</span>TXMP<span class="sc">*</span>ATP <span class="sc">+</span> k7<span class="sc">*</span>TIMP<span class="sc">*</span>ATP <span class="sc">-</span> km7<span class="sc">*</span>TITP<span class="sc">*</span>AMP</span>
+<span id="cb329-46"><a href="redesMet.html#cb329-46" aria-hidden="true" tabindex="-1"></a>  dPP <span class="ot">=</span> <span class="sc">-</span>k8<span class="sc">*</span>TIMP<span class="sc">*</span>PP <span class="sc">+</span> km8<span class="sc">*</span>TITP <span class="sc">-</span> km3<span class="sc">*</span>TGMP<span class="sc">*</span>AMP<span class="sc">*</span>PP <span class="sc">+</span> k3<span class="sc">*</span>TXMP<span class="sc">*</span>ATP</span>
+<span id="cb329-47"><a href="redesMet.html#cb329-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="fu">c</span>(dMPex,dMPin,dTIMP,dTXMP,dTGMP,dmeTGMP,dTITP,dATP,dAMP,dPP)) <span class="co"># lista de valores diferenciais para cada espécie</span></span>
+<span id="cb329-48"><a href="redesMet.html#cb329-48" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb329-49"><a href="redesMet.html#cb329-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Rotina de lsoda pra solução equações diferenc. ordinárias</span></span>
+<span id="cb329-50"><a href="redesMet.html#cb329-50" aria-hidden="true" tabindex="-1"></a>sol.eq <span class="ot">=</span> <span class="fu">lsoda</span>(reag0,tempo,eq.dif, parms,</span>
+<span id="cb329-51"><a href="redesMet.html#cb329-51" aria-hidden="true" tabindex="-1"></a>               <span class="at">rtol=</span><span class="fl">1e-4</span>, <span class="at">atol=</span> <span class="fl">1e-6</span>)</span>
+<span id="cb329-52"><a href="redesMet.html#cb329-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Isolamento das colunas de resultdos</span></span>
+<span id="cb329-53"><a href="redesMet.html#cb329-53" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> sol.eq[,<span class="dv">1</span>]; MPex <span class="ot">=</span> sol.eq[,<span class="dv">2</span>]; MPin <span class="ot">=</span> sol.eq[,<span class="dv">3</span>]; TIMP <span class="ot">=</span> sol.eq[,<span class="dv">4</span>];</span>
+<span id="cb329-54"><a href="redesMet.html#cb329-54" aria-hidden="true" tabindex="-1"></a>TXMP <span class="ot">=</span> sol.eq[,<span class="dv">5</span>]; TGMP <span class="ot">=</span> sol.eq[,<span class="dv">6</span>];meTGMP <span class="ot">=</span> sol.eq[,<span class="dv">7</span>];TITP <span class="ot">=</span> sol.eq[,<span class="dv">8</span>];ATP <span class="ot">=</span> sol.eq[,<span class="dv">9</span>];AMP <span class="ot">=</span> sol.eq[,<span class="dv">10</span>];PP <span class="ot">=</span> sol.eq[,<span class="dv">11</span>]</span>
+<span id="cb329-55"><a href="redesMet.html#cb329-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb329-56"><a href="redesMet.html#cb329-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Elaboração do gráfico</span></span>
+<span id="cb329-57"><a href="redesMet.html#cb329-57" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,MPex,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;tempo, dias&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;[espécie], umol/L&quot;</span>)</span>
+<span id="cb329-58"><a href="redesMet.html#cb329-58" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,MPin,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb329-59"><a href="redesMet.html#cb329-59" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,TIMP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb329-60"><a href="redesMet.html#cb329-60" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,TXMP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">4</span>,<span class="at">lty=</span><span class="dv">4</span>)</span>
+<span id="cb329-61"><a href="redesMet.html#cb329-61" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,TGMP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">5</span>,<span class="at">lty=</span><span class="dv">5</span>)</span>
+<span id="cb329-62"><a href="redesMet.html#cb329-62" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,meTGMP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">6</span>,<span class="at">lty=</span><span class="dv">6</span>)</span>
+<span id="cb329-63"><a href="redesMet.html#cb329-63" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,TITP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">7</span>,<span class="at">lty=</span><span class="dv">7</span>)</span>
+<span id="cb329-64"><a href="redesMet.html#cb329-64" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,ATP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">8</span>,<span class="at">lty=</span><span class="dv">8</span>)</span>
+<span id="cb329-65"><a href="redesMet.html#cb329-65" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,AMP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">9</span>,<span class="at">lty=</span><span class="dv">9</span>)</span>
+<span id="cb329-66"><a href="redesMet.html#cb329-66" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,PP,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="dv">10</span>,<span class="at">lty=</span><span class="dv">10</span>)</span>
+<span id="cb329-67"><a href="redesMet.html#cb329-67" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="fl">1.5</span>,<span class="at">y=</span><span class="fl">0.65</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;MPex&quot;</span>,<span class="st">&quot;MPin&quot;</span>,<span class="st">&quot;TIMP&quot;</span>,<span class="st">&quot;TXMP&quot;</span>,<span class="st">&quot;TGMP&quot;</span>,<span class="st">&quot;meTGMP&quot;</span>,<span class="st">&quot;TITP&quot;</span>,<span class="st">&quot;ATP&quot;</span>,<span class="st">&quot;AMP&quot;</span>,<span class="st">&quot;PP&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>),<span class="at">cex=</span><span class="fl">0.7</span>,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-90"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-90-1.png" alt="Dependência da dinâmica da rede metabólica de degradação de 6-mercaptopurina em função do teor inicial de ATP a 0,2 umol/L. Os valores iniciais e parâmetros são descritos no trecho de código." width="672" />
+<p class="caption">
+Figura 10.13: Dependência da dinâmica da rede metabólica de degradação de 6-mercaptopurina em função do teor inicial de ATP a 0,2 umol/L. Os valores iniciais e parâmetros são descritos no trecho de código.
+</p>
+</div>
+<div class="line-block">      Como a dinâmica de variação dos compostos é dependente do teor inicial de ATP celular, experimente variar esse valor inicial (ex: ATP0=2):</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-91"></span>
+<img src="figures/rede6MP.png" alt="Dependência da dinâmica da rede metabólica de degradação de 6-mercaptopurina em função do teor inicial de ATP a 2 umol/L. Os valores iniciais e parâmetros são descritos no trecho de código." width="100%" />
+<p class="caption">
+Figura 10.14: Dependência da dinâmica da rede metabólica de degradação de 6-mercaptopurina em função do teor inicial de ATP a 2 umol/L. Os valores iniciais e parâmetros são descritos no trecho de código.
+</p>
+</div>
+<div class="line-block">      Observe que, com a redução de 10x no teor de ATP, TGMP e TIMP mantiveram teores mais estáveis ao longo do período.</div>
+
+<!-- Google tag (gtag.js)-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-lavrova2017ordinary" class="csl-entry">
+Lavrova, Anastasia I, Eugene B Postnikov, Andrey Yu Zyubin, and Svetlana V Babak. 2017. <span>“Ordinary Differential Equations and Boolean Networks in Application to Modelling of 6-Mercaptopurine Metabolism.”</span> <em>Royal Society Open Science</em> 4 (4): 160872.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Metabolismo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="referências.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Bioquímica Quantitativa & R.pdf", "Bioquímica Quantitativa & R.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

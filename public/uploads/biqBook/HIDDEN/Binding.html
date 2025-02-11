@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 6 Interação Bimolecular | Bioquímica Quantitativa &amp; R</title>
+  <meta name="description" content="não sei." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 6 Interação Bimolecular | Bioquímica Quantitativa &amp; R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="não sei." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 6 Interação Bimolecular | Bioquímica Quantitativa &amp; R" />
+  
+  <meta name="twitter:description" content="não sei." />
+  
+
+<meta name="author" content="José Maurício Schneedorf FS" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Enzimas.html"/>
+<link rel="next" href="acNucl.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bioquímica Quantitativa & R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i>Introdução</a></li>
+<li class="chapter" data-level="1" data-path="biomol.html"><a href="biomol.html"><i class="fa fa-check"></i><b>1</b> Biomoléculas e dimensões</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="biomol.html"><a href="biomol.html#conversão-de-unidades"><i class="fa fa-check"></i><b>1.1</b> Conversão de unidades</a></li>
+<li class="chapter" data-level="1.2" data-path="biomol.html"><a href="biomol.html#versatilidade-estrutural-em-biopolímeros"><i class="fa fa-check"></i><b>1.2</b> Versatilidade estrutural em biopolímeros</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html"><i class="fa fa-check"></i><b>2</b> Tampões biológicos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-acetato"><i class="fa fa-check"></i><b>2.1</b> Sistema acetato</a></li>
+<li class="chapter" data-level="2.2" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-bicarbonato"><i class="fa fa-check"></i><b>2.2</b> Sistema bicarbonato</a></li>
+<li class="chapter" data-level="2.3" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-fosfato"><i class="fa fa-check"></i><b>2.3</b> Sistema fosfato</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#titulação-de-sistemas-em-geral-com-programação-do-r"><i class="fa fa-check"></i><b>2.3.1</b> Titulação de sistemas em geral com programação do R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="AAcido.html"><a href="AAcido.html"><i class="fa fa-check"></i><b>3</b> Aminoácidos &amp; Peptídios</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="AAcido.html"><a href="AAcido.html#ponto-isoelétrico-aminoácidos"><i class="fa fa-check"></i><b>3.1</b> Ponto isoelétrico &amp; aminoácidos</a></li>
+<li class="chapter" data-level="3.2" data-path="AAcido.html"><a href="AAcido.html#ponto-isoiônico-biopolímeros"><i class="fa fa-check"></i><b>3.2</b> Ponto isoiônico &amp; biopolímeros</a></li>
+<li class="chapter" data-level="3.3" data-path="AAcido.html"><a href="AAcido.html#ponto-isoiônico-bibliotecas-do-r"><i class="fa fa-check"></i><b>3.3</b> Ponto isoiônico &amp; bibliotecas do R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Proteinas.html"><a href="Proteinas.html"><i class="fa fa-check"></i><b>4</b> Proteínas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Proteinas.html"><a href="Proteinas.html#composição-de-aminoácidos"><i class="fa fa-check"></i><b>4.1</b> Composição de aminoácidos</a></li>
+<li class="chapter" data-level="4.2" data-path="Proteinas.html"><a href="Proteinas.html#tabela-de-purificação-de-proteínas-r-como-planilha-eletrônica"><i class="fa fa-check"></i><b>4.2</b> Tabela de Purificação de Proteínas &amp; R como planilha eletrônica</a></li>
+<li class="chapter" data-level="4.3" data-path="Proteinas.html"><a href="Proteinas.html#interação-de-oxigênio-com-mioglobina-e-hemoglobina"><i class="fa fa-check"></i><b>4.3</b> Interação de oxigênio com mioglobina e hemoglobina</a></li>
+<li class="chapter" data-level="4.4" data-path="Proteinas.html"><a href="Proteinas.html#alguns-pacotes-do-r-para-estudo-de-proteínas"><i class="fa fa-check"></i><b>4.4</b> Alguns pacotes do R para estudo de proteínas</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Enzimas.html"><a href="Enzimas.html"><i class="fa fa-check"></i><b>5</b> Enzimas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Enzimas.html"><a href="Enzimas.html#obtenção-de-parâmetros-cinéticos-a-partir-de-dados-expermentais-simulados"><i class="fa fa-check"></i><b>5.1</b> Obtenção de parâmetros cinéticos a partir de dados expermentais simulados</a></li>
+<li class="chapter" data-level="5.2" data-path="Enzimas.html"><a href="Enzimas.html#linearizações-e-ajustes"><i class="fa fa-check"></i><b>5.2</b> Linearizações e ajustes</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="Enzimas.html"><a href="Enzimas.html#linearização-por-transformação-de-lineweaver-burk"><i class="fa fa-check"></i><b>5.2.1</b> Linearização por transformação de Lineweaver-Burk</a></li>
+<li class="chapter" data-level="5.2.2" data-path="Enzimas.html"><a href="Enzimas.html#linearização-por-transformação-de-eadie-hofstee"><i class="fa fa-check"></i><b>5.2.2</b> Linearização por transformação de Eadie-Hofstee</a></li>
+<li class="chapter" data-level="5.2.3" data-path="Enzimas.html"><a href="Enzimas.html#distribuição-de-erros-nas-linearizações-de-michaelis-mentem"><i class="fa fa-check"></i><b>5.2.3</b> Distribuição de erros nas linearizações de Michaelis-Mentem</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="Enzimas.html"><a href="Enzimas.html#ajuste-não-linear"><i class="fa fa-check"></i><b>5.3</b> Ajuste não-linear</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="Enzimas.html"><a href="Enzimas.html#ajuste-não-linear-da-equação-de-michaelis-mentem"><i class="fa fa-check"></i><b>5.3.1</b> Ajuste não-linear da equação de Michaelis-Mentem</a></li>
+<li class="chapter" data-level="5.3.2" data-path="Enzimas.html"><a href="Enzimas.html#algumas-vantagens-do-modelo-linear-sobre-o-não-linear"><i class="fa fa-check"></i><b>5.3.2</b> Algumas vantagens do modelo linear sobre o não-linear</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="Enzimas.html"><a href="Enzimas.html#enzimas-alostéricas"><i class="fa fa-check"></i><b>5.4</b> Enzimas alostéricas</a></li>
+<li class="chapter" data-level="5.5" data-path="Enzimas.html"><a href="Enzimas.html#inibição-enzimática"><i class="fa fa-check"></i><b>5.5</b> Inibição Enzimática</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="Enzimas.html"><a href="Enzimas.html#inibição-pelo-substrato"><i class="fa fa-check"></i><b>5.5.1</b> Inibição pelo substrato</a></li>
+<li class="chapter" data-level="5.5.2" data-path="Enzimas.html"><a href="Enzimas.html#modelos-de-inibição-enzimática"><i class="fa fa-check"></i><b>5.5.2</b> Modelos de inibição enzimática</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="Enzimas.html"><a href="Enzimas.html#diagnóstico-estatístico-de-inibição-enzimática"><i class="fa fa-check"></i><b>5.6</b> Diagnóstico estatístico de inibição enzimática</a></li>
+<li class="chapter" data-level="5.7" data-path="Enzimas.html"><a href="Enzimas.html#cinética-de-estado-pré-estacionário"><i class="fa fa-check"></i><b>5.7</b> Cinética de estado pré-estacionário</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Binding.html"><a href="Binding.html"><i class="fa fa-check"></i><b>6</b> Interação Bimolecular</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="Binding.html"><a href="Binding.html#modelos-de-interação-e-representações-lineares"><i class="fa fa-check"></i><b>6.1</b> Modelos de Interação e Representações Lineares</a></li>
+<li class="chapter" data-level="6.2" data-path="Binding.html"><a href="Binding.html#ajuste-não-linear-em-interação-ligante-proteína"><i class="fa fa-check"></i><b>6.2</b> Ajuste Não-Linear Em Interação Ligante-Proteína</a></li>
+<li class="chapter" data-level="6.3" data-path="Binding.html"><a href="Binding.html#sistemas-gráficos-no-r"><i class="fa fa-check"></i><b>6.3</b> Sistemas Gráficos no R</a></li>
+<li class="chapter" data-level="6.4" data-path="Binding.html"><a href="Binding.html#solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína"><i class="fa fa-check"></i><b>6.4</b> Solução Numérica Para o Equilíbrio de Complexos Ligante-Proteína</a></li>
+<li class="chapter" data-level="6.5" data-path="Binding.html"><a href="Binding.html#cinética-de-interação-ligante-proteína-e-solução-numérica"><i class="fa fa-check"></i><b>6.5</b> Cinética de Interação Ligante-Proteína e Solução Numérica</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="acNucl.html"><a href="acNucl.html"><i class="fa fa-check"></i><b>7</b> Ácidos Nucleicos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="acNucl.html"><a href="acNucl.html#análise-de-sequências"><i class="fa fa-check"></i><b>7.1</b> Análise de sequências</a></li>
+<li class="chapter" data-level="7.2" data-path="acNucl.html"><a href="acNucl.html#termoestabilidade-de-dna"><i class="fa fa-check"></i><b>7.2</b> Termoestabilidade de DNA</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="Bioenerg.html"><a href="Bioenerg.html"><i class="fa fa-check"></i><b>8</b> Bioenergética &amp; Soluções Matriciais</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Bioenerg.html"><a href="Bioenerg.html#solução-de-sistema-de-equações-lineares-no-r"><i class="fa fa-check"></i><b>8.1</b> Solução de sistema de equações lineares no R</a></li>
+<li class="chapter" data-level="8.2" data-path="Bioenerg.html"><a href="Bioenerg.html#matrizes-e-r"><i class="fa fa-check"></i><b>8.2</b> Matrizes e <code>R</code></a></li>
+<li class="chapter" data-level="8.3" data-path="Bioenerg.html"><a href="Bioenerg.html#solução-de-parâmetros-termodinâmicos-de-estabilidade-enzimática"><i class="fa fa-check"></i><b>8.3</b> Solução de parâmetros termodinâmicos de estabilidade enzimática</a></li>
+<li class="chapter" data-level="8.4" data-path="Bioenerg.html"><a href="Bioenerg.html#entalpia-de-reação-por-matrizes"><i class="fa fa-check"></i><b>8.4</b> Entalpia De Reação Por Matrizes</a></li>
+<li class="chapter" data-level="8.5" data-path="Bioenerg.html"><a href="Bioenerg.html#quantidades-termodinâmicas-por-ajuste-polinomial"><i class="fa fa-check"></i><b>8.5</b> Quantidades Termodinâmicas Por Ajuste Polinomial</a></li>
+<li class="chapter" data-level="8.6" data-path="Bioenerg.html"><a href="Bioenerg.html#estabilidade-termodinâmica-de-biopolímeros"><i class="fa fa-check"></i><b>8.6</b> Estabilidade Termodinâmica de Biopolímeros</a></li>
+<li class="chapter" data-level="8.7" data-path="Bioenerg.html"><a href="Bioenerg.html#relação-quantitativa-estrutura-função-qsar-e-ajuste-multilinear"><i class="fa fa-check"></i><b>8.7</b> Relação Quantitativa Estrutura-Função (QSAR) e Ajuste Multilinear</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="Bioenerg.html"><a href="Bioenerg.html#ajuste-linear-múltiplo-por-função-lm"><i class="fa fa-check"></i><b>8.7.1</b> Ajuste linear múltiplo por função <code>lm</code>:</a></li>
+<li class="chapter" data-level="8.7.2" data-path="Bioenerg.html"><a href="Bioenerg.html#ajuste-linear-múltiplo-por-matrizes"><i class="fa fa-check"></i><b>8.7.2</b> Ajuste linear múltiplo por matrizes:</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="Bioenerg.html"><a href="Bioenerg.html#rendimento-de-reação-planejamento-fatorial-22"><i class="fa fa-check"></i><b>8.8</b> Rendimento de Reação &amp; Planejamento Fatorial 2<span class="math inline">\(^{2}\)</span></a></li>
+<li class="chapter" data-level="8.9" data-path="Bioenerg.html"><a href="Bioenerg.html#metodologia-de-superfície-de-resposta-msr"><i class="fa fa-check"></i><b>8.9</b> Metodologia de Superfície de Resposta (MSR)</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="Bioenerg.html"><a href="Bioenerg.html#superfície-quadrática-de-resposta"><i class="fa fa-check"></i><b>8.9.1</b> Superfície Quadrática de Resposta</a></li>
+<li class="chapter" data-level="8.9.2" data-path="Bioenerg.html"><a href="Bioenerg.html#uma-palavra-sobre-matrizes-e-aplicações"><i class="fa fa-check"></i><b>8.9.2</b> Uma palavra sobre matrizes e aplicações</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Metabolismo.html"><a href="Metabolismo.html"><i class="fa fa-check"></i><b>9</b> Metabolismo</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Metabolismo.html"><a href="Metabolismo.html#rotas-metabólicas-balanceamento-de-reações"><i class="fa fa-check"></i><b>9.1</b> Rotas metabólicas &amp; Balanceamento de Reações</a></li>
+<li class="chapter" data-level="9.2" data-path="Metabolismo.html"><a href="Metabolismo.html#operação-matricial"><i class="fa fa-check"></i><b>9.2</b> Operação matricial</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="Metabolismo.html"><a href="Metabolismo.html#obtenção-do-vetor-de-rota-metabólica-para-a-glicólise-aeróbia"><i class="fa fa-check"></i><b>9.2.1</b> Obtenção do vetor de rota metabólica para a glicólise aeróbia:</a></li>
+<li class="chapter" data-level="9.2.2" data-path="Metabolismo.html"><a href="Metabolismo.html#obtenção-do-balanceamento-de-atp-adp-pi-e-coenzimas-de-oxi-redução-na-glicólise"><i class="fa fa-check"></i><b>9.2.2</b> Obtenção do balanceamento de ATP, ADP, Pi e coenzimas de oxi-redução na glicólise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="redesMet.html"><a href="redesMet.html"><i class="fa fa-check"></i><b>10</b> Redes Metabólicas</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="redesMet.html"><a href="redesMet.html#solução-numérica-para-sistema-de-equações-diferenciais"><i class="fa fa-check"></i><b>10.1</b> Solução numérica para sistema de equações diferenciais</a></li>
+<li class="chapter" data-level="10.2" data-path="redesMet.html"><a href="redesMet.html#algumas-reações-do-metabolismo-da-glicose"><i class="fa fa-check"></i><b>10.2</b> Algumas reações do metabolismo da glicose</a></li>
+<li class="chapter" data-level="10.3" data-path="redesMet.html"><a href="redesMet.html#cinética-do-metabolismo-de-6-mercaptopurina"><i class="fa fa-check"></i><b>10.3</b> Cinética do metabolismo de 6-mercaptopurina</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referências.html"><a href="referências.html"><i class="fa fa-check"></i>Referências</a></li>
+<li class="chapter" data-level="" data-path="apêndice-a.html"><a href="apêndice-a.html"><i class="fa fa-check"></i>Apêndice A</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bioquímica Quantitativa &amp; R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Binding" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Capítulo 6</span> Interação Bimolecular<a href="Binding.html#Binding" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="line-block">      Quando se menciona interação entre biomoléculas, normalmente se faz referência à processos adsortivos envolvendo um biopolímero (proteína, ácido nucleico, glicano), e um ligante de baixo peso molecular, embora o formalismo também se aplique com alguma restrição a interações entre biopolímeros, e mesmo células inteiras.<br />
+      O formalismo mais comum para interação biomolecular é o que envolve a formação de complexo adsortivo entre uma proteína e um ligante (<em>ligand binding</em>), exemplificado para íons (Ca<span class="math inline">\(^{2+}\)</span>, Mg<span class="math inline">\(^{2+}\)</span>, etc), fármacos e candidatos, produtos naturais, e antígenos, dentre vários.<br />
+      Perguntas simples acerca da <em>interação ligante-proteína</em> podem elucidar diversas características da formação de tais complexos, como:</div>
+<ol style="list-style-type: decimal">
+<li>Quanto de proteína/ligante estão presentes ?</li>
+<li>Quanto do complexo é formado ?</li>
+<li>Quão rápido o complexo associa/dissocia ?</li>
+<li>Quais os mecanismos envolvidos ?</li>
+</ol>
+<div class="line-block">      De modo geral, pode-se representar a interação ligante-proteína como segue:</div>
+<span class="math display" id="eq:diagPL">\[\begin{equation}
+P+L \begin{array}{c}
+_{k_{on}}\\
+\rightleftharpoons\\
+^{k_{off}} \end{array} PL
+\tag{6.1}
+\end{equation}\]</span>
+<p>Onde <em>P</em> representa o teor de proteína livre, <em>L</em> o ligante livre, e <em>PL</em> o complexo formado. As taxas de reação são definidas para a formação (<em>k<span class="math inline">\(_{on}\)</span></em>; M<span class="math inline">\(^{-1}\)</span>s<span class="math inline">\(^{-1}\)</span>) e dissociação (<em>k<span class="math inline">\(_{off}\)</span></em>; s<span class="math inline">\(^{-1}\)</span>) do complexo.</p>
+<div class="line-block">      Dessa forma deduz-se a equação para a <em>isoterma de interação</em> do ligante com a proteína como segue:</div>
+<span class="math display" id="eq:eqPL">\[\begin{equation}
+Kd=\frac{[P]*[L]}{[P]+[L]}
+\tag{6.2}
+\end{equation}\]</span>
+<p>Onde <em>Kd</em> representa a <em>constante de equilíbrio de dissociação</em> para o complexo <em>PL</em> formado, tal como condicionado ao equilíbrio de formação/dissociação do complexo (<em>v<span class="math inline">\(_{assoc}\)</span> = v<span class="math inline">\(_{dissoc}\)</span></em>), e também definido como:</p>
+<span class="math display" id="eq:eqKd">\[\begin{equation}
+Kd=\frac{k_{off}}{k_{on}}
+\tag{6.3}
+\end{equation}\]</span>
+<div class="line-block">      A partir da Eq. <a href="Binding.html#eq:eqPL">(6.2)</a> pode-se facilmente deduzir a expressão final para a interação de um ligante a um conjunto de sítios de mesma afinidade na proteína:</div>
+<span class="math display" id="eq:eqNu">\[\begin{equation}
+\nu=\frac{n * [L]}{Kd + [L]}
+\tag{6.4}
+\end{equation}\]</span>
+<div id="modelos-de-interação-e-representações-lineares" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Modelos de Interação e Representações Lineares<a href="Binding.html#modelos-de-interação-e-representações-lineares" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      Observe que a equação <a href="Binding.html#eq:eqNu">(6.4)</a> praticamente repete o formalismo já visto com a formação do complexo ativado de enzima-substrato <a href="Enzimas.html#eq:eqMM">(5.2)</a>, bem como sua representação resultante como uma hipérbole quadrática. De fato, ocorre essencialmente a substituição do parâmetro cinético <em>v</em> da reação pelo parâmetro termodinâmico <span class="math inline">\(\nu\)</span> (“nu”, do Grego) para a isoterma de ligação. As demais quantidades envolvidas mantém-se análogas (<em>P</em> no lugar de <em>E</em>; <em>L</em> no lugar de <em>S</em>;<em>Kd</em> no lugar de <em>Km</em>; e <em>n</em> no lugar de <em>Vmax</em>).<br />
+      Mantida essa similaridade com o formalismo da <em>equação de Michaelis-Menten</em>, da mesma maneira decorrem as linearizações para a Eq. <a href="Binding.html#eq:eqNu">(6.4)</a>, bem como ajustes não lineares à mesma, na busca de uma <em>solução analítica</em> para os parâmetros termodinâmicos <em>Kd</em> e <em>n</em>. Exemplificando um trecho de código para as linearizações mais comuns no tratamento de dados de interação ligante-proteína:</div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="Binding.html#cb172-1" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>)<span class="sc">*</span><span class="fl">1e-6</span></span>
+<span id="cb172-2"><a href="Binding.html#cb172-2" aria-hidden="true" tabindex="-1"></a>Kd<span class="ot">=</span><span class="fl">1e-6</span>;n<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb172-3"><a href="Binding.html#cb172-3" aria-hidden="true" tabindex="-1"></a>v<span class="ot">=</span>n<span class="sc">*</span>L<span class="sc">/</span>(Kd<span class="sc">+</span>L)</span>
+<span id="cb172-4"><a href="Binding.html#cb172-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)) <span class="co"># estabelece área de plot pra 6 gráficos</span></span>
+<span id="cb172-5"><a href="Binding.html#cb172-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Direto&quot;</span>)</span>
+<span id="cb172-6"><a href="Binding.html#cb172-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(L),v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Langmuir&quot;</span>)</span>
+<span id="cb172-7"><a href="Binding.html#cb172-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">/</span>L,<span class="dv">1</span><span class="sc">/</span>v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Klotz&quot;</span>)</span>
+<span id="cb172-8"><a href="Binding.html#cb172-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v,v<span class="sc">/</span>L,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Scatchard&quot;</span>)</span>
+<span id="cb172-9"><a href="Binding.html#cb172-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,L<span class="sc">/</span>v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Woolf&quot;</span>)</span>
+<span id="cb172-10"><a href="Binding.html#cb172-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(L),<span class="fu">log10</span>(v<span class="sc">/</span>(n<span class="sc">-</span>v)),<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Hill&quot;</span>) </span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:figLinBind"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/figLinBind-1.png" alt="Principais linearizações da isoterma de ligação ligante-proteína." width="672" />
+<p class="caption">
+Figura 6.1: Principais linearizações da isoterma de ligação ligante-proteína.
+</p>
+</div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="Binding.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># volta à janela gráfica normal</span></span></code></pre></div>
+<div class="line-block">      Desvios da linearidade, por outro lado, são frequentemente utilizados como diagnósticos para modelos que distintos do de <em>homogeneidade de sítios de ligação</em> como acima (<em>heterogeneidade de sítios</em>, <em>criação de sítio</em>, <em>cooperatividade</em>. As equações abaixo descrevem esses modelos, e consideram <em>K</em>, <em>constante de equilíbrio de associação ligante-proteína</em>, como o reverso de <em>Kd</em>, a fim de tornar as expressões mais legíveis:</div>
+<span class="math display" id="eq:eqKdK">\[\begin{equation}
+K = \frac{1}{Kd}
+\tag{6.5}
+\end{equation}\]</span>
+<div class="line-block">      O <em>modelo de heterogeneidade de sítios</em> de ligação pressupõe que haja na proteína mais um sítio com afinidades distintas para o ligante (<span class="citation">(<a href="#ref-dahlquist197813" role="doc-biblioref">Dahlquist 1978</a>)</span>). Formalmente esse modelo pode ser exemplificado para 2 conjuntos de sítios de ligação, como segue:</div>
+<span class="math display" id="eq:eqHeterSit">\[\begin{equation}
+\nu=\frac{K1*[L]}{1+K1*[L]} + \frac{K2*[L]}{1+K2*[L]}
+\tag{6.6}
+\end{equation}\]</span>
+<div class="line-block">      O trecho de código abaixo exemplifica o modelo no ‘R’, bem como suas principais linearizações diagnósticas.</div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="Binding.html#cb174-1" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>)<span class="sc">*</span><span class="fl">1e-6</span></span>
+<span id="cb174-2"><a href="Binding.html#cb174-2" aria-hidden="true" tabindex="-1"></a>Kd1<span class="ot">=</span><span class="fl">2e-6</span>;n1<span class="ot">=</span><span class="dv">1</span>;</span>
+<span id="cb174-3"><a href="Binding.html#cb174-3" aria-hidden="true" tabindex="-1"></a>Kd2<span class="ot">=</span><span class="fl">2e-8</span>;n2<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb174-4"><a href="Binding.html#cb174-4" aria-hidden="true" tabindex="-1"></a>v<span class="ot">=</span>(n1<span class="sc">*</span>L<span class="sc">/</span>(Kd1<span class="sc">+</span>L))<span class="sc">+</span>(n2<span class="sc">*</span>L<span class="sc">/</span>(Kd2<span class="sc">+</span>L))</span>
+<span id="cb174-5"><a href="Binding.html#cb174-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb174-6"><a href="Binding.html#cb174-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)) <span class="co"># estabelece área de plot pra 6 gráficos</span></span>
+<span id="cb174-7"><a href="Binding.html#cb174-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Direto&quot;</span>)</span>
+<span id="cb174-8"><a href="Binding.html#cb174-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(L),v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Langmuir&quot;</span>)</span>
+<span id="cb174-9"><a href="Binding.html#cb174-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">/</span>L,<span class="dv">1</span><span class="sc">/</span>v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Klotz&quot;</span>)</span>
+<span id="cb174-10"><a href="Binding.html#cb174-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v,v<span class="sc">/</span>L,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Scatchard&quot;</span>)</span>
+<span id="cb174-11"><a href="Binding.html#cb174-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,L<span class="sc">/</span>v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Woolf&quot;</span>)</span>
+<span id="cb174-12"><a href="Binding.html#cb174-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(L),<span class="fu">log10</span>(v<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="sc">-</span>v)),<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Hill&quot;</span>) <span class="co"># n1+n2=ntot no Hill</span></span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:figHeterSit"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/figHeterSit-1.png" alt="Modelo e linearizações para  heterogeneidade de 2 conjuntos de sítios de ligação" width="672" />
+<p class="caption">
+Figura 6.2: Modelo e linearizações para heterogeneidade de 2 conjuntos de sítios de ligação
+</p>
+</div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="Binding.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># volta à janela gráfica normal</span></span></code></pre></div>
+<div class="line-block">      O <em>modelo de criação de novo sítio</em> - “one-site creator”; <span class="citation">(<a href="#ref-parsons1978theoretical" role="doc-biblioref">Parsons and Vallner 1978</a>)</span> estabelece uma cooperatividade positiva resultante da produção de novos sítios para o ligante na proteína. Segue o modelo exemplificado e suas linearizações resultantes.</div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="Binding.html#cb176-1" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>)<span class="sc">*</span><span class="fl">1e-6</span></span>
+<span id="cb176-2"><a href="Binding.html#cb176-2" aria-hidden="true" tabindex="-1"></a>Kd1<span class="ot">=</span><span class="fl">2e-6</span>;n1<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb176-3"><a href="Binding.html#cb176-3" aria-hidden="true" tabindex="-1"></a>Kd2<span class="ot">=</span><span class="fl">2e-5</span>;n2<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb176-4"><a href="Binding.html#cb176-4" aria-hidden="true" tabindex="-1"></a>nH<span class="ot">=</span><span class="fl">0.5</span></span>
+<span id="cb176-5"><a href="Binding.html#cb176-5" aria-hidden="true" tabindex="-1"></a>v<span class="ot">=</span>(n1<span class="sc">*</span>L<span class="sc">*</span><span class="dv">1</span><span class="sc">/</span>Kd1)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>Kd1<span class="sc">*</span>L)<span class="sc">+</span>((n2<span class="sc">*</span><span class="dv">1</span><span class="sc">/</span>Kd1<span class="sc">*</span><span class="dv">1</span><span class="sc">/</span>Kd2<span class="sc">*</span>L<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>Kd1<span class="sc">*</span>L)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>Kd2<span class="sc">*</span>L))</span>
+<span id="cb176-6"><a href="Binding.html#cb176-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)) <span class="co"># estabelece área de plot pra 6 gráficos</span></span>
+<span id="cb176-7"><a href="Binding.html#cb176-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Direto&quot;</span>)</span>
+<span id="cb176-8"><a href="Binding.html#cb176-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(L),v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Langmuir&quot;</span>)</span>
+<span id="cb176-9"><a href="Binding.html#cb176-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">/</span>L,<span class="dv">1</span><span class="sc">/</span>v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Klotz&quot;</span>)</span>
+<span id="cb176-10"><a href="Binding.html#cb176-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v,v<span class="sc">/</span>L,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Scatchard&quot;</span>)</span>
+<span id="cb176-11"><a href="Binding.html#cb176-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,L<span class="sc">/</span>v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Woolf&quot;</span>)</span>
+<span id="cb176-12"><a href="Binding.html#cb176-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(L),<span class="fu">log10</span>(v<span class="sc">/</span>(n<span class="sc">-</span>v)),<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Hill&quot;</span>) <span class="co"># n1+n2=ntot no Hill</span></span></code></pre></div>
+<pre><code>## Warning in xy.coords(x, y, xlabel, ylabel, log): NaNs produced</code></pre>
+<div class="figure"><span style="display:block;" id="fig:figOneSitCreat"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/figOneSitCreat-1.png" alt="Modelo e linearizações para  criação de novo sítio: *1-site creator*." width="672" />
+<p class="caption">
+Figura 6.3: Modelo e linearizações para criação de novo sítio: <em>1-site creator</em>.
+</p>
+</div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="Binding.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># volta à janela gráfica normal</span></span></code></pre></div>
+<div class="line-block">      Os <em>modelos de cooperatividade (negativa e positiva)</em> seguem um formalismo similar descrito para a ligação de oxigênio à hemoglobina junto ao capítulo <a href="Proteinas.html#Proteinas">4</a> (Eq. <a href="Proteinas.html#eq:Hb">(4.2)</a>). Na <em>cooperatividade negativa</em> uma segunda molécula de ligante interage com a proteína com menor afinidade:</div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="Binding.html#cb179-1" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>)<span class="sc">*</span><span class="fl">1e-6</span></span>
+<span id="cb179-2"><a href="Binding.html#cb179-2" aria-hidden="true" tabindex="-1"></a>Kd<span class="ot">=</span><span class="fl">2e-6</span>;n<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb179-3"><a href="Binding.html#cb179-3" aria-hidden="true" tabindex="-1"></a>nH<span class="ot">=</span><span class="fl">0.5</span></span>
+<span id="cb179-4"><a href="Binding.html#cb179-4" aria-hidden="true" tabindex="-1"></a>v<span class="ot">=</span>(n<span class="sc">*</span>L<span class="sc">^</span>nH<span class="sc">/</span>(Kd<span class="sc">+</span>L<span class="sc">^</span>nH))</span>
+<span id="cb179-5"><a href="Binding.html#cb179-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)) <span class="co"># estabelece área de plot pra 6 gráficos</span></span>
+<span id="cb179-6"><a href="Binding.html#cb179-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Direto&quot;</span>)</span>
+<span id="cb179-7"><a href="Binding.html#cb179-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(L),v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Langmuir&quot;</span>)</span>
+<span id="cb179-8"><a href="Binding.html#cb179-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">/</span>L,<span class="dv">1</span><span class="sc">/</span>v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Klotz&quot;</span>)</span>
+<span id="cb179-9"><a href="Binding.html#cb179-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v,v<span class="sc">/</span>L,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Scatchard&quot;</span>)</span>
+<span id="cb179-10"><a href="Binding.html#cb179-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,L<span class="sc">/</span>v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Woolf&quot;</span>)</span>
+<span id="cb179-11"><a href="Binding.html#cb179-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(L),<span class="fu">log10</span>(v<span class="sc">/</span>(n<span class="sc">-</span>v)),<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Hill&quot;</span>) <span class="co"># n1+n2=ntot no Hill</span></span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:figCoopNeg"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/figCoopNeg-1.png" alt="Modelo e linearizações para  cooperatividade negativa de sítios de ligação." width="672" />
+<p class="caption">
+Figura 6.4: Modelo e linearizações para cooperatividade negativa de sítios de ligação.
+</p>
+</div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="Binding.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># volta à janela gráfica normal</span></span></code></pre></div>
+<div class="line-block">      Já na <em>cooperatividade positiva</em>, uma segunda molécula de ligante interage com a proteína com maior afinidade que a primeira molécula <span class="citation">(<a href="#ref-parsons1978theoretical" role="doc-biblioref">Parsons and Vallner 1978</a>)</span>:</div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="Binding.html#cb181-1" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>)<span class="sc">*</span><span class="fl">1e-6</span></span>
+<span id="cb181-2"><a href="Binding.html#cb181-2" aria-hidden="true" tabindex="-1"></a>Kd<span class="ot">=</span><span class="fl">2e-6</span>;n<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb181-3"><a href="Binding.html#cb181-3" aria-hidden="true" tabindex="-1"></a>nH<span class="ot">=</span><span class="fl">1.5</span></span>
+<span id="cb181-4"><a href="Binding.html#cb181-4" aria-hidden="true" tabindex="-1"></a>v<span class="ot">=</span>(n<span class="sc">*</span>L<span class="sc">^</span>nH<span class="sc">/</span>(Kd<span class="sc">+</span>L<span class="sc">^</span>nH))</span>
+<span id="cb181-5"><a href="Binding.html#cb181-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)) <span class="co"># estabelece área de plot pra 6 gráficos</span></span>
+<span id="cb181-6"><a href="Binding.html#cb181-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Direto&quot;</span>)</span>
+<span id="cb181-7"><a href="Binding.html#cb181-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(L),v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Langmuir&quot;</span>)</span>
+<span id="cb181-8"><a href="Binding.html#cb181-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">/</span>L,<span class="dv">1</span><span class="sc">/</span>v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Klotz&quot;</span>)</span>
+<span id="cb181-9"><a href="Binding.html#cb181-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v,v<span class="sc">/</span>L,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Scatchard&quot;</span>)</span>
+<span id="cb181-10"><a href="Binding.html#cb181-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,L<span class="sc">/</span>v,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Woolf&quot;</span>)</span>
+<span id="cb181-11"><a href="Binding.html#cb181-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(L),<span class="fu">log10</span>(v<span class="sc">/</span>(n<span class="sc">-</span>v)),<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">main=</span><span class="st">&quot;Hill&quot;</span>) <span class="co"># n1+n2=ntot no Hill</span></span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:figCoopPos"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/figCoopPos-1.png" alt="Modelo e linearizações para  cooperatividade positiva de sítios de ligação." width="672" />
+<p class="caption">
+Figura 6.5: Modelo e linearizações para cooperatividade positiva de sítios de ligação.
+</p>
+</div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="Binding.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># volta à janela gráfica normal</span></span></code></pre></div>
+<div class="line-block">      Observe que a inclinação do gráfico de <em>Hill</em> é inferior à unidade para a <em>cooperatividade negativa</em>, e superior a essa, para a <em>cooperatividade positiva</em>, e representa o mesmo parâmetro <em>nH</em> visto na Eq.<a href="Proteinas.html#eq:Hb">(4.2)</a>.<br />
+      Ainda que sujeito à crítica por sua inconsistência estatística (variável dependente em ambos os eixos), a representação de Scatchard tem sido privilegiada ao longo de décadas como diagnóstico de modelos de interação ligante-proteína. Entre suas vantagens, aloca-se a possibilidade de facilmente distinguir-se o modelo de cooperatividade positiva (aclive) do de heterogeneidade de sítios de ligação (declive abrupto) ou de cooperatividade negativa (declive suave).</div>
+</div>
+<div id="ajuste-não-linear-em-interação-ligante-proteína" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Ajuste Não-Linear Em Interação Ligante-Proteína<a href="Binding.html#ajuste-não-linear-em-interação-ligante-proteína" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      Ajustes diretos da equação não linear dos modelos de interação também podem ser efetuados como fora realizado para a equação de Michaelis-Menten no capítulo <a href="Enzimas.html#Enzimas">5</a> sobre Enzimas. Exemplificando, pode-se simular a obtenção de dados experimentais de <em>binding</em> pelo trecho a seguir, utilizando-se o comando ‘runif’ (<em>random uniform</em>) para geração de sequência aleatória (como fora realizado no capítulo <a href="Enzimas.html#Enzimas">5</a>.</div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="Binding.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Isoterma de Interação Ligante-Proteína</span></span>
+<span id="cb183-2"><a href="Binding.html#cb183-2" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb183-3"><a href="Binding.html#cb183-3" aria-hidden="true" tabindex="-1"></a>Kd<span class="ot">=</span><span class="dv">10</span></span>
+<span id="cb183-4"><a href="Binding.html#cb183-4" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span><span class="dv">120</span></span>
+<span id="cb183-5"><a href="Binding.html#cb183-5" aria-hidden="true" tabindex="-1"></a>i<span class="ot">=</span><span class="dv">3</span></span>
+<span id="cb183-6"><a href="Binding.html#cb183-6" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">0</span>, L, i)</span>
+<span id="cb183-7"><a href="Binding.html#cb183-7" aria-hidden="true" tabindex="-1"></a>v<span class="ot">=</span>(L<span class="sc">*</span>n)<span class="sc">/</span>(Kd<span class="sc">+</span>L)<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">40</span>,<span class="dv">0</span>,<span class="fl">0.1</span>)</span></code></pre></div>
+<pre><code>## Warning in (L * n)/(Kd + L) + rnorm(40, 0, 0.1): longer object length is not a
+## multiple of shorter object length</code></pre>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="Binding.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,v)</span></code></pre></div>
+<p><img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/1SitBindSimul-1.png" width="672" /></p>
+<div class="line-block">      Observe que o comando ‘rnorm’ adiciona um erro de distribuição normal aos dados. Outra forma para simulação desses é dada abaixo, introduzindo-se o comando ‘runif’ de geração de números aleatórios.</div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="Binding.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulação de dados de interação bimolecular (1 sítio)</span></span>
+<span id="cb186-2"><a href="Binding.html#cb186-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb186-3"><a href="Binding.html#cb186-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulação de dados</span></span>
+<span id="cb186-4"><a href="Binding.html#cb186-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20160227</span>) <span class="co"># estabelece semente para geração de números aleatórios</span></span>
+<span id="cb186-5"><a href="Binding.html#cb186-5" aria-hidden="true" tabindex="-1"></a>L<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">50</span>,<span class="dv">1</span>)</span>
+<span id="cb186-6"><a href="Binding.html#cb186-6" aria-hidden="true" tabindex="-1"></a>PL<span class="ot">&lt;-</span>((<span class="fu">runif</span>(<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">20</span>)<span class="sc">*</span>L)<span class="sc">/</span>(<span class="fu">runif</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">10</span>)<span class="sc">+</span>L))<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">51</span>,<span class="dv">0</span>,<span class="dv">1</span>) </span>
+<span id="cb186-7"><a href="Binding.html#cb186-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. runif(n,min,max); quando sem atributos, considera-se min=0  e max=1</span></span>
+<span id="cb186-8"><a href="Binding.html#cb186-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. rnorm(no. pontos,media,desvio) - erro aleatório de distribuição normal</span></span>
+<span id="cb186-9"><a href="Binding.html#cb186-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,PL, <span class="at">xlab=</span><span class="st">&quot;L&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;PL&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:1sitBindSimul2"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/1sitBindSimul2-1.png" alt="Dados simulados para isoterma de interação bimolecular." width="672" />
+<p class="caption">
+Figura 6.6: Dados simulados para isoterma de interação bimolecular.
+</p>
+</div>
+<div class="line-block">      Agora precisamos utilizar o comando ‘nls’ para o ajuste não linear, sobreposição da curva teórica, e tabela estatística de resultados:</div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="Binding.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ajuste não linear</span></span>
+<span id="cb187-2"><a href="Binding.html#cb187-2" aria-hidden="true" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="fu">nls</span>(PL<span class="sc">~</span>n<span class="sc">*</span>L<span class="sc">/</span>(Kd<span class="sc">+</span>L),<span class="at">start=</span><span class="fu">list</span>(<span class="at">n=</span><span class="dv">1</span>,<span class="at">Kd=</span><span class="dv">1</span>))</span>
+<span id="cb187-3"><a href="Binding.html#cb187-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-4"><a href="Binding.html#cb187-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Coef. de correlação</span></span>
+<span id="cb187-5"><a href="Binding.html#cb187-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(PL,<span class="fu">predict</span>(m)) <span class="co"># Coeficiente de correlação de Pearson</span></span></code></pre></div>
+<pre><code>## [1] 0.9</code></pre>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="Binding.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Gráfico de dados e simulação</span></span>
+<span id="cb189-2"><a href="Binding.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L,PL)</span>
+<span id="cb189-3"><a href="Binding.html#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(L,<span class="fu">predict</span>(m),<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/nlsBind-1.png" width="672" /></p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="Binding.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
+<pre><code>## 
+## Formula: PL ~ n * L/(Kd + L)
+## 
+## Parameters:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## n    11.848      0.262   45.22  &lt; 2e-16 ***
+## Kd    4.278      0.511    8.37  5.3e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8 on 49 degrees of freedom
+## 
+## Number of iterations to convergence: 6 
+## Achieved convergence tolerance: 1.55e-06</code></pre>
+</div>
+<div id="sistemas-gráficos-no-r" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Sistemas Gráficos no R<a href="Binding.html#sistemas-gráficos-no-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      A última curva de simulação obtida o foi junto à biblioteca padrão para manipulação de gráficos da instalação do ‘R’, <strong>Graphics</strong>. Trata-se um conjunto de funções amplo também utilizado por vários outros pacotes do ambiente. Contudo, existem no ‘R’ diversas outras bibliotecas para elaboração de gráficos, dentre os quais vale destacar o <em>Lattice</em>, também incluido na instalação padrão, e o <em>ggplot2</em>. Ambos os sistemas geram resultados com melhor estética e flexibilidade gráfica que a biblioteca <em>Graphics</em> padrão, e possuem empregos e semânticas distintas entre si.<br />
+      O sistema <em>Lattice</em> <span class="citation">(<a href="#ref-sarkar2008lattice" role="doc-biblioref">Sarkar 2008</a>)</span> é baseado no sistema <em>Trellis</em> para representação gráfica de dados multivariados. Sua força está na representação de dados em paineis contendo subgrupos e, embora tenha sintaxe menos intuitiva e por vezes mais elaborada que o pacote <em>Graphics</em>, produz um grafismo superior a esse com poucos cliques de teclado. De modo geral, o <em>Lattice</em> produz o gráfico dentro do próprio algoritmo, de modo diferente aos sistemas <em>Graphics</em> (pode-se acumular linhas sucessivas de modificação do gráfico) ou <em>ggplot2</em>.<br />
+     Por outro lado a biblioteca <em>ggplot2</em> é baseada na gramática de gráficos <span class="citation">(<a href="#ref-wickham2011ggplot2" role="doc-biblioref">Wickham 2011</a>)</span>, e produz o gráfico utilizando uma única linha de comando que combina camadas sobrepostas, de modo similar à aplicativos de manipulação de imagens (ex: <em>Inkscape</em>, <em>Gimp</em>, <em>Corel Draw</em>, <em>Photoshop</em>). Dessa forma é possível alterar cada ítem do gráfico em suas camadas específicas (tema, coordenadas, facets, estatísticas, geometria, estética, dados). Exemplificando o resultado gráfico da curva de simulação acima de <em>binding</em> para <em>Lattice</em> e <em>ggplot2</em>:</div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="Binding.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulação de dados</span></span>
+<span id="cb192-2"><a href="Binding.html#cb192-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20160227</span>) <span class="co"># estabelece semente para geração de números aleatórios</span></span>
+<span id="cb192-3"><a href="Binding.html#cb192-3" aria-hidden="true" tabindex="-1"></a>L<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">50</span>,<span class="dv">1</span>)</span>
+<span id="cb192-4"><a href="Binding.html#cb192-4" aria-hidden="true" tabindex="-1"></a>PL<span class="ot">&lt;-</span>((<span class="fu">runif</span>(<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">20</span>)<span class="sc">*</span>L)<span class="sc">/</span>(<span class="fu">runif</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">10</span>)<span class="sc">+</span>L))<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">51</span>,<span class="dv">0</span>,<span class="dv">1</span>) </span>
+<span id="cb192-5"><a href="Binding.html#cb192-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. runif(n,min,max); quando sem atributos, considera-se min=0  e max=1</span></span>
+<span id="cb192-6"><a href="Binding.html#cb192-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. rnorm(no. pontos,media,desvio) - erro aleatório de distribuição normal</span></span>
+<span id="cb192-7"><a href="Binding.html#cb192-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-8"><a href="Binding.html#cb192-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Produção do gráfico com sistema Lattice</span></span>
+<span id="cb192-9"><a href="Binding.html#cb192-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb192-10"><a href="Binding.html#cb192-10" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(PL<span class="sc">~</span>L)</span></code></pre></div>
+<p><img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/1sitBindSimulLattice-1.png" width="672" /></p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="Binding.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Produção do gráfico com sistema ggplot2</span></span>
+<span id="cb193-2"><a href="Binding.html#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb193-3"><a href="Binding.html#cb193-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(L,PL)</span></code></pre></div>
+<p><img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/1sitBindSimulLattice-2.png" width="672" /></p>
+<div class="line-block">      Como a percepção de peculiaridades dos sistemas gráficos se revela melhor com dados mais elaborados, as ilustrações a seguir utilizarão o conjunto de dados ‘Puromycin’, que integra a biblioteca ‘datasets’ do ‘R’. Os dados apresentam a velocidade de reação enzimática sobre um substrato em células tratadas e não tratadas com puromicina.</div>
+<div class="line-block">      O código abaixo retorna a plotagem, ajuste não linear e resultados obtidos com a biblioteca <em>Graphics</em> padrão, e foi extraído do própria documentação do <em>dataset</em>.</div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="Binding.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
+<span id="cb194-2"><a href="Binding.html#cb194-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-3"><a href="Binding.html#cb194-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rate <span class="sc">~</span> conc, <span class="at">data =</span> Puromycin, <span class="at">las =</span> <span class="dv">1</span>,</span>
+<span id="cb194-4"><a href="Binding.html#cb194-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;[S], mM&quot;</span>,</span>
+<span id="cb194-5"><a href="Binding.html#cb194-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;v (contagem/min/min)&quot;</span>,</span>
+<span id="cb194-6"><a href="Binding.html#cb194-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="fu">as.integer</span>(Puromycin<span class="sc">$</span>state),</span>
+<span id="cb194-7"><a href="Binding.html#cb194-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">as.integer</span>(Puromycin<span class="sc">$</span>state),</span>
+<span id="cb194-8"><a href="Binding.html#cb194-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Ilustração de Ajuste Com Graphics&quot;</span>)</span>
+<span id="cb194-9"><a href="Binding.html#cb194-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-10"><a href="Binding.html#cb194-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Ajuste da equação de Michaelis-Mentem</span></span>
+<span id="cb194-11"><a href="Binding.html#cb194-11" aria-hidden="true" tabindex="-1"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">nls</span>(rate <span class="sc">~</span> Vm <span class="sc">*</span> conc<span class="sc">/</span>(K <span class="sc">+</span> conc), <span class="at">data =</span> Puromycin,</span>
+<span id="cb194-12"><a href="Binding.html#cb194-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">subset =</span> state <span class="sc">==</span> <span class="st">&quot;treated&quot;</span>,</span>
+<span id="cb194-13"><a href="Binding.html#cb194-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">start =</span> <span class="fu">c</span>(<span class="at">Vm =</span> <span class="dv">200</span>, <span class="at">K =</span> <span class="fl">0.05</span>))</span>
+<span id="cb194-14"><a href="Binding.html#cb194-14" aria-hidden="true" tabindex="-1"></a>fm2 <span class="ot">&lt;-</span> <span class="fu">nls</span>(rate <span class="sc">~</span> Vm <span class="sc">*</span> conc<span class="sc">/</span>(K <span class="sc">+</span> conc), <span class="at">data =</span> Puromycin,</span>
+<span id="cb194-15"><a href="Binding.html#cb194-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">subset =</span> state <span class="sc">==</span> <span class="st">&quot;untreated&quot;</span>,</span>
+<span id="cb194-16"><a href="Binding.html#cb194-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">start =</span> <span class="fu">c</span>(<span class="at">Vm =</span> <span class="dv">160</span>, <span class="at">K =</span> <span class="fl">0.05</span>))</span>
+<span id="cb194-17"><a href="Binding.html#cb194-17" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fm1)</span></code></pre></div>
+<pre><code>## 
+## Formula: rate ~ Vm * conc/(K + conc)
+## 
+## Parameters:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## Vm 2.13e+02   6.95e+00   30.61  3.2e-11 ***
+## K  6.41e-02   8.28e-03    7.74  1.6e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 11 on 10 degrees of freedom
+## 
+## Number of iterations to convergence: 5 
+## Achieved convergence tolerance: 8.82e-06</code></pre>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="Binding.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fm2)</span></code></pre></div>
+<pre><code>## 
+## Formula: rate ~ Vm * conc/(K + conc)
+## 
+## Parameters:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## Vm 1.60e+02   6.48e+00   24.73  1.4e-09 ***
+## K  4.77e-02   7.78e-03    6.13  0.00017 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 10 on 9 degrees of freedom
+## 
+## Number of iterations to convergence: 5 
+## Achieved convergence tolerance: 4.45e-06</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="Binding.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Adição de linhas de ajuste ao plot</span></span>
+<span id="cb198-2"><a href="Binding.html#cb198-2" aria-hidden="true" tabindex="-1"></a>conc <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.2</span>, <span class="at">length.out =</span> <span class="dv">101</span>)</span>
+<span id="cb198-3"><a href="Binding.html#cb198-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(conc, <span class="fu">predict</span>(fm1, <span class="fu">list</span>(<span class="at">conc =</span> conc)), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="dv">1</span>)</span>
+<span id="cb198-4"><a href="Binding.html#cb198-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(conc, <span class="fu">predict</span>(fm2, <span class="fu">list</span>(<span class="at">conc =</span> conc)), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb198-5"><a href="Binding.html#cb198-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fl">0.8</span>, <span class="dv">120</span>, <span class="fu">levels</span>(Puromycin<span class="sc">$</span>state),</span>
+<span id="cb198-6"><a href="Binding.html#cb198-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:puromycGraphics"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/puromycGraphics-1.png" alt="Plotagem e análise com graphics." width="672" />
+<p class="caption">
+Figura 6.7: Plotagem e análise com graphics.
+</p>
+</div>
+<div class="line-block">      O sistema <em>ggplot2</em>, por sua vez, exige que os comandos sejam elencados em camadas justapostas intercaladas com o sinal “+”, como segue:</div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="Binding.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
+<span id="cb199-2"><a href="Binding.html#cb199-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>Puromycin, <span class="fu">aes</span>(conc, rate, <span class="at">color =</span> state)) <span class="sc">+</span></span>
+<span id="cb199-3"><a href="Binding.html#cb199-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb199-4"><a href="Binding.html#cb199-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb199-5"><a href="Binding.html#cb199-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">method       =</span> <span class="st">&quot;nls&quot;</span>,</span>
+<span id="cb199-6"><a href="Binding.html#cb199-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula      =</span> y <span class="sc">~</span> Vm<span class="sc">*</span>x<span class="sc">/</span>(Km<span class="sc">+</span>x),</span>
+<span id="cb199-7"><a href="Binding.html#cb199-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">method.args  =</span> <span class="fu">list</span>(<span class="at">start =</span> <span class="fu">list</span>(<span class="at">Vm =</span> <span class="dv">200</span>, <span class="at">Km =</span> <span class="fl">0.1</span>)),</span>
+<span id="cb199-8"><a href="Binding.html#cb199-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">se           =</span> <span class="cn">FALSE</span> </span>
+<span id="cb199-9"><a href="Binding.html#cb199-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># expressão que define o plot</span></span>
+<span id="cb199-10"><a href="Binding.html#cb199-10" aria-hidden="true" tabindex="-1"></a>p <span class="co"># variável que apresenta o plot</span></span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:puromycGgplot2"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/puromycGgplot2-1.png" alt="Plotagem e análise com ggplot2." width="672" />
+<p class="caption">
+Figura 6.8: Plotagem e análise com ggplot2.
+</p>
+</div>
+<div class="line-block">      Perceba o menor número de instruções do <em>script</em> para a produção do gráfico. Além disso, e diferente do <em>Graphics</em>, <em>ggplot2</em> permite adicionar camadas à linha de comandos principais, e apresentar os dados multivariados em paineis (funções ‘facet_grid’ e ‘facet_wrap’), sem a necessidade de se utilizar o comando ‘mfrow’ ou ‘mfcol’ visto no capítulo, como segue:</div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="Binding.html#cb200-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(state))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:puromycGgplot2Facet"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/puromycGgplot2Facet-1.png" alt="Plotagem e análise com ggplot2 - paineis (faceting)." width="672" />
+<p class="caption">
+Figura 6.9: Plotagem e análise com ggplot2 - paineis (faceting).
+</p>
+</div>
+<div class="line-block">      <em>Lattice</em> também possui uma economia de instruções em relação à <em>Graphics</em>. Não considerando o ajuste estatístico, os grupos podem ser apresentados simplesmente utilizando-se a fórmula:</div>
+<span class="math display" id="eq:eqTrellis">\[\begin{equation}
+xyplot(y \sim x~|~ groups = z)
+\tag{6.7}
+\end{equation}\]</span>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="Binding.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb201-2"><a href="Binding.html#cb201-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(rate <span class="sc">~</span> conc, <span class="at">data =</span> Puromycin, <span class="at">groups=</span>state)</span></code></pre></div>
+<p><img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<div class="line-block">      E para a representação dos ajustes não lineares:</div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="Binding.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<span id="cb202-2"><a href="Binding.html#cb202-2" aria-hidden="true" tabindex="-1"></a>n1<span class="ot">&lt;-</span><span class="fu">nlsList</span>(rate <span class="sc">~</span> Vmax<span class="sc">*</span>conc<span class="sc">/</span>(Km<span class="sc">+</span>conc) <span class="sc">|</span> state, <span class="at">data=</span>Puromycin, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vmax=</span><span class="dv">200</span>, <span class="at">Km=</span><span class="fl">0.1</span>))</span>
+<span id="cb202-3"><a href="Binding.html#cb202-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(n1)</span>
+<span id="cb202-4"><a href="Binding.html#cb202-4" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(rate <span class="sc">~</span> conc,<span class="at">groups =</span> state, <span class="at">data =</span></span>
+<span id="cb202-5"><a href="Binding.html#cb202-5" aria-hidden="true" tabindex="-1"></a>         Puromycin) <span class="sc">+</span></span>
+<span id="cb202-6"><a href="Binding.html#cb202-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.curve</span>(Vmax[<span class="dv">1</span>]<span class="sc">*</span>x<span class="sc">/</span>(Km[<span class="dv">1</span>]<span class="sc">+</span>x),<span class="at">col=</span><span class="dv">1</span>),</span>
+<span id="cb202-7"><a href="Binding.html#cb202-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> <span class="fu">as.list</span>(<span class="fu">coef</span>(n1))) <span class="sc">+</span></span>
+<span id="cb202-8"><a href="Binding.html#cb202-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.curve</span>(Vmax[<span class="dv">2</span>]<span class="sc">*</span>x<span class="sc">/</span>(Km[<span class="dv">2</span>]<span class="sc">+</span>x),<span class="at">col=</span><span class="dv">2</span>),</span>
+<span id="cb202-9"><a href="Binding.html#cb202-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> <span class="fu">as.list</span>(<span class="fu">coef</span>(n1)))</span></code></pre></div>
+<div class="line-block">      A biblioteca <em>Lattice</em> também permite a apresentação em paineis; diferente de <em>ggplot2</em>, contudo, o gráfico é gerado algoritmicamente, sem a sobreposição de comandos:</div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="Binding.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme) <span class="co"># pacote quer permite regressão não linear com subgrupos</span></span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;nlme&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     collapse</code></pre>
+<pre><code>## The following object is masked from &#39;package:seqinr&#39;:
+## 
+##     gls</code></pre>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="Binding.html#cb207-1" aria-hidden="true" tabindex="-1"></a>nonlinLatt<span class="ot">&lt;-</span><span class="fu">nlsList</span>(rate<span class="sc">~</span>Vmax<span class="sc">*</span>conc<span class="sc">/</span>(Km<span class="sc">+</span>conc)<span class="sc">|</span> state, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vmax=</span><span class="dv">200</span>, <span class="at">Km=</span><span class="fl">0.1</span>), <span class="at">data=</span>Puromycin)</span>
+<span id="cb207-2"><a href="Binding.html#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nonlinLatt)</span></code></pre></div>
+<pre><code>## Call:
+##   Model: rate ~ Vmax * conc/(Km + conc) | state 
+##    Data: Puromycin 
+## 
+## Coefficients:
+##    Vmax 
+##           Estimate Std. Error t value Pr(&gt;|t|)
+## treated        213          7      32    3e-11
+## untreated      160          7      23    1e-09
+##    Km 
+##           Estimate Std. Error t value Pr(&gt;|t|)
+## treated       0.06      0.008       8    2e-05
+## untreated     0.05      0.008       6    2e-04
+## 
+## Residual standard error: 10 on 19 degrees of freedom</code></pre>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="Binding.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(rate <span class="sc">+</span> <span class="fu">fitted</span>(nonlinLatt)<span class="sc">~</span>conc<span class="sc">|</span> state, <span class="at">data=</span>Puromycin,</span>
+<span id="cb209-2"><a href="Binding.html#cb209-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">type=</span><span class="fu">c</span>(<span class="st">&quot;p&quot;</span>,<span class="st">&quot;l&quot;</span>),<span class="at">distribute.type=</span><span class="cn">TRUE</span>,<span class="at">col.line=</span><span class="st">&quot;red&quot;</span>,</span>
+<span id="cb209-3"><a href="Binding.html#cb209-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span><span class="st">&quot;rate&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:puromicLatticePan"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/puromicLatticePan-1.png" alt="Plotagem e análise com Lattice - ajuste externo e paineis." width="672" />
+<p class="caption">
+Figura 6.10: Plotagem e análise com Lattice - ajuste externo e paineis.
+</p>
+</div>
+<div class="line-block">      Das muitas diferenças que os pacotes <em>ggplot2</em> e <em>Lattice</em> apresentam, há uma que vale a pena ressaltar. Como visto acima, o <em>ggplot2</em> realiza o ajuste não linear dentro da linha de comandos de geração do gráfico, ao passo que o <em>Lattice</em> permite fazê-lo fora da linha. Isso é inerente do <em>ggplot2</em>, uma biblioteca desenhada para a produção de gráficos, e não para análises computacionais. Dessa forma o algoritmo que permite o ajuste não linear pelo <em>ggplot2</em>, ainda que seja o mesmo ‘nls’ já trabalhado, não expressa seus resultados explicitamente (embora haja formas de “pescá-los” utilizando-se outros pacotes).<br />
+      De certa forma, ainda que o <em>Lattice</em> exija uma curva de aprendizado menos intutiva, ele permite que se utilize os resultados estatísticos obtidos anteriormente para inclusão no algoritmo de plotagem. Isso é vantajoso quando se deseja outros algoritmos estatísticos para ajuste, como acima, ou mesmo sua flexibilização, além do ‘nls’ incluido em <em>ggplot2</em>. Não obstante, o <em>Lattice</em> também permite que se inclua a linha de ajuste dentro do próprio algoritmo, como abaixo:</div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="Binding.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(rate <span class="sc">~</span> conc <span class="sc">|</span> state, <span class="at">data =</span> Puromycin,</span>
+<span id="cb210-2"><a href="Binding.html#cb210-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">panel =</span> <span class="cf">function</span>(x, y, ...) {</span>
+<span id="cb210-3"><a href="Binding.html#cb210-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">panel.xyplot</span>(x, y, ...)</span>
+<span id="cb210-4"><a href="Binding.html#cb210-4" aria-hidden="true" tabindex="-1"></a>         n3<span class="ot">&lt;-</span><span class="fu">nls</span>(y <span class="sc">~</span> Vmax<span class="sc">*</span>x<span class="sc">/</span>(Km<span class="sc">+</span>x), <span class="at">data=</span>Puromycin, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vmax=</span><span class="dv">200</span>, <span class="at">Km=</span><span class="fl">0.1</span>))</span>
+<span id="cb210-5"><a href="Binding.html#cb210-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">panel.lines</span>(<span class="fu">seq</span>(<span class="fl">0.02</span>,<span class="fl">1.1</span>,<span class="fl">0.02</span>), <span class="fu">predict</span>(n3,<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="fl">0.02</span>,<span class="fl">1.1</span>,<span class="fl">0.02</span>))), <span class="at">col.line =</span> <span class="dv">2</span>)</span>
+<span id="cb210-6"><a href="Binding.html#cb210-6" aria-hidden="true" tabindex="-1"></a>       },</span>
+<span id="cb210-7"><a href="Binding.html#cb210-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;conc&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;rate&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:puromicLatticePanInterno"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/puromicLatticePanInterno-1.png" alt="Plotagem e análise com Lattice - ajuste interno e paineis." width="672" />
+<p class="caption">
+Figura 6.11: Plotagem e análise com Lattice - ajuste interno e paineis.
+</p>
+</div>
+</div>
+<div id="solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Solução Numérica Para o Equilíbrio de Complexos Ligante-Proteína<a href="Binding.html#solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      Como visto no capítulo <a href="AAcido.html#AAcido">3</a>, por vezes uma <em>solução numérica</em> pode ser empregada quando a <em>solução analítica</em> não converge, ou quando estamos diante de uma equação mais complexa. Nesse sentido a formação de complexos de que trata este subtítulo pode também ser tratada por uma solução numérica.<br />
+      Usualmente o tratamento dado para a solução numérica envolve encontrar as raízes de uma equação ou sistema de equações, ou seja:</div>
+<span class="math display" id="eq:eqFx">\[\begin{equation}
+F(x) = 0
+\tag{6.8}
+\end{equation}\]</span>
+<span class="math display" id="eq:solNumEq">\[\begin{equation}
+P+L \rightleftarrows PL
+\\
+Kd = \frac{[P][L]}{[PL]}
+\\
+Então,\ [PL]=\frac{[P][L]}{Kd}
+\tag{6.9}
+\end{equation}\]</span>
+<span class="math display" id="eq:solNumEq2">\[\begin{equation}
+    \begin{cases}
+      [Pt] = [P]+[PL] = [P]+\frac{[P][L]}{Kd}\\
+      [Lt] = [L]+[PL] = [L]+\frac{[P][L]}{Kd}
+    \end{cases}\
+\tag{6.10}
+\end{equation}\]</span>
+<div class="line-block">      Assim, tem-se um sistema de equações lineares nos parâmetros (<em>[P]</em> livre, <em>[L]</em> livre, e complexo <em>[PL]</em>) que pode ser solucionado pelo <code>R</code> por diversas maneiras, uma das quais pela função de minimização <code>rootSolve</code>:</div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="Binding.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Cálculo de L, P, e PL em interação biomolecular para 1 conjunto de sítios de mesma afinidade</span></span>
+<span id="cb211-2"><a href="Binding.html#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rootSolve) </span>
+<span id="cb211-3"><a href="Binding.html#cb211-3" aria-hidden="true" tabindex="-1"></a>Pt <span class="ot">=</span><span class="dv">1</span>; Lt<span class="ot">=</span><span class="dv">10</span>; Kd<span class="ot">=</span><span class="dv">4</span></span>
+<span id="cb211-4"><a href="Binding.html#cb211-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb211-5"><a href="Binding.html#cb211-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo</span></span>
+<span id="cb211-6"><a href="Binding.html#cb211-6" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> <span class="cf">function</span>(x) <span class="fu">c</span>(x[<span class="dv">1</span>]<span class="sc">+</span>(x[<span class="dv">1</span>]<span class="sc">*</span>x[<span class="dv">2</span>])<span class="sc">/</span>Kd<span class="sc">-</span>Pt,x[<span class="dv">2</span>]<span class="sc">+</span>(x[<span class="dv">1</span>]<span class="sc">*</span>x[<span class="dv">2</span>])<span class="sc">/</span>Kd<span class="sc">-</span>Lt,Pt<span class="sc">-</span>x[<span class="dv">1</span>]<span class="sc">-</span>x[<span class="dv">3</span>])</span>
+<span id="cb211-7"><a href="Binding.html#cb211-7" aria-hidden="true" tabindex="-1"></a><span class="co"># o modelo acima deve conter uma lista de equações cuja igualdade é zero, ou seja, f(x)=0</span></span>
+<span id="cb211-8"><a href="Binding.html#cb211-8" aria-hidden="true" tabindex="-1"></a>(<span class="at">ss=</span><span class="fu">multiroot</span>(model,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))) <span class="co"># comando de execução do rootSolve (sementes pro algoritmo)</span></span></code></pre></div>
+<pre><code>## $root
+## [1] 0.3 9.3 0.7
+## 
+## $f.root
+## [1] 5e-08 5e-08 5e-12
+## 
+## $iter
+## [1] 5
+## 
+## $estim.precis
+## [1] 4e-08</code></pre>
+<div class="line-block">      Dessa forma os valores resultantes (<em>f.root</em>) quando <em>[Lt]</em> = 10 são apresentados como <em>[P]</em> = 0,3, <em>[L]</em> = 9,3 e <em>[PL]</em> = 0,7.</div>
+<div class="line-block">      Outras soluções numéricas permitem um maior controle sobre o algoritmo empregado, tais como a função <code>optim</code> do <code>R</code> (limites de busca da solução, emprego de vetores, por ex). Para isso será exemplificado a mesma situação acima, embora apresentando uma variação do formalismo que relaciona <em>P</em>, <em>L</em> e <em>PL</em> :</div>
+<span class="math display" id="eq:solNumEq3">\[\begin{equation}
+    \begin{cases}
+      [PL] = [Pt]-[L]\\
+      [PL] = [Lt]-[L]\\
+      [P]*[L]=Kd*[PL]
+    \end{cases}\
+\tag{6.11}
+\end{equation}\]</span>
+<div class="line-block">      Dessa forma pode-se contruir uma relação quadrática envolvendo as três incógnitas:</div>
+<span class="math display" id="eq:solNumEq4">\[\begin{equation}
+([Pt]-[L]-[PL])^2 + ([Lt]-[L]-[PL])^2 + ([P]*[L]-Kd*[PL])^2
+\tag{6.12}
+\end{equation}\]</span>
+<div class="line-block">      Aplicando-se o algoritmo de minimização <code>optim</code> do <code>R</code>:</div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="Binding.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Cálculo de L, P, PL em interação para 1 sítio</span></span>
+<span id="cb213-2"><a href="Binding.html#cb213-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb213-3"><a href="Binding.html#cb213-3" aria-hidden="true" tabindex="-1"></a>model2<span class="ot">=</span><span class="cf">function</span>(x,Pt,Lt,K){L<span class="ot">=</span>x[<span class="dv">1</span>];P<span class="ot">=</span>x[<span class="dv">2</span>];PL<span class="ot">=</span>x[<span class="dv">3</span>];(Pt<span class="sc">-</span>P<span class="sc">-</span>PL)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(Lt<span class="sc">-</span>L<span class="sc">-</span>PL)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(P<span class="sc">*</span>L<span class="sc">-</span>Kd<span class="sc">*</span>PL)<span class="sc">^</span><span class="dv">2</span>} <span class="co"># declaração da função</span></span>
+<span id="cb213-4"><a href="Binding.html#cb213-4" aria-hidden="true" tabindex="-1"></a>Pt<span class="ot">=</span><span class="dv">1</span>;Lt<span class="ot">=</span><span class="dv">10</span>;Kd<span class="ot">=</span><span class="dv">4</span> <span class="co"># parâmetros da função</span></span>
+<span id="cb213-5"><a href="Binding.html#cb213-5" aria-hidden="true" tabindex="-1"></a>sol2num <span class="ot">=</span> <span class="fu">optim</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,.<span class="dv">5</span>),model2,<span class="at">method=</span><span class="st">&quot;L-BFGS-B&quot;</span>,<span class="at">lower=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="at">upper=</span><span class="fu">c</span>(Lt,Pt,Pt),<span class="at">Pt=</span>Pt,<span class="at">Lt=</span>Lt) <span class="co"># método BFGS permite bounds (lower, upper)    </span></span>
+<span id="cb213-6"><a href="Binding.html#cb213-6" aria-hidden="true" tabindex="-1"></a>sol2num<span class="sc">$</span>par <span class="co"># LF, PF, PL calculados</span></span></code></pre></div>
+<pre><code>## [1] 9.3 0.3 0.7</code></pre>
+<div class="line-block">      Perceba que são os mesmos resultados anteriores, embora com maior controle da solução. Agora pode-se utilizar essa minimização para criar um vetor de soluções para as três quantidades, como segue:</div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="Binding.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Declaração da função</span></span>
+<span id="cb215-2"><a href="Binding.html#cb215-2" aria-hidden="true" tabindex="-1"></a>bind1<span class="ot">=</span><span class="cf">function</span>(x,Pt,Lt,Kd) {</span>
+<span id="cb215-3"><a href="Binding.html#cb215-3" aria-hidden="true" tabindex="-1"></a>  L<span class="ot">=</span>x[<span class="dv">1</span>];P<span class="ot">=</span>x[<span class="dv">2</span>];PL<span class="ot">=</span>x[<span class="dv">3</span>];</span>
+<span id="cb215-4"><a href="Binding.html#cb215-4" aria-hidden="true" tabindex="-1"></a>  (Pt<span class="sc">-</span>P<span class="sc">-</span>PL)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(Lt<span class="sc">-</span>L<span class="sc">-</span>PL)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(P<span class="sc">*</span>L<span class="sc">-</span>Kd<span class="sc">*</span>PL)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb215-5"><a href="Binding.html#cb215-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb215-6"><a href="Binding.html#cb215-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-7"><a href="Binding.html#cb215-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Parâmetros da função</span></span>
+<span id="cb215-8"><a href="Binding.html#cb215-8" aria-hidden="true" tabindex="-1"></a>Pt <span class="ot">=</span> <span class="dv">1</span>; Lt <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>); Kd <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb215-9"><a href="Binding.html#cb215-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-10"><a href="Binding.html#cb215-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Minimização (parâmetros para que a função acima dê zero)</span></span>
+<span id="cb215-11"><a href="Binding.html#cb215-11" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="cf">function</span>(i) <span class="fu">optim</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), bind1, <span class="at">method =</span></span>
+<span id="cb215-12"><a href="Binding.html#cb215-12" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;L-BFGS-B&quot;</span>, <span class="at">lower =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">upper =</span> <span class="fu">c</span>(Lt[i], Pt,</span>
+<span id="cb215-13"><a href="Binding.html#cb215-13" aria-hidden="true" tabindex="-1"></a>                                                                Pt), <span class="at">Lt=</span>Lt[i], <span class="at">Pt=</span>Pt, <span class="at">Kd=</span>Kd)</span>
+<span id="cb215-14"><a href="Binding.html#cb215-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-15"><a href="Binding.html#cb215-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados em matriz</span></span>
+<span id="cb215-16"><a href="Binding.html#cb215-16" aria-hidden="true" tabindex="-1"></a>ypar <span class="ot">=</span> <span class="cf">function</span>(i) <span class="fu">y</span>(i)<span class="sc">$</span>par</span>
+<span id="cb215-17"><a href="Binding.html#cb215-17" aria-hidden="true" tabindex="-1"></a>yp <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">length</span>(Lt), <span class="at">ncol=</span><span class="dv">2</span><span class="sc">+</span><span class="fu">length</span>(Kd),</span>
+<span id="cb215-18"><a href="Binding.html#cb215-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">byrow=</span>T)</span>
+<span id="cb215-19"><a href="Binding.html#cb215-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(Lt)) yp[i,]<span class="ot">=</span><span class="fu">y</span>(i)<span class="sc">$</span>par</span>
+<span id="cb215-20"><a href="Binding.html#cb215-20" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(yp) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;L&quot;</span>,<span class="st">&quot;P&quot;</span>,<span class="st">&quot;PL&quot;</span>)</span>
+<span id="cb215-21"><a href="Binding.html#cb215-21" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(yp) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;5&quot;</span>,<span class="st">&quot;10&quot;</span>,<span class="st">&quot;20&quot;</span>)</span>
+<span id="cb215-22"><a href="Binding.html#cb215-22" aria-hidden="true" tabindex="-1"></a>yp</span></code></pre></div>
+<pre><code>##     L   P  PL
+## 5   4 0.5 0.5
+## 10  9 0.3 0.7
+## 20 19 0.2 0.8</code></pre>
+</div>
+<div id="cinética-de-interação-ligante-proteína-e-solução-numérica" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Cinética de Interação Ligante-Proteína e Solução Numérica<a href="Binding.html#cinética-de-interação-ligante-proteína-e-solução-numérica" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      Sob o mesmo princípio da solução numérica apresentada no ítem anterior para o equilíbrio da interação ligante-proteína, o <code>R</code> permite solução de mesma natureza para a cinética da formação dos complexos, ou seja, os teores de <em>P</em>, <em>L</em> e <em>PL</em> observados no tempo. Nesse caso pode-se desenvolver outras relações a partir da Eq. <a href="Binding.html#eq:diagPL">(6.1)</a>. Tomando-se por base que no equilíbrio as taxas cinéticas de <em>k<span class="math inline">\(_{on}\)</span></em> e <em>k<span class="math inline">\(_{off}\)</span></em> se igualam (<em>steady-state</em>), pode-se relacionar algumas equações diferenciais para a <em>associação</em>, bem como para a <em>dissociação</em> dos complexos:</div>
+<span class="math display" id="eq:solNumKin">\[\begin{equation}
+Para \, a\, associação:
+    \begin{cases}
+     \frac{d[PL]}{dt} = k_{on}*[L]*[P]\\
+     \frac{d[L]}{dt} = -k_{on}*[L]*[P]\\
+     \frac{d[P]}{dt} = -k_{on}*[L]*[P]
+    \end{cases}
+\tag{6.13}
+\end{equation}\]</span>
+<span class="math display" id="eq:solNumKin2">\[\begin{equation}
+Para \, a\, dissociação:
+    \begin{cases}
+     \frac{d[PL]}{dt} = -k_{off}*[PL]\\
+     \frac{d[L]}{dt} = k_{off}*[PL]\\
+     \frac{d[P]}{dt} = k_{off}*[PL]
+    \end{cases}
+\tag{6.14}
+\end{equation}\]</span>
+<div class="line-block">       Assim, as taxas globais resultantes para cada quantidade (taxa líquida) envolverá a soma das taxas de associação e dissociação de cada:</div>
+<span class="math display" id="eq:solNumKin3">\[\begin{equation}
+Taxas \, líquidas:
+    \begin{cases}
+     \frac{d[PL]}{dt} = k_{on}*[L]*[P]-k_{off}*[PL]\\
+     \frac{d[L]}{dt} = -k_{on}*[L]*[P]+k_{off}*[PL]\\
+     \frac{d[P]}{dt} = -k_{on}*[L]*[P]+k_{off}*[PL]
+    \end{cases}
+\tag{6.15}
+\end{equation}\]</span>
+<div class="line-block">      A solução para esse sistema final de equações diferenciais (taxas líquidas) envolve resolver a variação de cada quantidade (<em><span class="math inline">\(\Delta\)</span>x</em>) num determinado intervalo de tempo (<em><span class="math inline">\(\Delta\)</span>t</em>), tal que:</div>
+<span class="math display" id="eq:eqDiff">\[\begin{equation}
+\Delta x=f(x)*\Delta t
+\tag{6.16}
+\end{equation}\]</span>
+<div class="line-block">      Para isso é necessário utilizar uma biblioteca do <code>R</code> que permita a solução de um sistema de equações diferenciais. Entre as muitas soluções (<code>odeintr</code>, <code>pracma</code>, <code>rODE</code>), o emprego da biblioteca <code>deSolve</code>, que utiliza uma função para integração do sistema por algoritmo de <em>Runge-Kutta de 4a. ordem</em>:</div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="Binding.html#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cinética de interação ligante-protéina para 1 conjunto de sítios</span></span>
+<span id="cb217-2"><a href="Binding.html#cb217-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb217-3"><a href="Binding.html#cb217-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb217-4"><a href="Binding.html#cb217-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Condições experimentais</span></span>
+<span id="cb217-5"><a href="Binding.html#cb217-5" aria-hidden="true" tabindex="-1"></a>tempo <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>) <span class="co"># intervalo de tempo</span></span>
+<span id="cb217-6"><a href="Binding.html#cb217-6" aria-hidden="true" tabindex="-1"></a>parms <span class="ot">=</span> <span class="fu">c</span>(<span class="at">kon=</span><span class="fl">0.02</span>, <span class="at">koff=</span><span class="fl">0.001</span>) <span class="co"># parâmetros do estado estacionário da interação (uM^-1*s^-1 e s^-1, respectivamente)</span></span>
+<span id="cb217-7"><a href="Binding.html#cb217-7" aria-hidden="true" tabindex="-1"></a>val.inic <span class="ot">=</span> <span class="fu">c</span>(<span class="at">L=</span><span class="fl">0.8</span>, <span class="at">P=</span><span class="dv">1</span>, <span class="at">PL=</span><span class="dv">0</span>) <span class="co"># valores iniciais, uM</span></span>
+<span id="cb217-8"><a href="Binding.html#cb217-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb217-9"><a href="Binding.html#cb217-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Integração do sistema por Runge-Kutta de 4a. ordem</span></span>
+<span id="cb217-10"><a href="Binding.html#cb217-10" aria-hidden="true" tabindex="-1"></a>solNumKin <span class="ot">=</span> <span class="cf">function</span>(t, x, parms) { </span>
+<span id="cb217-11"><a href="Binding.html#cb217-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># definição da lista de parâmetros</span></span>
+<span id="cb217-12"><a href="Binding.html#cb217-12" aria-hidden="true" tabindex="-1"></a>  L  <span class="ot">=</span> x[<span class="dv">1</span>] <span class="co"># ligante </span></span>
+<span id="cb217-13"><a href="Binding.html#cb217-13" aria-hidden="true" tabindex="-1"></a>  P  <span class="ot">=</span> x[<span class="dv">2</span>] <span class="co"># proteína</span></span>
+<span id="cb217-14"><a href="Binding.html#cb217-14" aria-hidden="true" tabindex="-1"></a>  PL <span class="ot">=</span> x[<span class="dv">3</span>] <span class="co"># complexo</span></span>
+<span id="cb217-15"><a href="Binding.html#cb217-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb217-16"><a href="Binding.html#cb217-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(parms),{ </span>
+<span id="cb217-17"><a href="Binding.html#cb217-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># definição da lista de equações diferenciais</span></span>
+<span id="cb217-18"><a href="Binding.html#cb217-18" aria-hidden="true" tabindex="-1"></a>    dL <span class="ot">=</span> <span class="sc">-</span>kon<span class="sc">*</span>L<span class="sc">*</span>P <span class="sc">+</span> koff<span class="sc">*</span>PL</span>
+<span id="cb217-19"><a href="Binding.html#cb217-19" aria-hidden="true" tabindex="-1"></a>    dP <span class="ot">=</span> <span class="sc">-</span>kon<span class="sc">*</span>L<span class="sc">*</span>P <span class="sc">+</span> koff<span class="sc">*</span>PL</span>
+<span id="cb217-20"><a href="Binding.html#cb217-20" aria-hidden="true" tabindex="-1"></a>    dPL <span class="ot">=</span> kon<span class="sc">*</span>L<span class="sc">*</span>P<span class="sc">-</span>koff<span class="sc">*</span>PL</span>
+<span id="cb217-21"><a href="Binding.html#cb217-21" aria-hidden="true" tabindex="-1"></a>    res<span class="ot">&lt;-</span><span class="fu">c</span>(dL, dP, dPL)</span>
+<span id="cb217-22"><a href="Binding.html#cb217-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(res)</span>
+<span id="cb217-23"><a href="Binding.html#cb217-23" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb217-24"><a href="Binding.html#cb217-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb217-25"><a href="Binding.html#cb217-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb217-26"><a href="Binding.html#cb217-26" aria-hidden="true" tabindex="-1"></a>sol.rk4 <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">rk4</span>(val.inic, tempo, solNumKin,</span>
+<span id="cb217-27"><a href="Binding.html#cb217-27" aria-hidden="true" tabindex="-1"></a>                            parms)) <span class="co"># rotina para Runge-Kutta 4a. ordem</span></span>
+<span id="cb217-28"><a href="Binding.html#cb217-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb217-29"><a href="Binding.html#cb217-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico</span></span>
+<span id="cb217-30"><a href="Binding.html#cb217-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (sol.rk4<span class="sc">$</span>time, sol.rk4<span class="sc">$</span>L, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;tempo&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;[composto], uM&quot;</span>)</span>
+<span id="cb217-31"><a href="Binding.html#cb217-31" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;L&quot;</span>,<span class="st">&quot;P&quot;</span>,<span class="st">&quot;PL&quot;</span>),<span class="at">text.col=</span><span class="fu">c</span>(<span class="st">&quot;black&quot;</span>,<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>),<span class="at">bty=</span><span class="st">&quot;n&quot;</span>,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb217-32"><a href="Binding.html#cb217-32" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span> (sol.rk4<span class="sc">$</span>time, sol.rk4<span class="sc">$</span>P, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="fl">1.5</span>)</span>
+<span id="cb217-33"><a href="Binding.html#cb217-33" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span> (sol.rk4<span class="sc">$</span>time, sol.rk4<span class="sc">$</span>PL, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lty=</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">3</span>,<span class="at">lwd=</span><span class="fl">1.5</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-52"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-52-1.png" alt="Teores de ligante e proteína livres (L e P), bem como do complexo PL  apresentados ao longo do tempo de acordo com o método Runge-Kutta de 4a. ordem para solução de equações diferenciais." width="672" />
+<p class="caption">
+Figura 6.12: Teores de ligante e proteína livres (L e P), bem como do complexo PL apresentados ao longo do tempo de acordo com o método Runge-Kutta de 4a. ordem para solução de equações diferenciais.
+</p>
+</div>
+
+<!-- Google tag (gtag.js)-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-dahlquist197813" class="csl-entry">
+Dahlquist, FW. 1978. <span>“[13] the Meaning of Scatchard and Hill Plots.”</span> <em>Methods in Enzymology</em> 48: 270–99.
+</div>
+<div id="ref-parsons1978theoretical" class="csl-entry">
+Parsons, DL, and JJ Vallner. 1978. <span>“Theoretical Models for Cooperative Binding—i. One-Site Creator of Binding Sites.”</span> <em>Mathematical Biosciences</em> 41 (3-4): 189–215.
+</div>
+<div id="ref-sarkar2008lattice" class="csl-entry">
+Sarkar, Deepayan. 2008. <em>Lattice: Multivariate Data Visualization with r</em>. Springer Science &amp; Business Media.
+</div>
+<div id="ref-wickham2011ggplot2" class="csl-entry">
+Wickham, Hadley. 2011. <span>“Ggplot2.”</span> <em>Wiley Interdisciplinary Reviews: Computational Statistics</em> 3 (2): 180–85.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Enzimas.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="acNucl.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Bioquímica Quantitativa & R.pdf", "Bioquímica Quantitativa & R.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
