@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Workshop - Outras Funcionalidades (JSPlotly2)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../avatar.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-4b957b30fffc5edb70387ff4d75203a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo-unifal.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Sobre</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../erre.html"> 
+<span class="menu-text">Ensino Reprodutível</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-folhas-de-dicas" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Folhas de dicas</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-folhas-de-dicas">    
+        <li>
+    <a class="dropdown-item" href="../../../cheatsheet/plotly.pdf">
+ <span class="dropdown-text">Plotly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../cheatsheet/jmol_cheat.pt2.pdf">
+ <span class="dropdown-text">Jmol</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../cheatsheet/r_cheat.pt.pdf">
+ <span class="dropdown-text">R</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../producao.html"> 
+<span class="menu-text">Trabalhos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contato.html"> 
+<span class="menu-text">Contato</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../en/index.html"> 
+<span class="menu-text">EN</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Workshop - Outras Funcionalidades (JSPlotly2)</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">JSPlotly &amp; GSPlotly - Simulação gráfica interativa &amp; IA</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/jsplotly/jsplotly_geral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">JSPlotly - Simulação gráfica com JavaScript</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/jsplotly/gsplotly.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GSPlotly - gerador de códigos por IA para JSPlotly</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/jsplotly/jsplt_bioq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simulações em Biofísico-química</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/jsplotly/jsplotly_bas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simulações na Escola</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Jmol - Moléculas em 3D</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/jmol/index_jmol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelos atômicos em Bioquímica</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/Curso/index_jmol_bas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Moléculas 3D na Escola</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/Jardim/index_Jardim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Jardim de Moléculas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">R - Cálculos e visualizações</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/r/index_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R em Biofísico-química</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/ScriptRplot/scriptrplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">scriptRplot: gráficos elegantes com ggplot2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/Curso/index_r_bas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R &amp; RStudio na Escola</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/R/index_OIER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gráficos e mapas interativos na Escola</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sisma - diagramas dinâmicos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/sisma/index_sisma.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fluxos dinâmicos em Bioquímica</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/sisma/index_sisma_bas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diagramas interativos na Escola</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#barras" id="toc-barras" class="nav-link active" data-scroll-target="#barras"><span class="header-section-number">1</span> Barras</a></li>
+  <li><a href="#subplot" id="toc-subplot" class="nav-link" data-scroll-target="#subplot"><span class="header-section-number">2</span> Subplot</a></li>
+  <li><a href="#parábola-1---slider-e-surgimento" id="toc-parábola-1---slider-e-surgimento" class="nav-link" data-scroll-target="#parábola-1---slider-e-surgimento"><span class="header-section-number">3</span> Parábola 1 - slider e surgimento</a></li>
+  <li><a href="#parábola-2---controles-sliders" id="toc-parábola-2---controles-sliders" class="nav-link" data-scroll-target="#parábola-2---controles-sliders"><span class="header-section-number">4</span> Parábola 2 - controles (sliders)</a></li>
+  <li><a href="#outra-função---slider" id="toc-outra-função---slider" class="nav-link" data-scroll-target="#outra-função---slider"><span class="header-section-number">5</span> Outra função - slider</a></li>
+  <li><a href="#lançamento-oblíquo" id="toc-lançamento-oblíquo" class="nav-link" data-scroll-target="#lançamento-oblíquo"><span class="header-section-number">6</span> Lançamento oblíquo</a></li>
+  <li><a href="#menu" id="toc-menu" class="nav-link" data-scroll-target="#menu"><span class="header-section-number">7</span> Menu</a></li>
+  <li><a href="#seletor" id="toc-seletor" class="nav-link" data-scroll-target="#seletor"><span class="header-section-number">8</span> Seletor</a></li>
+  <li><a href="#mapa" id="toc-mapa" class="nav-link" data-scroll-target="#mapa"><span class="header-section-number">9</span> Mapa</a></li>
+  <li><a href="#mapa-com-animação" id="toc-mapa-com-animação" class="nav-link" data-scroll-target="#mapa-com-animação"><span class="header-section-number">10</span> Mapa com animação</a></li>
+  <li><a href="#objeto-3d" id="toc-objeto-3d" class="nav-link" data-scroll-target="#objeto-3d"><span class="header-section-number">11</span> Objeto 3D</a></li>
+  <li><a href="#superfície-3d" id="toc-superfície-3d" class="nav-link" data-scroll-target="#superfície-3d"><span class="header-section-number">12</span> Superfície 3D</a></li>
+  <li><a href="#animação---potencial-de-ação-neuronal" id="toc-animação---potencial-de-ação-neuronal" class="nav-link" data-scroll-target="#animação---potencial-de-ação-neuronal"><span class="header-section-number">13</span> Animação - potencial de ação neuronal</a></li>
+  <li><a href="#animação---histograma" id="toc-animação---histograma" class="nav-link" data-scroll-target="#animação---histograma"><span class="header-section-number">14</span> Animação - Histograma</a></li>
+  <li><a href="#painel-dashboard" id="toc-painel-dashboard" class="nav-link" data-scroll-target="#painel-dashboard"><span class="header-section-number">15</span> Painel (<em>dashboard</em>)</a></li>
+  <li><a href="#tabela" id="toc-tabela" class="nav-link" data-scroll-target="#tabela"><span class="header-section-number">16</span> Tabela</a></li>
+  <li><a href="#dados-de-usuário---csv" id="toc-dados-de-usuário---csv" class="nav-link" data-scroll-target="#dados-de-usuário---csv"><span class="header-section-number">17</span> Dados de usuário - CSV</a></li>
+  <li><a href="#curva-de-gauss-e-área-rachurada-por-p-valor" id="toc-curva-de-gauss-e-área-rachurada-por-p-valor" class="nav-link" data-scroll-target="#curva-de-gauss-e-área-rachurada-por-p-valor"><span class="header-section-number">18</span> Curva de Gauss e área rachurada por p-valor</a></li>
+  <li><a href="#regressão-linear---ajuste-no-script" id="toc-regressão-linear---ajuste-no-script" class="nav-link" data-scroll-target="#regressão-linear---ajuste-no-script"><span class="header-section-number">19</span> Regressão Linear - ajuste no script</a></li>
+  <li><a href="#treinamento-em-javascript" id="toc-treinamento-em-javascript" class="nav-link" data-scroll-target="#treinamento-em-javascript"><span class="header-section-number">20</span> Treinamento em JavaScript</a></li>
+  <li><a href="#análise-de-variância-e-teste-de-tukey-hsd" id="toc-análise-de-variância-e-teste-de-tukey-hsd" class="nav-link" data-scroll-target="#análise-de-variância-e-teste-de-tukey-hsd"><span class="header-section-number">21</span> Análise de Variância e teste de Tukey-HSD</a></li>
+  <li><a href="#animação---mini-sistema-solar" id="toc-animação---mini-sistema-solar" class="nav-link" data-scroll-target="#animação---mini-sistema-solar"><span class="header-section-number">22</span> Animação - Mini Sistema Solar</a></li>
+  <li><a href="#animação---mini-sistema-solar-2---dados-aproximados" id="toc-animação---mini-sistema-solar-2---dados-aproximados" class="nav-link" data-scroll-target="#animação---mini-sistema-solar-2---dados-aproximados"><span class="header-section-number">23</span> Animação - Mini Sistema Solar 2 - dados aproximados</a></li>
+  <li><a href="#animação---afélio-e-periélio" id="toc-animação---afélio-e-periélio" class="nav-link" data-scroll-target="#animação---afélio-e-periélio"><span class="header-section-number">24</span> Animação - Afélio e Periélio</a></li>
+  <li><a href="#animação---pêndulo" id="toc-animação---pêndulo" class="nav-link" data-scroll-target="#animação---pêndulo"><span class="header-section-number">25</span> Animação - Pêndulo</a></li>
+  <li><a href="#animação---massa-e-mola" id="toc-animação---massa-e-mola" class="nav-link" data-scroll-target="#animação---massa-e-mola"><span class="header-section-number">26</span> Animação - Massa e Mola</a></li>
+  <li><a href="#som---flauta-doce-script" id="toc-som---flauta-doce-script" class="nav-link" data-scroll-target="#som---flauta-doce-script"><span class="header-section-number">27</span> Som - flauta doce (script)</a></li>
+  <li><a href="#som---piano-script" id="toc-som---piano-script" class="nav-link" data-scroll-target="#som---piano-script"><span class="header-section-number">28</span> Som - piano (script)</a></li>
+  <li><a href="#game---pong-script" id="toc-game---pong-script" class="nav-link" data-scroll-target="#game---pong-script"><span class="header-section-number">29</span> Game - Pong (script)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Workshop - Outras Funcionalidades (JSPlotly2)</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="barras" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="barras"><span class="header-section-number">1</span> <a href="work/barras.html" target="_blank">Barras</a></h2>
+</section>
+<section id="subplot" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="subplot"><span class="header-section-number">2</span> <a href="work/subplot2.html" target="_blank">Subplot</a></h2>
+</section>
+<section id="parábola-1---slider-e-surgimento" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="parábola-1---slider-e-surgimento"><span class="header-section-number">3</span> <a href="work/parabola1.html" target="_blank">Parábola 1 - slider e surgimento</a></h2>
+</section>
+<section id="parábola-2---controles-sliders" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="parábola-2---controles-sliders"><span class="header-section-number">4</span> <a href="work/parabola2.html" target="_blank">Parábola 2 - controles (sliders)</a></h2>
+</section>
+<section id="outra-função---slider" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="outra-função---slider"><span class="header-section-number">5</span> <a href="work/funcao_slider.html" target="_blank">Outra função - slider</a></h2>
+</section>
+<section id="lançamento-oblíquo" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="lançamento-oblíquo"><span class="header-section-number">6</span> <a href="work/lancamento.html" target="_blank">Lançamento oblíquo</a></h2>
+</section>
+<section id="menu" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="menu"><span class="header-section-number">7</span> <a href="work/menu.html" target="_blank">Menu</a></h2>
+</section>
+<section id="seletor" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="seletor"><span class="header-section-number">8</span> <a href="work/8_seletor.html" target="_blank">Seletor</a></h2>
+</section>
+<section id="mapa" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="mapa"><span class="header-section-number">9</span> <a href="work/mapa.html" target="_blank">Mapa</a></h2>
+</section>
+<section id="mapa-com-animação" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="mapa-com-animação"><span class="header-section-number">10</span> <a href="work/mapaAnim.html" target="_blank">Mapa com animação</a></h2>
+</section>
+<section id="objeto-3d" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="objeto-3d"><span class="header-section-number">11</span> <a href="work/3d.html" target="_blank">Objeto 3D</a></h2>
+</section>
+<section id="superfície-3d" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="superfície-3d"><span class="header-section-number">12</span> <a href="work/3d_superf.html" target="_blank">Superfície 3D</a></h2>
+</section>
+<section id="animação---potencial-de-ação-neuronal" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="animação---potencial-de-ação-neuronal"><span class="header-section-number">13</span> <a href="work/anim_neuronio.html" target="_blank">Animação - potencial de ação neuronal</a></h2>
+</section>
+<section id="animação---histograma" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="animação---histograma"><span class="header-section-number">14</span> <a href="work/anim_histogr.html" target="_blank">Animação - Histograma</a></h2>
+</section>
+<section id="painel-dashboard" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="painel-dashboard"><span class="header-section-number">15</span> <a href="work/painel.html" target="_blank">Painel (<em>dashboard</em>)</a></h2>
+</section>
+<section id="tabela" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="tabela"><span class="header-section-number">16</span> <a href="work/tabela.html" target="_blank">Tabela</a></h2>
+</section>
+<section id="dados-de-usuário---csv" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="dados-de-usuário---csv"><span class="header-section-number">17</span> <a href="work/dados_csv.html" target="_blank">Dados de usuário - CSV</a></h2>
+</section>
+<section id="curva-de-gauss-e-área-rachurada-por-p-valor" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="curva-de-gauss-e-área-rachurada-por-p-valor"><span class="header-section-number">18</span> <a href="work/gauss.html" target="_blank">Curva de Gauss e área rachurada por p-valor</a></h2>
+</section>
+<section id="regressão-linear---ajuste-no-script" class="level2" data-number="19">
+<h2 data-number="19" class="anchored" data-anchor-id="regressão-linear---ajuste-no-script"><span class="header-section-number">19</span> <a href="work/regressLin.html" target="_blank">Regressão Linear - ajuste no script</a></h2>
+</section>
+<section id="treinamento-em-javascript" class="level2" data-number="20">
+<h2 data-number="20" class="anchored" data-anchor-id="treinamento-em-javascript"><span class="header-section-number">20</span> <a href="work/treinamento_JS.html" target="_blank">Treinamento em JavaScript</a></h2>
+</section>
+<section id="análise-de-variância-e-teste-de-tukey-hsd" class="level2" data-number="21">
+<h2 data-number="21" class="anchored" data-anchor-id="análise-de-variância-e-teste-de-tukey-hsd"><span class="header-section-number">21</span> <a href="work/ANAVA_Tukey.html" target="_blank">Análise de Variância e teste de Tukey-HSD</a></h2>
+</section>
+<section id="animação---mini-sistema-solar" class="level2" data-number="22">
+<h2 data-number="22" class="anchored" data-anchor-id="animação---mini-sistema-solar"><span class="header-section-number">22</span> <a href="work/plan4_miniSistSol.html" target="_blank">Animação - Mini Sistema Solar</a></h2>
+</section>
+<section id="animação---mini-sistema-solar-2---dados-aproximados" class="level2" data-number="23">
+<h2 data-number="23" class="anchored" data-anchor-id="animação---mini-sistema-solar-2---dados-aproximados"><span class="header-section-number">23</span> <a href="work/miniSistSol.html" target="_blank">Animação - Mini Sistema Solar 2 - dados aproximados</a></h2>
+</section>
+<section id="animação---afélio-e-periélio" class="level2" data-number="24">
+<h2 data-number="24" class="anchored" data-anchor-id="animação---afélio-e-periélio"><span class="header-section-number">24</span> <a href="work/afelio_perielio.html" target="_blank">Animação - Afélio e Periélio</a></h2>
+</section>
+<section id="animação---pêndulo" class="level2" data-number="25">
+<h2 data-number="25" class="anchored" data-anchor-id="animação---pêndulo"><span class="header-section-number">25</span> <a href="work/pendulo.html" target="_blank">Animação - Pêndulo</a></h2>
+</section>
+<section id="animação---massa-e-mola" class="level2" data-number="26">
+<h2 data-number="26" class="anchored" data-anchor-id="animação---massa-e-mola"><span class="header-section-number">26</span> <a href="work/massa_mola.html" target="_blank">Animação - Massa e Mola</a></h2>
+</section>
+<section id="som---flauta-doce-script" class="level2" data-number="27">
+<h2 data-number="27" class="anchored" data-anchor-id="som---flauta-doce-script"><span class="header-section-number">27</span> <a href="work/flauta.js" target="_blank">Som - flauta doce (script)</a></h2>
+</section>
+<section id="som---piano-script" class="level2" data-number="28">
+<h2 data-number="28" class="anchored" data-anchor-id="som---piano-script"><span class="header-section-number">28</span> <a href="work/piano.js" target="_blank">Som - piano (script)</a></h2>
+</section>
+<section id="game---pong-script" class="level2" data-number="29">
+<h2 data-number="29" class="anchored" data-anchor-id="game---pong-script"><span class="header-section-number">29</span> <a href="work/pong.js" target="_blank">Game - Pong (script)</a></h2>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> De volta ao topo</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
