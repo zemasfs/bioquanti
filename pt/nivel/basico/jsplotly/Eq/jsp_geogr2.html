@@ -13,8 +13,11 @@
     <script src="https://cdn.jsdelivr.net/npm/ml-regression@6.0.0/dist/ml-regression.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>    
     <script src="https://cdn.jsdelivr.net/npm/ml-levenberg-marquardt@3.3.0/dist/ml-levenberg-marquardt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.5/jstat.min.js"></script>
 
- 
+ <!---<body style="margin:0; padding:0;">--->
+
+
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         .container { display: flex; justify-content: space-between; align-items: flex-start; }
@@ -40,14 +43,26 @@
 
 
 .license-info {
-    position: fixed;
-    bottom: 10px;
-    right: 500px;
-    font-size: 12px;
-    color: gray;
-    font-family: Arial, sans-serif;
-    opacity: 0.8;
+  font-size: 12px;
+  color: gray;
+  font-family: Arial, sans-serif;
+  opacity: 0.8;
+  text-align: center;
+  margin: 30px auto 10px auto;
 }
+
+
+#toggleTheme {
+  position: relative;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  margin: -2px 0 0 10px; /* margem superior e esquerda */
+  display: inline-block;
+  z-index: 10;
+}
+
 
 
 .dev-info {
@@ -74,6 +89,9 @@
     display: flex; 
     gap: 10px; 
     margin-top: 10px; 
+
+  position: relative;
+  z-index: 10;
 }
 
 button { 
@@ -86,50 +104,80 @@ button {
 }
 
 
-.add-btn { 
-    background: linear-gradient(to bottom, #e6f2e6, #d0e6d0); 
-    color: #2d6a2d; 
+/* Botão base */
+button {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-
-.reset-btn { 
-    background: linear-gradient(to bottom, #fae3e3, #f4cccc); 
-    color: #a83232; 
+.add-btn {
+  background: #e2f6e9;
+  color: #207a44;
+  border-color: #b1e2c3;
 }
-
-
-.save-btn { 
-    background: linear-gradient(to bottom, #fff4e6, #ffe0b2); 
-    color: #8a5a00; 
+.add-btn:hover {
+  background: #ccf0dd;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(50, 150, 100, 0.3);
 }
-
-
-.save-html-btn { 
-    background: linear-gradient(to bottom, #f5f5f5, #e0e0e0); 
-    color: #444; 
-}
-
-.clear-btn {
-    background-color: #6c757d; 
-    color: white;
-}
-
 
 .remove-btn {
-    background-color: #faf482;
-    color: #85802a;
+  background: #fff8c6;
+  color: #887200;
+  border-color: #f0dc7d;
+}
+.remove-btn:hover {
+  background: #fdf2a8;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(200, 180, 20, 0.3);
+}
+
+.reset-btn {
+  background: #fce1e1;
+  color: #b42c2c;
+  border-color: #f4b6b6;
+}
+.reset-btn:hover {
+  background: #f8caca;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(200, 50, 50, 0.3);
+}
+
+.save-btn {
+  background: #fff1db;
+  color: #8a4b00;
+  border-color: #ffd9a2;
+}
+.save-btn:hover {
+  background: #ffe1ba;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(200, 120, 30, 0.3);
 }
 
 .clear-btn {
-    background-color: #dc3545; 
-    color: white;
-    padding: 10px;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
+  background: #f99;
+  color: white;
+  border-color: #d33;
 }
 .clear-btn:hover {
-    background-color: #a71d2a;
+  background: #e55;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(255, 80, 80, 0.5);
+}
+
+.save-html-btn {
+  background: #e6f1fb;
+  color: #125a8f;
+  border-color: #a8d0f0;
+}
+.save-html-btn:hover {
+  background: #d2e9fc;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(50, 100, 200, 0.3);
 }
 
 
@@ -145,6 +193,22 @@ button {
  text-align: right;
  z-index: 10; 
  }
+ 
+.save-project-btn {
+  background: linear-gradient(to bottom, #f3e6ff, #d3bdf0);
+  color: #5e2d91;
+  font-weight: normal;
+  border: 2px solid #b48ce3;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(140, 90, 200, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.save-project-btn:hover {
+  background: linear-gradient(to bottom, #e7d4ff, #c9aee8);
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(120, 60, 180, 0.5);
+}
+
 
 </style>
 
@@ -172,7 +236,10 @@ button {
     .button-container {
       flex-direction: column;
       gap: 8px;
-    }
+    
+  position: relative;
+  z-index: 10;
+}
 
     button {
       width: 100%;
@@ -228,6 +295,7 @@ button {
     background-color: #2b2b2b;
     color: #eee;
   }
+  
 </style>
 
 
@@ -235,14 +303,23 @@ button {
 
 
 <body>
-    <div class="header-bar">JSPlotly - Interactive Graphics </div>
+<div class="header-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 4px 10px;">
+  <button id="toggleTheme" onclick="alternarTema()" style="font-size: 18px; background: none; border: none; cursor: pointer;">
+    🌙
+  </button>
 
-<button id="toggleTheme" onclick="alternarTema()" style="position: fixed; top: 10px; left: 10px; z-index: 999; background: none; border: none; font-size: 22px; cursor: pointer;">
-  🌙
-</button>
+  <div style="flex: 1; text-align: center; font-weight: bold; font-size: 16px;">
+    JSPlotly - Interactive Graphics
+  </div>
+
+  <div style="width: 30px;"><!-- espaço vazio para equilibrar com o botão da esquerda --></div>
+</div>
+
+
+
 
 <div class="external-link">
-  <a href="https://bioquanti.netlify.app/" target="_blank">🔗 Bioquanti</a>  <!--- link para o site --->
+  <a href="https://bioquanti.netlify.app/" target="_blank">🔗 Bioquanti</a>  
 </div>
 
 
@@ -301,14 +378,32 @@ button {
   color: #0077cc;
 }
 
+.save-html-btn {
+  background: linear-gradient(to bottom, #dff0f7, #add9e6);
+  color: #004b66;
+  font-weight: normal;
+  border: 2px solid #66b8d4;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.save-html-btn:hover {
+  background: linear-gradient(to bottom, #c4ecff, #8fd3ec);
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+}
+
+
 </style>
 
   <div id="editor-container">
+  
 
-<div style="display: flex; align-items: center; gap10px; margin-bottom: 5px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
   <input type="file" id="fileInput" accept=".js" onchange="carregarEquacaoAuto(event)">
-  <span style="font-size: 13px; font-family: Arial, sans-serif; color: #2e7d57;">
-    For easy code construction, try the custom GPT
+  
+  <span style="font-size: 13px; font-family: Arial, sans-serifbioq; color: #2e7d57; text-align: right;">
+    For easy code construction, try 
     <a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly" 
        target="_blank" 
        style="color: #2e7d57 !important; font-weight: bold; text-decoration: underline;">
@@ -319,14 +414,21 @@ button {
 
 
 
+
+
        <div id="editor"></div>
        <div class="button-container">
-       <button class="add-btn" onclick="adicionarCurva()">add plot</button>
-       <button class="remove-btn" onclick="removerUltimaCurva()">remove last</button>
-       <button class="reset-btn" onclick="resetarGrafico()">clean plot</button>
-       <button class="save-html-btn" onclick="salvarHTML()">save html</button>
-       <button class="save-btn" onclick="salvarEquacao()">save script</button>                
-       <button class="clear-btn" onclick="limparEditor()">clean script</button> 
+       <button class="add-btn" onclick="adicionarCurva()">add</button>
+       <button class="remove-btn" onclick="removerUltimaCurva()">remove</button>
+       <button class="clear-btn" onclick="resetarGrafico()">clean</button> 
+       <button class="reset-btn" onclick="limparEditor()">delete</button>
+     <!---  <button class="save-html-btn" onclick="salvarHTML()">html</button> --->             
+       <button class="save-btn" onclick="salvarEquacao()">script</button> 
+       <button class="save-html-btn" onclick="salvarProjetoSomenteGrafico()">html</button>
+    <!---<button class="save-html-btn" onclick="salvarProjetoCompleto()">save project</button> --->
+       <button class="save-project-btn" onclick="salvarCloneJSPlotly()">clone</button>
+       
+    
   </div>
 </div>
     </div>
@@ -361,6 +463,11 @@ var config = {
   modeBarButtonsToAdd: [
     'toggleSpikelines',
     'hoverCompareCartesian',
+    'drawline',
+    'drawopenpath',
+    'drawrect',
+    'drawcircle',
+    //'eraseshape',
     customSaveButton,
     {
       name: 'change color',
@@ -371,7 +478,36 @@ var config = {
         Plotly.restyle(gd, { 'line.color': novaCor }, [ultima]);
         curvas[ultima].line.color = novaCor;
       }
-    }
+    },
+  {
+  name: 'Adicionar Texto',
+  icon: {
+    width: 1000,
+    height: 1000,
+    path: 'M200 800V160h600v80H540v560h-80V240H200z' // Ícone simples em forma de "T"
+  },
+  click: function(gd) {
+    // O clique no botão ativa o modo de anotação
+    const handler = function(eventData) {
+      const x = eventData.points[0].x;
+      const y = eventData.points[0].y;
+      const texto = prompt("Digite o texto a ser inserido:");
+      if (texto) {
+        Plotly.relayout(gd, {
+          annotations: (gd.layout.annotations || []).concat([{
+            x: x,
+            y: y,
+            text: texto,
+            showarrow: true,
+            arrowhead: 2
+          }])
+        });
+      }
+      gd.removeListener('plotly_click', handler);
+    };
+    gd.on('plotly_click', handler);
+  }
+}
   ],
   showEditInChartStudio: true,
   plotlyServerURL: "https://chart-studio.plotly.com",
@@ -419,57 +555,155 @@ function carregarEquacaoAuto(event) {
            }
 
 function adicionarCurva() {
+  const codigoUsuario = editor.getValue();
+
+  let consoleSaida = [];
+  const logOriginal = console.log;
+  console.log = (...args) => {
+    consoleSaida.push(args.map(arg => typeof arg === "object" ? JSON.stringify(arg) : String(arg)).join(" "));
+  };
+
+  let resultado;
+  try {
+    const func = new Function(codigoUsuario + "\nreturn typeof output !== 'undefined' ? output : undefined;");
+    resultado = func();
+  } catch (e1) {
     try {
-        var codigoUsuario = editor.getValue().trim();
-        var func = new Function(codigoUsuario + "; return { trace, layout, x_values, y_values };");
-        var resultado = func();
-
-let novaCor = cores[Math.floor(Math.random() * cores.length)];
-let novaCurva;
-
-if (resultado.trace) {
-    novaCurva = resultado.trace;
-
-    if (!novaCurva.line) {
-        novaCurva.line = {};
+      const func = new Function(codigoUsuario);
+      resultado = func();
+    } catch (e2) {
+      console.log = logOriginal;
+      alert("Erro ao executar o código:\n" + e2.message);
+      return;
     }
-    if (!novaCurva.line.color) {
-        novaCurva.line.color = novaCor;
+  }
+
+  console.log = logOriginal;
+  if (!resultado) return;
+
+  const texto = consoleSaida.map(l => "> " + l).join("<br>");
+  const layout = resultado.layout || {};
+  layout.annotations = layout.annotations || [];
+
+  if (texto.trim()) {
+    layout.annotations.push({
+      text: `<div style="font-family: monospace; font-size: 14px; max-height: 200px; overflow-y: auto; background:#f9f9f9; padding:5px; border:1px solid #ccc;">${texto}</div>`,
+      showarrow: false,
+      xref: 'paper',
+      yref: 'paper',
+      x: 0,
+      y: 1,
+      align: 'left',
+      xanchor: 'left',
+      yanchor: 'top'
+    });
+  }
+
+const config = {
+  responsive: true,
+  displaylogo: false,
+  scrollZoom: true,
+  editable: true,
+  modeBarButtonsToRemove: ['sendDataToCloud'],
+  modeBarButtonsToAdd: [
+    'toggleSpikelines',
+    'hoverCompareCartesian',
+    'drawline',
+    'drawopenpath',
+    'drawrect',
+    'drawcircle',
+    {
+      name: 'Salvar PNG/SVG',
+      icon: Plotly.Icons.disk,
+      click: () => abrirPopup()
+    },
+    {
+      name: 'Mudar cor',
+      icon: Plotly.Icons.camera,
+      click: function(gd) {
+        const ultima = curvas.length - 1;
+        const novaCor = cores[Math.floor(Math.random() * cores.length)];
+        Plotly.restyle(gd, { 'line.color': novaCor }, [ultima]);
+        curvas[ultima].line.color = novaCor;
+      }
+    },
+    {
+      name: 'Adicionar Texto',
+      icon: {
+        width: 1000,
+        height: 1000,
+        path: 'M200 800V160h600v80H540v560h-80V240H200z'
+      },
+      click: function(gd) {
+        const handler = function(eventData) {
+          const x = eventData.points[0].x;
+          const y = eventData.points[0].y;
+          const texto = prompt("Digite o texto a ser inserido:");
+          if (texto) {
+            Plotly.relayout(gd, {
+              annotations: (gd.layout.annotations || []).concat([{
+                x, y, text: texto, showarrow: true, arrowhead: 2
+              }])
+            });
+          }
+          gd.removeListener('plotly_click', handler);
+        };
+        gd.on('plotly_click', handler);
+      }
     }
-} else if (resultado.x_values && resultado.y_values) {
-    novaCurva = {
-        x: resultado.x_values,
-        y: resultado.y_values,
-        type: 'scatter',
-        mode: 'lines',
-        line: { color: novaCor }
-    };
-} else {
-    alert("O código precisa retornar 'trace' ou 'x_values' e 'y_values'.");
-    return;
+  ]
+};
+
+
+  let data = [];
+  if (resultado.data) {
+    data = resultado.data;
+  } else if (resultado.trace) {
+    data = [resultado.trace];
+  } else if (resultado.traces) {
+    data = resultado.traces;
+  } else if (resultado.x_values && resultado.y_values) {
+    data = [{
+      x: resultado.x_values,
+      y: resultado.y_values,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: resultado.title || "Curva"
+    }];
+    if (resultado.x_range) layout.xaxis = { range: resultado.x_range, title: resultado.x_label || "" };
+    if (resultado.y_range) layout.yaxis = { range: resultado.y_range, title: resultado.y_label || "" };
+    layout.title = resultado.title || "";
+  }
+
+  curvas.push(...data);
+
+  Plotly.newPlot("grafico", curvas, layout, config).then(() => {
+    if (resultado.frames && resultado.frames.length > 0) {
+      Plotly.addFrames("grafico", resultado.frames);
+      Plotly.animate("grafico", null, {
+        frame: { duration: 80, redraw: true },
+        transition: { duration: 0 }
+      });
+    }
+  });
 }
 
 
-        curvas.push(novaCurva);
-        Plotly.newPlot("grafico", curvas, resultado.layout, config);
-    } catch (error) {
-        alert("Erro ao adicionar curva: " + error.message);
-        console.error(error);
-    }
-}
 
 
 function resetarGrafico() {
             curvas = [];
             corIndex = 0;
-            Plotly.newPlot('grafico', [], {xaxis: { title: 'X' }, yaxis: { title: 'Y' } });
+            Plotly.newPlot('grafico', [], {xaxis: { title: 'X' }, yaxis: {
+          zeroline: true,
+          zeroline: true, title: 'Y' } });
         }
 
 function salvarEquacao() {
     var blob = new Blob([editor.getValue()], { type: "text/javascript" });
     var a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = "equacao_salva.js";
+        a.download = "script.js";
         document.body.appendChild(a);
         a.click();
             document.body.removeChild(a);
@@ -497,10 +731,20 @@ function salvarHTML() {
                 '</body>\n' +
                 '</html>';
 
+function salvarAppCompleto() {
+  const htmlBase = document.documentElement.outerHTML;
+  const blob = new Blob([htmlBase], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "jsplotly_completo.html";
+  a.click();
+}
+
+
 var blob = new Blob([htmlContent], { type: 'text/html' });
 var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'grafico_interativo.html';
+//    a.download = 'grafico_interativo.html';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -515,7 +759,7 @@ function removerUltimaCurva() {
     curvas.pop(); 
     atualizarGrafico(); 
         } else {
-        alert("Não há curvas para remover!");
+        alert("No curves to remove!");
       }
     }
 
@@ -524,7 +768,9 @@ function atualizarGrafico() {
     Plotly.newPlot('grafico', curvas, {
         title: 'Gráfico Interativo',
         xaxis: { title: 'X' },
-        yaxis: { title: 'Y' },
+        yaxis: {
+          zeroline: true,
+          zeroline: true, title: 'Y' },
         showlegend: true
     });
 }
@@ -538,7 +784,7 @@ function fecharPopup() {
 }
 
 function salvarImagem(formato) {
-    Plotly.downloadImage('grafico', {format: formato, filename: 'grafico_interativo'});
+    Plotly.downloadImage('grafico', {format: formato, filename: 'plot'});
     fecharPopup();
 }
 
@@ -549,7 +795,9 @@ function limparTudo() {
      if (graficoDiv) {
             Plotly.newPlot("grafico", [], {
             xaxis: { title: "Eixo X" },
-            yaxis: { title: "Eixo Y" }
+            yaxis: {
+          zeroline: true,
+          zeroline: true, title: "Eixo Y" }
         });
         graficoDiv.data = [];
     }
@@ -558,6 +806,8 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
+
+
 
 const trace = {
     type: "choropleth",
@@ -609,17 +859,19 @@ const layout = {
 return { trace, layout };
 
 
+
+
 `;
 
 
 window.onload = function() {
     editor.setValue(codigoPadrao, -1);
-};  resetarGrafico();
+    resetarGrafico();
+};
+
    
 </script>
 
-<div class="license-info">
-    <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" style="color: gray; text-decoration: none;">
 
 <div class="license-info">
   <p>
@@ -647,7 +899,9 @@ window.onload = function() {
     paper_bgcolor: "#1e1e1e",
     font: { color: "#e0e0e0" },
     xaxis: { color: "#e0e0e0", gridcolor: "#444" },
-    yaxis: { color: "#e0e0e0", gridcolor: "#444" }
+    yaxis: {
+          zeroline: true,
+          zeroline: true, color: "#e0e0e0", gridcolor: "#444" }
   };
 
   const layoutClaro = {
@@ -655,7 +909,9 @@ window.onload = function() {
     paper_bgcolor: "#ffffff",
     font: { color: "#000000" },
     xaxis: { color: "#000", gridcolor: "#ccc" },
-    yaxis: { color: "#000", gridcolor: "#ccc" }
+    yaxis: {
+          zeroline: true,
+          zeroline: true, color: "#000", gridcolor: "#ccc" }
   };
 
   const layoutNovo = isDark ? layoutEscuro : layoutClaro;
@@ -665,7 +921,186 @@ window.onload = function() {
 
 </script>
 
+<script>
+function salvarAppCompleto() {
+  const gd = document.getElementById("grafico");
+  const curvasAtuais = JSON.stringify(gd.data);
+  const layoutAtual = JSON.stringify(gd.layout || {});
+
+  let htmlCompleto = document.documentElement.outerHTML;
+
+  // Script que será injetado no HTML salvo para redesenhar o gráfico
+  const scriptPlotly = `
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const data = ${curvasAtuais};
+        const layout = ${layoutAtual};
+        Plotly.newPlot("grafico", data, layout);
+      });
+    <\\/script>
+  `;
+
+</script>
+
+
+<script>
+function salvarProjetoCompleto() {
+  const gd = document.getElementById("grafico");
+  const curvasStr = JSON.stringify(gd.data);
+  const layoutStr = JSON.stringify(gd.layout || {});
+  const codigoStr = JSON.stringify(editor.getValue());
+  const temaEscuro = document.body.classList.contains("dark-mode");
+
+  let htmlContent = ''
+    + '<!DOCTYPE html>\n'
+    + '<html lang="pt">\n'
+    + '<head>\n'
+    + '  <meta charset="UTF-8">\n'
+    + '  <title>JSPlotly Projeto Salvo</title>\n'
+    + '  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"><\/script>\n'
+    + '  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"><\/script>\n'
+    + '  <style>\n'
+    + '    body { font-family: Arial, sans-serif; margin: 20px; }\n'
+    + '    .container { display: flex; justify-content: space-between; align-items: flex-start; }\n'
+    + '    #grafico { width: 55%; height: 500px; }\n'
+    + '    #editor-container { width: 40%; }\n'
+    + '    #editor { width: 100%; height: 350px; border: 1px solid #ccc; }\n'
+    + '  </style>\n'
+    + '</head>\n'
+    + '<body>\n'
+    + '  <h2>JSPlotly - Projeto Salvo</h2>\n'
+    + '  <div class="container">\n'
+    + '    <div id="grafico"></div>\n'
+    + '    <div id="editor-container">\n'
+    + '      <div id="editor"></div>\n'
+    + '    </div>\n'
+    + '  </div>\n'
+    + '  <script>\n'
+    + '    const curvas = ' + curvasStr + ';\n'
+    + '    const layout = ' + layoutStr + ';\n'
+    + '    const codigo = ' + codigoStr + ';\n'
+    + '    const temaEscuro = ' + JSON.stringify(temaEscuro) + ';\n'
+    + '    const editor = ace.edit("editor");\n'
+    + '    editor.setTheme(temaEscuro ? "ace/theme/monokai" : "ace/theme/github");\n'
+    + '    editor.session.setMode("ace/mode/javascript");\n'
+    + '    editor.setValue(codigo, -1);\n'
+    + '    layout.editable = true;\n'
+    + '    Plotly.newPlot("grafico", curvas, layout);\n'
+    + '    document.body.classList.toggle("dark-mode", temaEscuro);\n'
+    + '    document.getElementById("grafico").on("plotly_click", function(data) {\n'
+    + '      const y = data.points[0].y;\n'
+    + '      const ctx = new (window.AudioContext || window.webkitAudioContext)();\n'
+    + '      const osc = ctx.createOscillator();\n'
+    + '      const gain = ctx.createGain();\n'
+    + '      osc.type = "sine";\n'
+    + '      osc.frequency.setValueAtTime(y, ctx.currentTime);\n'
+    + '      osc.connect(gain);\n'
+    + '      gain.connect(ctx.destination);\n'
+    + '      osc.start();\n'
+    + '      osc.stop(ctx.currentTime + 0.4);\n'
+    + '    });\n'
+    + '  <\/script>\n'
+    + '</body>\n'
+    + '</html>';
+
+  const blob = new Blob([htmlContent], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "jsplotly_projeto.html";
+  a.click();
+}
+</script>
+
+<script>
+function salvarProjetoSomenteGrafico() {
+  const gd = document.getElementById("grafico");
+  const curvasStr = JSON.stringify(gd.data);
+  const layoutStr = JSON.stringify(gd.layout || {});
+  const framesData = gd._transitionData && gd._transitionData._frames;
+  const framesStr = JSON.stringify(framesData || []);
+  const temaEscuro = document.body.classList.contains("dark-mode");
+
+  let htmlContent = ''
+    + '<!DOCTYPE html>\n'
+    + '<html lang="pt">\n'
+    + '<head>\n'
+    + '  <meta charset="UTF-8">\n'
+    + '  <title>JSPlotly Gráfico Exportado</title>\n'
+    + '  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"><\/script>\n'
+    + '  <style>\n'
+    + '    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: ' + (temaEscuro ? '#1e1e1e' : '#ffffff') + '; color: ' + (temaEscuro ? '#e0e0e0' : '#000000') + '; }\n'
+    + '    #grafico { width: 100vw; height: 100vh; }\n'
+    + '  </style>\n'
+    + '</head>\n'
+    + '<body>\n'
+    + '  <div id="grafico"></div>\n'
+    + '  <script>\n'
+    + '    const data = ' + curvasStr + ';\n'
+    + '    const layout = ' + layoutStr + ';\n'
+    + '    const frames = ' + framesStr + ';\n'
+    + '    layout.editable = false;\n'
+    + '    Plotly.newPlot("grafico", data, layout).then(function() {\n'
+    + '      if (frames && frames.length > 0) {\n'
+    + '        Plotly.addFrames("grafico", frames);\n'
+    + '        Plotly.animate("grafico", null, { frame: { duration: 500, redraw: true }, transition: { duration: 300 } });\n'
+    + '      }\n'
+    + '    });\n'
+    + '    document.getElementById("grafico").on("plotly_click", function(data) {\n'
+    + '      const y = data.points[0].y;\n'
+    + '      const ctx = new (window.AudioContext || window.webkitAudioContext)();\n'
+    + '      const osc = ctx.createOscillator();\n'
+    + '      const gain = ctx.createGain();\n'
+    + '      osc.type = "sine";\n'
+    + '      osc.frequency.setValueAtTime(y, ctx.currentTime);\n'
+    + '      osc.connect(gain);\n'
+    + '      gain.connect(ctx.destination);\n'
+    + '      osc.start();\n'
+    + '      osc.stop(ctx.currentTime + 0.4);\n'
+    + '    });\n'
+    + '  <\/script>\n'
+    + '</body>\n'
+    + '</html>';
+
+  const blob = new Blob([htmlContent], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "play.html";
+  a.click();
+}
+</script>
+
+
+
+
+<script>
+function salvarCloneJSPlotly() {
+  // Captura o código do usuário e escapa com segurança
+  const codigoNovo = editor.getValue()
+    .replace(/\\/g, '\\\\')
+    .replace(/`/g, '\\`')
+    .replace(/\$/g, '\\$');
+
+  // Substitui diretamente o valor da variável codigoPadrao na string
+  const novaDefinicao = 'var codigoPadrao = `' + codigoNovo + '`;';
+  
+  // Extrai o HTML original em partes
+  const htmlOriginal = document.documentElement.outerHTML;
+
+  const htmlAtualizado = htmlOriginal.replace(
+    /var codigoPadrao = `([\s\S]*?)`;/,
+    novaDefinicao
+  );
+
+  const blob = new Blob([htmlAtualizado], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "JSPlotly.html";
+  a.click();
+}
+</script>
+
 
 </body>
 </html>
+
 

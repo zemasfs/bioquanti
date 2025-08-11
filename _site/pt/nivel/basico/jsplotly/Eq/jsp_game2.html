@@ -807,68 +807,99 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
-// === Contagem de palavras (PT-BR) com barras e limpeza ===
-const texto = "A educação no Brasil enfrenta desafios históricos e estruturais. A desigualdade de acesso à escolas, a qualidade do ensino e a valorização dos professores são temas recorrentes nos debates públicos de educação. Muitos estudantes, especialmente em regiões periféricas e com comprometimentos históricos no ensino, convivem com a precariedade das escolas, a falta de recursos e a ausência de políticas consistentes. Investir em educação é investir no futuro. Entretanto, políticas públicas nem sempre acompanham a urgência do problema em educação. A falta de planejamento em educação, os cortes orçamentários e a burocracia dificultam a implementação de melhoriaspara as escolas. É preciso garantir equidade da educação, promover inclusão e assegurar que cada criança e jovem tenha acesso a uma educação de qualidade. Sem isso, o desenvolvimento do país segue comprometido.";
 
-// 1) Normalização: minúsculas, remover acentos e sinais não alfanuméricos
-const textoLimpo = texto
-  .toLowerCase()
-  .normalize('NFD')                        // separa acentos
-  .replace(/\p{Diacritic}/gu, '')         // remove acentos (se o engine suportar \p{...})
-  .replace(/[^\p{L}\p{N}\s]/gu, ' ');     // mantém só letras/números/espaço
 
-// 2) Stopwords básicas
-const stopwords = new Set([
-  'a','as','o','os','um','uma','uns','umas',
-  'de','do','da','dos','das','no','na','nos','nas','ao','aos','à','às',
-  'e','ou','em','para','por','com','sem','sobre','entre','apenas',
-  'que','se','sua','seu','suas','seus','sao','ser','foi','é','esta','este','essa','esse',
-  'num','numa','mesmo','mais','menos'
-]);
+// 🔧 Configurações do jogo
+const jogue = false;      // false = exibe todos os valores para memorização; true = mostra apenas um valor
+const verificar = false;  // true = mostra o valor escolhido pelo aluno para comparar com o par
+const semente = 123;      // mude para alterar a disposição dos pares
 
-// 3) Tokenização + filtro
-const palavras = textoLimpo
-  .replace(/\s+/g, ' ')
-  .trim()
-  .split(' ')
-  .filter(w => w.length >= 3 && !stopwords.has(w));
+// 📐 Grid e pares
+const linhas = 4;
+const colunas = 4;
+const totalPares = (linhas * colunas) / 2;
+const x_labels = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-// 4) Frequências
-const freq = {};
-for (const w of palavras) freq[w] = (freq[w] || 0) + 1;
+// 🎲 Gerar e embaralhar valores com base na semente
+let valores = [];
+for (let i = 0; i < totalPares; i++) {
+    const numero = Math.floor(semente * Math.sin(i + 1));
+    valores.push(numero, numero); // pares
+}
 
-// 5) Top 20
-const entradas = Object.entries(freq)
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 20);
+// Embaralhamento determinístico
+for (let i = valores.length - 1; i > 0; i--) {
+    const j = Math.abs(Math.floor(semente * Math.cos(i + 1))) % (i + 1);
+    [valores[i], valores[j]] = [valores[j], valores[i]];
+}
 
-const x_values = entradas.map(e => e[0]);
-const y_values = entradas.map(e => e[1]);
+// 🎯 Definir índice do valor mostrado
+let idxMostrar = parseInt(localStorage.getItem("revealedIdx"));
+if (!jogue) {
+    idxMostrar = null; // mostra todos
+    localStorage.setItem("revealedIdx", Math.floor(Math.random() * valores.length));
+}
 
-// 6) Gráfico de barras
+// 🎯 Definir índice do valor escolhido pelo aluno
+let idxEscolhido = null;
+if (verificar) {
+    const entrada = prompt("Digite a posição do outro par (ex: C3):");
+    const colLetra = entrada[0].toUpperCase();
+    const linhaNum = parseInt(entrada.slice(1));
+    const colIdx = x_labels.indexOf(colLetra);
+    const linIdx = linhas - linhaNum;
+    idxEscolhido = linIdx * colunas + colIdx;
+}
+
+// 🎨 Construção do gráfico
+const x_values = [], y_values = [], texts = [];
+for (let i = 0; i < linhas * colunas; i++) {
+    const x = x_labels[i % colunas];
+    const y = linhas - Math.floor(i / colunas);
+    x_values.push(x);
+    y_values.push(y);
+
+    if (!jogue) {
+        texts.push(valores[i]); // mostra todos
+    } else {
+        if (i === idxMostrar || i === idxEscolhido) {
+            texts.push(valores[i]);
+        } else {
+            texts.push("?");
+        }
+    }
+}
+
 const trace = {
-  type: 'bar',
-  x: x_values,
-  y: y_values,
-  text: y_values.map(String),
-  textposition: 'outside'
+    x: x_values,
+    y: y_values,
+    text: texts,
+    mode: "text",
+    type: "scatter",
+    textfont: { size: 24 }
 };
 
 const layout = {
-  title: '20 palavras mais frequentes (texto limpo)',
-  xaxis: {
-    title: 'Palavra',
-    tickangle: -45,
-    categoryorder: 'array',
-    categoryarray: x_values,
-    automargin: true,
-    ticklabeloverflow: 'allow'   // <<< evita cortar o começo dos rótulos
-  },
-  yaxis: { title: 'Frequência', rangemode: 'tozero', automargin: true },
-  margin: { t: 70, b: 140, r: 20, l: 60 } // <<< mais espaço para os rótulos rotacionados
+    title: "Jogo da Memória Numérica",
+    xaxis: {
+        tickvals: x_labels,
+        title: "Colunas",
+        fixedrange: true
+    },
+    yaxis: {
+        tickvals: Array.from({ length: linhas }, (_, i) => i + 1),
+        title: "Linhas",
+        fixedrange: true
+    },
+    margin: { t: 50 },
+    showlegend: false
 };
 
 return { trace, layout };
+
+
+
+
 
 
 `;

@@ -807,68 +807,60 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
-// === Contagem de palavras (PT-BR) com barras e limpeza ===
-const texto = "A educação no Brasil enfrenta desafios históricos e estruturais. A desigualdade de acesso à escolas, a qualidade do ensino e a valorização dos professores são temas recorrentes nos debates públicos de educação. Muitos estudantes, especialmente em regiões periféricas e com comprometimentos históricos no ensino, convivem com a precariedade das escolas, a falta de recursos e a ausência de políticas consistentes. Investir em educação é investir no futuro. Entretanto, políticas públicas nem sempre acompanham a urgência do problema em educação. A falta de planejamento em educação, os cortes orçamentários e a burocracia dificultam a implementação de melhoriaspara as escolas. É preciso garantir equidade da educação, promover inclusão e assegurar que cada criança e jovem tenha acesso a uma educação de qualidade. Sem isso, o desenvolvimento do país segue comprometido.";
 
-// 1) Normalização: minúsculas, remover acentos e sinais não alfanuméricos
-const textoLimpo = texto
-  .toLowerCase()
-  .normalize('NFD')                        // separa acentos
-  .replace(/\p{Diacritic}/gu, '')         // remove acentos (se o engine suportar \p{...})
-  .replace(/[^\p{L}\p{N}\s]/gu, ' ');     // mantém só letras/números/espaço
 
-// 2) Stopwords básicas
-const stopwords = new Set([
-  'a','as','o','os','um','uma','uns','umas',
-  'de','do','da','dos','das','no','na','nos','nas','ao','aos','à','às',
-  'e','ou','em','para','por','com','sem','sobre','entre','apenas',
-  'que','se','sua','seu','suas','seus','sao','ser','foi','é','esta','este','essa','esse',
-  'num','numa','mesmo','mais','menos'
-]);
+// Parâmetros do fractal de Julia
+const largura = 300;
+const altura = 300;
+const maxIter = 100;
+const lim = 2;
+const c_re = -0.70176;
+const c_im = -0.3842;
 
-// 3) Tokenização + filtro
-const palavras = textoLimpo
-  .replace(/\s+/g, ' ')
-  .trim()
-  .split(' ')
-  .filter(w => w.length >= 3 && !stopwords.has(w));
+// Intervalo do plano complexo
+const xmin = -1.5, xmax = 1.5;
+const ymin = -1.5, ymax = 1.5;
 
-// 4) Frequências
-const freq = {};
-for (const w of palavras) freq[w] = (freq[w] || 0) + 1;
+// Geração da matriz z com contagem de iterações
+let z = [];
+for (let i = 0; i < altura; i++) {
+    let linha = [];
+    const y = ymin + (ymax - ymin) * i / altura;
+    for (let j = 0; j < largura; j++) {
+        const x = xmin + (xmax - xmin) * j / largura;
+        let zx = x, zy = y;
+        let n = 0;
+        while (zx * zx + zy * zy <= lim * lim && n < maxIter) {
+            const xtemp = zx * zx - zy * zy + c_re;
+            zy = 2 * zx * zy + c_im;
+            zx = xtemp;
+            n++;
+        }
+        linha.push(n);
+    }
+    z.push(linha);
+}
 
-// 5) Top 20
-const entradas = Object.entries(freq)
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 20);
-
-const x_values = entradas.map(e => e[0]);
-const y_values = entradas.map(e => e[1]);
-
-// 6) Gráfico de barras
+// Trace do tipo heatmap para visualização do fractal
 const trace = {
-  type: 'bar',
-  x: x_values,
-  y: y_values,
-  text: y_values.map(String),
-  textposition: 'outside'
+    z: z,
+    type: 'heatmap',
+    colorscale: 'Inferno',
+    showscale: false
 };
 
+// Layout limpo com título e centralização
 const layout = {
-  title: '20 palavras mais frequentes (texto limpo)',
-  xaxis: {
-    title: 'Palavra',
-    tickangle: -45,
-    categoryorder: 'array',
-    categoryarray: x_values,
-    automargin: true,
-    ticklabeloverflow: 'allow'   // <<< evita cortar o começo dos rótulos
-  },
-  yaxis: { title: 'Frequência', rangemode: 'tozero', automargin: true },
-  margin: { t: 70, b: 140, r: 20, l: 60 } // <<< mais espaço para os rótulos rotacionados
+    title: 'Conjunto de Julia para c = ' + c_re + ' + ' + c_im + 'i',
+    xaxis: { visible: false },
+    yaxis: { visible: false },
+    width: 600,
+    height: 600,
+    margin: { t: 40, b: 0, l: 0, r: 0 }
 };
 
 return { trace, layout };
+
 
 
 `;

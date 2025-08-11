@@ -807,69 +807,52 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
-// === Contagem de palavras (PT-BR) com barras e limpeza ===
-const texto = "A educação no Brasil enfrenta desafios históricos e estruturais. A desigualdade de acesso à escolas, a qualidade do ensino e a valorização dos professores são temas recorrentes nos debates públicos de educação. Muitos estudantes, especialmente em regiões periféricas e com comprometimentos históricos no ensino, convivem com a precariedade das escolas, a falta de recursos e a ausência de políticas consistentes. Investir em educação é investir no futuro. Entretanto, políticas públicas nem sempre acompanham a urgência do problema em educação. A falta de planejamento em educação, os cortes orçamentários e a burocracia dificultam a implementação de melhoriaspara as escolas. É preciso garantir equidade da educação, promover inclusão e assegurar que cada criança e jovem tenha acesso a uma educação de qualidade. Sem isso, o desenvolvimento do país segue comprometido.";
+// Mapa do Brasil e Capitais
 
-// 1) Normalização: minúsculas, remover acentos e sinais não alfanuméricos
-const textoLimpo = texto
-  .toLowerCase()
-  .normalize('NFD')                        // separa acentos
-  .replace(/\p{Diacritic}/gu, '')         // remove acentos (se o engine suportar \p{...})
-  .replace(/[^\p{L}\p{N}\s]/gu, ' ');     // mantém só letras/números/espaço
-
-// 2) Stopwords básicas
-const stopwords = new Set([
-  'a','as','o','os','um','uma','uns','umas',
-  'de','do','da','dos','das','no','na','nos','nas','ao','aos','à','às',
-  'e','ou','em','para','por','com','sem','sobre','entre','apenas',
-  'que','se','sua','seu','suas','seus','sao','ser','foi','é','esta','este','essa','esse',
-  'num','numa','mesmo','mais','menos'
-]);
-
-// 3) Tokenização + filtro
-const palavras = textoLimpo
-  .replace(/\s+/g, ' ')
-  .trim()
-  .split(' ')
-  .filter(w => w.length >= 3 && !stopwords.has(w));
-
-// 4) Frequências
-const freq = {};
-for (const w of palavras) freq[w] = (freq[w] || 0) + 1;
-
-// 5) Top 20
-const entradas = Object.entries(freq)
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 20);
-
-const x_values = entradas.map(e => e[0]);
-const y_values = entradas.map(e => e[1]);
-
-// 6) Gráfico de barras
 const trace = {
-  type: 'bar',
-  x: x_values,
-  y: y_values,
-  text: y_values.map(String),
-  textposition: 'outside'
+  type: 'scattergeo',
+  mode: 'markers+text',
+  text: [
+    'Rio Branco', 'Macapá', 'Manaus', 'Belém', 'Palmas', 'São Luís', 'Porto Velho',
+    'Boa Vista', 'Cuiabá', 'Campo Grande', 'Goiânia', 'Brasília', 'Belo Horizonte',
+    'Vitória', 'São Paulo', 'Rio de Janeiro', 'Curitiba', 'Porto Alegre', 'Florianópolis',
+    'Recife', 'Maceió', 'Aracaju', 'Salvador', 'Natal', 'João Pessoa', 'Fortaleza', 'Teresina'
+  ],
+  lon: [
+    -67.81, -51.05, -60.02, -48.50, -48.29, -44.30, -63.90,
+    -60.67, -56.10, -54.61, -49.25, -47.93, -19.92,
+    -40.31, -46.63, -43.17, -49.27, -51.23, -48.55,
+    -34.87, -35.73, -37.07, -38.52, -35.21, -34.87, -38.52, -42.80
+  ],
+  lat: [
+    -9.97, 0.03, -3.10, -1.46, -10.19, -2.52, -8.76,
+    2.81, -15.60, -20.45, -16.68, -15.78, -19.92,
+    -20.32, -23.55, -22.91, -25.42, -30.03, -27.59,
+    -8.05, -9.66, -10.91, -12.97, -5.80, -7.12, -3.71, -5.09
+  ],
+  marker: {
+    size: 8,
+    color: 'blue'
+  },
+  textposition: 'top center',
+  name: 'Capitais',
+  geo: 'geo' // 🔹 fundamental para o layout reconhecer como mapa
 };
 
 const layout = {
-  title: '20 palavras mais frequentes (texto limpo)',
-  xaxis: {
-    title: 'Palavra',
-    tickangle: -45,
-    categoryorder: 'array',
-    categoryarray: x_values,
-    automargin: true,
-    ticklabeloverflow: 'allow'   // <<< evita cortar o começo dos rótulos
-  },
-  yaxis: { title: 'Frequência', rangemode: 'tozero', automargin: true },
-  margin: { t: 70, b: 140, r: 20, l: 60 } // <<< mais espaço para os rótulos rotacionados
+  title: 'Capitais do Brasil',
+  geo: {
+    scope: 'south america',
+    projection: { type: 'mercator' },
+    showland: true,
+    landcolor: 'rgb(217, 217, 217)',
+    countrycolor: 'rgb(255, 255, 255)',
+    lonaxis: { range: [-75, -30] },
+    lataxis: { range: [-35, 5] }
+  }
 };
 
 return { trace, layout };
-
 
 `;
 

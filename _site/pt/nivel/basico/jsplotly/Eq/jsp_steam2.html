@@ -807,68 +807,67 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
-// === Contagem de palavras (PT-BR) com barras e limpeza ===
-const texto = "A educação no Brasil enfrenta desafios históricos e estruturais. A desigualdade de acesso à escolas, a qualidade do ensino e a valorização dos professores são temas recorrentes nos debates públicos de educação. Muitos estudantes, especialmente em regiões periféricas e com comprometimentos históricos no ensino, convivem com a precariedade das escolas, a falta de recursos e a ausência de políticas consistentes. Investir em educação é investir no futuro. Entretanto, políticas públicas nem sempre acompanham a urgência do problema em educação. A falta de planejamento em educação, os cortes orçamentários e a burocracia dificultam a implementação de melhoriaspara as escolas. É preciso garantir equidade da educação, promover inclusão e assegurar que cada criança e jovem tenha acesso a uma educação de qualidade. Sem isso, o desenvolvimento do país segue comprometido.";
 
-// 1) Normalização: minúsculas, remover acentos e sinais não alfanuméricos
-const textoLimpo = texto
-  .toLowerCase()
-  .normalize('NFD')                        // separa acentos
-  .replace(/\p{Diacritic}/gu, '')         // remove acentos (se o engine suportar \p{...})
-  .replace(/[^\p{L}\p{N}\s]/gu, ' ');     // mantém só letras/números/espaço
 
-// 2) Stopwords básicas
-const stopwords = new Set([
-  'a','as','o','os','um','uma','uns','umas',
-  'de','do','da','dos','das','no','na','nos','nas','ao','aos','à','às',
-  'e','ou','em','para','por','com','sem','sobre','entre','apenas',
-  'que','se','sua','seu','suas','seus','sao','ser','foi','é','esta','este','essa','esse',
-  'num','numa','mesmo','mais','menos'
-]);
+// Perfil: função radial mais realista para vaso cerâmico
+const k = 1.5;          // controle de curvatura (1.0 a 2.5 recomendável)
+const esc = 1.0;         // escala horizontal
+const cor = 'Earth';     // escolha: 'Earth', 'YlOrBr', 'Blues', etc.
 
-// 3) Tokenização + filtro
-const palavras = textoLimpo
-  .replace(/\s+/g, ' ')
-  .trim()
-  .split(' ')
-  .filter(w => w.length >= 3 && !stopwords.has(w));
+// Domínio em y (altura do vaso)
+const y = [], r = [];
+for (let i = 0; i <= 1; i += 0.01) {
+  const yi = i * 20 - 10; // de -10 a +10
+  y.push(yi);
+  // Perfil suavemente convexo: base fina, meio mais largo, topo menor
+  const base = 0.3;
+  const curva = esc * (1 + 0.8 * Math.sin(Math.PI * i) * Math.exp(-k * Math.abs(i - 0.5)));
+  r.push(base + curva);
+}
 
-// 4) Frequências
-const freq = {};
-for (const w of palavras) freq[w] = (freq[w] || 0) + 1;
+// Geração da superfície por revolução
+const theta = [], deg2rad = Math.PI / 180;
+for (let i = 0; i <= 360; i += 5) theta.push(i * deg2rad);
 
-// 5) Top 20
-const entradas = Object.entries(freq)
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 20);
+const x_vals = [], y_vals = [], z_vals = [];
+for (let j = 0; j < y.length; j++) {
+  const x_row = [], y_row = [], z_row = [];
+  for (let i = 0; i < theta.length; i++) {
+    x_row.push(r[j] * Math.cos(theta[i]));
+    y_row.push(y[j]);
+    z_row.push(r[j] * Math.sin(theta[i]));
+  }
+  x_vals.push(x_row);
+  y_vals.push(y_row);
+  z_vals.push(z_row);
+}
 
-const x_values = entradas.map(e => e[0]);
-const y_values = entradas.map(e => e[1]);
-
-// 6) Gráfico de barras
 const trace = {
-  type: 'bar',
-  x: x_values,
-  y: y_values,
-  text: y_values.map(String),
-  textposition: 'outside'
+  type: 'surface',
+  x: x_vals,
+  y: y_vals,
+  z: z_vals,
+  colorscale: cor,
+  showscale: false,
+  lighting: { ambient: 0.5, diffuse: 0.9 },
+  contours: { z: { show: false } }
 };
 
 const layout = {
-  title: '20 palavras mais frequentes (texto limpo)',
-  xaxis: {
-    title: 'Palavra',
-    tickangle: -45,
-    categoryorder: 'array',
-    categoryarray: x_values,
-    automargin: true,
-    ticklabeloverflow: 'allow'   // <<< evita cortar o começo dos rótulos
+  title: 'Vaso de Torno de Oleiro',
+  scene: {
+    xaxis: { title: '', visible: false },
+    yaxis: { title: 'Altura', range: [-10, 10] },
+    zaxis: { title: '', visible: false },
+    aspectratio: { x: 1, y: 2, z: 1 }
   },
-  yaxis: { title: 'Frequência', rangemode: 'tozero', automargin: true },
-  margin: { t: 70, b: 140, r: 20, l: 60 } // <<< mais espaço para os rótulos rotacionados
+  margin: { l: 0, r: 0, t: 50, b: 0 }
 };
 
 return { trace, layout };
+
+
+
 
 
 `;

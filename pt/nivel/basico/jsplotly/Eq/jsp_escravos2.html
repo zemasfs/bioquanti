@@ -807,68 +807,59 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
-// === Contagem de palavras (PT-BR) com barras e limpeza ===
-const texto = "A educação no Brasil enfrenta desafios históricos e estruturais. A desigualdade de acesso à escolas, a qualidade do ensino e a valorização dos professores são temas recorrentes nos debates públicos de educação. Muitos estudantes, especialmente em regiões periféricas e com comprometimentos históricos no ensino, convivem com a precariedade das escolas, a falta de recursos e a ausência de políticas consistentes. Investir em educação é investir no futuro. Entretanto, políticas públicas nem sempre acompanham a urgência do problema em educação. A falta de planejamento em educação, os cortes orçamentários e a burocracia dificultam a implementação de melhoriaspara as escolas. É preciso garantir equidade da educação, promover inclusão e assegurar que cada criança e jovem tenha acesso a uma educação de qualidade. Sem isso, o desenvolvimento do país segue comprometido.";
 
-// 1) Normalização: minúsculas, remover acentos e sinais não alfanuméricos
-const textoLimpo = texto
-  .toLowerCase()
-  .normalize('NFD')                        // separa acentos
-  .replace(/\p{Diacritic}/gu, '')         // remove acentos (se o engine suportar \p{...})
-  .replace(/[^\p{L}\p{N}\s]/gu, ' ');     // mantém só letras/números/espaço
+// Tráfico de Escravos nas Américas (1500-1888)
 
-// 2) Stopwords básicas
-const stopwords = new Set([
-  'a','as','o','os','um','uma','uns','umas',
-  'de','do','da','dos','das','no','na','nos','nas','ao','aos','à','às',
-  'e','ou','em','para','por','com','sem','sobre','entre','apenas',
-  'que','se','sua','seu','suas','seus','sao','ser','foi','é','esta','este','essa','esse',
-  'num','numa','mesmo','mais','menos'
-]);
+const dados = {
+  'Século XVI': {
+    regioes: ['Brasil', 'Caribe Espanhol', 'Caribe Britânico', 'América do Norte'],
+    valores: [300000, 150000, 20000, 5000]
+  },
+  'Século XVII': {
+    regioes: ['Brasil', 'Caribe Espanhol', 'Caribe Britânico', 'América do Norte'],
+    valores: [1000000, 400000, 250000, 30000]
+  },
+  'Século XVIII': {
+    regioes: ['Brasil', 'Caribe Espanhol', 'Caribe Britânico', 'América do Norte'],
+    valores: [2500000, 600000, 900000, 500000]
+  },
+  'Século XIX': {
+    regioes: ['Brasil', 'Caribe Espanhol', 'Caribe Britânico', 'América do Norte'],
+    valores: [1000000, 300000, 100000, 200000]
+  }
+};
 
-// 3) Tokenização + filtro
-const palavras = textoLimpo
-  .replace(/\s+/g, ' ')
-  .trim()
-  .split(' ')
-  .filter(w => w.length >= 3 && !stopwords.has(w));
+const secoes = Object.keys(dados);
 
-// 4) Frequências
-const freq = {};
-for (const w of palavras) freq[w] = (freq[w] || 0) + 1;
-
-// 5) Top 20
-const entradas = Object.entries(freq)
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 20);
-
-const x_values = entradas.map(e => e[0]);
-const y_values = entradas.map(e => e[1]);
-
-// 6) Gráfico de barras
 const trace = {
+  x: dados['Século XVIII'].regioes,
+  y: dados['Século XVIII'].valores,
   type: 'bar',
-  x: x_values,
-  y: y_values,
-  text: y_values.map(String),
-  textposition: 'outside'
+  marker: { color: 'indigo' },
+  name: 'Século XVIII'
 };
 
 const layout = {
-  title: '20 palavras mais frequentes (texto limpo)',
-  xaxis: {
-    title: 'Palavra',
-    tickangle: -45,
-    categoryorder: 'array',
-    categoryarray: x_values,
-    automargin: true,
-    ticklabeloverflow: 'allow'   // <<< evita cortar o começo dos rótulos
-  },
-  yaxis: { title: 'Frequência', rangemode: 'tozero', automargin: true },
-  margin: { t: 70, b: 140, r: 20, l: 60 } // <<< mais espaço para os rótulos rotacionados
+  title: 'Tráfico Atlântico de Escravizados por Região',
+  xaxis: { title: 'Região das Américas' },
+  yaxis: { title: 'Número estimado de escravizados', rangemode: 'tozero' },
+  updatemenus: [{
+    y: 1.15,
+    buttons: secoes.map(sec => ({
+      method: 'restyle',
+      args: [
+        { x: [dados[sec].regioes], y: [dados[sec].valores], name: sec }
+      ],
+      label: sec
+    })),
+    direction: 'down',
+    showactive: true
+  }]
 };
 
 return { trace, layout };
+
+
 
 
 `;

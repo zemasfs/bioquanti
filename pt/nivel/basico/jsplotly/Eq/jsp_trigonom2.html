@@ -807,68 +807,118 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
-// === Contagem de palavras (PT-BR) com barras e limpeza ===
-const texto = "A educação no Brasil enfrenta desafios históricos e estruturais. A desigualdade de acesso à escolas, a qualidade do ensino e a valorização dos professores são temas recorrentes nos debates públicos de educação. Muitos estudantes, especialmente em regiões periféricas e com comprometimentos históricos no ensino, convivem com a precariedade das escolas, a falta de recursos e a ausência de políticas consistentes. Investir em educação é investir no futuro. Entretanto, políticas públicas nem sempre acompanham a urgência do problema em educação. A falta de planejamento em educação, os cortes orçamentários e a burocracia dificultam a implementação de melhoriaspara as escolas. É preciso garantir equidade da educação, promover inclusão e assegurar que cada criança e jovem tenha acesso a uma educação de qualidade. Sem isso, o desenvolvimento do país segue comprometido.";
 
-// 1) Normalização: minúsculas, remover acentos e sinais não alfanuméricos
-const textoLimpo = texto
-  .toLowerCase()
-  .normalize('NFD')                        // separa acentos
-  .replace(/\p{Diacritic}/gu, '')         // remove acentos (se o engine suportar \p{...})
-  .replace(/[^\p{L}\p{N}\s]/gu, ' ');     // mantém só letras/números/espaço
 
-// 2) Stopwords básicas
-const stopwords = new Set([
-  'a','as','o','os','um','uma','uns','umas',
-  'de','do','da','dos','das','no','na','nos','nas','ao','aos','à','às',
-  'e','ou','em','para','por','com','sem','sobre','entre','apenas',
-  'que','se','sua','seu','suas','seus','sao','ser','foi','é','esta','este','essa','esse',
-  'num','numa','mesmo','mais','menos'
-]);
+const N = 500;
+const xmin = -2 * Math.PI;
+const xmax = 2 * Math.PI;
 
-// 3) Tokenização + filtro
-const palavras = textoLimpo
-  .replace(/\s+/g, ' ')
-  .trim()
-  .split(' ')
-  .filter(w => w.length >= 3 && !stopwords.has(w));
+function gerarDados(omega, func) {
+    const x = [], y = [];
+    for (let i = 0; i <= N; i++) {
+        const xi = xmin + (i / N) * (xmax - xmin);
+        x.push(xi);
+        let yi;
+        if (func === "sen") yi = Math.sin(omega * xi);
+        else if (func === "cos") yi = Math.cos(omega * xi);
+        else if (func === "tan") {
+            const t = Math.tan(omega * xi);
+            yi = Math.abs(t) > 10 ? null : t;
+        }
+        y.push(yi);
+    }
+    return { x, y };
+}
 
-// 4) Frequências
-const freq = {};
-for (const w of palavras) freq[w] = (freq[w] || 0) + 1;
+const funcInicial = "sen";
+const omegaInicial = 1;
+const dados = gerarDados(omegaInicial, funcInicial);
 
-// 5) Top 20
-const entradas = Object.entries(freq)
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 20);
-
-const x_values = entradas.map(e => e[0]);
-const y_values = entradas.map(e => e[1]);
-
-// 6) Gráfico de barras
 const trace = {
-  type: 'bar',
-  x: x_values,
-  y: y_values,
-  text: y_values.map(String),
-  textposition: 'outside'
+    x: dados.x,
+    y: dados.y,
+    type: 'scatter',
+    mode: 'lines',
+    name: funcInicial + '(ωx)'
 };
 
 const layout = {
-  title: '20 palavras mais frequentes (texto limpo)',
-  xaxis: {
-    title: 'Palavra',
-    tickangle: -45,
-    categoryorder: 'array',
-    categoryarray: x_values,
-    automargin: true,
-    ticklabeloverflow: 'allow'   // <<< evita cortar o começo dos rótulos
-  },
-  yaxis: { title: 'Frequência', rangemode: 'tozero', automargin: true },
-  margin: { t: 70, b: 140, r: 20, l: 60 } // <<< mais espaço para os rótulos rotacionados
+    title: 'Função ' + funcInicial + ': y = ' + funcInicial + '(ωx)',
+    xaxis: { title: 'x', range: [xmin, xmax] },
+    yaxis: { title: 'y', range: [-2, 2] },
+    updatemenus: [{
+        buttons: ['sen', 'cos', 'tan'].map(func => ({
+            label: func + '(ωx)',
+            method: 'update',
+            args: [
+                (() => {
+                    const dados = gerarDados(omegaInicial, func);
+                    const rangeY = func === "tan" ? [-10, 10] : [-2, 2];
+                    return {
+                        x: [dados.x],
+                        y: [dados.y],
+                        name: func + '(ωx)'
+                    };
+                })(),
+                {
+                    title: 'Função ' + func + ': y = ' + func + '(ωx)',
+                    yaxis: { range: func === "tan" ? [-10, 10] : [-2, 2] },
+                    sliders: [{
+                        pad: { t: 50 },
+                        currentvalue: {
+                            visible: true,
+                            prefix: 'ω (' + func + ') = ',
+                            font: { size: 14, color: '#000' }
+                        },
+                        steps: Array.from({ length: 9 }, (_, i) => {
+                            const ω = i + 1;
+                            const dados = gerarDados(ω, func);
+                            return {
+                                label: ω.toString(),
+                                method: 'restyle',
+                                args: [{
+                                    x: [dados.x],
+                                    y: [dados.y],
+                                    name: func + '(' + ω + 'x)'
+                                }]
+                            };
+                        })
+                    }]
+                }
+            ]
+        })),
+        direction: 'down',
+        showactive: true,
+        x: 0.1,
+        xanchor: 'left',
+        y: 1.2,
+        yanchor: 'top'
+    }],
+    sliders: [{
+        pad: { t: 50 },
+        currentvalue: {
+            visible: true,
+            prefix: 'ω (sen) = ',
+            font: { size: 14, color: '#000' }
+        },
+        steps: Array.from({ length: 9 }, (_, i) => {
+            const ω = i + 1;
+            const dados = gerarDados(ω, "sen");
+            return {
+                label: ω.toString(),
+                method: 'restyle',
+                args: [{
+                    x: [dados.x],
+                    y: [dados.y],
+                    name: 'sen(' + ω + 'x)'
+                }]
+            };
+        })
+    }]
 };
 
 return { trace, layout };
+
 
 
 `;

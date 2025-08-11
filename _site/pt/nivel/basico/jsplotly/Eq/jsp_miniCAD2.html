@@ -807,68 +807,61 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
-// === Contagem de palavras (PT-BR) com barras e limpeza ===
-const texto = "A educação no Brasil enfrenta desafios históricos e estruturais. A desigualdade de acesso à escolas, a qualidade do ensino e a valorização dos professores são temas recorrentes nos debates públicos de educação. Muitos estudantes, especialmente em regiões periféricas e com comprometimentos históricos no ensino, convivem com a precariedade das escolas, a falta de recursos e a ausência de políticas consistentes. Investir em educação é investir no futuro. Entretanto, políticas públicas nem sempre acompanham a urgência do problema em educação. A falta de planejamento em educação, os cortes orçamentários e a burocracia dificultam a implementação de melhoriaspara as escolas. É preciso garantir equidade da educação, promover inclusão e assegurar que cada criança e jovem tenha acesso a uma educação de qualidade. Sem isso, o desenvolvimento do país segue comprometido.";
 
-// 1) Normalização: minúsculas, remover acentos e sinais não alfanuméricos
-const textoLimpo = texto
-  .toLowerCase()
-  .normalize('NFD')                        // separa acentos
-  .replace(/\p{Diacritic}/gu, '')         // remove acentos (se o engine suportar \p{...})
-  .replace(/[^\p{L}\p{N}\s]/gu, ' ');     // mantém só letras/números/espaço
 
-// 2) Stopwords básicas
-const stopwords = new Set([
-  'a','as','o','os','um','uma','uns','umas',
-  'de','do','da','dos','das','no','na','nos','nas','ao','aos','à','às',
-  'e','ou','em','para','por','com','sem','sobre','entre','apenas',
-  'que','se','sua','seu','suas','seus','sao','ser','foi','é','esta','este','essa','esse',
-  'num','numa','mesmo','mais','menos'
-]);
+// === MINI-CAD: PARÂMETROS AJUSTÁVEIS PELO ALUNO ===
+const baseRadius = -10;       // Raio da base
+const height = 3;           // Altura do sólido
+const curvatura = 20.5;      // Intensidade da curvatura (0 = cilindro, >2 = abaulado)
+const paleta = 'Hot';   // Estilo de cores: 'Blues', 'Greys', 'Hot', 'Rainbow', 'Viridis'
 
-// 3) Tokenização + filtro
-const palavras = textoLimpo
-  .replace(/\s+/g, ' ')
-  .trim()
-  .split(' ')
-  .filter(w => w.length >= 3 && !stopwords.has(w));
+// === GERADOR DE SÓLIDO DE REVOLUÇÃO ===
+const n = 80, m = 50;
+const x = [], y = [], z = [];
 
-// 4) Frequências
-const freq = {};
-for (const w of palavras) freq[w] = (freq[w] || 0) + 1;
+for (let j = 0; j <= m; j++) {
+  const u = j / m;
+  const r = baseRadius * Math.exp(-curvatura * (u - 0.5) ** 2);
+  const h = (u - 0.5) * height;
 
-// 5) Top 20
-const entradas = Object.entries(freq)
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 20);
+  const linhaX = [], linhaY = [], linhaZ = [];
+  for (let i = 0; i <= n; i++) {
+    const theta = i / n * 2 * Math.PI;
+    linhaX.push(r * Math.cos(theta));
+    linhaY.push(r * Math.tan(theta));
+    linhaZ.push(h);
+  }
 
-const x_values = entradas.map(e => e[0]);
-const y_values = entradas.map(e => e[1]);
+  x.push(linhaX);
+  y.push(linhaY);
+  z.push(linhaZ);
+}
 
-// 6) Gráfico de barras
+// === TRAÇO E LAYOUT ===
 const trace = {
-  type: 'bar',
-  x: x_values,
-  y: y_values,
-  text: y_values.map(String),
-  textposition: 'outside'
+  type: 'surface',
+  x, y, z,
+  colorscale: paleta,
+  showscale: false,
+  opacity: 0.95
 };
 
 const layout = {
-  title: '20 palavras mais frequentes (texto limpo)',
-  xaxis: {
-    title: 'Palavra',
-    tickangle: -45,
-    categoryorder: 'array',
-    categoryarray: x_values,
-    automargin: true,
-    ticklabeloverflow: 'allow'   // <<< evita cortar o começo dos rótulos
+  title: 'Mini-CAD Paramétrico 3D',
+  scene: {
+    xaxis: { visible: false },
+    yaxis: { visible: false },
+    zaxis: { visible: false },
+    camera: { eye: { x: 1.4, y: 1.4, z: 1.2 } }
   },
-  yaxis: { title: 'Frequência', rangemode: 'tozero', automargin: true },
-  margin: { t: 70, b: 140, r: 20, l: 60 } // <<< mais espaço para os rótulos rotacionados
+  margin: { l: 0, r: 0, b: 0, t: 40 }
 };
 
 return { trace, layout };
+
+
+
+
 
 
 `;
