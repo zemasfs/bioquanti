@@ -806,26 +806,167 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
-// Função Quadrática
-const a = -0.2;   
-const b = 2.5;    
-const c = 0.5;    
 
-const x_values = [];
-const y_values = [];
-for (let i = 0; i <= 20; i += 0.5) {
-  x_values.push(i);
-  y_values.push(a * Math.pow(i, 2) + b * i + c);
+// Spirograph Animado (Hipotrocoide / Epitrocoide)
+// GSPlotly · CC BY-NC-SA 4.0
+
+function gcd(a, b){
+  a = Math.abs(a); b = Math.abs(b);
+  while (b){ var t = b; b = a % b; a = t; }
+  return a;
 }
 
+// Presets: label, R, r, d, kind ("hypo" ou "epi")
+var presets = [
+  { label: "Flor 8:3 (hypo)",     R: 8,  r: 3,  d: 3,   kind: "hypo" },
+  { label: "Estrela 5:2 (hypo)",  R: 5,  r: 2,  d: 2.5, kind: "hypo" },
+  { label: "Roseta 5:3 (epi)",    R: 5,  r: 3,  d: 5,   kind: "epi"  },
+  { label: "Trevo 7:2 (epi)",     R: 7,  r: 2,  d: 7,   kind: "epi"  },
+  { label: "Mandala 10:4 (hypo)", R:10, r: 4,  d: 6,   kind: "hypo" }
+];
 
-const x_range = [0, 15];
-const y_range = [0, Math.max(...y_values)];
-const x_label = "Valores de X";
-const y_label = "Valores de Y";
-const title = "Função Quadrática";
+// Range de eixos
+var maxRadius = 0;
+for (var i=0; i<presets.length; i++){
+  var p = presets[i];
+  var reach = (p.kind === "hypo") ? (p.R - p.r) + p.d : (p.R + p.r) + p.d;
+  if (reach > maxRadius) maxRadius = reach;
+}
+var axisRange = [-maxRadius*1.05, maxRadius*1.05];
 
-return { x_values, y_values, x_range, y_range, x_label, y_label, title };`;
+function spiro(R, r, d, kind, nPts){
+  if (typeof nPts === "undefined") nPts = 2400;
+  var m = gcd(R, r);
+  var cycles = r / m;
+  var thetaMax = 2*Math.PI*cycles;
+  var x = new Array(nPts);
+  var y = new Array(nPts);
+  for (var i=0; i<nPts; i++){
+    var t = i * thetaMax / (nPts-1);
+    if (kind === "hypo"){
+      var k1 = (R - r) / r;
+      x[i] = (R - r)*Math.cos(t) + d*Math.cos(k1*t);
+      y[i] = (R - r)*Math.sin(t) - d*Math.sin(k1*t);
+    } else {
+      var k2 = (R + r) / r;
+      x[i] = (R + r)*Math.cos(t) - d*Math.cos(k2*t);
+      y[i] = (R + r)*Math.sin(t) - d*Math.sin(k2*t);
+    }
+  }
+  return { x: x, y: y };
+}
+
+// Frames
+var FRAMES_PER_PRESET = 120;
+var NPTS = 2400;
+var frames = [];
+
+function makeFramesForPreset(presetIndex){
+  var p = presets[presetIndex];
+  var xy = spiro(p.R, p.r, p.d, p.kind, NPTS);
+  for (var k=0; k<FRAMES_PER_PRESET; k++){
+    var end = Math.max(2, Math.floor((k+1)/FRAMES_PER_PRESET * NPTS));
+    var xi = xy.x.slice(0, end);
+    var yi = xy.y.slice(0, end);
+    var penX = xi[xi.length-1];
+    var penY = yi[yi.length-1];
+    frames.push({
+      name: presetIndex + "-" + k,
+      data: [
+        { x: xi, y: yi },
+        { x: [penX], y: [penY] }
+      ]
+    });
+  }
+}
+for (var i=0; i<presets.length; i++) makeFramesForPreset(i);
+
+// Traços iniciais (preset 0)
+var startPreset = 0;
+var p0 = presets[startPreset];
+var xy0 = spiro(p0.R, p0.r, p0.d, p0.kind, NPTS);
+var xi0 = xy0.x.slice(0, 2);
+var yi0 = xy0.y.slice(0, 2);
+
+var traceLine = {
+  x: xi0, y: yi0,
+  mode: "lines",
+  line: { width: 2, color: "cyan" },
+  hoverinfo: "none"
+};
+var tracePen = {
+  x: [xi0[xi0.length-1]], y: [yi0[yi0.length-1]],
+  mode: "markers",
+  marker: { size: 8, symbol: "circle-open", line: { width: 2 }, color: "magenta" },
+  hoverinfo: "none"
+};
+var data = [traceLine, tracePen];
+
+// Dropdown buttons (sem template strings)
+var ddButtons = [];
+for (var i=0; i<presets.length; i++){
+  var seq = [];
+  for (var k=0; k<FRAMES_PER_PRESET; k++) seq.push(i + "-" + k);
+  ddButtons.push({
+    label: presets[i].label,
+    method: "animate",
+    args: [ seq, { mode: "immediate", frame: { duration: 30, redraw: false }, transition: { duration: 0 } } ]
+  });
+}
+
+// Slider passos do preset inicial
+var sliderSteps = [];
+for (var k=0; k<FRAMES_PER_PRESET; k++){
+  sliderSteps.push({
+    label: String(k+1),
+    method: "animate",
+    args: [ [startPreset + "-" + k], { mode: "immediate", frame: { duration: 0 }, transition: { duration: 0 } } ]
+  });
+}
+
+var layout = {
+  title: "Spirograph Animado (Hipotrocoide / Epitrocoide)",
+  paper_bgcolor: "black",
+  plot_bgcolor: "black",
+  font: { color: "white" },
+  width: 700,
+  height: 700,
+  xaxis: { range: axisRange, visible: false, scaleanchor: "y", scaleratio: 1 },
+  yaxis: { range: axisRange, visible: false },
+  margin: { t: 60, r: 20, b: 20, l: 20 },
+  updatemenus: [
+    {
+      type: "buttons",
+      direction: "left",
+      x: 0.02, y: 1.12, xanchor: "left", yanchor: "top",
+      showactive: false,
+      buttons: [
+        { label: "Play",  method: "animate", args: [ null, { fromcurrent: true, frame: { duration: 40, redraw: false }, transition: { duration: 0 } } ] },
+        { label: "Pause", method: "animate", args: [ [null], { mode: "immediate" } ] }
+      ]
+    },
+    {
+      type: "dropdown",
+      direction: "down",
+      x: 0.42, y: 1.12, xanchor: "left", yanchor: "top",
+      showactive: true,
+      buttons: ddButtons
+    }
+  ],
+  sliders: [{
+    x: 0.02, y: 1.05, xanchor: "left", len: 0.36,
+    steps: sliderSteps
+  }],
+  annotations: [
+    { x: 0.02, y: 1.165, xref: "paper", yref: "paper", text: "Controles:", showarrow: false, font: {size: 12} },
+    { x: 0.42, y: 1.165, xref: "paper", yref: "paper", text: "Presets:", showarrow: false, font: {size: 12} }
+  ]
+};
+
+return { data: data, layout: layout, frames: frames };
+
+`;
+
 
 
 window.onload = function() {

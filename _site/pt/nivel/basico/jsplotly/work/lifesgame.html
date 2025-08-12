@@ -806,26 +806,220 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
-// Função Quadrática
-const a = -0.2;   
-const b = 2.5;    
-const c = 0.5;    
 
-const x_values = [];
-const y_values = [];
-for (let i = 0; i <= 20; i += 0.5) {
-  x_values.push(i);
-  y_values.push(a * Math.pow(i, 2) + b * i + c);
+// Conway's Game of Life — versão pedagógica com Plotly frames (JSPlotly2o)
+// Regras: 1) célula viva sobrevive se 2 ou 3 vizinhos; 2) célula morta nasce se 3 vizinhos.
+// Grade toroidal (bordas conectadas).
+
+// ---------- parâmetros didáticos ----------
+const N = 30;          // grade NxN
+const T = 120;         // passos de tempo (frames)
+const pRand = 0.18;    // prob. de célula viva no padrão "Random"
+const presets = ["Glider", "Blinker", "Toad", "Random"];
+
+// ---------- utilidades ----------
+function zeros(n){ return Array.from({length:n}, function(){ return Array(n).fill(0); }); }
+function clone2D(A){ return A.map(function(row){ return row.slice(); }); }
+function wrap(i){ return (i + N) % N; }
+
+function neighborsToroidal(Z, i, j){
+  var s = 0;
+  for(var di=-1; di<=1; di++){
+    for(var dj=-1; dj<=1; dj++){
+      if(di===0 && dj===0) continue;
+      s += Z[wrap(i+di)][wrap(j+dj)];
+    }
+  }
+  return s;
 }
 
+function stepLife(Z){
+  const out = zeros(N);
+  for(let i=0;i<N;i++){
+    for(let j=0;j<N;j++){
+      const n = neighborsToroidal(Z, i, j);
+      if(Z[i][j]===1){
+        out[i][j] = (n===2 || n===3) ? 1 : 0;
+      }else{
+        out[i][j] = (n===3) ? 1 : 0;
+      }
+    }
+  }
+  return out;
+}
 
-const x_range = [0, 15];
-const y_range = [0, Math.max(...y_values)];
-const x_label = "Valores de X";
-const y_label = "Valores de Y";
-const title = "Função Quadrática";
+// ---------- padrões iniciais (posicionados no centro) ----------
+function seedEmpty(){ return zeros(N); }
 
-return { x_values, y_values, x_range, y_range, x_label, y_label, title };`;
+function seedGlider(){
+  const Z = zeros(N);
+  const c = Math.floor(N/2);
+  const pts = [
+    [c-1, c  ],
+    [c  , c+1],
+    [c+1, c-1],[c+1, c],[c+1, c+1]
+  ];
+  pts.forEach(function(p){ Z[p[0]][p[1]] = 1; });
+  return Z;
+}
+
+function seedBlinker(){
+  const Z = zeros(N);
+  const c = Math.floor(N/2);
+  const pts = [[c, c-1],[c, c],[c, c+1]];
+  pts.forEach(function(p){ Z[p[0]][p[1]] = 1; });
+  return Z;
+}
+
+function seedToad(){
+  const Z = zeros(N);
+  const c = Math.floor(N/2);
+  const pts = [
+    [c  , c  ],[c  , c+1],[c  , c+2],
+    [c+1, c-1],[c+1, c  ],[c+1, c+1]
+  ];
+  pts.forEach(function(p){ Z[p[0]][p[1]] = 1; });
+  return Z;
+}
+
+function seedRandom(p){
+  if(p === undefined) p = 0.18;
+  const Z = zeros(N);
+  for(let i=0;i<N;i++){
+    for(let j=0;j<N;j++){
+      Z[i][j] = Math.random() < p ? 1 : 0;
+    }
+  }
+  return Z;
+}
+
+// mapa de geradores
+const seeders = {
+  "Glider":  seedGlider,
+  "Blinker": seedBlinker,
+  "Toad":    seedToad,
+  "Random":  function(){ return seedRandom(pRand); }
+};
+
+// ---------- pré-simulação: séries Z_t para cada preset ----------
+function simulateFrom(Z0, steps){
+  const seq = [clone2D(Z0)];
+  let Z = clone2D(Z0);
+  for(let t=1; t<=steps; t++){
+    Z = stepLife(Z);
+    seq.push(Z);
+  }
+  return seq; // array de length steps+1, cada item é matriz NxN
+}
+
+const runs = {};
+presets.forEach(function(name){
+  runs[name] = simulateFrom(seeders[name](), T);
+});
+
+// ---------- eixos / grade ----------
+const xVals = Array.from({length:N}, function(_,k){ return k; });
+const yVals = Array.from({length:N}, function(_,k){ return k; });
+
+// ---------- traces (um heatmap por preset, só o primeiro visível) ----------
+const colorscale = [
+  [0.0, "#0b0c10"],  // morto
+  [1.0, "#25d366"]   // vivo
+];
+
+function traceForPreset(name, visible){
+  const Z0 = runs[name][0];
+  return {
+    type: "heatmap",
+    x: xVals,
+    y: yVals,
+    z: Z0,
+    showscale: false,
+    colorscale: colorscale,
+    zmin: 0, zmax: 1,
+    hovertemplate: "(" + name + ") i=%{y}, j=%{x}<br>estado=%{z}<extra></extra>",
+    visible: visible
+  };
+}
+
+const data = presets.map(function(name, idx){ return traceForPreset(name, idx===0); });
+
+// ---------- frames (t = 0..T) ----------
+const frames = [];
+for(let t=0; t<=T; t++){
+  const frData = presets.map(function(name){ return { z: runs[name][t] }; });
+  frames.push({ name: "t" + t, data: frData });
+}
+
+// ---------- slider e botões ----------
+const steps = [];
+for(let t=0; t<=T; t++){
+  steps.push({
+    label: String(t),
+    method: "animate",
+    args: [["t" + t], { mode: "immediate", frame: {duration: 0, redraw: true}, transition: {duration: 0} }]
+  });
+}
+
+function visFor(idx){
+  const v = Array(presets.length).fill(false);
+  v[idx] = true;
+  return v;
+}
+
+const updatemenus = [{
+  type: "buttons",
+  showactive: true,
+  x: 0.02, y: 1.14, xanchor: "left", yanchor: "top",
+  buttons: presets.map(function(name, i){
+    return {
+      label: name,
+      method: "update",
+      args: [
+        { visible: visFor(i) },
+        { title: "Conway's Game of Life — " + name }
+      ]
+    };
+  }).concat([
+    {
+      label: "▶ Play",
+      method: "animate",
+      args: [null, { fromcurrent: true, frame: {duration: 60, redraw: true}, transition: {duration: 0} }]
+    },
+    {
+      label: "⏹ Pause",
+      method: "animate",
+      args: [[null], { mode: "immediate", frame: {duration: 0, redraw: false}, transition: {duration: 0} }]
+    }
+  ])
+}];
+
+// ---------- layout ----------
+const layout = {
+  title: "Conway's Game of Life — " + presets[0],
+  xaxis: { title: "j (coluna)", constrain: "domain", dtick: 1, range: [-0.5, N-0.5] },
+  yaxis: { title: "i (linha)", scaleanchor: "x", dtick: 1, range: [-0.5, N-0.5] },
+  margin: { l: 60, r: 20, t: 80, b: 50 },
+  updatemenus: updatemenus,
+  sliders: [{
+    active: 0,
+    currentvalue: { prefix: "t = " },
+    pad: { t: 30 },
+    steps: steps
+  }],
+  annotations: [{
+    x: 1.0, y: -0.22, xref: "paper", yref: "paper", showarrow: false, align: "right",
+    text:
+      "Regras: vivo ⇒ sobrevive se 2–3 vizinhos; morto ⇒ nasce se 3 vizinhos.<br>" +
+      "Borda toroidal (wrap). Botões: escolha o padrão; ▶ Play anima; slider controla t."
+  }]
+};
+
+// ---------- retorno para o botão add ----------
+return { data: data, layout: layout, frames: frames };
+
+`;
+
 
 
 window.onload = function() {

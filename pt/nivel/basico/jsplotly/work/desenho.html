@@ -806,26 +806,150 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
-// Função Quadrática
-const a = -0.2;   
-const b = 2.5;    
-const c = 0.5;    
 
-const x_values = [];
-const y_values = [];
-for (let i = 0; i <= 20; i += 0.5) {
-  x_values.push(i);
-  y_values.push(a * Math.pow(i, 2) + b * i + c);
-}
+// Caderno de Desenho com 12 cores (inclui Branco) e botoes coloridos
+// + barra vertical de figuras na margem esquerda (logo abaixo de "Fino")
+// GSPlotly · CC BY-NC-SA 4.0
+
+// Nenhum trace: os desenhos sao shapes "openpath" criados pelo Plotly.
+var data = [];
+
+// Paleta tipo "caixa de lapis" (12 cores, incluindo Branco)
+var cores = [
+  "#111111", // Preto
+  "#8c564b", // Marrom
+  "#d62728", // Vermelho
+  "#ff7f0e", // Laranja
+  "#ffbf00", // Amarelo
+  "#2ca02c", // Verde
+  "#17becf", // Ciano
+  "#1f77b4", // Azul
+  "#9467bd", // Roxo
+  "#e377c2", // Magenta
+  "#f7b6d2", // Rosa
+  "#ffffff"  // Branco (substitui borracha)
+];
+
+var larguraInicial = 4;
+
+var layout = {
+  title: "Folha para Desenho (12 cores, com Branco)",
+  paper_bgcolor: "#fafafa",
+  plot_bgcolor: "#ffffff",
+  width: 980,
+  height: 620,
+  margin: {t: 80, r: 40, b: 40, l: 40},
+
+  xaxis: {
+    range: [0, 100],
+    showgrid: true, zeroline: false,
+    gridcolor: "#e6e6e6", gridwidth: 1,
+    tickvals: [], fixedrange: true
+  },
+  yaxis: {
+    range: [0, 70],
+    scaleanchor: "x", scaleratio: 1,
+    showgrid: true, zeroline: false,
+    gridcolor: "#e6e6e6", gridwidth: 1,
+    tickvals: [], fixedrange: true
+  },
+
+  // Modo “desenhar”
+  dragmode: "drawopenpath",
+
+  // Pincel inicial (preto)
+  newshape: {
+    line: { color: cores[0], width: larguraInicial },
+    fillcolor: "rgba(0,0,0,0)",
+    layer: "above", opacity: 1
+  },
+
+  updatemenus: (function(){
+    var menus = [];
+
+    // Linha 1 — Modos (sem borracha; use Branco para “apagar”)
+    menus.push({
+      type: "buttons",
+      direction: "left",
+      x: 0.00, y: 1.18, xanchor: "left", yanchor: "top",
+      showactive: true,
+      buttons: [
+        { label: "Desenhar", method: "relayout", args: [{"dragmode":"drawopenpath"}] },
+        { label: "Bloquear", method: "relayout", args: [{"dragmode":"pan"}] },
+        { label: "Apagar tudo", method: "relayout", args: [{"shapes": []}] }
+      ]
+    });
+
+    // Linha 2 — Cores como “swatches” coloridos (1 botao por menu, com o fundo da cor)
+    for (var i=0; i<cores.length; i++){
+      var xPos = 0.00 + i*0.055; // ajuste de espacamento
+      var borda = (cores[i] === "#ffffff") ? "#bbbbbb" : "rgba(0,0,0,0)";
+      menus.push({
+        type: "buttons",
+        direction: "left",
+        x: xPos, y: 1.10, xanchor: "left", yanchor: "top",
+        // fundo do botao = a propria cor
+        bgcolor: cores[i],
+        bordercolor: borda,
+        borderwidth: 1,
+        pad: {t:4, r:4, b:4, l:4},
+        showactive: false,
+        buttons: [
+          {
+            label: " ", // sem texto; quadradinho colorido = botao
+            method: "relayout",
+            args: [ {"newshape.line.color": cores[i]} ]
+          }
+        ]
+      });
+    }
+
+    // Linha 3 — Espessura
+    menus.push({
+      type: "buttons",
+      direction: "right",
+      x: 0.00, y: 1.02, xanchor: "left", yanchor: "top",
+      showactive: true,
+      buttons: [
+        {label:"Fino (2)",  method:"relayout", args:[{"newshape.line.width":2}]},
+        {label:"Medio (4)", method:"relayout", args:[{"newshape.line.width":4}]},
+        {label:"Grosso (8)",method:"relayout", args:[{"newshape.line.width":8}]},
+        {label:"Extra (12)",method:"relayout", args:[{"newshape.line.width":12}]}
+      ]
+    });
+
+    // Barra vertical de figuras — colada na margem esquerda, logo abaixo do "Fino"
+    menus.push({
+      type: "buttons",
+      direction: "down",
+      x: 0.00, y: 0.95, xanchor: "left", yanchor: "top",
+      pad: {t:0, r:0, b:0, l:0},
+      font: {size: 12},
+      showactive: true,
+      buttons: [
+        { label: "-",  method: "relayout", args: [{"dragmode":"drawline"}] },        // reta
+        { label: "o",  method: "relayout", args: [{"dragmode":"drawcircle"}] },      // circulo
+        { label: "[]", method: "relayout", args: [{"dragmode":"drawrect"}] },        // quadrado/retangulo
+        { label: "△",  method: "relayout", args: [{"dragmode":"drawclosedpath"}] }   // triangulo (feche com duplo-clique)
+      ]
+    });
+
+    return menus;
+  })()
+};
+
+// Uso:
+// - Cores: clique nos quadradinhos (Branco "apaga" pintando por cima).
+// - Espessura: escolha Fino/Medio/Grosso/Extra.
+// - Formas (barra vertical): "-" reta, "o" circulo, "[]" quadrado/retangulo, "△" triangulo.
+//   Triangulo: clique 3 pontos e finalize com duplo-clique.
+// - Modos: Desenhar (mão livre), Bloquear (pan), Apagar tudo (limpa).
+
+return { data: data, layout: layout };
 
 
-const x_range = [0, 15];
-const y_range = [0, Math.max(...y_values)];
-const x_label = "Valores de X";
-const y_label = "Valores de Y";
-const title = "Função Quadrática";
+`;
 
-return { x_values, y_values, x_range, y_range, x_label, y_label, title };`;
 
 
 window.onload = function() {

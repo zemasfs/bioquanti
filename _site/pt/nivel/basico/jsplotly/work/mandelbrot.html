@@ -806,26 +806,215 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
-// Função Quadrática
-const a = -0.2;   
-const b = 2.5;    
-const c = 0.5;    
 
-const x_values = [];
-const y_values = [];
-for (let i = 0; i <= 20; i += 0.5) {
-  x_values.push(i);
-  y_values.push(a * Math.pow(i, 2) + b * i + c);
+// Fractal de Mandelbrot com controles (Regiao e Paleta)
+// GSPlotly · CC BY-NC-SA 4.0
+
+// ---------- Utilidades ----------
+function linspace(a, b, n){
+  var arr = new Array(n);
+  var step = (b - a) / (n - 1);
+  for (var i=0;i<n;i++) arr[i] = a + i*step;
+  return arr;
 }
 
+// Paletas simples (corescale do Plotly)
+function palette(name){
+  if (name === "Fire") {
+    return [
+      [0.00,"rgb(0,0,0)"],
+      [0.20,"rgb(60,0,80)"],
+      [0.40,"rgb(180,0,0)"],
+      [0.60,"rgb(255,120,0)"],
+      [0.80,"rgb(255,220,0)"],
+      [1.00,"rgb(255,255,255)"]
+    ];
+  } else if (name === "Ocean") {
+    return [
+      [0.00,"rgb(0,0,0)"],
+      [0.25,"rgb(0,20,80)"],
+      [0.50,"rgb(0,120,200)"],
+      [0.75,"rgb(0,200,200)"],
+      [1.00,"rgb(240,255,255)"]
+    ];
+  } else if (name === "Viridis") {
+    return [
+      [0.00,"rgb(68,1,84)"],
+      [0.25,"rgb(59,82,139)"],
+      [0.50,"rgb(33,145,140)"],
+      [0.75,"rgb(94,201,97)"],
+      [1.00,"rgb(253,231,37)"]
+    ];
+  } else if (name === "Gray") {
+    return [
+      [0.00,"rgb(0,0,0)"],
+      [1.00,"rgb(255,255,255)"]
+    ];
+  } else { // Turbo-like
+    return [
+      [0.00,"rgb(48,18,59)"],
+      [0.25,"rgb(37,133,167)"],
+      [0.50,"rgb(53,183,121)"],
+      [0.75,"rgb(245,208,66)"],
+      [1.00,"rgb(208,18,52)"]
+    ];
+  }
+}
 
-const x_range = [0, 15];
-const y_range = [0, Math.max(...y_values)];
-const x_label = "Valores de X";
-const y_label = "Valores de Y";
-const title = "Função Quadrática";
+// Calcula a matriz Z (suavizada) do Mandelbrot
+function mandelbrot(xmin, xmax, ymin, ymax, W, H, maxIter){
+  var xs = linspace(xmin, xmax, W);
+  var ys = linspace(ymin, ymax, H);
+  var z = new Array(H);
+  var escape2 = 4.0;
+  for (var j=0; j<H; j++){
+    var cy = ys[j];
+    var row = new Array(W);
+    for (var i=0; i<W; i++){
+      var cx = xs[i];
+      var zx = 0.0, zy = 0.0;
+      var it = 0;
+      var zx2, zy2, mag2 = 0.0;
+      while (it < maxIter){
+        zx2 = zx*zx - zy*zy + cx;
+        zy2 = 2*zx*zy + cy;
+        zx = zx2; zy = zy2;
+        mag2 = zx*zx + zy*zy;
+        if (mag2 > escape2) break;
+        it++;
+      }
+      if (it === maxIter){
+        row[i] = 0; // interior preto
+      } else {
+        // Suavizacao log log
+        var mu = it + 1 - Math.log(Math.log(Math.sqrt(mag2))) / Math.log(2);
+        var v = mu / maxIter;
+        if (!isFinite(v) || v<0) v = it / maxIter;
+        row[i] = v;
+      }
+    }
+    z[j] = row;
+  }
+  return {z: z, xs: xs, ys: ys};
+}
 
-return { x_values, y_values, x_range, y_range, x_label, y_label, title };`;
+// Construtor de limites a partir de centro e meia-largura, preservando aspecto
+function boundsFromCenter(cx, cy, halfW, aspect){ // aspect = H/W
+  var halfH = halfW * aspect;
+  return { xmin: cx - halfW, xmax: cx + halfW, ymin: cy - halfH, ymax: cy + halfH };
+}
+
+// ---------- Presets de regiao ----------
+var presets = [
+  { name:"Visao Geral",   cx: -0.5,        cy: 0.0,         halfW: 1.75 },
+  { name:"Zoom A",        cx: -0.7436439,  cy: 0.1318259,   halfW: 0.0035 },
+  { name:"Zoom B",        cx:  0.285,      cy: 0.01,        halfW: 0.0060 },
+  { name:"Mini esquerda", cx: -1.748,      cy: 0.0,         halfW: 0.0200 }
+];
+
+// ---------- Parametros de render ----------
+var W = 360;     // largura em pixels do grid
+var H = 240;     // altura em pixels do grid
+var MAXITER = 120;
+var aspect = H / W;
+
+// Gera frames (um por preset)
+var frames = [];
+for (var p=0; p<presets.length; p++){
+  var b = boundsFromCenter(presets[p].cx, presets[p].cy, presets[p].halfW, aspect);
+  var tile = mandelbrot(b.xmin, b.xmax, b.ymin, b.ymax, W, H, MAXITER);
+  frames.push({
+    name: "R"+p,
+    data: [{
+      z: tile.z,
+      x: tile.xs,
+      y: tile.ys
+    }],
+    // guarda limites como "layout" do frame para resetar com duplo clique (autorange) se quiser
+    layout: {
+      xaxis: {range: [b.xmin, b.xmax]},
+      yaxis: {range: [b.ymin, b.ymax]}
+    }
+  });
+}
+
+// ---------- Trace inicial (preset 0) ----------
+var init = frames[0].data[0];
+var trace = {
+  type: "heatmap",
+  z: init.z,
+  x: init.x,
+  y: init.y,
+  colorscale: palette("Fire"),
+  showscale: true,
+  zsmooth: false
+};
+
+// ---------- Layout ----------
+var layout = {
+  title: "Conjunto de Mandelbrot — Presets e Paletas",
+  paper_bgcolor: "black",
+  plot_bgcolor: "black",
+  font: {color: "white"},
+  width: 900,
+  height: 640,
+  margin: {t: 60, r: 20, b: 40, l: 60},
+  dragmode: "zoom",
+  xaxis: {title: "Re", zeroline: false},
+  yaxis: {title: "Im", zeroline: false, scaleanchor: "x", scaleratio: 1},
+
+  updatemenus: [
+    // Dropdown de Regiao (troca o frame)
+    {
+      type: "dropdown",
+      x: 0.01, y: 1.15, xanchor: "left", yanchor: "top",
+      showactive: true,
+      buttons: presets.map(function(p, i){
+        return {
+          label: p.name,
+          method: "animate",
+          args: [
+            ["R"+i],
+            {mode: "immediate", transition:{duration: 0}, frame:{duration: 0, redraw: true}}
+          ]
+        };
+      })
+    },
+    // Dropdown de Paleta (restyle apenas a escala de cor)
+    {
+      type: "dropdown",
+      x: 0.32, y: 1.15, xanchor: "left", yanchor: "top",
+      showactive: true,
+      buttons: ["Fire","Ocean","Viridis","Gray","Turbo"].map(function(nm){
+        return {
+          label: nm,
+          method: "restyle",
+          args: [ {"colorscale": [palette(nm)]}, [0] ] // [0] = primeiro trace
+        };
+      })
+    },
+    // Botoes de ajuda rapida
+    {
+      type: "buttons",
+      direction: "left",
+      x: 0.62, y: 1.15, xanchor: "left", yanchor: "top",
+      showactive: false,
+      buttons: [
+        {label: "Zoom",  method: "relayout", args: [{"dragmode":"zoom"}]},
+        {label: "Pan",   method: "relayout", args: [{"dragmode":"pan"}]},
+        {label: "Auto",  method: "relayout", args: [{"xaxis.autorange": true, "yaxis.autorange": true}]}
+      ]
+    }
+  ]
+};
+
+// Dica: use arrastar para zoom; duplo-clique para resetar o enquadramento.
+// Quer uma versao "HD" (resolucao e iteracoes maiores)? Posso gerar outra variante.
+
+return { data: [trace], layout: layout, frames: frames };
+
+`;
+
 
 
 window.onload = function() {
