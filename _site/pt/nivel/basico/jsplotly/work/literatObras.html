@@ -806,103 +806,142 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
-const mu = 0;
-const sigma = 1;
-const n_frames = 50;
-const sample_per_frame = 20;
-const total_samples = n_frames * sample_per_frame;
 
-// Configuração de bins usada em todos os frames
-const xbins = { start: -5, end: 5, size: 0.5 };
+// Timeline de obras-chave da literatura brasileira (1850+)
+// Retorna { data, layout } compatível com o botão "add" do JSPlotly2o.
 
-// Gera todos os dados de uma vez (mas anima aos poucos)
-function gerarNormal(n) {
-  const dados = [];
-  for (let i = 0; i < n; i++) {
-    // Box-Muller transform
-    const u = Math.random();
-    const v = Math.random();
-    const z = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
-    dados.push(mu + sigma * z);
-  }
-  return dados;
+// ----- DADOS BASE -----
+const obras = [
+  { titulo: "O Guarani", autor: "José de Alencar", ano: 1857, periodo: "Romantismo" },
+  { titulo: "Iracema", autor: "José de Alencar", ano: 1865, periodo: "Romantismo" },
+  { titulo: "Senhora", autor: "José de Alencar", ano: 1875, periodo: "Romantismo" },
+  { titulo: "Memórias Póstumas de Brás Cubas", autor: "Machado de Assis", ano: 1881, periodo: "Realismo/Naturalismo" },
+  { titulo: "O Cortiço", autor: "Aluísio Azevedo", ano: 1890, periodo: "Realismo/Naturalismo" },
+  { titulo: "Quincas Borba", autor: "Machado de Assis", ano: 1891, periodo: "Realismo/Naturalismo" },
+  { titulo: "Dom Casmurro", autor: "Machado de Assis", ano: 1899, periodo: "Realismo/Naturalismo" },
+  { titulo: "Os Sertões", autor: "Euclides da Cunha", ano: 1902, periodo: "Pré‑Modernismo" },
+  { titulo: "Triste Fim de Policarpo Quaresma", autor: "Lima Barreto", ano: 1915, periodo: "Pré‑Modernismo" },
+  { titulo: "Macunaíma", autor: "Mário de Andrade", ano: 1928, periodo: "Modernismo" },
+  { titulo: "Reinações de Narizinho", autor: "Monteiro Lobato", ano: 1931, periodo: "Modernismo" },
+  { titulo: "Capitães da Areia", autor: "Jorge Amado", ano: 1937, periodo: "Modernismo" },
+  { titulo: "Vidas Secas", autor: "Graciliano Ramos", ano: 1938, periodo: "Modernismo" },
+  { titulo: "O Quinze", autor: "Rachel de Queiroz", ano: 1930, periodo: "2ª Fase/Regionalismo" },
+  { titulo: "Morte e Vida Severina", autor: "João Cabral de Melo Neto", ano: 1955, periodo: "2ª Fase/Regionalismo" },
+  { titulo: "Grande Sertão: Veredas", autor: "João Guimarães Rosa", ano: 1956, periodo: "2ª Fase/Regionalismo" },
+  { titulo: "Perto do Coração Selvagem", autor: "Clarice Lispector", ano: 1943, periodo: "2ª Fase/Regionalismo" },
+  { titulo: "Lavoura Arcaica", autor: "Raduan Nassar", ano: 1975, periodo: "2ª Fase/Regionalismo" },
+  { titulo: "A Hora da Estrela", autor: "Clarice Lispector", ano: 1977, periodo: "2ª Fase/Regionalismo" },
+  { titulo: "Viva o Povo Brasileiro", autor: "João Ubaldo Ribeiro", ano: 1984, periodo: "Contemporâneo" },
+  { titulo: "O Alquimista", autor: "Paulo Coelho", ano: 1988, periodo: "Contemporâneo" },
+  { titulo: "Cidade de Deus", autor: "Paulo Lins", ano: 1997, periodo: "Contemporâneo" },
+  { titulo: "Dois Irmãos", autor: "Milton Hatoum", ano: 2000, periodo: "Contemporâneo" },
+  { titulo: "Ponciá Vicêncio", autor: "Conceição Evaristo", ano: 2003, periodo: "Contemporâneo" },
+  { titulo: "Leite Derramado", autor: "Chico Buarque", ano: 2009, periodo: "Contemporâneo" },
+  { titulo: "Torto Arado", autor: "Itamar Vieira Junior", ano: 2019, periodo: "Contemporâneo" }
+];
+
+// Converte cada ano em uma data (YYYY-01-01) para eixo de tempo real
+function anoParaData(ano) {
+  return ano + "-01-01";
 }
 
-const all_data = gerarNormal(total_samples);
+// ----- AGRUPAMENTO POR PERÍODO (cada período vira um trace) -----
+const periodos = [
+  "Romantismo",
+  "Realismo/Naturalismo",
+  "Pré‑Modernismo",
+  "Modernismo",
+  "2ª Fase/Regionalismo",
+  "Contemporâneo"
+];
 
-// Calcula o pico de contagem (máximo Y) que ocorrerá em qualquer frame
-function maxHistCount(allData, nFrames, samplesPerFrame, bins) {
-  const nBins = Math.floor((bins.end - bins.start) / bins.size);
-  let globalMax = 0;
-
-  for (let i = 1; i <= nFrames; i++) {
-    const slice = allData.slice(0, i * samplesPerFrame);
-    const counts = new Array(nBins).fill(0);
-
-    for (const x of slice) {
-      const idx = Math.floor((x - bins.start) / bins.size);
-      if (idx >= 0 && idx < nBins) counts[idx]++;
-    }
-    const localMax = Math.max(...counts);
-    if (localMax > globalMax) globalMax = localMax;
-  }
-  return globalMax;
-}
-
-const yMax = maxHistCount(all_data, n_frames, sample_per_frame, xbins);
-const yMargin = Math.ceil(yMax * 1.1); // folga de 10%
-
-// Frames da animação (cumulativos)
-const frames = [];
-for (let i = 0; i <= n_frames; i++) {
-  const dados_atuais = all_data.slice(0, i * sample_per_frame);
-  frames.push({
-    name: String(i),
-    data: [{
-      type: 'histogram',
-      x: dados_atuais,
-      xbins,
-      autobinx: false,
-      marker: { color: 'steelblue' }
-    }]
+function criarTracePeriodo(nomePeriodo, visible=true) {
+  const subset = obras.filter(function(o){ return o.periodo === nomePeriodo; });
+  const x = subset.map(function(o){ return anoParaData(o.ano); });
+  const y = subset.map(function(){ return 0; }); // linha base (timeline)
+  const textHover = subset.map(function(o){
+    return o.autor + " — <b>" + o.titulo + "</b><br>" + o.ano;
   });
+
+  return {
+    type: "scatter",
+    mode: "markers",
+    name: nomePeriodo,
+    x: x,
+    y: y,
+    visible: visible,
+    hovertemplate: "%{customdata}<extra></extra>",
+    customdata: textHover,
+    marker: { size: 12, line: { width: 1 } }
+  };
 }
 
+const data = periodos.map(function(p){ return criarTracePeriodo(p, true); });
+
+// ----- BOTÕES DE FILTRO (updatemenus) -----
+function visPorPeriodo(alvo) {
+  if (alvo === "Todos") return data.map(function(){ return true; });
+  return data.map(function(tr){ return tr.name === alvo; });
+}
+
+const botoes = [{ label: "Todos", target: "Todos" }]
+  .concat(periodos.map(function(p){ return { label: p, target: p }; }))
+  .map(function(btn){
+    return {
+      method: "update",
+      label: btn.label,
+      args: [
+        { visible: visPorPeriodo(btn.target) },
+        {}
+      ]
+    };
+  });
+
+// ----- LAYOUT -----
 const layout = {
-  title: 'Histograma em formação: amostragem de uma normal',
-  xaxis: { title: 'Valor', range: [xbins.start, xbins.end] },
-  yaxis: { title: 'Frequência', range: [0, yMargin] }, // range fixo cobrindo toda a animação
+  title: { text: "Timeline – Principais Obras da Literatura Brasileira (1850 → atual)", x: 0.5 },
+  xaxis: {
+    title: "Ano",
+    type: "date",
+    rangeselector: false,
+    rangeslider: { visible: true },
+    range: [anoParaData(1850), anoParaData(2025)]
+  },
+  yaxis: { visible: false, range: [-1, 1] },
+  hovermode: "closest",
+  margin: { l: 20, r: 20, t: 60, b: 40 },
+  showlegend: true,
   updatemenus: [{
-    type: 'buttons',
-    showactive: false,
-    buttons: [{
-      label: '▶️ Construir',
-      method: 'animate',
-      args: [null, {
-        frame: { duration: 100, redraw: true },
-        mode: 'immediate',
-        fromcurrent: true
-      }]
-    }]
+    type: "buttons",
+    direction: "right",
+    x: 0.5, xanchor: "center",
+    y: 1.15, yanchor: "top",
+    buttons: botoes,
+    pad: { r: 6, t: 4 },
+    bgcolor: "rgba(240,240,240,0.7)"
+  }],
+  annotations: [{
+    xref: "paper", yref: "paper",
+    x: 0.0, y: -0.18, showarrow: false,
+    text: "Passe o mouse sobre os pontos para ver Autor · Obra · Ano. Use o slider abaixo para aproximar um período."
   }]
 };
 
-const output = {
-  data: [{
-    type: 'histogram',
-    x: all_data.slice(0, sample_per_frame),
-    xbins,
-    autobinx: false,
-    marker: { color: 'steelblue' },
-    name: 'Histograma'
-  }],
-  layout,
-  frames
-};
+// (Opcional) Ordena os pontos por ano dentro de cada trace (para hover consistente)
+for (var i = 0; i < data.length; i++) {
+  var tr = data[i];
+  var zipped = tr.x.map(function(x, j){ return { x: x, y: tr.y[j], cd: tr.customdata[j] }; });
+  zipped.sort(function(a, b){ return new Date(a.x) - new Date(b.x); });
+  tr.x = zipped.map(function(z){ return z.x; });
+  tr.y = zipped.map(function(z){ return z.y; });
+  tr.customdata = zipped.map(function(z){ return z.cd; });
+}
+
+// ---- RETURN (para o botão "add") ----
+return { data, layout };
 
 
 `;
-
 
 
 window.onload = function() {

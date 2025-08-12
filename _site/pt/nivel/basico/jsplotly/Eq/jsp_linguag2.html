@@ -807,29 +807,29 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
-// === Contagem de palavras (PT-BR) com barras e limpeza ===
+// === Contagem de palavras (PT-BR) — compatível (sem \p{...}) e sem cortes nos rótulos ===
 const texto = "A educação no Brasil enfrenta desafios históricos e estruturais. A desigualdade de acesso à escolas, a qualidade do ensino e a valorização dos professores são temas recorrentes nos debates públicos de educação. Muitos estudantes, especialmente em regiões periféricas e com comprometimentos históricos no ensino, convivem com a precariedade das escolas, a falta de recursos e a ausência de políticas consistentes. Investir em educação é investir no futuro. Entretanto, políticas públicas nem sempre acompanham a urgência do problema em educação. A falta de planejamento em educação, os cortes orçamentários e a burocracia dificultam a implementação de melhoriaspara as escolas. É preciso garantir equidade da educação, promover inclusão e assegurar que cada criança e jovem tenha acesso a uma educação de qualidade. Sem isso, o desenvolvimento do país segue comprometido.";
 
-// 1) Normalização: minúsculas, remover acentos e sinais não alfanuméricos
+// 1) Normalização: minúsculas, remove acentos e pontuação (sem \p{...})
 const textoLimpo = texto
   .toLowerCase()
-  .normalize('NFD')                        // separa acentos
-  .replace(/\p{Diacritic}/gu, '')         // remove acentos (se o engine suportar \p{...})
-  .replace(/[^\p{L}\p{N}\s]/gu, ' ');     // mantém só letras/números/espaço
+  .normalize('NFD')                 // separa acentos
+  .replace(/[\u0300-\u036f]/g, '')  // remove acentos
+  .replace(/[^a-z0-9\s]/g, ' ')     // mantém só letras/dígitos/espaço (ASCII)
+  .replace(/\s+/g, ' ')             // comprime espaços
+  .trim();
 
-// 2) Stopwords básicas
+// 2) Stopwords (sem acento)
 const stopwords = new Set([
   'a','as','o','os','um','uma','uns','umas',
-  'de','do','da','dos','das','no','na','nos','nas','ao','aos','à','às',
+  'de','do','da','dos','das','no','na','nos','nas','ao','aos',
   'e','ou','em','para','por','com','sem','sobre','entre','apenas',
-  'que','se','sua','seu','suas','seus','sao','ser','foi','é','esta','este','essa','esse',
+  'que','se','sua','seu','suas','seus','sao','ser','foi','esta','este','essa','esse',
   'num','numa','mesmo','mais','menos'
 ]);
 
 // 3) Tokenização + filtro
 const palavras = textoLimpo
-  .replace(/\s+/g, ' ')
-  .trim()
   .split(' ')
   .filter(w => w.length >= 3 && !stopwords.has(w));
 
@@ -839,7 +839,7 @@ for (const w of palavras) freq[w] = (freq[w] || 0) + 1;
 
 // 5) Top 20
 const entradas = Object.entries(freq)
-  .sort((a, b) => b[1] - a[1])
+  .sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1))
   .slice(0, 20);
 
 const x_values = entradas.map(e => e[0]);
@@ -851,7 +851,8 @@ const trace = {
   x: x_values,
   y: y_values,
   text: y_values.map(String),
-  textposition: 'outside'
+  textposition: 'outside',
+  hovertemplate: '<b>%{x}</b><br>freq: %{y}<extra></extra>'
 };
 
 const layout = {
@@ -862,10 +863,10 @@ const layout = {
     categoryorder: 'array',
     categoryarray: x_values,
     automargin: true,
-    ticklabeloverflow: 'allow'   // <<< evita cortar o começo dos rótulos
+    ticklabeloverflow: 'allow' // evita clipping dos rótulos
   },
   yaxis: { title: 'Frequência', rangemode: 'tozero', automargin: true },
-  margin: { t: 70, b: 140, r: 20, l: 60 } // <<< mais espaço para os rótulos rotacionados
+  margin: { t: 70, b: 140, r: 20, l: 60 }
 };
 
 return { trace, layout };

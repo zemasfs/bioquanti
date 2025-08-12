@@ -806,100 +806,44 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
-const mu = 0;
-const sigma = 1;
-const n_frames = 50;
-const sample_per_frame = 20;
-const total_samples = n_frames * sample_per_frame;
+// Dados simulados: 100 dias
+const dias = Array.from({length: 100}, (_, i) => {
+  const d = new Date();
+  d.setDate(d.getDate() - (100 - i));
+  return d.toISOString().split('T')[0]; // formato YYYY-MM-DD
+});
+const valores = dias.map((_, i) => 50 + 10 * Math.sin(i / 10) + Math.random() * 5);
 
-// Configuração de bins usada em todos os frames
-const xbins = { start: -5, end: 5, size: 0.5 };
-
-// Gera todos os dados de uma vez (mas anima aos poucos)
-function gerarNormal(n) {
-  const dados = [];
-  for (let i = 0; i < n; i++) {
-    // Box-Muller transform
-    const u = Math.random();
-    const v = Math.random();
-    const z = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
-    dados.push(mu + sigma * z);
-  }
-  return dados;
-}
-
-const all_data = gerarNormal(total_samples);
-
-// Calcula o pico de contagem (máximo Y) que ocorrerá em qualquer frame
-function maxHistCount(allData, nFrames, samplesPerFrame, bins) {
-  const nBins = Math.floor((bins.end - bins.start) / bins.size);
-  let globalMax = 0;
-
-  for (let i = 1; i <= nFrames; i++) {
-    const slice = allData.slice(0, i * samplesPerFrame);
-    const counts = new Array(nBins).fill(0);
-
-    for (const x of slice) {
-      const idx = Math.floor((x - bins.start) / bins.size);
-      if (idx >= 0 && idx < nBins) counts[idx]++;
-    }
-    const localMax = Math.max(...counts);
-    if (localMax > globalMax) globalMax = localMax;
-  }
-  return globalMax;
-}
-
-const yMax = maxHistCount(all_data, n_frames, sample_per_frame, xbins);
-const yMargin = Math.ceil(yMax * 1.1); // folga de 10%
-
-// Frames da animação (cumulativos)
-const frames = [];
-for (let i = 0; i <= n_frames; i++) {
-  const dados_atuais = all_data.slice(0, i * sample_per_frame);
-  frames.push({
-    name: String(i),
-    data: [{
-      type: 'histogram',
-      x: dados_atuais,
-      xbins,
-      autobinx: false,
-      marker: { color: 'steelblue' }
-    }]
-  });
-}
-
+// Layout com range selector e slider
 const layout = {
-  title: 'Histograma em formação: amostragem de uma normal',
-  xaxis: { title: 'Valor', range: [xbins.start, xbins.end] },
-  yaxis: { title: 'Frequência', range: [0, yMargin] }, // range fixo cobrindo toda a animação
-  updatemenus: [{
-    type: 'buttons',
-    showactive: false,
-    buttons: [{
-      label: '▶️ Construir',
-      method: 'animate',
-      args: [null, {
-        frame: { duration: 100, redraw: true },
-        mode: 'immediate',
-        fromcurrent: true
-      }]
-    }]
-  }]
+  title: "Valores ao longo do tempo",
+  xaxis: {
+    title: "Data",
+    type: "date",
+    rangeselector: {
+      buttons: [
+        { count: 7, label: "1 sem", step: "day", stepmode: "backward" },
+        { count: 14, label: "2 sem", step: "day", stepmode: "backward" },
+        { count: 1, label: "1 mês", step: "month", stepmode: "backward" },
+        { step: "all", label: "Tudo" }
+      ]
+    },
+    rangeslider: { visible: true }
+  },
+  yaxis: { title: "Valor" }
 };
 
-const output = {
-  data: [{
-    type: 'histogram',
-    x: all_data.slice(0, sample_per_frame),
-    xbins,
-    autobinx: false,
-    marker: { color: 'steelblue' },
-    name: 'Histograma'
-  }],
-  layout,
-  frames
-};
+// Plota gráfico com slider e seletor
+setTimeout(() => {
+  document.getElementById("grafico").innerHTML = '<div id="divGraficoPlotly" style="width:100%; height:500px;"></div>';
 
+  Plotly.newPlot("divGraficoPlotly", [{
+    x: dias,
+    y: valores,
+    mode: "lines+markers",
+    line: { color: "royalblue" }
+  }], layout);
+}, 100);
 
 `;
 

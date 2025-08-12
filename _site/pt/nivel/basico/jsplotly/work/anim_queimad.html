@@ -806,99 +806,218 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
-const mu = 0;
-const sigma = 1;
-const n_frames = 50;
-const sample_per_frame = 20;
-const total_samples = n_frames * sample_per_frame;
 
-// Configuração de bins usada em todos os frames
-const xbins = { start: -5, end: 5, size: 0.5 };
+// Brasil — Áreas queimadas por BIOMA (1955–2024) • mapa animado (70 anos)
+// DEMONSTRAÇÃO didática: dados fictícios com tendências + picos. 
+// Troque facilmente por dados reais na função areaBiomaAno_real().
+// Retorna { data, layout, frames } para o botão "add" do JSPlotly2o.
 
-// Gera todos os dados de uma vez (mas anima aos poucos)
-function gerarNormal(n) {
-  const dados = [];
-  for (let i = 0; i < n; i++) {
-    // Box-Muller transform
-    const u = Math.random();
-    const v = Math.random();
-    const z = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
-    dados.push(mu + sigma * z);
+// =====================
+// 1) CONTROLE GERAL
+// =====================
+const ano_final = 2024;
+const janela_anos = 70; // últimos 70 anos
+const ano_inicial = ano_final - janela_anos + 1; // 1955
+const anos = Array.from({length: janela_anos}, (_,i) => ano_inicial + i);
+
+const usar_dados_ficticios = true; // mude para false e preencha areaBiomaAno_real()
+
+// Biomas (posições aproximadas das bolhas)
+const biomas = [
+  { nome: "Amazônia",         lat: -4.0,  lon: -62.0, base:  2500, g: 0.020 },
+  { nome: "Cerrado",          lat: -14.0, lon: -47.0, base:  1800, g: 0.018 },
+  { nome: "Caatinga",         lat: -9.0,  lon: -39.0, base:   900, g: 0.015 },
+  { nome: "Mata Atlântica",   lat: -19.0, lon: -41.0, base:   700, g: 0.010 },
+  { nome: "Pampa",            lat: -31.0, lon: -53.0, base:   500, g: 0.010 },
+  { nome: "Pantanal",         lat: -17.5, lon: -57.5, base:   300, g: 0.013 }
+];
+
+// Formatação PT-BR
+function fmt(n){ return n.toLocaleString("pt-BR", { maximumFractionDigits: 0 }); }
+
+// =====================
+// 2) MODELO DIDÁTICO (FICTÍCIO)
+// =====================
+function pulsoGauss(ano, pico, largura, amp){
+  const z = (ano - pico)/largura;
+  return amp * Math.exp(-0.5*z*z);
+}
+function fatorPeriodo(ano){
+  if (ano < 1960) return 0.6;
+  if (ano < 1988) return 0.9;
+  if (ano < 2005) return 1.1;
+  if (ano < 2013) return 1.3;
+  return 1.5; // 2013–2024
+}
+function ondulacao(ano, fase=0){
+  return 1 + 0.10*Math.sin(0.25*(ano-ano_inicial) + fase);
+}
+
+function areaBiomaAno_ficticio(bioma, ano){
+  const i = ano - ano_inicial;
+  let area = bioma.base * Math.pow(1 + bioma.g, i);
+  area *= fatorPeriodo(ano) * ondulacao(ano, bioma.lon/10);
+
+  let extra = 0;
+  if (bioma.nome === "Amazônia"){
+    extra += pulsoGauss(ano, 1998, 1.5, 0.8);
+    extra += pulsoGauss(ano, 2005, 1.5, 0.7);
+    extra += pulsoGauss(ano, 2010, 1.5, 0.6);
+    extra += pulsoGauss(ano, 2019, 1.0, 1.0);
   }
-  return dados;
-}
-
-const all_data = gerarNormal(total_samples);
-
-// Calcula o pico de contagem (máximo Y) que ocorrerá em qualquer frame
-function maxHistCount(allData, nFrames, samplesPerFrame, bins) {
-  const nBins = Math.floor((bins.end - bins.start) / bins.size);
-  let globalMax = 0;
-
-  for (let i = 1; i <= nFrames; i++) {
-    const slice = allData.slice(0, i * samplesPerFrame);
-    const counts = new Array(nBins).fill(0);
-
-    for (const x of slice) {
-      const idx = Math.floor((x - bins.start) / bins.size);
-      if (idx >= 0 && idx < nBins) counts[idx]++;
-    }
-    const localMax = Math.max(...counts);
-    if (localMax > globalMax) globalMax = localMax;
+  if (bioma.nome === "Pantanal"){
+    extra += pulsoGauss(ano, 2020, 0.8, 3.2);
   }
-  return globalMax;
+  if (bioma.nome === "Cerrado"){
+    extra += pulsoGauss(ano, 2007, 1.2, 0.6);
+    extra += pulsoGauss(ano, 2017, 1.2, 0.7);
+  }
+  if (bioma.nome === "Caatinga"){
+    extra += pulsoGauss(ano, 2012, 1.2, 0.5);
+  }
+  if (bioma.nome === "Mata Atlântica"){
+    extra += pulsoGauss(ano, 1963, 1.5, 0.3);
+  }
+  area *= (1 + extra);
+  return area; // km²
 }
 
-const yMax = maxHistCount(all_data, n_frames, sample_per_frame, xbins);
-const yMargin = Math.ceil(yMax * 1.1); // folga de 10%
-
-// Frames da animação (cumulativos)
-const frames = [];
-for (let i = 0; i <= n_frames; i++) {
-  const dados_atuais = all_data.slice(0, i * sample_per_frame);
-  frames.push({
-    name: String(i),
-    data: [{
-      type: 'histogram',
-      x: dados_atuais,
-      xbins,
-      autobinx: false,
-      marker: { color: 'steelblue' }
-    }]
-  });
+// =====================
+// 3) TROQUE POR DADOS REAIS (opcional)
+// =====================
+function areaBiomaAno_real(bioma, ano){
+  return 0;
+}
+function areaBiomaAno(bioma, ano){
+  return usar_dados_ficticios ? areaBiomaAno_ficticio(bioma, ano)
+                              : areaBiomaAno_real(bioma, ano);
 }
 
+// =====================
+// 4) PRÉ-CÁLCULOS
+// =====================
+const matrizAreas = anos.map(ano => biomas.map(b => areaBiomaAno(b, ano)));
+const totais = matrizAreas.map(arr => arr.reduce((s,x)=>s+x,0));
+const maxArea = Math.max(...matrizAreas.flat());
+
+// Escala de tamanho (Plotly)
+const maxMarkerPx = 56;
+const sizeref = 2.0 * maxArea / (maxMarkerPx ** 2);
+
+// =====================
+// 5) TRACE INICIAL
+// =====================
+const i0 = 0;
+const data = [{
+  type: "scattergeo",
+  name: "Área queimada (km²)",
+  lat: biomas.map(b => b.lat),
+  lon: biomas.map(b => b.lon),
+  text: biomas.map(b => b.nome),
+  customdata: biomas.map((b, j) => [b.nome, matrizAreas[i0][j], anos[i0]]),
+  hovertemplate:
+    "<b>%{customdata[0]}</b><br>" +
+    "Ano: %{customdata[2]}<br>" +
+    "Área queimada: %{customdata[1]:.0f} km²<extra></extra>",
+  mode: "markers+text",
+  textposition: "top center",
+  textfont: { size: 10 },
+  marker: {
+    size: matrizAreas[i0],
+    sizemode: "area",
+    sizeref: sizeref,
+    sizemin: 6,
+    color: matrizAreas[i0],
+    cmin: 0,
+    cmax: maxArea,
+    colorscale: "YlOrRd",
+    reversescale: false,
+    colorbar: {
+      title: "km² queimados",
+      titleside: "right",
+      x: 1.02,
+      ticks: "outside",
+      thickness: 12
+    },
+    line: { width: 0.5, color: "rgba(0,0,0,0.35)" }
+  }
+}];
+
+// =====================
+// 6) FRAMES (1 por ano)
+// =====================
+const frames = anos.map((ano, i) => {
+  const areas = matrizAreas[i];
+  const cd = biomas.map((b, j) => [b.nome, areas[j], ano]);
+  const titulo = "Brasil — Áreas queimadas por bioma • " + ano + " (Total: " + fmt(totais[i]) + " km²)";
+  return {
+    name: String(ano),
+    data: [{ customdata: cd, marker: { size: areas, color: areas } }],
+    layout: { title: { text: titulo } }
+  };
+});
+
+// =====================
+// 7) LAYOUT / MAPA
+// =====================
 const layout = {
-  title: 'Histograma em formação: amostragem de uma normal',
-  xaxis: { title: 'Valor', range: [xbins.start, xbins.end] },
-  yaxis: { title: 'Frequência', range: [0, yMargin] }, // range fixo cobrindo toda a animação
+  title: { 
+    text: "Brasil — Áreas queimadas por bioma • " + anos[i0] + " (Total: " + fmt(totais[i0]) + " km²)", 
+    x: 0.5 
+  },
+  showlegend: false,
+  margin: { l: 10, r: 48, t: 70, b: 80 },
+
+  geo: {
+    scope: "south america",
+    projection: { type: "mercator" },
+    center: { lat: -14, lon: -52 },
+    lataxis: { range: [-34, 6] },
+    lonaxis: { range: [-75, -32] },
+    showland: true,
+    landcolor: "rgb(240,240,240)",
+    showcountries: true,
+    countrycolor: "rgb(180,180,180)",
+    coastlinecolor: "rgb(180,180,180)",
+    showlakes: true,
+    lakecolor: "rgb(230,230,255)"
+  },
+
   updatemenus: [{
-    type: 'buttons',
-    showactive: false,
-    buttons: [{
-      label: '▶️ Construir',
-      method: 'animate',
-      args: [null, {
-        frame: { duration: 100, redraw: true },
-        mode: 'immediate',
-        fromcurrent: true
-      }]
-    }]
+    type: "buttons",
+    direction: "right",
+    x: 0.5, xanchor: "center",
+    y: 1.12, yanchor: "top",
+    bgcolor: "rgba(255,255,255,0.9)",
+    pad: { r: 6, t: 2, b: 2, l: 2 },
+    buttons: [
+      { label: "▶ Play",  method: "animate", args: [ null, { fromcurrent: true, frame: { duration: 280, redraw: true }, transition: { duration: 0 } } ] },
+      { label: "⏸ Pause", method: "animate", args: [ [null], { mode: "immediate", frame: { duration: 0, redraw: false } } ] },
+      { label: "↺ " + anos[0], method: "animate", args: [ [String(anos[0])], { mode: "immediate", frame: { duration: 0, redraw: true } } ] }
+    ]
+  }],
+
+  sliders: [{
+    pad: { t: 30 },
+    currentvalue: { prefix: "Ano: ", visible: true },
+    steps: anos.map(ano => ({
+      label: String(ano),
+      method: "animate",
+      args: [[String(ano)], { mode: "immediate", frame: { duration: 0, redraw: true }, transition: { duration: 0 } }]
+    }))
+  }],
+
+  annotations: [{
+    xref: "paper", yref: "paper", x: 0, y: -0.13, showarrow: false,
+    text: "Demonstração didática: valores fictícios. Substitua na função areaBiomaAno_real() para usar dados do INPE/MapBiomas.",
+    font: { size: 11 }
   }]
 };
 
-const output = {
-  data: [{
-    type: 'histogram',
-    x: all_data.slice(0, sample_per_frame),
-    xbins,
-    autobinx: false,
-    marker: { color: 'steelblue' },
-    name: 'Histograma'
-  }],
-  layout,
-  frames
-};
+// =====================
+// 8) RETURN
+// =====================
+return { data, layout, frames };
 
 
 `;

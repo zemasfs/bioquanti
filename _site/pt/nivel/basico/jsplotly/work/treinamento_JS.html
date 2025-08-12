@@ -807,98 +807,78 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
-// Pequeno Tutorial JavaScript para JSPlotly
-// ==========================================
-// Use console.log para visualizar os resultados na área gráfica do JSPlotly
+// Pequeno Tutorial JavaScript para JSPlotly (saídas na área gráfica)
+// ==================================================================
+
+// Função auxiliar para acumular saídas
+let logs = [];
+function print(...args) {
+    logs.push(args.join(" "));
+}
 
 // 1. VARIÁVEIS
-// -------------
 const pi = 3.14159;
-console.log("Valor de pi:", pi);
+print("Valor de pi:", pi);
 
 let contador = 0;
 contador += 1;
-console.log("Contador:", contador);
+print("Contador:", contador);
 
 // 2. ARRAYS
-// ----------
 const numeros = [1, 2, 3, 4, 5];
 const cores = ['vermelho', 'verde', 'azul'];
 
-console.log("Primeiro número:", numeros[0]);
-console.log("Última cor:", cores[2]);
+print("Primeiro número:", numeros[0]);
+print("Última cor:", cores[2]);
 
 const quadrados = numeros.map(n => n * n);
-console.log("Quadrados:", quadrados);
+print("Quadrados:", quadrados);
 
 const pares = numeros.filter(n => n % 2 === 0);
-console.log("Pares:", pares);
+print("Pares:", pares);
 
-numeros.forEach(n => console.log("Dobro:", n * 2));
+numeros.forEach(n => print("Dobro:", n * 2));
 
 // 3. OBJETOS
-// ----------
 const pessoa = { nome: 'João', idade: 30, cidade: 'São Paulo' };
 pessoa.profissao = 'Engenheiro';
-console.log("Pessoa:", pessoa);
+print("Pessoa:", JSON.stringify(pessoa));
 
 // 4. FUNÇÕES
-// -----------
 function soma(a, b) {
     return a + b;
 }
-console.log("Soma:", soma(5, 3));
+print("Soma:", soma(5, 3));
 
 const multiplica = (a, b) => a * b;
-console.log("Multiplicação:", multiplica(4, 6));
+print("Multiplicação:", multiplica(4, 6));
 
 // 5. CONDICIONAIS E LAÇOS
-// ------------------------
 const idade = 18;
-if (idade >= 18) console.log("Maior de idade");
+if (idade >= 18) print("Maior de idade");
 
 for (let i = 0; i < 5; i++) {
-    console.log("i =", i);
+    print("i =", i);
 }
 
-// 6. CURVA COM FOR
-// -----------------
-const x = [], y = [];
-for (let i = -10; i <= 10; i++) {
-    x.push(i);
-    y.push(i * i);
-}
-console.log("x:", x);
-console.log("y:", y);
-
-// 7. GERADOR DE CURVA PARABÓLICA
-// -------------------------------
-function curva(a, b, c, x) {
-    return a * x * x + b * x + c;
-}
-
-const x_vals = [], y_vals = [];
-for (let i = -5; i <= 5; i += 0.5) {
-    x_vals.push(i);
-    y_vals.push(curva(1, -2, 3, i));
-}
-console.log("Curva y = ax² + bx + c:", y_vals);
-
-// 8. OBJETO PARA PLOTAGEM
-// ------------------------
+// Saída como texto no JSPlotly
 const output = {
     trace: {
-        x: x_vals,
-        y: y_vals,
+        x: [0], // posição fixa no eixo X
+        y: [0], // posição fixa no eixo Y
+        text: logs.join("<br>"),
         type: 'scatter',
-        mode: 'lines+markers',
-        name: 'Parábola'
+        mode: 'text',
+        textfont: { family: 'Courier New, monospace', size: 14 }
     },
     layout: {
-        title: 'Função Quadrática'
+        title: 'Saídas do Script',
+        xaxis: { visible: false },
+        yaxis: { visible: false }
     }
 };
 return output;
+
 `;
 
 

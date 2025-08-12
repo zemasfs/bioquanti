@@ -812,6 +812,9 @@ const n_frames = 50;
 const sample_per_frame = 20;
 const total_samples = n_frames * sample_per_frame;
 
+// Configuração de bins usada em todos os frames
+const xbins = { start: -5, end: 5, size: 0.5 };
+
 // Gera todos os dados de uma vez (mas anima aos poucos)
 function gerarNormal(n) {
   const dados = [];
@@ -826,8 +829,31 @@ function gerarNormal(n) {
 }
 
 const all_data = gerarNormal(total_samples);
-const frames = [];
 
+// Calcula o pico de contagem (máximo Y) que ocorrerá em qualquer frame
+function maxHistCount(allData, nFrames, samplesPerFrame, bins) {
+  const nBins = Math.floor((bins.end - bins.start) / bins.size);
+  let globalMax = 0;
+
+  for (let i = 1; i <= nFrames; i++) {
+    const slice = allData.slice(0, i * samplesPerFrame);
+    const counts = new Array(nBins).fill(0);
+
+    for (const x of slice) {
+      const idx = Math.floor((x - bins.start) / bins.size);
+      if (idx >= 0 && idx < nBins) counts[idx]++;
+    }
+    const localMax = Math.max(...counts);
+    if (localMax > globalMax) globalMax = localMax;
+  }
+  return globalMax;
+}
+
+const yMax = maxHistCount(all_data, n_frames, sample_per_frame, xbins);
+const yMargin = Math.ceil(yMax * 1.1); // folga de 10%
+
+// Frames da animação (cumulativos)
+const frames = [];
 for (let i = 0; i <= n_frames; i++) {
   const dados_atuais = all_data.slice(0, i * sample_per_frame);
   frames.push({
@@ -835,7 +861,7 @@ for (let i = 0; i <= n_frames; i++) {
     data: [{
       type: 'histogram',
       x: dados_atuais,
-      xbins: { start: -5, end: 5, size: 0.5 },
+      xbins,
       autobinx: false,
       marker: { color: 'steelblue' }
     }]
@@ -844,8 +870,8 @@ for (let i = 0; i <= n_frames; i++) {
 
 const layout = {
   title: 'Histograma em formação: amostragem de uma normal',
-  xaxis: { title: 'Valor', range: [-5, 5] },
-  yaxis: { title: 'Frequência', range: [0, sample_per_frame * 1.5] },
+  xaxis: { title: 'Valor', range: [xbins.start, xbins.end] },
+  yaxis: { title: 'Frequência', range: [0, yMargin] }, // range fixo cobrindo toda a animação
   updatemenus: [{
     type: 'buttons',
     showactive: false,
@@ -865,7 +891,7 @@ const output = {
   data: [{
     type: 'histogram',
     x: all_data.slice(0, sample_per_frame),
-    xbins: { start: -5, end: 5, size: 0.5 },
+    xbins,
     autobinx: false,
     marker: { color: 'steelblue' },
     name: 'Histograma'
@@ -873,6 +899,7 @@ const output = {
   layout,
   frames
 };
+
 
 `;
 

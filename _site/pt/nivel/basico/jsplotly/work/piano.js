@@ -22,7 +22,7 @@ function iniciarPiano() {
   // Slider visual
   const slider = `
     <div style="margin-bottom: 10px; text-align: center;">
-      <label for="sustain">Sustentação:</label>
+      <label for="sustain">Sustain:</label>
       <input type="range" id="sustain" min="0" max="2" step="1" value="1"
              style="width: 200px;">
     </div>`;

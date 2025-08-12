@@ -806,100 +806,219 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
-const mu = 0;
-const sigma = 1;
-const n_frames = 50;
-const sample_per_frame = 20;
-const total_samples = n_frames * sample_per_frame;
 
-// Configuração de bins usada em todos os frames
-const xbins = { start: -5, end: 5, size: 0.5 };
+// Cinética R → P (perfil hiperbólico) — constante cinética ajustável (s^-1)
+// Versão com layout organizado (sem sobreposição) e animação com frames.
+// Retorna { data, layout, frames } para o botão "add" do JSPlotly2o.
 
-// Gera todos os dados de uma vez (mas anima aos poucos)
-function gerarNormal(n) {
-  const dados = [];
-  for (let i = 0; i < n; i++) {
-    // Box-Muller transform
-    const u = Math.random();
-    const v = Math.random();
-    const z = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
-    dados.push(mu + sigma * z);
-  }
-  return dados;
+// ========================
+// 1) OPÇÕES INICIAIS
+// ========================
+// >>> O(A) ALUNO(A) PODE MUDAR ESTE VALOR (use ponto decimal) <<<
+const k_cinetica = 0.017;   // s^-1  (ex.: 0.008; 0.017; 0.05)
+
+// Professor pode ligar/desligar efeitos:
+const usar_catalisador = true;   // true/false
+const usar_inibidor    = false;  // true/false
+
+// Intensidade dos efeitos (ajuste didático)
+const fator_catalise  = 2.0;   // >1 acelera
+const fator_inibicao  = 3.0;   // >1 retarda
+
+// ========================
+// 2) PARÂMETROS DO MODELO
+// ========================
+const R0 = 100;         // quantidade inicial de R (unidades arbitrárias)
+const t_max = 60;       // duração (s)
+const n_frames = 121;   // nº de quadros (>=2)
+
+// k_cinética efetiva após catalisador/inibidor
+let k_efetiva = k_cinetica;      // s^-1
+if (usar_catalisador) k_efetiva *= fator_catalise;
+if (usar_inibidor)    k_efetiva /= fator_inibicao; // inibidor diminui a taxa
+
+// ========================
+// 3) PERFIS HIPERBÓLICOS
+// ========================
+// R(t) = R0 / (1 + k_efetiva * t)    (k em s^-1; t em s)
+// P(t) = R0 - R(t)
+function R_t(t){ return R0 / (1 + k_efetiva * t); }
+function P_t(t){ return R0 - R_t(t); }
+
+// Amostras no tempo
+const t_vals = [];
+const R_vals = [];
+const P_vals = [];
+for (let i = 0; i < n_frames; i++) {
+  const t = i * (t_max / (n_frames - 1));
+  t_vals.push(t);
+  R_vals.push(R_t(t));
+  P_vals.push(P_t(t));
 }
 
-const all_data = gerarNormal(total_samples);
+// ========================
+// 4) TRACES INICIAIS
+// ========================
+const trace_R = {
+  type: "scatter",
+  mode: "lines",
+  name: "Reagente R",
+  x: [t_vals[0]],
+  y: [R_vals[0]],
+  hovertemplate: "t = %{x:.1f} s<br>R = %{y:.2f}<extra></extra>",
+  line: { width: 3 }
+};
 
-// Calcula o pico de contagem (máximo Y) que ocorrerá em qualquer frame
-function maxHistCount(allData, nFrames, samplesPerFrame, bins) {
-  const nBins = Math.floor((bins.end - bins.start) / bins.size);
-  let globalMax = 0;
+const trace_P = {
+  type: "scatter",
+  mode: "lines",
+  name: "Produto P",
+  x: [t_vals[0]],
+  y: [P_vals[0]],
+  hovertemplate: "t = %{x:.1f} s<br>P = %{y:.2f}<extra></extra>",
+  line: { width: 3 }
+};
 
-  for (let i = 1; i <= nFrames; i++) {
-    const slice = allData.slice(0, i * samplesPerFrame);
-    const counts = new Array(nBins).fill(0);
+const trace_marker = {
+  type: "scatter",
+  mode: "markers",
+  name: "Estado atual",
+  x: [t_vals[0], t_vals[0]],
+  y: [R_vals[0], P_vals[0]],
+  hovertemplate: [
+    "t = %{x:.1f} s<br>R = %{y:.2f}<extra>R</extra>",
+    "t = %{x:.1f} s<br>P = %{y:.2f}<extra>P</extra>"
+  ],
+  marker: { size: 10, line: { width: 1 } },
+  showlegend: false
+};
 
-    for (const x of slice) {
-      const idx = Math.floor((x - bins.start) / bins.size);
-      if (idx >= 0 && idx < nBins) counts[idx]++;
-    }
-    const localMax = Math.max(...counts);
-    if (localMax > globalMax) globalMax = localMax;
-  }
-  return globalMax;
-}
+const trace_plato = {
+  type: "scatter",
+  mode: "lines",
+  name: "Platô de P (= R₀)",
+  x: [0, t_max],
+  y: [R0, R0],
+  line: { width: 1, dash: "dot" },
+  hoverinfo: "skip"
+};
 
-const yMax = maxHistCount(all_data, n_frames, sample_per_frame, xbins);
-const yMargin = Math.ceil(yMax * 1.1); // folga de 10%
+const data = [trace_R, trace_P, trace_marker, trace_plato];
 
-// Frames da animação (cumulativos)
+// ========================
+// 5) FRAMES DA ANIMAÇÃO
+// ========================
 const frames = [];
-for (let i = 0; i <= n_frames; i++) {
-  const dados_atuais = all_data.slice(0, i * sample_per_frame);
+for (let i = 0; i < n_frames; i++) {
+  const xR = t_vals.slice(0, i + 1);
+  const yR = R_vals.slice(0, i + 1);
+  const xP = t_vals.slice(0, i + 1);
+  const yP = P_vals.slice(0, i + 1);
+
   frames.push({
     name: String(i),
-    data: [{
-      type: 'histogram',
-      x: dados_atuais,
-      xbins,
-      autobinx: false,
-      marker: { color: 'steelblue' }
-    }]
+    data: [
+      { x: xR, y: yR },                                  // R até t
+      { x: xP, y: yP },                                  // P até t
+      { x: [t_vals[i], t_vals[i]], y: [R_vals[i], P_vals[i]] }, // marcadores
+      null                                               // platô fixo
+    ],
+    traces: [0, 1, 2, 3]
   });
 }
 
+// ========================
+// 6) LAYOUT (sem sobreposição)
+// ========================
+function legendaEstado(){
+  const cat = usar_catalisador ? 
+    "Catalisador ON (×" + fator_catalise + ")" : 
+    "Catalisador OFF";
+  const inh = usar_inibidor ? 
+    "Inibidor ON (÷" + fator_inibicao + ")" : 
+    "Inibidor OFF";
+  return cat + " · " + inh + " · k cinética = " + k_cinetica + " s⁻¹ · k efetiva = " + k_efetiva.toFixed(3) + " s⁻¹";
+}
+
+
 const layout = {
-  title: 'Histograma em formação: amostragem de uma normal',
-  xaxis: { title: 'Valor', range: [xbins.start, xbins.end] },
-  yaxis: { title: 'Frequência', range: [0, yMargin] }, // range fixo cobrindo toda a animação
+  title: { text: "Cinética R → P (perfil hiperbólico) — constante cinética (s⁻¹) ajustável", x: 0.5 },
+  xaxis: { title: "Tempo (s)", range: [0, t_max] },
+  yaxis: { title: "Quantidade (unid.)", rangemode: "tozero" },
+  hovermode: "closest",
+
+  // margens generosas para evitar sobreposição (legend + 3 anotações + slider)
+  margin: { l: 70, r: 20, t: 90, b: 180 },
+
+  // legenda em baixo, horizontal
+  showlegend: true,
+  legend: { orientation: "h", x: 0.5, xanchor: "center", y: -0.12 },
+
+  // botões no canto superior-direito da área do gráfico
   updatemenus: [{
-    type: 'buttons',
-    showactive: false,
-    buttons: [{
-      label: '▶️ Construir',
-      method: 'animate',
-      args: [null, {
-        frame: { duration: 100, redraw: true },
-        mode: 'immediate',
-        fromcurrent: true
-      }]
-    }]
+    type: "buttons",
+    direction: "right",
+    x: 1.0, xanchor: "right",
+    y: 1.02, yanchor: "top",
+    bgcolor: "rgba(255,255,255,0.85)",
+    pad: { r: 6, t: 2, b: 2, l: 2 },
+    buttons: [
+      {
+        label: "▶ Play",
+        method: "animate",
+        args: [ null, {
+          fromcurrent: true,
+          frame: { duration: 40, redraw: true },
+          transition: { duration: 0 }
+        }]
+      },
+      {
+        label: "⏸ Pause",
+        method: "animate",
+        args: [ [null], { mode: "immediate", frame: { duration: 0, redraw: false } } ]
+      },
+      {
+        label: "↺ Reset",
+        method: "animate",
+        args: [ ["0"], { mode: "immediate", frame: { duration: 0, redraw: true } } ]
+      }
+    ]
+  }],
+
+  // textos explicativos no rodapé (abaixo do eixo X)
+  annotations: [
+    {
+      xref: "paper", yref: "paper", x: 0, y: -0.20, showarrow: false,
+      text: "Modelo didático: R(t)=R₀/(1 + k·t), P(t)=R₀−R(t) — k em s⁻¹ (t em s)",
+      font: { size: 12 }
+    },
+    {
+      xref: "paper", yref: "paper", x: 0, y: -0.28, showarrow: false,
+      text: legendaEstado(),
+      font: { size: 11 }
+    },
+    {
+      xref: "paper", yref: "paper", x: 0, y: -0.36, showarrow: false,
+      text: "Dica: altere k_cinetica no topo (ex.: 0.008, 0.017, 0.05) e use Play/Reset para comparar."
+    }
+  ],
+
+  // slider padrão (fica acima da legenda; as margens cuidam do espaçamento)
+  sliders: [{
+    pad: { t: 30 },
+    currentvalue: { prefix: "t = ", suffix: " s", visible: true },
+    steps: frames.map((fr, i) => ({
+      label: (i * (t_max / (n_frames - 1))).toFixed(1),
+      method: "animate",
+      args: [[fr.name], { mode: "immediate", frame: { duration: 0, redraw: true }, transition: { duration: 0 } }]
+    }))
   }]
 };
 
-const output = {
-  data: [{
-    type: 'histogram',
-    x: all_data.slice(0, sample_per_frame),
-    xbins,
-    autobinx: false,
-    marker: { color: 'steelblue' },
-    name: 'Histograma'
-  }],
-  layout,
-  frames
-};
-
+// ========================
+// 7) RETURN
+// ========================
+return { data, layout, frames };
 
 `;
 
