@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>JSPlotly e GSPlotly na Escola</title>
+<title>Workshop - Funcionalidades do JSPlotly</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -113,35 +78,6 @@ gtag('js', new Date());
 gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -220,7 +156,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">JSPlotly e GSPlotly na Escola</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Workshop - Funcionalidades do JSPlotly</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -363,14 +299,58 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Nesta página</h2>
    
+  <ul>
+  <li><a href="#gráficos" id="toc-gráficos" class="nav-link active" data-scroll-target="#gráficos"><span class="header-section-number">1</span> Gráficos</a>
   <ul class="collapse">
-  <li><a href="#instruções" id="toc-instruções" class="nav-link active" data-scroll-target="#instruções">Instruções</a></li>
-  <li><a href="#matemática" id="toc-matemática" class="nav-link" data-scroll-target="#matemática"><span class="header-section-number">1</span> Matemática</a></li>
-  <li><a href="#matemática-financeira" id="toc-matemática-financeira" class="nav-link" data-scroll-target="#matemática-financeira"><span class="header-section-number">2</span> Matemática Financeira</a></li>
-  <li><a href="#estatística" id="toc-estatística" class="nav-link" data-scroll-target="#estatística"><span class="header-section-number">3</span> Estatística</a></li>
-  <li><a href="#física" id="toc-física" class="nav-link" data-scroll-target="#física"><span class="header-section-number">4</span> Física</a></li>
-  <li><a href="#química" id="toc-química" class="nav-link" data-scroll-target="#química"><span class="header-section-number">5</span> Química</a></li>
-  <li><a href="#biologia" id="toc-biologia" class="nav-link" data-scroll-target="#biologia"><span class="header-section-number">6</span> Biologia</a></li>
+  <li><a href="#comuns-biologia" id="toc-comuns-biologia" class="nav-link" data-scroll-target="#comuns-biologia"><span class="header-section-number">1.1</span> Comuns (Biologia)</a></li>
+  <li><a href="#múltiplos---com-referência-cruzada-química" id="toc-múltiplos---com-referência-cruzada-química" class="nav-link" data-scroll-target="#múltiplos---com-referência-cruzada-química"><span class="header-section-number">1.2</span> Múltiplos - com referência cruzada (Química)</a></li>
+  <li><a href="#gráficos-tridimensionais-física" id="toc-gráficos-tridimensionais-física" class="nav-link" data-scroll-target="#gráficos-tridimensionais-física"><span class="header-section-number">1.3</span> Gráficos tridimensionais (Física)</a></li>
+  </ul></li>
+  <li><a href="#mapas-geografia" id="toc-mapas-geografia" class="nav-link" data-scroll-target="#mapas-geografia"><span class="header-section-number">2</span> Mapas (Geografia)</a></li>
+  <li><a href="#diagramas-ensino-religioso" id="toc-diagramas-ensino-religioso" class="nav-link" data-scroll-target="#diagramas-ensino-religioso"><span class="header-section-number">3</span> Diagramas (Ensino Religioso)</a></li>
+  <li><a href="#objeto-3d-artes" id="toc-objeto-3d-artes" class="nav-link" data-scroll-target="#objeto-3d-artes"><span class="header-section-number">4</span> Objeto 3D (Artes)</a></li>
+  <li><a href="#desenho-artes" id="toc-desenho-artes" class="nav-link" data-scroll-target="#desenho-artes"><span class="header-section-number">5</span> Desenho (Artes)</a></li>
+  <li><a href="#widgets-componentes-de-interatividade" id="toc-widgets-componentes-de-interatividade" class="nav-link" data-scroll-target="#widgets-componentes-de-interatividade"><span class="header-section-number">6</span> Widgets (componentes de interatividade)</a>
+  <ul class="collapse">
+  <li><a href="#slider-deslizador" id="toc-slider-deslizador" class="nav-link" data-scroll-target="#slider-deslizador"><span class="header-section-number">6.1</span> Slider (deslizador)</a></li>
+  <li><a href="#menu-seletor-e-botões" id="toc-menu-seletor-e-botões" class="nav-link" data-scroll-target="#menu-seletor-e-botões"><span class="header-section-number">6.2</span> Menu, seletor, e botões</a></li>
+  </ul></li>
+  <li><a href="#análise-de-dados-pesquisa" id="toc-análise-de-dados-pesquisa" class="nav-link" data-scroll-target="#análise-de-dados-pesquisa"><span class="header-section-number">7</span> Análise de dados (Pesquisa)</a>
+  <ul class="collapse">
+  <li><a href="#tabela" id="toc-tabela" class="nav-link" data-scroll-target="#tabela"><span class="header-section-number">7.1</span> Tabela</a></li>
+  <li><a href="#carregamento-de-dados---csv" id="toc-carregamento-de-dados---csv" class="nav-link" data-scroll-target="#carregamento-de-dados---csv"><span class="header-section-number">7.2</span> Carregamento de dados - CSV</a></li>
+  <li><a href="#curva-de-gauss-e-p-valor-estatística" id="toc-curva-de-gauss-e-p-valor-estatística" class="nav-link" data-scroll-target="#curva-de-gauss-e-p-valor-estatística"><span class="header-section-number">7.3</span> Curva de Gauss e p-valor (Estatística)</a></li>
+  <li><a href="#análise-de-variância-e-teste-de-tukey-hsd" id="toc-análise-de-variância-e-teste-de-tukey-hsd" class="nav-link" data-scroll-target="#análise-de-variância-e-teste-de-tukey-hsd"><span class="header-section-number">7.4</span> Análise de Variância e teste de Tukey-HSD</a></li>
+  <li><a href="#regressão-linear-ajuste-no-script" id="toc-regressão-linear-ajuste-no-script" class="nav-link" data-scroll-target="#regressão-linear-ajuste-no-script"><span class="header-section-number">7.5</span> Regressão Linear (ajuste no script)</a></li>
+  </ul></li>
+  <li><a href="#treinamento-em-javascript-programação" id="toc-treinamento-em-javascript-programação" class="nav-link" data-scroll-target="#treinamento-em-javascript-programação"><span class="header-section-number">8</span> Treinamento em JavaScript (Programação)</a></li>
+  <li><a href="#animação" id="toc-animação" class="nav-link" data-scroll-target="#animação"><span class="header-section-number">9</span> Animação</a>
+  <ul class="collapse">
+  <li><a href="#lançamento-oblíquo-física" id="toc-lançamento-oblíquo-física" class="nav-link" data-scroll-target="#lançamento-oblíquo-física"><span class="header-section-number">9.1</span> Lançamento oblíquo (Física)</a></li>
+  <li><a href="#mapa-mundi-geografia-história" id="toc-mapa-mundi-geografia-história" class="nav-link" data-scroll-target="#mapa-mundi-geografia-história"><span class="header-section-number">9.2</span> Mapa Mundi (Geografia, História)</a></li>
+  <li><a href="#mapa---queimadas-c.-da-natureza-dados-fictícios" id="toc-mapa---queimadas-c.-da-natureza-dados-fictícios" class="nav-link" data-scroll-target="#mapa---queimadas-c.-da-natureza-dados-fictícios"><span class="header-section-number">9.3</span> Mapa - Queimadas (C. da Natureza; dados fictícios)</a></li>
+  <li><a href="#menu-e-botões-química" id="toc-menu-e-botões-química" class="nav-link" data-scroll-target="#menu-e-botões-química"><span class="header-section-number">9.4</span> Menu e botões (Química)</a></li>
+  <li><a href="#painel---dashboard-c.-da-natureza" id="toc-painel---dashboard-c.-da-natureza" class="nav-link" data-scroll-target="#painel---dashboard-c.-da-natureza"><span class="header-section-number">9.5</span> Painel - dashboard (C. da Natureza)</a></li>
+  <li><a href="#espirógrafo-arte-e-matemática" id="toc-espirógrafo-arte-e-matemática" class="nav-link" data-scroll-target="#espirógrafo-arte-e-matemática"><span class="header-section-number">9.6</span> Espirógrafo (Arte e Matemática)</a></li>
+  <li><a href="#jogo-da-vida-de-conway-biologia" id="toc-jogo-da-vida-de-conway-biologia" class="nav-link" data-scroll-target="#jogo-da-vida-de-conway-biologia"><span class="header-section-number">9.7</span> Jogo da Vida de Conway (Biologia)</a></li>
+  <li><a href="#histograma-estatística" id="toc-histograma-estatística" class="nav-link" data-scroll-target="#histograma-estatística"><span class="header-section-number">9.8</span> Histograma (Estatística)</a></li>
+  <li><a href="#potencial-de-ação-neuronal-biologia" id="toc-potencial-de-ação-neuronal-biologia" class="nav-link" data-scroll-target="#potencial-de-ação-neuronal-biologia"><span class="header-section-number">9.9</span> Potencial de ação neuronal (Biologia)</a></li>
+  <li><a href="#movimento-circular-física" id="toc-movimento-circular-física" class="nav-link" data-scroll-target="#movimento-circular-física"><span class="header-section-number">9.10</span> Movimento circular (Física)</a></li>
+  <li><a href="#mini-sistema-sola2---dados-aproximados-física" id="toc-mini-sistema-sola2---dados-aproximados-física" class="nav-link" data-scroll-target="#mini-sistema-sola2---dados-aproximados-física"><span class="header-section-number">9.11</span> Mini Sistema Sola2 - dados aproximados (Física)</a></li>
+  <li><a href="#afélio-e-periélio-física" id="toc-afélio-e-periélio-física" class="nav-link" data-scroll-target="#afélio-e-periélio-física"><span class="header-section-number">9.12</span> Afélio e Periélio (Física)</a></li>
+  <li><a href="#oscilação-harmônica-física" id="toc-oscilação-harmônica-física" class="nav-link" data-scroll-target="#oscilação-harmônica-física"><span class="header-section-number">9.13</span> Oscilação harmônica (Física)</a></li>
+  <li><a href="#movimento-pendular-física" id="toc-movimento-pendular-física" class="nav-link" data-scroll-target="#movimento-pendular-física"><span class="header-section-number">9.14</span> Movimento pendular (Física)</a></li>
+  </ul></li>
+  <li><a href="#áudio" id="toc-áudio" class="nav-link" data-scroll-target="#áudio"><span class="header-section-number">10</span> Áudio</a>
+  <ul class="collapse">
+  <li><a href="#flauta-doce-script" id="toc-flauta-doce-script" class="nav-link" data-scroll-target="#flauta-doce-script"><span class="header-section-number">10.1</span> Flauta doce (script)</a></li>
+  <li><a href="#piano-script" id="toc-piano-script" class="nav-link" data-scroll-target="#piano-script"><span class="header-section-number">10.2</span> Piano (script)</a></li>
+  </ul></li>
+  <li><a href="#multimídia-interativa" id="toc-multimídia-interativa" class="nav-link" data-scroll-target="#multimídia-interativa"><span class="header-section-number">11</span> Multimídia interativa</a>
+  <ul class="collapse">
+  <li><a href="#animação-e-interatividade---jogo-de-arco-e-flecha" id="toc-animação-e-interatividade---jogo-de-arco-e-flecha" class="nav-link" data-scroll-target="#animação-e-interatividade---jogo-de-arco-e-flecha"><span class="header-section-number">11.1</span> Animação e interatividade - Jogo de Arco e Flecha</a></li>
+  <li><a href="#animação-interatividade-e-áudio---jogo-pong" id="toc-animação-interatividade-e-áudio---jogo-pong" class="nav-link" data-scroll-target="#animação-interatividade-e-áudio---jogo-pong"><span class="header-section-number">11.2</span> Animação, interatividade, e áudio - Jogo Pong</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -379,7 +359,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">JSPlotly e GSPlotly na Escola</h1>
+<h1 class="title">Workshop - Funcionalidades do JSPlotly</h1>
 </div>
 
 
@@ -396,270 +376,139 @@ window.Quarto = {
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;Para ilustrar o potencial de uso do <em>JSPlotly</em> para o ensino fundamental e médio, seguem alguns exemplos de simulações e cujos gráficos são frequentemente encontrados em livros-texto e conteúdos afins. Para um melhor aproveitamento de cada tema, experimente seguir as sugestões para <em>manipulação paramétrica</em> em cada tema.</div>
-<p><br>
-</p>
-<section id="instruções" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="instruções">Instruções</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Escolha um tema;</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Clique no gráfico correspondente;</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Clique em <span class="st">"Add Plot"</span>;</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Use o mouse para interatividade e<span class="sc">/</span>ou edite o código. </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Lembrete<span class="sc">:</span> o editor usa desfazer<span class="sc">/</span>refazer infinitos no código (Ctrl<span class="sc">+</span>Z <span class="sc">/</span> Shift<span class="sc">+</span>Ctrl<span class="sc">+</span>Z) <span class="sc">!</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><br>
-</p>
+<section id="gráficos" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="gráficos"><span class="header-section-number">1</span> Gráficos</h2>
+<section id="comuns-biologia" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="comuns-biologia"><span class="header-section-number">1.1</span> <a href="work/barras.html" target="_blank">Comuns (Biologia)</a></h3>
 </section>
-<section id="matemática" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="matemática"><span class="header-section-number">1</span> Matemática</h2>
-<section id="contexto---trigonometria-em13mat306-em13mat308-em13mat307" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="contexto---trigonometria-em13mat306-em13mat308-em13mat307"><span class="header-section-number">1.1</span> Contexto - Trigonometria (EM13MAT306, EM13MAT308, EM13MAT307)</h3>
-<div class="line-block">&nbsp;&nbsp;A simulação a seguir objetiva facilitar a visualização para alguns conceitos em trigonometria, <em>seno, cosseno e tangente</em>. O código permite usar um <em>menu suspenso</em> para cada função trigonométrica, bem como um <em>slider</em> para alterar a frequência em radianos.</div>
+<section id="múltiplos---com-referência-cruzada-química" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="múltiplos---com-referência-cruzada-química"><span class="header-section-number">1.2</span> <a href="work/subplot2.html" target="_blank">Múltiplos - com referência cruzada (Química)</a></h3>
 </section>
-<section id="equação" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="equação">Equação:</h3>
-<p><strong>1. Função seno:</strong></p>
-<p><span class="math display">\[
-y = \sin(\omega x)
-\]</span></p>
-<p><strong>2. Função cosseno:</strong></p>
-<p><span class="math display">\[
-y = \cos(\omega x)
-\]</span></p>
-<p><strong>3. Função tangente:</strong></p>
-<p><span class="math display">\[
-y = \tan(\omega x)
-\]</span><br>
-</p>
-<p><a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/eq/jsp_trigonom2" target="_blank"><img src="Eq/trigonom.png" class="img-fluid"></a></p>
-</section>
-<section id="sugestão" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="sugestão">Sugestão:</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Selecione, alternativamente, a função seno, cosseno, e tangente, utilizando<span class="sc">-</span>se o <span class="st">"menu suspenso"</span>;</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente o efeito de se alterar a frequência da função na barra <span class="fu">deslizante</span> (<span class="st">"slider"</span>);</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Sobreponha um gráfico de seno e um de cosseno para observar suas diferenças;</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Repita o mesmo para o gráfico de tangente.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="gráficos-tridimensionais-física" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="gráficos-tridimensionais-física"><span class="header-section-number">1.3</span> <a href="work/3d_superf.html" target="_blank">Gráficos tridimensionais (Física)</a></h3>
 </section>
 </section>
-<section id="matemática-financeira" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="matemática-financeira"><span class="header-section-number">2</span> Matemática Financeira</h2>
-<section id="contexto---juros-compostos-em13mat402" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="contexto---juros-compostos-em13mat402"><span class="header-section-number">2.1</span> Contexto - Juros Compostos (EM13MAT402):</h3>
-<div class="line-block">&nbsp;&nbsp;Também conhecido pela máxima <em>“juros sobre juros”</em>, os juros compostos incorporam valor ao capital ao longo do tempo, resultando no cresimento do montante final.</div>
+<section id="mapas-geografia" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="mapas-geografia"><span class="header-section-number">2</span> <a href="work/mapa.html" target="_blank">Mapas (Geografia)</a></h2>
 </section>
-<section id="equação-1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="equação-1">Equação:</h3>
-<p><span class="math display">\[
-M = C \cdot (1 + i)^t
-\]</span></p>
-<p><em>Onde,</em></p>
-<ul>
-<li>M: montante final</li>
-<li>C: capital inicial</li>
-<li>i: taxa de juros por período (em decimal)</li>
-<li>t: número de períodos (ex: meses)</li>
-</ul>
-<p><a href="Eq/jsp_juros2.html" target="_blank"><img src="Eq/juros.png" class="img-fluid"></a></p>
+<section id="diagramas-ensino-religioso" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="diagramas-ensino-religioso"><span class="header-section-number">3</span> <a href="work/fluxogr_papas.html" target="_blank">Diagramas (Ensino Religioso)</a></h2>
 </section>
-<section id="sugestão-1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="sugestão-1">Sugestão:</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Varie o período de contratação, a taxa mensal de juros ou o montante inicial.</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente combinar os parâmetros na variação.</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Avalie a diferença visual entre um investimento e um empréstimo, inserido valor positivo de capital inicial para o <span class="dv">1</span>o. e negativo para o <span class="dv">2</span>o. </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Observe a curva descendente para um empréstimo simulado com capital inicial negativo. Os valores remanescentes referem<span class="sc">-</span>se à dívida faltante para quitar o empréstimo.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="objeto-3d-artes" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="objeto-3d-artes"><span class="header-section-number">4</span> <a href="work/3d.html" target="_blank">Objeto 3D (Artes)</a></h2>
+</section>
+<section id="desenho-artes" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="desenho-artes"><span class="header-section-number">5</span> <a href="work/desenho.html" target="_blank">Desenho (Artes)</a></h2>
+</section>
+<section id="widgets-componentes-de-interatividade" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="widgets-componentes-de-interatividade"><span class="header-section-number">6</span> Widgets (componentes de interatividade)</h2>
+<section id="slider-deslizador" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="slider-deslizador"><span class="header-section-number">6.1</span> Slider (deslizador)</h3>
+<section id="visualização-progressiva-de-equação" class="level4" data-number="6.1.1">
+<h4 data-number="6.1.1" class="anchored" data-anchor-id="visualização-progressiva-de-equação"><span class="header-section-number">6.1.1</span> <a href="work/funcao_slider.html" target="_blank">Visualização progressiva de equação</a></h4>
+</section>
+<section id="ajustes-de-equação" class="level4" data-number="6.1.2">
+<h4 data-number="6.1.2" class="anchored" data-anchor-id="ajustes-de-equação"><span class="header-section-number">6.1.2</span> <a href="work/parabola2.html" target="_blank">Ajustes de equação</a></h4>
 </section>
 </section>
-<section id="estatística" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="estatística"><span class="header-section-number">3</span> Estatística</h2>
-<section id="contexto---curva-de-distribuição-normal-em13mat316-em13mat407-em13mat312" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="contexto---curva-de-distribuição-normal-em13mat316-em13mat407-em13mat312"><span class="header-section-number">3.1</span> Contexto - Curva de distribuição normal (EM13MAT316, EM13MAT407, EM13MAT312)</h3>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Amostragem e população são temas comuns para observação de dados em procedimentos analíticos. As curvas de distribuição estatísticas para isso envolvem a distribuição <em>t-Student</em>, <em>F-Snedecor</em>, <em>Chi-quadrado</em>, e <em>distribuição normal</em>. A curva de distribuição normal reflete o comportamento estatístico para fenômenos naturais em uma dada uma população de dados.</div>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O exemplo pretende ilustrar o uso da transformação <em>z</em>, o cálculo de valores críticos, e a interpretação da área sob a curva no estudo da distribuição normal e de inferência estatística.</div>
+<section id="menu-seletor-e-botões" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="menu-seletor-e-botões"><span class="header-section-number">6.2</span> Menu, seletor, e botões</h3>
+<section id="menu-escolha-de-função" class="level4" data-number="6.2.1">
+<h4 data-number="6.2.1" class="anchored" data-anchor-id="menu-escolha-de-função"><span class="header-section-number">6.2.1</span> <a href="work/menu.html" target="_blank">Menu (escolha de função</a></h4>
 </section>
-<section id="equação-2" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="equação-2">Equação</h3>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A função densidade da distribuição normal (ou Gaussiana) é dada abaixo?</div>
-<p><span class="math display">\[
-f(x) = \frac{1}{\sigma \sqrt{2\pi}} \, e^{ -\frac{(x - \mu)^2}{2\sigma^2} }
-\]</span></p>
-<p><em>Onde:</em></p>
-<ul>
-<li><span class="math inline">\(\mu\)</span> = 0 (média da distribuição);</li>
-<li><span class="math inline">\(\sigma\)</span> = 1 (desvio padrão);</li>
-<li><em>x</em> = variável aleatória contínua; <em>f</em> = função de densidade da distribuição normal</li>
-</ul>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Da equação acima pode-se extrair <em>z</em>, o valor da variável aleatória padronizada para média nula e desvio-padrão unitário, representando o valor no eixo das abscissas:</div>
-<p><span class="math display">\[
-z = \frac{x - \mu}{\sigma}
-\]</span></p>
-<p><a href="Eq/jsp_estat2.html" target="_blank"><img src="Eq/estat.png" class="img-fluid"></a></p>
+<section id="seletor-tema-genérico" class="level4" data-number="6.2.2">
+<h4 data-number="6.2.2" class="anchored" data-anchor-id="seletor-tema-genérico"><span class="header-section-number">6.2.2</span> <a href="work/seletor.html" target="_blank">Seletor (tema genérico)</a></h4>
 </section>
-<section id="sugestão-2" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="sugestão-2">Sugestão:</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente alterar o valor de <span class="st">"p"</span> e rodar o gráfico. Esse valor representa a probabilidade de se observar, sob a hipótese nula, um valor tão extremo ou mais extremo do que o observado — ou seja, mede a evidência contra a hipótese nula. No gráfico, representa a área sob a curva normal nas regiões críticas, indicando a chance de ocorrência do resultado observado por puro acaso.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="menu-e-seletor-literatura" class="level4" data-number="6.2.3">
+<h4 data-number="6.2.3" class="anchored" data-anchor-id="menu-e-seletor-literatura"><span class="header-section-number">6.2.3</span> <a href="work/literatObras.html" target="_blank">Menu e seletor (Literatura)</a></h4>
+</section>
+<section id="objetos-complexos-fractal" class="level4" data-number="6.2.4">
+<h4 data-number="6.2.4" class="anchored" data-anchor-id="objetos-complexos-fractal"><span class="header-section-number">6.2.4</span> <a href="work/mandelbrot.html" target="_blank">Objetos complexos (Fractal)</a></h4>
 </section>
 </section>
-<section id="física" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="física"><span class="header-section-number">4</span> Física</h2>
-<section id="contexto---energia-potencial-elástica-em13cnt102em13cnt202-em13mat402" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="contexto---energia-potencial-elástica-em13cnt102em13cnt202-em13mat402"><span class="header-section-number">4.1</span> Contexto - Energia potencial elástica (EM13CNT102,EM13CNT202, EM13MAT402)</h3>
-<div class="line-block">&nbsp;&nbsp;A deformação de um material elástico é diretamente proporcional à força exercida sobre esse, e limitada às propriedades do material.</div>
 </section>
-<section id="equação-3" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="equação-3">Equação</h3>
-<div class="line-block">&nbsp;&nbsp;O comportamento de uma mola ideal é descrita pela <em>Lei de Hooke</em> abaixo:</div>
-<p><span class="math display">\[
-F = -k*x
-\]</span></p>
-<p><em>Onde:</em></p>
-<ul>
-<li>F = força restauradora da mola (N);</li>
-<li>k = constante elástica da mola (N/m);</li>
-<li>x = deformação (m).</li>
-</ul>
-<div class="line-block">&nbsp;&nbsp;Por outro lado, a <em>energia potencial elástica</em> envolvida é descrita pela relação quadrática que segue:</div>
-<p><span class="math display">\[
-E = \frac{1}{2}*k*x^2
-\]</span></p>
-<p><em>Onde:</em></p>
-<ul>
-<li>E = energia potencial elástica (J).</li>
-</ul>
-<p><a href="Eq/jsp_fisica2.html" target="_blank"><img src="Eq/fisica2.png" class="img-fluid"></a></p>
+<section id="análise-de-dados-pesquisa" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="análise-de-dados-pesquisa"><span class="header-section-number">7</span> Análise de dados (Pesquisa)</h2>
+<section id="tabela" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="tabela"><span class="header-section-number">7.1</span> <a href="work/tabela.html" target="_blank">Tabela</a></h3>
 </section>
-<section id="sugestão-3" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="sugestão-3">Sugestão:</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente alterar o valor da constante elástica da mola para evidenciar seu efeito, relacionando<span class="sc">-</span>a com molas mais rígidas ou menos rígidas;</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Altere os limites de deformação da mola na <span class="st">"estrutura de constrole"</span> do código (ex<span class="sc">:</span> <span class="st">"for (let x = -0.7)"</span>), e observe o efeito na energia potencial máxima;</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Observe que, pela operação quadrática no valor da deformação, a energia potencial é sempre positiva.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="carregamento-de-dados---csv" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="carregamento-de-dados---csv"><span class="header-section-number">7.2</span> <a href="work/dados_csv.html" target="_blank">Carregamento de dados - CSV</a></h3>
 </section>
-<section id="contexto---movimento-de-corpos-em13cnt102" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="contexto---movimento-de-corpos-em13cnt102"><span class="header-section-number">4.2</span> Contexto - Movimento de corpos (EM13CNT102):</h3>
-<div class="line-block">&nbsp;&nbsp;O código a seguir ilustra a trajetória de um lançamento oblíquo com ângulo ajustável por uma barra deslizante (<em>slider</em>), útil para explorar os conceitos de cinemática.</div>
+<section id="curva-de-gauss-e-p-valor-estatística" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="curva-de-gauss-e-p-valor-estatística"><span class="header-section-number">7.3</span> <a href="work/gauss.html" target="_blank">Curva de Gauss e p-valor (Estatística)</a></h3>
 </section>
-<section id="equação-4" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="equação-4">Equação:</h3>
-<p><strong>1. Equação geral</strong></p>
-<p><span class="math display">\[
-y(x) = x \cdot \tan(\theta) - \frac{g}{2 v_0^2 \cos^2(\theta)} \cdot x^2
-\]</span></p>
-<p><em>Onde:</em></p>
-<ul>
-<li>y(x): altura em função da distância horizontal;</li>
-<li>x: posição horizontal (m);</li>
-<li><span class="math inline">\(\theta\)</span>: ângulo de lançamento em relação à horizontal (radianos ou graus);</li>
-<li>v0: velocidade inicial do projétil (m/s);</li>
-<li>g: aceleração da gravidade (9,8 m/s²<span class="math inline">\(^{2}\)</span>)</li>
-</ul>
-<p><strong>2. Tempo total de vôo:</strong></p>
-<p><span class="math display">\[
-t_{\text{total}} = \frac{2 v_0 \sin(\theta)}{g}
-\]</span></p>
-<p><strong>3. Posição Horizontal ao longo do tempo</strong></p>
-<p><span class="math display">\[
-x(t) = v_0 \cos(\theta) \cdot t
-\]</span></p>
-<p><a href="Eq/jsp_fis_pedra2.html" target="_blank"><img src="Eq/fis_pedra.png" class="img-fluid"></a></p>
+<section id="análise-de-variância-e-teste-de-tukey-hsd" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="análise-de-variância-e-teste-de-tukey-hsd"><span class="header-section-number">7.4</span> <a href="work/ANAVA_Tukey.html" target="_blank">Análise de Variância e teste de Tukey-HSD</a></h3>
 </section>
-<section id="sugestão-4" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="sugestão-4">Sugestão:</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Veja que há uma barra deslizante para ângulos iniciais na simulação. Arraste a barra para outro ângulo e adicione o gráfico, comparando o efeito dessa modificação.</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Altere a velocidade inicial no código, e observe o efeito no gráfico.</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Simule uma <span class="st">"condição lunar"</span> para a trajetória, e cuja gravidade é em torno de <span class="dv">1</span><span class="sc">/</span><span class="dv">6</span> a da <span class="fu">Terra</span> (<span class="sc">~</span><span class="fl">1.6</span> m<span class="sc">/</span>s²).</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="regressão-linear-ajuste-no-script" class="level3" data-number="7.5">
+<h3 data-number="7.5" class="anchored" data-anchor-id="regressão-linear-ajuste-no-script"><span class="header-section-number">7.5</span> <a href="work/regressLin.html" target="_blank">Regressão Linear (ajuste no script)</a></h3>
 </section>
 </section>
-<section id="química" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="química"><span class="header-section-number">5</span> Química</h2>
-<section id="contexto---capacidade-calorífica-ef09ci06-em13cnt104-em13cnt203" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="contexto---capacidade-calorífica-ef09ci06-em13cnt104-em13cnt203"><span class="header-section-number">5.1</span> Contexto - Capacidade Calorífica (EF09CI06, EM13CNT104, EM13CNT203)</h3>
-<div class="line-block">&nbsp;&nbsp;A simulação que segue visa observar a relação entre o calor trocado (<em>Q</em>), a massa (<em>m</em>), a capacidade calorífica (<em>c</em>) e a variação de temperatura (<em><span class="math inline">\(\Delta\)</span>T</em>).</div>
+<section id="treinamento-em-javascript-programação" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="treinamento-em-javascript-programação"><span class="header-section-number">8</span> <a href="work/treinamento_JS.html" target="_blank">Treinamento em JavaScript (Programação)</a></h2>
 </section>
-<section id="equação-5" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="equação-5">Equação:</h3>
-<p><span class="math display">\[
-Q = c \cdot m \cdot \Delta T
-\]</span><br>
-</p>
-<p><a href="Eq/jsp_cp2.html" target="_blank"><img src="Eq/cp.png" class="img-fluid"></a></p>
+<section id="animação" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="animação"><span class="header-section-number">9</span> Animação</h2>
+<section id="lançamento-oblíquo-física" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="lançamento-oblíquo-física"><span class="header-section-number">9.1</span> <a href="work/lancamento.html" target="_blank">Lançamento oblíquo (Física)</a></h3>
 </section>
-<section id="sugestão-5" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="sugestão-5">Sugestão:</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente variar inicialmente a temperatura, sobrepondo alguns gráficos;</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Varie também a massa no editor de códigos, para comparação.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="mapa-mundi-geografia-história" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="mapa-mundi-geografia-história"><span class="header-section-number">9.2</span> <a href="work/mapaAnim.html" target="_blank">Mapa Mundi (Geografia, História)</a></h3>
 </section>
-<section id="contexto-mistura-de-substâncias-em-reação-exotérmica---gráfico-3d-ef09ci02-em13cnt103-em13cnt103" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="contexto-mistura-de-substâncias-em-reação-exotérmica---gráfico-3d-ef09ci02-em13cnt103-em13cnt103"><span class="header-section-number">5.2</span> Contexto: Mistura de substâncias em reação exotérmica - gráfico 3D (EF09CI02, EM13CNT103, EM13CNT103)</h3>
-<div class="line-block">&nbsp;&nbsp;Simulações podem ser realizadas sem necessariamente envolver uma relação matemática, como na observação experimental de duas variáveis, como tempo e concentração, simulando uma reação química exotérmica. Segue um exemplo interativo em 3D.</div>
-<div class="line-block">&nbsp;&nbsp;Nesse caso, a equação utilizada no editor envolve uma variação suave de temperatura ao longo do tempo, empregando-se a função seno e uma temperatura inicial (vide o código).</div>
-<p><br>
-</p>
-<p><a href="Eq/jsp_quim2.html" target="_blank"><img src="Eq/quim2.png" class="img-fluid"></a></p>
+<section id="mapa---queimadas-c.-da-natureza-dados-fictícios" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="mapa---queimadas-c.-da-natureza-dados-fictícios"><span class="header-section-number">9.3</span> <a href="work/anim_queimad.html" target="_blank">Mapa - Queimadas (C. da Natureza; dados fictícios)</a></h3>
 </section>
-<section id="sugestão-6" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="sugestão-6">Sugestão:</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente variar inicialmente a temperatura, sobrepondo alguns gráficos;</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Varie também a massa no editor de códigos, para comparação.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="menu-e-botões-química" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="menu-e-botões-química"><span class="header-section-number">9.4</span> <a href="work/cineticaRP.html" target="_blank">Menu e botões (Química)</a></h3>
+</section>
+<section id="painel---dashboard-c.-da-natureza" class="level3" data-number="9.5">
+<h3 data-number="9.5" class="anchored" data-anchor-id="painel---dashboard-c.-da-natureza"><span class="header-section-number">9.5</span> <a href="work/painel.html" target="_blank">Painel - dashboard (C. da Natureza)</a></h3>
+</section>
+<section id="espirógrafo-arte-e-matemática" class="level3" data-number="9.6">
+<h3 data-number="9.6" class="anchored" data-anchor-id="espirógrafo-arte-e-matemática"><span class="header-section-number">9.6</span> <a href="work/espirogr.html" target="_blank">Espirógrafo (Arte e Matemática)</a></h3>
+</section>
+<section id="jogo-da-vida-de-conway-biologia" class="level3" data-number="9.7">
+<h3 data-number="9.7" class="anchored" data-anchor-id="jogo-da-vida-de-conway-biologia"><span class="header-section-number">9.7</span> <a href="work/lifesgame.html" target="_blank">Jogo da Vida de Conway (Biologia)</a></h3>
+</section>
+<section id="histograma-estatística" class="level3" data-number="9.8">
+<h3 data-number="9.8" class="anchored" data-anchor-id="histograma-estatística"><span class="header-section-number">9.8</span> <a href="work/anim_histogr.html" target="_blank">Histograma (Estatística)</a></h3>
+</section>
+<section id="potencial-de-ação-neuronal-biologia" class="level3" data-number="9.9">
+<h3 data-number="9.9" class="anchored" data-anchor-id="potencial-de-ação-neuronal-biologia"><span class="header-section-number">9.9</span> <a href="work/anim_neuronio.html" target="_blank">Potencial de ação neuronal (Biologia)</a></h3>
+</section>
+<section id="movimento-circular-física" class="level3" data-number="9.10">
+<h3 data-number="9.10" class="anchored" data-anchor-id="movimento-circular-física"><span class="header-section-number">9.10</span> <a href="work/plan4_miniSistSol.html" target="_blank">Movimento circular (Física)</a></h3>
+</section>
+<section id="mini-sistema-sola2---dados-aproximados-física" class="level3" data-number="9.11">
+<h3 data-number="9.11" class="anchored" data-anchor-id="mini-sistema-sola2---dados-aproximados-física"><span class="header-section-number">9.11</span> <a href="work/miniSistSol.html" target="_blank">Mini Sistema Sola2 - dados aproximados (Física)</a></h3>
+</section>
+<section id="afélio-e-periélio-física" class="level3" data-number="9.12">
+<h3 data-number="9.12" class="anchored" data-anchor-id="afélio-e-periélio-física"><span class="header-section-number">9.12</span> <a href="work/afelio_perielio.html" target="_blank">Afélio e Periélio (Física)</a></h3>
+</section>
+<section id="oscilação-harmônica-física" class="level3" data-number="9.13">
+<h3 data-number="9.13" class="anchored" data-anchor-id="oscilação-harmônica-física"><span class="header-section-number">9.13</span> <a href="work/massa_mola.html" target="_blank">Oscilação harmônica (Física)</a></h3>
+</section>
+<section id="movimento-pendular-física" class="level3" data-number="9.14">
+<h3 data-number="9.14" class="anchored" data-anchor-id="movimento-pendular-física"><span class="header-section-number">9.14</span> <a href="work/pendulo.html" target="_blank">Movimento pendular (Física)</a></h3>
 </section>
 </section>
-<section id="biologia" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="biologia"><span class="header-section-number">6</span> Biologia</h2>
-<section id="contexto---modelo-de-crescimento-populacional-com-fase-lag-em13cnt102" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="contexto---modelo-de-crescimento-populacional-com-fase-lag-em13cnt102"><span class="header-section-number">6.1</span> Contexto - Modelo de Crescimento Populacional com Fase Lag (EM13CNT102)</h3>
-<div class="line-block">&nbsp;&nbsp;Este modelo apresenta uma função logística que simula o crescimento populacional (microorganismos, células, por ex), acompanhado por um componente de retardo. Variando-se os parâmetros no editor, é possível estimar diversos perfis de crescimento populacional.</div>
+<section id="áudio" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="áudio"><span class="header-section-number">10</span> Áudio</h2>
+<section id="flauta-doce-script" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="flauta-doce-script"><span class="header-section-number">10.1</span> <a href="work/flauta.js" target="_blank">Flauta doce (script)</a></h3>
 </section>
-<section id="equação-6" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="equação-6">Equação:</h3>
-<p><span class="math display">\[
-N(t) = \frac{K}{1 + \left(\frac{K - N_0}{N_0}\right) \cdot e^{-r \cdot A(t) \cdot t}}, \quad \text{com } A(t) = \frac{1}{1 + e^{-k(t - t_0)}}
-\]</span></p>
-<p><em>Onde:</em></p>
-<ul>
-<li>K = capacidade de suporte ambiental;</li>
-<li>N0 = população inicial;</li>
-<li>r = taxa intrínseca de crescimento;</li>
-<li>A(t) = fator de ativação do crescimento com atraso (fase lag);</li>
-<li>t0 = ponto médio de transição entre fase lag e fase log;</li>
-<li>k = constante de suavidade do retardo (fixado como 0.5 no código)</li>
-</ul>
-<p><a href="Eq/jsp_crescim2.html" target="_blank"><img src="Eq/crescim.png" class="img-fluid"></a></p>
+<section id="piano-script" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="piano-script"><span class="header-section-number">10.2</span> <a href="work/piano.js" target="_blank">Piano (script)</a></h3>
 </section>
-<section id="sugestão-7" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="sugestão-7">Sugestão:</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente variar os parâmetros da equação, combinando alguns, e comparando seus efeitos sobre os gráficos<span class="sc">:</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  a. Capacidade de suporte;</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  b. População inicial;</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  c. Taxa de crescimento;</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  d. <span class="fu">Retardo</span> (fase lag);</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
-<section id="contexto---eficiência-energética-e-cadeia-alimentar-ef06ci02-em13cnt202-em13cnt203" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="contexto---eficiência-energética-e-cadeia-alimentar-ef06ci02-em13cnt202-em13cnt203"><span class="header-section-number">6.2</span> Contexto - Eficiência energética e cadeia alimentar (EF06CI02, EM13CNT202, EM13CNT203)</h3>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Segue um exemplo para retratar a transferëncia de energia entre diferentes níveis tróficos de uma cadeia alimentar. Embora não haja propriamente uma função matemática que a descreva, pode-se aplicar a <a href="https://en.wikipedia.org/wiki/Ecological_efficiency?">lei dos 10%</a> de eficiência ecológica entre os níveis da cadeia, o que resulta numa relação logaritmica de transferência.</div>
-<p><a href="Eq/jsp_bio2.html" target="_blank"><img src="Eq/bio2.png" class="img-fluid"></a></p>
+<section id="multimídia-interativa" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="multimídia-interativa"><span class="header-section-number">11</span> Multimídia interativa</h2>
+<section id="animação-e-interatividade---jogo-de-arco-e-flecha" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="animação-e-interatividade---jogo-de-arco-e-flecha"><span class="header-section-number">11.1</span> <a href="work/arcoFlecha.html" target="_blank">Animação e interatividade - Jogo de Arco e Flecha</a></h3>
 </section>
-<section id="sugestão-8" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="sugestão-8">Sugestão</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> A regra de Lindeman, esboçada na referência acima, estabelece uma variação para <span class="dv">5-20</span>% de eficiência energética no ecossistema. Assim, experimente sobrepor as curvas com tais taxas;</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Se quiser observar a relação logarítmica da transferência de energia, acrescente o comando <span class="st">"type: 'log',"</span> , logo abaixo de <span class="st">"title: 'Energia disponível (unidades)',"</span>.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="animação-interatividade-e-áudio---jogo-pong" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="animação-interatividade-e-áudio---jogo-pong"><span class="header-section-number">11.2</span> <a href="work/pong6.html" target="_blank">Animação, interatividade, e áudio - Jogo Pong</a></h3>
 
 
 </section>
