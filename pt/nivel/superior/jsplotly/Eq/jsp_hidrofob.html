@@ -317,10 +317,10 @@ button {
 
 
 
-
 <div class="external-link">
   <a href="https://bioquanti.netlify.app/" target="_blank">🔗 Bioquanti</a>  
 </div>
+
 
 
 <div class="dev-info">
@@ -599,60 +599,7 @@ function adicionarCurva() {
     });
   }
 
-const config = {
-  responsive: true,
-  displaylogo: false,
-  scrollZoom: true,
-  editable: true,
-  modeBarButtonsToRemove: ['sendDataToCloud'],
-  modeBarButtonsToAdd: [
-    'toggleSpikelines',
-    'hoverCompareCartesian',
-    'drawline',
-    'drawopenpath',
-    'drawrect',
-    'drawcircle',
-    {
-      name: 'Salvar PNG/SVG',
-      icon: Plotly.Icons.disk,
-      click: () => abrirPopup()
-    },
-    {
-      name: 'Mudar cor',
-      icon: Plotly.Icons.camera,
-      click: function(gd) {
-        const ultima = curvas.length - 1;
-        const novaCor = cores[Math.floor(Math.random() * cores.length)];
-        Plotly.restyle(gd, { 'line.color': novaCor }, [ultima]);
-        curvas[ultima].line.color = novaCor;
-      }
-    },
-    {
-      name: 'Adicionar Texto',
-      icon: {
-        width: 1000,
-        height: 1000,
-        path: 'M200 800V160h600v80H540v560h-80V240H200z'
-      },
-      click: function(gd) {
-        const handler = function(eventData) {
-          const x = eventData.points[0].x;
-          const y = eventData.points[0].y;
-          const texto = prompt("Digite o texto a ser inserido:");
-          if (texto) {
-            Plotly.relayout(gd, {
-              annotations: (gd.layout.annotations || []).concat([{
-                x, y, text: texto, showarrow: true, arrowhead: 2
-              }])
-            });
-          }
-          gd.removeListener('plotly_click', handler);
-        };
-        gd.on('plotly_click', handler);
-      }
-    }
-  ]
-};
+
 
 
   let data = [];
@@ -805,72 +752,55 @@ function limparTudo() {
 
 
 // Definir a equação quadrática padrão
-var codigoPadrao = `// Dados experimentais
-const x_values = [0, 1, 2, 3, 4, 5];
-const y_values = [0.1, 1.2, 3.9, 6.1, 8.0, 10.2];
+var codigoPadrao = `
 
-// Flags de exibição
-const mostrarPontos = true;   // true = dados com barras de erro
-const mostrarReta   = false;  // true = reta ajustada
-
-// Ajuste linear
-const n = x_values.length;
-const sumX = x_values.reduce(function(a, b){ return a + b; }, 0);
-const sumY = y_values.reduce(function(a, b){ return a + b; }, 0);
-const sumXY = x_values.reduce(function(acc, xi, i){ return acc + xi * y_values[i]; }, 0);
-const sumXX = x_values.reduce(function(acc, xi){ return acc + xi * xi; }, 0);
-
-const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-const intercept = (sumY - slope * sumX) / n;
-
-// Regressão linear
-const y_fit = x_values.map(function(x){ return slope * x + intercept; });
-const y_error = y_values.map(function(y, i){ return Math.abs(y - y_fit[i]); });
-
-// --- R² ---
-const meanY = sumY / n;
-const ssTot = y_values.reduce(function(acc, y){ return acc + Math.pow(y - meanY, 2); }, 0);
-const ssRes = y_values.reduce(function(acc, y, i){ return acc + Math.pow(y - y_fit[i], 2); }, 0);
-const r2 = 1 - ssRes / ssTot;
-
-// Layout comum
-const layout = {
-    title: "Ajuste Linear: y = " + slope.toFixed(2) + "x + " + intercept.toFixed(2)
-           + " (R² = " + r2.toFixed(3) + ")",
-    xaxis: { title: "Eixo X" },
-    yaxis: { title: "Eixo Y" }
+// Escala de hidrofobicidade Kyte-Doolittle
+const hidrofobicidade = {
+    Ala: 1.8,  Arg: -4.5, Asn: -3.5, Asp: -3.5, Cys: 2.5,
+    Gln: -3.5, Glu: -3.5, Gly: -0.4, His: -3.2, Ile: 4.5,
+    Leu: 3.8,  Lys: -3.9, Met: 1.9, Phe: 2.8, Pro: -1.6,
+    Ser: -0.8, Thr: -0.7, Trp: -0.9, Tyr: -1.3, Val: 4.2
 };
 
-// Escolha o que retornar para o trace
-let trace;
-if (mostrarPontos) {
-    trace = {
-        x: x_values,
-        y: y_values,
-        mode: "markers",
-        type: "scatter",
-        name: "Dados com Erro",
-        error_y: {
-            type: "data",
-            array: y_error,
-            visible: true
-        },
-        marker: { size: 6 }
-    };
-}
-if (mostrarReta) {
-    trace = {
-        x: x_values,
-        y: y_fit,
-        mode: "lines",
-        type: "scatter",
-        name: "Reta Ajustada",
-        line: { width: 2, dash: "dash", color: "gray" }
-    };
-}
+// 🧬 Entrada do usuário: escreva aqui a sequência (com 3 letras e vírgulas)
+const sequenciaStr = "Val,Leu,Gly,Thr,Arg,Pro,Ala,Gly,Lys,Ile,Phe,Trp,Ser,Met,Val";
 
-// Retorno final
-return { x_values, y_values: mostrarReta ? y_fit : y_values, layout, trace };
+
+
+// Processar sequência
+const seq = sequenciaStr.split(",").map(s => s.trim());
+
+
+// Verificar e converter
+const y_values = seq.map(aa => {
+    if (hidrofobicidade.hasOwnProperty(aa)) {
+        return hidrofobicidade[aa];
+    } else {
+throw new Error("Aminoácido inválido: " + aa);
+
+    }
+});
+
+const x_values = Array.from({ length: seq.length }, (_, i) => i + 1);
+
+// Layout do gráfico
+const layout = {
+    title: 'Perfil de Hidrofobicidade (Kyte-Doolittle)',
+    xaxis: {
+        title: 'Posição na Sequência',
+        tickmode: 'array',
+        tickvals: x_values,
+        ticktext: seq,
+        tickangle: 45
+    },
+    yaxis: {
+        title: 'Hidrofobicidade',
+        zeroline: true
+    }
+};
+
+return { x_values, y_values, layout };
+
 `;
 
 
@@ -1107,7 +1037,54 @@ function salvarCloneJSPlotly() {
   a.download = "JSPlotly.html";
   a.click();
 }
+
+function abrirNoChartStudio() {
+  const gd = document.getElementById('grafico');
+  if (!gd || !gd.data || gd.data.length === 0) {
+    alert("Não há gráfico para enviar. Clique em 'add' primeiro.");
+    return;
+  }
+
+  const dataStr   = JSON.stringify(gd.data || []);
+  const layoutStr = JSON.stringify(gd.layout || {});
+
+  // Tenta GET quando o payload é pequeno (URLs muito grandes podem falhar)
+  const urlBase = "https://chart-studio.plotly.com/create/";
+  const urlGET  = urlBase
+    + "?plotlyData="   + encodeURIComponent(dataStr)
+    + "&plotlyLayout=" + encodeURIComponent(layoutStr);
+
+  if ((dataStr.length + layoutStr.length) < 1500) {
+    window.open(urlGET, "_blank");
+    return;
+  }
+
+  // Fallback: POST via form oculto (evita limite de URL)
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = urlBase;     // Editor do Chart Studio
+  form.target = "_blank";
+
+  const inpData = document.createElement("input");
+  inpData.type = "hidden";
+  inpData.name = "plotlyData";
+  inpData.value = dataStr;
+
+  const inpLayout = document.createElement("input");
+  inpLayout.type = "hidden";
+  inpLayout.name = "plotlyLayout";
+  inpLayout.value = layoutStr;
+
+  form.appendChild(inpData);
+  form.appendChild(inpLayout);
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+}
+
+
 </script>
+
 
 
 </body>

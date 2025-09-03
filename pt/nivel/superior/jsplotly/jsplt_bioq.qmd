@@ -107,6 +107,46 @@ $$
 \
 
 
+## Hidrofobicidade em sequências de aminoácidos
+
+### Contexto: {.unnumbered}
+
+|   A observação de níveis de hidrobicidade de aminoácidos pode ser de utilidade para o estudo e a predição de sequências de resíduos, tais como encontradas na porção central de hélices de proteínas transmembrânicas, como para identificação de sítios específicos em enzimas, como fendas e bolsões hidrofóbicos.
+
+|   Esses níveis são classificados de modo relativos, dando origem a alguns índices como a *escala de Kyte–Doolittle*, que atribui a cada aminoácido um valor de hidropatia (hidrofobicidade/hidrofobicidade) estimado a partir de dados experimentais e observacionais. Valores positivos indicam tendência hidrofóbica (ex: Ile, Val, Leu) e valores negativos indicam tendência hidrofílica (ex: Asp, Glu, Lys, Arg). O índice permite destacar trechos propensos a ambientes não polares, bem como regiões expostas ao solvente aquoso.
+
+
+
+### Equação: {.unnumbered}
+
+$$
+\tilde{y}_i \;=\; \frac{1}{w} \sum_{k=i-m}^{i+m} y_k,
+\qquad w = 2m+1
+$$
+\
+
+*Onde*,
+
+\begin{aligned}
+y_i &:\; \text{valor de hidrofobicidade na posição $i$ da sequência} \\
+\tilde{y}_i &:\; \text{valor suavizado (média móvel) na posição $i$} \\
+m &:\; \text{meia-janela (número de vizinhos de cada lado)} \\
+w &:\; \text{largura total da janela ($w=2m+1$)} \\
+i &:\; \text{posição do aminoácido na sequência ($1 \leq i \leq N$)}
+\end{aligned}
+
+
+[![](Eq/hidrofob.png)](Eq/jsp_hidrofob.html){target="_blank"}
+
+
+### Sugestão: {.unnumbered}
+
+```{r,eval=FALSE}
+1. Experimente trocar a sequência para um conhecido;
+2. Compare uma sequência polar com uma apolar por sobreposição ("add")
+```
+\
+
 ## Interação de oxigênio com mioglobina e hemoglobina
 
 #### Contexto: {.unnumbered}
