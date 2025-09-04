@@ -62,6 +62,37 @@ Explicação: pKa é um termo que representa o logaritmo de uma constante de dis
 ```
 \
 
+## Estado de ionização de grupos químicos de biomoléculas
+
+### Contexto: {.unnumbered}
+
+|   O *JSPlotly* também permite a observação de alguns conceitos facilitados por *aprendizagem baseada em animação* junto às representações gráficas obtidas por funções matemáticas. No exemplo que segue, o objeto interativo ilustra o estado de protonação para os principais grupos químicos encontrados em biomoléculas.
+\
+
+### Instrução: {.unnumbered}
+
+
+1. Após clicar na imagem correlata abaixo, clique em "add" e observe o gráfico de titulação ácido-basica gerado. O eixo das abscissas (eixo x) possui uma faixa extensa de valores de pH, e o eixo das ordenadas a carga que a molécula com potencial de ionização se manifesta em cada pH, e em função de seu valor de pKa;
+
+2. Clique em "Animar" para observar o deslocamento de uma bolinha ao longo da curva de titulação, até um valor de pH pré-definido no script do simulador, e em função de seu pKa;
+
+3. Modifique no *script* o tipo de grupo ionizável (em *"let grupo_edit = "*) e/ou o pH final desejado (*"let pH_final_edit = "*), para avaliar o estado de ionização de um novo grupo;
+
+4. Clique em "Reset" e "Animar", para observar a nova animação.
+
+[![](Eq/pHpKa.png)](Eq/jsp_pHpKa.html){target="_blank"}
+
+
+### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Troque o pH e o tipo de grupo que se pretende observar;
+2. Simule o estado de ionização de moléculas diferentes, como fármacos com ácido carboxílico (ex: ácido acetilsalicílico...aspirina), no pH sanguíneo e na cavidade gástrica;
+3. Crie um novo grupo ionizável e preveja seu estado de ionização. Para isso, basta alterar a informação em 3 constantes ao início do script: grupos, pKas, e tipos.
+  a. 
+```
+\
+
 ## Rede de carga líquida em peptídios
 
 #### Contexto: {.unnumbered}
@@ -106,36 +137,43 @@ $$
 ```
 \
 
-## Estado de ionização de grupos químicos de biomoléculas
 
-### Contexto: {.unnumbered}
 
-|   O *JSPlotly* também permite a observação de alguns conceitos facilitados por *aprendizagem baseada em animação* junto às representações gráficas obtidas por funções matemáticas. No exemplo que segue, o objeto interativo ilustra o estado de protonação para os principais grupos químicos encontrados em biomoléculas.
+## Ponto Isoelétrico em Proteínas 
+
+
+#### Contexto: {.unnumbered}
+
+|   O *script* para esta simulação baseia-se na distribuição da rede de cargas para um polieletrólito, e a identificação do valor de pH em que essa rede é nula, ou seja o *ponto isoelétrico (ou isoiônico), pI*. O exemplo utiliza a sequência primária da lisozima, hidrolase que atua no rompimento da parede microbiana. 
+
+#### Equação: {.unnumbered}
+
+
+$$
+q_{\text{net}}(pH) = \sum_{i=1}^{N} \left[ n_i \cdot q_{B_i} + \frac{n_i}{1 + 10^{pH - pK_{a_i}}} \right]
+$$
 \
+*Onde*,
 
-### Instrução: {.unnumbered}
+- qnet = carga líquida total;
+- qB$_{i} = carga da forma básica para o resíduo i (por exemplo, +1 para Lys, 0 para Asp);
+- n$_{i}$ = número de grupos do resíduo *i*.
 
-
-1. Após clicar na imagem correlata abaixo, clique em "add" e observe o gráfico de titulação ácido-basica gerado. O eixo das abscissas (eixo x) possui uma faixa extensa de valores de pH, e o eixo das ordenadas a carga que a molécula com potencial de ionização se manifesta em cada pH, e em função de seu valor de pKa;
-
-2. Clique em "Animar" para observar o deslocamento de uma bolinha ao longo da curva de titulação, até um valor de pH pré-definido no script do simulador, e em função de seu pKa;
-
-3. Modifique no *script* o tipo de grupo ionizável (em "let grupo_edit = ") e/ou o pH final desejado ("let pH_final_edit = "), para avaliar o estado de ionização de um novo grupo;
-
-4. Clique em "Reset" e "Animar", para observar a nova animação.
-
-[![](Eq/pHpKa.png)](Eq/jsp_pHpKa.html){target="_blank"}
+[![](Eq/pI.png)](Eq/jsp_pI.html)
 
 
-### Sugestão: {.unnumbered}
+#### Sugestão: {.unnumbered}
 
 ```{r, eval=FALSE}
-1. Troque o pH e o tipo de grupo que se pretende observar;
-2. Simule o estado de ionização de moléculas diferentes, como fármacos com ácido carboxílico (ex: ácido acetilsalicílico...aspirina), no pH sanguíneo e na cavidade gástrica;
-3. Crie um novo grupo ionizável e preveja seu estado de ionização. Para isso, basta alterar a informação em 3 constantes ao início do script: grupos, pKas, e tipos.
-  a. 
-```
+"Descobrindo o pI para outras proteínas"
 
+1. Pode-se verificar a titulação de qualquer outra proteína ou sequência peptídica por simples substituição da sequência primária contida no código. Uma forma ascertiva de realizar essa substituição envolve:
+  a. Procurar a sequência "FASTA" da proteína no NCBI ("https://www.ncbi.nlm.nih.gov/protein/") - ex: "papain";
+  b. Clicar em "FASTA" e copiar a sequência 1a. obtida;
+  c. Colar a sequência num site para quantificação de resíduos (ex: "https://www.protpi.ch/Calculator/ProteinTool");
+4. Substituir a sequência no código. 
+```
+\
 
 ## Hidrofobicidade em sequências de aminoácidos
 
@@ -172,56 +210,13 @@ i &:\; \text{posição do aminoácido na sequência ($1 \leq i \leq N$)}
 ### Sugestão: {.unnumbered}
 
 ```{r,eval=FALSE}
-1. Experimente trocar a sequência para um conhecido;
-2. Compare uma sequência polar com uma apolar por sobreposição ("add")
+1. Experimente trocar a sequência para uma conhecida;
+2. Compare uma sequência polar com uma apolar por sobreposição ("add");
+3. Transcreva uma sequência de hélice transmembrânica de uma proteína acessando seus dados pelo site PDB
 ```
 \
 
 
-## Simulação Experimental - Caracterização de aminoácidos e cadeias
-
-### Contexto: {.unnumbered}
-
-|   O *JSPlotly* permite se trabalhar com um conjunto de interações não necessariamente atreladas à equações e suas representações gráficas. O exemplo a seguir ilustra seu potencial para uma simulação de um experimento clássico em Bioquímica: *a caracterização de aminoácidos, peptídios, e proteínas, por reações cromogênicas em tubos de ensaio*. Como o escopo deste material é apresentar e facultar o uso de *OIERs* variados (*objetos interativos de ensino reprodutível*), recomenda-se ao usuário a busca de fontes de informação tangentes às reações descritas brevemente a seguir. 
-
-#### Instruções do simulador {.unnumbered}
-
-
-|   O simulador permite duas opções: a) descobrir a natureza de uma amostra ou b) descobrir o padrão de cores de reações para uma amostra escolhida.
-\
-
-**Opção A: descobrir a natureza de uma amostra:**
-
-|   Aqui é possível *"jogar"* para verificar se está diante de uma amostra de proteína/peptídio (cadeia), de um aminoácido (AA), de uma mistura específica de AAs, ou de de AA(s) presente numa cadeia. Para isso:
-
-1. Clique na imagem abaixo e dê um "add". Será gerado um conjunto de 7 barras coloridas, representando as cores obtidas em tubos de ensaio para 7 reações distintas para caracterização proteica:  ninhidrina, biureto, Pauly, xantoproteica, Sakagushi, Millon, e enxofre (Cys);
-
-2. Descubra o tipo de amostra em função do padrão de cores dos tubos apresentado, fornecendo um palpite. O palpite deve ser por tipo (no menu "Palpite (tipo) - AA, cadeia, ou mistura de AAs) e por perfil (no menu "Palpite (perfil) - aleatório, AA(s) específico(s) ou mistura específica);
-
-3. Após a seleção nos 2 menus, clique em "Conferir". Se tiver acertado, um "Placar" logo abaixo irá computar número de acertos/número de amostras "jogadas";
-
-4. Se errar, tente de novo ou busque a explicação do padrão de cores em "Explicar";
-
-5) "Modo difícil" esconde o nome das reações, embora mantendo sua sequência, e "Embaralhar" altera a ordem dos tubos;
-
-6) Para uma nova amostra, clique em "Nova amostra";
-
-
-**Opção B: descobrir o padrão de cores de uma reação para uma amostra selecionada:**
-
-1. Selecione uma amostra em "Gerar", e clique em "Nova amostra". Será gerado um conjunto de tubos com padrão de reações esperado para a amostra.
-
-[![](Eq/Id-Prot-7.png)](Eq/jsp_Id-Prot-7.html){target="_blank"}
-
-
-
-### Sugestão: {.unnumbered}
-
-```{r eval =FALSE}
-1. Experimente clicar em "Nova amostra" para verificar a frequência de possibilidades;
-2. Experimente as duas opções de operação do "jogo" (sim, é um jogo...afinal, tem um placar!);
-3. Experimente o "modo difícil" (sem referência às reações em sequência) ou "embaralhar" (permuta da ordem das reações). Por óbvio, contudo, evite os dois simultaneamente !
-```
 
 
 ## Interação de oxigênio com mioglobina e hemoglobina
@@ -290,42 +285,6 @@ $$
 [![](Eq/jspl_bohr.png)](Eq/jspl_bohr.html)
 
 
-
-## Ponto Isoelétrico em Proteínas 
-
-
-#### Contexto: {.unnumbered}
-
-|   O *script* para esta simulação baseia-se na distribuição da rede de cargas para um polieletrólito, e a identificação do valor de pH em que essa rede é nula, ou seja o *ponto isoelétrico (ou isoiônico), pI*. O exemplo utiliza a sequência primária da lisozima, hidrolase que atua no rompimento da parede microbiana. 
-
-#### Equação: {.unnumbered}
-
-
-$$
-q_{\text{net}}(pH) = \sum_{i=1}^{N} \left[ n_i \cdot q_{B_i} + \frac{n_i}{1 + 10^{pH - pK_{a_i}}} \right]
-$$
-\
-*Onde*,
-
-- qnet = carga líquida total;
-- qB$_{i} = carga da forma básica para o resíduo i (por exemplo, +1 para Lys, 0 para Asp);
-- n$_{i}$ = número de grupos do resíduo *i*.
-
-[![](Eq/pI.png)](Eq/jsp_pI.html)
-
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-"Descobrindo o pI para outras proteínas"
-
-1. Pode-se verificar a titulação de qualquer outra proteína ou sequência peptídica por simples substituição da sequência primária contida no código. Uma forma ascertiva de realizar essa substituição envolve:
-  a. Procurar a sequência "FASTA" da proteína no NCBI ("https://www.ncbi.nlm.nih.gov/protein/") - ex: "papain";
-  b. Clicar em "FASTA" e copiar a sequência 1a. obtida;
-  c. Colar a sequência num site para quantificação de resíduos (ex: "https://www.protpi.ch/Calculator/ProteinTool");
-4. Substituir a sequência no código. 
-```
-\
 
 
 ## Catálise e inibição enzimática
@@ -1146,5 +1105,144 @@ $$
 [![](Eq/ajNonLinGauss2.png)](Eq/jsp_ajNonLinGauss3.html){target="_blank"}
 
 
+## Simulação Experimental - Caracterização de aminoácidos e cadeias
 
-                                                                                                     
+### Contexto: {.unnumbered}
+
+|   O *JSPlotly* permite se trabalhar com um conjunto de interações não necessariamente atreladas à equações e suas representações gráficas. O exemplo a seguir ilustra seu potencial para uma simulação de um experimento clássico em Bioquímica: *a caracterização de aminoácidos, peptídios, e proteínas, por reações cromogênicas em tubos de ensaio*. Como o escopo deste material é apresentar e facultar o uso de *OIERs* variados (*objetos interativos de ensino reprodutível*), recomenda-se ao usuário a busca de fontes de informação tangentes às reações descritas brevemente a seguir. 
+
+#### Instruções do simulador {.unnumbered}
+
+
+|   O simulador permite duas opções: a) descobrir a natureza de uma amostra ou b) descobrir o padrão de cores de reações para uma amostra escolhida.
+\
+
+**Opção A: descobrir a natureza de uma amostra:**
+
+|   Aqui é possível *"jogar"* para verificar se está diante de uma amostra de proteína/peptídio (cadeia), de um aminoácido (AA), de uma mistura específica de AAs, ou de de AA(s) presente numa cadeia. Para isso:
+
+1. Clique na imagem abaixo e dê um *"add"*. Será gerado um conjunto de 7 barras coloridas, representando as cores obtidas em tubos de ensaio para 7 reações distintas para caracterização proteica:  ninhidrina, biureto, Pauly, xantoproteica, Sakagushi, Millon, e enxofre (Cys);
+
+2. Descubra o tipo de amostra em função do padrão de cores dos tubos apresentado, fornecendo um palpite. O palpite deve ser por tipo (no menu *"Palpite (tipo)"* - AA, cadeia, ou mistura de AAs) e por perfil (no menu *"Palpite (perfil)"* - aleatório, AA(s) específico(s) ou mistura específica);
+
+3. Após a seleção nos 2 menus, clique em *"Conferir"*. Se tiver acertado, um *"Placar"* logo abaixo irá computar o número de acertos/número de amostras *"jogadas"*;
+
+4. Se errar, tente de novo ou busque a explicação do padrão de cores em *"Explicar"*;
+
+5) Existem duas outras possibilidades: *"Modo difícil"*, que esconde o nome das reações, embora mantendo sua sequência, e *"Embaralhar"*, que altera a ordem dos tubos;
+
+6) Para uma nova amostra, basta clicar em *"Nova amostra"*;
+
+
+**Opção B: descobrir o padrão de cores de uma reação para uma amostra selecionada:**
+
+1. Selecione uma amostra em *"Gerar"*, e clique em *"Nova amostra"*. Será gerado um conjunto de tubos com o padrão de reações esperado para a amostra.
+
+[![](Eq/Id-Prot-7.png)](Eq/jsp_Id-Prot-7.html){target="_blank"}
+
+
+
+### Sugestão: {.unnumbered}
+
+```{r eval =FALSE}
+1. Experimente clicar em "Nova amostra" para verificar a frequência de possibilidades;
+2. Experimente as duas opções de operação do "jogo" (sim, é um jogo...afinal, tem um placar!);
+3. Experimente o "modo difícil" (sem referência às reações em sequência) ou "embaralhar" (permuta da ordem das reações). Por óbvio, contudo, evite os dois simultaneamente !
+```
+\
+
+## **Simulação Experimental** {.unnumbered}
+
+
+## Caracterização de aminoácidos e cadeias  
+
+### Contexto: {.unnumbered}
+
+|   O *JSPlotly* permite se trabalhar com um conjunto de interações não necessariamente atreladas à equações e suas representações gráficas. O exemplo a seguir ilustra seu potencial para uma simulação de um experimento clássico em Bioquímica: *a caracterização de aminoácidos, peptídios, e proteínas, por reações cromogênicas em tubos de ensaio*. Como o escopo deste material é apresentar e facultar o uso de *OIERs* variados (*objetos interativos de ensino reprodutível*), recomenda-se ao usuário a busca de fontes de informação tangentes às reações descritas brevemente a seguir. 
+
+#### Instruções do simulador {.unnumbered}
+
+
+|   O simulador permite duas opções: a) descobrir a natureza de uma amostra ou b) descobrir o padrão de cores de reações para uma amostra escolhida.
+\
+
+**Opção A: descobrir a natureza de uma amostra:**
+
+|   Aqui é possível *"jogar"* para verificar se está diante de uma amostra de proteína/peptídio (cadeia), de um aminoácido (AA), de uma mistura específica de AAs, ou de de AA(s) presente numa cadeia. Para isso:
+
+1. Clique na imagem abaixo e dê um *"add"*. Será gerado um conjunto de 7 barras coloridas, representando as cores obtidas em tubos de ensaio para 7 reações distintas para caracterização proteica:  ninhidrina, biureto, Pauly, xantoproteica, Sakagushi, Millon, e enxofre (Cys);
+
+2. Descubra o tipo de amostra em função do padrão de cores dos tubos apresentado, fornecendo um palpite. O palpite deve ser por tipo (no menu *"Palpite (tipo)"* - AA, cadeia, ou mistura de AAs) e por perfil (no menu *"Palpite (perfil)"* - aleatório, AA(s) específico(s) ou mistura específica);
+
+3. Após a seleção nos 2 menus, clique em *"Conferir"*. Se tiver acertado, um *"Placar"* logo abaixo irá computar o número de acertos/número de amostras *"jogadas"*;
+
+4. Se errar, tente de novo ou busque a explicação do padrão de cores em *"Explicar"*;
+
+5) Existem duas outras possibilidades: *"Modo difícil"*, que esconde o nome das reações, embora mantendo sua sequência, e *"Embaralhar"*, que altera a ordem dos tubos;
+
+6) Para uma nova amostra, basta clicar em *"Nova amostra"*;
+
+
+**Opção B: descobrir o padrão de cores de uma reação para uma amostra selecionada:**
+
+1. Selecione uma amostra em *"Gerar"*, e clique em *"Nova amostra"*. Será gerado um conjunto de tubos com o padrão de reações esperado para a amostra.
+
+[![](Eq/Id-Prot-7.png)](Eq/jsp_Id-Prot-7.html){target="_blank"}
+
+
+
+### Sugestão: {.unnumbered}
+
+```{r eval =FALSE}
+1. Experimente clicar em "Nova amostra" para verificar a frequência de possibilidades;
+2. Experimente as duas opções de operação do "jogo" (sim, é um jogo...afinal, tem um placar!);
+3. Experimente o "modo difícil" (sem referência às reações em sequência) ou "embaralhar" (permuta da ordem das reações). Por óbvio, contudo, evite os dois simultaneamente !
+```
+
+
+                              
+## **Aplicativo** {.unnumbered}   
+
+## ZeMol - visualizador 3D para modelos moleculares
+
+### Contexto: {.unnumbered}
+
+|   Pelas características combinadas do uso de *JavaScript* e da biblioteca *Plotly.js*, é possível extender o potencial de aplicação do *JSPlotly* para a construção de verdadeiros aplicativos HTML. Um claro exemplo desse alcance é ilustrado abaixo, para um visualizador molecular de natureza similar a alguns pré-existentes e empregados em ensino e pesquisa (*Jmol*, *Pymol*, etc).
+
+|   Embora seja obviamente bem menor na extensão de suas funcionalidades quando comparado a outros aplicativos, o assim alcunhado *"ZeMol"* possui menos de 70 kB de memória, e apresenta funcionalidades como:
+
+- modelos carregados online do site [PDB](https://www.rcsb.org/) ou [PubChem](https://pubchem.ncbi.nlm.nih.gov/);
+- modelos carregados da memória física do dispositivo (formatos PDB, MOL, SDF, XYZ, TXT);
+- informações de identificação do arquivo PDB (ou nome do arquivo PubChem);
+- identificação apenas dos carbonos $\alpha$ do esqueleto polipetídico, facilitando a visualização do modelo;
+- visualização automática de ligações dissulfeto;
+- identificação de resíduos, ligantes, e íons, por *hover* de mouse sobre o modelo;
+- *checkbox* para visualização de estrutura secundária de proteínas (hélice, folha-$\beta$);
+- *checkbox* para índice de polaridade dos resíduos;
+- *sliders* para tamanho do carbono CA e opacidade do modelo (útil pra destaque de fendas, estrutura 2a., cadeia carbônica, ligantes, íons);
+- ocultar/mostrar partes distintas do modelo, clicando-se em sua legenda (cadeia, íons, hélice/folhas, ligantes);
+- seleção de AAs (individual, sequência, todos de um tipo, grupos pré-definidos no *script*);
+- HTML autosuficiente no salvamento, *"congelando"* o modelo nas características que se deseja apresentar; 
+- *Zoom* em dispositivos móveis (um dedo fixo na tela e outro arrastando o modelo) e *Pan* (deslocamento do modelo com 2 dedos na tela) - ações também presentes nos ícones acima do modelo;
+- ajustes facultativos no próprio *script* (tamanhos, cores, espessuras, grupos de AAs, tipo e espessura de traços, por ex).
+
+
+[![](Eq/ZeMol.png)](Eq/ZeMol.html){target="_blank"}
+
+
+### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Carregue um modelo com código PDB, ou uma molécula do site PubChem;
+2. Se proteína, experimente os efeitos separados e combinados dos "sliders" para tamanho do CA e opacidade;
+3. Observe a polaridade dos resíduos proteicos no "checkbox" homônimo;
+4. Experimente ampliar/reduzir ou deslocá-lo na tela com auxílio do mouse, ou fazê-lo num smartphone conforme a instrução dada acima; 
+5. Mostre ou esconda alternativamente cada cadeia ou todas, ligantes e íons, clicando-se nos termos respectivos da legenda;
+6. Selecione resíduos de interesse do modelo, como sítio catalítico, de ligação a coenzimas, ou de regulação da atividade. Para isso, sugere-se:
+  a. Individuais: Arg15, ASP117, 15, A:15, A:ARG15; 
+  b. Faixas: 15-30, A:15-30, Arg15-Asp30; 
+  c. Múltiplos separados por vírgula: "Arg15, Asp117";
+  d. Grupos: "aromatico", "polar", "apolar", "basico", "acido", "small".
+
+```
+
