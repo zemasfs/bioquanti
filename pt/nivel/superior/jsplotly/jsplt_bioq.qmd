@@ -286,13 +286,17 @@ $$
 [![](Eq/jspl_bohr.png)](Eq/jspl_bohr.html)
 
 
+```{r, eval=FALSE}
+1. Experimente alterar o pH de referência para a interação;
+2. Simule outros modelos alostéricos alterando o valor de "n"
+```
 
 
 ## Catálise e inibição enzimática
 
 ### Contexto: {.unnumbered}
 
-|   A simulação visa oferecer uma equação geral para estudos de inibição enzimática, que contemple os *modelos competitivo, incompetitivo e competitivo (puro ou misto)*, também permitindo o estudo de catálise enzimática na ausência de inibidor. 
+|   A simulação que segue visa oferecer uma equação geral para estudos de inibição enzimática, que contemple os *modelos competitivo, incompetitivo e competitivo (puro ou misto)*, também permitindo o estudo de catálise enzimática na ausência de inibidor. 
 
 #### Equação: {.unnumbered}
 
@@ -336,6 +340,43 @@ $$
 1. Para este modelo, basta alocar valores distintos para Kic e Kiu.
 ```
 \
+
+
+## Linearização de dados cinéticos por Lineweaver-Burk
+
+## Contexto {.unnumbered}
+
+|   Uma das (várias) dificuldades ao aprendizado em Bioquímica refere-se ao letramento para interpretação de gráficos. Entre esses, a natureza hiperbólica do modelo michaeliano é tratata alternativamente por diversas transformações das variáveis *S* e *v*, destacando-se na literatura a linearização por *duplo-recíproco*, ou transformação de *Lineweaver-Burk*. 
+
+|   O exemplo que segue ilustra a relação entre as variáveis dependente e independente do modelo original e transformado, utilizando-se outro recurso da biblioteca *Plotly.js*: a possibilidade de seleção cruzada de pontos. 
+
+|   Para observar essa funcionalidade, selecione um conjunto de pontos em um dos *subplots* do gráfico que segue, e observe sua seleção automática no outro subplot.
+
+
+### Equação {.unnumered}
+
+|   A transformação linear de Lineweaver-Burk é dada abaixo:
+
+$$
+\frac{1}{v} = \frac{1}{S}*\frac{Km}{Vm} + \frac{1}{Vm}
+$$
+\
+
+[![](Eq/LB.png)](Eq/jsp_LB.html){target="_blank"}
+
+
+### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente selecionar os extremos do gráfico de Michaelis-Mentem (curva hiperbólica), e observe os mesmos pontos no duplo-recíproco. Quais valores são mais confiáveis nesse último, os primeiros ou os últimos ?
+
+2. Pesquise sobre outras formas de linearização (ex: Eadie-Hofstee; "v/S" X "v"), e veja como a transformação e seleção de pontos se apresenta. Para isso, altere as constantes abaixo:
+    const invS = S.map(s => 1/s);
+    const invV = V.map(v => 1/v);
+```
+\
+
+
 
 ## Estabilidade termodinâmica de ácidos nucleicos
 
