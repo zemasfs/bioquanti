@@ -7,7 +7,7 @@ number-sections: true
 lang: en
 ---
 
-| To illustrate the potential use of *JSPlotly* for biochemistry and related fields, here are some examples of simulations and data analysis whose graphs are often found in textbooks and related content. To get the most out of each topic, try following the suggestions for *parametric manipulation* in each topic.
+| To illustrate the potential use of *JSPlotly* for Biochemistry and related areas, here are some examples of **simulations and data analysis**, whose graphs are often found in textbooks and related content. To get the most out of each topic, try following the suggestions for *parametric manipulation* of the codes in each topic. 
 \
 
 ## Instructions {.unnumbered}
@@ -18,17 +18,20 @@ lang: en
 1. Choose a topic;
 2. Click on the corresponding graph;
 3. Click on "Add Plot";
-4. Use the mouse for interactivity and/or edit the code.
+4. Use the mouse for interactivity and/or edit the code. 
 
-Reminder: the editor uses infinite undo/redo in the code (Ctrl+Z / Shift+Ctrl+Z)!
+Reminder: the editor uses infinite undo/redo in the code (Ctrl+Z / Shift+Ctrl+Z) !
 ```
 
 
-## Acid-base equilibrium and buffer systems
+## **General Biophysical Chemistry** {.unnumbered}
+
+## Acid-base equilibrium and buffer system
 
 #### Context: {.unnumbered}
 
-| The example illustrates the addition of a base to a system containing a weak acid and its conjugate base. The titration equation refers to a *triprotic acid*, the phosphoric acid of the buffer of the same name, but it would also work for many others, such as those present in the Krebs cycle (citrate, isocitrate). 
+| The example illustrates the addition of a base in a system containing a weak acid and its conjugate base. The titration equation refers to a *triprotic acid*, the phosphoric acid of the buffer of the same name, but it would also work for many others, such as those present in the Krebs cycle (citrate, isocitrate).
+ 
 
 
 #### Equation: {.unnumbered}
@@ -36,7 +39,7 @@ Reminder: the editor uses infinite undo/redo in the code (Ctrl+Z / Shift+Ctrl+Z)
 $$
 fa= \frac{1}{1 + 10^{pKa1 - pH}} + \frac{1}{1 + 10^{pKa2 - pH}} + \frac{1}{1 + 10^{pKa3 - pH}}
 $$
-*Where
+*Where*,
 fa = acid fraction (protonatable groups)
 \
 
@@ -50,15 +53,46 @@ fa = acid fraction (protonatable groups)
 "A. Converting the phosphate buffer (triprotic) curve to bicarbonate buffer (diprotic)"
 
 1. Change the pKa values for the bicarbonate buffer: pKa1 = 6.1, and pKa2 = 10.3;
-2. Set a very large value for pKa3 (e.g., 1e20). 
+2. Set a very large value for pKa3 (e.g., 1e20).
 3. Click "add plot."
 
-Explanation: pKa is a term that represents the logarithm of a dissociation constant (-log[Ka]). With an extreme value, the denominator becomes equally large, canceling out the term that carries pKa3. In JavaScript and other languages, ‘e’ represents the notation for power of 10.
+Explanation: pKa is a term that represents the logarithm of a dissociation constant (-log[Ka]). With an extreme value, the denominator becomes equally large, canceling out the term that carries pKa3. In JavaScript and other languages, "e" represents the notation for power of 10.
 
 "B. Converting the bicarbonate buffer curve to acetate"
 
-1. Simply repeat the above procedure with pKa1 = 4.75 and eliminate pKa2.
+1. Simply repeat the above procedure, with pKa1 = 4.75, and eliminating pKa2.
 
+```
+\
+
+## Ionization state of biomolecule chemical groups
+
+### Context: {.unnumbered}
+
+| *JSPlotly* also allows the observation of some concepts facilitated by *animation-based learning* together with graphical representations obtained by mathematical functions. In the following example, the interactive object illustrates the protonation state for the main chemical groups found in biomolecules.
+\
+
+### Instruction: {.unnumbered}
+
+
+1. After clicking on the related image below, click on "add" and observe the acid-base titration graph generated. The abscissa axis (x-axis) has a wide range of pH values, and the ordinate axis shows the charge that the molecule with ionization potential manifests at each pH, as a function of its pKa value;
+
+2. Click on "Animate" to observe the displacement of a small ball along the titration curve, up to a pH value predefined in the simulator script, and as a function of its pKa;
+
+3. Modify the type of ionizable group (in "let grupo_edit = "*) and/or the desired final pH ("let pH_final_edit = "*) in the script to evaluate the ionization state of a new group;
+
+4. Click "Reset" and ‘Animate’ to view the new animation.
+
+[![](Eq/pHpKa.png)](Eq/jsp_pHpKa.html){target="_blank"}
+
+
+### Suggestion: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Change the pH and the type of group you want to observe;
+2. Simulate the ionization state of different molecules, such as drugs with carboxylic acid (e.g., acetylsalicylic acid...aspirin), in blood pH and in the gastric cavity;
+3. Create a new ionizable group and predict its ionization state. To do this, simply change the information in 3 constants at the beginning of the script: groups, pKas, and types.
+a.
 ```
 \
 
@@ -66,25 +100,26 @@ Explanation: pKa is a term that represents the logarithm of a dissociation const
 
 #### Context: {.unnumbered}
 
-| The code refers to the net charge network present in any sequence of amino acid residues. Here we illustrate *angiotensin II*, an important peptide for blood pressure regulation and electrolyte balance, whose converting enzyme is associated with the mechanism of cell invasibility by SARS-CoV-2.
+| The code refers to the net charge network present in any sequence of amino acid residues. Here we illustrate *angiotensin II*, an important peptide for regulating blood pressure and electrolyte balance, whose converting enzyme is associated with the mechanism of cell invasibility by SARS-CoV-2.
 
 
 #### Equation: {.unnumbered}
 
-| There is no direct equation for this simulation, as the algorithm needs to decide the charge based on the basic or acidic nature of the residue at a given pH value (see the *script*). Thus:
+| There is no direct equation for this simulation, since the algorithm needs to decide the charge based on the basic or acidic nature of the residue at a given pH value (see the *script*). Thus:
 
 $$
 q =
 \begin{cases}
 -\dfrac{1}{1 + 10^{pK_a - pH}} & \text{(acid group)} \\\\
-\dfrac{1}{1 + 10^{pH - pK_a}} & \text{(basic group)}
+\dfrac{1}{1 + 10^{pH - pK_a}} & \text{
+{(basic group)}
 \end{cases}
 $$
 \
 
-*Where
+*Where*,
 
-- pKa = value of the antilogarithm of base 10 for the acid dissociation equilibrium constant, Ka (or log[Ka]).
+- pKa = base 10 antilogarithm value for the acid dissociation equilibrium constant, Ka (or log[Ka]).
 
 
 [![](Eq/cargaAA3.png)](Eq/jsp_cargaAA3.html){target="_blank"}
@@ -107,81 +142,13 @@ $$
 \
 
 
-## Interaction of oxygen with myoglobin and hemoglobin
-
-#### Context: {.unnumbered}
-
-| The oxygen molecule can combine with the *heme* group of myoglobin and hemoglobin in different ways, depending on the cooperativity exhibited in the latter due to its quaternary structure. The following model illustrates this interaction using the *Hill equation*. 
-
-
-#### Equation: {.unnumbered}
-
-
-$$
-Y= \frac{pO_2^{nH}}{p_{50}^{nH} + pO_2^{nH}}
-$$
-\
-
-*Where*
-
-Y = degree of oxygen saturation in the protein;
-
-
-- pO$_{2}$ = oxygen pressure;
-- p$_{50}$ = oxygen pressure at 50% saturation;
-- nH = Hill coefficient for the interaction;
-\
-
-
-[![](Eq/O2.png)](Eq/jsp_O2.html){target="_blank"}
-\
-<!---div class="jsplotly_sup-fundo"> --->
-
-### Suggestion: {.unnumbered}
-
-```{r, eval =FALSE}
-1. Run the application ("add plot"). Note that the value of "nH" for the Hill constant is "1," meaning there is no cooperativity effect.
-
-2. Now replace the value of "nH" with the Hill coefficient for hemoglobin, 2.8, and run again!
-```
-\
-
-
-## Bohr effect on hemoglobin (pH)
-
-
-#### Context: {.unnumbered}
-
-| Some physiological or pathological conditions can alter the binding affinity of oxygen to hemoglobin, such as temperature, certain metabolites (2,3-BPG), and the hydrogen ion content of the solution.
-
-#### Equation: {.unnumbered}
-
-$$
-Y(pO_2) = \frac{{pO_2^n}}{{P_{50}^n + pO_2^n}}, \quad \text{with } P_{50} = P_{50,\text{ref}} + \alpha (pH_{\text{ref}} - pH)
-$$
-\
-*Where*,
-
-- Y = hemoglobin saturation,
-- pO$_{2}$ = partial pressure of oxygen (in mmHg),
-- P$_{50}$ = pressure of O$_{2}$ at which hemoglobin is 50% saturated,
-- P$_{50,ref}$ = 26 mmHg (standard value),
-- $\alpha$ = 50 (Bohr effect intensity),
-- pH$_{ref}$ = 7.4,
-- n = 2.8 = Hill coefficient for hemoglobin.
-
-
-
-[![](Eq/jspl_bohr.png)](Eq/jspl_bohr.html)
-
-
 
 ## Isoelectric Point in Proteins
 
 
 #### Context: {.unnumbered}
 
-| The *script* for this simulation is based on the distribution of the charge network for a polyelectrolyte, and the identification of the pH value at which this network is zero, i.e., the *isoelectric point (or isoionic point), pI*. The example uses the primary sequence of lysozyme, a hydrolase that acts to break down the microbial wall.
+| The *script* for this simulation is based on the distribution of the charge network for a polyelectrolyte, and the identification of the pH value at which this network is zero, i.e., the *isoelectric (or isoionic) point, pI*. The example uses the primary sequence of lysozyme, a hydrolase that acts to break down the microbial wall. 
 
 #### Equation: {.unnumbered}
 
@@ -205,19 +172,133 @@ $$
 "Finding the pI for other proteins"
 
 1. You can check the titration of any other protein or peptide sequence by simply replacing the primary sequence contained in the code. An assertive way to perform this replacement involves:
-a. Search for the "FASTA" sequence of the protein in NCBI ("https://www.ncbi.nlm.nih.gov/protein/") - e.g., "papain";
-b. Click on "FASTA" and copy the sequence 1a. obtained;
-c. Paste the sequence into a website for residue quantification (e.g., "https://www.protpi.ch/Calculator/ProteinTool");
-4. Replace the sequence in the code. 
+a. Searching for the ‘FASTA’ sequence of the protein in NCBI ("https://www.ncbi.nlm.nih.gov/protein/") - e.g., "papain";
+b. Clicking on ‘FASTA’ and copying the sequence obtained in step 1;
+c. Pasting the sequence into a website for residue quantification (e.g., "https://www.protpi.ch/Calculator/ProteinTool");
+4. Replacing the sequence in the code.
+ 
+```
+\
+
+## Hydrophobicity in amino acid sequences
+
+### Context: {.unnumbered}
+
+| Observing amino acid hydrophobicity levels can be useful for studying and predicting residue sequences, such as those found in the central portion of transmembrane protein helices, as well as for identifying specific sites in enzymes, such as hydrophobic clefts and pockets.
+
+| These levels are classified relatively, giving rise to indices such as the *Kyte–Doolittle scale*, which assigns each amino acid a hydrophobicity value estimated from experimental and observational data. Positive values indicate a hydrophobic tendency (e.g., Ile, Val, Leu) and negative values indicate a hydrophilic tendency (e.g., Asp, Glu, Lys, Arg). The index allows us to highlight sections prone to nonpolar environments, as well as regions exposed to the aqueous solvent.
+
+
+
+### Equation: {.unnumbered}
+
+$$
+\tilde{y}_i \;=\; \frac{1}{w} \sum_{k=i-m}^{i+m} y_k,
+\qquad w = 2m+1
+$$
+\
+
+*Where*,
+
+\begin{aligned}
+y_i &:\; \text{hydrophobicity value at position $i$ of the sequence} \\
+\tilde{y}_i &:\; \text{smoothed value (moving average) at position $i$} \\
+m &:\; \text{half-window (number of neighbors on each side)} \\
+w &:\; \text{total window width ($w=2m+1$)} \\
+i &:\; \text{position of the amino acid in the sequence ($1 \leq i \leq N$)}
+\end{aligned}
+
+
+[![](Eq/hidrofob.png)](Eq/jsp_hidrofob.html){target="_blank"}
+
+
+### Suggestion: {.unnumbered}
+
+```{r,eval=FALSE}
+1. Try changing the sequence to a known one;
+2. Compare a polar sequence with a nonpolar one by overlaying ("add");
+3. Transcribe a transmembrane helix sequence of a protein by accessing its data on the PDB website
 ```
 \
 
 
-## Catalysis and enzyme inhibition
+
+
+## Interaction of oxygen with myoglobin and hemoglobin
+
+#### Context: {.unnumbered}
+
+| The oxygen molecule can combine with the *heme* group of myoglobin and hemoglobin in different ways, depending on the cooperativity exhibited in the latter due to its quaternary structure. The following model exemplifies this interaction using the *Hill equation*. 
+
+
+#### Equation: {.unnumbered}
+
+
+$$
+Y= \frac{pO_2^{nH}}{p_{50}^{nH} + pO_2^{nH}}
+$$
+\
+
+*Where*
+
+- Y = degree of oxygen saturation in the protein;
+- pO₂ = oxygen pressure;
+- p₅₀ = oxygen pressure at 50% saturation;
+- nH = Hill coefficient for the interaction;
+\
+
+
+[![](Eq/O2.png)](Eq/jsp_O2.html){target="_blank"}
+\
+<!---div class="jsplotly_sup-fundo"> --->
+
+### Suggestion: {.unnumbered}
+
+```{r, eval =FALSE}
+1. Run the application ("add plot"). Note that the value of ‘nH’ for the Hill constant is "1," meaning there is no cooperativity effect.
+
+2. Now replace the value of "nH" with the Hill coefficient for hemoglobin, 2.8, and run again!
+```
+\
+
+
+## Bohr effect on hemoglobin (pH)
+
+
+#### Context: {.unnumbered}
+
+| Some physiological or pathological conditions can alter the binding affinity of oxygen to hemoglobin, such as temperature, certain metabolites (2,3-BPG), and the hydrogen ion content of the solution.
+
+#### Equation: {.unnumbered}
+
+$$
+Y(pO_2) = \frac{{pO_2^n}}{{P_{50}^n + pO_2^n}}, \quad \text{with } P_{50} = P_{50,\text{ref}} + \alpha (pH_{\text{ref}} - pH)
+$$
+\
+*Where*,
+
+- Y = hemoglobin saturation,
+- pO₂ = partial pressure of oxygen (in mmHg),
+- P₅₀ = pressure of O₂ at which hemoglobin is 50% saturated,
+- P₅₀,ref = 26 mmHg 
+(standard value),
+- $\alpha$ = 50 (intensity of the Bohr effect),
+- pH$_{ref}$ = 7.4,
+- n = 2.8 = Hill coefficient for hemoglobin.
+
+
+
+[![](Eq/jspl_bohr.png)](Eq/jspl_bohr.html)
+
+
+
+
+## Enzyme catalysis and inhibition
 
 ### Context: {.unnumbered}
 
-| The simulation aims to provide a general equation for enzyme inhibition studies, covering *competitive, non-competitive, and competitive (pure or mixed) models*, also allowing the study of enzyme catalysis in the absence of an inhibitor.
+| The simulation aims to provide a general equation for enzyme inhibition studies, covering *competitive, non-competitive, and competitive (pure or mixed) models*, also allowing the study of enzyme catalysis in the absence of inhibitors. 
+
 #### Equation: {.unnumbered}
 
 
@@ -228,10 +309,10 @@ $$
 *Where*
 
 - S = substrate content for reaction;
-- Vm = reaction limit speed (in books, maximum speed);
+- Vm = reaction rate limit (in books, maximum rate);
 - Km = Michaelis-Mentem constant;
 - Kic = inhibitor dissociation equilibrium constant for competitive model;
-- Kiu = inhibitor dissociation equilibrium constant for non-competitive model
+- Kiu = inhibitor dissociation equilibrium constant for incompetitive model
 \
 
 
@@ -245,19 +326,19 @@ $$
 "A. Enzymatic catalysis in the absence of inhibitor."
 1. Just run the application with the general equation. Note that the values for Kic and Kiu are high (1e20). Thus, with high "dissociation constants," the interaction of the inhibitor with the enzyme is irrelevant, returning the model to the classic Michaelis-Mentem equation.
 2. Try changing the values of Vm and Km, comparing graphs.
-3. Use the geographic coordinates feature on the icon bar ("Toggle Spike Lines") to consolidate the mathematical meaning of Km, as well as to observe the effect of different values on the graph.
+3. Use the geographic coordinates feature in the icon bar ("Toggle Spike Lines") feature to consolidate the mathematical meaning of Km, as well as to observe the effect of different values on the graph visualization.
 
 "B. Competitive inhibition model."
-1. To observe or compare the Michaelis model with the competitive inhibition model, simply replace the value of Kic with a consistent number (e.g., Kic= 3).
+1. To observe or compare the Michaelis model with the competitive inhibition model, simply replace the Kic value with a consistent number (e.g., Kic= 3).
 
 "C. Incompetitive inhibition model."
 1. The same suggestion above applies to the incompetitive model, this time replacing the value for Kiu.
 
 "D. Pure non-competitive inhibition model."
-1. In this model, the simulation is performed using equal values for Kic and Kiu.
+1. In this model, the simulation is based on equal values for Kic and Kiu.
 
 "E. Mixed non-competitive inhibition model."
-1. For this model, simply assign different values to Kic and Kiu.
+1. For this model, simply allocate different values for Kic and Kiu.
 ```
 \
 
@@ -265,7 +346,7 @@ $$
 
 ### Context: {.unnumbered}
 
-| Several factors contribute to the thermodynamic stability of biopolymers, either stabilizing or destabilizing them. This simulation deals with a thermal denaturation curve for DNA in the presence or absence of some of these compounds: trehalose (stabilizing osmolyte) and guanidine chloride (destabilizing).
+| Several factors contribute to the thermodynamic stability of biopolymers, either stabilizing or destabilizing them. This simulation deals with a thermal denaturation curve for DNA in the presence or absence of some of these compounds: trehalose (stabilizing osmolyte) and guanidine chloride (destabilizer).
 
 
 ### Equation: {.unnumbered}
@@ -282,7 +363,7 @@ $$
 - $\beta$: parameter that adjusts the slope of the curve (affected by trehalose and guanidine).
 
 
-*Note:*
+*Note:* 
 
 1. Trehalose as a stabilizer (reduces $\beta$);
 2. Guanidine as a denaturant (increases $\beta$);
@@ -306,10 +387,10 @@ d) variation of guanidine chloride content.
 
 ### Context: {.unnumbered}
 
-| An adaptation that relates the thermodynamic quantities of pressure, volume, and temperature for ideal gases is the *van der Waals equation*. In this equation, coefficients are calculated that estimate the existence of a volume and interparticle interactions. Thus, the van der Waals equation corrects the ideal gas equation by considering a term to compensate for intermolecular forces (a/V$^{2}$) and the available volume, which discounts the volume occupied by the gas molecules themselves.
+| An adaptation that relates the thermodynamic quantities of pressure, volume, and temperature for ideal gases is the *van der Waals equation*. In this equation, coefficients are computed that estimate the existence of a volume and interparticle interactions. Thus, the van der Waals equation corrects the ideal gas equation by considering a term to compensate for intermolecular forces (a/V$^{2}$) and the available volume, discounting the volume occupied by the gas molecules themselves.
 
 
-| The simulation offers additional interactivity through the presence of sliders for temperature and for the finite volume coefficient (*b*) and particle interaction coefficient (*a*).
+| The simulation offers additional interactivity through the presence of sliders for temperature and for the finite volume (*b*) and particle interaction (*a*) coefficients.
 
 ### Equation: {.unnumbered}
 
@@ -334,17 +415,17 @@ $$
 
 ```{r, eval=FALSE}
 
-1. Try varying the parameters of the equation using the slider for temperature, as well as for coefficients "a and b."
-2. Discuss which of the coefficients has the greatest effect on the curve profile and the reason for this.
+1. Try varying the parameters of the equation using the slider for temperature, as well as for coefficients "a and b".
+2. Discuss which of the coefficients has the greatest effect on the curve profile, and the reason for this.
 
 ```
 \
 
-## Equilibrium of ATP production from reactants, temperature, and pH
+## Balance of ATP production from reagents, temperature, and pH
 
 ### Context: {.unnumbered}
 
-| Intracellular ATP production involves the classic chemical equilibrium relationship between reactants and products as a function of reaction temperature, adjusted to a specific pH value. By varying one or both reactant concentrations or physical-chemical parameters, it is possible to quantify the product using the following thermodynamic reaction:
+| Intracellular ATP production involves the classic chemical equilibrium relationship between reagents and products as a function of reaction temperature, adjusted to a specific pH value. By varying one and/or other reagent content, or physical-chemical parameter, it is possible to quantify the product by the following thermodynamic reaction:
 
 
 ### Equation: {.unnumbered}
@@ -379,7 +460,7 @@ $$
 
 ### Context: {.unnumbered}
 
-| The Gibbs-Helmholtz relation predicts that Gibbs energy varies nonlinearly with temperature in reactions involving a change in the heat capacity of the system ($\Delta$Cp). This expanded form of the Gibbs equation for variable heat capacity is found in various biochemical phenomena, such as in the phase transition of biomembrane structures subjected to a compound challenge, or in the conformational change that accompanies the protein structure under heating. \
+| The Gibbs-Helmholtz relation predicts that Gibbs energy varies nonlinearly with temperature in reactions involving a change in the heat capacity of the system ($\Delta$Cp). This expanded form of the Gibbs equation for variable heat capacity is present in various biochemical phenomena, such as in the phase transition of biomembrane structures subjected to a challenge from compounds, or in the conformational change that accompanies the protein structure under heating. \
 
 ### Equation: {.unnumbered}
 
@@ -390,9 +471,9 @@ $$
 *Where*,
 
 - $\Delta$G(T) = Gibbs energy of the reaction at each temperature value, kJ/mol);
-- $\Delta$H$^{o}$ = standard enthalpy of the reaction at T$_{0}$, normally 298 K (J/mol);
+- $\Delta$H$^{o}$ = standard enthalpy of the reaction at T$_{0}$, usually 298 K (J/mol);
 - $\Delta$S$^{o}$ = standard entropy of the reaction at T$_{0}$;
-- $\Delta$Cp = variation in the heat capacity of the reaction (J/mol·K), assumed to be constant with temperature;
+- $\Delta$Cp = change in heat capacity of the reaction (J/mol·K), assumed to be constant with temperature;
 - T = temperature of interest (K);
 - T$_{0}$ = reference temperature, usually 298 K.
 - R = 8.314 J/mol/K (universal gas constant);
@@ -401,12 +482,13 @@ $$
 [![](Eq/gibbs.png)](Eq/jsp_gibbs.html){target="_blank"}
 
 
+
 ### Suggestion: {.unnumbered}
 
 ```{r, eval=FALSE}
 1. Try varying one or more parameters of the expression;
 2. Test the behavior of the Gibbs curve at a high reference temperature (simulation for extremophile organism);
-3. Simulate the situation where the variation in heat capacity is zero.
+3. Simulate the situation where the variation in heat capacity is zero
 ```
 
 
@@ -414,7 +496,7 @@ $$
 
 ### Context: {.unnumbered}
 
-| Electrochemical impedance spectroscopy (EIS) is an analytical technique that measures the response of an electrochemical system to a small amplitude sinusoidal disturbance (e.g., 5-10 mV) applied over a wide frequency range (e.g., 100 kHz-1 mHz). EIS provides information about interfacial processes, such as charge transfer, ion diffusion, and passive film formation, by analyzing the complex impedance of the system. It is a non-destructive technique widely used in areas such as corrosion, batteries, fuel cells, biosensors, and protective coatings. 
+| Electrochemical impedance spectroscopy (EIS) is an analytical technique that measures the response of an electrochemical system to a small amplitude sinusoidal disturbance (e.g., 5-10 mV), applied over a wide range of frequencies (e.g., 100 kHz-1mHz).. EIS provides information about interfacial processes, such as charge transfer, ion diffusion, and passive film formation, through the analysis of the complex impedance of the system. It is a non-destructive technique widely used in areas such as corrosion, batteries, fuel cells, biosensors, and protective coatings. 
 
 ### Equation: {.unnumbered}
 
@@ -429,8 +511,8 @@ $$
 *Where:*
 
 - Z$_{total}$ = total impedance at a given frequency;
-- $\omega$ = angular frequency (rad/s), $\omega$=2πf or $\omega$=2πf;
-- R$_{p}$ = ohmic resistance (resistance of the electrolytic solution, wires, contacts, etc.);
+- $\omega$ = Angular frequency (rad/s), $\omega$=2πf or $\omega$=2πf;
+- R$_{p}$ = Ohmic resistance (resistance of the electrolytic solution, wires, contacts, etc.);
 - R$_{p}$ = Polarization resistance (associated with charge transfer processes, such as electrochemical reactions);
 - *Q* = Constant associated with the constant phase element (CPE), replaces an ideal capacitor to represent non-ideal behaviors;
 - *n* = CPE exponent, between 0 and 1; defines the degree of ideality of the capacitive behavior (n = 1: ideal capacitor; n < 1: dispersion);
@@ -448,8 +530,8 @@ $$
 
 ```{r, eval=FALSE}
 
-1. Check the effect of Rs on the graph by setting its value to zero (solution resistance);
-2. Observe the deformation of the semicircle by varying the values of the constant phase element (e.g., Q = 1e-3; n = 0.6 - dispersion of capacitive behavior);
+1. Check the effect of Rs on the graph by canceling its value (solution resistance);
+2. Observe the deformation of the semicircle by varying the values of the constant phase element (e.g., Q = 1e-3; n = 0.6 - dispersion of capacitive behavior); 
 2. Try combining other values of the code header parameters to highlight common situations in electroanalysis: Rs, Rp, Q, n, and sigma;
 3. Reduce the Warburg model with constant phase element to a simple Randles model, consisting only of two resistors in series, the second in parallel with an ideal capacitor, and without Warburg diffusion (sigma = 0; n = 1).
 ```
@@ -459,12 +541,12 @@ $$
 
 ### Context: {.unnumbered}
 
-| Cyclic voltammetry (CV) is an electroanalytical technique for characterizing interfacial (electrode-solution) redox processes. When a standard analyte in quantitative equilibrium between the oxidized and reduced forms is used, the resulting graph acquires an unusual profile, called a *duck shape*. This results from the peculiar shape obtained when a bidirectional potentiometric scan is performed on a set of electrodes by a potentiostat, resulting in cycles of oxidation and subsequent reduction (application of positive potentials followed by negative potentials). The shape, value, and distance between the resulting peaks allow the analyte to be identified and characterized, as well as the redox processes involved in the experiment.
+| Cyclic voltammetry (CV) is an electroanalytical technique for characterizing interfacial (electrode-solution) redox processes. When a standard analyte in quantitative equilibrium between the oxidized and reduced forms is used, the resulting graph acquires an unusual profile, called a *duck shape*. This results from the peculiar shape obtained when a bidirectional potentiometric scan is performed on a set of electrodes by a *potentiostat*, resulting in cycles of oxidation and subsequent reduction (application of positive potentials followed by negative potentials). The shape, value, and distance between the resulting peaks allow the analyte to be identified and characterized, as well as the redox processes involved in the experiment.
  
 
 ### Equation: {.unnumbered}
 
-| Although the formalism for cyclic voltammetry is complex and involves the solution of *ordinary differential equations* (as well as electroanalytical techniques in general), which is beyond the scope of this material, the resulting current flow can be summarized by the *Buttler-Volmer equation* below:
+| Although the formalism for cyclic voltammetry is complex and involves solving *ordinary differential equations* (as well as electroanalytical techniques in general), which is beyond the scope of this material, the resulting current flow can be summarized by the following *Buttler-Volmer equation*:
 
 $$
 j = j_0 \left[ \exp\left(\frac{\alpha n F (E - E^0)}{RT}\right) - \exp\left(\frac{-(1 - \alpha) n F (E - E^0)}{RT}\right) \right]
@@ -482,7 +564,7 @@ $$
 - T = temperature
 \
 
-| For a model of electroanalyte diffusion and accumulation at the electrode surface, the general equation for the boundary condition where the redox conversion rate is proportional to the diffusion current can be represented by *Fick's 2nd Law equation * for mass transport: 
+| For a model of electroanalyte diffusion and accumulation at the electrode surface, the general equation for the boundary condition where the redox conversion rate is proportional to the diffusion current can be represented by *Fick's 2nd Law * for mass transport: 
 
 $$
 \frac{\partial C(x,t)} {\partial t} = D \frac{\partial^2 C(x,t)} {\partial x^2}
@@ -498,14 +580,14 @@ $$
 \
 
 
-| The chemical equilibrium of the redox reaction is given by the ratio between the concentrations of the oxidized and reduced forms at the electrode/solution interface when the system is in equilibrium (or near equilibrium), according to the *Nernst equation*:
+| The chemical equilibrium of the redox reaction is given by the ratio between the concentrations of the oxidized and reduced forms at the electrode/solution interface when the system is in equilibrium (or near equilibrium), according to the *Nernst equation*: 
 
 $$
 E = E^0 + \frac{RT}{nF} \ln \left( \frac{[\text{Ox}]}{[\text{Red}]} \right)
 $$
 
 
-| The resulting current is obtained by *Faraday's law*:
+| The resulting current is obtained by Faraday's law:
 
 $$
 i(t) = n F A D \left. \frac{\partial C(x,t)} {\partial x} \right|_{x=0}
@@ -513,19 +595,19 @@ $$
 *Where:*
 
 - A = electrode surface area (cm²);
-- i(t) = current at time *t* (A, Amperes).
+- i(t) = current at time *t* (A, Ampere).
 
 
-### Cyclic Voltammetry Simulator {.unnumbered}
+### Cyclic Voltametry Simulator {.unnumbered}
 
 
-| To illustrate the potential of the *JSPlotly/GSPlotly* platform for developing complex *virtual experiments*, here is a *cyclic voltammetry simulator* resulting from the above procedures (as well as a few hours of prompt engineering!!). 
+| To illustrate the potential of the *JSPlotly/GSPlotly* platform for developing complex *virtual experiments*, here is a *cyclic voltametry simulator* resulting from the above procedures (as well as a few hours of prompt engineering!!). 
 
 | The example illustrates typical behavior in cyclic voltammetry (and the curious *duck shape*), and includes a model of diffusion and accumulation of electroactive species near the electrode surface. The code uses a *numerical solution* to obtain the current density over time, considering the effects of cyclic scanning of the applied potential, mass transport, and reaction kinetics.
 
 | In short, it numerically solves Fick's equation with dynamic boundary conditions, applies the Nernst equation at the boundary (electrode surface) to determine the conversion between species, uses the finite difference method or explicit scheme to advance in time, and obtains the current by applying Faraday's Law, through the derivative of the flux at the interface.
 
-| Find it complex? How about this: the code combines Fick (transport) and Nernst (local redox equilibrium) to accurately model the shape of the voltamogram, obtaining a physical simulation with significant realism for cyclic voltammetry.
+| Find it complex? Then how about this: the code combines Fick (transport) and Nernst (local redox equilibrium) to accurately model the shape of the voltammogram, obtaining a physical simulation with significant realism for cyclic voltammetry.
 \
 
 
@@ -536,16 +618,17 @@ $$
 ### Suggestion: {.unnumbered}
 
 ```{r, eval=FALSE}
-1. Observe the number of values at the beginning of the code, which are tangible to "parametric manipulation." Try to understand what they represent, and consciously vary their values, aiming to add value to the learning of the simulation. This is the essence of "parametric manipulation" that involves "reproducible teaching"!
+1. Note the number of values at the beginning of the code, which are tangible to "parametric manipulation." Try to understand what they represent, and consciously vary their values, aiming to add value to the learning of the simulation. This is the essence of "parametric manipulation" that involves "reproducible teaching"!
 ```
-\
+
+
 
 ## Diagrams and flowcharts
 
-### Context: {.unnumbered}
+### Context: Diagram {.unnumbered}
 
 
-| Due to the nature of the *Plotly.js* library, it is also possible to generate code in *JSPlotly* without involving an equation, such as for representing diagrams, flowcharts, heredograms, among others. The example below illustrates a representation of the Krebs cycle.
+| Due to the nature of the Plotly.js library, it is also possible to generate code in JSPlotly without involving an equation, such as for representing diagrams and flowcharts, among others. The example below illustrates a representation of the Krebs cycle, and the following is an experimental flowchart.
 
 
 [![](Eq/krebs.png)](Eq/jsp_krebs.html){target="_blank"}
@@ -553,7 +636,7 @@ $$
 ### Suggestion: {.unnumbered}
 
 ```{r, eval=FALSE}
-1. Try repositioning enzymes and metabolites by clicking and dragging the terms;
+1. Try to better reposition enzymes and metabolites by simply clicking and dragging the terms;
 2. Try replacing the names in the code to produce another metabolic cycle, such as the urea cycle.
 ```
 
@@ -568,17 +651,22 @@ $$
 ```{r, eval=FALSE}
 1. Reposition terms and connectors by dragging with the mouse;
 2. For a different flowchart in the content, modify the terms in the code;
-2. For a different flowchart format, change the font and connector characteristics in the "annotations" constant.
+2. For a different flowchart in the format, change the font and connector characteristics in the "annotations" constant.
 
 
 ```
 \
+<br>
 
-## **Data analysis** {.unnumbered}
+## **Data Analysis** {.unnumbered}
+
 
 ## User data insertion
 
-| Sometimes it is interesting to work with discrete data itself, seeking a trend, mathematical or simply visual, for the relationship between variables. Here is an example of an interactive graph with user data.
+
+### Context {.unnumbered}
+
+| Sometimes it is interesting to work with the discrete data itself, seeking a trend, mathematical or simply visual, for the relationship between variables. Here is an example of an interactive graph with user data.
 \
 
 [![](Eq/dados.png)](Eq/jsp_dados.html){target="_blank"}
@@ -592,24 +680,25 @@ $$
 
 \
 
-
-## Uploading files for analysis
+## Loading file for analysis
 
 ### Context - CSV file {.unnumbered}
 
-| Sometimes, it is necessary to analyze results related to a set of data in a spreadsheet. For this situation, the following example illustrates the loading of two data vectors from a *CSV* (*comma separated value*) file, a format commonly used for exporting/importing in spreadsheets, and the resulting graph. 
+| Sometimes, it is necessary to analyze results related to a data set in a spreadsheet. For this situation, the following example illustrates the loading of two data vectors from a *CSV* (*comma separated value*) file, a format commonly used in exporting/importing spreadsheets, and its resulting graph.
+ 
 
 [![](Eq/csv.png)](Eq/jsp_csv.html){target="_blank"}
 
 **Instructions:**
 
-- 1 Click on *add plot* and select a CSV file using the *browse* button at the top. Note: variable *X* in the first column of the file, and variable *Y* in the second column;
-- 2. Click on *add plot* again to view the resulting graph.
+- 1 Click *add plot* and select a CSV file from the *browse* button at the top. Note: variable *X* in the 1st column of the file, and variable *Y* in the 2nd column;
+- 2. Click *add plot* again to view the resulting graph.
 
 ```{r, eval=FALSE}
 1. Try other CSV files;
 2. Vary the aspects of the graph, such as type, color, marker size, etc.
 ```
+
 
 
 ## Linear data adjustment
@@ -634,7 +723,7 @@ $$
 - $\epsilon$ = measurement error.
 
 
-| The parameters of *slope and intercept* can be obtained by several procedures, such as *least squares*, *matrix algebra*, or simple *summaries*. In the latter case, the calculation of parameters and error can be computed as follows:
+| The *slope and intercept* parameters can be obtained through several procedures, such as *least squares*, *matrix algebra*, or simple *summaries*. In the latter case, the calculation of parameters and error can be computed as follows:
 
 $$
 \alpha = \frac{n \sum x_i y_i - \sum x_i \sum y_i}{n \sum x_i^2 - \left( \sum x_i \right)^2}
@@ -654,32 +743,31 @@ $$
 
 
 
-| A representation for linear adjustment with arbitrary data is provided below:
+| A representation for linear fitting with arbitrary data is provided below:
 \
 
-[![](Eq/ajLin.png)](Eq/jsp_ajLin.html){target="_blank"}
+[![](Eq/ajLin.png)](Eq/jsp_ajLinR2.html){target="_blank"}
 
 
 ### Suggestion: {.unnumbered}
 
 ```{r, eval=FALSE}
-1. Show the points that overlap or do not overlap the fit line. For overlap, choose "showPoints = true" and "showLine = true";
-2. Change the data and perform a new fit to obtain other parameters of the line.
+1. Display the points overlapping or not overlapping the adjustment line. For overlap, choose "showPoints = true" and "showLine = true";
+2. Change the data and perform a new adjustment to obtain other parameters of the line.
 ```
-
 
 
 ## Polynomial regression
 
 ### Context: {.unnumbered}
 
-| In some situations, linear fitting does not provide an adequate trend for modeling experimental data, which leads to the use of other models, such as *exponential, hyperbolic, logarithmic, power, and polynomial*. Polynomial trends are common in natural phenomena, with mathematical treatment of data occurring by different methods, such as simple sums, least squares, or linear algebra. Here is an example of polynomial regression with adjustable degrees in the code.
+| In some situations, linear adjustment does not provide an adequate trend for modeling experimental data, which leads to the use of other models, such as *exponential, hyperbolic, logarithmic, power, and polynomial*. Polynomial trends are common in natural phenomena, with mathematical treatment of data occurring by different methods, such as simple sums, least squares, or linear algebra. Here is an example of polynomial regression with adjustable degrees in the code.
 
 ### Equation
 
 | Error minimization for the polynomial curve is obtained by generalized *least squares regression* and application of the *Vandermonde matrix*, as follows.
 
-| Let the vectors x=[x$_{1}$,x$_{2}$,…,x$_{n}$] and y=[y$_{1}$,y$_{2}$,…,y${_n}$] be the desired polynomial:
+| Let the vectors be x=[x$_{1}$,x$_{2}$,…,x$_{n}$] and y=[y$_{1}$,y$_{2}$,…,y${_n}$], we want to adjust the polynomial:
 
 $$
 y = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_g x^g
@@ -711,7 +799,7 @@ $$
 
 
 
-[![](Eq/polinomial.png)](Eq/jsp_polinomial.html){target=“_blank”}
+[![](Eq/polinomial.png)](Eq/jsp_polinomial.html){target="_blank"}
 
 
 ### Suggestion: {.unnumbered}
@@ -719,7 +807,7 @@ $$
 ```{r, eval=FALSE}
 1. Try degree 1 for the polynomial, i.e., a reduction of the treatment to linear adjustment;
 2. Change the formatting of labels, colors, sizes, etc., in the code;
-3. Overlap some adjustments, edit, and reposition the caption;
+3. Overlap some adjustments, edit, and reposition the legend;
 4. Test the code with another data vector.
 ```
 
@@ -764,49 +852,50 @@ $$
 $$
 
 
-| Obviously, the graphical representation for a multilinear fit is limited to two independent variables, *x1* and *x2*, in addition to the response variable (*3D graph*), although the matrix calculation allows for several predictor variables (hyperdimensional space). Tangential to the first situation, here is an example.
+| Obviously, the graphical representation for a multilinear fit is limited to two independent variables, *x1* and *x2*, in addition to the response variable (*3D graph*), although the matrix calculation allows for several predictor variables (hyperdimensional space). Tangent to the first situation, here is an example.
 
 **Instructions**
 - 1. Note that there is a Boolean flag (*showFit*) at the beginning of the code: *false* for data only, and *true* for the fit.
 - 2. You can click on *add plot* to view the data with the flag set to *false*, followed by another *add plot* with the flag set to *true*.
 \
 
-[![](Eq/multilinear.png)](Eq/jsp_multilinear.html){target=“_blank”}
+[![](Eq/multilinear.png)](Eq/jsp_multilinear.html){target="_blank"}
 \
 
-| Rotate the graph and observe the surface around the points. Unlike a linear fit, the points are distributed discontinuously in space.
+| Rotate the graph and observe the surface around the points. Unlike a linear fit, the points are distributed non-continuously in space.
 
 ### Suggestion: {.unnumbered}
 
 ```{r, eval=FALSE}
-1. QSAR (“Quantitative Structure-Activity Relationship”) results use multilinear adjustment analysis to identify the strength of predictor variables. Try a dataset with two variables (e.g., concentration, pH, compound A, B, etc.) on the internet.
-2. For more predictor variables, see the code below!
+1. QSAR ("Quantitative Structure-Activity Relationship") results use multilinear adjustment analysis to identify the strength of predictor variables. Try a dataset on the internet that has 2 variables (e.g., concentration, pH, compound A, B, etc.).
+2. For more predictor variables, see the code below !!
 ```
 
 
 ### Context: Multiple linear adjustment with 3 or more predictor variables
 
-| Although *JSPlotly* was designed for producing interactive graphs and maps using the *Plotly.js* library on top of the *JavaScript* language, it extends the application possibilities beyond graphical representations. An example of this can be found in the code below, for a *multilinear adjustment* for a situation with 4 predictor variables.
+| Although *JSPlotly* was designed to produce interactive graphs and maps using the *Plotly.js* library on top of the *JavaScript* language, it extends the application possibilities beyond graphical representations. An example of this permeates the following code, for a *multilinear adjustment* for a situation with 4 predictor variables.
 
 
-[![](Eq/multilin4Var.png)](Eq/jsp_multilin4Var.html){target=“_blank”}
+[![](Eq/multilin4Var.png)](Eq/jsp_multilin4Var.html){target="_blank"}
 
 
 ### Suggestion: {.unnumbered}
 
 ```{r, eval=FALSE}
 1. Try varying the number of predictors (xi). To do this:
-a. Without reducing, simply remove the desired vector(s) and correct their quantity in the line: “const X = x1.map((_, i)”;
-b. If you want to increase, add a new vector in the corresponding line and update the quantity in the mapping of “const X = x1.map((_, i)”.
+a. Without reducing, simply remove the desired vector(s) and correct their quantity in the line: "const X = x1.map((_, i)";
+b. If you want to increase, add a new vector in the corresponding line and update the quantity in the mapping of "const X = x1.map((_, i)".
 ```
 
 
 
 ## Response Surface Methodology (RSM)
 
-| A variation of multilinear adjustment involves the *response surface methodology*, commonly linear (flat) or quadratic (curvilinear), applied in modeling and optimization of experimental processes with multiple independent variables. Its objective is to fit a mathematical equation that represents the relationship between the experimental factors and the response variable, allowing behaviors to be predicted and optimal conditions to be identified. 
+| A multilinear adjustment variation involves the *response surface methodology*, commonly linear (flat) or quadratic (curvilinear), applied in modeling and optimization of experimental processes with multiple independent variables. Its objective is to adjust a mathematical equation that represents the relationship between the experimental factors and the response variable, allowing behaviors to be predicted and optimal conditions to be identified.
+ 
 
-| For experiments with two factors, a second-order quadratic model is commonly used, which allows surfaces with curvature to be represented. The central idea of the experiment is to select values and their codes (-1,0,1), representing, respectively, a quantity below, an average quantity, and a quantity above, for a given predictor variable.
+| For experiments with two factors, a second-order quadratic model is commonly used, which allows for the representation of curved surfaces. The central idea of the experiment is to select values and their codes (-1,0,1), representing, respectively, a quantity below, an average quantity, and a quantity above, for a given predictor variable.
 
 ### Equation: {.unnumbered}
 
@@ -834,7 +923,7 @@ $$
 
 
 
-[![](Eq/msr.png)](Eq/jsp_msr.html){target=“_blank”}
+[![](Eq/msr.png)](Eq/jsp_msr.html){target="_blank"}
 
 
 ### Suggestion: {.unnumbered}
@@ -847,12 +936,12 @@ $$
 
 ## Data smoothing - Spline and Savitzky-Golay filter
 
-| In experimental research, signal detection occasionally occurs in the presence of significant levels of noise, as occurs in continuous spectral scanning under wavelength variation, or in the detection of electrical signals in time. In this case, there is no analytical equation that describes the behavior of the signal, although some digital processing tools can rely on a trend curve in data processing, significantly reducing the noise level, such as by *spline curve* and *Savitzky-Golay filter*. 
+| In experimental research, signal detection occasionally occurs in the presence of significant levels of noise, such as in continuous spectral scanning under wavelength variation, or in the detection of electrical signals over time. In this case, there is no analytical equation that describes the behavior of the signal, although some digital processing tools can rely on a trend curve in data processing, significantly reducing the noise level, such as by *spline curve* and *Savitzky-Golay filter*. 
 
 
 ### Context - Cubic spline {.unnumbered}
 
-| A very common interpolation technique involves the use of cubic splines by degree 3 polynomials interconnecting data windows. The treatment consists of applying polynomial functions to subintervals of the points, promoting smoothing between the data windows. Mathematically, the spline is applied in such a way that:
+| A very common interpolation technique involves the use of cubic splines by degree 3 polynomials interconnecting data windows. The treatment consists of applying polynomial functions in subintervals of the points, promoting smoothing between data windows. Mathematically, the spline is applied in such a way that:
 
 $$
 S_i(x) = a_i + b_i(x - x_i) + c_i(x - x_i)^2 + d_i(x - x_i)^3
@@ -869,7 +958,7 @@ $$
 
 ### Context - Savitzky-Golay filter
 
-| The Savitzky-Golay filter smoothing technique applies a local polynomial regression to a moving window, using least squares and a predetermined degree, preserving peak, valley, and band signals. Unlike cubic splines, the filter produces a continuous global curve, rather than a set of interconnected curves. Mathematically:
+| The Savitzky-Golay filter smoothing technique applies a local polynomial regression to a moving window, using least squares and a predetermined degree, preserving peak, valley, and band signals. Unlike the cubic spline, the filter produces a continuous global curve, rather than a set of interconnected curves. Mathematically:
 
 
 $$
@@ -885,16 +974,16 @@ $$
 
 | Here is an example of code for *JSplotly* that illustrates the use of the two interpolation methods.
 
-[![](Eq/splineGolay.png)](Eq/jsp_splineGolay.html){target=“_blank”}
+[![](Eq/splineGolay.png)](Eq/jsp_splineGolay.html){target="_blank"}
 \
 
 **Instructions:**
 
-- 1. The code has two *true/false flags*, one for ‘useGolay’ and another for “useSpline”;
+- 1. The code has two *true/false* flags, one for "useGolay" and another for "useSpline";
 - 2. View the raw data by setting both flags to *false*;
 - 3. To overlay a cubic spline, change its constant to *true*;
 - 4. To overlay the Savitzky-Golay filter, change its constant to *true*;
-- 5. To adjust the filter, modify its parameters in the constants *window* (moving window) and/or *degree* (degree of the polynomial).
+- 5. To adjust the filter, modify its parameters in the *window* (sliding window) and/or *degree* (degree of the polynomial) constants.
 
 
 ### Suggestion: {.unnumbered}
@@ -902,7 +991,7 @@ $$
 ```{r, eval=FALSE}
 1. Compare the smoothing effects of the two polynomial interpolation treatments;
 2. Apply only the filter, adjusting the moving window and polynomial degree parameters;
-3. Try interpolation with other raw data in the code, replacing the constants “x_values” and “y_raw” with numeric vectors;
+3. Try interpolation with other raw data in the code, replacing the constants "x_values" and "y_raw" with numerical vectors;
 ```
 
 
@@ -910,7 +999,7 @@ $$
 
 ### Context: {.unnumbered}
 
-| In research, it is common to analyze a set of data by comparing the variance between groups with that obtained within each group, or *Analysis of Variance (ANOVA)*. Once statistical information indicating that there is a difference between groups greater than the internal difference has been obtained, a *post hoc* test is performed to compare means, such as the *Tukey-HSD test* (*Honest Significant Difference*). 
+| In research, it is common to analyze a data set by comparing the variance between groups with that obtained within each group, or *Analysis of Variance (ANOVA)*. Once statistical information has been obtained showing that there is a difference between groups that is greater than the internal difference, a *post-hoc* test is performed to compare means, such as the *Tukey-HSD test* (*Honest Significant Difference*). 
 
 ### Equation: {.unnumbered}
 
@@ -936,7 +1025,7 @@ $$
 
 ```{r, eval=FALSE}
 1. You can click and drag the minimum difference markers (a, b, etc.) above the graph for better visual adjustment, as well as the ANOVA table and the statistical test result;
-2. Change the values of the vectors, redo the analysis and the graph simultaneously, and notice the difference in the values obtained. Note that, as stated at the bottom, you need to refresh the website page to clear previous data retained in the cache;
+2. Change the vector values, redo the simultaneous analysis and graph, and notice the difference in the values obtained. Note that, as stated at the bottom, you need to refresh the website page to clear previous data retained in the cache;
 3. Enter other data in the respective vectors, either your own or from another source;
 4. Enter new data vectors, or delete some, for a customized calculation and graph.
 
@@ -946,15 +1035,16 @@ $$
 
 ## Nonlinear data adjustment
 
-| Modeling is a common area of employment in the natural sciences, when mathematical prediction or correlation of experimental data is desired. Models can be linear or nonlinear. When nonlinear, they can be applied empirically to the data (e.g., quadratic, logarithmic, exponential, or power functions), or from an explanatory mathematical function of the model. 
-
-| In this case, techniques for nonlinear adjustment of the data to the model are used, such as *Simplex*, *Gauss*, *Newton-Raphson*, *Levenberg-Marquardt*, or *least squares*, for example. Regardless of the method, nonlinear adjustment differs from linear adjustment in its assumptions and treatment of data (see a quick explanation [here](https://bioquanti.netlify.app/pt/nivel/superior/r/enzimas#ajuste-n%C3%A3o-linear).
+| Modeling is a common area of application in the natural sciences when mathematical prediction or correlation of experimental data is desired. Models can be linear or nonlinear. When nonlinear, they can be applied empirically to the data (e.g., quadratic, logarithmic, exponential, or power functions) or based on a mathematical function that explains the model.
  
 
-### Context: Ligand-protein interaction (*grid search* algorithm) {.unnumbered}
+In this case, techniques for nonlinear adjustment of the data to the model are used, such as Simplex, Gauss, Newton-Raphson, Levenberg-Marquardt, or least squares, for example. Regardless of the method, nonlinear fitting differs from linear fitting in its assumptions and treatment of data (see a quick explanation [here](https://bioquanti.netlify.app/pt/nivel/superior/r/enzimas#ajuste-n%C3%A3o-linear).
+ 
+
+Context: Ligand-protein interaction (grid search algorithm) {.unnumbered}
 
 
-| The following example illustrates the application of a nonlinear adjustment of molecular interaction data using the Langmuir model and treatment by *manual grid search*. In this treatment, the *sum of the quadratic errors (RMSE)* is calculated for combinations of *a* and *b*, selecting the pair with the lowest calculated error. In this case, for simplicity, although *JSPlotly* works with more specific libraries, the nonlinear regression is performed by least squares, but using *grid search* rather than classic iterative methods. Thus, a set of values is tested for the pair (a, b) in a previously defined grid (combination table), allowing the identification of the parameters that best describe the experimental data according to the minimum error criterion.
+| The following example illustrates the application of a nonlinear adjustment of molecular interaction data using the Langmuir model and treatment by *quadratic error minimization by manual scanning*. In this treatment, the *sum of quadratic errors (RMSE)* is calculated for combinations of *a* and *b*, selecting the pair with the lowest calculated error. In this case, for simplicity, although *JSPlotly* works with more specific libraries, the nonlinear regression is performed by least squares, but using *grid search* rather than classic iterative methods. Thus, a set of values is tested for the pair (a, b) in a previously defined grid (combination table), allowing the identification of the parameters that best describe the experimental data according to the minimum error criterion.
 \
 
 ### Equation: {.unnumbered}
@@ -969,7 +1059,7 @@ $$
 - Y = fraction of occupied sites;
 - X = concentration of free ligand;
 - *a* = saturation value (sites of the same affinity completely occupied);
-- *Kd* = dissociation equilibrium constant of the complex.
+- *Kd* = equilibrium dissociation constant of the complex.
 
 
 
@@ -986,23 +1076,22 @@ $$
 \
 
 
-[![](Eq/ajNonLin.png)](Eq/jsp_ajNonLin.html){target=“_blank”}
+[![](Eq/ajNonLin.png)](Eq/jsp_ajNonLin.html){target="_blank"}
 
 
 ### Suggestion: {.unnumbered}
 
 ```{r, eval=FALSE}
-1. As in the previous example, alternately display the points and the adjustment curve using the “Boolean” operation (“showPoints = true/false”; “showCurve = true/false”);
-2. Change the data and perform a new fit to obtain other parameters of the equation (Kd, SSR, R², adjusted R²). Note: R² adj corresponds to the value of R² corrected for the number of parameters in the model (in this case, “2”), directly affecting the “degrees of freedom” for the fit.
+1. As in the previous example, alternately display the points and the adjustment curve using the "Boolean" operation ("showPoints = true/false"; "showCurve = true/false");
+2. Change the data and perform a new fit to obtain other parameters of the equation (Kd, SSR, R², adjusted R²). Note: Adjusted R² corresponds to the value of R² corrected for the number of parameters in the model (in this case, "2"), directly affecting the "degrees of freedom" for the fit.
 ```
 \
 
 
-### Context - Competitive inhibition in enzyme kinetics (Gauss-Newton algorithm) {.unnumbered}
- 
+### Context - Competitive inhibition in enzyme kinetics (Gauss-Newton algorithm) {.unnumbered} 
 
 
-| The *Gauss-Newton* method iteratively fits nonlinear models to experimental data sets. It is especially efficient when the model is *quasi-linear* with respect to the parameters and the residuals are moderately small. The goal is to find the parameters $\theta$ that minimize the sum of the squares of the residuals between the observed data *yi* and the values predicted by the model f(xi,$\theta$. Unlike the full Newton-Raphson method, Gauss-Newton avoids the explicit calculation of the Hessian by using an approximation based on the Jacobian of the residuals.
+| The *Gauss-Newton* method iteratively adjusts nonlinear models to experimental data sets. It is especially efficient when the model is *quasi-linear* with respect to the parameters and the residuals are moderately small. The goal is to find the parameters $\theta$ that minimize the sum of the squares of the residuals between the observed data *yi* and the values predicted by the model f(xi,$\theta$. Unlike the full Newton-Raphson method, Gauss-Newton avoids the explicit calculation of the Hessian, using an approximation based on the Jacobian of the residuals.
 
 
 ## Equation: {.unnumbered}
@@ -1015,15 +1104,114 @@ $$
 
 | To illustrate the potential of the application in iterative nonlinear fitting, here is an example for enzyme kinetics using a *competitive inhibition model*. 
 
-| The code allows you to adjust the *seeds*, *tolerance*, and number of *iterations*, and provides the graph (points/fitted line, manually), and statistical parameters of the regression.
+| The code allows you to adjust the *seeds*, *tolerance*, and number of *iterations*, and provides the graph (points/fitted line, manually) and statistical parameters of the regression.
 \
 
 **Instructions**
 
-- 1. Note that the code has a flag for *true/false* in the *ajuste* constant. I left it at *false* for data representation only (vectors *x* and *y*, or *S* and *v*);
+- 1. Note that the code has a flag for *true/false* in the *ajuste* constant. Leave it at *false* for data representation only (*x* and *y* vectors, or *S* and *v*);
 - 2. In the *Plot* area of the code, set the *trace* constant so that it also includes the data vectors;
 - 3. Click *add plot* to view the experimental points;
-- 4. To superimpose the fitted curve, update the constants *ajuste* and *trace* (vectors *S_fit* and *v_fit*), and choose *lines* in *mode*.
+- 4. To superimpose the fitted curve, update the *ajuste* and *trace* constants (vectors *S_fit* and *v_fit*), and choose *lines* in *mode*.
 
-[![](Eq/ajNonLinGauss2.png)](Eq/jsp_ajNonLinGauss3.html){target=“_blank”}
+[![](Eq/ajNonLinGauss2.png)](Eq/jsp_ajNonLinGauss3.html){target="_blank"}
 
+
+
+## **Experimental Simulation** {.unnumbered}
+
+
+## Characterization of amino acids and chains
+
+### Context: {.unnumbered}
+
+| *JSPlotly* allows you to work with a set of interactions that are not necessarily linked to equations and their graphical representations. The following example illustrates its potential for simulating a classic experiment in biochemistry: *the characterization of amino acids, peptides, and proteins by chromogenic reactions in test tubes*. As the scope of this material is to present and facilitate the use of various *OIERs* (*interactive reproducible teaching objects*), users are advised to search for sources of information related to the reactions briefly described below.
+ 
+
+#### Simulator instructions {.unnumbered}
+
+
+| The simulator allows two options: a) discover the nature of a sample or b) discover the color pattern of reactions for a chosen sample.
+\
+
+**Option A: discover the nature of a sample:**
+
+| Here you can *"play"* to check whether you are dealing with a sample of protein/peptide (chain), an amino acid (AA), a specific mixture of AAs, or AA(s) present in a chain. To do this:
+
+1. Click on the image below and select *"add."* A set of seven colored bars will be generated, representing the colors obtained in test tubes for seven different reactions for protein characterization: ninhydrin, biuret, Pauly, xanthoprotein, Sakagushi, Millon, and sulfur (Cys).
+
+2. Discover the type of sample based on the color pattern of the tubes presented, providing a guess. The guess must be by type (in the *"Guess (type)"* menu - AA, chain, or mixture of AAs) and by profile (in the *"Guess (profile)"* menu - random, specific AA(s), or specific mixture).
+
+3. After selecting from the two menus, click *"Check."* If you are correct, a *‘Score’* just below will calculate the number of correct answers/number of samples *"played."*
+
+4. If you are wrong, try again or look for an explanation of the color pattern in *"Explain"*;
+
+5) There are two other possibilities: *"Hard mode"*, which hides the names of the reactions, while maintaining their sequence, and *"Shuffle"*, which changes the order of the tubes;
+
+6) For a new sample, just click on *"New sample"*;
+
+
+**Option B: discover the color pattern of a reaction for a selected sample:**
+
+1. Select a sample in *‘Generate’*, and click on *"New sample"*. A set of tubes will be generated with the expected reaction pattern for the sample.
+
+[![](Eq/Id-Prot-7.png)](Eq/jsp_Id-Prot-7.html){target="_blank"}
+
+
+
+### Suggestion: {.unnumbered}
+
+```{r eval =FALSE}
+1. Try clicking on "New sample" to check the frequency of possibilities;
+2. Try the two "game" operation options (yes, it's a game... after all, it has a scoreboard!);
+3. Try "hard mode" (no reference to reactions in sequence) or "shuffle" (swap the order of reactions). Obviously, however, avoid both simultaneously!
+```
+
+
+
+## **Application** {.unnumbered}
+
+## ZeMol - 3D viewer for molecular models
+
+### Context: {.unnumbered}
+
+| Through the combined features of *JavaScript* and the *Plotly.js* library, it is possible to extend the application potential of *JSPlotly* to build true HTML applications. A clear example of this scope is illustrated below, for a molecular viewer similar in nature to some pre-existing ones used in teaching and research (*Jmol*, *Pymol*, etc.).
+
+| Although it is obviously much smaller in scope compared to other applications, the so-called *"ZeMol"* has less than 70 kB of memory and offers features such as:
+
+- models loaded online from the [PDB](https://www.rcsb.org/) or [PubChem](https://pubchem.ncbi.nlm.nih.gov/) websites;
+- models loaded from the device's physical memory (PDB, MOL, SDF, XYZ, TXT formats);
+- PDB file identification information (or PubChem file name);
+- header containing the number of chains, ligands, ions, and disulfide bonds;
+- identification of only the $\alpha$ carbons of each residue of the polypeptide skeleton, facilitating model visualization;
+- automatic visualization of disulfide bonds;
+- identification of residues, ligands, and ions by hovering the mouse over the model;
+- checkbox for viewing the secondary structure of proteins (helix, $\beta$-sheet);
+- checkbox for residue polarity index;
+- sliders for CA carbon size and model opacity (useful for highlighting crevices, 2a structure, carbon chain, ligands, ions);
+- hide/show different parts of the model by clicking on its legend (chain, ions, helix/sheets, ligands);
+- Highlighting of AAs (individual, sequence, all of one type, predefined groups in the *script*);
+- Self-sufficient HTML when saving, *"freezing"* the model in the characteristics you want to present;
+- *Zoom* on mobile devices (one finger fixed on the screen and the other dragging the model) and Pan (moving the model with two fingers on the screen) - actions also present in the icons above the model;
+- optional adjustments in the script itself (sizes, colors, thicknesses, AA groups, line type and thickness, for example).
+
+
+[![](Eq/ZeMol.png)](Eq/ZeMol.html){target="_blank"}
+
+
+### Suggestion: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Load a model with PDB code, or a molecule from the PubChem website;
+2. If it is a protein, try the separate and combined effects of the sliders for CA size and opacity;
+3. Observe the polarity of protein residues in the checkbox of the same name;
+4. Try zooming in/out or moving it around the screen with the mouse, or do it on a smartphone as instructed above;
+5. Show or hide each chain or all chains, ligands, and ions by clicking on the respective terms in the legend;
+6. Select residues of interest from the model, such as catalytic sites, coenzyme binding sites, or activity regulation sites. To do this, type in the corresponding field and click "highlight." Some suggestions:
+a. Individual: Arg15, ASP117, 15, A:15, A:ARG15;
+ 
+b. Ranges: 15-30, A:15-30, Arg15-Asp30; 
+c. Multiple residues separated by commas: "Arg15, Asp117";
+d. Groups: "aromatic," "polar," "nonpolar," "basic," "acidic," "small."
+
+```

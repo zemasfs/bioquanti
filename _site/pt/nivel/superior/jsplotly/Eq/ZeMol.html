@@ -819,6 +819,7 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
+
 // =====================================================
 // ZeMol - Visualizador de moléculas 3D
 // =====================================================
@@ -862,7 +863,7 @@ var __molAtoms = null, __molBonds = null;
 
   function mkSpan(t){ var s=document.createElement("span"); s.textContent=t; return s; }
 
-  ui.appendChild(mkSpan("Arquivo PDB/MOL/SDF/XYZ:"));
+  ui.appendChild(mkSpan("PDB/MOL/SDF/XYZ:"));
   var inpFile = document.createElement("input");
   inpFile.type = "file";
   inpFile.accept = ".pdb,.ent,.mol,.sdf,.xyz,.txt,text/plain";
@@ -880,7 +881,7 @@ var __molAtoms = null, __molBonds = null;
   ui.appendChild(mkSpan("  ou PubChem:"));
 var inpPub = document.createElement("input");
 inpPub.type = "text";
-inpPub.placeholder = "CID ou nome (ex.: 2244 ou caffeine)";
+inpPub.placeholder = "2244, caffeine";
 inpPub.size = 18;
 ui.appendChild(inpPub);
 
@@ -891,14 +892,14 @@ ui.appendChild(btnPub);
 
   var info = document.createElement("span");
   info.style.fontSize = "12px"; info.style.color = "#555";
-  info.textContent = " selecione arquivo ou informe ID";
+ // info.textContent = " nome ou ID";
   ui.appendChild(info);
 
   // seleção
   var selBox = document.createElement("input");
   selBox.type = "text";
-  selBox.placeholder = "ex.: Arg15, A:15-30, Asp117  |  em MOL: 1-20, C,N,O";
-  selBox.size = 36;
+  selBox.placeholder = "12, 42-50, Arg15, A:15-30, polar, C,N"
+  selBox.size = 30;
   ui.appendChild(selBox);
 
   var btnHi = document.createElement("button"); btnHi.textContent = "destacar"; ui.appendChild(btnHi);
@@ -917,10 +918,10 @@ ui.appendChild(btnPub);
   btnPol.onclick = function(){ if(!__isGenericMol){ __polOn = !__polOn; btnPol.style.fontWeight = __polOn ? "700":"400"; updatePlot(); } };
 
   // slider CA size
-  ui.appendChild(mkSpan(" CA size:"));
+  ui.appendChild(mkSpan(" tamanho:"));
   var sliderCA = document.createElement("input");
   sliderCA.type = "range"; sliderCA.min = 1; sliderCA.max = 100; sliderCA.value = __caSize;
-  sliderCA.style.width = "120px";
+  sliderCA.style.width = "80px";
   ui.appendChild(sliderCA);
   sliderCA.oninput = function(){ __caSize = parseInt(sliderCA.value,10); updatePlot(); };
 
@@ -928,7 +929,7 @@ ui.appendChild(btnPub);
   ui.appendChild(mkSpan(" opacidade:"));
   var sliderOp = document.createElement("input");
   sliderOp.type = "range"; sliderOp.min = 1; sliderOp.max = 100; sliderOp.value = Math.round(__opacity*100);
-  sliderOp.style.width = "120px";
+  sliderOp.style.width = "80px";
   ui.appendChild(sliderOp);
   sliderOp.oninput = function(){
     __opacity = Math.max(0, Math.min(1, parseInt(sliderOp.value,10)/100));
@@ -1845,6 +1846,7 @@ __baseData.forEach(function(tr){ tr.__isBase = true; });
   Plotly.react("grafico", data0, layout0);
 
 })(); // fim IIFE
+
 
 
 
