@@ -978,6 +978,7 @@ function criarPongInterativo() {
 }
 
 // ---------- UI no JSPlotly ----------
+// ---------- UI no JSPlotly ----------
 (function initUI(){
   var g = document.getElementById('grafico');
   if (!g) return;
@@ -1004,6 +1005,7 @@ function criarPongInterativo() {
   });
 })();
 
+
 // ---------- Export HTML (self-contained) ----------
 (function(){
   function strToB64(s){
@@ -1013,21 +1015,21 @@ function criarPongInterativo() {
     } catch(e){ return btoa(unescape(encodeURIComponent(s))); }
   }
   function makeHTML(dark,b64Sound,b64Sfx,b64Sketch){
-    var head=[
-      '<!DOCTYPE html>','<html lang="en">','<head>',
-      '  <meta charset="UTF-8">','  <title>Pong</title>',
-      '  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"><\\/script>',
-      '  <style>',
-      '    body{background-color:',(dark?'#1e1e1e':'#ffffff'),';color:',(dark?'#e0e0e0':'#000000'),';font-family:sans-serif;text-align:center;margin:20px;}',
-      '    #jogoArea{margin-top:20px;} button{padding:6px 12px;}',
-      '  </style>',
-      '</head><body>',
-      '  <h2>Pong</h2>',
-      '  <button id="btnStart">Start Game</button> <button id="btnExport">Export HTML</button><br><br>',
-      '  <label>Speed: <span id="warpValor">Warp 1.5</span></label><br>',
-      '  <input type="range" id="warpSlider" min="0" max="5" step="0.1" value="1.5"><br>',
-      '  <div id="jogoArea"></div>'
-    ].join('');
+    var head = [
+  '<!DOCTYPE html>','<html lang="en">','<head>',
+  '  <meta charset="UTF-8">','  <title>Pong</title>',
+  '  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"><\\/script>',
+  '  <style>',
+  '    body{background-color:',(dark?'#1e1e1e':'#ffffff'),';color:',(dark?'#e0e0e0':'#000000'),';font-family:sans-serif;text-align:center;margin:20px;}',
+  '    #jogoArea{margin-top:20px;} button{padding:6px 12px;}',
+  '  </style>',
+  '</head><body>',
+  '  <h2>Pong</h2>',
+  '  <button id="btnStart">Start Game</button><br><br>',   // <-- só Start
+  '  <label>Speed: <span id="warpValor">Warp 1.5</span></label><br>',
+  '  <input type="range" id="warpSlider" min="0" max="5" step="0.1" value="1.5"><br>',
+  '  <div id="jogoArea"></div>'
+].join('');
     var boot=[
       '<script>',
       'function b64ToStr(b){var bin=atob(b),len=bin.length,arr=new Uint8Array(len);for(var i=0;i<len;i++){arr[i]=bin.charCodeAt(i);}try{return new TextDecoder("utf-8").decode(arr);}catch(e){var s="";for(var j=0;j<len;j++){s+=String.fromCharCode(arr[j]);}return s;}}',
@@ -1036,16 +1038,23 @@ function criarPongInterativo() {
       'eval(b64ToStr("',b64Sketch,'"));',
       '<\\/script>'
     ].join('');
-    var tail=[
-      '<script>',
-      '["pointerdown","touchstart","click","keydown"].forEach(function(ev){window.addEventListener(ev,function(){try{if(window.Sound&&Sound.resume)Sound.resume();}catch(e){}},{once:true,passive:true});});',
-      'document.getElementById("btnStart").addEventListener("click",function(){ try{Sound.resume();}catch(e){} try{if(window.sfx)sfx("wall");}catch(e){} document.getElementById("jogoArea").innerHTML=""; criarPongInterativo(); });',
-      'document.getElementById("warpSlider").addEventListener("input",function(){ document.getElementById("warpValor").innerText="Warp "+this.value; });',
-      '<\\/script>',
-      '</body></html>'
-    ].join('');
-    return head+boot+tail;
-  }
+    var tail = [
+  '<script>',
+  '["pointerdown","touchstart","click","keydown"].forEach(function(ev){',
+  '  window.addEventListener(ev,function(){try{if(window.Sound&&Sound.resume)Sound.resume();}catch(e){}},{once:true,passive:true});',
+  '});',
+  'document.getElementById("btnStart").addEventListener("click",function(){',
+  '  try{Sound.resume();}catch(e){} try{if(window.sfx)sfx("wall");}catch(e){}',
+  '  document.getElementById("jogoArea").innerHTML=""; criarPongInterativo();',
+  '});',
+  'document.getElementById("warpSlider").addEventListener("input",function(){',
+  '  document.getElementById("warpValor").innerText="Warp "+this.value;',
+  '});',
+  '<\\/script>',
+  '</body></html>'
+].join('');
+return head + boot + tail;
+}
 
   function __pong_exportHTML(){
     var dark = document.body.classList.contains('dark-mode');
@@ -1068,15 +1077,6 @@ const Sound=(function(){let ctx=null,master=null;function ensureCtx(){if(!ctx){c
   // expõe pro botão html do JSPlotly
   window.salvarProjetoSomenteGrafico = __pong_exportHTML;
 
-  // também cria um botão "Export HTML" ao lado do Start ao rodar no clone
-  try{
-    var bStart = document.getElementById('btnStart');
-    if (bStart && !document.getElementById('btnExport')) {
-      var b = document.createElement('button'); b.id='btnExport'; b.textContent='Export HTML'; b.style.marginLeft='8px';
-      bStart.parentNode.insertBefore(b, bStart.nextSibling);
-      b.addEventListener('click', __pong_exportHTML);
-    }
-  }catch(e){}
 })();
 
 `;
