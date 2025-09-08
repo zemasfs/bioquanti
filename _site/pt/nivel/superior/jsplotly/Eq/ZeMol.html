@@ -819,7 +819,6 @@ function limparTudo() {
 
 // Definir a equação quadrática padrão
 var codigoPadrao = `
-
 // =====================================================
 // ZeMol - Visualizador de moléculas 3D
 // =====================================================
@@ -838,7 +837,8 @@ var __ssData = {helix:[], sheet:[]}, __ssSel = {helix:false, sheet:false}; // OF
 var __polOn = false, __polTrace = null;
 
 // sliders
-var __caSize = 3;      // tamanho dos pontos CA
+var __caSize = 6;   // tamanho das esferas (CA/átomos)
+// sliders
 var __opacity = 1.0;   // opacidade global
 
 // MOL/SDF/XYZ
@@ -863,7 +863,7 @@ var __molAtoms = null, __molBonds = null;
 
   function mkSpan(t){ var s=document.createElement("span"); s.textContent=t; return s; }
 
-  ui.appendChild(mkSpan("PDB/MOL/SDF/XYZ:"));
+  ui.appendChild(mkSpan("Arquivo PDB/MOL/SDF/XYZ:"));
   var inpFile = document.createElement("input");
   inpFile.type = "file";
   inpFile.accept = ".pdb,.ent,.mol,.sdf,.xyz,.txt,text/plain";
@@ -881,7 +881,7 @@ var __molAtoms = null, __molBonds = null;
   ui.appendChild(mkSpan("  ou PubChem:"));
 var inpPub = document.createElement("input");
 inpPub.type = "text";
-inpPub.placeholder = "2244, caffeine";
+inpPub.placeholder = "CID ou nome (ex.: 2244 ou caffeine)";
 inpPub.size = 18;
 ui.appendChild(inpPub);
 
@@ -892,14 +892,14 @@ ui.appendChild(btnPub);
 
   var info = document.createElement("span");
   info.style.fontSize = "12px"; info.style.color = "#555";
- // info.textContent = " nome ou ID";
+  info.textContent = " selecione arquivo ou informe ID";
   ui.appendChild(info);
 
   // seleção
   var selBox = document.createElement("input");
   selBox.type = "text";
-  selBox.placeholder = "12, 42-50, Arg15, A:15-30, polar, C,N"
-  selBox.size = 30;
+  selBox.placeholder = "ex.: Arg15, A:15-30, Asp117  |  em MOL: 1-20, C,N,O";
+  selBox.size = 36;
   ui.appendChild(selBox);
 
   var btnHi = document.createElement("button"); btnHi.textContent = "destacar"; ui.appendChild(btnHi);
@@ -918,10 +918,10 @@ ui.appendChild(btnPub);
   btnPol.onclick = function(){ if(!__isGenericMol){ __polOn = !__polOn; btnPol.style.fontWeight = __polOn ? "700":"400"; updatePlot(); } };
 
   // slider CA size
-  ui.appendChild(mkSpan(" tamanho:"));
+  ui.appendChild(mkSpan(" CA size:"));
   var sliderCA = document.createElement("input");
   sliderCA.type = "range"; sliderCA.min = 1; sliderCA.max = 100; sliderCA.value = __caSize;
-  sliderCA.style.width = "80px";
+  sliderCA.style.width = "120px";
   ui.appendChild(sliderCA);
   sliderCA.oninput = function(){ __caSize = parseInt(sliderCA.value,10); updatePlot(); };
 
@@ -929,7 +929,7 @@ ui.appendChild(btnPub);
   ui.appendChild(mkSpan(" opacidade:"));
   var sliderOp = document.createElement("input");
   sliderOp.type = "range"; sliderOp.min = 1; sliderOp.max = 100; sliderOp.value = Math.round(__opacity*100);
-  sliderOp.style.width = "80px";
+  sliderOp.style.width = "120px";
   ui.appendChild(sliderOp);
   sliderOp.oninput = function(){
     __opacity = Math.max(0, Math.min(1, parseInt(sliderOp.value,10)/100));
@@ -1728,8 +1728,8 @@ __baseData.forEach(function(tr){ tr.__isBase = true; });
     if (tr.marker){
       tr.marker.opacity = targetOpacity;
 
-      // Só os traces de CA seguem o slider de tamanho:
-      if (tr._isCA){
+      // PDB: só CA; Moléculas pequenas (PubChem/MOL/XYZ): todos os markers
+      if (__isGenericMol || tr._isCA){
         tr.marker.size = __caSize;
       }
     }
@@ -1846,11 +1846,6 @@ __baseData.forEach(function(tr){ tr.__isBase = true; });
   Plotly.react("grafico", data0, layout0);
 
 })(); // fim IIFE
-
-
-
-
-
 
 `;
 
@@ -2065,30 +2060,51 @@ function salvarProjetoSomenteGrafico() {
 
 <script>
 function salvarCloneJSPlotly() {
-  // Captura o código do usuário e escapa com segurança
+  // 1) Pega o código do editor e escapa com segurança
   const codigoNovo = editor.getValue()
     .replace(/\\/g, '\\\\')
     .replace(/`/g, '\\`')
-    .replace(/\$/g, '\\$');
+    .replace(/\$/g, '\\$')
+    .replace(/<\/script>/gi, '<\\/script>');
 
-  // Substitui diretamente o valor da variável codigoPadrao na string
   const novaDefinicao = 'var codigoPadrao = `' + codigoNovo + '`;';
-  
-  // Extrai o HTML original em partes
-  const htmlOriginal = document.documentElement.outerHTML;
 
-  const htmlAtualizado = htmlOriginal.replace(
+  // 2) Clona o HTML atual e limpa o que é *dinâmico* do viewer
+  const htmlOriginal = document.documentElement.outerHTML;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlOriginal, 'text/html');
+
+  // remove UI dinâmica criada pelo codigoPadrao
+  const ui   = doc.getElementById('pdb3d-ui2');   if (ui) ui.remove();
+  const meta = doc.getElementById('pdb3d-meta');  if (meta) meta.remove();
+  const wrap = doc.getElementById('pdb3d-wrap');
+  if (wrap) {
+    // move #grafico para fora e descarta o wrapper
+    const graf = doc.getElementById('grafico');
+    if (graf && wrap.parentNode) {
+      wrap.parentNode.replaceChild(graf, wrap);
+    }
+  }
+  // esvazia o container do plot (nada pré-renderizado no clone)
+  const gd = doc.getElementById('grafico');
+  if (gd) gd.innerHTML = '';
+
+  // 3) Substitui o codigoPadrao na cópia do HTML
+  doc.documentElement.innerHTML = doc.documentElement.innerHTML.replace(
     /var codigoPadrao = `([\s\S]*?)`;/,
     novaDefinicao
   );
 
-  const blob = new Blob([htmlAtualizado], { type: "text/html" });
+  // 4) Salva o clone “limpo”
+  const saida = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+  const blob = new Blob([saida], { type: "text/html" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "JSPlotly.html";
   a.click();
 }
 </script>
+
 
   <!-- Script de expansão/contração -->
   <script>

@@ -219,6 +219,97 @@ i &:\; \text{posição do aminoácido na sequência ($1 \leq i \leq N$)}
 
 
 
+## *Aplicativo* - Simulação experimental para caracterização de aminoácidos e cadeias  
+
+### Contexto: {.unnumbered}
+
+|   O *JSPlotly* permite se trabalhar com um conjunto de interações não necessariamente atreladas à equações e suas representações gráficas. O exemplo a seguir ilustra seu potencial para uma simulação de um experimento clássico em Bioquímica: *a caracterização de aminoácidos, peptídios, e proteínas, por reações cromogênicas em tubos de ensaio*. Como o escopo deste material é apresentar e facultar o uso de *OIERs* variados (*objetos interativos de ensino reprodutível*), recomenda-se ao usuário a busca de fontes de informação tangentes às reações descritas brevemente a seguir. 
+
+
+#### Instruções do simulador {.unnumbered}
+
+
+|   O simulador permite duas opções: a) descobrir a natureza de uma amostra ou b) descobrir o padrão de cores de reações para uma amostra escolhida.
+\
+
+**Opção A: descobrir a natureza de uma amostra:**
+
+|   Aqui é possível *"jogar"* para verificar se está diante de uma amostra de proteína/peptídio (cadeia), de um aminoácido (AA), de uma mistura específica de AAs, ou de de AA(s) presente numa cadeia. Para isso:
+
+1. Clique na imagem abaixo e dê um *"add"*. Será gerado um conjunto de 7 barras coloridas, representando as cores obtidas em tubos de ensaio para 7 reações distintas para caracterização proteica:  ninhidrina, biureto, Pauly, xantoproteica, Sakagushi, Millon, e enxofre (Cys);
+
+2. Descubra o tipo de amostra em função do padrão de cores dos tubos apresentado, fornecendo um palpite. O palpite deve ser por tipo (no menu *"Palpite (tipo)"* - AA, cadeia, ou mistura de AAs) e por perfil (no menu *"Palpite (perfil)"* - aleatório, AA(s) específico(s) ou mistura específica);
+
+3. Após a seleção nos 2 menus, clique em *"Conferir"*. Se tiver acertado, um *"Placar"* logo abaixo irá computar o número de acertos/número de amostras *"jogadas"*;
+
+4. Se errar, tente de novo ou busque a explicação do padrão de cores em *"Explicar"*;
+
+5) Existem duas outras possibilidades: *"Modo difícil"*, que esconde o nome das reações, embora mantendo sua sequência, e *"Embaralhar"*, que altera a ordem dos tubos;
+
+6) Para uma nova amostra, basta clicar em *"Nova amostra"*;
+
+
+**Opção B: descobrir o padrão de cores de uma reação para uma amostra selecionada:**
+
+1. Selecione uma amostra em *"Gerar"*, e clique em *"Nova amostra"*. Será gerado um conjunto de tubos com o padrão de reações esperado para a amostra.
+
+[![](Eq/Id-Prot-7.png)](Eq/jsp_Id-Prot-7.html){target="_blank"}
+
+
+
+### Sugestão: {.unnumbered}
+
+```{r eval =FALSE}
+1. Experimente clicar em "Nova amostra" para verificar a frequência de possibilidades;
+2. Experimente as duas opções de operação do "jogo" (sim, é um jogo...afinal, tem um placar!);
+3. Experimente o "modo difícil" (sem referência às reações em sequência) ou "embaralhar" (permuta da ordem das reações). Por óbvio, contudo, evite os dois simultaneamente !
+```
+\
+
+## *Aplicativo* - ZeMol: um visualizador 3D para modelos moleculares
+
+### Contexto: {.unnumbered}
+
+|   Pelas características combinadas do uso de *JavaScript* e da biblioteca *Plotly.js*, é possível extender o potencial de aplicação do *JSPlotly* para a construção de verdadeiros aplicativos HTML. Um claro exemplo desse alcance é ilustrado abaixo, para um visualizador molecular de natureza similar a alguns pré-existentes e empregados em ensino e pesquisa (*Jmol*, *Pymol*, etc).
+
+|   Embora seja obviamente bem menor na extensão de suas funcionalidades quando comparado a outros aplicativos, o assim alcunhado *"ZeMol"* possui menos de 70 kB de memória, e apresenta funcionalidades como:
+
+- modelos carregados online do site [PDB](https://www.rcsb.org/) ou [PubChem](https://pubchem.ncbi.nlm.nih.gov/);
+- modelos carregados da memória física do dispositivo (formatos PDB, MOL, SDF, XYZ, TXT);
+- informações de identificação do arquivo PDB (ou nome do arquivo PubChem);
+- cabeçalho contendo quantitativo de cadeias, ligantes, íons, e ligações dissulfeto;
+- identificação apenas dos carbonos $\alpha$ de cada resíduo do esqueleto polipetídico, facilitando a visualização do modelo;
+- visualização automática de ligações dissulfeto;
+- identificação de resíduos, ligantes, e íons, por *hover* de mouse sobre o modelo;
+- *checkbox* para visualização de estrutura secundária de proteínas (hélice, folha-$\beta$);
+- *checkbox* para índice de polaridade dos resíduos;
+- *sliders* para tamanho do carbono CA (PDB) ou átomos no geral, e opacidade do modelo (útil pra destaque de fendas, estrutura 2a., cadeia carbônica, ligantes, íons);
+- ocultar/mostrar partes distintas do modelo, clicando-se em sua legenda (cadeia, íons, hélice/folhas, ligantes);
+- Destaque de AAs (individual, sequência, todos de um tipo, grupos pré-definidos no *script*);
+- HTML autosuficiente no salvamento, *"congelando"* o modelo nas características que se deseja apresentar; 
+- *Zoom* em dispositivos móveis (um dedo fixo na tela e outro arrastando o modelo) e *Pan* (deslocamento do modelo com 2 dedos na tela) - ações também presentes nos ícones acima do modelo;
+- ajustes facultativos no próprio *script* (tamanhos, cores, espessuras, grupos de AAs, tipo e espessura de traços, por ex).
+
+
+[![](Eq/ZeMol.png)](Eq/ZeMol.html){target="_blank"}
+
+
+### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Carregue um modelo com código PDB, ou uma molécula do site PubChem;
+2. Se proteína, experimente os efeitos separados e combinados dos "sliders" para tamanho do CA e opacidade;
+3. Observe a polaridade dos resíduos proteicos no "checkbox" homônimo;
+4. Experimente ampliar/reduzir ou deslocá-lo na tela com auxílio do mouse, ou fazê-lo num smartphone conforme a instrução dada acima; 
+5. Mostre ou esconda alternativamente cada cadeia ou todas, ligantes e íons, clicando-se nos termos respectivos da legenda;
+6. Selecione resíduos de interesse do modelo, como sítio catalítico, de ligação a coenzimas, ou de regulação da atividade. Para isso, digite no campo correlato e clique em "destacar". Algumas sugestões:
+  a. Individuais: Arg15, ASP117, 15, A:15, A:ARG15; 
+  b. Faixas: 15-30, A:15-30, Arg15-Asp30; 
+  c. Múltiplos separados por vírgula: "Arg15, Asp117";
+  d. Grupos: "aromatico", "polar", "apolar", "basico", "acido", "small".
+
+```
+\
 
 ## Interação de oxigênio com mioglobina e hemoglobina
 
@@ -1145,102 +1236,44 @@ $$
 - 4. Para superimpor a curva ajustada, atualize as constantes *ajuste* e *trace* (vetores *S_fit* e *v_fit*), e escolha *lines* em *mode*.
 
 [![](Eq/ajNonLinGauss2.png)](Eq/jsp_ajNonLinGauss3.html){target="_blank"}
-
-
-
-## **Simulação Experimental** {.unnumbered}
-
-
-## Caracterização de aminoácidos e cadeias  
-
-### Contexto: {.unnumbered}
-
-|   O *JSPlotly* permite se trabalhar com um conjunto de interações não necessariamente atreladas à equações e suas representações gráficas. O exemplo a seguir ilustra seu potencial para uma simulação de um experimento clássico em Bioquímica: *a caracterização de aminoácidos, peptídios, e proteínas, por reações cromogênicas em tubos de ensaio*. Como o escopo deste material é apresentar e facultar o uso de *OIERs* variados (*objetos interativos de ensino reprodutível*), recomenda-se ao usuário a busca de fontes de informação tangentes às reações descritas brevemente a seguir. 
-
-#### Instruções do simulador {.unnumbered}
-
-
-|   O simulador permite duas opções: a) descobrir a natureza de uma amostra ou b) descobrir o padrão de cores de reações para uma amostra escolhida.
 \
 
-**Opção A: descobrir a natureza de uma amostra:**
+## Aplicativo - Lousa Digital 
 
-|   Aqui é possível *"jogar"* para verificar se está diante de uma amostra de proteína/peptídio (cadeia), de um aminoácido (AA), de uma mistura específica de AAs, ou de de AA(s) presente numa cadeia. Para isso:
+|   A natureza do objeto abaixo dispensa apresentações. Trata-se mais um entre os muitos aplicativos para simular uma lousa, ou quadro de giz/caneta digital. Diferente de seus concorrentes, contudo:
 
-1. Clique na imagem abaixo e dê um *"add"*. Será gerado um conjunto de 7 barras coloridas, representando as cores obtidas em tubos de ensaio para 7 reações distintas para caracterização proteica:  ninhidrina, biureto, Pauly, xantoproteica, Sakagushi, Millon, e enxofre (Cys);
+1. Pode ser exportada como arquivo autossuficiente HTML em botão da própria lousa, e permitindo compartilhamento da imagem gerada, bem como continuidade de sua edição;
+2. Faculta a personalização do código que o produz, permitindo inserir/alterar canetas, espessuras, e ações distintas não previstas no código-fonte.
+\
 
-2. Descubra o tipo de amostra em função do padrão de cores dos tubos apresentado, fornecendo um palpite. O palpite deve ser por tipo (no menu *"Palpite (tipo)"* - AA, cadeia, ou mistura de AAs) e por perfil (no menu *"Palpite (perfil)"* - aleatório, AA(s) específico(s) ou mistura específica);
-
-3. Após a seleção nos 2 menus, clique em *"Conferir"*. Se tiver acertado, um *"Placar"* logo abaixo irá computar o número de acertos/número de amostras *"jogadas"*;
-
-4. Se errar, tente de novo ou busque a explicação do padrão de cores em *"Explicar"*;
-
-5) Existem duas outras possibilidades: *"Modo difícil"*, que esconde o nome das reações, embora mantendo sua sequência, e *"Embaralhar"*, que altera a ordem dos tubos;
-
-6) Para uma nova amostra, basta clicar em *"Nova amostra"*;
+[![](Eq/lousa.png)](Eq/lousa.html){target="_blank"}
+\
 
 
-**Opção B: descobrir o padrão de cores de uma reação para uma amostra selecionada:**
+|   Tangente à suas facilidades, a lousa digital permite:
 
-1. Selecione uma amostra em *"Gerar"*, e clique em *"Nova amostra"*. Será gerado um conjunto de tubos com o padrão de reações esperado para a amostra.
+- Escrever com 7 cores e 3 espessuras distintas;
+- Acessar 4 planos de fundo de coloração diferente;
+- Sobrepor o plano com um *grid*;
+- Utilizar um apagador (*erase*);
+- Utilizar um *apontador de laser* para localização do que se pretende assinalar;
+- Salvar a imagem como PNG, indicando data e hora;
+- Comando de desfazer (*undo*) e de limpeza (*clean*) do quadro;
+- Possui atalhos de teclado: E=borracha; L=laser; Z desfaz, X limpa, H salva HTML
 
-[![](Eq/Id-Prot-7.png)](Eq/jsp_Id-Prot-7.html){target="_blank"}
+### Sugestão:
 
-
-
-### Sugestão: {.unnumbered}
-
-```{r eval =FALSE}
-1. Experimente clicar em "Nova amostra" para verificar a frequência de possibilidades;
-2. Experimente as duas opções de operação do "jogo" (sim, é um jogo...afinal, tem um placar!);
-3. Experimente o "modo difícil" (sem referência às reações em sequência) ou "embaralhar" (permuta da ordem das reações). Por óbvio, contudo, evite os dois simultaneamente !
+```{r, eval=FALSE}
+1. Pode-se alterar a espessura das canetas em "var baseWidth = 1;" ;
+2. Os botões 1x, 2x, 4x são multiplicadores; edite as linhas de criação dos botões pra trocar rótulo/multiplicador (ex.: "addSize('3x', 3, true)").
 ```
+
+
+
+
+
+
 
 
                               
-## **Aplicativo** {.unnumbered}   
-
-## ZeMol - visualizador 3D para modelos moleculares
-
-### Contexto: {.unnumbered}
-
-|   Pelas características combinadas do uso de *JavaScript* e da biblioteca *Plotly.js*, é possível extender o potencial de aplicação do *JSPlotly* para a construção de verdadeiros aplicativos HTML. Um claro exemplo desse alcance é ilustrado abaixo, para um visualizador molecular de natureza similar a alguns pré-existentes e empregados em ensino e pesquisa (*Jmol*, *Pymol*, etc).
-
-|   Embora seja obviamente bem menor na extensão de suas funcionalidades quando comparado a outros aplicativos, o assim alcunhado *"ZeMol"* possui menos de 70 kB de memória, e apresenta funcionalidades como:
-
-- modelos carregados online do site [PDB](https://www.rcsb.org/) ou [PubChem](https://pubchem.ncbi.nlm.nih.gov/);
-- modelos carregados da memória física do dispositivo (formatos PDB, MOL, SDF, XYZ, TXT);
-- informações de identificação do arquivo PDB (ou nome do arquivo PubChem);
-- cabeçalho contendo quantitativo de cadeias, ligantes, íons, e ligações dissulfeto;
-- identificação apenas dos carbonos $\alpha$ de cada resíduo do esqueleto polipetídico, facilitando a visualização do modelo;
-- visualização automática de ligações dissulfeto;
-- identificação de resíduos, ligantes, e íons, por *hover* de mouse sobre o modelo;
-- *checkbox* para visualização de estrutura secundária de proteínas (hélice, folha-$\beta$);
-- *checkbox* para índice de polaridade dos resíduos;
-- *sliders* para tamanho do carbono CA e opacidade do modelo (útil pra destaque de fendas, estrutura 2a., cadeia carbônica, ligantes, íons);
-- ocultar/mostrar partes distintas do modelo, clicando-se em sua legenda (cadeia, íons, hélice/folhas, ligantes);
-- Destaque de AAs (individual, sequência, todos de um tipo, grupos pré-definidos no *script*);
-- HTML autosuficiente no salvamento, *"congelando"* o modelo nas características que se deseja apresentar; 
-- *Zoom* em dispositivos móveis (um dedo fixo na tela e outro arrastando o modelo) e *Pan* (deslocamento do modelo com 2 dedos na tela) - ações também presentes nos ícones acima do modelo;
-- ajustes facultativos no próprio *script* (tamanhos, cores, espessuras, grupos de AAs, tipo e espessura de traços, por ex).
-
-
-[![](Eq/ZeMol.png)](Eq/ZeMol.html){target="_blank"}
-
-
-### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Carregue um modelo com código PDB, ou uma molécula do site PubChem;
-2. Se proteína, experimente os efeitos separados e combinados dos "sliders" para tamanho do CA e opacidade;
-3. Observe a polaridade dos resíduos proteicos no "checkbox" homônimo;
-4. Experimente ampliar/reduzir ou deslocá-lo na tela com auxílio do mouse, ou fazê-lo num smartphone conforme a instrução dada acima; 
-5. Mostre ou esconda alternativamente cada cadeia ou todas, ligantes e íons, clicando-se nos termos respectivos da legenda;
-6. Selecione resíduos de interesse do modelo, como sítio catalítico, de ligação a coenzimas, ou de regulação da atividade. Para isso, digite no campo correlato e clique em "destacar". Algumas sugestões:
-  a. Individuais: Arg15, ASP117, 15, A:15, A:ARG15; 
-  b. Faixas: 15-30, A:15-30, Arg15-Asp30; 
-  c. Múltiplos separados por vírgula: "Arg15, Asp117";
-  d. Grupos: "aromatico", "polar", "apolar", "basico", "acido", "small".
-
-```
 
