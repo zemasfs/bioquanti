@@ -754,81 +754,90 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 // ---------- Michaelis–Menten vs Lineweaver–Burk (com inibição) ----------
-// Edite livremente estes parâmetros antes de clicar em "add"
-const Vm   = 10;         // Vmáx
-const Km   = 5;          // Km
-const I    = 0;          // [Inibidor]
-const Kic  = Infinity;   // constante de inibição competitiva (use Infinity p/ "desligar")
-const Kiu  = Infinity;   // constante de inibição incompetitiva (use Infinity p/ "desligar")
-const Smax = 20;         // [S] máxima para varrer
-const N    = 60;         // nº de pontos (>= 3)
+const Vm   = 10;
+const Km   = 5;
+const I    = 0;
+const Kic  = Infinity;
+const Kiu  = Infinity;
+const Smax = 20;
+const N    = 60;
+
+// ★ Paleta e cor determinística por “condição” (tag)
+const PALETTE = [
+  "#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd",
+  "#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"
+];
+function hashTag(s){
+  let h = 0; for (let i=0;i<s.length;i++) h = (h*31 + s.charCodeAt(i))|0;
+  return Math.abs(h);
+}
+function colorFromTag(tag){ return PALETTE[ hashTag(tag) % PALETTE.length ]; }
 
 // ---------- Geração dos dados ----------
-function linspace(a, b, n){
-  var out = [];
-  if (n <= 1){ out.push(a); return out; }
-  var step = (b - a)/(n - 1);
-  for (var i=0;i<n;i++) out.push(a + i*step);
-  return out;
-}
+function linspace(a,b,n){ const out=[]; if(n<=1){out.push(a);return out;}
+  const step=(b-a)/(n-1); for(let i=0;i<n;i++) out.push(a+i*step); return out; }
 function safeDiv(a,b){ return (b===0)? NaN : a/b; }
-function fmt(x){
-  if (!isFinite(x)) return "∞";
-  var ax = Math.abs(x);
-  if (ax>=1000 || (ax>0 && ax<0.01)) return x.toExponential(2);
-  return Math.round(x*100)/100;
-}
+function fmt(x){ if(!isFinite(x)) return "∞"; const ax=Math.abs(x);
+  if(ax>=1000 || (ax>0 && ax<0.01)) return x.toExponential(2);
+  return Math.round(x*100)/100; }
 
-var S0 = (Smax>0 ? Smax/Math.max(16, N|0) : 1); // evita S=0
-var S  = linspace(S0, Smax, Math.max(3, N|0));
-var V  = [];
-for (var i=0;i<S.length;i++){
-  var s = S[i];
-  var a = isFinite(Kic) ? (I/Kic) : 0;
-  var b = isFinite(Kiu) ? (I/Kiu) : 0;
-  var denom = Km*(1 + a) + s*(1 + b);
+const S0 = (Smax>0 ? Smax/Math.max(16, N|0) : 1);
+const S  = linspace(S0, Smax, Math.max(3, N|0));
+const V  = [];
+for (let i=0;i<S.length;i++){
+  const s = S[i];
+  const a = isFinite(Kic) ? (I/Kic) : 0;
+  const b = isFinite(Kiu) ? (I/Kiu) : 0;
+  const denom = Km*(1 + a) + s*(1 + b);
   V.push( Vm * s / denom );
 }
-var invS = S.map(function(s){ return safeDiv(1, s); });
-var invV = V.map(function(v){ return safeDiv(1, v); });
+const invS = S.map(s => safeDiv(1,s));
+const invV = V.map(v => safeDiv(1,v));
 
-// ---------- Montagem dos traços ----------
-var tag = "Vm="+fmt(Vm)+"; Km="+fmt(Km)+"; I="+fmt(I)+"; Kic="+fmt(Kic)+"; Kiu="+fmt(Kiu);
+// ---------- Tag, cor e traços ----------
+const tag = "Vm="+fmt(Vm)+"; Km="+fmt(Km)+"; I="+fmt(I)+"; Kic="+fmt(Kic)+"; Kiu="+fmt(Kiu);
+const C   = colorFromTag(tag);                 // ★ mesma cor para MM e LB
+const group = tag;                             // ★ agrupa os dois na mesma legenda
 
-var traceMM = {
-  x: S, y: V,
-  type: "scatter",
-  mode: "lines+markers",
-  name: "MM ("+tag+")",
-  xaxis: "x1",
-  yaxis: "y1",
-  hovertemplate: "S=%{x:.3f}<br>v=%{y:.3f}<extra>"+tag+"</extra>"
+const traceMM = {
+  x:S, y:V,
+  type:"scatter", mode:"lines+markers",
+  name:"MM",                                     // ★ nome curto
+  legendgroup: group, legendgrouptitle:{text: tag}, // ★ grupo (um clique afeta ambos)
+  marker:{color:C, symbol:"circle"},
+  line:{color:C, width:2, dash:"solid"},        // ★ sólido
+  xaxis:"x1", yaxis:"y1",
+  hovertemplate:"S=%{x:.3f}<br>v=%{y:.3f}<extra>"+tag+"</extra>",
+  showlegend:true
 };
 
-var traceLB = {
-  x: invS, y: invV,
-  type: "scatter",
-  mode: "lines+markers",
-  name: "LB ("+tag+")",
-  xaxis: "x2",
-  yaxis: "y2",
-  hovertemplate: "1/S=%{x:.3f}<br>1/v=%{y:.3f}<extra>"+tag+"</extra>"
+const traceLB = {
+  x:invS, y:invV,
+  type:"scatter", mode:"lines+markers",
+  name:"LB",                                     // ★ nome curto
+  legendgroup: group,                            // ★ mesmo grupo
+  marker:{color:C, symbol:"square-open"},        // ★ mesmo tom, símbolo diferente (opcional)
+  line:{color:C, width:2, dash:"dash"},          // ★ tracejado para LB
+  xaxis:"x2", yaxis:"y2",
+  hovertemplate:"1/S=%{x:.3f}<br>1/v=%{y:.3f}<extra>"+tag+"</extra>",
+  showlegend:false                               // ★ evita duplicar entrada na legenda
 };
 
-// ---------- Layout bipartido (um painel p/ MM e outro p/ LB) ----------
-var layout = {
-  title: "Michaelis–Menten e Lineweaver–Burk (com Kic/Kiu)",
-  dragmode: "zoom",
-  grid: {rows:1, columns:2, pattern:"independent"},
-  xaxis:  {domain:[0,0.48], title:"[S]"},
-  yaxis:  {title:"v"},
-  xaxis2: {domain:[0.52,1], title:"1/[S]"},
-  yaxis2: {title:"1/v"},
-  legend: {orientation:"h", y:-0.2}
+// ---------- Layout bipartido ----------
+const layout = {
+  title:"Michaelis–Menten e Lineweaver–Burk (com Kic/Kiu)",
+  dragmode:"zoom",
+  grid:{rows:1, columns:2, pattern:"independent"},
+  xaxis:{domain:[0,0.48], title:"[S]"},
+  yaxis:{title:"v"},
+  xaxis2:{domain:[0.52,1], title:"1/[S]"},
+  yaxis2:{title:"1/v"},
+  legend:{orientation:"h", y:-0.2}
 };
 
-// ---------- Saída para o JSPlotly2q ("add" aceita {data, layout}) ----------
-return { data: [traceMM, traceLB], layout: layout };
+// ---------- Saída ----------
+return { data:[traceMM, traceLB], layout };
+
 `;
 
 
