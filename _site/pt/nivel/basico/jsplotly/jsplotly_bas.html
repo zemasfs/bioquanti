@@ -385,6 +385,7 @@ window.Quarto = {
   <li><a href="#musicalização" id="toc-musicalização" class="nav-link" data-scroll-target="#musicalização"><span class="header-section-number">16</span> Musicalização</a></li>
   <li><a href="#acessibilidade-e-inclusão" id="toc-acessibilidade-e-inclusão" class="nav-link" data-scroll-target="#acessibilidade-e-inclusão"><span class="header-section-number">17</span> Acessibilidade e inclusão</a></li>
   <li><a href="#games" id="toc-games" class="nav-link" data-scroll-target="#games"><span class="header-section-number">18</span> Games</a></li>
+  <li><a href="#interface-experimental" id="toc-interface-experimental" class="nav-link" data-scroll-target="#interface-experimental"><span class="header-section-number">19</span> Interface Experimental</a></li>
   </ul>
 </nav>
     </div>
@@ -1537,6 +1538,53 @@ N(t) = \frac{K}{1 + \left(\frac{K - N_0}{N_0}\right) \cdot e^{-r \cdot A(t) \cdo
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Se achar que o jogo tá difícil ou fácil demais, é possível alterar o tamanho da raquete em <span class="st">"paddle = { w: 80, h: 10,..."</span>;</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Se desejar aumentar a área do jogo, modifique na linha <span class="fu">abaixo</span> (largura, altura)<span class="sc">:</span></span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"var cv = sk.createCanvas(400, 300).parent('jogoArea');"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="interface-experimental" class="level2" data-number="19">
+<h2 data-number="19" class="anchored" data-anchor-id="interface-experimental"><span class="header-section-number">19</span> Interface Experimental</h2>
+<section id="jsplotly-para-arduino-e-aquisição-de-dados-de-condutivimetria-em13cnt201-em13cnt308-m13cnt301-m13cnt302" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="jsplotly-para-arduino-e-aquisição-de-dados-de-condutivimetria-em13cnt201-em13cnt308-m13cnt301-m13cnt302">JSPlotly para Arduino e aquisição de dados de condutivimetria (EM13CNT201, EM13CNT308, M13CNT301, M13CNT302)</h3>
+<div class="line-block">&nbsp;&nbsp;<em>JSPlotly</em> foi inicialmente concebido para a construção de <em>objetos virtuais de aprendizagem</em> interativos. Contudo, é possível integrá-lo a uma interface para placas microcontroladoras (ex: Arduino, ESP32, Rapsberry pi), elevando exponencialmente sua aplicação para experimentação real e <em>projetos STEAM experimentais</em>.</div>
+<div class="line-block">&nbsp;&nbsp;O exemplo abaixo ilustra uma aplicação para aquisição/controle em tempo real por navegador. O <em>setup</em> apresenta uma leitura de dados de condutividade em solução aquosa contendo teores crescentes de NaCl (0 a 5% p/v). Foi utilizado uma placa Arduino Uno R3 com conexão <em>Web Serial</em> por USB a notebook rodando um aplicativo autônomo para <em>JSPlotly</em>. A condutividade foi obtida por um sensor TDS comercial (<em>sólidos dissolvidos totais</em>) com excitação por potencial alternado de onda quadrada (PWM) para minimizar efeitos de polarização, e <em>script</em> adaptado do fabricante. O sensor TDS opera em faixa de 3,3 a 5,0 V (input) com saída de 0 a 2,3 V, e corrente de 3 a 6 mA.</div>
+<p><br>
+</p>
+<p><a href="Eq/condutiv_JSPlotly.html" target="_blank"><img src="Eq/arduino.png" class="img-fluid"></a> <em>Exemplo de aplicação de JSPlotly para interfaceamente com Arduino. O gráfico apresenta medidas de condutividade em meio aquoso com medidor TDS para teores crescentes de NaCl (sonda no canto esquerdo). Clique na imagem para obter o aplicativo JSPlotly autônomo para condutividade.</em><br>
+</p>
+<p><strong>Instruções:</strong></p>
+<ol type="1">
+<li>Para conexão <em>Web Serial</em> é necessário instalação de <em>Python</em> ao computador (Windows ou Linux), e <em>setup</em> de servidor local. Para Windows baixe e instale o arquivo oficial para <a href="https://www.python.org/downloads/windows/">Python</a>, lembrando-se de clicar em <em>Add Python to PATH</em>, e digite os comandos no CMD dentro da pasta do aplicativo autônomo. Segue a orientação para Linux:</li>
+</ol>
+<ul>
+<li><ol type="1">
+<li>Conecte o Arduino e componentes (sonda TDS, recipiente com água e sal);</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Copie, cole e rode o <em>script</em> do fabricante para TDS na IDE do Arduino conectado;</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>Feche a IDE do Arduíno;</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>Abra um Terminal na pasta do aplicativo autônomo do <em>JSPlotly</em> para Arduino (<em>condutiv_JSPlotly.html</em>);</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>Digite: <em>python3 -m http.server</em></li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>Abra o html autônomo do circuito no Chrome (nunca no Firefox);</li>
+</ol></li>
+</ul>
+<div class="line-block">&nbsp;&nbsp;A leitura deverá iniciar em instantes. Caso não ocorra, verifique se a taxa de transferência para a IDE do Arduino confere com a do aplicativo (115200 bauds).</div>
+<p><br>
+</p>
+</section>
+<section id="sugestão-45" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-45">Sugestão:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Como o aplicativo é escrito no JSPlotly, é possível personalizá<span class="sc">-</span>lo para diversas situações, como taxa de tranferência de dados, traços (tipo, cores, espessura), tipo de gráfico, entre outros. </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
