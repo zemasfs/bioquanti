@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Interação Bimolecular – Bioquímica Quantitativa &amp; R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./acnucleic.html" rel="next">
+<link href="./enzimas.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5cd4c82f5794ab985b4ec67d486cba7b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./binding.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Interação Bimolecular</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bioquímica Quantitativa &amp; R</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">index.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introducao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introdução</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./biomoleculas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Biomoléculas e dimensões</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tampoes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tampões biológicos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aminoacid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aminoácidos &amp; Peptídios</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proteinas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Proteínas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./enzimas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Enzimas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./binding.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Interação Bimolecular</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acnucleic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Ácidos Nucleicos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./membranas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Membranas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bioenergetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bioenergética</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./metabolismo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Metabolismo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Redes Metabólicas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#modelos-de-interação-e-representações-lineares" id="toc-modelos-de-interação-e-representações-lineares" class="nav-link active" data-scroll-target="#modelos-de-interação-e-representações-lineares"><span class="header-section-number">6.1</span> Modelos de Interação e Representações Lineares</a></li>
+  <li><a href="#ajuste-não-linear-em-interação-ligante-proteína" id="toc-ajuste-não-linear-em-interação-ligante-proteína" class="nav-link" data-scroll-target="#ajuste-não-linear-em-interação-ligante-proteína"><span class="header-section-number">6.2</span> Ajuste Não-Linear Em Interação Ligante-Proteína</a></li>
+  <li><a href="#sistemas-gráficos-no-r" id="toc-sistemas-gráficos-no-r" class="nav-link" data-scroll-target="#sistemas-gráficos-no-r"><span class="header-section-number">6.3</span> Sistemas Gráficos no R</a></li>
+  <li><a href="#solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína" id="toc-solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína" class="nav-link" data-scroll-target="#solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína"><span class="header-section-number">6.4</span> Solução Numérica Para o Equilíbrio de Complexos Ligante-Proteína</a></li>
+  <li><a href="#cinética-de-interação-ligante-proteína-e-solução-numérica" id="toc-cinética-de-interação-ligante-proteína-e-solução-numérica" class="nav-link" data-scroll-target="#cinética-de-interação-ligante-proteína-e-solução-numérica"><span class="header-section-number">6.5</span> Cinética de Interação Ligante-Proteína e Solução Numérica</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="Binding" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Interação Bimolecular</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Google tag (gtag.js)-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quando se menciona interação entre biomoléculas, normalmente se faz referência à processos adsortivos envolvendo um biopolímero (proteína, ácido nucleico, glicano), e um ligante de baixo peso molecular, embora o formalismo também se aplique com alguma restrição a interações entre biopolímeros, e mesmo células inteiras.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O formalismo mais comum para interação biomolecular é o que envolve a formação de complexo adsortivo entre uma proteína e um ligante (<em>ligand binding</em>), exemplificado para íons (Ca<span class="math inline">\(^{2+}\)</span>, Mg<span class="math inline">\(^{2+}\)</span>, etc), fármacos e candidatos, produtos naturais, e antígenos, dentre vários.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perguntas simples acerca da <em>interação ligante-proteína</em> podem elucidar diversas características da formação de tais complexos, como:</div>
+<ol type="1">
+<li>Quanto de proteína/ligante estão presentes ?</li>
+<li>Quanto do complexo é formado ?</li>
+<li>Quão rápido o complexo associa/dissocia ?</li>
+<li>Quais os mecanismos envolvidos ?</li>
+</ol>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;De modo geral, pode-se representar a interação ligante-proteína como segue:</div>
+<p><span id="eq-diagPL"><span class="math display">\[
+P+L \begin{array}{c}
+_{k_{on}}\\
+\rightleftharpoons\\
+^{k_{off}} \end{array} PL
+\tag{6.1}\]</span></span></p>
+<p>Onde <em>P</em> representa o teor de proteína livre, <em>L</em> o ligante livre, e <em>PL</em> o complexo formado. As taxas de reação são definidas para a formação (<em>k<span class="math inline">\(_{on}\)</span></em>; M<span class="math inline">\(^{-1}\)</span>s<span class="math inline">\(^{-1}\)</span>) e dissociação (<em>k<span class="math inline">\(_{off}\)</span></em>; s<span class="math inline">\(^{-1}\)</span>) do complexo.</p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma deduz-se a equação para a <em>isoterma de interação</em> do ligante com a proteína como segue:</div>
+<p><span id="eq-eqPL"><span class="math display">\[
+Kd=\frac{[P]*[L]}{[P]+[L]}
+\tag{6.2}\]</span></span></p>
+<p>Onde <em>Kd</em> representa a <em>constante de equilíbrio de dissociação</em> para o complexo <em>PL</em> formado, tal como condicionado ao equilíbrio de formação/dissociação do complexo (<em>v<span class="math inline">\(_{assoc}\)</span> = v<span class="math inline">\(_{dissoc}\)</span></em>), e também definido como:</p>
+<p><span id="eq-eqKd"><span class="math display">\[
+Kd=\frac{k_{off}}{k_{on}}
+\tag{6.3}\]</span></span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A partir da <a href="#eq-eqPL" class="quarto-xref">Equação&nbsp;<span>6.2</span></a> pode-se facilmente deduzir a expressão final para a interação de um ligante a um conjunto de sítios de mesma afinidade na proteína:</div>
+<p><span id="eq-eqNu"><span class="math display">\[
+\nu=\frac{n * [L]}{Kd + [L]}
+\tag{6.4}\]</span></span></p>
+<section id="modelos-de-interação-e-representações-lineares" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="modelos-de-interação-e-representações-lineares"><span class="header-section-number">6.1</span> Modelos de Interação e Representações Lineares</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Observe que a <a href="#eq-eqNu" class="quarto-xref">Equação&nbsp;<span>6.4</span></a> praticamente repete o formalismo já visto com a formação do complexo ativado de enzima-substrato (<a href="enzimas.html#eq-eqMM" class="quarto-xref">Equação&nbsp;<span>5.2</span></a>), bem como sua representação resultante como uma hipérbole quadrática. De fato, ocorre essencialmente a substituição do parâmetro cinético <em>v</em> da reação pelo parâmetro termodinâmico <span class="math inline">\(\nu\)</span> (“nu”, do Grego) para a isoterma de ligação. As demais quantidades envolvidas mantém-se análogas (<em>P</em> no lugar de <em>E</em>; <em>L</em> no lugar de <em>S</em>;<em>Kd</em> no lugar de <em>Km</em>; e <em>n</em> no lugar de <em>Vmax</em>).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mantida essa similaridade com o formalismo da <em>equação de Michaelis-Menten</em>, da mesma maneira decorrem as linearizações para a <a href="#eq-eqNu" class="quarto-xref">Equação&nbsp;<span>6.4</span></a>), bem como ajustes não lineares à mesma, na busca de uma <em>solução analítica</em> para os parâmetros termodinâmicos <em>Kd</em> e <em>n</em>. Exemplificando um trecho de código para as linearizações mais comuns no tratamento de dados de interação ligante-proteína:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linearizações em interação bimolecular</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>) <span class="sc">*</span> <span class="fl">1e-06</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Kd <span class="ot">&lt;-</span> <span class="fl">1e-06</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> n <span class="sc">*</span> L<span class="sc">/</span>(Kd <span class="sc">+</span> L)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))  <span class="co"># estabelece área de plot pra 6 gráficos</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Direto"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(L), v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Langmuir"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">/</span>L, <span class="dv">1</span><span class="sc">/</span>v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Klotz"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v, v<span class="sc">/</span>L, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Scatchard"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, L<span class="sc">/</span>v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Woolf"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(L), <span class="fu">log10</span>(v<span class="sc">/</span>(n <span class="sc">-</span> v)), <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Hill"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/figLinBind-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Principais linearizações da isoterma de ligação ligante-proteína.</figcaption>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))  <span class="co"># volta à janela gráfica normal</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Desvios da linearidade, por outro lado, são frequentemente utilizados como diagnósticos para modelos que distintos do de <em>homogeneidade de sítios de ligação</em> como acima (<em>heterogeneidade de sítios</em>, <em>criação de sítio</em>, <em>cooperatividade</em>. As equações abaixo descrevem esses modelos, e consideram <em>K</em>, <em>constante de equilíbrio de associação ligante-proteína</em>, como o reverso de <em>Kd</em>, a fim de tornar as expressões mais legíveis:</div>
+<p><span id="eq-eqKdK"><span class="math display">\[
+K = \frac{1}{Kd}
+\tag{6.5}\]</span></span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O <em>modelo de heterogeneidade de sítios</em> de ligação pressupõe que haja na proteína mais um sítio com afinidades distintas para o ligante <span class="citation" data-cites="dahlquist197813">(<a href="referencias.html#ref-dahlquist197813" role="doc-biblioref">Dahlquist 1978</a>)</span>. Formalmente esse modelo pode ser exemplificado para 2 conjuntos de sítios de ligação, como segue:</div>
+<p><span id="eq-eqHeterSit"><span class="math display">\[
+\nu=\frac{K1*[L]}{1+K1*[L]} + \frac{K2*[L]}{1+K2*[L]}
+\tag{6.6}\]</span></span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O trecho de código abaixo exemplifica o modelo no <code>R</code>, bem como suas principais linearizações diagnósticas.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Heterogeneidade de sítios de ligação</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>) <span class="sc">*</span> <span class="fl">1e-06</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Kd1 <span class="ot">&lt;-</span> <span class="fl">2e-06</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Kd2 <span class="ot">&lt;-</span> <span class="fl">2e-08</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> (n1 <span class="sc">*</span> L<span class="sc">/</span>(Kd1 <span class="sc">+</span> L)) <span class="sc">+</span> (n2 <span class="sc">*</span> L<span class="sc">/</span>(Kd2 <span class="sc">+</span> L))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))  <span class="co"># estabelece área de plot pra 6 gráficos</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Direto"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(L), v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Langmuir"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">/</span>L, <span class="dv">1</span><span class="sc">/</span>v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Klotz"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v, v<span class="sc">/</span>L, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Scatchard"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, L<span class="sc">/</span>v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Woolf"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(L), <span class="fu">log10</span>(v<span class="sc">/</span>(n1 <span class="sc">+</span> n2 <span class="sc">-</span> v)), <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Hill"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/figHeterSit-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Modelo e linearizações para heterogeneidade de 2 conjuntos de sítios de ligação</figcaption>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># n1+n2=ntot no Hill</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))  <span class="co"># volta à janela gráfica normal</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O <em>modelo de criação de novo sítio</em> - “one-site creator”; <span class="citation" data-cites="parsons1978theoretical">(<a href="referencias.html#ref-parsons1978theoretical" role="doc-biblioref">Parsons e Vallner 1978</a>)</span> estabelece uma cooperatividade positiva resultante da produção de novos sítios para o ligante na proteína. Segue o modelo exemplificado e suas linearizações resultantes.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criação de novo sítio sob interação com ligante</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>) <span class="sc">*</span> <span class="fl">1e-06</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Kd1 <span class="ot">&lt;-</span> <span class="fl">2e-06</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>Kd2 <span class="ot">&lt;-</span> <span class="fl">2e-05</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>nH <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> (n1 <span class="sc">*</span> L <span class="sc">*</span> <span class="dv">1</span><span class="sc">/</span>Kd1)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>Kd1 <span class="sc">*</span> L) <span class="sc">+</span> ((n2 <span class="sc">*</span> <span class="dv">1</span><span class="sc">/</span>Kd1 <span class="sc">*</span> <span class="dv">1</span><span class="sc">/</span>Kd2 <span class="sc">*</span> L<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>Kd1 <span class="sc">*</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    L) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>Kd2 <span class="sc">*</span> L))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))  <span class="co"># estabelece área de plot pra 6 gráficos</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Direto"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(L), v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Langmuir"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">/</span>L, <span class="dv">1</span><span class="sc">/</span>v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Klotz"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v, v<span class="sc">/</span>L, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Scatchard"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, L<span class="sc">/</span>v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Woolf"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(L), <span class="fu">log10</span>(v<span class="sc">/</span>(n <span class="sc">-</span> v)), <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Hill"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in xy.coords(x, y, xlabel, ylabel, log): NaNs produced</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/figOneSitCreat-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Modelo e linearizações para criação de novo sítio: <em>1-site creator</em>.</figcaption>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># n1+n2=ntot no Hill</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))  <span class="co"># volta à janela gráfica normal</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Os <em>modelos de cooperatividade (negativa e positiva)</em> seguem um formalismo similar descrito para a ligação de oxigênio à hemoglobina em <a href="proteinas.html" class="quarto-xref"><span>Capítulo 4</span></a> (<a href="proteinas.html#eq-Hb" class="quarto-xref">Equação&nbsp;<span>4.2</span></a>). Na <em>cooperatividade negativa</em> uma segunda molécula de ligante interage com a proteína com menor afinidade:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cooperatividade negativa em ligand-binding</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>) <span class="sc">*</span> <span class="fl">1e-06</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>Kd <span class="ot">&lt;-</span> <span class="fl">2e-06</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>nH <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> (n <span class="sc">*</span> L<span class="sc">^</span>nH<span class="sc">/</span>(Kd <span class="sc">+</span> L<span class="sc">^</span>nH))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))  <span class="co"># estabelece área de plot pra 6 gráficos</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Direto"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(L), v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Langmuir"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">/</span>L, <span class="dv">1</span><span class="sc">/</span>v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Klotz"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v, v<span class="sc">/</span>L, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Scatchard"</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, L<span class="sc">/</span>v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Woolf"</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(L), <span class="fu">log10</span>(v<span class="sc">/</span>(n <span class="sc">-</span> v)), <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Hill"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/figCoopNeg-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Modelo e linearizações para cooperatividade negativa de sítios de ligação.</figcaption>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># n1+n2=ntot no Hill</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))  <span class="co"># volta à janela gráfica normal</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Já na <em>cooperatividade positiva</em>, uma segunda molécula de ligante interage com a proteína com maior afinidade que a primeira molécula <span class="citation" data-cites="parsons1978theoretical">(<a href="referencias.html#ref-parsons1978theoretical" role="doc-biblioref">Parsons e Vallner 1978</a>)</span>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cooperatividade positiva em ligand binding</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>) <span class="sc">*</span> <span class="fl">1e-06</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Kd <span class="ot">&lt;-</span> <span class="fl">2e-06</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>nH <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> (n <span class="sc">*</span> L<span class="sc">^</span>nH<span class="sc">/</span>(Kd <span class="sc">+</span> L<span class="sc">^</span>nH))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))  <span class="co"># estabelece área de plot pra 6 gráficos</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Direto"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(L), v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Langmuir"</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">/</span>L, <span class="dv">1</span><span class="sc">/</span>v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Klotz"</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v, v<span class="sc">/</span>L, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Scatchard"</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, L<span class="sc">/</span>v, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Woolf"</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(L), <span class="fu">log10</span>(v<span class="sc">/</span>(n <span class="sc">-</span> v)), <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">main =</span> <span class="st">"Hill"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/figCoopPos-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Modelo e linearizações para cooperatividade positiva de sítios de ligação.</figcaption>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># n1+n2=ntot no Hill</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))  <span class="co"># volta à janela gráfica normal</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Observe que a inclinação do gráfico de <em>Hill</em> é inferior à unidade para a <em>cooperatividade negativa</em>, e superior a essa, para a <em>cooperatividade positiva</em>, e representa o mesmo parâmetro <em>nH</em> visto na <a href="proteinas.html#eq-Hb" class="quarto-xref">Equação&nbsp;<span>4.2</span></a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ainda que sujeito à crítica por sua inconsistência estatística (variável dependente em ambos os eixos), a representação de Scatchard tem sido privilegiada ao longo de décadas como diagnóstico de modelos de interação ligante-proteína. Entre suas vantagens, aloca-se a possibilidade de facilmente distinguir-se o modelo de cooperatividade positiva (aclive) do de heterogeneidade de sítios de ligação (declive abrupto) ou de cooperatividade negativa (declive suave).</div>
+</section>
+<section id="ajuste-não-linear-em-interação-ligante-proteína" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="ajuste-não-linear-em-interação-ligante-proteína"><span class="header-section-number">6.2</span> Ajuste Não-Linear Em Interação Ligante-Proteína</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ajustes diretos da equação não linear dos modelos de interação também podem ser efetuados como fora realizado para a equação de Michaelis-Menten no <a href="enzimas.html" class="quarto-xref"><span>Capítulo 5</span></a> sobre Enzimas. Exemplificando, pode-se simular a obtenção de dados experimentais de <em>binding</em> pelo trecho a seguir, utilizando-se o comando ‘runif’ (<em>random uniform</em>) para geração de sequência aleatória (como fora realizado no capítulo <a href="enzimas.html" class="quarto-xref"><span>Capítulo 5</span></a>). Para ilustrar, segue a <a href="#fig-1SitBindSimul" class="quarto-xref">Figura&nbsp;<span>6.1</span></a>.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Isoterma de Interação Ligante-Proteína</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>Kd <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, L, i)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> (L <span class="sc">*</span> n)<span class="sc">/</span>(Kd <span class="sc">+</span> L) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="dv">0</span>, <span class="fl">0.1</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in (L * n)/(Kd + L) + rnorm(40, 0, 0.1): longer object length is not a
+multiple of shorter object length</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, v)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-1SitBindSimul" class="quarto-float quarto-figure quarto-figure-center anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1SitBindSimul-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="binding_files/figure-html/fig-1SitBindSimul-1.png" id="fig-1SitBindSimul" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-1SitBindSimul-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.1
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Observe que o comando ‘rnorm’ adiciona um erro de distribuição normal aos dados. Outra forma para simulação desses é dada abaixo, introduzindo-se o comando ‘runif’ de geração de números aleatórios.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulação de dados de interação bimolecular (1 sítio)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulação de dados</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20160227</span>)  <span class="co"># estabelece semente para geração de números aleatórios</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">1</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>PL <span class="ot">&lt;-</span> ((<span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">20</span>) <span class="sc">*</span> L)<span class="sc">/</span>(<span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> L)) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">51</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. runif(n,min,max); quando sem atributos, considera-se min=0 e max=1 2.</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># rnorm(no. pontos,media,desvio) - erro aleatório de distribuição normal</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, PL, <span class="at">xlab =</span> <span class="st">"L"</span>, <span class="at">ylab =</span> <span class="st">"PL"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/1sitBindSimul2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Dados simulados para isoterma de interação bimolecular.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agora precisamos utilizar o comando ‘nls’ para o ajuste não linear, sobreposição da curva teórica, e tabela estatística de resultados:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste não linear em ligand binding</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">nls</span>(PL <span class="sc">~</span> n <span class="sc">*</span> L<span class="sc">/</span>(Kd <span class="sc">+</span> L), <span class="at">start =</span> <span class="fu">list</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">Kd =</span> <span class="dv">1</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Coef. de correlação</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(PL, <span class="fu">predict</span>(m))  <span class="co"># Coeficiente de correlação de Pearson</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9496598</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de dados e simulação</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, PL)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(L, <span class="fu">predict</span>(m), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="binding_files/figure-html/nlsBind-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Formula: PL ~ n * L/(Kd + L)
+
+Parameters:
+   Estimate Std. Error t value Pr(&gt;|t|)    
+n   11.8478     0.2620  45.216  &lt; 2e-16 ***
+Kd   4.2778     0.5113   8.366  5.3e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7826 on 49 degrees of freedom
+
+Number of iterations to convergence: 6 
+Achieved convergence tolerance: 1.554e-06</code></pre>
+</div>
+</div>
+</section>
+<section id="sistemas-gráficos-no-r" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="sistemas-gráficos-no-r"><span class="header-section-number">6.3</span> Sistemas Gráficos no R</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A última curva de simulação obtida o foi junto à biblioteca padrão para manipulação de gráficos da instalação do ‘R’, <strong>Graphics</strong>. Trata-se um conjunto de funções amplo também utilizado por vários outros pacotes do ambiente. Contudo, existem no ‘R’ diversas outras bibliotecas para elaboração de gráficos, dentre os quais vale destacar o <em>Lattice</em>, também incluido na instalação padrão, e o <em>ggplot2</em>. Ambos os sistemas geram resultados com melhor estética e flexibilidade gráfica que a biblioteca <em>Graphics</em> padrão, e possuem empregos e semânticas distintas entre si.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O sistema <em>Lattice</em> <span class="citation" data-cites="sarkar2008lattice">(<a href="referencias.html#ref-sarkar2008lattice" role="doc-biblioref">Sarkar 2008</a>)</span> é baseado no sistema <em>Trellis</em> para representação gráfica de dados multivariados. Sua força está na representação de dados em paineis contendo subgrupos e, embora tenha sintaxe menos intuitiva e por vezes mais elaborada que o pacote <em>Graphics</em>, produz um grafismo superior a esse com poucos cliques de teclado. De modo geral, o <em>Lattice</em> produz o gráfico dentro do próprio algoritmo, de modo diferente aos sistemas <em>Graphics</em> (pode-se acumular linhas sucessivas de modificação do gráfico) ou <em>ggplot2</em>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por outro lado a biblioteca <em>ggplot2</em> é baseada na gramática de gráficos <span class="citation" data-cites="wickham2011ggplot2">(<a href="referencias.html#ref-wickham2011ggplot2" role="doc-biblioref">Wickham 2011</a>)</span>, e produz o gráfico utilizando uma única linha de comando que combina camadas sobrepostas, de modo similar à aplicativos de manipulação de imagens (ex: <em>Inkscape</em>, <em>Gimp</em>, <em>Corel Draw</em>, <em>Photoshop</em>). Dessa forma é possível alterar cada ítem do gráfico em suas camadas específicas (tema, coordenadas, facets, estatísticas, geometria, estética, dados). Exemplificando o resultado gráfico da curva de simulação acima de <em>binding</em> para <em>Lattice</em> e <em>ggplot2</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Os sistemas lattice e ggplot2</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulação de dados</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20160227</span>)  <span class="co"># estabelece semente para geração de números aleatórios</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">1</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>PL <span class="ot">&lt;-</span> ((<span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">20</span>) <span class="sc">*</span> L)<span class="sc">/</span>(<span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> L)) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">51</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. runif(n,min,max); quando sem atributos, considera-se min=0 e max=1 2.</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># rnorm(no. pontos,media,desvio) - erro aleatório de distribuição normal</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Produção do gráfico com sistema Lattice</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(PL <span class="sc">~</span> L)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="binding_files/figure-html/1sitBindSimulLattice-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Produção do gráfico com sistema ggplot2</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(L, PL)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `qplot()` was deprecated in ggplot2 3.4.0.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="binding_files/figure-html/1sitBindSimulLattice-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como a percepção de peculiaridades dos sistemas gráficos se revela melhor com dados mais elaborados, as ilustrações a seguir utilizarão o conjunto de dados ‘Puromycin’, que integra a biblioteca ‘datasets’ do ‘R’. Os dados apresentam a velocidade de reação enzimática sobre um substrato em células tratadas e não tratadas com puromicina.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O código abaixo retorna a plotagem, ajuste não linear e resultados obtidos com a biblioteca <em>Graphics</em> padrão, e foi extraído do própria documentação do <em>dataset</em>.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># O sistema base `graphics`</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rate <span class="sc">~</span> conc, <span class="at">data =</span> Puromycin, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">"[S], mM"</span>, <span class="at">ylab =</span> <span class="st">"v (contagem/min/min)"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">pch =</span> <span class="fu">as.integer</span>(Puromycin<span class="sc">$</span>state), <span class="at">col =</span> <span class="fu">as.integer</span>(Puromycin<span class="sc">$</span>state), <span class="at">main =</span> <span class="st">"Ilustração de Ajuste Com Graphics"</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Ajuste da equação de Michaelis-Mentem</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">nls</span>(rate <span class="sc">~</span> Vm <span class="sc">*</span> conc<span class="sc">/</span>(K <span class="sc">+</span> conc), <span class="at">data =</span> Puromycin, <span class="at">subset =</span> state <span class="sc">==</span> <span class="st">"treated"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">start =</span> <span class="fu">c</span>(<span class="at">Vm =</span> <span class="dv">200</span>, <span class="at">K =</span> <span class="fl">0.05</span>))</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>fm2 <span class="ot">&lt;-</span> <span class="fu">nls</span>(rate <span class="sc">~</span> Vm <span class="sc">*</span> conc<span class="sc">/</span>(K <span class="sc">+</span> conc), <span class="at">data =</span> Puromycin, <span class="at">subset =</span> state <span class="sc">==</span> <span class="st">"untreated"</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">start =</span> <span class="fu">c</span>(<span class="at">Vm =</span> <span class="dv">160</span>, <span class="at">K =</span> <span class="fl">0.05</span>))</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fm1)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Formula: rate ~ Vm * conc/(K + conc)
+
+Parameters:
+    Estimate Std. Error t value Pr(&gt;|t|)    
+Vm 2.127e+02  6.947e+00  30.615 3.24e-11 ***
+K  6.412e-02  8.281e-03   7.743 1.57e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 10.93 on 10 degrees of freedom
+
+Number of iterations to convergence: 5 
+Achieved convergence tolerance: 8.768e-06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fm2)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Formula: rate ~ Vm * conc/(K + conc)
+
+Parameters:
+    Estimate Std. Error t value Pr(&gt;|t|)    
+Vm 1.603e+02  6.480e+00  24.734 1.38e-09 ***
+K  4.771e-02  7.782e-03   6.131 0.000173 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 9.773 on 9 degrees of freedom
+
+Number of iterations to convergence: 5 
+Achieved convergence tolerance: 4.473e-06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Adição de linhas de ajuste ao plot</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>conc <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.2</span>, <span class="at">length.out =</span> <span class="dv">101</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(conc, <span class="fu">predict</span>(fm1, <span class="fu">list</span>(<span class="at">conc =</span> conc)), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="dv">1</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(conc, <span class="fu">predict</span>(fm2, <span class="fu">list</span>(<span class="at">conc =</span> conc)), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fl">0.8</span>, <span class="dv">120</span>, <span class="fu">levels</span>(Puromycin<span class="sc">$</span>state), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/puromycGraphics-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Plotagem e análise com <code>graphics</code>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O sistema <em>ggplot2</em>, por sua vez, exige que os comandos sejam elencados em camadas justapostas intercaladas com o sinal “+”, como segue:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico e análise com ggplot2</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> Puromycin, <span class="fu">aes</span>(conc, rate, <span class="at">color =</span> state)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"nls"</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> y <span class="sc">~</span> Vm <span class="sc">*</span> x<span class="sc">/</span>(Km <span class="sc">+</span> x), <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">start =</span> <span class="fu">list</span>(<span class="at">Vm =</span> <span class="dv">200</span>, <span class="at">Km =</span> <span class="fl">0.1</span>)),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="cn">FALSE</span>)  <span class="co"># expressão que define o plot</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>p  <span class="co"># variável que apresenta o plot</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/puromycGgplot2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Plotagem e análise com ggplot2.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perceba o menor número de instruções do <em>script</em> para a produção do gráfico. Além disso, e diferente do <em>Graphics</em>, <em>ggplot2</em> permite adicionar camadas à linha de comandos principais, e apresentar os dados multivariados em paineis (funções ‘facet_grid’ e ‘facet_wrap’), sem a necessidade de se utilizar o comando ‘mfrow’ ou ‘mfcol’ visto no capítulo, como segue:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(state))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/puromycGgplot2Facet-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Plotagem e análise com ggplot2 - paineis (faceting).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Lattice</em> também possui uma economia de instruções em relação à <em>Graphics</em>. Não considerando o ajuste estatístico, os grupos podem ser apresentados simplesmente utilizando-se a fórmula:</div>
+<p><span id="eq-eqTrellis"><span class="math display">\[
+xyplot(y \sim x~|~ groups = z)
+\tag{6.7}\]</span></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(rate <span class="sc">~</span> conc, <span class="at">data =</span> Puromycin, <span class="at">groups =</span> state)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="binding_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E para a representação dos ajustes não lineares:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Um gráfico com dataset para lattice</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">nlsList</span>(rate <span class="sc">~</span> Vmax <span class="sc">*</span> conc<span class="sc">/</span>(Km <span class="sc">+</span> conc) <span class="sc">|</span> state, <span class="at">data =</span> Puromycin, <span class="at">start =</span> <span class="fu">list</span>(<span class="at">Vmax =</span> <span class="dv">200</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Km =</span> <span class="fl">0.1</span>))</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(n1)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(rate <span class="sc">~</span> conc, <span class="at">groups =</span> state, <span class="at">data =</span> Puromycin) <span class="sc">+</span> <span class="fu">layer</span>(<span class="fu">panel.curve</span>(Vmax[<span class="dv">1</span>] <span class="sc">*</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    x<span class="sc">/</span>(Km[<span class="dv">1</span>] <span class="sc">+</span> x), <span class="at">col =</span> <span class="dv">1</span>), <span class="at">data =</span> <span class="fu">as.list</span>(<span class="fu">coef</span>(n1))) <span class="sc">+</span> <span class="fu">layer</span>(<span class="fu">panel.curve</span>(Vmax[<span class="dv">2</span>] <span class="sc">*</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    x<span class="sc">/</span>(Km[<span class="dv">2</span>] <span class="sc">+</span> x), <span class="at">col =</span> <span class="dv">2</span>), <span class="at">data =</span> <span class="fu">as.list</span>(<span class="fu">coef</span>(n1)))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A biblioteca <em>Lattice</em> também permite a apresentação em paineis; diferente de <em>ggplot2</em>, contudo, o gráfico é gerado algoritmicamente, sem a sobreposição de comandos:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico e análise não linear com lattice</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)  <span class="co"># pacote quer permite regressão não linear com subgrupos</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>nonlinLatt <span class="ot">&lt;-</span> <span class="fu">nlsList</span>(rate <span class="sc">~</span> Vmax <span class="sc">*</span> conc<span class="sc">/</span>(Km <span class="sc">+</span> conc) <span class="sc">|</span> state, <span class="at">start =</span> <span class="fu">list</span>(<span class="at">Vmax =</span> <span class="dv">200</span>,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Km =</span> <span class="fl">0.1</span>), <span class="at">data =</span> Puromycin)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nonlinLatt)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+  Model: rate ~ Vmax * conc/(Km + conc) | state 
+   Data: Puromycin 
+
+Coefficients:
+   Vmax 
+          Estimate Std. Error  t value     Pr(&gt;|t|)
+treated   212.6836   6.608088 32.18535 3.241151e-11
+untreated 160.2800   6.896011 23.24242 1.384612e-09
+   Km 
+            Estimate  Std. Error  t value     Pr(&gt;|t|)
+treated   0.06412110 0.007876774 8.140529 0.0000156514
+untreated 0.04770812 0.008281147 5.761052 0.0001727056
+
+Residual standard error: 10.40003 on 19 degrees of freedom</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(rate <span class="sc">+</span> <span class="fu">fitted</span>(nonlinLatt) <span class="sc">~</span> conc <span class="sc">|</span> state, <span class="at">data =</span> Puromycin, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"p"</span>,</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"l"</span>), <span class="at">distribute.type =</span> <span class="cn">TRUE</span>, <span class="at">col.line =</span> <span class="st">"red"</span>, <span class="at">ylab =</span> <span class="st">"rate"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/puromicLatticePan-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Plotagem e análise com Lattice - ajuste externo e paineis.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Das muitas diferenças que os pacotes <em>ggplot2</em> e <em>Lattice</em> apresentam, há uma que vale a pena ressaltar. Como visto acima, o <em>ggplot2</em> realiza o ajuste não linear dentro da linha de comandos de geração do gráfico, ao passo que o <em>Lattice</em> permite fazê-lo fora da linha. Isso é inerente do <em>ggplot2</em>, uma biblioteca desenhada para a produção de gráficos, e não para análises computacionais. Dessa forma o algoritmo que permite o ajuste não linear pelo <em>ggplot2</em>, ainda que seja o mesmo ‘nls’ já trabalhado, não expressa seus resultados explicitamente (embora haja formas de “pescá-los” utilizando-se outros pacotes).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;De certa forma, ainda que o <em>Lattice</em> exija uma curva de aprendizado menos intutiva, ele permite que se utilize os resultados estatísticos obtidos anteriormente para inclusão no algoritmo de plotagem. Isso é vantajoso quando se deseja outros algoritmos estatísticos para ajuste, como acima, ou mesmo sua flexibilização, além do ‘nls’ incluido em <em>ggplot2</em>. Não obstante, o <em>Lattice</em> também permite que se inclua a linha de ajuste dentro do próprio algoritmo, como abaixo:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste não linear em paineis (Lattice)</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(rate <span class="sc">~</span> conc <span class="sc">|</span> state, <span class="at">data =</span> Puromycin, <span class="at">panel =</span> <span class="cf">function</span>(x, y, ...) {</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">panel.xyplot</span>(x, y, ...)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    n3 <span class="ot">&lt;-</span> <span class="fu">nls</span>(y <span class="sc">~</span> Vmax <span class="sc">*</span> x<span class="sc">/</span>(Km <span class="sc">+</span> x), <span class="at">data =</span> Puromycin, <span class="at">start =</span> <span class="fu">list</span>(<span class="at">Vmax =</span> <span class="dv">200</span>, <span class="at">Km =</span> <span class="fl">0.1</span>))</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">panel.lines</span>(<span class="fu">seq</span>(<span class="fl">0.02</span>, <span class="fl">1.1</span>, <span class="fl">0.02</span>), <span class="fu">predict</span>(n3, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="fl">0.02</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.1</span>, <span class="fl">0.02</span>))), <span class="at">col.line =</span> <span class="dv">2</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>}, <span class="at">xlab =</span> <span class="st">"conc"</span>, <span class="at">ylab =</span> <span class="st">"rate"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/puromicLatticePanInterno-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Plotagem e análise com Lattice - ajuste interno e paineis.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína"><span class="header-section-number">6.4</span> Solução Numérica Para o Equilíbrio de Complexos Ligante-Proteína</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como visto no capítulo <a href="aminoacid.html" class="quarto-xref"><span>Capítulo 3</span></a>, por vezes uma <em>solução numérica</em> pode ser empregada quando a <em>solução analítica</em> não converge, ou quando estamos diante de uma equação mais complexa. Nesse sentido a formação de complexos de que trata este subtítulo pode também ser tratada por uma solução numérica.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Usualmente o tratamento dado para a solução numérica envolve encontrar as raízes de uma equação ou sistema de equações, ou seja:</div>
+<p><span id="eq-eqFx"><span class="math display">\[
+F(x) = 0
+\tag{6.8}\]</span></span></p>
+<p><span id="eq-solNumEq"><span class="math display">\[
+P+L \rightleftarrows PL
+\\
+Kd = \frac{[P][L]}{[PL]}
+\\
+Então,\ [PL]=\frac{[P][L]}{Kd}
+\tag{6.9}\]</span></span></p>
+<p><span id="eq-solNumEq2"><span class="math display">\[
+\begin{cases}
+[Pt] = [P]+[PL] = [P]+\frac{[P][L]}{Kd}\\
+[Lt] = [L]+[PL] = [L]+\frac{[P][L]}{Kd}
+\end{cases}\
+\tag{6.10}\]</span></span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assim, tem-se um sistema de equações lineares nos parâmetros (<em>[P]</em> livre, <em>[L]</em> livre, e complexo <em>[PL]</em>) que pode ser solucionado pelo <code>R</code> por diversas maneiras, uma das quais pela função de minimização <code>rootSolve</code>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo de L, P, e PL em interação biomolecular para 1 conjunto de sítios de</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mesma afinidade</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rootSolve)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>Pt <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>Lt <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>Kd <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(x[<span class="dv">1</span>] <span class="sc">+</span> (x[<span class="dv">1</span>] <span class="sc">*</span> x[<span class="dv">2</span>])<span class="sc">/</span>Kd <span class="sc">-</span> Pt, x[<span class="dv">2</span>] <span class="sc">+</span> (x[<span class="dv">1</span>] <span class="sc">*</span> x[<span class="dv">2</span>])<span class="sc">/</span>Kd <span class="sc">-</span> Lt,</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    Pt <span class="sc">-</span> x[<span class="dv">1</span>] <span class="sc">-</span> x[<span class="dv">3</span>])</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co"># o modelo acima deve conter uma lista de equações cuja igualdade é zero, ou</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co"># seja, f(x)=0</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>(ss <span class="ot">&lt;-</span> <span class="fu">multiroot</span>(model, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)))  <span class="co"># comando de execução do </span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$root
+[1] 0.3007353 9.3007353 0.6992647
+
+$f.root
+[1] 5.466137e-08 5.463051e-08 5.191070e-12
+
+$iter
+[1] 5
+
+$estim.precis
+[1] 3.643236e-08</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rootSolve (sementes pro algoritmo)</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma os valores resultantes (<em>f.root</em>) quando <em>[Lt]</em> = 10 são apresentados como <em>[P]</em> = 0,3, <em>[L]</em> = 9,3 e <em>[PL]</em> = 0,7.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras soluções numéricas permitem um maior controle sobre o algoritmo empregado, tais como a função <code>optim</code> do <code>R</code> (limites de busca da solução, emprego de vetores, por ex). Para isso será exemplificado a mesma situação acima, embora apresentando uma variação do formalismo que relaciona <em>P</em>, <em>L</em> e <em>PL</em> :</div>
+<p><span id="eq-solNumEq3"><span class="math display">\[
+\begin{cases}
+[PL] = [Pt]-[L]\\
+[PL] = [Lt]-[L]\\
+[P]*[L]=Kd*[PL]
+\end{cases}\
+\tag{6.11}\]</span></span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma pode-se contruir uma relação quadrática envolvendo as três incógnitas:</div>
+<p><span id="eq-solNumEq4"><span class="math display">\[
+([Pt]-[L]-[PL])^2 + ([Lt]-[L]-[PL])^2 + ([P]*[L]-Kd*[PL])^2
+\tag{6.12}\]</span></span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aplicando-se o algoritmo de minimização <code>optim</code> do <code>R</code>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo de L, P, PL em interação para 1 sítio</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, Pt, Lt, K) {</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    L <span class="ot">&lt;-</span> x[<span class="dv">1</span>]</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    P <span class="ot">&lt;-</span> x[<span class="dv">2</span>]</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    PL <span class="ot">&lt;-</span> x[<span class="dv">3</span>]</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    (Pt <span class="sc">-</span> P <span class="sc">-</span> PL)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (Lt <span class="sc">-</span> L <span class="sc">-</span> PL)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (P <span class="sc">*</span> L <span class="sc">-</span> Kd <span class="sc">*</span> PL)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>}  <span class="co"># declaração da função</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>Pt <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>Lt <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>Kd <span class="ot">&lt;-</span> <span class="dv">4</span>  <span class="co"># parâmetros da função</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>sol2num <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">0.5</span>), model2, <span class="at">method =</span> <span class="st">"L-BFGS-B"</span>, <span class="at">lower =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper =</span> <span class="fu">c</span>(Lt, Pt, Pt), <span class="at">Pt =</span> Pt, <span class="at">Lt =</span> Lt)</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="co"># método BFGS permite bounds (lower, upper)</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>sol2num<span class="sc">$</span>par  <span class="co"># LF, PF, PL calculados</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.3007349 0.3007355 0.6992652</code></pre>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perceba que são os mesmos resultados anteriores, embora com maior controle da solução. Agora pode-se utilizar essa minimização para criar um vetor de soluções para as três quantidades, como segue:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Declaração da função</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>bind1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, Pt, Lt, Kd) {</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    L <span class="ot">&lt;-</span> x[<span class="dv">1</span>]</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    P <span class="ot">&lt;-</span> x[<span class="dv">2</span>]</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    PL <span class="ot">&lt;-</span> x[<span class="dv">3</span>]</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    (Pt <span class="sc">-</span> P <span class="sc">-</span> PL)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (Lt <span class="sc">-</span> L <span class="sc">-</span> PL)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (P <span class="sc">*</span> L <span class="sc">-</span> Kd <span class="sc">*</span> PL)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Parâmetros da função</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>Pt <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>Lt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>Kd <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Minimização (parâmetros para que a função acima dê zero)</span></span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">optim</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), bind1, <span class="at">method =</span> <span class="st">"L-BFGS-B"</span>, <span class="at">lower =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="at">upper =</span> <span class="fu">c</span>(Lt[i],</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>        Pt, Pt), <span class="at">Lt =</span> Lt[i], <span class="at">Pt =</span> Pt, <span class="at">Kd =</span> Kd)</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados em matriz</span></span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>ypar <span class="ot">&lt;-</span> <span class="cf">function</span>(i) <span class="fu">y</span>(i)<span class="sc">$</span>par</span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>yp <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">length</span>(Lt), <span class="at">ncol =</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">length</span>(Kd), <span class="at">byrow =</span> T)</span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(Lt)) yp[i, ] <span class="ot">&lt;-</span> <span class="fu">y</span>(i)<span class="sc">$</span>par</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(yp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"L"</span>, <span class="st">"P"</span>, <span class="st">"PL"</span>)</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(yp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"5"</span>, <span class="st">"10"</span>, <span class="st">"20"</span>)</span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>yp</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           L         P        PL
+5   4.472136 0.4721359 0.5278640
+10  9.300736 0.3007344 0.6992634
+20 19.172624 0.1726180 0.8273844</code></pre>
+</div>
+</div>
+</section>
+<section id="cinética-de-interação-ligante-proteína-e-solução-numérica" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="cinética-de-interação-ligante-proteína-e-solução-numérica"><span class="header-section-number">6.5</span> Cinética de Interação Ligante-Proteína e Solução Numérica</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sob o mesmo princípio da solução numérica apresentada no ítem anterior para o equilíbrio da interação ligante-proteína, o <code>R</code> permite solução de mesma natureza para a cinética da formação dos complexos, ou seja, os teores de <em>P</em>, <em>L</em> e <em>PL</em> observados no tempo. Nesse caso pode-se desenvolver outras relações a partir da Eq. @ref(eq:diagPL). Tomando-se por base que no equilíbrio as taxas cinéticas de <em>k<span class="math inline">\(_{on}\)</span></em> e <em>k<span class="math inline">\(_{off}\)</span></em> se igualam (<em>steady-state</em>), pode-se relacionar algumas equações diferenciais para a <em>associação</em>, bem como para a <em>dissociação</em> dos complexos:</div>
+<p><span id="eq-solNumKin"><span class="math display">\[
+Para \, a\, associação:
+\begin{cases}
+\frac{d[PL]}{dt} = k_{on}*[L]*[P]\\
+\frac{d[L]}{dt} = -k_{on}*[L]*[P]\\
+\frac{d[P]}{dt} = -k_{on}*[L]*[P]
+\end{cases}
+\tag{6.13}\]</span></span></p>
+<p><span id="eq-solNumKin2"><span class="math display">\[
+Para \, a\, dissociação:
+\begin{cases}
+\frac{d[PL]}{dt} = -k_{off}*[PL]\\
+\frac{d[L]}{dt} = k_{off}*[PL]\\
+\frac{d[P]}{dt} = k_{off}*[PL]
+\end{cases}
+\tag{6.14}\]</span></span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assim, as taxas globais resultantes para cada quantidade (taxa líquida) envolverá a soma das taxas de associação e dissociação de cada:</div>
+<p><span id="eq-solNumKin3"><span class="math display">\[
+Taxas \, líquidas:
+\begin{cases}
+\frac{d[PL]}{dt} = k_{on}*[L]*[P]-k_{off}*[PL]\\
+\frac{d[L]}{dt} = -k_{on}*[L]*[P]+k_{off}*[PL]\\
+\frac{d[P]}{dt} = -k_{on}*[L]*[P]+k_{off}*[PL]
+\end{cases}
+\tag{6.15}\]</span></span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A solução para esse sistema final de equações diferenciais (taxas líquidas) envolve resolver a variação de cada quantidade (<em><span class="math inline">\(\Delta\)</span>x</em>) num determinado intervalo de tempo (<em><span class="math inline">\(\Delta\)</span>t</em>), tal que:</div>
+<p><span id="eq-eqDiff"><span class="math display">\[
+\Delta x=f(x)*\Delta t
+\tag{6.16}\]</span></span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para isso é necessário utilizar uma biblioteca do <code>R</code> que permita a solução de um sistema de equações diferenciais. Entre as muitas soluções (<code>odeintr</code>, <code>pracma</code>, <code>rODE</code>), o emprego da biblioteca <code>deSolve</code>, que utiliza uma função para integração do sistema por algoritmo de <em>Runge-Kutta de 4a. ordem</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cinética de interação ligante-protéina para 1 conjunto de sítios</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Condições experimentais</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>tempo <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>)  <span class="co"># intervalo de tempo</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">kon =</span> <span class="fl">0.02</span>, <span class="at">koff =</span> <span class="fl">0.001</span>)  <span class="co"># parâmetros do estado estacionário </span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="co"># da interação (uM^-1*s^-1 e s^-1, respectivamente)</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>val.inic <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">L =</span> <span class="fl">0.8</span>, <span class="at">P =</span> <span class="dv">1</span>, <span class="at">PL =</span> <span class="dv">0</span>)  <span class="co"># valores iniciais, uM</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Integração do sistema por Runge-Kutta de 4a. ordem</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>solNumKin <span class="ot">&lt;-</span> <span class="cf">function</span>(t, x, parms) {</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># definição da lista de parâmetros</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>    L <span class="ot">&lt;-</span> x[<span class="dv">1</span>]  <span class="co"># ligante</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    P <span class="ot">&lt;-</span> x[<span class="dv">2</span>]  <span class="co"># proteína</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>    PL <span class="ot">&lt;-</span> x[<span class="dv">3</span>]  <span class="co"># complexo</span></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">with</span>(<span class="fu">as.list</span>(parms), {</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># definição da lista de equações diferenciais</span></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>        dL <span class="ot">&lt;-</span> <span class="sc">-</span>kon <span class="sc">*</span> L <span class="sc">*</span> P <span class="sc">+</span> koff <span class="sc">*</span> PL</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>        dP <span class="ot">&lt;-</span> <span class="sc">-</span>kon <span class="sc">*</span> L <span class="sc">*</span> P <span class="sc">+</span> koff <span class="sc">*</span> PL</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>        dPL <span class="ot">&lt;-</span> kon <span class="sc">*</span> L <span class="sc">*</span> P <span class="sc">-</span> koff <span class="sc">*</span> PL</span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>        res <span class="ot">&lt;-</span> <span class="fu">c</span>(dL, dP, dPL)</span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(res)</span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>sol.rk4 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">rk4</span>(val.inic, tempo, solNumKin, parms))  <span class="co"># rotina para Runge-Kutta 4a. ordem</span></span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico</span></span>
+<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sol.rk4<span class="sc">$</span>time, sol.rk4<span class="sc">$</span>L, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">xlab =</span> <span class="st">"tempo"</span>, <span class="at">ylab =</span> <span class="st">"[composto], uM"</span>)</span>
+<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="fu">c</span>(<span class="st">"L"</span>, <span class="st">"P"</span>, <span class="st">"PL"</span>), <span class="at">text.col =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">bty =</span> <span class="st">"n"</span>,</span>
+<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(sol.rk4<span class="sc">$</span>time, sol.rk4<span class="sc">$</span>P, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(sol.rk4<span class="sc">$</span>time, sol.rk4<span class="sc">$</span>PL, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="dv">3</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="binding_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Teores de ligante e proteína livres (L e P), bem como do complexo PL apresentados ao longo do tempo de acordo com o método Runge-Kutta de 4a. ordem para solução de equações diferenciais.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-dahlquist197813" class="csl-entry" role="listitem">
+Dahlquist, FW. 1978. <span>«[13] The meaning of scatchard and hill plots»</span>. <em>Methods in enzymology</em> 48: 270–99.
+</div>
+<div id="ref-parsons1978theoretical" class="csl-entry" role="listitem">
+Parsons, DL, e JJ Vallner. 1978. <span>«Theoretical models for cooperative binding—I. one-site creator of binding sites»</span>. <em>Mathematical Biosciences</em> 41 (3-4): 189–215.
+</div>
+<div id="ref-sarkar2008lattice" class="csl-entry" role="listitem">
+Sarkar, Deepayan. 2008. <em>Lattice: multivariate data visualization with R</em>. Springer Science &amp; Business Media.
+</div>
+<div id="ref-wickham2011ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley. 2011. <span>«ggplot2»</span>. <em>Wiley interdisciplinary reviews: computational statistics</em> 3 (2): 180–85.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./enzimas.html" class="pagination-link" aria-label="Enzimas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Enzimas</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./acnucleic.html" class="pagination-link" aria-label="Ácidos Nucleicos">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Ácidos Nucleicos</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
