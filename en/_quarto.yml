@@ -6,12 +6,21 @@ project:
     - nivel/superior/sisma/prat/carb.pdf
     - nivel/superior/sisma/prat/carb_lip.pdf
     - nivel/superior/sisma/prat/a_nucl.pdf
+#    - livrosVivos/Tutorial/_book/**
+    - r/_book/**
+    - biqTxT/_book/**
     # - nivel/superior/jsplotly/sbbq/vdw3D.html
     # - nivel/superior/jsplotly/sbbq/buffer_slider.html
     # - nivel/superior/jsplotly/sbbq/cargaPept_slider.html
     # - nivel/superior/jsplotly/sbbq/gibbs.html
     # - nivel/superior/jsplotly/sbbq/nyquist2.html
     # - nivel/superior/jsplotly/sbbq/3d.html
+
+#NÃO renderizar os .qmd do livro dentro do site
+render:
+  - "!"                         # mantém seu padrão atual
+  - "!livrosVivos/Tutorial/**"
+  - "!r/_book/**"
 
 website:
   page-navigation: true
@@ -23,45 +32,47 @@ website:
   favicon: avatar.png
 
   sidebar:
+    collapse-level: 1    # só nível 1 aberto; subtópicos (nível 2+) fechados
+    # collapse-level: 0  # tudo fechado (inclusive o 1º nível)
     contents:
-      - section: "JSPlotly & GSPlotly - Interactive Graphics & AI"
+      - section: "JSPlotly: Interactive objects & AI"
         contents:
-          - text: "JSPlotly - Graphical simulation with JavaScript"
+          - text: "JSPlotly"
             href: nivel/superior/jsplotly/jsplotly_geral_en.qmd
-          - text: "GSPlotly - AI code generator for JSPlotly"
+          - text: "GSPlotly - AI code generator"
             href: nivel/superior/jsplotly/gsplotly_en.qmd
-          - text: "Simulations in Biophysical Chemistry"
+          - text: "Biophysical chemistry"
             href: nivel/superior/jsplotly/jsptl_bioq_en.qmd
-          - text: "Simulations at School"
+          - text: "School"
             href: nivel/basico/jsplotly/jsplotly_bas_en.qmd
           
             
       - section: "Jmol - 3D molecules"
         contents:
-          - text: "Atomic models in Biochemistry"
+          - text: "Biochemistry"
             href: nivel/superior/jmol/index_jmol_en.qmd
-          - text: "3D molecules at School"
+          - text: "School"
             href: nivel/basico/Curso/index_jmol_bas_en.qmd
-          - text: "A Molecule Garden"
+          - text: "Molecule Garden"
             href: nivel/basico/Jardim/index_Jardim_en.qmd
 
-      - section: "R - Maths and visualization"
+      - section: "R - Maths and charts"
         contents:
-          - text: "R in Biophysical Chemistry"
-            href: nivel/superior/r/index_r_en.qmd
-          - text: "scriptRplot: elegant graphics with ggplot2"
+          - text: "Biophysical chemistry"
+            href: nivel/superior/r/_book/index_en.html
+          - text: "scriptRplot: elegant graphics"
             href: nivel/superior/ScriptRplot/scriptrplot_en.qmd
-          - text: "R & RStudio at School"
+          - text: "School"
             href: nivel/basico/Curso/index_r_bas_en.qmd
-          - text: "Interactive charts and maps at School"
+          - text: "Interactivity at School"
             href:  nivel/basico/R/index_OIER_en.qmd
 
 
-      - section: "Sisma - dynamic diagrams"
+      - section: "Sisma - dynamic flows"
         contents:
-          - text: "Dynamic flows in Biochemistry"
+          - text: "Biochemistry"
             href: nivel/superior/sisma/index_sisma_en.qmd
-          - text: "Interactive diagrams at School"
+          - text: "School"
             href: nivel/basico/sisma/index_sisma_bas_en.qmd
 
 
@@ -113,7 +124,9 @@ format:
   html:
     theme: 
       light: flatly
-    css: styles.css
+    css: 
+      - styles.css
+#      - styles.pastel.css   # <- este vem por último para sobrepor
     code-overflow: wrap
 
 execute:
