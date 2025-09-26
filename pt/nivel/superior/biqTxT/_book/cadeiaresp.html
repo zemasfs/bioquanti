@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="José Maurício Schneedorf Ferreira da Silva">
-<meta name="author" content="Kamila Leite Rodrigues">
 
-<title>Bioquímica básica, de gente, de bicho, e de planta</title>
+<title>16&nbsp; Cadeia Respiratória – Bioquímica básica, de gente, de bicho, e de planta</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./introducao.html" rel="next">
+<link href="./gliconeog.html" rel="next">
+<link href="./krebs.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -71,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Prefácio</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cadeiaresp.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cadeia Respiratória</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -110,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prefácio</span></a>
   </div>
 </li>
@@ -218,7 +246,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cadeiaresp.html" class="sidebar-item-text sidebar-link">
+  <a href="./cadeiaresp.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cadeia Respiratória</span></span></a>
   </div>
 </li>
@@ -518,7 +546,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#prefácio" id="toc-prefácio" class="nav-link active" data-scroll-target="#prefácio">Prefácio</a></li>
+  <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos">Objetivos</a></li>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link" data-scroll-target="#introdução"><span class="header-section-number">16.1</span> Introdução</a></li>
+  <li><a href="#detalhes" id="toc-detalhes" class="nav-link" data-scroll-target="#detalhes"><span class="header-section-number">16.2</span> Detalhes</a>
+  <ul class="collapse">
+  <li><a href="#síntese" id="toc-síntese" class="nav-link" data-scroll-target="#síntese">Síntese</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -527,32 +560,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Bioquímica básica, de gente, de bicho, e de planta</h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cadeia Respiratória</span></h1>
 </div>
 
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Autores</div>
-  <div class="quarto-title-meta-heading">Afiliação</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author">José Maurício Schneedorf Ferreira da Silva <a href="mailto:jose.dasilva@unifal-mg.edu.br" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-2031-6315" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Universidade Federal de Alfenas, UNIFAL-MG
-          </p>
-      </div>
-    <div class="quarto-title-meta-contents">
-    <p class="author">Kamila Leite Rodrigues </p>
-  </div>
-  <div class="quarto-title-meta-contents">
-      </div>
-  </div>
 
 <div class="quarto-title-meta">
 
-      
+    
   
     
   </div>
@@ -562,12 +577,87 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="prefácio" class="level1 unnumbered">
-<h1 class="unnumbered">Prefácio</h1>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Este material pretende contribuir ao aprendizado em conteúdos de <em>Bioquímica</em> usualmente encontrados em ementas da disciplina, bem como traçar um panorama esboçado de suas inúmeras aplicações nas arestas humana, animal, vegetal e microbiana que se encontram alicerçadas em suas bases.</div>
-<!-- |       Diferente dos demais disponibilizados no [Bioquanti](https://bioquanti.netlify.app/){target="_blank"}, é oferecido para leitura e estudo, e não abrange trechos de códigos para uso nos programas tratados no *website* (*Jmol*, *R*, ou *Sisma*). -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+<section id="objetivos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="objetivos">Objetivos</h3>
+<ol type="1">
+<li>Saber a localização distinta dos processos metabólicos aeróbios (ciclo de Krebs e cadeia respiratória);</li>
+<li>Entender o que é a cadeia respiratória e o por quê desse nome;</li>
+<li>Compreende de que é formada a cadeia, complexos proteicos e não proteicos;</li>
+<li>Saber distinguir as ações dos complexos 1 a 5 da cadeia respiratória;</li>
+<li>Entender como funciona o transporte de elétrons a partir da oxidação de coenzimas metabólicas NADH e FADH2;</li>
+<li>Saber o que é o acomplamento energético da cadeia, bem como exemplificar desacopladores;</li>
+<li>Saber que a cadeia pode ser inibida com especificidade em seus complexos; proteicos, e a importância disso, exemplificando substâncias tóxicas e antibióticas;</li>
+<li>Entender como o ciclo de Krebs está interligado à cadeia respiratória, e suas consequências</li>
+<li>Compreender a hipótese quimiosmótica;</li>
+<li>Saber como a produção de ATP ocorre no complexo 5 da cadeia;</li>
+<li>Entender porque o potencial transmembânico ou o consumo de oxigênio na célula pode ser utilizado como uma medida da cadeia respiratória;</li>
+<li>Entender o significado das razões ATP/O e quociente respiratório (CO2/O2).</li>
+</ol>
+</section>
+<section id="introdução" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">16.1</span> Introdução</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A imagem mais simples que se pode fazer da cadeia respiratória é a de uma cadeia de alguma coisa, onde acontece um processo de respiração celular. Respiração indica que se precisa de oxigênio. A cadeia respiratória é, portanto, uma cadeia de eventos que só acontece na presença de oxigênio. Mas pra que serve ? Escreve aí: pra produzir ATP. Mas a glicólise não produz ATP, sem precisar de oxigênio ? Sim, mas a cadeia respiratória é capaz de produzir quase 20 vezes mais ATP que a glicólise, sendo portanto de grande valia em sistemas mais complexos que bactérias estritamente fermentadoras. É o caso do o tecido cardíaco ou do exercício de maratona, onde a contração muscular exige grande quantidade de energia provinda da queima de combustível metabólico.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assim como o ciclo de Krebs, a cadeia respiratória também ocorre na mitocôndria, e só funciona nas células que a possui, fechando o capítulo da bioquímica destinado ao metabolismo intermediário da grande maioria das células conhecidas. A cadeia respiratória funciona com um conjunto de proteínas que, colocadas em sequência, uma ao lado da outra, transferem entre si elétrons, advindos de diversas rotas metabólicas, principalmente do ciclo de Krebs. Isto quer dizer que uma proteína pega elétrons do metabolismo, e passa pra outra, que passa pra outra, e assim por diante.</div>
+<p>Mas de onde vêm estes elétrons metabólicos ? Assim como nos ensinava a química ginasial, um composto que perde elétrons fica oxidado. De maneira similar, um composto que ganha elétrons fica reduzido.</p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Compostos reduzidos têm “mais energia” que compostos oxidados, já que possuem mais elétrons. Quando uma molécula combustível é degradada pelo organismo para a produção de ATP, como a glicose, ela vai sendo continuamente oxidada, com alguns elétrons deixando o composto original e combinando-se com moléculas especiais chamadas de “coenzimas de oxi-redução”. Elas também têm nomes específicos. As mais comuns possuem as siglas NADH e FADH2. Essas moléculas carregam os elétrons doados no processo de oxidação até a cadeia respiratória, transferindo-os em seguida para o conjunto de proteínas existentes nesta.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Juntamente com os elétrons, as coenzimas de oxi-redução também carregam prótons H+, também oriundos da oxidação do mesmo combustível metabólico. Pra não confundir tanto assim: as coenzimas de oxi-redução carregam elétrons e H+ doados nas várias etapas da queima de combustível metabólico.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uma combinação especial no transporte de elétrons e de H+ nas proteínas da cadeia respiratória é a verdadeira responsável pela produção da enorme quantidade de ATP mencionada acima e, por consequência, do funcionamento de células que precisam produzir muito ATP além daquele obtido pela fermentação da glicólise. E o oxigênio ? Bom, o oxigênio é necessário na cadeia para receber os elétrons que estão passando de proteína em proteína, como um goleiro assustado em uma partida de ludopédio, afinal de contas, os elétrons, assim como a bola, têm de parar em algum lugar.</div>
+<div id="fig-intermed" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intermed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="intermed.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intermed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;16.1: Resumo de operações do metabolismo intermediário, apresentando a produção final de ATP pela cadeia respiratória (fosforilação oxidativa).
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="detalhes" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="detalhes"><span class="header-section-number">16.2</span> Detalhes</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A cadeia respiratória, ou fosforilação oxidativa, é a principal rota de produção de ATP em tecidos contendo mitocôndrias. Basicamente, o ATP é produzido a partir do fluxo de elétrons de NADH e FADH2 entre proteínas da membrana mitocondrial interna, com captação final desses elétrons pelo oxigênio. O ATP assim produzido pode ser agora utilizado na contração muscular, transporte de íons e termogênese. As estruturas envolvidas no fluxo de elétrons, bem como a sequência de sua disposição na membrana, formam os complexos I (NADH desidrogenase), II (succinato desidrogenase), coenzima Q (ubiquinona, a única de natureza não protéica, e que recebe elétrons tanto do complexo I como do II), III (citocromos bc) e IV (citocromo oxidase).</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Em poucas palavras, os complexos I e II catalisam a transferência de elétrons até a ubiquinona, a partir de dois doadores de elétrons diferentes: NADH (complexo I) e succinato (complexo II). O complexo III transporta elétrons da ubiquinona até o citocromo c, e o complexo IV completa a sequência transferindo elétrons do citocromo c até o O2. A lógica da produção de ATP pela cadeia respiratória se baseia na hipótese quimiosmótica.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cada NADH e FADH2 que é oxidado na cadeia libera prótons H+, gerando um gradiente de concentração destes (uma diferença de pH no espaço inter-membranoso) que força sua passagem pelo interior da ATP sintase da membrana mitocondrial, promovendo sua transconformação e consequente redução do ADP a ela ligado. Pelo fato do FADH2 ser menos reduzido que o NADH, o primeiro origina 2 ATPs e o segundo, 3 ATP. Estruturalmente, a NADH desidrogenase constitui um complexo de flavoproteínas contendo 25 cadeias polipeptídicas orientadas para a matriz, e que recebe o íon hidreto (dois elétrons e um próton) do NADH, transferindo os elétrons para o seu grupo prostético, FMN, e deste para a ubiquinona.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A transferência se dá por 7 centros de Fe-S, os quais podem ser inibidos por barbitúricos (amital), rotenona (produto vegetal utilizado em flexas indígenas e na elaboração de inseticidas), e pelo antibiótico piericidina A. O complexo II, succinato desidrogenase, única proteína do ciclo de Krebs ligada à membrana, possui duas proteínas contendo um centro Fe-S cada. Acredita-se que os elétrons passem do succinato para o FAD da primeira proteína, e depois dos centros Fe-S até a ubiquinona.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outros substratos para as desidrogenases mitocondriais também passam elétrons para a cadeia respiratória, ao nível da ubiquinona, mas através do complexo II. Assim ocorre com a acil-CoA desidrogenase (oxidação de ácidos graxos), e a glicerol-3-P-desidrogenase (transporte de equivalentes redutores do NADH citosólico para a matriz mitocondrial). O complexo III contém os citocromos b562 , b566 e c, além de uma proteína Fe-S, e pelo menos 6 outras subunidades protéicas.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A transferência de elétrons da ubiquinona para o complexo II envolve uma série de etapas (ciclo Q) que culminam na oxidação da ubiquinona e redução do citocromo c.&nbsp;É justamente no complexo III, orientado assimetricamente, que os prótons H+ liberados vão para o espaço inter-membranoso, gerando um diferencial de pH que possibilita a produção de ATP (bomba de prótons). No complexo IV, contendo os citocromos a e a3, possuidores de 2 grupos heme e de 2 centros de íons Cu, ambos vitais na redução dos 4 elétrons de O2 para a produção final de H2O. Termodinamicamente, o ATP necessita de um <span class="math inline">\(\Delta\)</span>G0, de -52 kJ/mol para sua formação. Neste sentido, a transferência do NADH libera -220 kJ/mol, e do succinato, -152 kJ/mol, energia suficiente para a síntese de ATP, com o excedente podendo ser utilizado para a manutenção térmica do organismo.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O ATP, como já mencionado, é produzido pelo acoplamento da passagem de elétrons à fosforilação. Inibidores da passagem de elétrons ao O2, como o cianeto, o CO, azida e antimicina A, bloqueiam a síntese de ATP. Oligomicina e venturicidina, ambos antibióticos tóxicos , por sua vez, bloqueiam a ATP sintase da membrana, etapa final da cadeia respiratória na produção de ATP. Outro bloqueio na produção de energia pode ser realizado através de desacopladores da cadeira respiratória. Estes, representados pelo dinitrofenol e pela valinomicina (ionóforo de K+), difundem-se pela membrana mitocondrial, criando um curto-circuito elétrico através da membrana.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fisiologicamente, contudo, existem desacopladores regulados, como a termogenina de animais hibernantes, proteína de membrana mitocondrial rica no tecido adiposo marrom (cor resultante do acúmulo de mitocôndrias), e que atua como um canal de prótons na membrana mitocondrial, dissipando o fluxo de elétrons e gerando calor. Como consequência, ocorre uma produção excessiva de calor, uma vez que o fluxo de elétrons não atinge o complexo final da ATP sintase. Esta enzima, formada pelas subunidades F0 e F1, atua como uma força próton-motora na geração de ATP. Pela teoria quimiosmótica, a transferência de elétrons ao longo da cadeia respiratória é acompanhada pelo bombeamento de prótons para fora da membrana mitocondrial interna, o que leva a uma diferença na concentração de prótons transmembrana (um gradiente de prótons) e, portanto, de pH; a matriz torna-se relativamente alcalina ao lado citosólico da membrana.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A energia eletroquímica inerente nesta diferença de concentração de prótons e separação de carga, a força próton-motora, representa uma conservação de parte da energia de oxidação. A força próton-motora é subsequentemente usada para impulsionar a síntese do ATP catalisada pela subunidade F1 da ATP sintase, à medida que os prótons fluem passivamente de volta para a matriz, através dos poros formados pela subunidade F0 da mesma enzima.</div>
+<div id="fig-cadeia" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cadeia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cadeia.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cadeia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;16.2: Sequência de eventos da cadeia respiratória.
+</figcaption>
+</figure>
+</div>
+<section id="síntese" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="síntese">Síntese</h3>
+<ol type="1">
+<li>Conceito: via de produção de ATP que ocorre na presença de O2 , através do fluxo de elétrons entre proteínas mitocondriais;</li>
+<li>Importância: síntese de ATP, transporte de íons, contração muscular, termogênese;</li>
+<li>Localização: mitocôndria (membrana);</li>
+<li>Complexos protéicos (I, II, Ubiquinona, III, e IV);</li>
+<li>Lógica da via: transferência de prótons e elétrons para produção de ATP; hipótese quimiosmótica: oxidações de coenzimas acarretam diferença de pH no espaço intermembranoso da mitocôndria, forçando sua restauração pela passagem de prótons para a matriz no interior da ATP sintase, com concomitante geração de ATP;</li>
+<li>Diferenças do rendimento de ATP de NADH e FADH2; como o FADH2 é menos energético que o NADH, ele se liga mais adiante na via, gerando 2 ATPs; o NADH, por sua vez, se liga no início da mesma, com consequente produção de 3 ATPs;</li>
+<li>Inibição por drogas: amital, barbitúricos, CO, e azida;</li>
+<li>Desacoplamento energético: o transporte de elétrons e a produção de ATP podem ser desacoplado por substâncias como o dinitrofenol (capta H+), gerando calor mas nenhum ATP; animais hibernantes possuem termogenina, uma proteína de igual ação;</li>
+<li>Antibióticos: oligomicina e antimicina se ligam em proteínas da cadeia, inativando-a.</li>
+</ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -972,10 +1062,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./krebs.html" class="pagination-link" aria-label="Ciclo de Krebs">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ciclo de Krebs</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./introducao.html" class="pagination-link" aria-label="INTRODUÇÃO">
-        <span class="nav-page-text">INTRODUÇÃO</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./gliconeog.html" class="pagination-link" aria-label="Gliconeogênese">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Gliconeogênese</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

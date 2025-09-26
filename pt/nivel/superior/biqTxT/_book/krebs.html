@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="José Maurício Schneedorf Ferreira da Silva">
-<meta name="author" content="Kamila Leite Rodrigues">
 
-<title>Bioquímica básica, de gente, de bicho, e de planta</title>
+<title>15&nbsp; Ciclo de Krebs – Bioquímica básica, de gente, de bicho, e de planta</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./introducao.html" rel="next">
+<link href="./cadeiaresp.html" rel="next">
+<link href="./glicolise.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -71,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Prefácio</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./krebs.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ciclo de Krebs</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -110,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prefácio</span></a>
   </div>
 </li>
@@ -212,7 +240,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./krebs.html" class="sidebar-item-text sidebar-link">
+  <a href="./krebs.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ciclo de Krebs</span></span></a>
   </div>
 </li>
@@ -518,7 +546,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#prefácio" id="toc-prefácio" class="nav-link active" data-scroll-target="#prefácio">Prefácio</a></li>
+  <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos">Objetivos</a></li>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link" data-scroll-target="#introdução"><span class="header-section-number">15.1</span> Introdução</a></li>
+  <li><a href="#detalhes" id="toc-detalhes" class="nav-link" data-scroll-target="#detalhes"><span class="header-section-number">15.2</span> Detalhes</a></li>
+  <li><a href="#aplicação" id="toc-aplicação" class="nav-link" data-scroll-target="#aplicação"><span class="header-section-number">15.3</span> Aplicação</a>
+  <ul class="collapse">
+  <li><a href="#síntese" id="toc-síntese" class="nav-link" data-scroll-target="#síntese">Síntese</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -527,32 +561,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Bioquímica básica, de gente, de bicho, e de planta</h1>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ciclo de Krebs</span></h1>
 </div>
 
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Autores</div>
-  <div class="quarto-title-meta-heading">Afiliação</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author">José Maurício Schneedorf Ferreira da Silva <a href="mailto:jose.dasilva@unifal-mg.edu.br" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-2031-6315" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Universidade Federal de Alfenas, UNIFAL-MG
-          </p>
-      </div>
-    <div class="quarto-title-meta-contents">
-    <p class="author">Kamila Leite Rodrigues </p>
-  </div>
-  <div class="quarto-title-meta-contents">
-      </div>
-  </div>
 
 <div class="quarto-title-meta">
 
-      
+    
   
     
   </div>
@@ -562,12 +578,90 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="prefácio" class="level1 unnumbered">
-<h1 class="unnumbered">Prefácio</h1>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Este material pretende contribuir ao aprendizado em conteúdos de <em>Bioquímica</em> usualmente encontrados em ementas da disciplina, bem como traçar um panorama esboçado de suas inúmeras aplicações nas arestas humana, animal, vegetal e microbiana que se encontram alicerçadas em suas bases.</div>
-<!-- |       Diferente dos demais disponibilizados no [Bioquanti](https://bioquanti.netlify.app/){target="_blank"}, é oferecido para leitura e estudo, e não abrange trechos de códigos para uso nos programas tratados no *website* (*Jmol*, *R*, ou *Sisma*). -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+<section id="objetivos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="objetivos">Objetivos</h3>
+<ol type="1">
+<li>Saber a localização distinta do ciclo de Krebs em relação à glicólise;</li>
+<li>Entender a lógica cíclica deste circuito metabólico;</li>
+<li>Saber exemplificar a necessidade de algumas vitaminas do complexo B, tais como B1, B2 e B3 para o correto funcionamento do circuito (coenzimas);</li>
+<li>Compreender e saber exemplificar a natureza anfibólico do ciclo de Krebs;</li>
+<li>Entender a produção de coenzimas de oxi-redução (NADH e FADH2) em suas desidrogenases respectivas;</li>
+<li>Compreender a descarboxilação dupla que ocorre neste circuito;</li>
+<li>Saber exemplificar os controles metabólicos alostérico e covalente envolvidos no circuito;</li>
+<li>Entender como um atalho no circuito pode poupar carbonos da descarboxilação (ciclo do glioxilato);</li>
+<li>Entender a produção de GTP direta no circuito;</li>
+<li>Saber o saldo de coenzimas de oxiredução do circuito;</li>
+<li>Observar como o ciclo de Krebs está interligado a outras rotas metabólicas.</li>
+</ol>
+</section>
+<section id="introdução" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">15.1</span> Introdução</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O ciclo de Krebs é uma mistura de redemoinho com ventilador. É um redemoinho pois pode canalizar todo o excesso de compostos metabólicos produzidos pela célula para o seu interior, ao mesmo tempo que comporta-se como um ventilador, na medida em que joga uma série de compostos fabricados em seu interior para outras rotas do metabolismo (experimente jogar alguma coisa num ventilador ligado !).</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Essa dupla função faz com que desempenhe um papel central no metabolismo, já que elimina alguns excessos de umas rotas, ao mesmo tempo em que distribui alguns compostos para outras. A metáfora não é em vão. Tanto o redemoinho como o ventilador fazem alusão à imagem de algo girando. E é exatamente assim que o ciclo de Krebs se comporta. Girando, ele pode pegar gordura, aminoácidos ou açúcares, vindos de outras rotas, e transformá-los em outros compostos de interesse à célula no momento, como uréia, ATP, ácido cítrico, etc.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O ciclo de Krebs só ocorre em células que contém mitocôndrias ou cloroplastos. Assim como na glicólise, o ciclo de Krebs, e todas as outras rotas metabólicas existentes em qualquer ser vivo, faz uso das enzimas como operárias na transformação química de seus compostos. Assim, o ciclo de Krebs é formado por cerca de 8 enzimas que transformam sequencialmente um composto em outro. Sequencialmente e ciclicamente, senão por qual motivo o ciclo Krebs se chamaria ciclo ?! Uma rota metabólica cíclica indica que o composto incial formado se regenera ao final do ciclo. No ciclo de Krebs é a mesma coisa, só não existe um composto inicial, assim como não é possível se determinar qual pá do ventilador começou a rodar primeiro.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quimicamente falando, se olharmos para o ciclo de Krebs, veremos na sequência de reações um composto com 4 carbonos se transformando em outro com 6 carbonos. Como isso é possível, ou seja, como um 4C pode virar um 6C? Ora, só se receber mais 2 carbonos (4C+2C=6C). Acontece que o ciclo é cíclico por definição, o que faz com que esse composto 6C tenha que se transformar novamente em 4C, fechando o ciclo. Neste caso, há a perda de 2 carbonos, que no ciclo de Krebs vão embora na forma de duas moléculas de dióxido de carbono, ou 2 CO2. Durante o ciclo são produzidas também algumas coenzimas especiais (ajudantes de enzimas), as quais podem ser utilizadas pela etapa seguinte do metabolismo intermediário, a cadeia respiratória, para formar uma enorme quantidade de ATP energético para a célula.</div>
+<div id="fig-krebsLittle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-krebsLittle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="krebsLittle.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-krebsLittle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;15.1: Representação esquemática do ciclo de Krebs ou ciclo do ácido tricarboxílico, onde a fusão e a clivagem de compostos permite a regeneração do ciclo.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="detalhes" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="detalhes"><span class="header-section-number">15.2</span> Detalhes</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O ciclo de Krebs, ou ciclo do ácido tricarboxílico (TCA), ou ciclo do ácido cítrico, é uma rota cíclica de oxidação de acetil CoA para a produção de metabólitos intermediários de outras vias, como oxalacetato e glutamato, de coenzimas do catabolismo energético (NADH e FADH2) e de ATP. Em eucariotos o ciclo de Krebs ocorre na matriz mitocondrial, ao passo que em procariotos, na membrana citoplasmática. O ciclo de Krebs permite que se produza mais energia a partir da oxidação de compostos já oxidados por outras vias (glicólise, por exemplo).</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como toda oxidação exige um aceptor de elétrons, este ocorre na forma das coenzimas acima, NADH e FADH2, que transferem esses elétrons para a etapa final do metabolismo intermediário, a cadeia respiratória, gerando ATP, por oxidação e transferência final de elétrons ao O2 molecular, produzindo água. Neste sentido, acredita-se que o ciclo de Krebs (Hans Krebs, Nobel de 1953) tenha surgido há 3 bilhões de anos atrás, quando do aumento dos níveis de oxigênio atmosférico.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A lógica da via constitui uma condensação de C2 e C4 foramando um C6, com duas descarboxilações sucedentes que regeneram o composto C4. Desta forma, a via figura-se cíclica. Neste percurso são produzidos 3 NADH, 1 FADH2, e 1 GTP. São 8 reações principais que se inicam com a conversão adicional de piruvato em acetil CoA, uma molécula de importância fundamental em todo o mapa de reações metabólicas, já que figura no metabolismo de ácidos graxos, carboidratos, proteínas e ácidos nucléicos. Esta reação é catalizada pela piruvato desidrogenase, produz 1 NADH, e envolve 5 coenzimas, a saber: TTP (pirofosfato de tiamina, um derivado da vitamina B1), NAD+, FAD, CoA (derivado da vitamina ácido pantotênico), e ácido lipóico.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A piruvato desidrogenase é um complexo multi-enzimático formado por 60 cadeias polipeptídicas com funções de descarboxilação (que requer a vitamina B1), transcetilação (que transfere o –SH, grupo tiol da lipoamida ligada covalentemente à transcetilase, ao CoA, coenzima A), e desidrogenação (que restaura as formas oxidadas de lipoato e FAD, e produz NADH). A piruvato desidrogenase é inibida por NADH e acetil CoA, que sinalizam à uma quinase sua fosforilação e consequente inativação. A segunda etapa do ciclo envolve uma condensação aldólica da acetil CoA produzida (C2) com oxalacetato (C4), formando citrato (C6), pela citrato sintase. O citrato assim produzido, se em excesso, pode inibiir a fosfofrutoquinase-1 (PFK-1) da glicólise, ou ativar a síntese de ácidos graxos (pela acetil CoA carboxilase). A enzima é inibida por ATP, NADH, succinil CoA, ou acil CoA graxa (dos ácidos graxos), compostos relacionados à saciedade energética.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Em seguida ocorre uma isomerização do citrato em isocitrato pela aconitase, e duas reações consecutivas de descarboxilação e desidrogenação, ambas liberando CO2 e produzindo NADH. A primeira é catalisada pela isocitrato desidrogenase, e a segunda pela <span class="math inline">\(\alpha\)</span>-cetoglutarato desidrogenase, esta última operando com as mesmas 5 coenzimas da piruvato desidrogenase. O produto intermediário é o succinil CoA, um composto de alta energia, que na reação seguinte sofre clivagem pela succinil tioquinase, liberando GTP. Este processo é denominado “fosforilação ao nível do substrato”, semelhante à produção de ATP na glicólise, já que não ocorre na cadeia respiratória (fosforilação oxidativa). Este GTP pode então se converter em ATP (ação da nucleosídio difosfato quinase).</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uma terceira desidrogenação libera FADH2 pela succinato desidrogenase, formando fumarato que se hidrata em malato, seguindo-se a última desidrogenação que produz NADH, e converte o malato em oxalacetato, regenerando o composto.</div>
+</section>
+<section id="aplicação" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="aplicação"><span class="header-section-number">15.3</span> Aplicação</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A doença mais comum associada ao ciclo de Krebs é o béribéri, causada por deficiência de vitamina B1, a qual pode ser encontrada em cerais, ovos, carne e vegetais verdes. A vitamina B1, contudo, pode estar indisponibilizada em alimentos levados à alta temperatura, ou na intoxicação alcoólica.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No quadro etanólico do “<em>delirius tremens</em>” é administrado vitamina B1 intravenosamente. Neste caso, do qual figura a <em>Síndrome de Wernicke-Korssakoff</em>, ocorre um comprometimento cardíaco e neurológico que determina fraqueza muscular, palpitação, edema, formigamente e psicose de confabulação. Outra intoxicação costuma ocorrer por inibição enzimática do fluoreto na aconitase, ou, mais especificamente, pelo fluoroacetato presente na erva-de-rato (ou cafezinho, <em>Palicourea marcgravii</em>), o qual se converte em fluorocitrato, inibindo a aconitase e paralisando o ciclo. A intoxicação por cafezinho constitui a de maior abrangência geográfica nos rebanhos bovinos brasileiros. Os sintomas do animal vão desde tremores e taquicardia, até convulsão e morte, essa por acumulação da toxina.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uma forma mais branda de intervenção no ciclo de Krebs se dá pelo uso de fármacos dietéticos a base de hidroxicitrato. Este composto, extraído da Garcinia, simula o ácido cítrico, inibindo a citrato liase e reduzindo o citrato intracelular. A queda nos teores de citrato sinalizam o organismo para o aumento na oxidação de carboidratos e ácidos graxos. Finalmente, outra inibição de importância clínica se dá com o arsênico, o qual se combina com o ácido lipóico, inativando a piruvato desidrogenase e a <span class="math inline">\(\alpha\)</span>-cetoglutarato desidrogenase.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arsenitos orgânicos eram muito comuns na posologia de tônicos no século XIX, acreditando-se ter intoxicados Charles Darwin, que sofria de sintomas típicos da intoxicação, como náuseas, eczemas, gota e dor de cabeça. A morte do estadista Napoleão Bonaparte também é atribuída ao envenenamento intencional pelo arsênico, ou acidental por este, já que era comum na época o uso de tintas de parede contendo arsenitos. Estes produzem compostos voláteis pelo metabolismo fúngico, e que identificados em mechas de cabelo do estadista.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como o ciclo de Krebs é uma rota intermediária para a oxidação de carboidratos e gorduras, servindo como uma drenagem catabólica destes, pode ser manipulado para aumentar a degradação dos mesmos, visando a redução de gordura. Isto tem sido feito de forma perigosa pela administração oral agonistas <span class="math inline">\(\beta\)</span>-adrenérgicos, embora de larga escala em animais de produção (bovinos, suínos e ovinos).</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Neurotransmissores simpáticos, como adrenalina e noradrenalina, têm a propriedade de estimular a glicólise e a lipólise no tecido adiposo, liberando ácidos graxos livres. Complementarmente, ainda induzem a retenção de nitrogênio pela musculatura esquelética. Sendo assim, análogos sintéticos de catecolaminas (adrenalina e noradrenalina), como o clenbuterol, têm demonstrado uma diminuição da deposição de gorduras e aumento na síntese de proteínas em rebanhos, aumentando a massa muscular destes.</div>
+<div id="fig-krebs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-krebs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="krebs.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-krebs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;15.2: Representação das etapas do ciclo de Krebs e seu encurtamento pela via do glioxilato.
+</figcaption>
+</figure>
+</div>
+<section id="síntese" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="síntese">Síntese</h3>
+<ol type="1">
+<li>Conceito: via cíclica de restauração de ácido cítrico a partir de acetil CoA, para a produção de metabólitos utilizados em outras vias;</li>
+<li>Importância: permite a produção de coenzimas (NADH e FADH2) que serão utilizadas na cadeia respiratória para a produção de ATP, e fornece intermediários de outros ciclos, como oxalacetato e glutamato;</li>
+<li>Localização: mitocôndria (matriz);</li>
+<li>Lógica da via: condensação de C2 com C4 (para produzir C6) e desidrogenações (para produzir C4 e as coenzimas), restaurando C6 em nova condensação (descarboxilação de 2 CO2 permite retorno C6 para C4 do ciclo);</li>
+<li>Principais vitaminas da via: vitamina B3, ácido lipóico, vit B1, vit B2;</li>
+<li>Descarboxilações e desidrogenações ( produzindo CO2, 3 NADH, 1 FADH2 e 1 GTP ou ATP);</li>
+<li>Regulação por fofoenolpiruvato (+), acil CoA (-) e NADH (-);</li>
+<li>Inibições por malonato e arsenato sobre algumas enzimas da via; esta interrupção promove a inativação da via, e consequente estagnação do metabolismo intermediário;</li>
+<li>Doença: béribéri (carência de vitamina B1, levando a quadro neurológico e cardiovascular).</li>
+</ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -972,10 +1066,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./glicolise.html" class="pagination-link" aria-label="Glicólise">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Glicólise</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./introducao.html" class="pagination-link" aria-label="INTRODUÇÃO">
-        <span class="nav-page-text">INTRODUÇÃO</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cadeiaresp.html" class="pagination-link" aria-label="Cadeia Respiratória">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cadeia Respiratória</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

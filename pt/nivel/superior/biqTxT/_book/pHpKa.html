@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="José Maurício Schneedorf Ferreira da Silva">
-<meta name="author" content="Kamila Leite Rodrigues">
 
-<title>Bioquímica básica, de gente, de bicho, e de planta</title>
+<title>3&nbsp; pH e Solução Tampão – Bioquímica básica, de gente, de bicho, e de planta</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./introducao.html" rel="next">
+<link href="./sangue.html" rel="next">
+<link href="./funcoes.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -71,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Prefácio</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pHpKa.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">pH e Solução Tampão</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -110,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prefácio</span></a>
   </div>
 </li>
@@ -132,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pHpKa.html" class="sidebar-item-text sidebar-link">
+  <a href="./pHpKa.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">pH e Solução Tampão</span></span></a>
   </div>
 </li>
@@ -518,7 +546,20 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#prefácio" id="toc-prefácio" class="nav-link active" data-scroll-target="#prefácio">Prefácio</a></li>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">3.1</span> Introdução</a>
+  <ul class="collapse">
+  <li><a href="#solução-tampão" id="toc-solução-tampão" class="nav-link" data-scroll-target="#solução-tampão"><span class="header-section-number">3.1.1</span> Solução tampão</a></li>
+  </ul></li>
+  <li><a href="#detalhes" id="toc-detalhes" class="nav-link" data-scroll-target="#detalhes"><span class="header-section-number">3.2</span> Detalhes</a>
+  <ul class="collapse">
+  <li><a href="#ponto-isoelétrico-isoiônico" id="toc-ponto-isoelétrico-isoiônico" class="nav-link" data-scroll-target="#ponto-isoelétrico-isoiônico"><span class="header-section-number">3.2.1</span> Ponto isoelétrico (isoiônico)</a></li>
+  </ul></li>
+  <li><a href="#aplicação." id="toc-aplicação." class="nav-link" data-scroll-target="#aplicação."><span class="header-section-number">3.3</span> Aplicação.</a>
+  <ul class="collapse">
+  <li><a href="#variações-de-ph-entre-os-animais." id="toc-variações-de-ph-entre-os-animais." class="nav-link" data-scroll-target="#variações-de-ph-entre-os-animais."><span class="header-section-number">3.3.1</span> Variações de pH entre os animais.</a></li>
+  <li><a href="#leitões-e-dieta-ácida." id="toc-leitões-e-dieta-ácida." class="nav-link" data-scroll-target="#leitões-e-dieta-ácida."><span class="header-section-number">3.3.2</span> Leitões e dieta ácida.</a></li>
+  <li><a href="#aditivos-de-solos-e-ph." id="toc-aditivos-de-solos-e-ph." class="nav-link" data-scroll-target="#aditivos-de-solos-e-ph."><span class="header-section-number">3.3.3</span> Aditivos de solos e pH.</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -527,32 +568,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Bioquímica básica, de gente, de bicho, e de planta</h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">pH e Solução Tampão</span></h1>
 </div>
 
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Autores</div>
-  <div class="quarto-title-meta-heading">Afiliação</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author">José Maurício Schneedorf Ferreira da Silva <a href="mailto:jose.dasilva@unifal-mg.edu.br" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-2031-6315" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Universidade Federal de Alfenas, UNIFAL-MG
-          </p>
-      </div>
-    <div class="quarto-title-meta-contents">
-    <p class="author">Kamila Leite Rodrigues </p>
-  </div>
-  <div class="quarto-title-meta-contents">
-      </div>
-  </div>
 
 <div class="quarto-title-meta">
 
-      
+    
   
     
   </div>
@@ -562,12 +585,135 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="prefácio" class="level1 unnumbered">
-<h1 class="unnumbered">Prefácio</h1>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Este material pretende contribuir ao aprendizado em conteúdos de <em>Bioquímica</em> usualmente encontrados em ementas da disciplina, bem como traçar um panorama esboçado de suas inúmeras aplicações nas arestas humana, animal, vegetal e microbiana que se encontram alicerçadas em suas bases.</div>
-<!-- |       Diferente dos demais disponibilizados no [Bioquanti](https://bioquanti.netlify.app/){target="_blank"}, é oferecido para leitura e estudo, e não abrange trechos de códigos para uso nos programas tratados no *website* (*Jmol*, *R*, ou *Sisma*). -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+<section id="introdução" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">3.1</span> Introdução</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pode-se afirmar com certo resvelo que termos como pH, pKa e tampão constituem o terror primal do estudante em bioquímica. Mas não é tão assustador quanto parece. Você já ouviu falar em xampu neutro ou já provou um abacaxi ácido ? Tem serventia ? Claro, pois o xampu neutro aparentemente não prejudica o couro cabeludo, e o abacaxi ácido é intragável. Então vamos tentar entender melhor essa noção de ácido e neutro, já que ela vem ao menos preservar nossa vetusta cabeleira e nosso bom senso alimentar. Ácido é uma substância com muito próton H+, neutro uma com o mesmo teor de H+ e OH-, e básica (ou alcalina), uma com muito OH-.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por razões de formalismo químico, são atribuidos valores de 0 a 14 para se determinar a acidez de toda a gama de substância aquosas. Zero representa a acidez absoluta, 14 a alcalinidade absoluta, e 7, é claro, o ponto médio, a neutralidade absoluta. Diz-se absoluta pois se pode tomar faixas de acidez relativa das substâncias. Neste caso, tudo que estiver entre 0 e 7 será ácido, e entre 7 e 14 será básico ou alcalino. Os valores de 0 a 14 representam, na verdade, transformações matemáticas de concentrações de H+, mais explicitamente, uma transformação logaritmica. Assim, o valor 2 indica 0,01 moles por litro de H+, e 7, 0,0000001 moles por litro de H+. Como esses números são muito desagradáveis para ser representados, os cientistas tomaram o logaritmo negativo (- log) das concentrações de H+ para uma apresentação menos agressiva, chamando-a de pH. Dessa forma -log 0,01 é igual a 2, e -log 0,0000001 é igual a 7. Voilá.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Temos então uma representação menos fragmentada para valores de acidez, o que torna bastante útil se levarmos em conta que a acidez normalmente encontrada na Natureza varia entre 0,0001 e 0,00000001 unidades de moles de H+ por litro de solução aquosa.</div>
+<p>Então o pH nada mais é do que uma representação de valores de acidez de uma solução. Uma solução diluída de vinagre ou ácido acético, por exemplo, tem pH 3, o que significa que ela possui em torno de 0,001 moles por litro de H+. Outros exemplos do cotidiano estão representados na <span class="quarto-unresolved-ref">?fig-pHscala</span> abaixo.</p>
+<p><img src="pHscala.png" id="fig-pHscala" class="img-fluid" alt="Escala de pH e valores medidos para alguns compostos. Observe que a acidez, representada pelo número de prótons H+ aumenta progressivamente à esquerda do valor de neutralidade 7, ao passo que a alcalinidade, representada pelo número de ânions OH -, aumenta à direita desse valor."> | Observe que o pH é inversamente proporcional à acidez. Ou seja, quanto mais zeros aparecerem após a vírgula, maior será o valor de pH e, por conseguinte, menor a acidez da solução (solução muito diluída). Outro simbolismo normalmente encontrado em livros-texto sobre o assunto são denotados por pKa e o pI. O que vem a ser esses parâmetros ? Bom , em primeiro lugar você deve ter notado que pH, pKa e pI começam com a letra “p”. Esse “p” só está aí para que você se lembre tratar daquela operação logarítmica (- log).</p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O que vai importar mesmo é que “Ka” é uma constante de dissociação de ácidos, ou seja, uma constante qualquer relativa ao equilíbrio do ácido que está se dissociando na água. Em termos representativos, HA=H+ + A-, onde HA é forma protonada (com próton) e A- a desprotonada (sem próton ). Já o “I” do pI significa isoelétrico (cargas iguais), indicando que a substância tem o mesmo número de cargas positivas que o de negativas em solução. Tanto pKa quanto pI registram, portanto, um pH no qual o ácido encontra-se em equilíbrio na água (pKa), e um pH no qual uma substância tem carga nula em solução (pI). Ambos os conceitos são importantes para o estudo de biomoléculas e de soluções tampão.</div>
+<section id="solução-tampão" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="solução-tampão"><span class="header-section-number">3.1.1</span> Solução tampão</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Um tampão é, basicamente, uma solução que varia pouco o seu pH, condição essencial para que qualquer célula, tecido ou organismo vivo possa realizar suas funções vitais, já que todo o metabolismo celular produz ácidos, na maior parte de suas operações, e álcalis, em minoria, os quais poderiam incompatibilizar os fenômenos vitais se acumulados nos tecidos de origem.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uma solução tampão é sempre formada por um ácido e um sal derivado de uma base. Com esses dois compostos em mãos, além do conhecimento do pKa do ácido dessa solução, pode-se facilmente elaborar uma solução tampão. É assim que se produz uma solução tampão em laboratórios, e é assim que a Natureza trabalha para impedir mudanças de pH perigosas ao organismo.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exemplificando, o ser humano possui um pH fisiológico sanguíneo em torno de 7.2 a 7.4. Se não existissem tampões naturais, e esse pH baixasse para 6.8, o indivíduo certamente iria a óbíto.</div>
+<div id="fig-tabela.pka" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tabela.pka-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tabela.pka.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tabela.pka-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.1: Valores de pKa de alguns ácidos fisiológicos
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="detalhes" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="detalhes"><span class="header-section-number">3.2</span> Detalhes</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Em poucas palavras, o pH mede a acidez de uma solução, o pKa mede a força de ionização de ácidos fracos, o <em>pI</em> determina o pH em que um íon possui carga nula, e a solução tampão especifica uma mistura de um ácido com um sal capaz de resistir à variação de pH em solução. O pH é representado pela função logaritma da concentração hidrogeniônica em solução ( -log [H+] ou 1/log [H+] ).</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assim, uma solução de 1M de HCl tem pH 1, o suco gástrico tem pH 1,5, o vinagre e o refrigerante pH 3, a cerveja e o vinho tinto pH 4, a água do mar e a clara de ovo pH 8, a amônia doméstica pH 12, o alvejante pH 13, e uma solução de 1M de NaOH, pH 14. Em equilíbrio, soluções ácidos/bases fracos se dissociam parcialmente, podendo ser representados pela equação de Arrhenius:</div>
+<p><span class="math display">\[
+HA &lt;---&gt; H^+ + A^-
+\]</span> <span class="math display">\[
+Ka = \frac{[H^+] [A^-]}{[HA]},~com~pKa = - log~Ka
+\]</span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, ácidos/bases fracos podem ter sua “força” de dissociação indexada pelo valor da constante de ionização ou dissociação Ka, que informa “quantos dissociam” e “quão fracos eles são”. Normalmente, a dissociação de um ácido/base fraca tende a ser de 1 para cada 102 - 1013 íons H+ / OH- liberados em solução. Com ácidos/bases fracos é possível se elaborar sistemas tampão, soluções compostas por ácidos e base conjugadas, e que atuam na manutenção do pH. Esta manutenção é vital em todo processo celular, para a interação entre macromoléculas, e para a atividade do arcabouço enzimático.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No plasma sanguíneo, variações mínimas além da faixa de pH fisiológico de 7,3-7,4 podem resultar em paralisação de sistemas enzimáticos com danos celulares irreparáveis, levando à morte em casos extremos (cetoacidose diabética, hiperamonemia adquirida), quando não houver mecanismos de compensação para essas variações. São vários os compartimentos de pH existentes e atividade protéica/enzimática correspondentes. Assim, pepsina estomacal atua sob um pH ótimo de 2, tripsina pancreática em pH 7, e fosfatase alcalina em pH 8. Um sistema tampão funciona como um reservatório de ácidos com bases conjugadas em concentrações aproximadamente iguais, que neutralizam limitadamente a adição de um álcali ou de um ácido à solução.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quando a solução tampão possui 50% de ácido e 50% de base conjugada, pode-se afirmar que ela está com o seu reservatório completo, no que tange à neutralização de pequenas quantidades de base ou de ácido adicionadas a ela, respectivamente. Nesta situação, o pH da solução tampão tem valor igual ao pKa do par conjugado, e solução encontra-se com o seu potencial tamponante máximo. Na prática, isto significa dizer que a adição de ácido ou base à solução resiste a uma variação de até duas unidades de pH. Esse reservatório também é garantido pela capacidade de dissociação do ácido/base fraca, e pela dissociação da água. Pela equação de Arrhenius, a dissociação desta última pode ser representada por:</div>
+<p><span class="math display">\[
+H_2O &lt;----&gt; H^+ + OH^-
+\]</span></p>
+<p><span class="math display">\[
+,~K_{H2O}=[H^+][OH^-]
+\]</span></p>
+<p>Levando-se em conta que [H2O] é de 55,5M, e que <span class="math inline">\(K_{H2O}\)</span> é de 1,8x10<span class="math inline">\(^{-16}\)</span> M (medidas de condutividade elétrica), então o produto “[H+] [OH-]” é de 9,99x10<span class="math inline">\(^{-15}\)</span> M², ou 1x10<span class="math inline">\(^{-14}\)</span> M². Assim, quando [H+] e [OH-] forem equivalentes em solução (água), então [H+] será de 1x10<span class="math inline">\(^{-7}\)</span> M, e o pH será 7 (solução neutra a 25<span class="math inline">\(^{o}\)</span> C). O produto “[H+] [OH-]” é também denominado <em>Kw</em> (“water”).</p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A expressão que relaciona o pH ótimo de tamponamento de uma solução com o pKa do par ácido/base conjugado da mesma é a <strong>equação de Henderson-Hasselbach</strong>:</div>
+<p><span class="math display">\[
+pH=pKa+log\frac{aceptor~de~H^+}{doador~de~H^+}
+\]</span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;É possível elaborar uma solução tampão em laboratório por três vias distintas:</div>
+<ol type="1">
+<li>Aplicando-se a relação de Henderson-Hasselbach com pKa conhecido para o par ácido/base conjugado;</li>
+<li>Diluindo-se a mesma quantidade (concentração molar) de ácido e de base conjugada em solução aquosa;</li>
+<li>Preparando a solução ácida, e ir adicionando a base conjugada até o pH desejado (desde que este possua valor próximo do pKa do par).</li>
+</ol>
+<div id="fig-tampaoBarras" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tampaoBarras-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tampaoBarras.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tampaoBarras-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.2: Representação esquemática do mecanismo de soluções tampão. Em A, a adição de ácido H+ pode ser neutralizada pelo reservatório de álcali, A-. Porém, a adição de álcali altera o pH da solução, pois o reservatório de ácido dissociável HA, capaz de neutralizar esta ação pela formação de água, encontra-se reduzido. O oposto ocorre na situação C, onde a adição de álcali é eficientemente neutralizada, mas a de ácido não. A situação B demonstra o funcionamento de uma solução tampão, onde adições de ácido ou álcali podem ser neutralizadas pelos reservatórios de alta capacidade de, respectivamente, A- e HA.
+</figcaption>
+</figure>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Não obstante o preparo de cunho prático, a 1a. forma possui o formalismo adequado.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Os tampões mais importantes no homem são aqueles cujo pKa se aproxima do pH fisiológico, como o bicarbonato (plasmático e extracelular, pKa = 3,8, mas que aumenta para 6,38 em presença de CO2) e o fosfato (intracelular, pKa = 6,86). O tampão bicarbonato age simultaneamente à disponibilidade de dióxido de carbono presente:</div>
+<p><span class="math display">\[
+CO_2 + H_2O &lt;---&gt; H_2CO_3 &lt;---&gt; H+ + HCO_3^-
+\]</span></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assim, como é natural dos tecidos produzirem energia à custa de sua própria acidificação, os tampões fisiológicos encontram-se melhor preparados para combater variações dentro de uma faixa ácida, mais do que alcalina, o que justifica ser o valor de pKa dos mesmos inferior ao neutro. A <span class="quarto-unresolved-ref">?fig-curvaTamp</span> 7 exemplifica graficamente a faixa de tamponamento de um sistema intracelular formado por combinações de fosfato de sódio.</div>
+<p><img src="curvaTamp.png" class="img-fluid" alt="Sistema tampão. Notar que a pequena variação de pH em A ocorre às custas de grande adição de ácido, em B; ou seja, uma solução tampão resiste à variação de pH.">{curvaTamp}</p>
+<section id="ponto-isoelétrico-isoiônico" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="ponto-isoelétrico-isoiônico"><span class="header-section-number">3.2.1</span> Ponto isoelétrico (isoiônico)</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O pI, ou <em>ponto isoelétrico</em> da solução, é aquele representado pelo pH de uma solução na qual o íon (composto, carboidrato, proteína, etc) considerado encontra-se com sua carga líquida nula (soma das cargas positivas e negativas é zero), impedido de mobilidade em um campo elétrico, ou sem interação com a água. Neste ponto, o íon deixa a solução aquosa, precipitando-se.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alternativamente há o conceito de <em>ponto isoiônico</em>, também pI, no qual o valor experimental é obtido por titulação ácido-básica, e não por mobilidade em campo elétrico.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exemplificando, a caseína, principal proteína do leite, precipita em temperatura ambiente quando o pH da solução atinge o seu pI, de valor 4,6.</div>
+</section>
+</section>
+<section id="aplicação." class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="aplicação."><span class="header-section-number">3.3</span> Aplicação.</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mecanismos de hiperventilação (respiração de cachorrinho, liberação de CO2) e hipoventilação (inspiração profunda, retenção de CO2) podem corrigir, dessa forma, pequenas variações de pH. Proteínas desempenham, ainda que fracamente, um papel tamponante, devido à presença da histidina, cujo pKa está próximo do fisiológico, 6,0. Os mecanismos fisiológicos do organismo para a manutenção do equilíbrio ácido-básico incluem os pulmões (modulação do sistema bicarbonato pela variação da pressão de CO2 no centro respiratório, e compensação de variações metabólicas de pH) e os rins (excreção modulada de H+ pelas células tubulares, acompanhada de reabsorção de HCO3- e Na+, e secreção de NH3). A <a href="#fig-disfacbase" class="quarto-xref">Figura&nbsp;<span>3.3</span></a> exemplifica algumas disfunções do equilíbrio ácido-base.</div>
+<div id="fig-disfacbase" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-disfacbase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="disfacbase.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-disfacbase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.3: Mecanismos para o surgimento de quadros patológicos baseados no desequilíbrio ácido-básico do organismo.
+</figcaption>
+</figure>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alguns ácidos orgânicos tamponam vacúolos de células vegetais, e a amônia tampona a urina. A disponibilidade de nutrientes para os vegetais é bastante influenciada pelo pH dos solos. Assim, a maior disponibilidade de P para as plantas é assinalada em pH de solos acima de 6, ao passo que para o Fe, acima de 7. Mo e Se estão melhor disponíveis em pH alcalino. Dentre os elementos traço, o Mn é o mais afetado pela variação de pH dos solos. Processos biológicos como o da nitrificação diminuem muito em pH 6, tornando-se insignificantes em pH 5. O controle do pH dos solos pode ser reallizado pela adição de cal - óxido de cálcio (para corrigir acidez) ou de enxofre (para corrigir alcalinidade).</div>
+<section id="variações-de-ph-entre-os-animais." class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="variações-de-ph-entre-os-animais."><span class="header-section-number">3.3.1</span> Variações de pH entre os animais.</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Existe alguma variação de pH na saliva e suco gástrico de animais. Exemplificando, o suíno e o cavalo possuem um pH salivar de 7,4, enquanto que o bovino pode chegar a 8,3, em decorrência de uma presença significativa de bicarbonato, e em decorrência da atividade da enzima urease de origem bacteriana, a qual quebra a uréia salivar do gado, liberando amônia, de caráter alcalino. Essas variações encontram significância se nos deparamos com as grandes diferenças de volume de saliva produzido ao longo de 24 horas para cada rebanho, representando 5 litros para carneiro, 42 para cavalo e 60 para bovinos. O pH gástrico também varia entre esses animais, atingindo 1,3 em ovinos, e de 2 a 4 em bovinos.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Curiosamente, cavalos podem flutuar o seu pH gástrico entre 1,1 e 7,0. No trato gastrintestinal de aves, o proventrículo faz o papel do estômago, com faixa variando entre 0,5 e 5,5 (média em torno de 2,7), e os demais tecidos, do duodeno ao cólon, entre 4,9 e 8,0 (média em torno de 6,6). De modo geral, carnívoros possuem um pH gástrico mais baixo que herbívoros, o que é causado pelo aumento no teor secretado de HCl, conjuntamente com atividade bacteriana produzindo ácido acético, lático e butírico. Em aves o papel do estômago é realizado pelo pro-ventrículo, produtor de HCl e pepsina, enzima que auxilia na hidrólise de alimento protéico.</div>
+</section>
+<section id="leitões-e-dieta-ácida." class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="leitões-e-dieta-ácida."><span class="header-section-number">3.3.2</span> Leitões e dieta ácida.</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O período de 7 a 14 dias pós-desmame em leitões pode ser acompanhado de alterações digestivas que caracterizam uma imaturidade face à transição do regime alimentar do leite de porca para uma dieta seca e sólida das rações. Neste sentido, a desmama precoce pode resultar em baixa produção de ácido clorídrico gástrico e atividades enzimáticas digestivas, resultando em aproveitamento incompleto das dietas formuladas. Mais ainda, essa adaptação parece estar relacionada à predisposições à malabsorção, possíveis episódios de desidratação, diarréias e infecções entéricas. Vários métodos tem sido propostos para a acidificação de dietas para leitões jovens , incluindo a adição simples de ácidos orgânicos (fumárico e cítrico) e inorgânicos, e a combinação de vários ácidos (Syneracid, 0,35 %) e bactérias lácticas que permitam a acidificação em diferentes sítios do trato gastrointestinal.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maior sucesso tem se verificado com ácidos protegidos, já que a utilização de ácidos nas dietas pode levar a uma queda brusca do pH gástrico nos animais. Os ácidos protegidos são formados por uma cobertura protetora de ácidos graxos que permite a liberação lenta e contínua dos ácidos ao longo do trato digestivo, reduzindo a taxa de absorção e prolongando o processo de acidificação no intestino delgado (Triacid® 300 a 0,3 %).</div>
+</section>
+<section id="aditivos-de-solos-e-ph." class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="aditivos-de-solos-e-ph."><span class="header-section-number">3.3.3</span> Aditivos de solos e pH.</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O controle de pH nos solos é de vital importância para a manutenção da atividade microbiana, cuja otimização entre 6,0 e 6,5 unidades de pH desencadeia os processos de decomposição da matéria orgânica e fixação de nitrogênio, com consequente disponibilidade aumentada de nutrientes. Por outro lado, teores de acidez e alcalinidade indesejáveis para os solos estão intimamente relacionados à solubilidade e disponibilização reduzida de alguns minerais às plantas (vide tabela abaixo).</div>
+<div id="fig-pHminerais" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pHminerais-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pHminerais.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pHminerais-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.4: Exemplos de minerais presentes no solo e sua relação com a atividade microbiana e o crescimento vegetal.
+</figcaption>
+</figure>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como regra geral, os solos brasileiros são considerados ácidos por definição, o que significa possuirem baixo pH, pouco cálcio e magnésio disponíveis à atividade vegetal, excesso de alumínio, manganês e, algumas vezes, ferro. Além disso, esses solos possuem condições desfavoráveis à mineralização microbiana da matéria orgânica, fixação de nitrogênio e adubação em geral, quer nitrogenada, potássica ou fosfatada. Neste sentido a correção de pH dos solos pode ser realizada com um procedimento de <em>calagem</em>, o qual tende a normalizar a acidez daqueles.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A calagem é normalmente realizada com derivados calcários, como o gesso, o gesso agrícola ou fosfogesso (sub-produto da indústria de ácido fosfórico). Esse último possui menor poder de neutralização do que o calcário, porém tende a reduzir a disponibilidade de alumínio tóxico às raízes das plantas. Via de regra, o calcário pode ser melhor aproveitado na correção superficial dos solos, enquanto que o gesso na sub-superficial. Os principais fatores que definem o uso e teores de um ou outro composto de calagem são a água e o tempo. O calcário não se dissolve em solo seco, enquanto que o gesso possui menor exigência para tal.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Embora o calcário presente apresente um efeito residual no solo, a acidez pode retornar como consequência natural de lixiviação pelas chuvas, troca de base por prótons H+ pelas culturas, uso de adubos nitrogenados, e trocas de potássio, alumínio e manganês com o emprego de adubos potássicos.</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -972,10 +1118,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./funcoes.html" class="pagination-link" aria-label="Funções Químicas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Funções Químicas</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./introducao.html" class="pagination-link" aria-label="INTRODUÇÃO">
-        <span class="nav-page-text">INTRODUÇÃO</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sangue.html" class="pagination-link" aria-label="Bioquímica do Sangue">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bioquímica do Sangue</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

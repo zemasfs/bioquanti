@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="José Maurício Schneedorf Ferreira da Silva">
-<meta name="author" content="Kamila Leite Rodrigues">
 
-<title>Bioquímica básica, de gente, de bicho, e de planta</title>
+<title>9&nbsp; Inibição Enzimática – Bioquímica básica, de gente, de bicho, e de planta</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./introducao.html" rel="next">
+<link href="./carboidratos.html" rel="next">
+<link href="./cinetica.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -71,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Prefácio</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./inibicao.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inibição Enzimática</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -110,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prefácio</span></a>
   </div>
 </li>
@@ -172,7 +200,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./inibicao.html" class="sidebar-item-text sidebar-link">
+  <a href="./inibicao.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inibição Enzimática</span></span></a>
   </div>
 </li>
@@ -518,7 +546,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#prefácio" id="toc-prefácio" class="nav-link active" data-scroll-target="#prefácio">Prefácio</a></li>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">9.1</span> Introdução</a></li>
+  <li><a href="#detalhes" id="toc-detalhes" class="nav-link" data-scroll-target="#detalhes"><span class="header-section-number">9.2</span> Detalhes</a>
+  <ul class="collapse">
+  <li><a href="#inibição-pelo-substrato" id="toc-inibição-pelo-substrato" class="nav-link" data-scroll-target="#inibição-pelo-substrato"><span class="header-section-number">9.2.1</span> Inibição pelo substrato</a></li>
+  <li><a href="#modelos-de-inibição-enzimática" id="toc-modelos-de-inibição-enzimática" class="nav-link" data-scroll-target="#modelos-de-inibição-enzimática"><span class="header-section-number">9.2.2</span> Modelos de inibição enzimática</a></li>
+  <li><a href="#curva-de-michaelis-mentem-para-modelos-de-inibição-enzimática" id="toc-curva-de-michaelis-mentem-para-modelos-de-inibição-enzimática" class="nav-link" data-scroll-target="#curva-de-michaelis-mentem-para-modelos-de-inibição-enzimática"><span class="header-section-number">9.2.3</span> Curva de Michaelis-Mentem para modelos de inibição enzimática</a></li>
+  <li><a href="#cinética-de-estado-pré-estacionário" id="toc-cinética-de-estado-pré-estacionário" class="nav-link" data-scroll-target="#cinética-de-estado-pré-estacionário"><span class="header-section-number">9.2.4</span> Cinética de estado pré-estacionário</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -527,32 +562,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Bioquímica básica, de gente, de bicho, e de planta</h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Inibição Enzimática</span></h1>
 </div>
 
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Autores</div>
-  <div class="quarto-title-meta-heading">Afiliação</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author">José Maurício Schneedorf Ferreira da Silva <a href="mailto:jose.dasilva@unifal-mg.edu.br" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-2031-6315" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Universidade Federal de Alfenas, UNIFAL-MG
-          </p>
-      </div>
-    <div class="quarto-title-meta-contents">
-    <p class="author">Kamila Leite Rodrigues </p>
-  </div>
-  <div class="quarto-title-meta-contents">
-      </div>
-  </div>
 
 <div class="quarto-title-meta">
 
-      
+    
   
     
   </div>
@@ -562,12 +579,150 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="prefácio" class="level1 unnumbered">
-<h1 class="unnumbered">Prefácio</h1>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Este material pretende contribuir ao aprendizado em conteúdos de <em>Bioquímica</em> usualmente encontrados em ementas da disciplina, bem como traçar um panorama esboçado de suas inúmeras aplicações nas arestas humana, animal, vegetal e microbiana que se encontram alicerçadas em suas bases.</div>
-<!-- |       Diferente dos demais disponibilizados no [Bioquanti](https://bioquanti.netlify.app/){target="_blank"}, é oferecido para leitura e estudo, e não abrange trechos de códigos para uso nos programas tratados no *website* (*Jmol*, *R*, ou *Sisma*). -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+<section id="introdução" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">9.1</span> Introdução</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A atividade enzimática pode ser reduzida na presença de vários efetores, entre moléculas endógenas ou exógenas do metabolismo celular, incluindo o próprio substrato. Genericamente a <em>inibição enzimática</em> classifica-se como <em>irreversível</em> quando a ativide decai pela ligação covalente de um inibidor, ou <em>reversível</em>, quando há um equilíbrio de associação/dissociação com a macromolécula. A seguir serão ilustradas inibições reversíveis.</div>
+</section>
+<section id="detalhes" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="detalhes"><span class="header-section-number">9.2</span> Detalhes</h2>
+<section id="inibição-pelo-substrato" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="inibição-pelo-substrato"><span class="header-section-number">9.2.1</span> Inibição pelo substrato</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uma inibição enzimática comum ao metabolismo é a protagonizada pelo próprio substrato em excesso no meio, sendo definida por:</div>
+<span class="math display">\[\begin{equation}
+v=\frac{Vm*S}{S(1+\frac{S}{Ks})+Km}
+\end{equation}\]</span>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o gráfico resultante de uma inibição por excesso de substrato pode ser reproduzido por:</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="inibicao_files/figure-html/figInibS-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Comportamento cinético de uma enzima inibida por excesso de substrato.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Percebe-se pela figura que a atividade da enzima alcança um limite sendo reduzida com o aumento do teor de substrato.</div>
+</section>
+<section id="modelos-de-inibição-enzimática" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="modelos-de-inibição-enzimática"><span class="header-section-number">9.2.2</span> Modelos de inibição enzimática</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A inibição de enzimas por moléculas que não o próprio substrato pode ser representada por um diagrama no qual o efetor altera um dos elementos representados no diagrama abaixo.</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="inibDiag.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>Diagrama representativo dos tipos de inibição enzimática. kcat: constante catalítica; Ki: constante de equilíbrio de dissociação do inibidor, com índices para inibição competitiva (Ki), incompetitiva (Kiu) e não competitiva (Kic e Kiu).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nesse caso, pode-se definir os três tipos principais de inibição enzimática reversível como <em>inibição competitiva, incompetitiva e não competitiva (pura ou mista)</em>. Em síntese, a <em>inibição competitiva</em> dá-se quando o inibidor complexa-se ao sítio ativo da enzima; a <em>inibição incompetitiva</em>, quando o inibidor interage com o complexo enzima-substrato; e a <em>inibição não competitiva</em>, quando o inibidor liga-se em outro local que não o sítio ativo da enzima, podendo ainda ser <em>pura</em> (Kiu = Kic) ou <em>mista</em> (Kiu &gt; ou &lt; Kic).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Um modelo matemático que abrange esses três tipos de inibição enzimática é descrito na equação abaixo:</div>
+<span class="math display">\[\begin{equation}
+v=\frac{Vm*S}{Km(1+\frac{I}{Kic})+S(1+\frac{I}{Kiu})}
+\end{equation}\]</span>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, a equação acima reduz-se em seus termos multiplicadores no denominador, em função do tipo de inibição enzimática presente, até o modelo primitivo de Michaelis-Mentem, quando na ausência do inibidor.<br>
+</div>
+</section>
+<section id="curva-de-michaelis-mentem-para-modelos-de-inibição-enzimática" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="curva-de-michaelis-mentem-para-modelos-de-inibição-enzimática"><span class="header-section-number">9.2.3</span> Curva de Michaelis-Mentem para modelos de inibição enzimática</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As curvas diretas de cinética enzimática sofrem alterações de perfil em função dos três tipos principais de inibição enzimática reversível, tais como ilustrado abaixo</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="inibicao_files/figure-html/inibMM-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Curva de Michaelis-Mentem na presença de inibidores de comportamento clássico.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Veja que para o <em>modelo competitivo</em> a velocidade limite <em>Vm</em> da reação tende a ser alcançada, já que a ocupação do sítio ativo da enzima é mutualmente exclusiva entre substrato e inibidor, privilegiando o primeiro quando em alto teor.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por outro lado, o valor de <em>Vm</em> não é tangível para os demais modelos de inibição, já que o inibidor se liga em outro sítio na enzima (<em>não competitivo</em>) ou ao próprio substrato, e esse conjunto à enzima (<em>incompetitivo</em>).</div>
+<section id="diagnóstico-de-modelos-de-inibição-enzimática-por-lineweaver-burk" class="level4" data-number="9.2.3.1">
+<h4 data-number="9.2.3.1" class="anchored" data-anchor-id="diagnóstico-de-modelos-de-inibição-enzimática-por-lineweaver-burk"><span class="header-section-number">9.2.3.1</span> Diagnóstico de modelos de inibição enzimática por Lineweaver-Burk</h4>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As transformações lineares da equação de Michaelis-Mentem são muito úteis no diagnóstico visual de modelos de inibição. Nesse sentido, o emprego da linearização por <em>duplos-recíprocos</em> para esses modelos resutará nas equações de inibição que seguem:</div>
+<span class="math display">\[\begin{equation}
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km(1+\frac{I}{Kic})}{Vm}*\frac{1}{S} \quad ;\,  competitivo
+\end{equation}\]</span>
+<span class="math display">\[\begin{equation}
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km(1+\frac{I}{Ki})}{Vm}*\frac{1}{S(1+\frac{I}{Ki})} \quad ;\,  puro
+\end{equation}\]</span>
+<span class="math display">\[\begin{equation}
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km(1+\frac{I}{Kic})}{Vm}*\frac{1}{S(1+\frac{I}{Kiu})} \quad ;\,  misto
+\end{equation}\]</span>
+<span class="math display">\[\begin{equation}
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km}{Vm}*\frac{1}{S(1+\frac{I}{Kiu})} \quad ;\,  incompetitivo
+\end{equation}\]</span>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Observe que os termos multiplicadores inseridos em <em>S</em> e <em>Km</em> na equação de duplo-recíproco apenas alteram seu formalismo apresentado equação de <em>Lineweaver-Burk</em>. O diagnóstico visual para os modelos é representado a seguir.</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="inibicao_files/figure-html/inibLB-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Diagnóstico de modelos de inibição enzimática por Lineweaver-Burk.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ki-ic_50" class="level4" data-number="9.2.3.2">
+<h4 data-number="9.2.3.2" class="anchored" data-anchor-id="ki-ic_50"><span class="header-section-number">9.2.3.2</span> Ki &amp; IC<span class="math inline">\(_{50}\)</span></h4>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A concentração inibitória a 50% do teor de inibidor, definida como <em>IC<span class="math inline">\(_{50}\)</span></em>, pode ser determinada empiricamente sem o conhecimento dos parâmetros de catálise enzimática envolvidos.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para isso, basta se obter um valor de inibição relativa num ensaio a concentração fixa de <em>S</em>, variando-se o teor de inibidor. De fato, análogos ao <em>IC<span class="math inline">\(_{50}\)</span></em> existem em ampla gama nas <em>Ciências Naturais</em>, não envolvendo necessariamente qualquer informação cinética ou termodinâmica dos compostos envolvidos, mas tão somente a informação empírica do resultado. Exemplificando, os parâmetros <em>DE<span class="math inline">\(_{50}\)</span></em> (dose efetiva) ou <em>DL<span class="math inline">\(_{50}\)</span></em> (dose letal), e mesmo projeções de <em>X<span class="math inline">\(_{50}\)</span></em>, tal como <em>Tm</em> (temperatura de desnaturação a 50%), e o valor de <em>pKa</em> em tampões (pH em que as espécies encontram-se 50% ionizadas/protonadas em solução).</div>
+<div class="line-block">&nbsp;&nbsp;No entanto, existe uma relação útil entre a constante de equilíbrio de dissociação do inibidor <em>Ki</em> e o valor de <em>IC<span class="math inline">\(_{50}\)</span></em> que permite sua permuta, desde que conhecido o modelo de inibição. Generalizando para os modelos de inibição, pode-se definir uma equação geral pra <em>relação de Cheng-Prusoff</em> como:</div>
+<span class="math display">\[\begin{equation}
+IC_{50} = \frac{(1+\frac{S}{Km})}{(\frac{1}{Kic})+(\frac{1}{Km*Kiu})}
+\end{equation}\]</span>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exemplificando, para um <em>modelo competitivo</em> de inibição, onde <em>Kiu</em> é nulo:</div>
+<span class="math display">\[\begin{equation}
+IC_{50} = Kic(1+\frac{S}{Km})
+\end{equation}\]</span>
+</section>
+</section>
+<section id="cinética-de-estado-pré-estacionário" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="cinética-de-estado-pré-estacionário"><span class="header-section-number">9.2.4</span> Cinética de estado pré-estacionário</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Existem basicamente três tipos de comportamentos cinéticos para as enzimas: comportamento de <em>Henry-Michaelis-Mentem-Briggs-Haldane</em>, sucintamente denominado por <em>michaeliano</em> ou de <em>estado estacionário (steady-state)</em>, comportamento de <em>fase lag</em> (quando o substrato leva algum tempo para ser convertido em produto), e comportamento de <em>burst</em>, <em>transiente</em>, ou de <em>estado pré-estacionário</em> (quando uma fase com rápida liberação de produto precede o estado estacionário).</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Algumas enzimas trabalham seguindo a cinética de <em>burst</em>, entre as quais algumas nucleosidades e glicosidases, e dehalogenases. A cinética de estado pré-estacionário segue um formalismo um pouco distinto, e que depende do quantitativo de etapas reacionais. Exemplificando abaixo para uma reação de 3 etapas:</div>
+<span class="math display">\[\begin{equation}
+E+S \begin{array}{c}
+_{k1}\\
+\rightleftharpoons\\
+^{km1} \end{array}
+E*S
+\begin{array}{c}
+_{k2}\\
+\rightleftharpoons\\
+^{km2} \end{array}
+E*P
+\begin{array}{c}
+_{k3}\\
+\rightarrow \\
+  ^{}\end{array}
+E+P
+\end{equation}\]</span>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="inibicao_files/figure-html/figBurst-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Formação de produto num modelo cinético de estado pré-estacionário.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -972,10 +1127,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./cinetica.html" class="pagination-link" aria-label="Cinética Enzimática">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Cinética Enzimática</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./introducao.html" class="pagination-link" aria-label="INTRODUÇÃO">
-        <span class="nav-page-text">INTRODUÇÃO</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./carboidratos.html" class="pagination-link" aria-label="Carboidratos">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Carboidratos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
