@@ -1,0 +1,144 @@
+---
+title: "Aminoacids"
+---
+
+## Structure
+
+| There are hundreds of amino acids, mainly found in soils and microorganisms, although only 20 of them can participate in the genetic code for translation into proteins.
+| In order to start observing some of these amino acids, download\index{loading} the structure of *Glycine* from a file saved on your hard drive as "gly.png" or by *File, Get Mol* (and typing *gly* afterwards). Note the amino and carboxylate groups in the **CPK stain**. Identify the structure of the amino acid:
+
+What is the **side chain** of Gly?
+
+And the **carbon skeleton**?
+
+| Note that glycine has a formal color code (*CPK*, Corey, Pauling, Koltun) for carbon (gray), nitrogen (blue), phosphorus or sulfur (yellow), and hydrogen (white). Several polymeric structures, however, are loaded without the presence of the *hydrogen atom*. For example, load the structure of the plant protein *crambine*, but this time using the **Jmol* Console** (*File,Console*):
+
+```{r, eval=FALSE}
+load=1crn
+```
+
+| Note that the *hydrogen* atoms are not displayed in the structure. To make them appear, you need to configure *Jmol* through the **Console** window:
+
+```{r, eval=FALSE}
+set pdbAddHydrogens
+```
+
+| The message *pdbAddHydrogens = true* should appear. You will now be able to view the hydrogen atoms of crambine by loading it again.
+
+| For longer command sequences, you can use the **Jmol* Editor** instead of the **Console**. The *Editor* allows you to insert commands line by line, with explanatory comments for each one. To do this, simply click on *Editor* in the *Console* itself. Once the window is open, you can compose a sequence of commands or paste a previously created one.
+| As an example, the following code snippet loads the amino acid *Glutamate*, calculates its *partial charge*, and renders it in rods showing the values ​​of the charges. To "run" it, simply copy and paste into the open *Editor*:
+
+```{r, eval=FALSE}
+# Script for observations of the amino acid Glutamate:
+
+load $glu # micromolecule loading (note that the equal sign refers to macromolecules with PDB attributes, and not to micromolecules - $; and also note that an amino acid can be loaded by typing its 3-letter abbreviation)
+
+calculate partialcharge # partial charge
+
+wireframe only # exclusive rendering of rods
+
+label %P
+# labeling of partial charges on atoms
+```
+
+| As already mentioned, it is not necessary to have *Jmol* installed or the *Jmol* directory and its executable in *Java* on your computer. The program can be accessed through *applets* found on several websites, such as:
+
+The *links* below lead to some websites that allow remote access to *JSmol*:
+
+1. [St. Olaf College - Jmol & JSmol (direct applet for JSmol)](https://chemapps.stolaf.edu/jmol/jsmol/simple.htm){target="_blank"} - interface with some commands in buttons.
+
+2. [St. Olaf College 2](https://chemapps.stolaf.edu/jmol/jsmol/jsmol.htm?_USE=HTML5){target="_blank"} - more elaborate interface, with several examples, buttons and commands by *hyperlink*.
+
+3. [IZA-SC - Comissão de Estruturas de Valencia (ES)](http://www.iza-structure.org/IZA-SC/jsmol/supersimple.htm){target="_blank"} - very simplified interface.
+
+4. [First Glance in Jmol - Access via the Proteopedia portal](https://proteopedia.org/wiki/fgij/)
+
+| To "run" the previous script, for example,
+
+1. Go to the [St. Olaf College - Jmol & JSmol)](https://chemapps.stolaf.edu/jmol/jsmol/simple.htm) website;
+
+2. Start the Console (bottom left corner of the screen);
+
+3. Copy the *script* above and paste it into the *Console*.
+
+| Alternatively, instead of copying/pasting a piece of code, *Jmol* makes it possible to load the *script*, as long as it is previously saved with the *spt* attribute (for *script*). In fact, the *script* can be saved in any simple text editor, keeping this *spt* attribute.
+
+| The image below illustrates the result of the *script* for glutamate.
+
+::: {#fig-glu}
+![](figures/glu.jpg)
+
+Image generated in **Jmol** from *script* for partial charges of glutamic acid.
+:::
+
+To export images created in *Jmol*, simply follow the *Menu*, or the command below typed in the *Console* of the *standalone* program or through the *JSmol* *link*:
+
+```{r, eval=FALSE}
+write glutamato_cargas.jpg # png and pdf attributes are also possible
+```
+
+## JSmol - An Applet for Displaying Jmol in Internet Browsers
+
+| Among the advantages of using *Jmol* to view molecular models is the aforementioned possibility of using the program over the Internet, without the need for local installation (PC). This flexibility is guaranteed by the help of an *applet* developed in HTML5, **JSmol**, which compiles *Jmol* using *JavaScript*, instead of *JAVA*. This way there is no need for *Jmol* or *JAVA* to be locally installed.
+
+| To facilitate the study of molecular models in this material, these subsequent chapters will include a link called **JSmol** to access a new display tab integrated into the *applet*, showing a *water* molecule and the *Console* for scripting, as follows:
+
+<!-- Script for rendering new tab with water and Console -->
+
+[![](jsmol.png){width="20%"}](https://chemapps.stolaf.edu/jmol/jmol.php?model=water&script=Console)
+
+| Alternatively, molecular models will also be made available as a *JSmol* applet on the same content page when convenient, such as the **glutamate** molecule:
+
+```{=html}
+<script type="text/javascript"
+src="https://chemapps.stolaf.edu/jmol/jmol.php?model=glutamate&inline&width=300">
+</script>
+```
+| This way, simply right-click on any area of ​​the open "JSmol" window and select any item from the *Menu* or use the *Console*, in the same way as for the *standalone* program installed locally on the PC.
+
+| Other amino acid structures can list the various groups (nonpolar aliphatic and aromatic, as well as neutral, basic and acidic polar groups), as follows:
+
+```{=html}
+<script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jmol.php?model=lys&link=Lys&script=Console"></script>
+
+<script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jmol.php?model=trp&link=Trp&script=Console"></script>
+
+<script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jmol.php?model=cys&link=Cys&script=Console"></script>
+```
+| Other amino acids can be loaded *online* in *File, Get Mol* in the installed application, or through the *Console*, in this case:
+
+```{r, eval=FALSE}
+load $amino acid name or its 3-letter abbreviation
+```
+
+| There are several websites for studying biomolecules with the help of *JSmol*, including amino acids. For example, the [*Interactive Molecules Section*](https://www.ufrgs.br/bioquimica/#Moleculas) developed by the Department of Veterinary Clinical Pathology at UFRGS.
+
+## Metabolic Derivatives
+
+| Using the local or internet Jmol window (*JSmol*), load the file [gaba](https://chemapps.stolaf.edu/jmol/jmol.php?model=gaba&script=Console){target="_blank"} from the *Menu* or *Console* (*load \$gaba*)\index{GABA} and position it so that it looks similar to what was presented in the *Jmol* session containing the *Glu* model; do you see similarities? It is a metabolic derivative of the amino acid, of utmost importance in neurological control, called $\gamma$-aminobutyric acid, GABA, a neurodepressant of the nervous system.
+
+| Now load the amino acid [Pro](https://chemapps.stolaf.edu/jmol/jmol.php?model=pro&script=Console){target="_blank"}. Where is the *amino group* of the carbon skeleton? By rotating the structure, you can see that this group belongs to the side chain, being inserted in a *pyrrolidine ring*.
+
+| If you use the arrows to recover the previous partial charge command, you will also see that it is an amino acid with a side chain close to neutrality, thus being classified as *neutral polar* in some books.
+
+### Other Examples (structure and derivatives)
+
+| Now load [His](https://chemapps.stolaf.edu/jmol/jmol.php?model=his&script=Console){target="_blank"}. Note that, like Pro, His also has a ring, but this is only in the side chain (*imidazole ring*). To see it better, change the background:
+
+```{r, eval=FALSE}
+background lightyellow
+```
+
+| In principle, you would risk saying that this is a negatively charged amino acid, based on the values ​​presented. However, these values ​​refer to the atom, in this case O and N. On the contrary, while O does not participate in the side chain, but rather in the carbon skeleton, negatively charged N acts as a nucleophile, attracting H and forming an amine. This amine can exhibit a neutral or positive charge, depending on the pH in which it is inserted, and according to its pKa value, in this case, 6.0. Thus, at an acidic pH, His is strongly protonated in N, characterizing the amino acid as basic (positive). At physiological pH, however, its content is distributed in neutral and basic forms. As a whole, it is characterized as a basic amino acid.
+
+| Histidine has a derived metabolite that is very important in the homeostasis of inflammation. Load [histamine](https://chemapps.stolaf.edu/jmol/jmol.php?model=histamine&script=Console){target="_blank"}\index{histamine} and compare it to its precursor.
+
+Now load [Trp](https://chemapps.stolaf.edu/jmol/jmol.php?model=trp&script=Console){target="_blank"}. It also has a ring, *indole*, which is strongly aromatic (see the double bonds) and which gives this characteristic to the amino acid. Trp has a well-known metabolic derivative, [serotonin](https://chemapps.stolaf.edu/jmol/jmol.php?model=serotonin&script=Console){target="_blank"}\index{serotonin}. Serotonin is therefore a metabolic derivative of an amino acid, a chemical mediator of body relaxation, therefore linked to the administration of so-called serotonergics against anxiety.
+
+| Now load [Cys](https://chemapps.stolaf.edu/jmol/jmol.php?model=cys&script=Console){target="_blank"}. Note that there is a sulfur atom in its side chain. Click on the yellow sphere and see what appears in the *Console.* The first two numbers refer to the number of the atom in the structure, and the last three to its XYZ spatial coordinates of the atom. The *thiol group* of the Cys side chain gives it a strongly reactive character, capable of forming covalent bonds or bonds of similar magnitude with halogens (*iodoacetate*, for example), another thiol group (forming *disulfides* in proteins) and even *gold* (used in nanomaterials research and surface functionalization). Cys has a side chain pKa value of 8.3, although in proteins it can range from 5 to 10.
+
+| For another metabolic derivative, load [Phe](https://chemapps.stolaf.edu/jmol/jmol.php?model=phe&script=Console){target="_blank"}. Note that it can also be classified as an aromatic amino acid (benzene). Also see [Tyr](https://chemapps.stolaf.edu/jmol/jmol.php?model=tyr&script=Console){target="_blank"} and note the difference with Phe. It is no coincidence that Phe is a precursor of Tyr in metabolism, the former being an \index{essential amino acid}*essential amino acid* (it needs to be ingested) for mammals, and Tyr is not. Also as an aromatic, the phenolic ring of Tyr has a pKa, although far from the physiological one, with a value of 10.4. There are several important metabolic derivatives of Tyr, one of which is the main thyroid hormone, thyroxine.
+
+To view it, load [thyroxine](https://chemapps.stolaf.edu/jmol/jmol.php?model=thyroxin&script=Console){target="_blank"}\index{thyroxine} and view its structure. Click on the purple sphere and see that it is an iodine atom in the *Console.* Since there are four iodine atoms, the structure is also called *tetraiodothyronine* (or *T4* in clinical jargon).
+
+| Well, that's it for now. This chapter is not intended to cover the characteristics of all 20 protein amino acids, which would be somewhat boring, but rather to allow familiarization with the subject, as well as with the use of *Jmol* itself. Therefore, it is suggested that the student download and study, with the help of a textbook or the internet, the other amino acid structures, evaluate their characteristics and reactivity of the side chains, as well as important metabolic derivatives.

@@ -1,0 +1,653 @@
+---
+title: "Ciências Humanas"
+number-sections: true
+toc: true
+lang: pt
+class: fundo-basico
+---
+
+<!-- ############# ÁREA E POPULAÇÃO BRASILEIRA ################ --->
+
+<div class="hum-fundo">  <!--modifica para cada área-->
+
+## Relação de área e população em municípios brasileiros (EM13MAT405, EM13MAT407, EM13CHS101, EM13CHS104, EM13CNT301)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+url <- "https://raw.githubusercontent.com/turicas/rows/refs/heads/develop/examples/data/brazilian-cities.csv" # define o link para os dados
+dados <- read.csv(url)  # lê o arquivo dos dados
+
+library(plotly)
+plot_ly(dados, x = ~area, y = ~inhabitants,
+        type = "scatter", 
+        mode = 'markers',
+        marker = list(line = list(width = 1)),
+        text = ~paste("Cidade: ", city, "<br>Estado: ", state),  # Texto no hover
+        hoverinfo = 'text',           # Mostrar apenas o texto definido
+        frame = ~state)%>%
+  layout(
+    title = "Distribuição de área e população em cidades brasileiras",
+    xaxis = list(title = "Estados", type = "log"),
+    yaxis = list(title = "População", type = "log"),
+    showlegend = FALSE
+  ) %>%
+  animation_opts(
+    frame = 500,           # Velocidade da animação
+    transition = 0,
+    redraw = FALSE
+  )
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+url <- "https://raw.githubusercontent.com/turicas/rows/refs/heads/develop/examples/data/brazilian-cities.csv" # define o link para os dados
+dados <- read.csv(url)  # lê o arquivo dos dados
+
+library(plotly)
+plot_ly(dados, x = ~area, y = ~inhabitants,
+        type = "scatter", 
+        mode = 'markers',
+        marker = list(line = list(width = 1)),
+        text = ~paste("Cidade: ", city, "<br>Estado: ", state),  # Texto no hover
+        hoverinfo = 'text',           # Mostrar apenas o texto definido
+        frame = ~state)%>%
+  layout(
+    title = "Distribuição de área e população em cidades brasileiras",
+    xaxis = list(title = "Estados", type = "log"),
+    yaxis = list(title = "População", type = "log"),
+    showlegend = FALSE
+  ) %>%
+  animation_opts(
+    frame = 500,           # Velocidade da animação
+    transition = 0,
+    redraw = FALSE
+  )
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="hum-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+layout(
+    title = "Distribuição de Área e População em Cidades Brasileiras",
+    xaxis = list(title = "Área (log)", type = "log"),  # Escala logarítmica
+    yaxis = list(title = "População (log)", type = "log"),
+    showlegend = FALSE
+  ) %>%
+
+```
+
+</div>
+
+\
+
+<!-- ############# CONSUMO DE ÁLCOOL - MAPA ################ --->
+
+<div class="hum-fundo">  <!--modifica para cada área-->
+
+## Consumo populacional de álcool em 2010 (EM13CHS301, EM13CNT205)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Exemplo de dataframe com valores fictícios
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/refs/heads/master/2010_alcohol_consumption_by_country.csv")
+
+# Criando o mapa choropleth com a escala de cores ajustada
+plot_ly(
+  data = df,
+  locations = ~location,
+  locationmode = "country names",
+  z = ~alcohol, # Variável que determina as cores
+  type = "choropleth",
+  colorscale = "Viridis") # outras escalas: # outras escalas: RdBu, Inferno, Blues, Cividis, Greens, ...
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Exemplo de dataframe com valores fictícios
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/refs/heads/master/2010_alcohol_consumption_by_country.csv")
+
+# Criando o mapa choropleth com a escala de cores ajustada
+plot_ly(
+  data = df,
+  locations = ~location,
+  locationmode = "country names",
+  z = ~alcohol, # Variável que determina as cores
+  type = "choropleth",
+  colorscale = "Viridis") # outras escalas: # outras escalas: RdBu, Inferno, Blues, Cividis, Greens, ...
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="hum-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+# Alteração de cor
+colorscale = "Blues"
+
+```
+
+</div>
+
+\
+
+<!-- ############# EMISSÃO DE CO2 ################ --->
+
+<div class="hum-fundo">  <!--modifica para cada área-->
+
+## Efeito estufa e emissão de CO$_{2}$ no Brasil (EM13CN09, EM13CHS104)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+ library(plotly)
+  library(magrittr)  # bibliotecas necessárias
+  
+  # 1) Obtendo os dados da internet
+  
+  url <- "https://raw.githubusercontent.com/datasets/global-temp/refs/heads/main/data/annual.csv" # define o link para os dados
+  dados <- read.csv(url)  # lê o arquivo dos dados
+  
+  # 2) Construindo o gráfico com animação 
+  
+  plot_ly(dados, x = ~Year, y = ~Mean,
+          type = "bar", 
+          marker = list(line = list(width = 10)),
+          frame = ~Year) %>%
+    animation_opts(
+      frame = 150,           # Velocidade da animação
+      transition = 0,
+      redraw = TRUE
+    ) %>%
+    layout(
+      title = "Flutuação da temperatura global",
+      xaxis = list(title = "Anos"),
+      yaxis = list(title = "Diferença de temperatura, C"))
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+ library(plotly)
+  library(magrittr)  # bibliotecas necessárias
+  
+  # 1) Obtendo os dados da internet
+  
+  url <- "https://raw.githubusercontent.com/datasets/global-temp/refs/heads/main/data/annual.csv" # define o link para os dados
+  dados <- read.csv(url)  # lê o arquivo dos dados
+  
+  # 2) Construindo o gráfico com animação 
+  
+  plot_ly(dados, x = ~Year, y = ~Mean,
+          type = "bar", 
+          marker = list(line = list(width = 10)),
+          frame = ~Year) %>%
+    animation_opts(
+      frame = 150,           # Velocidade da animação
+      transition = 0,
+      redraw = TRUE
+    ) %>%
+    layout(
+      title = "Flutuação da temperatura global",
+      xaxis = list(title = "Anos"),
+      yaxis = list(title = "Diferença de temperatura, C"))
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="hum-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+frame = 100,  # Velocidade da animação ajustada
+
+```
+
+</div>
+
+\
+
+
+<!-- ####### PRODUÇÃO DE ÓLEOS - MAPA ########## --->
+
+<div class="hum-fundo">  <!--modifica para cada área-->
+
+## Produção global de óleos em 2014 (em teraWatts) 
+
+|       Obs: Petróleo bruto, óleo de xisto, areias betuminosas, condensados, e líquidos de gás natural- etano, GLP e nafta separados da produção de gás natural.
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Exemplo de dataframe com valores fictícios
+df <- read.csv("https://raw.githubusercontent.com/owid/owid-datasets/refs/heads/master/datasets/Oil%20production%20-%20Etemad%20%26%20Luciana/Oil%20production%20-%20Etemad%20%26%20Luciana.csv")
+
+# Renomeando as colunas para facilitar interpretação e plotagem
+
+names(df) <- c("País", "Ano", "Produção.TeraWatt")
+
+# Filtrando os dados para o último ano (2014)
+df <- subset(df, Ano == "2014")
+
+# Criando o mapa choropleth com a escala de cores ajustada
+library(plotly)
+plot_ly(
+  data = df,
+  locations = ~País,
+  locationmode = "country names",
+  z = ~Produção.TeraWatt, # Variável que determina as cores
+  type = "choropleth",
+  colorscale = "RdBu") # outras escalas: # outras escalas: Viridis, Inferno, Blues, Cividis, Greens, ...
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="hum-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+library(plotly)
+
+# Exemplo de dataframe com valores fictícios
+df <- read.csv("https://raw.githubusercontent.com/owid/owid-datasets/refs/heads/master/datasets/Oil%20production%20-%20Etemad%20%26%20Luciana/Oil%20production%20-%20Etemad%20%26%20Luciana.csv")
+
+# Renomeando as colunas para facilitar interpretação e plotagem
+
+names(df) <- c("País", "Ano", "Produção.TeraWatt")
+
+# Filtrando os dados para o último ano (2014)
+df <- subset(df, Ano == "2014")
+
+# Criando o mapa choropleth com a escala de cores ajustada
+library(plotly)
+plot_ly(
+  data = df,
+  locations = ~País,
+  locationmode = "country names",
+  z = ~Produção.TeraWatt, # Variável que determina as cores
+  type = "choropleth",
+  colorscale = "RdBu") # outras escalas: # outras escalas: Viridis, Inferno, Blues, Cividis, Greens, ...
+```
+
+</div>
+
+\
+
+<!-- ############# ELEVAÇÃO DA TEMPERATURA DA TERRA ################ --->
+
+<div class="hum-fundo">  <!--modifica para cada área-->
+
+## Aquecimento Global (EM13CN03, EM13CN09, EM13CHS105, EM13CHS205)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+library(magrittr)  # bibliotecas necessárias
+
+# 1) Obtendo os dados da internet
+
+url <- "https://raw.githubusercontent.com/datasets/global-temp/refs/heads/main/data/annual.csv" # define o link para os dados
+dados <- read.csv(url)  # lê o arquivo dos dados
+
+# 2) Construindo o gráfico com animação 
+
+plot_ly(dados, x = ~Year, y = ~Mean,
+        type = "scatter", 
+        marker = list(line = list(width = 10)),
+        frame = ~Year) %>%
+  animation_opts(
+    frame = 150,           # Velocidade da animação
+    transition = 0,
+    redraw = TRUE
+  ) %>%
+  layout(
+    title = "Flutuação da temperatura global",
+    xaxis = list(title = "Anos"),
+    yaxis = list(title = "Diferença de temperatura, C"))
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+library(magrittr)  # bibliotecas necessárias
+
+# 1) Obtendo os dados da internet
+
+url <- "https://raw.githubusercontent.com/datasets/global-temp/refs/heads/main/data/annual.csv" # define o link para os dados
+dados <- read.csv(url)  # lê o arquivo dos dados
+
+# 2) Construindo o gráfico com animação 
+
+plot_ly(dados, x = ~Year, y = ~Mean,
+        type = "bar", 
+        marker = list(line = list(width = 10)),
+        frame = ~Year) %>%
+  animation_opts(
+    frame = 150,           # Velocidade da animação
+    transition = 0,
+    redraw = TRUE
+  ) %>%
+  layout(
+    title = "Flutuação da temperatura global",
+    xaxis = list(title = "Anos"),
+    yaxis = list(title = "Diferença de temperatura, C"))
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="hum-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+plot_ly(dados, x = ~Year, y = ~Mean, type = "bar", 
+        text = ~paste("Ano:", Year, "<br>Temperatura:", Mean, "°C"),
+        hoverinfo = "text")
+
+
+```
+
+</div>
+
+\
+
+<!-- ###### EXPECTATIVA DE VIDA E PRODUTO INTERNO BRUTO ####### --->
+
+<div class="hum-fundo">  <!--modifica para cada área-->
+
+## Expectativa de vida e Produto Interno Bruto - PIB, 1956 a 2007 (EM13CHS101, EM13CHS104, EM13MAT405, EM13MAT410)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Obtendo os dados na internet
+url <- read.csv("https://raw.githubusercontent.com/kirenz/datasets/refs/heads/master/gapminder.csv")
+
+dadosExpVida <- url  # atribuindo os dados a um objeto do `R`
+
+# Criando o gráfico interativo com animação
+plot_ly(
+  dadosExpVida, # dados convertidos da internet
+  x = ~gdpPercap, # renda per capita
+  y = ~lifeExp, # expectativa de vida
+  size = ~pop, # tamanho dos pontos em função da população
+  color = ~country, # cor dos pontos em função do país
+  frame = ~year,    # Frame para a animação por ano de coleta dos dados
+  text = ~continent,  # País como informação ao passar o mouse
+  hoverinfo = "text",
+  type = 'scatter', # tipo de gráfico
+  mode = 'markers',
+  marker = list(sizemode = 'diameter', opacity = 0.7)
+) %>%
+  layout(  # atribuição de título e etiquetas dos eixos
+    title = "Produto interno bruto X Expectativa de vida",
+    xaxis = list(title = "PIB (log), US$", type = "log"),
+    yaxis = list(title = "Expectativa de Vida, anos"),
+    showlegend = TRUE # possibilidade ou não de aparecer a legenda
+  ) %>%
+  animation_opts(
+    frame = 1000,           # Velocidade da animação
+    transition = 0,
+    redraw = TRUE
+  )
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Obtendo os dados na internet
+url <- read.csv("https://raw.githubusercontent.com/kirenz/datasets/refs/heads/master/gapminder.csv")
+
+dadosExpVida <- url  # atribuindo os dados a um objeto do `R`
+
+# Criando o gráfico interativo com animação
+plot_ly(
+  dadosExpVida, # dados convertidos da internet
+  x = ~gdpPercap, # renda per capita
+  y = ~lifeExp, # expectativa de vida
+  size = ~pop, # tamanho dos pontos em função da população
+  color = ~country, # cor dos pontos em função do país
+  frame = ~year,    # Frame para a animação por ano de coleta dos dados
+  text = ~continent,  # País como informação ao passar o mouse
+  hoverinfo = "text",
+  type = 'scatter', # tipo de gráfico
+  mode = 'markers',
+  marker = list(sizemode = 'diameter', opacity = 0.7)
+) %>%
+  layout(  # atribuição de título e etiquetas dos eixos
+    title = "Produto interno bruto X Expectativa de vida",
+    xaxis = list(title = "PIB (log), US$", type = "log"),
+    yaxis = list(title = "Expectativa de Vida, anos"),
+    showlegend = TRUE # possibilidade ou não de aparecer a legenda
+  ) %>%
+  animation_opts(
+    frame = 1000,           # Velocidade da animação
+    transition = 0,
+    redraw = TRUE
+  )
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="hum-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+# Dentro de plot_ly()
+color = ~continent
+
+```
+
+</div>
+
+\
+
+<!-- ####### QUEDA DE METEORITOS - MAPA ########## --->
+
+<div class="hum-fundo">  <!--modifica para cada área-->
+
+## Queda de meteoritos na Terra - 1800 a 2013 (EM13CHS101, EM13CNT303, EM13CNT301)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(maps)
+
+meteoritos <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-06-11/meteorites.csv")
+
+options(scipen = 999) 
+
+meteoritos_Mundo <- meteoritos %>%
+  filter(fall == "Fell") %>%
+  filter(year > 1800) %>%
+  # drop_na() %>%
+  arrange(mass)
+
+# Carregar o mapa do mundo
+world <- map_data("world")
+
+mapa_animado <- world %>%
+  ggplot() +
+  geom_polygon(aes( x= long, y = lat, group = group),
+               fill = "grey20",
+               color = "white",
+               size = 0.01) +
+  geom_point(data= meteoritos_Mundo, 
+             aes(x = long, 
+                 y = lat, 
+                 frame = year,
+                 size = mass),
+             color = "orange",
+             alpha = 0.7) +
+  labs( title = "Queda de meteoritos -  1800 a 2013}",
+        caption = "The Meteoritical Society") +
+  # theme_map() +
+  scale_size_continuous(guide = F) +
+  scale_color_discrete(name = "Type") +
+  theme(plot.title = element_text(size = 10, hjust = 0.5))
+
+
+fig_2 <- ggplotly(mapa_animado) %>% animation_slider(currentvalue = list(prefix = "Year ", font = list(color="orange"))) 
+
+fig_2
+
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(maps)
+
+meteoritos <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-06-11/meteorites.csv")
+
+options(scipen = 999) 
+
+meteoritos_Mundo <- meteoritos %>%
+  filter(fall == "Fell") %>%
+  filter(year > 1800) %>%
+  # drop_na() %>%
+  arrange(mass)
+
+# Carregar o mapa do mundo
+world <- map_data("world")
+
+mapa_animado <- world %>%
+  ggplot() +
+  geom_polygon(aes( x= long, y = lat, group = group),
+               fill = "grey20",
+               color = "white",
+               size = 0.01) +
+  geom_point(data= meteoritos_Mundo, 
+             aes(x = long, 
+                 y = lat, 
+                 frame = year,
+                 size = mass),
+             color = "orange",
+             alpha = 0.7) +
+  labs( title = "Queda de meteoritos -  1800 a 2013}",
+        caption = "The Meteoritical Society") +
+  # theme_map() +
+  scale_size_continuous(guide = F) +
+  scale_color_discrete(name = "Type") +
+  theme(plot.title = element_text(size = 10, hjust = 0.5))
+
+
+fig_2 <- ggplotly(mapa_animado) %>% animation_slider(currentvalue = list(prefix = "Year ", font = list(color="orange"))) 
+
+fig_2
+
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="hum-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+fill = "grey30",  # Alterado de "grey20" para "grey30"
+
+```
+
+</div>
+
+\

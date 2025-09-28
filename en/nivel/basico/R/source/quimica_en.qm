@@ -1,0 +1,682 @@
+---
+title: "Chemistry"
+number-sections: true
+toc: true
+lang: en
+class: fundo-basico
+---
+
+<!-- ########### IDEAL GAS LAW ################## -->
+
+<div class="quim-fundo"> <!--modifies for each area-->
+
+## Ideal Gas Law (EM13CNT101, EM13CNT204, EM13CNT205, EM13CNT207, EM13CNT303)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+# Dados:
+R = 8.314 # J/(mol*K), constante geral dos gases ideias
+V = seq(0,22.4, length.out=50)  # vetor de "Volume" (em litros), com 50 pontos
+T = 298 # K, temperatura absoluta
+
+
+# Equação
+# pV = RT; p = RT/V
+p = R*T/V
+
+library(plotly)
+library(magrittr) # biblioteca para o operador pipe "%>%"
+plot_ly(x = V, y = ~R*T/V, type = 'scatter', mode='lines') %>%
+  layout(
+    title = "Transformação Isotérmica de um Gás",
+    xaxis = list(title = "Volume V, L", range=c(-1,24)),
+    yaxis = list(title = "Pressão p, Pascal")
+  )
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# Dados:
+R = 8.314 # J/(mol*K), constante geral dos gases ideias
+V = seq(0,22.4, length.out=50)  # vetor de "Volume" (em litros), com 50 pontos
+T = 298 # K, temperatura absoluta
+
+
+# Equação
+# pV = RT; p = RT/V
+p = R*T/V
+
+library(plotly)
+library(magrittr) # biblioteca para o operador pipe "%>%"
+plot_ly(x = V, y = ~R*T/V, type = 'scatter', mode='lines') %>%
+  layout(
+    title = "Transformação Isotérmica de um Gás",
+    xaxis = list(title = "Volume V, L", range=c(-1,24)),
+    yaxis = list(title = "Pressão p, Pascal")
+  )
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="quim-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing the commands below in the code snippet:
+
+```{r, eval = FALSE}
+plot_ly(x = V, y = ~R*T/V, type = 'scatter', mode='lines', line = list(color = "red", width = 3)) %>% # Changing the color and width of the line
+```
+
+</div>
+
+\
+<!-- ########### REAGENT AND PRODUCT CURVE ################# -->
+
+<div class="quim-fundo"> <!--modifies for each area-->
+
+## Reagent consumption and product formation curves (EM13CNT301, EM13MAT304, EM13CNT306)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(gganimate)
+library(gifski)
+
+# Dados simulados de tempo, reagente e produto
+tempo <- seq(0, 10, length.out = 100)           # 0 a 10 segundos
+reagente <- 100 * exp(-0.3 * tempo)             # Decaimento exponencial
+produto <- 100 * (1 - exp(-0.3 * tempo))        # Formação de produto
+
+# Criando um dataframe para o gráfico
+dados <- data.frame(Tempo = tempo, Reagente = reagente, Produto = produto)
+
+# Gráfico animado de consumo de reagente e formação de produto
+p <- ggplot(dados, aes(x = Tempo)) +
+  geom_line(aes(y = Reagente, color = "Reagente"), linewidth = 1.2) +
+  geom_line(aes(y = Produto, color = "Produto"), linewidth = 1.2) +
+  scale_color_manual(values = c("Reagente" = "blue", "Produto" = "red")) +
+  labs(title = "Consumo de Reagente e Formação de Produto ao Longo do Tempo",
+       x = "Tempo (s)", y = "Quantidade (mol)", color = "Substância") +
+  transition_reveal(Tempo) +
+  theme_minimal()
+
+# Exibindo o gráfico animado
+animate(p, renderer = gifski_renderer())
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(gganimate)
+library(gifski)
+
+# Dados simulados de tempo, reagente e produto
+tempo <- seq(0, 10, length.out = 100)           # 0 a 10 segundos
+reagente <- 100 * exp(-0.3 * tempo)             # Decaimento exponencial
+produto <- 100 * (1 - exp(-0.3 * tempo))        # Formação de produto
+
+# Criando um dataframe para o gráfico
+dados <- data.frame(Tempo = tempo, Reagente = reagente, Produto = produto)
+
+# Gráfico animado de consumo de reagente e formação de produto
+p <- ggplot(dados, aes(x = Tempo)) +
+  geom_line(aes(y = Reagente, color = "Reagente"), linewidth = 1.2) +
+  geom_line(aes(y = Produto, color = "Produto"), linewidth = 1.2) +
+  scale_color_manual(values = c("Reagente" = "blue", "Produto" = "red")) +
+  labs(title = "Consumo de Reagente e Formação de Produto ao Longo do Tempo",
+       x = "Tempo (s)", y = "Quantidade (mol)", color = "Substância") +
+  transition_reveal(Tempo) +
+  theme_minimal()
+
+# Exibindo o gráfico animado
+animate(p, renderer = gifski_renderer())
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="quim-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing the commands below in the code snippet:
+
+```{r, eval = FALSE}
+scale_color_manual(values ​​= c("Reagent" = "green", "Product" = "purple")) + # Change in colors
+
+```
+
+</div>
+
+\
+<!-- ########### DISSOCIATION EQUILIBRIUM ################## -->
+
+<div class="quim-fundo"> <!--modifies for each area-->
+
+## Dissociation equilibrium of weak acids and bases (EM13CNT303, EM13MAT305, EM13CNT304)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Parâmetro inicial de Ka para ácido fraco e dados para pH e concentração
+Ka <- 1e-5  # Constante de acidez padrão
+
+# Valores de pH e concentrações
+pH_values <- seq(0, 14, 0.1)
+conc_H <- 10^(-pH_values)       # Concentração H+ para cada pH
+conc_OH <- 1e-14 / conc_H       # Concentração OH- com base no produto iônico da água
+conc_HA <- conc_H / (Ka + conc_H)  # Concentração HA para ácido fraco
+conc_A <- Ka * conc_HA             # Concentração A- 
+
+# Data frame combinado
+dados_acidez <- data.frame(pH = pH_values, conc_H = conc_H, conc_OH = conc_OH, conc_HA = conc_HA, conc_A = conc_A)
+
+# Gráfico combinado interativo
+plot_ly(dados_acidez) %>%
+  add_lines(x = ~pH, y = ~conc_H, name = "Concentração H+", line = list(color = "blue")) %>%
+  add_lines(x = ~pH, y = ~conc_OH, name = "Concentração OH-", line = list(color = "red")) %>%
+  add_lines(x = ~pH, y = ~conc_HA, name = "Concentração HA (ácido)", line = list(color = "purple")) %>%
+  add_lines(x = ~pH, y = ~conc_A, name = "Concentração A- (base conjugada)", line = list(color = "green")) %>%
+  layout(
+    title = "Curvas de Acidez, Basicidade e Dissociação de Ácido",
+    xaxis = list(title = "pH"),
+    yaxis = list(title = "Concentração (mol/L)", type = "log"),
+    sliders = list(
+      list(
+        active = 5, 
+        currentvalue = list(prefix = "Ka = "),
+        steps = lapply(seq(1e-7, 1e-3, length.out = 10), function(k) {
+          list(label = format(k, scientific = TRUE), method = "update",
+               args = list(list(
+                 y = list(
+                   10^(-pH_values),                    # Atualizar H+
+                   1e-14 / 10^(-pH_values),            # Atualizar OH-
+                   10^(-pH_values) / (k + 10^(-pH_values)), # Atualizar HA
+                   k * (10^(-pH_values) / (k + 10^(-pH_values))) # Atualizar A-
+                 )
+               )))
+        })
+      )
+    )
+  )
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Parâmetro inicial de Ka para ácido fraco e dados para pH e concentração
+Ka <- 1e-5  # Constante de acidez padrão
+
+# Valores de pH e concentrações
+pH_values <- seq(0, 14, 0.1)
+conc_H <- 10^(-pH_values)       # Concentração H+ para cada pH
+conc_OH <- 1e-14 / conc_H       # Concentração OH- com base no produto iônico da água
+conc_HA <- conc_H / (Ka + conc_H)  # Concentração HA para ácido fraco
+conc_A <- Ka * conc_HA             # Concentração A- 
+
+# Data frame combinado
+dados_acidez <- data.frame(pH = pH_values, conc_H = conc_H, conc_OH = conc_OH, conc_HA = conc_HA, conc_A = conc_A)
+
+# Gráfico combinado interativo
+plot_ly(dados_acidez) %>%
+  add_lines(x = ~pH, y = ~conc_H, name = "Concentração H+", line = list(color = "blue")) %>%
+  add_lines(x = ~pH, y = ~conc_OH, name = "Concentração OH-", line = list(color = "red")) %>%
+  add_lines(x = ~pH, y = ~conc_HA, name = "Concentração HA (ácido)", line = list(color = "purple")) %>%
+  add_lines(x = ~pH, y = ~conc_A, name = "Concentração A- (base conjugada)", line = list(color = "green")) %>%
+  layout(
+    title = "Curvas de Acidez, Basicidade e Dissociação de Ácido",
+    xaxis = list(title = "pH"),
+    yaxis = list(title = "Concentração (mol/L)", type = "log"),
+    sliders = list(
+      list(
+        active = 5, 
+        currentvalue = list(prefix = "Ka = "),
+        steps = lapply(seq(1e-7, 1e-3, length.out = 10), function(k) {
+          list(label = format(k, scientific = TRUE), method = "update",
+               args = list(list(
+                 y = list(
+                   10^(-pH_values),                    # Atualizar H+
+                   1e-14 / 10^(-pH_values),            # Atualizar OH-
+                   10^(-pH_values) / (k + 10^(-pH_values)), # Atualizar HA
+                   k * (10^(-pH_values) / (k + 10^(-pH_values))) # Atualizar A-
+                 )
+               )))
+        })
+      )
+    )
+  )
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="quim-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing alternatively the commands below in the code snippet:
+
+```{r, eval = FALSE}
+add_lines(x = ~pH, y = ~conc_H, name = "H+ Concentration", line = list(color = "blue", width = 2)) %>% # Increase the line thickness
+add_lines(x = ~pH, y = ~conc_OH, name = "OH- Concentration", line = list(color = "red", width = 2)) %>% # Increase the line thickness
+add_lines(x = ~pH, y = ~conc_HA, name = "HA (acid) Concentration", line = list(color = "purple", width = 2)) %>% # Increase the line thickness
+add_lines(x = ~pH, y = ~conc_A, name = "H+ Concentration", line = list(color = "purple", width = 2)) %>% # Increase the line thickness
+add_lines(x = ~pH, y = ~conc_A, name = "H+ Concentration", line = list(color = "red ... A- (conjugate base)", line = list(color = "green", width = 2)) %>% # Increase line thickness
+
+```
+
+</div>
+
+\
+<!-- ########### RADIOACTIVE DECAY ################## -->
+
+<div class="quim-fundo"> <!--modifies for each area-->
+
+## Radioactive decay and half-life (EM13CNT306, EM13MAT305, EM13CNT301)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Initial parameters
+N0 <- 100 # Initial amount
+time <- seq(0, 50, by = 0.5) # Time interval
+
+# Decay function
+radioactive_decay <- function(t, half_life) {
+N0 * 0.5^(t / half_life)
+}
+
+# Plot with plotly
+fig <- plot_ly(x = ~time, y = ~radioactive_decay(time, 10), type = 'scatter', mode = 'lines', name = "Decay")
+
+# Adding the slider
+fig <- fig %>% layout(
+title = "Radioactive Decay",
+xaxis = list(title = "Time"),
+yaxis = list(title = "Amount Remaining"),
+sliders = list(list(
+currentvalue = list(prefix = "Half-life = "),
+steps = lapply(seq(5, 30, by = 5), function(half_life) {
+list(label = as.character(half_life), method = "update",
+args = list(list(y = list(radioactive_decay(time, half_life)))))
+})
+))
+)
+fig
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Initial parameters
+N0 <- 100 # Initial quantity
+time <- seq(0, 50, by = 0.5) # Time interval
+
+# Decay function
+radioactive_decay <- function(t, half_life) {
+N0 * 0.5^(t / half_life)
+}
+
+# Plot with plotly
+fig <- plot_ly(x = ~time, y = ~radioactive_decay(time, 10), type = 'scatter', mode = 'lines', name = "Decay")
+
+# Adding the slider
+fig <- fig %>% layout(
+title = "Radioactive Decay",
+xaxis = list(title = "Time"),
+yaxis = list(title = "Remaining Amount"),
+sliders = list(list(
+currentvalue = list(prefix = "Half-life = "),
+steps = lapply(seq(5, 30, by = 5), function(half_life) {
+list(label = as.character(half_life), method = "update",
+args = list(list(y = list(radioactive_decay(time, half_life)))))
+})
+))
+)
+
+fig
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="quim-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing alternatively the commands below in the code snippet:
+
+```{r, eval = FALSE}
+args = list(list(y = list(radioactive_decay(time, half_life))), list(line = list(color = 'green'))))
+
+```
+
+</div>
+
+\
+<!-- ########### H2O2 DECOMPOSITION ################## -->
+
+<div class="fundo-quim"> <!--modifies for each area-->
+
+## Hydrogen peroxide decomposition (EM13CNT301, EM13MAT305, EM13CNT303)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Initial parameters
+H2O2_0 <- 1 # Initial H2O2 concentration
+time <- seq(0, 10, 0.1) # Time interval
+
+# Decomposition function
+decomposition <- function(t, k) H2O2_0 * exp(-k * t)
+
+# Plot with slider
+fig <- plot_ly(x = ~time, y = ~decomposition(time, 0.3), type = 'scatter', mode = 'lines') %>%
+layout(
+title = "H2O2 Decomposition",
+xaxis = list(title = "Time (hours)"),
+yaxis = list(title = "H2O2 Concentration (mol/L)"),
+sliders = list(list(
+currentvalue = list(prefix = "k = "),
+steps = lapply(seq(0.1, 1, 0.1), function(k) {
+list(label = k, method = "update", args = list(list(y = list(decomposition(time, k)))))
+})
+))
+)
+
+fig
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Initial parameters
+H2O2_0 <- 1 # Initial concentration of H2O2
+time <- seq(0, 10, 0.1) # Time interval
+
+# Decomposition function
+decomposition <- function(t, k) H2O2_0 * exp(-k * t)
+
+# Plot with slider
+fig <- plot_ly(x = ~time, y = ~decomposition(time, 0.3), type = 'scatter', mode = 'lines') %>%
+ layout(
+ title = "Decomposition of H2O2",
+ xaxis = list(title = "Time (hours)"),
+ yaxis = list(title = "H2O2 concentration (mol/L)"),
+ sliders = list(list(
+ currentvalue = list(prefix = "k = "),
+ steps = lapply(seq(0.1, 1, 0.1), function(k) {
+ list(label = k, method = "update", args = list(list(y = list(decomposition(time, k)))))
+ })
+ ))
+ )
+
+fig
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="quim-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing the commands below in the code snippet:
+
+```{r, eval = FALSE}
+list(label = k, method = "update", args = list(list(y = list(decomposition(time, k))), list(line = list(color = 'red'))))
+```
+
+</div>
+
+\
+<!-- ########### PROUST'S LAW AND STOICHIOMETRY ################# -->
+
+<div class="quim-fundo"> <!--modify for each area-->
+
+## Proust's law and reaction stoichiometry in 3D representation (EM13CNT101, EM13CNT202, EM13CNT201)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Initial amounts of reactants
+H2_mol <- 0:5 # Amount of H2 in mol
+O2_mol <- 0:5 # Amount of O2 in mol
+
+# Function to calculate H2O formed based on the stoichiometry 2:1:2
+form_H2O <- function(H2, O2) {
+min(2 * H2, O2) / 2
+}
+
+# Data for the graph
+data <- expand.grid(H2 = H2_mol, O2 = O2_mol)
+data$H2O <- mapply(form_H2O, data$H2, data$O2)
+
+# Interactive graph with sliders for H2 and O2
+fig <- plot_ly(data, x = ~H2, y = ~O2, z = ~H2O, type = 'mesh3d', mode = 'markers') %>%
+layout(
+title = "Reaction Stoichiometry (Proust's Law)",
+scene = list(
+xaxis = list(title = "Amount of H2 (mol)"),
+yaxis = list(title = "Amount of O2 (mol)"),
+zaxis = list(title = "Amount of H2O formed (mol)")
+)
+)
+fig
+```
+
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Initial quantities of reactants
+H2_mol <- 0:5 # Amount of H2 in mol
+O2_mol <- 0:5 # Amount of O2 in mol
+
+# Function to calculate H2O formed based on stoichiometry 2:1:2
+form_H2O <- function(H2, O2) {
+min(2 * H2, O2) / 2
+}
+
+# Data for the graph
+data <- expand.grid(H2 = H2_mol, O2 = O2_mol)
+data$H2O <- mapply(form_H2O, data$H2, data$O2)
+
+# Interactive graph with sliders for H2 and O2
+fig <- plot_ly(data, x = ~H2, y = ~O2, z = ~H2O, type = 'mesh3d', mode = 'markers') %>%
+layout(
+title = "Reaction Stoichiometry (Proust's Law)",
+scene = list(
+xaxis = list(title = "Amount of H2 (mol)"),
+yaxis = list(title = "Amount of O2 (mol)"),
+zaxis = list(title = "Amount of H2O formed (mol)")
+)
+)
+
+fig
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="quim-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing alternatively the commands below in the code snippet:
+
+```{r, eval = FALSE}
+fig <- plot_ly(data, x = ~H2, y = ~O2, z = ~H2O, type = 'mesh3d', mode = 'markers',
+marker = list(color = ~H2O, colorscale = 'Viridis', size = 10)) %>%
+
+```
+
+</div>
+
+\
+<!-- ########### EQUILIBRIUM CONSTANT ################# -->
+
+<div class="quim-fundo"> <!--modify for each area-->
+
+## Concentration of reactants and equilibrium dissociation constant (EM13CNT201, EM13CNT202, EM13CNT204)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+# Load required packages
+library(ggplot2)
+library(gganimate)
+
+# Set initial parameters
+A <- 1 # Concentration of A
+B <- 1 # Concentration of B
+
+# Function to calculate product concentrations based on constant K
+calc_products <- function(K) sqrt(K * A * B)
+
+# Create the data set for different values ​​of K
+data <- data.frame(
+K = seq(0.5, 3, by = 0.1)
+)
+data$C <- calc_products(data$K)
+data$D <- data$C
+
+# Transform data for bar visualization
+data_long <- data.frame(
+K = rep(data$K, each = 4),
+Substance = rep(c("A", "B", "C", "D"), times = length(data$K)),
+Concentration = c(rep(A, length(data$K)), rep(B, length(data$K)), data$C, data$D)
+)
+# Create animated graph
+p <- ggplot(data_long, aes(x = Substance, y = Concentration, fill = Substance)) +
+geom_bar(stat = "identity", position = "dodge") +
+labs(title = 'Chemical Equilibrium - Equilibrium Constant (K): {closest_state}',
+x = 'Substances', y = 'Concentration (mol/L)') +
+transition_states(K, transition_length = 2, state_length = 1) + ease_aes('linear')
+
+# Display the graph
+p
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# Load required packages
+library(ggplot2)
+library(gganimate)
+
+# Set the initial parameters
+A <- 1 # Concentration of A
+B <- 1 # Concentration of B
+
+# Function to calculate the concentrations of products based on the constant K
+calc_products <- function(K) sqrt(K * A * B)
+
+# Create the dataset for different values ​​of K
+data <- data.frame(
+K = seq(0.5, 3, by = 0.1)
+)
+data$C <- calc_products(data$K)
+data$D <- data$C
+
+# Transform data to display bars
+data_long <- data.frame(
+K = rep(data$K, each = 4),
+Substance = rep(c("A", "B", "C", "D"), times = length(data$K)),
+Concentration = c(rep(A, length(data$K)), rep(B, length(data$K)), data$C, data$D)
+)
+
+# Create animated graph
+p <- ggplot(data_long, aes(x = Substance, y = Concentration, fill = Substance)) +
+geom_bar(stat = "identity", position = "dodge") +
+labs(title = 'Chemical Equilibrium - Equilibrium Constant (K): {closest_state}',
+x = 'Substances', y = 'Concentration (mol/L)') +
+transition_states(K, transition_length = 2, state_length = 1) +
+ease_aes('linear')
+
+# Show the graph
+p
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="quim-fundo2"> <!--modifica para cada área-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing alternatively the commands below in the code snippet:
+
+```{r, eval =FALSE}
+scale_fill_manual(values ​​= c("A" = "blue", "B" = "green", "C" = "red", "D" = "purple")) # Defined a custom color palette
+
+```
+
+</div>
+
+\
+

@@ -1,0 +1,855 @@
+---
+title: "Interactive graphics and maps & R"
+---
+
+## 1 - How to use R & Rstudio - installation and cloud
+
+<div class = "reminder-objetivos">
+
+Objectives:\
+1. Learn about R and RStudio\
+2. Understand the steps for installing on a computer\
+2. Access RStudio via the cloud\
+
+</div>
+
+| There are two alternative environments for using *R* (program) and *Rstudio* (user interface): installing on the computer, or via the cloud. There are few differences between the two ways of working, but the fundamental one is that *installation* allows the use of the programs *offline*, without the need for internet, while via the cloud, well, you already know. On the other hand, in the cloud version it is not necessary to install either *R* or *RStudio*, while in the installed version there are some steps for this, described below.
+\
+
+| However, <span style="color:orange;">you can use the cloud version throughout the *Course*, without having to worry about installing `R` or *RStudio*.</span>
+
+\
+
+## Installing R and RStudio on your computer
+
+| You need to follow a few steps to install *R & RStudio* on your computer. In practice, you download both programs and install them as you would any other program, whether for *Windows*, *Linux*, or *Mac*. Here are the steps:
+
+1. Access the [Rstudio](https://posit.co/download/rstudio-desktop/) website and *download* the `R` program. ![](rstudioSite.png)
+
+2. Install the program with the default options.
+
+3. On the same website of `[RStudio](https://posit.co/download/rstudio-desktop/) look a little further down for the installer that is most appropriate for your operating system.
+
+![](rstudioInstala.png)
+\
+3. Download the file and install it like any other program.
+
+4. Open the *RStudio* program, and its interface will be similar to the one below.
+
+![](rstudioJanela.png){#fig-rstudioJanela}
+\
+
+## Accessing `R & Rstudio` via the cloud
+
+| This is a simple option that does not require any installation. The interface accessed is practically the same as the installation on a computer. Among some advantages, the normally higher speed to run and install packages stands out, since the server is already in the cloud. However, since it is *online* access, it requires an initial registration, with *login and password*. Here are the steps:
+\
+1. Access the [RStudio Cloud](https://login.posit.cloud/login?redirect=%2Foauth%2Fauthorize%3Fredirect_uri%3Dhttps%253A%252F%252Fposit.cloud%252Flogin%26client_id%3Dposit-cloud%26response_type%3Dcode%26show_auth%3D0) website.
+
+![](rstudioNuvem.png)
+
+2. Sign up (*sign up*) or access via *Google* (easier).
+
+3. The window should look like the one below, although without the projects listed.
+
+![](rstudioCloudMain.png)
+
+4. Now for the interesting part. Click on *New Project* and select *New Rstudio Project*.
+
+![](rstudioCloudNewProj.png)
+
+5. The final image will be very similar to the one presented by the installed version, see:
+
+![](rstudioCloudFinal.png)
+\
+
+| That's it! You can use either way to access the proposed activities. Below are some quick actions and commands to work with the `Rstudio` interface and with `R`. But only so that you can create, execute, and modify some *scripts* created for *interactivity through animation, simulation, and cartographic visualization*.
+
+\
+
+| Let's get to work, now!!
+
+## Basic Commands & Scripts in R
+
+<div class = "reminder-objetivos">
+
+Objectives:\
+1. Understand what the RStudio windows and tabs are for\
+2. Understand the logic of R commands and attributes\
+3. Use script commands
+
+</div>
+
+| `R` is a program that operates via the command line. This is a bit annoying, as we have seen, because any error in typing a command results in the interruption of the reading of the code. But, on the other hand, and also as we have seen, *chained and commented command lines allow the reproduction and modification of code snippets converging to any product*, in this case, educational objects for high school, and *without the need to memorize mouse clicks and technical operations*.
+
+| Unlike *Jmol*, however, `R` is quite annoying in its syntax, and it is not possible to mix upper and lower case fonts, as well as singular or plural. In order for the code to work, it is necessary to type it correctly. But *you can easily increase or decrease the space between commands*, which makes no difference to the `R` compiler.
+
+| Some operations are performed alternatively by *mouse*, *command line*, or both, depending on the action. Below, we will present some basic features for reproducing codes for educational objects, without detailed descriptions of the operation of *R & RStudio*, to simplify and make this work more objective.
+
+| If you want to know more about both programs, installed or cloud version, we suggest the numerous websites and tutorials available on the internet, as well as hundreds of books already written on the subject, and *online* courses on various teaching platforms.
+
+\
+
+## An overview of the *RStudio* interface
+
+\
+| *Rstudio* does nothing more than allow a *graphical interface* for the user of `R` (or *GUI*, from English, *Graphic User Interface*), this is a program executed by its own code language, just like *Jmol*. Several operations are also performed alternatively without commands or codes, such as opening and saving a file, or viewing and saving a graph, for example. Let's look at the division of the main *Rstudio* window.
+
+![Basic RStudio window. A - command typing area (*prompt*); B - work tab area (directory, graphs, packages, etc.); C - files that appear in the homonymous tab; D - administration tab area (environment, command history, etc.).](rstudioWindows2.png)
+
+| For our work, however, an additional area will be interesting, the *scripts area*, which is accessed as follows:
+
+```{r, eval=FALSE}
+File --> New File --> RScript
+
+... or by shortcut: Ctrl + Shift + N
+
+```
+
+\
+
+![](rstudioScript.png)
+\
+
+| Note that now the main window has been divided into another part, which includes the new tab for *scripts*.
+\
+
+![Main window of *RStudio* containing the tab for creating and executing *scripts*.](rstudioScriptAberta.png)
+\
+
+## How commands work in `R`
+
+| All `R` commands are composed of a *name* followed by *arguments*, these in parentheses. Here are some examples
+
+```{r, eval=FALSE}
+command(argument 1, argument 2, argument 3, ...)
+
+Examples:
+plot(x,y)
+mean(z)
+read.csv(file = "my.data.csv")
+```
+\
+## Writing a *script* in `R`
+
+| To produce a *script* in `R`, the best way is to write the command lines in a similar way to what was done with the 3D molecular viewer *Jmol* in your *Console*, separating them by individual lines. See an example of a simple calculation:
+
+```{r}
+x = 5
+x^2 +7
+```
+\
+| And to run the *script* above, just copy and paste it into the open *script* area. And here's a **golden tip**. Note that in the upper right corner of the *script* there is a *paste icon* for the *script* text. Just click on this icon and the text will be copied.
+
+| Now just paste it into the open *script* tab (in the cloud, for example) and run it as follows.
+
+\
+
+## Running a *script* in `R`
+
+| There are a few ways to run a *script*, as in the example above, in `R`. Here are the most common:
+
+```{r, eval=FALSE}
+1. If you want to run some lines of a *script*, you can select the lines and press Ctrl + Enter ;
+
+2. If you want to run the entire *script*, select all the text (Ctrl + A) followed by the action above, Ctrl + Enter ;
+
+Optionally, you can click on the "-->Source" icon ;
+
+3. If you want to run just one line, just click on the line followed by Ctrl + Enter ;
+Optionally, you can click on the "-->Run" icon;
+
+```
+
+\
+
+<div class="reminder-markdown">
+
+**Now it's up to you:**
+
+From the script that was run, and transcribed below:\
+x = 5 \
+x^2 +7 \
+
+Modify the second command line to calculate "x" using other operations. Suggestions: \
+sqrt(x) ; square root \
+log10(x) ; logarithm to base 10 \
+sin(x) ; sine
+
+</div>
+
+## Some recommendations on typing in an `R` *script*:
+
+| There are some basic premises for an `R` *script* to be read clearly by its creator, as well as compiled correctly by the program:
+
+1. *Typing*: whenever there is an error in the *script* in *Rstudio*, a red cross will appear on the left side of the command line; once the error is overcome, the sign disappears;
+2. *Comments*: so that the *script* can also be read by *"a human being"*, it is advisable to include comments in the command lines (starting with *\#* ) - one of the bases of *Reproducible Teaching*;
+3. *Identation*: allow "indentation" when the line is a little long, by clicking the *Enter* key after separating arguments with a *"comma"*. This way, the line continues just below, but with a small shift to the right. This makes the code easier to read.
+4. *Names*: `R` commands are in English. Therefore, you should avoid using variables and file names with accents or graphic symbols in Portuguese (e.g. *ç*, *~*). Furthermore, `R` is a code compiler. If you define a compound name for a file or variable, that is, with a space between the terms (as is normal in everyday life, e.g. my file), `R` will try to execute the terms separately (e.g. "my", and then "file"), which will interrupt the reading and give you an error message. Therefore, for variable and file names, give preference to one of the 3 types of **common conventions used in programming**, namely:
+
+* separation by *underscore, " \_ "* or hyphen; e.g. my_variable, my-variable
+* separation by capital letters; e.g. myVariable
+* separation by periods; e.g. my.Variable
+
+
+## 4 - Installing packages in `RStudio`
+
+<div class = "reminder-objetivos">
+Objectives:\
+1. Understand what R packages are and what they are for\
+2. Know how to install and load an R package, exemplified by `plotly`
+</div>
+
+## Why install packages (libraries)?
+
+| In a simple answer, because each of the more than 21 thousand `R` packages has an extension of resources that `R` itself does not have in its original installation. In other words, the tool is extended for a specific purpose. *In this *Course*, our objective with `R` is to reproduce and even modify code snippets that result in interactive teaching objects for high school*.
+
+| And for this, we will use only two packages, `plotly` and `leaflet`. Therefore, the interactivity packages need to be installed prior to running the codes. But don't worry. This is one of the easiest parts of working with `R`.
+
+## Installing the `plotly` package in `R`
+
+1. Access the *Packages* tab of *RStudio*.
+
+![](pacotes.rstudio.png)
+
+2. Type the package name in the field (`plotly`), and click *Install*.
+
+![](pacotes.plotly.png)
+
+| That's it! The package will be installed from the *RStudio* cloud server (it doesn't matter if it's on your computer or in the cloud), with some intermediate messages in red, as below.
+
+![](pacotes.msg.png)
+
+## Loading the installed package
+
+| `R` allows you to install a huge number of packages. But of course you won't be using them simultaneously. In this way, `R` needs to *"know"* which package is currently desired, which is done by the `library` command, and illustrated below for the `plot_ly` package, as follows:
+
+```{r, eval=FALSE}
+library(plotly)
+```
+
+| Done!! Package installed and loaded!!
+| Now it's time to run some code snippets for teaching objects.
+
+## Building interactive graphics with `plotly`
+
+<div class = "reminder-objetivos">
+Objectives:\
+1. Understand what "plotly" is for and its interactive potential for teaching and learning\
+2. Use "plotly" through scripts to build interactive graphics\
+3. Check the interactivity of the created graphics\
+</div>
+
+| The `plotly` library is one of the richest in `R` for interactive graphics. It allows, among other things, *zoom* effects on the graph, as well as *mouse over*, in which simply passing the mouse over an element of the graph opens the information for that point. In addition, it allows user-controlled animations, the insertion of selectors, sliders, menus and buttons.
+
+\
+
+| In addition, because it allows integration with a language of these times called *JavaScript*, the library is also used in some data panels, such as in [Power Bi](https://www.microsoft.com/pt-br/power-platform/products/power-bi) from *Microsoft*, a collection of connected applications for data visualization. In fact, it is the `plotlyjs` library itself written in *JavaScript*, external to `R` and *RStudio*, that is incorporated into `R`.
+
+| Creating graphs with `plotly` requires a few simple commands. And the good news is that the graph produced already "comes out" with interactivity, such as enlargement/reduction, data displacement on axes, and information effects when passing the *mouse*, saving as a *PNG* image, among others. To build any graph you need *data*. Basically, there are 3 ways to obtain the data:
+
+```{r, eval=FALSE}
+* Creating the data;
+* Creating an equation that will generate the data;
+* Importing the data (from a spreadsheet, for example)
+```
+
+\
+## Creating an interactive graph
+
+| Let's start by creating the data from an equation applied to a *vector.* To do this, we need...the vector! Visualize a vector as if it were an Excel column (or row). In `R`, vectors are created by *concatenating* values ​​separated by *commas*, as follows:
+
+```{r}
+x = c(1,2,3,4,5) # a vector; the "c" indicates "concatenation"
+# assigns values ​​from 1 to 5 to the variable "x"
+
+# Alternatively,
+
+x = 1:5 # also assigns values ​​from 1 to 5 to the variable "x"
+```
+
+| To create the interactive graph, let's illustrate the *vertical launch* equation below.
+
+![Equations for vertical launch, for the rise and fall of a projectile, and related exercise. Source: MAPA: high school - 2nd Bim. 1st Year. Mathematics and its technologies, p.27.](lancamentoVert_mapa.png)
+\
+
+| Now we will create an interactive graph from this data. But first, of course, you need to install the `plotly` package in `R`. You can install it from the *Packages* tab of *RStudio*, if you haven't already done so, and as explained in the previous section on *Packages*.
+\
+
+| Final step... build a *scatter plot* of the vertical ascent function.
+
+| To do this, simply copy the snippet below and paste it into a new `R` *script*. And run it in any of the ways mentioned in the previous section.
+\
+
+```{r}
+# Data:
+t = 1:20 # define the time vector
+Vo = 100 # initial velocity, 100 m/s
+g = 9.8 # acceleration of gravity, m/s^2
+
+# Equation (vertical ascent):
+
+H = Vo*t-1/2*g*t^2
+
+# Interactive graph:
+library(plotly)
+plot_ly(x = ~t, y = ~H)
+
+# Note:
+# Plotly syntax: ~variable, to assign a variable (x or y)
+# type: to assign a graph type
+```
+
+| `R` usually displays some messages (*Warnings*) after running the commands. They are not errors, but additional information, such as when reproducing the previous graph. In this case, the information that is missing is to characterize the type of graph, a scatter plot (*scatter*):
+
+```{r, eval=FALSE}
+plot_ly(x = t, y = H, type = 'scatter')
+```
+
+| Now observe how much interactivity arose with the simple command above, passing the *mouse* over the points on the graph, or clicking on the icons that appeared above the graph. Test this interactivity:
+
+* Passing the *mouse* over the points on the graph (*hover*) you will obtain the coordinates of each point;
+
+* Using the *mouse* scroll button you will enlarge or reduce the graph
+
+* Clicking with the left *mouse* button on any part of the graph and drawing a rectangle you will obtain an enlargement of the area;
+
+* If you double-click after enlarging you will return to the original graph;
+
+* By positioning the mouse pointer between the values ​​of an axis and dragging the mouse, you will see a shift of the selected axis;
+
+* By selecting an icon in the upper right corner of the graph, you can, in sequence from the left, download the plot as an image, perform an enlargement, shift the axes, select the points inside a box or inside a loop, enlarge, reduce, scale to the original size, realign the axes to those of the original plot, observe the coordinates (x and y), observe only the *y* coordinate, and return to the beginning.
+
+## Saving the graph
+
+| Now a <span style="color:orange;">**very interesting feature of `plotly`: you can save the graph while maintaining all its interactivity in an *HTML* file. This way, anyone will be able to open your graph in an internet browser (Firefox, Chrome, Edge, for example), which will allow you to observe the details and interactive action on any computer, notebook, tablet or smartphone!!!</span>
+
+| And to save your first interactive graph, it's very simple:
+
+```{r, eval=FALSE}
+
+1. After creating the graph, click on "Export", right above the graph in the `Plots` tab;
+
+2. Click on "Save As Web Page"
+3. Choose a name for the graph and save it
+```
+
+| Now, just locate the file on your computer, open it automatically in a browser, and check that its interactivity has been maintained. **And to share it, if you wish, just send the interactive graph file to someone or display it on a multimedia projector**.
+
+## Working with mathematical relationships in variables
+
+| Sometimes it is interesting to construct a graph that allows you to perform a calculation on a variable, without having to create a new vector. Let's illustrate this for an *isothermal transformation from the study of gases (Boyle-Mariotte law)*, as follows:
+
+![Pressure and volume relationship in an isothermal transformation. Source: MAPA: high school - Natural sciences and their technologies. 2nd Bim. 3rd Year, p.28.](gases_mapa.png)
+
+| For example, if you are working on a spreadsheet (e.g.: *Excel*) and want to construct a graph of the above relationship, say *V* *versus* *p*, you will have to create a column with this operation. In `plotly`, as well as in `R` as a whole, this is not necessary, since *p* can be considered as *1/V constant*. In fact, this *constant* is represented by the *general constant of ideal gases, R*, of known value.
+
+| Solving for the situation above:
+
+```{r}
+# Data:
+R = 8.314 # J/(mol*K), general constant of ideal gases
+V = seq(0,22.4, length.out=50) # vector of "Volume" (in liters), with 50 points
+T = 298 # K, absolute temperature
+
+# Equation
+# pV = RT; p = RT/V
+p = R*T/V
+
+# Graph:
+library(plotly)
+plot_ly(x = V, y = ~R*T/V, type = 'scatter', mode='lines')
+```
+
+| Now, if you want to name the *axis labels* and provide a *title* to the graph to better present the physical meaning of the quantities involved, simply add the `layout` command, as follows:
+
+```{r, eval=TRUE}
+library(plotly)
+library(magrittr) # library for the pipe operator "%>%"
+plot_ly(x = V, y = ~R*T/V, type = 'scatter', mode='lines') %>%
+layout(
+title = "Isothermal Transformation of a Gas",
+xaxis = list(title = "Volume V, L"),
+yaxis = list(title = "Pressure p, bar")
+)
+```
+
+<div class="reminder-markdown">
+
+**Now it's up to you:**
+
+Open a new script and build a graph that presents any relationship between variables, as suggested below:
+
+1. Create the values of the independent variable (ex: x = 1:10); \
+2. Load the `plotly` library - `library(plotly)` ; \
+3. Type a general command line for the graph: \
+`plot_ly(x = ~x, y = ~sqrt(x), type = "scatter") ` \
+4. Select these lines, press Ctrl+Enter, and observe the output (i.e., the graph, in the `plots` tab; \
+5. Modify the variable "y", replacing the value of "x" with some other relation, such as: `~exp(x)` - exponential, `~sin(10*x)` - sine, ~sqrt(x)` - square root; \
+
+</div>
+\
+## Other types of graphs
+
+| It is also possible to create other graphs, such as *lines, bars, histograms, or box-plots* ("box and whiskers"). Some of these possibilities are illustrated below.
+
+![Some types of graphs presented in the Support Manual. Source: MAPA: high school - Mathematics and its technologies. 2nd Bim. 3rd Year, p.9, 10, 22, and 23.](tiposGraficos_mapa.png)
+
+| In `plotly` there is a range of possible graphs. Try some types:
+
+```{r}
+# Lines
+library(plotly)
+plot_ly(x = ~x, y = ~x, type = 'scatter', mode = 'lines')
+```
+
+```{r}
+# Bars
+library(plotly)
+
+classes <- c("A", "B", "C", "D") # data for the bar graph
+percentages <- c(25, 35, 20, 20)
+
+plot_ly(x = ~classes, y = ~percentages, type = 'bar')
+```
+
+```{r}
+library(plotly)
+classes <- c("A", "B", "C", "D") # data for the bar chart
+percentages <- c(25, 35, 20, 20)
+
+# Pie chart
+plot_ly(labels = classes, values = percentages, type = 'pie')
+```
+
+```{r}
+# Histogram
+library(plotly)
+
+x <- rnorm(1000) # command to generate random data in `R`
+plot_ly(x = ~x, type = "histogram")
+```
+
+```{r}
+# Boxplot
+
+library(plotly)
+x <- rnorm(50) # generate random data
+y <- rnorm(50, mean = 1) # generate statistical variation in the data
+
+plot_ly(y = ~x, type = "box", name = 'Group 1') %>% # add the two boxes for the data
+add_trace(y = ~y, type = "box", name = 'Group 2')
+```
+
+| It is also possible to combine some types, such as a *points and lines* plot:
+
+```{r}
+# Points and lines
+library(plotly)
+x <- 1:10
+plot_ly(x = ~x, y = ~x^2, type = 'scatter', mode = 'markers, lines') # also works if 'markers+lines'
+```
+\
+## 3D plots
+
+| To end this part, *three-dimensional plots*! The basic version of a 3D plot is very simple to execute in `plotly`, and its visual and interactive effect are very expressive!
+
+| An example of a 3D plot can be obtained from the relations of *radius, surface area, and volume* of a sphere, as follows.
+
+![Mathematical relations of surface area and volume of a sphere in function of its radius. Source: MAPA: high school - Mathematics and its technologies. 1st Bim. 3rd Year, p.15.](esfera3D_mapa.png)
+
+| Now let's create the interactive 3D graph in `plotly`. The simplest would be with the labels with the standard names, *x, y and z*. But it is better to add the *layout* command to give physical meaning and improve the interpretation of the graph.
+
+```{r}
+library(plotly)
+
+# Data:
+r = seq(0,100, length.out = 50)
+AreaSup = 4*pi*r^2 # calculation of the surface area of ​​the sphere
+Volume = 4/3*pi*r^3 # calculation of the volume of the sphere
+
+# Graph:
+library(plotly)
+plot_ly(x = r, y = AreaSup, z = Volume,
+mode= 'markers+lines')%>%
+layout(scene = list(
+xaxis=list(title="radius"),
+yaxis=list(title="surface area"),
+zaxis=list(title="volume")))
+
+```
+\
+
+| Note that the graph is also interactive about other aspects, such as its *rotation on any of the 3 axes*. From a content point of view, this graph illustrates how the values of surface area, and even more so of volume, vary enormously depending on the radius of a sphere. This also partly explains the great success of the use of *nanoparticles* in Science and Technology today (high surface area in a reduced size).
+
+| Another interesting three-dimensional graph is that of *3D surface*. Like the one above, few lines are needed to define it. The difference is that you can work with an *equation*, for the surface, see:
+
+```{r}
+x <- seq(-5, 5, length.out = 50)
+y <- seq(-5, 5, length.out = 50)
+z <- outer(x, y, function(x, y) x^2 - y^2) # equation x^2+y^2
+
+plot_ly(x = ~x, y = ~y, z = ~z, type = 'surface') %>%
+layout(title = "Surface Plot")
+```
+
+| There are other types of graphs for `plotly`, so it is worth visiting the [website](https://plotly.com/r/) for more information.
+
+## `Plotly` by mouse commands !!
+
+| Although this training emphasizes the advantages of using command lines instead of mouse clicks, we cannot help but present a solution of this type for those who prefer to use this resource. Among some online applications, we highlight [Plotly Chart Studio](https://chart-studio.plotly.com/create/) below, which allows the construction of various interactive graphs with the package.
+
+[![*Plotly Chart Studio*, a resource for creating interactive graphs and maps with `plotly`, but using *mouse* clicks instead of command lines.](chart_studio.png)](https://chart-studio.plotly.com/create/)
+
+## Package reference:
+
+* [General](https://cran.r-project.org/web/packages/plotly/index.html)
+* [Manual](https://cran.r-project.org/web/packages/plotly/plotly.pdf)
+* [Tutorial](https://plotly.com/r/)
+
+## 5 - More interactivity in graphs
+
+<div class = "reminder-objetivos">
+Objectives:\
+1. Observe the extensive capacity for interaction with the "plotly" package\
+2. Create a graph with a slider\
+3. Create a graph with a drop-down menu
+</div>
+
+| So far we have only *"scratched"* the potential for graphical interactivity of the `plotly` package. As mentioned before, this library allows a large set of user actions, such as sliders, menus, and buttons, among many others.
+
+\
+# Adding a range slider
+
+| A slider of this nature allows you to select a data window for a more detailed study of that region. In this case, it is possible to add a range slider to a simple graph.
+
+| We can illustrate its use by observing greenhouse gases, and in particular, carbon dioxide emissions in Brazil, from an internet database. To do this, you will learn how to obtain a file from an internet database, filter it for a desired subset, and create the resulting graph, with an additional slider.
+
+## CO$_{2}$ emissions and the greenhouse effect
+
+| Emissions of CO$_{2}$ and other gases from the burning of fossil fuels are largely responsible for the greenhouse effect, directly impacting climate change. To reduce these emissions, it is necessary to transform the current energy matrix, industry, and food systems.
+\
+
+| To understand the CO$_{2}$ emissions observed in Brazil from 1890 to 2022, run the following code snippet in an R script (i.e., copy, paste, and run), from the source [Our World in Data](https://github.com/owid).
+\
+
+![MAPA reference for greenhouse gases. Source: MAPA: high school - Human sciences and their technologies. 1st Bim. 2nd Year, p.19.](co2_mapa.png)
+\
+
+```{r}
+library(readr) # data import library
+library(dplyr) # library for using the pipe operator "%>%"
+library(plotly)
+
+# Loading data from the internet
+url <- "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
+co2_data <- read.csv(url)
+
+# Filtering data for Brazil using subset()
+co2_brasil <- subset(co2_data, country == "Brazil")
+
+# Creating an interactive graph with plot_ly
+co2_plot <- plot_ly(data = co2_brasil, x = ~year, y = ~co2, type = 'scatter', mode = 'lines+markers') %>%
+layout(title = "CO2 emissions in Brazil over the years",
+xaxis = list(title = "Year"),
+yaxis = list(title = "CO2 emissions (million tons)"))
+
+```
+
+| Now, the cherry on the cake. The insertion of a slider control, to select ranges for a more focused study.
+
+```{r}
+co2_plot %>%
+rangeslider()
+```
+\
+| You can copy and paste the *scripts* in the sequence for execution, or just add the `rangeslider()` command with the *pipe* operator %>% at the end.
+
+| Now try positioning the *mouse* on one of the two side markers of the lower graph, then dragging it, and observe the result. The slider control can be useful when you want to focus on a certain region of the graph. For example, adjusting the CO$_{2}$ emissions for the last few years.
+
+### Adding a dropdown menu
+
+| Dropdown menus allow you to see a different graph for each option selected. To illustrate this interactive feature, let's first create a data set (*dataframe*) that contains the linear, quadratic, and cubic responses to an independent variable, as follows:
+
+```{r}
+x = 1:10 # vector of the independent variable "x"
+yLin = x
+yQuad = x^2 # creation of the quadratic dependent variable
+yCub = x^3 # creation of the cubic dependent variable
+
+datLQC <-data.frame(x,yLin,yQuad,yCub) # creation of the data sheet
+```
+
+| Now we can insert the *dropdown* for the mathematical trends option:
+
+```{r}
+plot_ly(datLQC, x = ~x, y = ~yLin, type = "scatter", mode = "line", name = "Linear") %>%
+add_trace(x = ~x, y = ~yQuad, mode = "line", name = "Quadratic") %>%
+add_trace(x = ~x, y = ~yCub, mode = "line", name = "Cubic") %>%
+layout(
+title = "Power Plots",
+xaxis = list(title = "x"),
+yaxis = list(title = "x^n"),
+updatemenus = list(
+list(
+buttons = list(
+list(label = "yLin", method = "update", args = list(list(visible = c(TRUE, FALSE, FALSE)))),
+ list(label = "yQuad", method = "update", args = list(list(visible = c(FALSE, TRUE, FALSE)))),
+ list(label = "yCub", method = "update", args = list(list(visible = c(FALSE, FALSE, TRUE))))
+ ) 
+)
+)
+)
+
+```
+
+| Even though you may find the code snippet above a bit complicated, just copy it, paste it into a *script*, and run it. This exemplifies the *essence inherent in Reproducible Teaching, from the simple reproduction of the code, to its modification and even the creation of new ones*. Feeling curious, you can change some terms in the code above, such as the labels (*label*, replace a name, for example) that appear in the drop-down menu, the type of graph intended (replace *scatter* with *bar*, for example), or the title of the graph (*title*).
+\
+
+| Regarding the interactivity produced, it is added to that which was already present by the `plot_ly` command, the selection of the type of power to be represented by the drop-down menu.
+\
+
+| As with many `R` packages, there are a significant number of commands and *interactive widgets* with `plotly`, which, in this specific case, would be enough to cover a separate literary work. However, you can consult numerous *websites* about `plotly` for a more comprehensive learning, the *links* below, and even a free [online book](https://plotly-r.com/) with related codes and graphs. To see the immense wealth of interactive graphs, take a look at the [`plotly` website](https://plotly.com/r/) for `R`. \
+
+* [General](https://cran.r-project.org/web/packages/plotly/index.html)
+* [Manual](https://cran.r-project.org/web/packages/plotly/plotly.pdf)
+* [Tutorial](https://plotly.com/r/)
+
+## 6 - Animation in interactive graphs
+
+<div class = "reminder-objetivos">
+Objectives:\
+1. Learn about the potential of "plotly" to create interactive animations\
+2. Create animated graphs by importing a database
+</div>
+
+| In addition to the purely interactive aspect of graphs created with `plotly`, which already makes a big difference when preparing illustrative materials for educational content, the library is also capable of running animations with the graphs!
+\
+
+| Animation is done by means of transitions from one image to another on a graph when you want to observe what happens to it when you change a variable (numeric or categorical). The key command for this is `frame`. Animation in `plotly` also works for the 3 types of data input, that is: *equations, vectors, imported datasets*.
+\
+
+## Rise in the Earth's average temperature
+
+| It is unnecessary to mention the recent impacts of climate change on the planet due to human action, including an average rise in the surface temperature of the Earth due to factors such as the greenhouse effect.
+\
+
+![Climate change on the planet due to gas emissions and average temperature rise. Source: MAPA: high school - Human sciences and their technologies. 1st Bim. 2nd Year, p.99.](temp_mapa.png)
+\
+```{r}
+
+library(plotly)
+library(magrittr) # required libraries
+
+# 1) Getting the data from the internet
+
+url <- "https://raw.githubusercontent.com/datasets/global-temp/refs/heads/main/data/annual.csv" # defines the link to the data
+data <- read.csv(url) # reads the data file
+
+# 2) Building the graph with animation
+
+plot_ly(data, x = ~Year, y = ~Mean,
+type = "bar",
+marker = list(line = list(width = 10)),
+frame = ~Year) %>%
+animation_opts(
+frame = 150, # Animation speed
+transition = 0,
+redraw = TRUE
+) %>%
+layout(
+title = "Global temperature fluctuation",
+xaxis = list(title = "Years"),
+yaxis = list(title = "Temperature difference, C"))
+```
+\
+
+| To get a better look at the graph, click on *Zoom* and a larger window will open. Now for the "*fancy*" part: click on *PLAY* and see what happens. You can also select any period for the broadcast, just use the graph's scroll bar.
+\
+
+## Life expectancy & Gross Domestic Product
+
+| A very interesting use for `plot_ly` in graphic animation occurs when we need to present various data on a given topic. This is called *multivariate data*. To illustrate this situation, let's say you want to offer varied information in a graph that involves the relationship between a country's gross domestic product and the life expectancy of its inhabitants over time. \
+
+![Some economic indexes associated with life expectancy in 2001. Source: MAPA: high school - Humanities and their technologies. 1st Bim. 2nd Year, p.101.](expectativa_mapa.png)
+
+| To illustrate the interactive richness that can be obtained by `plotly` about the influence of the *gross domestic product - GDP* on life expectancy, we can import a data set from the internet and create a graph about this relationship, see:
+\
+
+```{r}
+library(plotly)
+
+# Obtaining the data from the internet
+url <- read.csv("https://raw.githubusercontent.com/kirenz/datasets/refs/heads/master/gapminder.csv")
+
+dadosExpida <- url # assigning the data to an `R` object
+
+# Creating the interactive graph
+plot_ly(
+dadosExpida, # data converted from the internet
+x = ~gdpPercap, # name of the per capita income column in the data
+y = ~lifeExp, # name of the life expectancy column in the data
+type = 'scatter', # type of graph (scatter)
+mode = 'markers' # type of scatter (points)
+)
+```
+\
+
+| Done! Simple, direct, and interactive code. If you move the *mouse* over the points you will see the *GDP* and life expectancy coordinates. However, it is not possible to know from this graph *who is who*, that is, which country has which GDP, as well as other information that is contained in the original spreadsheet downloaded from the internet. To give you an idea, *this spreadsheet contains, in addition to the GDP and life expectancy values, the country and its population, the continent to which it belongs, as well as the year in which the data was measured*.
+\
+
+| Thus, we are faced with a *multivariate data* table, very common in various databases, such as [IBGE](https://www.ibge.gov.br/) or [DATASUS](https://datasus.saude.gov.br).
+\
+
+| What if we could present everything at once, that is, GDP, life expectancy, the country, the population size, the country, the continent, and the year of measurement of all this, that is, **six** variables, between *numeric* and *categorical* (classes)?!
+\
+
+| Impossible?! Don't stop `R`!! Here is a code snippet for this, and with the proposed result. Don't worry about the size or details. If you want to **reproduce** this code, you know what to do... just copy, paste, and run the code in an `R` *script*. \
+
+```{r}
+library(plotly)
+
+# Getting the data from the internet
+url <- read.csv("https://raw.githubusercontent.com/kirenz/datasets/refs/heads/master/gapminder.csv")
+
+dadosExpida <- url # assigning the data to an `R` object
+
+# Creating the interactive graph with animation
+plot_ly(
+dadosExpida, # data converted from the internet
+x = ~gdpPercap, # per capita income
+y = ~lifeExp, # life expectancy
+size = ~pop, # size of the points as a function of the population
+color = ~country, # color of the points as a function of the country
+frame = ~year, # Frame for the animation by year of data collection
+text = ~continent, # Country as information when hovering the mouse
+hoverinfo = "text",
+type = 'scatter', # type of graph
+mode = 'markers',
+marker = list(sizemode = 'diameter', opacity = 0.7)
+) %>%
+layout( # assigning title and axis labels
+title = "Gross Domestic Product X Life Expectancy",
+xaxis = list(title = "GDP (log), US$", type = "log"),
+yaxis = list(title = "Life Expectancy, years"),
+showlegend = TRUE # whether or not to display the legend
+) %>%
+animation_opts(
+frame = 1000, # Animation speed
+transition = 0,
+redraw = TRUE
+)
+```
+\
+
+| To go to the "*playground*" now, press *PLAY* and observe the temporal transition of life expectancy as a function of the countries' GDP. And notice that all the other data is there, separated by point size (population), color (country), continent (*hover*, mouse over), and year (animation frame or *frame*)!
+\
+
+| One more detail! If you look at the legend, you'll see that it also *slides*, identifying each country by a color. Want to know where Brazil is in this crazy graph's relationship between GDP and life expectancy? Easy. Find Brazil in the legend, double-click, and notice that now only that point is highlighted.
+
+## 7 - Interactive maps with `plotly`
+
+<div class = "reminder-objetivos">
+Objectives:\
+1. Learn about the potential of "plotly" for creating interactive maps\
+2. Create an interactive map with inserted data\
+3. Create an interactive map with imported data\
+</div>
+
+| Finally, we leave this last part of our course to present you with another *"very cool"* potential of `plotly` for teaching and learning: the creation of interactive maps.
+
+| Interactive maps allow you to view information by *mouse hover* (passing the *mouse* over the data) or by clicking the *mouse* on a map containing this data. Since it is a map, the information is obtained in specific geographic coordinates. This characteristic therefore makes the *longitude and latitude coordinates* related to the geographic points that you want to present indispensable.
+
+| Here is a simple example, locating the three municipalities in the South of Minas Gerais where the campuses of the Federal University of Alfenas (UNIFAL-MG) are located.
+
+```{r}
+library(plotly)
+
+# Create sample data with coordinates of some cities
+cities <- data.frame(
+name = c("Alfenas", "Varginha", "Poços de Caldas"),
+lat = c(-21.42943530, -21.539957, -21.783731), # Latitude
+lon = c(-45.95948212, -45.433960, -46.564178) # Longitude
+)
+
+# Create the interactive map
+plot_ly(
+data = cities,
+lat = ~lat,
+lon = ~lon,
+type = 'scattergeo',
+mode = 'markers+text',
+text = ~name,
+marker = list(size = 10, color = 'blue', opacity = 0.7),
+textposition = "top center"
+) %>%
+layout(
+title = "Campi Municipalities of UNIFAL-MG",
+geo = list(
+scope = 'south america',
+showland = TRUE
+)
+)
+```
+
+| To see the cities, zoom in on the image with the *mouse*. Note that the map starts in South America, a condition inserted in the code to make it easier to search for cities. Try placing a comment (*#*) to the left of the "*scope = ..."* section, and the information will come from the *world* map.* Now notice that when you move the *mouse* over the cities, the proposed geographic coordinates are identified.
+\
+
+<div class="reminder-markdown">
+
+**Now it's up to you:**
+
+1. Find the geographic coordinates (longitude and latitude) of your hometown, or that of a loved one. To do this, search the internet;
+
+2. Copy the code above, and paste it into a new script;
+
+3. Replace the attributes *"name"*, *"lat"*, and *"lon"* in the `data.frame` of the code you searched for.
+4. Run the script and observe the chosen municipality on the interactive map.
+Tip: if you selected a city outside of South America, put a *"#"* before the "*scope = ..."* line.
+
+</div>
+
+## World oil production
+
+| Now imagine that you could, instead of entering the data one by one, *import the data from some internet repository* to build the map, as was done in the previous step. To illustrate this, let's import a spreadsheet related to oil production on the planet. This category includes crude oil, shale oil, tar sands, condensates, and natural gas liquids (ethane, LPG, and naphtha separated from natural gas production).
+
+| At the same time, we will filter the imported data for the year 2014, as found in the [Our World In Data](https://github.com/owid/owid-datasets/tree/master/datasets) database.
+
+![World oil production. Source: MAPA: high school - Human sciences and their technologies. 3rd Bim. 2nd Year, p.81.](petroleo_mapa.png)
+
+```{r}
+library(plotly)
+
+# Example of dataframe with dummy values
+df <- read.csv("https://raw.githubusercontent.com/owid/owid-datasets/refs/heads/master/datasets/Oil%20production%20-%20Etemad%20%26%20Luciana/Oil%20production%20-%20Etemad%20%26%20Luciana.csv")
+
+# Renaming the columns to make interpretation and plotting easier
+
+names(df) <- c("Country", "Year", "Production.TeraWatt")
+
+# Filtering the data for the last year (2014)
+df <- subset(df, Year == "2014")
+
+head(df)
+
+# Creating the choropleth map with the adjusted color scale
+library(plotly)
+plot_ly(
+data = df,
+locations = ~Country,
+locationmode = "country names",
+z = ~Production.TeraWatt, # Variable that determines the colors
+type = "choropleth",
+colorscale = "RdBu") # other scales: # other scales: Viridis, Inferno, Blues, Cividis, Greens, ...
+```
+
+| Following the same logic as the previous map, if you move the *mouse* over the countries you will see the consumption identified in each one. Note that there is a sidebar showing the legend about the quantity of production, in Also note that the "*type"* of the graph is now `choroplet` (and not `scattergeo`). In its simplest version, it only needs the standardized names of the countries. But it can also be done with a database that only has the geographic coordinates of latitude and longitude.
+
+| To help in this direction, here are two practical *links* to geographic coordinate files, accessible by `R`:
+
+* [Coordinates of Brazilian municipalities](https://raw.githubusercontent.com/kelvins/municipios-brasileiros/refs/heads/main/csv/municipios.csv)
+
+* [Coordinates of world capitals](https://raw.githubusercontent.com/bahar/WorldCityLocations/refs/heads/master/World_Cities_Location_table.csv)
+
+| And in this case, any database in this regard will be welcome. Which means in practice being able to exemplify any information of didactic content interactively on a map (e.g.: production/export of inputs, clinical observations, historical landmarks, etc.). 
+
+

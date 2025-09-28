@@ -1,0 +1,145 @@
+---
+title: "4 - How to use Jmol"
+format: html
+toc: true
+number-sections: true
+lang: en
+---
+
+
+## Now that the molecule is on the browser page, what can I do with it?
+
+| A looooot!!!
+
+| *Jmol* has a *menu* with several operations, hundreds of commands, and perhaps another hundred tutorials on the internet. For more direct and immediate structural observations, however, the operations can be summarized as follows:
+
+- Mouse movements (rotation, translation, *zoom*)
+- Model representations (ball and stick, filled space, wireframe)
+- Colors (model and background)
+- Measurements (distances and angles)
+- Molecular characteristics (H bonds, van der Waals cloud, partial and effective charge)
+- Surfaces (molecular, electrostatic)
+- Atom selection and visualization (water, hydrogen)
+- Animations (zoom, automatic rotation), cuts
+
+
+## Saving the model on your computer or mobile device
+
+| All actions performed on the molecule produce a new model that can be downloaded to your computer. This is really cool because the modified molecule (with changes in colors, representations, animations, for example) can be uploaded to *Jmol* or *JSmol* (internet) as already mentioned. To do this, you can use mouse clicks or command lines, as follows:
+
+```{r, eval=FALSE}
+1. Right click on the screen -> File -> Save -> Save as PNG/JMOL # by mouse
+or...
+2. write molecule_name.pngj # by command line in the Console
+```
+
+
+| **One of the impressive features of Jmol is that by saving the molecule as PNG/JMOL, you can open the file as a static image with a double click to just show the molecule, or drag the file to the Jmol window in your browser, which will load the three-dimensional and interactive structure of the model!!! **
+\
+
+<div class="reminder-markdown">
+
+**Now it's up to you:**
+
+1. Load a model for "phenol" by typing in the Console: `load $phenol`
+1. Save the model by typing in the Console: `write phenol.pngj
+2. Change the orientation of the model randomly with the mouse (just move it a little);
+3. Locate the file `phenol.pngj` on your computer;
+4. Open it as a normal image, just to test;
+5. Now drag the file to the Jmol online window and see if the model replaces the previous one (just check the orientation)
+
+</div>
+
+\
+
+
+### Some movements in Jmol
+
+| To illustrate some actions, we will initially use the *vitamin C* model, loading it with the command below in the *Console*.
+
+```{r, eval=FALSE}
+load $ascorbate
+```
+
+
+## Mouse movements
+
+| For *rotation and translation of the model, as well as magnification*:
+
+```{r, eval=FALSE}
+zoom - middle mouse button; if there is no middle button, Shift+left button; 
+
+rotation - left mouse button
+
+translation - Ctrl+right button
+
+rotation on the axis - Shift+right button
+```
+
+
+## Representations of the model
+
+| The representations refer to the visual aspect of the model (rendering), or its *style*. Thus, *Jmol* can render the model as *stick, wireframe, filled space, ball and stick, trace, and cartoon* (all in English, of course - *cpk, wireframe, trace, cartoon*). 
+
+
+| Try these styles, including the `only` option. This option allows the action not to be superimposed on previous ones (in this case, the superimposition of representations). To do this, copy, paste, and execute **on each separate line** the code snippet that follows in the *Jmol* *Console*, whose rendering illustrates the fluoxetine molecule.
+\
+
+
+![Fluoxetine structure. Source: MAPA: high school - 3rd semester, 2nd year, p.79. Natural sciences and their technologies.](fluoxetina_mapa.png)
+\
+
+
+```{r, eval = FALSE}
+
+load $fluoxetine # loads the molecule
+wireframe only # wireframe style
+cpk only # filled space
+cpk 20 only, bond 1 # balls and sticks
+cartoon only # cartoon representation, but this does not occur with small molecules, only with biomacromolecules (proteins, nucleic acids, for example)
+
+```
+
+
+| Note also that the `cartoon` representation does not result in a rendering for the fluoxetine model. This is because *the `cartoon` representation is restricted to biopolymers only, i.e., proteins and nucleic acids, and some supramolecular associations.*
+
+| However, if you want to try `cartoon`, you will need to know the alphanumeric code for a protein or nucleic acid. For example, for myoglobin, an oxygen-carrying protein in mammals (code: *1mcy*)
+
+```{r, eval=FALSE}
+load=1mcy # loading myoglobin
+
+# Note: note that the command line for biopolymers is slightly different from that used for small molecules
+```
+
+| Note that the default rendering for large molecules is *balls and sticks*, which is not very educational for learners. In this case, it can be represented as a unique drawing by typing:
+
+```{r, eval=FALSE}
+cartoon only # rendering as a drawing
+```
+
+| To obtain this and other protein and nucleic acid codes, enter the [PDB - Protein Data Bank, RCSB](https://www.rcsb.org/) database and type the name in the search field (in this case, `myoglobin`). The system returns several structural models and their codes. Simply transcribe one of these codes to the *JSmol* *Console*.
+
+| If you would like to learn more about biomolecules and the use of *Jmol*, I invite you to visit the [Biochemistry](nivel/superior/jmol/index_jmol.html) portal. 
+
+
+## Colors
+
+| There is great flexibility in [colors](https://jmol.sourceforge.net/jscolors/) for *Jmol* (and, consequently, for *JSmol*), both for entire models, parts of the model (specific atoms or a set), and the background. The default color display follows the [CPK (Corey–Pauling–Koltun)] convention (https://en.wikipedia.org/wiki/CPK_coloring). Using the previous vitamin C model (`load $ascorbate`) as an example, try the following variations separately:
+
+```{r, eval=FALSE}
+color pink
+color blue
+color ligthgreen
+background yellow # background color
+```
+
+| The last command in the list above allows you to vary the background color.
+
+| Additionally, it is also possible to color the bonds between atoms, as follows:
+
+```{r, eval=FALSE}
+color bonds LightSeaGreen
+```
+
+
+| For a wide range of colors, you can consult the [Jmol Colors](https://jmol.sourceforge.net/jscolors/) reference, or a more "digestible" link, created by us while learning the program for higher education, in the [Biochemistry](nivel/superior/jmol/index_jmol.html) area, more specifically, the topic on colors for Jmol.

@@ -1,0 +1,204 @@
+---
+title: "Metabolismo celular"
+toc: true
+lang: pt
+bibliography: referencias.bib
+---
+
+
+
+## Rotas metabólicas & Balanceamento de Reações
+
+<!-- - enzima alostérica -->
+
+<!-- - variação de deltaG, talvez -->
+
+<!-- - análise de dados 2 (estatística de tratamento2) -->
+
+<!-- balanceamento de reações eletroquímicas -->
+
+<!-- equações diferenciais e rede de reações bioquímicas -->
+
+<!-- balanceamento de pilhas metabólicas -->
+
+|       O metabolismo se dá uma intrincada rede de reações químicas catalisadas (ou não) por enzimas diversas, resultando numa rede equilibrada e dinâmica de processos autocatalíticos. Por vezes essa teia de reações pode ser observada no sem número dos chamados *mapas metabólicos* disponíveis, impressos ou na internet. Não obstante, os caminhos metabólicos são classificados para melhor compreensão em subconjuntos de reações pertinentes a determinado grupo de nutrientes ou compostos biológicos, como carboidratos, lipídios e ácidos nucleicos, por ex.
+|       E numa visão mais ampliada desses subconjuntos, uma classificação ulterior resulta por diversas em reações bioquímicas sequenciais e interdependentes, as chamadas *vias ou rotas metabólicas*. Essas vias metabólicas sumarizam processos *catabólicos* ou *anabólicos* envolvendo substratos, produtos, enzimas, cofatores e coenzimas, tal como ilustrado na *glicólise, gliconeogênese, glicogenólise, ciclo do ácido cítrico, cadeia respiratória, via das pentoses,* $\beta$-oxidação de ácidos graxos, entre outras.
+|       Dessa forma pode-se considerar uma rota metabólica como uma *combinação linear de reações* catalisadas enzimaticamente (ex: glicólise anaeróbia). Em adição, também pode-se considerar as *reações bioquímicas como equações bioquímicas*, e portanto como um *sistema linear de equações* bioqumímicas com resolução por *álgebra linear*. Assim, pode-se empregar *relações matriciais* para solucionar o balanceamento estequiométrico (massa e carga), obtendo-se a reação líquida final a partir de um conjunto de reações conhecidas. Em síntese, *equações bioquímicas* como *equações matriciais* [@alberty1991chemical].
+
+## Operação matricial
+
+|       Aplicando-se álgebra linear é possível obter-se o balanceamento final de reações sequenciais pela relação que segue, também vista no capítulo de *Biotermodinâmica*:
+
+$$
+A = 
+\begin{pmatrix}
+ a_{11} & a_{12} & a_{13} & ... & a_{1n}   \\
+ a_{21} & a_{22} & a_{23} & ... & a_{2n}   \\
+ a_{31} & a_{32} & a_{33} & ... & a_{3n}   \\
+ ... & ... & ... & ... & a_{jn}\\
+\end{pmatrix} ,\
+b = 
+\begin{pmatrix}
+ b_1 \\
+ b_2 \\
+ b_3 \\
+ ...  \\
+ b_n \\ 
+\end{pmatrix} ,\
+y = 
+\begin{pmatrix}
+ y_1 \\
+ y_2 \\
+ y_3 \\
+ ...  \\
+ y_n \\ 
+\end{pmatrix}
+$$ {#eq-mtrxGlic}
+
+|       Nesse caso, *A* representa a *matriz estequiométrica de reações* e compostos, *b* o *vetor de rota metabólica*, e *y* o *vetor da reação líquida* balanceado. O vetor de rota indica o número de vezes necessário para cada reação ocorrer, de modo a produzir a reação líquida final. A matriz *A* é disposta de tal forma a apresentar cada reação em cada coluna, e cada reagente em cada linha, prenchendo-a com os *coeficientes estequiométricos* de reagentes e produtos. Para esses, é necessário apresentar sinal positivo para produtos (são formados) e negativo para reagentes (são consumidos).
+|       A operação matricial para a obtenção da reação líquida envolve apenas um produto cruzado, tal que:
+
+$$
+A * b = y
+$$ {#eq-eqMtrxDot}
+
+### Obtenção do vetor de rota metabólica para a glicólise aeróbia:
+
+|       Supondo-se conhecer a reação líquida resumida para um conjunto de reações metabólicas, como a glicólise aeróbia (por sua vez agregando glicólise anaeróbia, ciclo do ácido cítrico e fosforilação oxidativa), pode-se facilmente obter-se o vetor de rotas. A partir desse vetor de rotas calculado, é possível obter-se o a reação líquida final do conjunto reações mais detalhado. Na prática, esse detalhamento envolve a participação de coenzimas de oxi-redução, ADP, ATP, e Pi.
+
+|       Exemplificando, considere as reações abaixo, referentes à uma síntese da glicólise [@alberty1996calculation]:
+
+$$
+glicose \rightleftarrows 2\,piruvato \\
+piruvato + CoA \rightleftarrows acetil \, CoA + CO_2 
+acetil \, CoA + 3 H_2O 
+\rightleftarrows 2 CO_2+CoA 
+\frac{1}{2} O_2 \rightleftarrows H_2O
+$$ {#eq-eqGlicoSimp}
+
+
+$$
+acetil \, CoA + 3 H_2O 
+\rightleftarrows 2 CO_2+CoA 
+\frac{1}{2} O_2 \rightleftarrows H_2O \\
+$$ 
+
+|       As reações sequenciais acima possuem como reação líquida resultante:
+
+$$
+glicose + 6O_2 \rightleftarrows 6 CO_2 + 6 H_2O 
+$$ {#eq-eqGlicoSimpFin}
+
+|       Para se obter o vetor de rotas então, é necessário elaborar a relação matricial, tal que:
+
+$$
+A = 
+\begin{pmatrix}
+-1 & 0 & 0 & 0 \\
+2 & -1 & 0 & 0 \\
+0 & 0 & -3 & 1 \\
+0 & -1 & 1 & 0 \\
+0 & 1 & -1 & 0 \\
+0 & 1 & 2 & 0 \\
+0 & 0 & 0 & -1/2 \\
+\end{pmatrix}
+$$ {#eq-mtrxGlicSimp}
+
+$$
+y = 
+\begin{pmatrix}
+-1 \\
+0 \\
+6 \\
+0 \\
+0 \\
+6 \\
+-6 \\
+\end{pmatrix}
+$$ {#eq-mtrxGlicSimp2}
+
+|       Dessa forma, a solução para o vetor de rotas fica:
+
+$$
+b = A^{-1} * y
+$$ {#eq-eqMtrxGlicSimp}
+
+|       Ocorre que o sistema linear para o conjunto de equações da via glicolítica é sobrestimado (há mais equações do que incógnitas), não permitindo a solução pela função `solve` de forma direta, como ilustrada no capítulo de *Biotermodinâmica*. Nesse caso, o vetor *b* pode ser obtido por solução de mínimos quadrados:
+
+$$
+b = (A^{T}*A)^{-1}*A^T * y
+$$ {#eq-eqMtrxGlicMinQuad}
+
+|       Resolvendo o vetor de rotas no `R`:
+
+```{r}
+
+#  Solução matricial para o vetor de rotas metabólicas
+
+A <- matrix(c(-1, 0, 0, 0, 2, -1, 0, 0, 0, 0, -3, 1, 0, -1, 1, 0, 0, 1,
+              -1, 0, 0, 1, 2, 0, 0, 0, 0, -1 / 2), nrow = 7,
+            byrow = TRUE) # matriz A de estequiometria de reações
+rownames(A) <- list("glicose", "piruvato", "H2O", "CoA", "acetil CoA"
+                    , "CO2", "O2") # etiquetas dos reagentes
+A # matriz A de reações
+y <- c(-1, 0, 6, 0, 0, 6, -6) # vetor y de rotas
+
+solve(t(A) %*% A) %*% t(A) %*% y
+```
+
+### Obtenção do balanceamento de ATP, ADP, Pi e coenzimas de oxi-redução na glicólise
+
+|       Com o vetor de rotas obtido (*{1,2,2,12}*), agora é possível aplicá-lo a um conjunto mais extenso de equações da glicólise, para dessa vez solucionar o balanceamento das reações envolvendo coenzimas de oxi-redução, ATP, ADP, e Pi:
+
+$$
+glicose+2Pi+2ADP+2NAD^+ \rightleftarrows 2 \,piruvato+2ATP+2NADH+2H_2O \, , \\
+glicólise \, anaeróbia,
+$$
+$$
+piruvato+CoA+NAD^+ \rightleftarrows acetil-CoA+CO_2+NADH \\
+$$
+
+$$
+acetil-CoA + 4NAD^++ADP+Pi+2H_2O \rightleftarrows2CO_2+4NADH+ATP+CoA, \, 
+\\
+\, piruvato \, desidrogenase
+$$
+$$
+NADH+ \frac{1}{2}O_2+3Pi+3ADP \rightleftarrows NAD^++4H_2O+3ATP \, ,\\
+oxidação \, fosforilativa
+$$ {#eq-eqGlicoPlus}
+
+
+
+
+|       Vale ressaltar uma simplificação pela substituição de GTP e GDP por ATP e ADP (ciclo de Krebs), uma vez que são interconversíveis no metabolismo. Também se assume para simplificação a interconversão de FAD e NAD na reação líquida [@alberty1996calculation] :
+
+$$
+FADH + NAD^+ \rightleftarrows FAD + NADH
+$$ {#eq-eqNadFad}
+
+|       De posse das reações presentes na @eq-eqGlicoPlus e do vetor de rotas obtido anteriormente, pode-se construir a nova matriz estequiométrica e aplicar a solução de mínimos quadrados (@eq-eqMtrxGlicMinQuad) para se obter a reação líquida da glicólise. E para isso basta aplicar a  @eq-eqMtrxDot) de produto cruzado:
+
+```{r}
+A <- matrix(c(-1, 0, 0, 0, -2, 0, -1, -3, -2, 0, -1, -3, -2, -1, 
+              -4, 1, 2, -1, 0, 0, 2, 0, 1, 3, 2, 1, 4, -1, 2, 0,
+              -2, 4, 0, -1, 1, 0, 0, 1, -1, 0, 0, 1, 2, 0, 0, 0,
+              0, -1 / 2), nrow = 12, byrow = TRUE) 
+# matriz A de estequiometria de reações
+rownames(A) <- list("glicose", "Pi", "ADP", "NAD", "piruvato", "ATP", 
+                    "NADH", "H2O", "CoA", "acetil CoA", "CO2", "O2") 
+# etiquetas dos reagentes
+A # matriz A de reações
+y <- c(1, 2, 2, 12) # vetor y de rotas
+
+A %*% y
+# solve(t(A)%*%A)%*%t(A)%*%y
+```
+
+|       A partir desse resultado pode-se montar a reação líquida final da via glicolítica como:
+
+$$
+ glicose + 6O_2 + 40 ADP + 40 Pi \rightleftarrows 6CO_2+ 40ATP
+$$ {#eq-eqBalGlico}
+
+|       O exemplo acima ilustra o emprego de álgebra matricial para a solução de problemas de balanceamento de reações bioquímicas. Por sua natureza trata-se de método abrangente e de natureza algorítmica (portanto, programável), embora não seja o único. Outras propostas de solução para o balanceamento e conservação de massa e carga englobam a *inspeção direta* por triagem e erro a partir de regras mnemônicas, o balanceamento por *método de meia-equação*, e o *método de número de oxidação*, não discutidos aqui.

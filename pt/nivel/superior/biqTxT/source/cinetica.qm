@@ -1,0 +1,154 @@
+---
+title: "Cinética Enzimática"
+lang: pt
+---
+
+
+```{=html}
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+```
+```{=html}
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+```
+
+
+
+## Introdução
+
+# Introdução {#Enzimas}
+
+|       Enzimas ou moléculas com comportamento enzimático (RNA catalítico, por ex) podem ser observadas quanto à sua estrutura, mecanismo de ação, e comportamento cinético. Uma equação que define o comportamento de uma enzima *E* sobre seu substrato *S* é:
+
+```{=tex}
+\begin{equation}
+E+S \begin{array}{c}
+_{k1}\\
+ \rightleftharpoons\\
+^{k2} \end{array} ES 
+\begin{array}{c}
+_{k3}\\
+\rightarrow \\
+  ^{}\end{array}E+P
+\end{equation}
+```
+
+|       Nessa equação, *P* representa o produto da reação, *ES* o complexo ativado no estado de transição, e *k1*, *k2* e *k3* as constantes de velocidade da reação.
+
+
+## Detalhes
+
+|       Aplicando-se alguns formalismos, tais como a   aproximação de Briggs-Haldane para o estado estacionário, e o tratamento de Henri-Michaelis-Menten, pode-se obter uma relação matemática que define a curva de velocidade da reação enzimática com o aumento do substrato, como segue:
+
+```{=tex}
+\begin{equation}
+v=\frac{Vm*S}{Km+S}
+\end{equation}
+```
+
+|       Nessa equação, *Km* representa a *constante de Michaelis-Menten*, e *Vm* a velocidade limite da reação (ou *velocidade máxima*, como trazem os livros clássicos na área). 
+
+|       A constante *Km*, por sua vez, pode ser definida a partir das constantes de velocidade da equação \@ref(eq:diagMM) como:
+
+```{=tex}
+\begin{equation}
+Km=\frac{k1+k3}{k2}
+\end{equation}
+```
+
+
+```{r, echo = FALSE, figMM, fig.cap="Curva de Michaelis-Mentem para uma enzima exibindo Vm=10 e Km=0,5 (50 curvas)."}
+Vm <- 10
+Km <- 0.5
+curve(Vm * x / (Km + x),
+  xlim = c(0, 10),
+  xlab = "[S]", ylab = "v"
+)
+abline(h = 5, lty = 2, col = "blue")
+abline(v = 0.5, lty = 2, col = "blue")
+text(x = 1, y = 0.2, "Km", col = "blue")
+text(1, 5.3, "Vm/2", col = "blue")
+```
+
+
+|       Por essa relação, o valor de *Km* é representado pelo teor de substrato que confere metade do valor de *Vm* para a reação. Observe que pela equação o valor de *Km* no denominador influencia inversamente a velocidade *v* da reação; ou seja, quanto maior o valor de *Km*, menor a taxa da reação enzimática.
+
+|       Ainda que a obtenção dos parâmetros cinéticos de uma enzima seja bastante evidente pelo gráfico acima, na prática a assíntota da curva, ou seja, a região de teor de substrato em que ela atinge um ponto máximo, é mais difícil de ser visualizada.
+|       Isso decorre de várias situações, tais como a quantidade insuficiente de substrato para se atingir um máximo, ou efeitos de viscosidade em alta concentração de substrato (reduzindo, portanto, a velocidade da reação), ou mesmo a ação desse como inibidor da enzima, quando em excesso, dentre várias outras situações.
+
+|       Dessa forma, busca-se obter os parâmetros cinéticos *Km* e *Vm* por linearizações, ou seja, transformações matemáticas que visem obter uma reta, ao invés de uma curva.
+
+|       Uma reta é bem mais simples de ser compreendida que uma curva. Curvas podem ser hiperbólicas (como a de *Michaelis-Menten), exponeciais, de potência, sigmoidais, e outros tantos tipos. Cada qual é representado por uma equação específica.
+
+|       Já retas são bem mais simples, já que possuem apenas um *intercepto (a)* em cada eixo, e uma *inclinação (b)*, definidas genericamente por: 
+
+```{=tex}
+\begin{equation}
+y = a + b *x
+\end{equation}
+```
+|       Dessa forma a conversão de uma curva de *Michaelis-Mentem* em reta facilita bastante o cálculo dos parâmetros cinéticos, linearizando a curva homônima.
+
+
+## Linearizações
+
+|       Diversas são as linearizações encontradas na literatura para a equação de Michaelis-Mentem. As três transformações mais empregadas são exemplificadas abaixo, juntamente com a curva direta de Michaelis-Mentem.
+
+```{r, echo=FALSE, figLin, warning=FALSE, fig.cap="Principais linearizações da equação de Michaelis-Menten."}
+S <- c(0.1, 0.2, 0.5, 1, 5, 10, 20) # cria um vetor para substrato
+Km <- 0.5
+Vm <- 10 # estabelece os parâmetros enzimáticos
+v <- Vm * S / (Km + S) # aplica a equação de MM ao vetor de S
+par(mfrow = c(2, 2)) # estabelece área de plot pra 4 gráficos
+plot(S, v, type = "o", main = "Michaelis-Mentem")
+plot(1 / S, 1 / v, type = "o", main = "Lineweaver-Burk")
+plot(v, v / S, type = "o", main = "Eadie-Hofstee")
+plot(S, S / v, type = "o", main = "Hanes-Woolf")
+layout(1) # volta à janela gráfica normal
+```
+
+|       Dentre essas transformações lineares para cinética enzimática, a mais frequentemente encontrada nos textos afins é a de *Lineweaver-Burk* (também conhecido como *gráfico duplo-recíproco*), e cuja equação é dada abaixo:
+
+```{=tex}
+\begin{equation}
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km}{Vm}*\frac{1}{S}
+\end{equation}
+```
+
+
+### Enzimas alostéricas
+
+|       O *alosterismo* constitui um dos principais recursos da metabolismo para a regulação dos níveis de compostos celulares. De etiologia grega (*allos = outro, stereos = estrutura*), uma *enzima alostérica* é aquela que altera seu perfil catalítico em função de transições conformacionais mediadas por moléculas que interagem fora de seu sítio ativo, sejam elas substrato, coenzimas, ou outros compostos. 
+
+|       O efeito resultante é uma modulação da atividade enzimática, quer ativando-a ou inibindo-a. Enzimas alostérica comportam-se portanto como *enzimas regulatórias* em uma rota metabólica, e cuja atividade pode ser modulada em função de *retroinibição* ou *inibição por feedback*, bem como por *ativação pelo precursor*. 
+|       A função que define uma enzima alostérica em função do teor de seu substrato dada abaixo:
+
+```{=tex}
+\begin{equation}
+v=\frac{Vm*S^n}{(Km^n+S^n)}
+\end{equation}
+```
+
+|       Nessa equação, *nH* representa o *coeficiente de cooperatividade ou constante de Hill* para a ligação com moléculas de *S* (de maneira similar à ligação de $O_{2}$ à hemoglobina. 
+
+
+```{r, echo=FALSE}
+v <- function(S, Vm = 10, Km = 3, nH = 2) {
+  Vm * S^nH / (Km^nH + S^nH)
+}
+curve(v,
+  from = 0, to = 10, n = 100, xlab = "S", ylab = "v",
+  bty = "L"
+) # eixos em L
+```
+
+
+|       De modo geral, o valor de *nH* pode ser inferior à unidade (*cooperatividade negativa*) ou superior a essa (*cooperatividade positiva*).  
+
+
+

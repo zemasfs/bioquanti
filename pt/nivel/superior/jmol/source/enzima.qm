@@ -1,0 +1,309 @@
+---
+title: "Enzimas"
+---
+
+<!-- Google tag (gtag.js)-->
+
+```{=html}
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+```
+```{=html}
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+```
+
+
+## Sítio ativo
+
+|       Carregue o modelo [1hew](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1hew&script=Console){target="_blank"}
+referente à lisozima e visualize sua estrutura desprovida do solvente: 
+
+```{r, eval=FALSE}
+delete water; cartoon only; color structure
+```
+
+
+|       Identifique e destaque os resíduos do *sítio ativo*\index{sítio ativo}:
+
+
+```{r, eval=FALSE}
+ select all; color grey; select (asp52,glu35); wireframe 100;color cpk
+```
+
+|       Agora clique nos dois *resíduos catalíticos* para identificá-los. Veja qual ligante (inibidor, por ex) está presente na estrutura. Para isto:
+
+```{r, eval=FALSE}
+select hetero;show groups
+```
+
+|       Com base na listagem dos grupos, identifique o inibidor\index{inibidor} que está  complexado ao sítio ativo:
+
+```{r, eval=FALSE}
+select nag;wireframe 100;color green
+```
+
+|       Trata-se do inibidor *NAG, N-acetil-glicosamina*. Por esta observação, você diria que a interação com o inibidor ocorre na superfície da proteína ou em seu *cerne* (centro) ? Experimente:
+
+
+```{r, eval=FALSE}
+select protein;color grey;spacefill only; spacefill 500; select glu35;color blue;select asp52;color magenta
+```
+
+|       Gire a molécula e observe como o trisacarídio interage na fenda do sítio ativo da enzima.
+
+
+
+##  Coevolução e sítio ativo
+
+|       Enzimas podem atuar de modo similar funcionalmente, sugerindo a conservação de seu sítio ativo. Para ilustrar isso, *carregue simultaneamente dois arquivos PDB*, referentes à acetilcolinesterase humana (*PDB 1b41*) e do peixe elétrico *Torpedo californica* (*PDB 1acj*): 
+
+```{r, eval=FALSE}
+load files "1acj.pdb" "1b41.pdb" # Importante: os arquivos precisam estar no diretório principal do Jmol (normalmente o diretório raiz, se não hover comando para sua alteração).
+```
+
+|       Agora visualize ambas as estruturas:
+
+```{r, eval=FALSE}
+frame*
+```
+
+
+|       Defina os sítios ativos presentes em ambas os modelos:
+
+```{r, eval=FALSE}
+define peixe 200,440,357/1.1
+define humana 203,334,447/2.1
+```
+
+
+|       Agora restrinja a visualização apenas aos sítios ativos das enzimas: 
+
+```{r, eval=FALSE}
+restrict peixe,humana; wireframe 100; select peixe; color blue; select human; color green
+```
+
+
+|       Por fim, sobreponha ambos os sítios por um algoritmo do *Jmol* para **homologia estrutural**\index{homologia estrutural}, e amplie o resultado focando num dos sítios:
+
+```{r, eval=FALSE}
+compare {2.1} {1.1} rotate translate 5.0; zoom {humana} 0
+```
+
+
+|       Gire as moléculas e observe a sobreposição topológica precisa de alguns resíduos do sítio ativo da acetilcolinesterase humana e de peixe. 
+
+
+
+##  Ajuste induzido
+
+
+|       Substratos podem encaixar-se no sítio ativo de enzimas pelo *modelo chave-fechadura*\index{modelo chave-fechadura} ou de *simetria*\index{modelo de simetria} de Monod, Wyman e Changeaux (MWC), bem como pelo *modelo de ajuste induzido*\index{modelo de ajuste induzido} de Koshland, Nemethy e Filmer (KNM).
+
+|       Esse último pode ser visualizado baixando-se dois arquivos referentes à *hexoquinase*, com e sem o substrato presente na estrutura, e sobrepondo-as para interpretação: 
+
+
+```{r, eval=FALSE}
+load files "2yhx.pdb" "1hkg.pdb";
+frame*;cartoon only
+select 2.1;color green;select otg;wireframe 150;color cpk
+select 1.1;color grey
+compare {2.1} {1.1} rotate translate 2
+```
+
+
+|       Lembre-se de que a molécula *OTG* pode ser visualizada previamente para *2yhx* por *"show groups"*. No arquivo PDB ela representa *O-toluilglicosamina*, um inibidor que compete pela glicose pelo sítio ativo da enzima.
+
+|       Rotacione a estrutura e perceba que a enzima em verde (com OTG) está mais fechada do que a cinza (sem OTG). Isso é interpretado como um *ajuste induzido*, com o fechamento da dobradiça entre os dois domínios da enzima ocorrendo somente na presença da molécula de OTG e, por dedução, do substrato da hexoquinase (glicose).
+
+##    Ativação de enzimas
+
+|       Como moléculas, enzimas não diferenciam substratos alimentares de endógenos. Assim, enzimas proteolíticas não distinguem se uma proteína a ser degradada veio da dieta ou do endotélio do vaso sanguíneo. Dessa forma, a evolução propiciou eventos de ativação enzimática para precursores inativos, ou zimogênios\index{zimogênio}, fora de seu tecido produtor, de modo a minimizar os riscos de autodigestão de proteínas intracelulares. 
+
+|       Um exemplo de *ativação de zimogênios* pode ser observado a partir do quimotripsinogênio. Para isso carregue o arquivo [2cga](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=2cga&script=Console){target="_blank"}, e represente-o em fitas com uma cor única:
+
+```{r, eval=FALSE}
+show trace;color grey
+```
+
+
+|       Rode a estrutura e perceba que o cristal está representado por duas moléculas, suscitando uma estrutura quaternária. Na verdade, o quimotripsinogênio possui apenas uma cadeia polipeptídica (*estrutura terciária*), embora tenha sido depositado no PDB como um cristal contendo duas moléculas, provavelmente por alguma limitação técnica.
+
+
+|       Durante a ativação do zimógeno para sua forma ativa, quimotripsina, quatro ligações peptídicas são hidrolisadas, liberando dois peptídios. Ilustrando: 
+
+```{r, eval=FALSE}
+cartoon only;color lightblue;select (13,14,15,16,146,147,148,149);color red
+```
+
+
+
+|       O resíduo amino terminal resultante, *Ile16*, dobra-se para o cerne proteico interagindo com *Asp194 *, promovendo uma alteração conformacional local:
+
+```{r, eval=FALSE}
+select ile16; wireframe 0.5;color yellow
+select asp194;wireframe 0.5;color green
+```
+
+
+|       Essa transconformação produz um bolso hidrofóbico para ligação do substrato, próximo à *tríade catalítica* da enzima (Asp102, His57, e Ser195). Ilustrando essa transição conformacional:
+
+```{r, eval=FALSE}
+select(asp102,his57,ser195);wireframe only; wireframe 0.5;color cpk
+```
+
+
+##        Enzimas alostéricas
+
+|       Por definição, o termo refere-se a enzimas usualmente dotadas por múltiplas subunidades, e que apresentam sítios de regulação distintos do sítio ativo. Nesses assim chamados *sítios regulatórios*\index{sítio regulatório}, a ligação de uma molécula efetora pode elevar ou reduzir a atividade da enzima, um predicado ausente em catalizadores químicos.
+
+|       Um exemplo ilustrativo de uma enzima alostérica constitui a *fosfofrutoquinase-1* ou *PFK1*, a qual participa do metabolismo anaeróbio de produção de energia a partir da oxidação de carboidratos Assim, carregue-a por [1pfk](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1pfk&script=Console){target="_blank"}
+".pdb", represente-a como de praxe, e identifique seu sítio ativo: 
+
+```{r, eval=FALSE}
+cartoon only;color grey;select (asp127,arg171);wireframe 150;color pink
+```
+
+
+|       Agora identifique as moléculas não proteicas no modelo:
+
+
+```{r, eval=FALSE}
+select all;show groups
+```
+
+
+|       Observe a presença das moléculas *FBP (frutose bifosfato)*, e *ADP (adenosina difosfato)*. Identifique-as na estrutura: 
+
+
+
+```{r, eval=FALSE}
+select (fbp,adp);wireframe 150;color cpk
+```
+
+
+|       Veja que surgiram 6 moléculas adsorvidas ao cristal da enzima. Para melhor compreensão desse quantitativo, colorize a proteína por suas cadeias: 
+
+```{r, eval=FALSE}
+select protein;color chain
+```
+
+
+|       Rode a estrutura e perceba tratar-se de um dímero, com cada subunidade contendo 2 moléculas de ADP e uma molécula de FBP. Na verdade, a PFK1 é um tetrâmero, embora sua estrutura cristalografada e depositada no PDB apresente apenas duas cadeias. Amplie a estrutura e veja esses detalhes. 
+
+|       Identifique o efetor alostérico por:
+
+
+```{r, eval=FALSE}
+select adp326:*.c8;label "ADP efetor";color label black
+```
+
+|       Se achar que o texto está mal posicionado pra leitura, tente acrescentar ao final:
+
+```{r, eval=FALSE}
+set labelfront
+```
+
+|       Em poucas palavras, a PFK1 converte uma molécula de frutose-6P em frutose 1,6-biP (FBP), reação catalizada na presença de ATP. Assim, o ADP atua como um regulador positivo de sua atividade, ou ativador alostérico (veja: excesso de ADP sinaliza à célula uma necessidade para síntese de ATP).
+
+|       Um efetor alostérico promove mudanças conformacionais na interação com seu sítio, as quais se propagam ao longo da estrutura proteica atingindo o sítio ativo. Perceba que na estrutura gerada, o sítio alostérico da PFK1 intercala-se entre as cadeias do dímero, e distancia-se consideravelmente do sítio ativo:
+
+```{r, eval=FALSE}
+select(asp127,arg171)
+wireframe only;wireframe 0.3
+color pink
+```
+
+
+|       Para calcular essa distância, dê um duplo clique no ADP efetor e aproxime o ponteiro do mouse ao sítio ativo da enzima. A título de comparação, distâncias entre 3 e 6 nm são comumente encontradas para bicamadas lipídicas.
+
+
+|       Como esses compostos adsorvem na enzima em sítios distintos do sítio ativo, são denominados *efetores alostéricos*\index{efetor alostérico}, e seus sítios de adsorção, *sítios alostéricos*\*index{sítio alostérico}}. A interação de um efetor num sítio alostérico altera localmente a conformação da proteína atingindo seu sítio ativo e resultando na modulação de sua atividade biológica. Assim, dependendo do efetor, a subunidade equilibra-se entre a **forma inativa T e a forma ativa R**. A esse equilíbrio propõe-se *dois modelos*, o **modelo sequencial** onde cada efetor altera sequencialmente a conformação da cadeia seguinte, e o **modelo em conserto**, em que um efetor pode alterar simultaneamente mais de uma cadeia polipeptídica.
+
+
+##  Mecanismos de Catálise
+
+|       Enzimas catalisam reações químicas por basicamente três modos distintos: *catálise ácido-básica, covalente e metálica*. No entanto, a catálise ácido-básica e a catálise covalente cobrem a imensa maioria dos processos, devido à ionização de resíduos de aminoácidos do centro ativo das enzimas. Independente do modo de ação, esses mecanismos envolvem:
+
+1) a redução dos graus de liberdade e consequente redução da entropia para a reação;
+2) o *efeito de proximidade*\index{efeito de proximidade} do substrato e o posicionamento correto desse no sítio ativo da enzima;
+3) ligações fracas entre o substrato e a enzima;
+4) a possibilidade de ajustes induzidos do reagente sobre a enzima.
+
+|       Entre as interações fracas, destacam-se os pares iônicos que podem ser formados com as cadeias laterais de resíduos de Asp, Glu, His, Lys, Arg, His, bem como transferências de grupos envolvendo resíduos de Ser, Cys e Tyr.
+
+###  Catálise ácido-básica.
+
+
+|       Como se dá a catálise da lisozima [1hew](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1hew&script=Console){target="_blank"}
+ sobre seu substrato ? Resumidamente, uma porção de seis resíduos de um polissacarídio da parede celular liga-se na fenda da enzima. A clivagem ocorre então entre o 4o. e o 5o. resíduo da unidade do hexassacarídio, e envolve um mecanismo de catálise ácida para o rompimento da ligação glicosídica. Nessa, *Glu35*-COOH encontra-se em uma fenda apolar que contribui para seu pKa incomum de 6,5 (o normal seria abaixo de 4,5). *Asp20*-COOH, por sua vez, encontra-se em um ambiente mais polar, possuindo valor de pKa de 3,5. A enzima como um todo desenvolve sua atividade ótima em pH 5,0, meio-termo entre os dois valores de pKa dos resíduos do sítio ativo.
+
+
+|       Durante a catálise o resíduo de Glu35-COOH encontra-se protonado em pH neutro, atuando como um ácido e doando um próton ao oxigênio envolvido na ligação glicosídica entre o 4o. e 5o. resíduo do hexassacarídio, e cuja ligação encontra-se ''torcida'' no interior da enzima, facilitando seu rompimento. Asp52-COO$^{-}$, por sua vez, encontrando-se desprotonado no pH neutro, atua formando um par iônico com o intermediário instável. O ataque nucleofílico resulta na formação de um complexo covalente intermediário, um *oxocarbocátion*\index{oxocarbocátion}.
+
+|       Na fase seguinte, Glu35 atua como uma base, aceitando um próton de uma molécula de água (nucleófilo) resultante da substituição de um álcool formado na primeira reação (grupo liberado), com consequente adição do íon hidróxido ao carbocátion. Existem outras interações fracas que estabilizam a ligação do inibidor (e portanto do substrato) ao sítio ativo da enzima. Exemplificando, ligações de H entre grupos -NH$_{2}$, -CO e -COOH de resíduos próximos, tais como Asn, Ala e Trp, aos grupos -OH do trissacarídio. 
+
+
+|       Você pode identificá-los restringindo a visualização da lisozima:
+
+```{r, eval=FALSE}
+restrict (asn59,ala107,trp63,trp62,nag);wireframe only; wireframe 100;color structure
+```
+
+
+|       E pode visualizar cada resíduo envolvido por: 
+
+
+```{r, eval=FALSE}
+select (asn59,ala107,trp63,trp62) and *.ca; label "\%n \%R"
+```
+
+
+|       Pode-se também definir esse conjunto de resíduos para uma análise futura, ou ampliação focada: 
+
+
+```{r, eval=FALSE}
+select (asn59,ala107,trp63,trp62)
+define estab selected
+select estab
+zoom {estab} 0
+```
+
+|       O efeito visual é maior quando se parte da visualização global da enzima. Uma dessas interações pode ser vista pela ligações de hidrogênio presentes:
+
+```{r, eval=FALSE}
+calculate hbonds
+```
+
+
+|       Uma opção mais ágil consiste em observar as interações do ligante diretamento do sítio do PDB, [RSCB-PDB](https://www.rcsb.org/){target="_blank"}. Para isso, digite "1hew" no campo de busca para obter a lisozima, desça até *Small Molecules* e clique na imagem de *2D Diagram \& Interactions*.
+
+
+##  Catálise covalente
+
+|       Outro tipo de mecanismo enzimático envolve uma ligação covalente do substrato num resíduo-chave do sítio ativo da enzima, com formação de um produto intermediário que é liberado antes do final da reação. O exemplo a seguir descreve o mecanismo de catálise covalente da quimotripsina,  [5cha.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=5cha&script=Console){target="_blank"}, enzima proteolítica que abriga a *tríade catalítica Ser195, His57 e Asp102*.
+
+|       Resumidamente, a interação do substrato peptídico comprime a distância de dois resíduos específicos no sítio ativo da enzima, formando uma *ligação de H* entre His57 (eletrófilo, com pKa anômalo de 11 na enzima) e Ser195, promovendo uma abstração de um próton dessa tornando-a um potente nucleófilo. Na sequência, Ser195 promove um ataque eletrofílico a uma carbonila do substrato (ligação peptídica), resultando num intermediário tetraédrico covalente acil-enzima (*fase de acilação*). Dessa forma, Asp102 estabiliza His57 com uma ligação de H de barreira energética muito baixa, próxima da de uma ligação covalente, e permitindo o escoamento de elétrons ao segundo nitrogênio do anel imidazólico de His57, elevando sua alcalinidade, e promovendo sua capacidade de desprotonação de Ser195.
+
+|       Uma ligação C-O dupla do substrato é convertida a simples na formação do **intermediário tetraédrico**, produzindo por consequência um *oxiânion*\index{oxiânion} (oxigênio carregado negativamente) o qual ocupa uma posição vacante (*fenda oxianiônica*\index{fenda oxianiônica}) e interage com a cadeia polipeptídica da enzima, especificamente aos grupos -NH$_{2}$ de Gly193 e Ser195.
+
+ Na *fase de deacilação* subsequente, os passos são invertidos, com um ataque nucleofílico promovido por uma molécula de água interagindo com His57 ao carbono acila do substrato. Dessa forma, His57 atua como um ácido, doando um próton ao nitrogênio do grupo pertencente à ligação peptídica a ser clivada. Na fase final o peptídio é liberado a partir da clivagem da ligação entre Ser195 e o carbono da carbonila (-C=O) do substrato.
+ 
+ 
+|       Dessa forma, o mecanismo proposto para a quimotripsina inclui uma catálise covalente (pelo oxigênio nucleofílico), junto a uma catálise ácido-básica (doação de próton de grupo 
+
+|       Para visualizar os atores envolvidos nessa catálise, carregue a quimotripsina novamente por [5cha](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=5cha&script=Console){target="_blank"} e visualize a proximidade de sua tríade catalítica: 
+
+```{r, eval=FALSE}
+trace only
+color grey
+select (Ser195,His57,Asp102) and *.ca
+label "\%n \%R"
+color label orange
+set labelfront
+```
+

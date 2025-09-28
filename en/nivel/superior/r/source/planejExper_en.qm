@@ -1,0 +1,268 @@
+---
+title: "Experimental design"
+bibliography: referencias.bib
+---
+
+## Matrix system
+
+| Recalling a simple *matrix system*, as seen in the *Biothermodynamics* chapter:
+
+$$
+a_{11}*x_1 + a_{12} * x_2 = b_1
+\\
+a_{21}*x_1 + a_{22} * x_2 = b_2
+$$ {#eq-eqMatrix}
+
+| That is,
+
+$$
+A = \begin{bmatrix}
+a_{11} & a_{12}\\
+a_{21} & a_{22}
+\end{bmatrix} ,
+$$
+
+$$
+x = \begin{bmatrix}
+b_1\\
+b_2
+\end{bmatrix} ,
+$$
+
+$$
+b = \begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix}
+$$
+
+| Now solve for the values ​​of *x* (or $\Delta$'s) linearly:
+
+$$
+A * x = b
+$$ {#eq-eqAxb}
+
+| Using *matrix algebra*, the @eq-eqAxb is solved for the values ​​of *x*:
+
+$$
+x = A^{-1} * b
+$$ {#eq-eqAm1xb}
+
+| Thus, the matrix solution, widely used in multivariate situations, such as *response surface methodology* and *factorial experiment*, can be obtained by the following @eq-linMatr:
+
+$$
+\beta = (X^T \; X)^{-1} \; X^T*y
+$$ {#eq-linMatr}
+
+| Other examples are illustrated in @eq-eqsLineares:
+
+$$
+y = b_0+b_1*x, \, linear\ fit
+\\
+y = b_0+b_1*x_1+b_2*x_2+...+b_n*x_n, \, multilinear\ fit
+\\
+y = b_0+b_1*x_1+b_2*x_2+...+b_n*x_n, \, linear\ response\ surface\ methodology
+\\
+y = b_0+b_1*x_1+b_2*x_2+b_{12}*x_1*x_2, \, factorial\ design\, 2^2
+\\
+y = b_0+b_1*x_1+b_2*x_2+b_3*x_3+b_{12}*x_1*x_2+,b_{13}*x_1*x_3+b_{23}*x_2*x_3+b_{123}*x_1*x_2*x3 \, experiment \, factorial \, 2^3
+\\
+y = b_0+b_1*x_1+b_2*x_2+b_{11}*x_1^2+b_{22}*x_2^2+b_{12}*x_1*x_2, \, quadratic \, response \, surface \, methodology
+\\
+$$ {#eq-eqsLineares}
+
+| As a rule, all applications listed in @eq-eqsLineares can be solved with the help of matrix relations of the equations @eq-linMatr (linear, multilinear and linear response surface adjustments) or @eq-eqAxb (factorial designs). Two situations of this nature are exemplified below.
+## Reaction Yield & Factorial Design 2$^{2}$
+
+| The simplest *factorial experiment* is the one that evaluates the *response* of an experiment (yield, for example) in which two *factors* (temperature and type of catalyst, for example) are varied at two *levels* each (low and high). The table prepared in the excerpt below from the data provided by Neto et al [@neto2010fazer] exemplifies this situation.
+
+```{r}
+# Factorial design
+
+# Experiment data
+temp <- c(40, 60, 40, 60)
+catalis <- c("A", "A", "B", "B")
+rendim <- c(59, 90, 54, 68)
+
+# Factorial design table
+
+tab.fat <- data.frame(temp, catalis, rendim)
+knitr::kable(tab.fat, caption = "Factorial experiment data (Neto et al., 2010).", "pipe") # table
+```
+
+| To conduct matrix analysis of the data, it is necessary to convert the table of independent variables (predictors) into a *coded design matrix*, in which high values ​​(*upper level*) are represented by *+1* and low values ​​(*lower level*) by *-1*. In addition, it is also necessary to assign *+1* to the 1st. column, and produce a 4th column containing the product of the encoded predictors. For example, for temperature at 40 (-1) and catalyst B (+1), the row will contain the product -1. This final 4x4 matrix is ​​called the *contrast coefficient matrix*:
+
+$$
+X = \begin{bmatrix}
+1 & -1 & -1 & 1 \\
+-1 & -1 & 1 & 1 \\
+-1 & 1 & -1 & 1 \\
+1 & 1 & 1 & 1 \\
+\end{bmatrix}
+$$
+
+| In addition, it is necessary to divide the result of the matrix operation by a specific scalar vector. In short: the coded matrix X of the predictors is created, the matrix Y of the response is applied to @eq-eqAxb, and the result is divided by a characteristic vector of the factorial design 2$^{2}$ (*c(4,2,2,2)*). The code snippet below solves the problem raised:
+
+```{r}
+# Creation of the coded planning matrix
+X <- matrix(c(1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, 1, 1, 1),
+nrow = 4, byrow = TRUE)
+# Creation of the yield matrix
+Y <- as.matrix(rendim)
+# Determination of the beta coefficients:
+beta <- t(X) %*% Y / c(4, 2, 2, 2)
+beta
+```
+
+| Thus, the result is interpreted as:
+
+$$
+\begin{pmatrix}
+M \\
+T \\
+C \\
+TC \\
+\end{pmatrix} =
+\begin{pmatrix}
+67.75 \\
+22.50 \\
+-13.50 \\
+-8.50 \\
+\end{pmatrix}
+$$ {#eq-factor22}
+
+Where *M* represents the *overall mean* of the response, *T* and *C* the *main effects* (temperature and catalyst), and *TC* the *interaction effect*. In summary, the results suggest that 1) the temperature favored the yield, especially for catalyst A, 2) there is a reduction in yield when replacing catalyst A with B, and c) the highest yields are obtained with catalyst A at the highest temperature. Expressing these results in the multiple linear function:
+
+$$
+y=67.75+22.5*T-13.5*C-8.5*T*C
+$$ {#eq-eqFator}
+
+| Interestingly, we arrive at the same results if, instead of applying @eq-eqAxb, we use @eq-linMatr, followed by multiplication (and not division) by another vector (*c(1,2,2,2)*:
+
+```{r}
+beta <- (solve(t(X) %*% X) %*% t(X) %*% Y) * c(1, 2, 2, 2)
+beta
+```
+
+## Response Surface Methodology (RSM)
+
+| This multivariate statistical technique is also commonly used in modeling responses influenced by more than one factor, sometimes associated with factorial design, and with a view to optimizing a response without the need to evaluate all possible combinations. This can be particularly useful when one wants to optimize a test whose response depends, for example, on scalar predictors, such as the concentration range of a given reagent and the pH conditions.
+| For example, for a *linear response surface* [@neto2010fazer], in a test in which one wishes to verify the best yield (*rend, %*) of a reaction by varying 3 levels of reagent concentration (*conc, %*) and three magnetic stirring speeds (*agit, rpm*), one can, as before, prepare the *contrast matrix* from the information in the following table:
+
+```{r}
+# Data for response surface methodology
+
+conc <- c(45, 55, 45, 55, 50, 50, 50)
+agit <- c(90, 90, 110, 110, 100, 100, 100)
+x1 <- c(-1, 1, -1, 1, 0, 0, 0)
+x2 <- c(-1, -1, 1, 1, 0, 0, 0)
+yield <- c(69, 59, 78, 67, 68, 66, 69)
+
+tab.msr <- data.frame(conc, agit, x1, x2, yield)
+knitr::kable(tab.msr, caption = "Experiment data of linear response surface methodology
+(Neto et al, 2010).", "pipe") # table
+```
+
+```{r}
+
+# Criação da matriz de coeficientes de contraste
+X <- matrix(c(1, 1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 0, 0, 0, -1, -1, 1, 
+              1, 0, 0, 0), nrow = 7, byrow = FALSE)
+
+# Criação da matriz de rendimento
+Y <- as.matrix(rendim)
+
+# Determinação dos coeficientes beta:
+beta <- solve(t(X) %*% X) %*% t(X) %*% Y
+beta
+```
+
+| Thus, the linear function that expresses the response surface will be:
+
+$$
+y=68.00-5.25*conc+4.25*agit
+$$ {#eq-eqMsr}
+
+### Quadratic Response Surface
+
+| Sometimes the linear model may not fit the experimental design, which can be verified by an *Analysis of Variance (ANAVA)* of the experiment. In these cases, a *quadratic surface methodology* can be applied, which can be expressed as seen in @eq-eqsLineares. In these cases, a construction called *star planning* is common, which adds an identical one rotated by 45$^{o}$ to the initial planning, and whose new points are $\sqrt{2}$ coded units away from the central point. The example below aims to illustrate this methodology.
+
+```{r}
+
+# Dados para superfície quadrática de resposta
+
+conc <- c(30, 40, 30, 40, 35, 35, 35, 28, 35, 42, 35)
+agit <- c(115, 115, 135, 135, 125, 125, 125, 125, 139, 125, 119)
+x1 <- c(-1, 1, -1, 1, 0, 0, 0, -sqrt(2), 0, sqrt(2), 0)
+x2 <- c(-1, -1, 1, 1, 0, 0, 0, 0, sqrt(2), 0, -sqrt(2))
+rendim <- c(86, 85, 78, 84, 90, 88, 89, 81, 80, 86, 87)
+
+tab.msr2 <- data.frame(conc, agit, x1, x2, rendim)
+knitr::kable(tab.msr2, caption = "Dados de experimento de metodologia de 
+             superfície quadrática de resposta (Neto e cols, 2010).", "pipe")
+# tabela
+```
+
+| This time the *contrast coefficient matrix* expands to six columns as a function of the terms *x$_{1}^{2}$*, *x$_{2}^{2}$*, and *x$_{1}$x$_{2}$*, becoming:
+
+$$
+\begin{pmatrix}
+1 & -1 & -1 & 1 & 1 & 1 \\
+1 & 1 & -1 & 1 & 1 & -1 \\
+1 & -1 & 1 & 1 & 1 & -1 \\
+1 & 1 & 1 & 1 & 1 \\
+1 & 0 & 0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 & 0 \\
+1 & -\sqrt(2) & 0 & 2 & 0 & 0 \\
+ 1 & 0 & \sqrt(2) & 0 & 2 & 0 \\
+ 1 & \sqrt(2) & 0 & 2 & 0 & 0 \\
+ 1 & 0 & -\sqrt(2) & 0 & 2 & 0 \\
+\end{pmatrix}
+$${#eq-msr2)
+
+
+| The procedure for the quadratic surface repeats the matrix operation performed with the linear one:
+
+```{r}
+
+# Creating the matrix of contrast coefficients for the quadratic surface
+X <- matrix(c(rep(1, 11), -1, 1, -1, 1, 0, 0, 0, -sqrt(2),
+0, sqrt(2), 0, -1, -1, 1, 1, 0, 0, 0, 0, sqrt(2),
+0, -sqrt(2), 1, 1, 1, 0, 0, 0, 2, 0, 2, 0, 1, 1,
+1, 1, 0, 0, 0, 0, 2, 0, 1, 1,
+1, 1, 0, 0, 0, 0, 2, 0, 2, 1, -1, -1, 1, 0, 0, 0, 0,
+0, 0, 0), nrow = 11, byrow = FALSE)
+
+# Creating the yield matrix
+Y <- as.matrix(rendim)
+# Determining the beta coefficients:
+beta <- solve(t(X) %*% X) %*% t(X) %*% Y
+beta
+```
+
+| The result expresses the quadratic function of the surface found, as follows:
+
+$$
+y=89.00+1.51*x_1-2.36*x_2-2.81*x_1^2-2.81*x_2^2+1.75*x_1*x_2
+$$ {#eq-eqMsr2}
+
+| From the result above it is possible to predict the optimized conditions for the test. In this sense, `R` allows, for example, the construction of a three-dimensional graph that represents the function obtained, and without the need for an additional package: as follows:
+
+```{r, fig.cap = "Quadratic surface described by the MSR equation with superposition of experimental values." }
+
+## Quadratic response surface (MSR)
+
+x <- seq(-1, 1, 0.1) # predictor x
+y <- seq(-1, 1, 0.1) # predictor y
+mrs <- function(x, y) {
+89.00 + 1.51 * x - 2.36 * y - 2.81 * x^2 - 2.81 * y^2 + 1.75 * x * y
+} # function applied to predictors
+z <- outer(x, y, mrs) # 3D plot output (response)
+res <- persp(x, y, z, xlab = "x1", ylab = "x2", zlab = "z",
+shade = 0.4, theta = 30, phi = 15, ticktype = "detailed")
+# surface plot of function z(x,y)
+points <- trans3d(x1, x2, rendim, pmat = res) # command for adding experimental points
+points(points, pch = 19, col = 1) # adding points
+```
+
+| However, there are some packages for `R` for three-dimensional representation of data and functions (`rgl`, `plot3D`, `scatterplot3d`), as well as for factorial design analysis (`agricolae`, `afex`, `FMC`), and response surface methodology (`rsm`). 

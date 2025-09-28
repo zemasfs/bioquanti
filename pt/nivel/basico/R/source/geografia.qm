@@ -1,0 +1,339 @@
+---
+title: "Geografia"
+number-sections: true
+toc: true
+lang: pt
+class: fundo-basico
+---
+
+<!-- ############# DADOS SOCIOECONÔMICOS - MAPA  ################ --->
+
+<div class="geo-fundo">  <!--modifica para cada área-->
+
+## Alguns dados socioeconômicos de municípios brasileiros (EM13CHS402, EM13CHS302, EM13CHS304)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+
+library(plotly)
+
+# Dados fictícios dos estados do Brasil
+dados_estados <- data.frame(
+  Estado = c("São Paulo", "Rio de Janeiro", "Minas Gerais", "Bahia", "Paraná"),
+  Sigla = c("SP", "RJ", "MG", "BA", "PR"),
+  Populacao = c(46289333, 17366189, 21411923, 14930634, 11947904),
+  Capital = c("São Paulo", "Rio de Janeiro", "Belo Horizonte", "Salvador", "Curitiba"),
+  IDH = c(0.783, 0.761, 0.731, 0.714, 0.749),
+  IDEB = c(4.9, 4.6, 4.7, 4.2, 4.8),
+  lat = c(-23.55, -22.91, -19.92, -12.97, -25.42),
+  lon = c(-46.63, -43.20, -43.94, -38.52, -49.27)
+)
+
+# Mapa interativo com informações ao passar o mouse
+fig <- plot_ly(
+  data = dados_estados, 
+  type = 'scattergeo',
+  mode = 'markers',
+  lat = ~lat, 
+  lon = ~lon,
+  text = ~paste(
+    "<b>Estado:</b>", Estado, "<br>",
+    "<b>Capital:</b>", Capital, "<br>",
+    "<b>População:</b>", Populacao, "<br>",
+    "<b>IDH:</b>", IDH, "<br>",
+    "<b>IDEB:</b>", IDEB
+  ),
+  hoverinfo = 'text',
+  marker = list(size = 10, color = 'blue', opacity = 0.7)
+) %>%
+  layout(
+    title = "Mapa Interativo do Brasil - Informações por Estado",
+    geo = list(
+      scope = 'south america',
+      resolution = 50,
+      showland = TRUE,
+      showcountries = TRUE,
+      countrycolor = "gray",
+      showlakes = TRUE,
+      lakecolor = "lightblue",
+      showsubunits = TRUE,
+      subunitcolor = "white"
+    )
+  )
+
+fig
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Dados fictícios dos estados do Brasil
+dados_estados <- data.frame(
+  Estado = c("São Paulo", "Rio de Janeiro", "Minas Gerais", "Bahia", "Paraná"),
+  Sigla = c("SP", "RJ", "MG", "BA", "PR"),
+  Populacao = c(46289333, 17366189, 21411923, 14930634, 11947904),
+  Capital = c("São Paulo", "Rio de Janeiro", "Belo Horizonte", "Salvador", "Curitiba"),
+  IDH = c(0.783, 0.761, 0.731, 0.714, 0.749),
+  IDEB = c(4.9, 4.6, 4.7, 4.2, 4.8),
+  lat = c(-23.55, -22.91, -19.92, -12.97, -25.42),
+  lon = c(-46.63, -43.20, -43.94, -38.52, -49.27)
+)
+
+# Mapa interativo com informações ao passar o mouse
+fig <- plot_ly(
+  data = dados_estados, 
+  type = 'scattergeo',
+  mode = 'markers',
+  lat = ~lat, 
+  lon = ~lon,
+  text = ~paste(
+    "<b>Estado:</b>", Estado, "<br>",
+    "<b>Capital:</b>", Capital, "<br>",
+    "<b>População:</b>", Populacao, "<br>",
+    "<b>IDH:</b>", IDH, "<br>",
+    "<b>IDEB:</b>", IDEB
+  ),
+  hoverinfo = 'text',
+  marker = list(size = 10, color = 'blue', opacity = 0.7)
+) %>%
+  layout(
+    title = "Mapa Interativo do Brasil - Informações por Estado",
+    geo = list(
+      scope = 'south america',
+      resolution = 50,
+      showland = TRUE,
+      showcountries = TRUE,
+      countrycolor = "gray",
+      showlakes = TRUE,
+      lakecolor = "lightblue",
+      showsubunits = TRUE,
+      subunitcolor = "white"
+    )
+  )
+
+fig
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="geo-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+# Adicionar após linha com hoverinfo
+
+marker = list(
+    size = 15, 
+    color = ~IDH, 
+    colorscale = "Viridis", # Escala de cores que varia conforme o IDH
+    colorbar = list(title = "IDH"), # Adiciona uma legenda para a escala de cores
+    opacity = 0.8
+
+```
+
+</div>
+
+\
+
+<!-- ############# ÁREA E POPULAÇÃO BRASILEIRA ################ --->
+
+<div class="geo-fundo">  <!--modifica para cada área-->
+
+## Relação de área e população em municípios brasileiros (EM13MAT405, EM13MAT407, EM13CHS101, EM13CHS104, EM13CNT301)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+url <- "https://raw.githubusercontent.com/turicas/rows/refs/heads/develop/examples/data/brazilian-cities.csv" # define o link para os dados
+dados <- read.csv(url)  # lê o arquivo dos dados
+
+library(plotly)
+plot_ly(dados, x = ~area, y = ~inhabitants,
+        type = "scatter", 
+        mode = 'markers',
+        marker = list(line = list(width = 1)),
+        text = ~paste("Cidade: ", city, "<br>Estado: ", state),  # Texto no hover
+        hoverinfo = 'text',           # Mostrar apenas o texto definido
+        frame = ~state)%>%
+  layout(
+    title = "Distribuição de área e população em cidades brasileiras",
+    xaxis = list(title = "Estados", type = "log"),
+    yaxis = list(title = "População", type = "log"),
+    showlegend = FALSE
+  ) %>%
+  animation_opts(
+    frame = 500,           # Velocidade da animação
+    transition = 0,
+    redraw = FALSE
+  )
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+url <- "https://raw.githubusercontent.com/turicas/rows/refs/heads/develop/examples/data/brazilian-cities.csv" # define o link para os dados
+dados <- read.csv(url)  # lê o arquivo dos dados
+
+library(plotly)
+plot_ly(dados, x = ~area, y = ~inhabitants,
+        type = "scatter", 
+        mode = 'markers',
+        marker = list(line = list(width = 1)),
+        text = ~paste("Cidade: ", city, "<br>Estado: ", state),  # Texto no hover
+        hoverinfo = 'text',           # Mostrar apenas o texto definido
+        frame = ~state)%>%
+  layout(
+    title = "Distribuição de área e população em cidades brasileiras",
+    xaxis = list(title = "Estados", type = "log"),
+    yaxis = list(title = "População", type = "log"),
+    showlegend = FALSE
+  ) %>%
+  animation_opts(
+    frame = 500,           # Velocidade da animação
+    transition = 0,
+    redraw = FALSE
+  )
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="geo-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+color = ~state,    # Adicionado para variar a cor conforme o estado
+
+```
+
+</div>
+
+\
+
+
+<!-- ############# MATRIZES ENERGÉTICAS MUNDIAIS - MAPA ################ --->
+
+<div class="geo-fundo">  <!--modifica para cada área-->
+
+## Dados de matrizes energéticas mundiais ao longo dos anos (EM13CHS106, EM13CHS302, EM13CNT309)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Dados fictícios sobre matrizes energéticas mundiais (percentuais por ano)
+dados <- data.frame(
+  Ano = rep(2000:2020, each = 4),
+  Fonte = rep(c("Renovável", "Carvão", "Petróleo", "Gás Natural"), times = 21),
+  Percentual = c(
+    # Dados fictícios que simulam a evolução de fontes de energia
+    seq(20, 40, length.out = 21),  # Renovável
+    seq(40, 30, length.out = 21),  # Carvão
+    seq(30, 20, length.out = 21),  # Petróleo
+    seq(10, 10, length.out = 21)   # Gás Natural
+  )
+)
+
+# Gráfico interativo
+fig <- plot_ly(
+  data = dados,
+  x = ~Ano, 
+  y = ~Percentual, 
+  color = ~Fonte, 
+  type = 'bar',
+  colors = c("green", "black", "brown", "blue")
+) %>%
+  layout(
+    title = "Evolução das Matrizes Energéticas Mundiais",
+    barmode = "stack",
+    xaxis = list(title = "Ano"),
+    yaxis = list(title = "Percentual (%)"),
+    legend = list(title = list(text = "Fonte de Energia"))
+  )
+
+fig
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Dados fictícios sobre matrizes energéticas mundiais (percentuais por ano)
+dados <- data.frame(
+  Ano = rep(2000:2020, each = 4),
+  Fonte = rep(c("Renovável", "Carvão", "Petróleo", "Gás Natural"), times = 21),
+  Percentual = c(
+    # Dados fictícios que simulam a evolução de fontes de energia
+    seq(20, 40, length.out = 21),  # Renovável
+    seq(40, 30, length.out = 21),  # Carvão
+    seq(30, 20, length.out = 21),  # Petróleo
+    seq(10, 10, length.out = 21)   # Gás Natural
+  )
+)
+
+# Gráfico interativo
+fig <- plot_ly(
+  data = dados,
+  x = ~Ano, 
+  y = ~Percentual, 
+  color = ~Fonte, 
+  type = 'bar',
+  colors = c("green", "black", "brown", "blue")
+) %>%
+  layout(
+    title = "Evolução das Matrizes Energéticas Mundiais",
+    barmode = "stack",
+    xaxis = list(title = "Ano"),
+    yaxis = list(title = "Percentual (%)"),
+    legend = list(title = list(text = "Fonte de Energia"))
+  )
+
+fig
+```
+
+<!-- ::: -->
+
+</div>
+
+<div class="geo-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+opacity = 0.8  # Alterada a opacidade das barras
+
+```
+
+</div>
+
+\
+

@@ -1,0 +1,735 @@
+---
+title: "Commands"
+toc: true
+---
+
+<!-- Google tag (gtag.js)-->
+
+
+| *Jmol* has a multitude of commands for viewing and studying molecular models. Most of these commands are accessed through the *Jmol* main *Menu*, or by right-clicking on the program's main screen or the *JSmol* applet on the internet. | However, *scripting* allows the execution of a much larger set of actions via the *Console*, both of the installed program and of the *applet*, in addition to allowing the listing of consecutive actions generating specific visualizations, calculations and animations, and even *programming.* In the latter case, via the *Jmol scripting* language. These commands and the programming language are explained on the website of its developers, [Jmol - Documentation & scripting](https://chemapps.stolaf.edu/jmol/docs/?ver=14.32#plot){target="_blank"}, with substantial examples and illustrative and interactive *links*. The content of this chapter aims to summarize the main commands for viewing, studying, importing and exporting, calculations and animations of models via the *Console* or via *script*.
+| As a sequence of commands for a more complex observation or animation, **you can create the script** in any simple text editor, **saving it with the ".spt" attribute**. The *script* can be loaded as a file or pasted into the *Console* field.
+| *Jmol* commands do not distinguish between singular or plural, or between upper or lower case, and both forms can be used, such as *show group* or *Show groups*.
+| An additional note: when creating a *script*, it is recommended that explanations be provided in command lines; to do so, simply use the hashtag sign (*\#*) after the commands.
+
+## Changing the interface language & file directory
+
+### Language
+
+| The *Menu* language and the command output (results) can be changed as follows. Remember, however, that the commands themselves refer to computational algorithms; this way, it is not possible to change the language of the commands.
+
+
+```{r, eval=FALSE}
+set language = code # pt (Portuguese), es (Spanish), en (English), fr (French), de (German), etc...
+```
+
+| Note: if you are unable to do so, start *Jmol* by opening a CMD (*Windows*) or Terminal (*Linux*) in the program directory folder, and type, for *Portuguese*:
+
+```{r, eval=FALSE}
+java -Duser.language=pt -jar Jmol.jar
+```
+
+### Directory
+
+```{r, eval=FALSE}
+cd # shows current directory
+cd ? # open window to default directory
+cd path # change default directory (e.g. ../temp)
+set defaultDirectory "/home/" # default directory (for applet)
+```
+
+## General commands
+
+```{r, eval=FALSE}
+Help: help # help zoom
+Exit: quit
+Undo: undo
+Redo: redo
+Return to original model (position, size, centering and orientation): reset
+Program initialization: initialize
+Command history: history on or history off
+Minimization by force fields of the model: minimize
+```
+
+| Try some of the above commands with the *applet* for *JSmol* that follows:
+
+[![](jsmol.png){width="20%"}](https://chemapps.stolaf.edu/jmol/jsmol/simple.htm)
+
+## Obtaining molecular models
+
+### One model
+
+```{r, eval=FALSE}
+From the internet:
+molecules in general: load $cholesterol
+molecules from the PDB (Protein Data Bank): load=9pap
+ligands from the RCSB website: load =ligand/hem
+compounds from the PubChem website: load ":nafamostat"
+
+From the computer (files must be in the root directory or preselected by "cd" - see above):
+load "1aay.pdb"
+```
+
+### More than one model
+
+```{r, eval=FALSE}
+Separate: load files "1a2t.pdb" "1aay.pdb"
+submit the 1st model: model 1 or model 1.1
+present the 2nd. model: model 2 or model 2.1
+show all models: model* or frame*
+Together: load append "1a2t.pdb" "1aay.pdb"
+```
+
+
+## Building simple molecules using SMILES
+
+| *SMILES*, an abbreviation for *“Simplified molecular-input line-entry system”*, allows you to represent the structure of atomic models using symbols and text (ASCII characters).
+
+
+| Try this formatting at the address below.
+
+```{r, eval=FALSE}
+https://chemapps.stolaf.edu/jmol/jmol.php?model=C
+```
+
+
+| Then replace the *model* in the *link*, *“model=”* with the following *SMILES* codes, alternatively:
+```{r, eval=FALSE}
+
+1. Single bond: CC, CN, CO
+2. Double bond: C=C, C=N, C=O
+3. Triple bond: N%23N, CC%23C
+
+Note: the code for the triple bond is intended to bypass the *SMILES* command, *“#”*, which is interpreted differently in internet addresses.
+```
+
+
+## Displaying models:
+
+```{r, eval=FALSE}
+View: display 2.1
+Hide: hide 1.1
+Remove models: zap
+Shading: set ambient 45 (0-shadow; 100-no shadow)
+```
+
+## Displaying model information (*show* command)
+
+```{r, eval=FALSE}
+Display nothing: show none
+Model: show model
+Atoms: show atom
+Chains (protein or nucleic acid): show chain
+Structural minimization information: show DSSP
+Surfaces (molecular, electrostatic): show isosurface
+Groups: show group
+Model information: show info
+Protein primary sequence: show sequence
+History of commands: show history
+Residues (protein): show residues
+Molecular orbital: show mo
+Internet path: show url
+Full PDB file information: show file
+```
+
+### Molecular databases
+
+| There are several databases for rendering molecular models, and with the possibility of saving the file for use with *Jmol*.
+
+Notable among these are [PubChem](https://pubchem.ncbi.nlm.nih.gov/){target="_blank"} or [DrugBank](https://go.drugbank.com/){target="_blank"} for *small molecules*, and [RCSB - Protein DataBank (Research Collaboratory for Structural Bioinformatics)](https://www.rcsb.org/){target="_blank"} for macromolecules. There is also the [IUPHAR/BPS Guide to PHARMACOLOGY](https://www.guidetopharmacology.org/), which allows indirect access to both micro and macromolecules.
+| In any of these, simply look for a field to *download* *3D* molecular models. *Jmol* accepts around **47 different file types** for structural rendering, including *PDB, MOL, CIF, SDF, XYZ, SMILES, and AMBER*.
+
+## General operations
+
+```{r, eval=FALSE}
+Resetting the model coordinates: reset (size and centering): Shift+ double click (or *reset* in the *Console*)
+
+Removing the Jmol *logo* from images: set frank off
+
+Background: background white
+
+Model resolution: set ambient 10
+```
+
+## Mouse commands
+
+| To open the *Menu* of options for viewing, calculations and surfaces: right click
+
+### Model movements
+
+```{r, eval=FALSE}
+Simple rotation: click and drag in any direction
+
+Rotation around the same axis up to 360$^{o}$: Shift+right click
+
+Translation of the structure: Ctrl+right click
+
+General magnification (zoom): Shift+left click and drag - zoom in/out - (or mouse, middle button). 
+```
+
+## Motion commands
+
+```{r, eval=FALSE}
+spin 10 # rotational, with a speed of 10 degrees per frame
+spin z -15 # (z axis)
+rotate 20 # 20 degrees
+rotate x 90 # x axis
+translate 50 # value represents the percentage of the window (100 - outside; 0 - center)
+```
+
+## Saving and exporting models (*write*)
+
+```{r, eval=FALSE}
+# (saves as image)
+Model image:
+default (png): write model-name
+with specifications: write PNGJ 2000 2000 "big.png"
+others (jpg, pdf): write name.jpg
+all models: write frames* "all.jpg"
+Model coordinates
+write name.mol # or other attribute (e.g. pdb)
+Model state (changes after loading): write molecule.spt # of "script"
+```
+
+### Copying to the clipboard
+
+| The model image can be copied through the program's main *Menu*.
+
+### Reproducing a model from the internet that does not allow saving
+
+| Sometimes some *sites* make molecules available in the \*mol or \*pdb attribute for viewing and studying, but without the possibility of downloading the file. In these cases, it is possible to obtain the model coordinates, copy them into a notepad, and save the file for reading by *Jmol*, as \*\mol, for example.
+
+```{r, eval=FALSE}
+1. View the desired model on the site;
+2. Right-click and select Console.
+3. Click again, select Show and:
+Extract mol data.... or
+File contents
+```
+
+| As a result, the *Console* will display the data for copying to a text file. Simply save it as \*.mol for future viewing in Jmol.
+
+## Quantities
+
+### Calculating distances and angles (*measure*)
+
+| In addition to the simple and interactive use of the mouse to calculate distances (double right-click on the 1st atom and drag to the 2nd atom) or angles (3 mouse clicks), it is possible to obtain the same information through the *Console*.
+
+```{r, eval=FALSE}
+Distance: measure no. atom1 no. atom2
+Angle: measure no. atom1 no. atom2 no. atom 3
+Note: to obtain the no. of the atom, simply click on the desired point of the model
+Torsion angle: measure atom1 atom2 atom3 atom4
+
+Measurements: measure on..or off...or delete
+Choose the unit of measurement: set measure nm # or pm, angstroms, au (Bohr atomic unit)
+```
+
+### Obtaining & viewing quantities
+
+```{r, eval=FALSE}
+Hydrogen bonds: calculate hbonds (or...hbonds calculate)
+Formal (effective) charges: calculate formalcharge # to label: label %C
+Partial charges: calculate partialcharge # to label: label %P
+Second structures in a protein: calculate structure # DSSP algorithm - Define Secondary Structure; note: the representation disappears, and it is necessary to type the command again for it to return
+All bonds in the model and their respective distances: measure allconnected (*)(*)
+```
+
+## Changing representations
+
+| There are several ways to render structures in *Jmol*. The commands below summarize this capability:
+
+```{r, eval=FALSE}
+wireframe, backbone, trace, strands, cartoon, ribbons, meshriboon, rockets, cpk (or spacefill), ball&stick (only through the Menu, or through the combination below in the Console)
+
+To display a single shape: wireframe only
+To hide a shape: backbone off
+To render as "ball&stick": wireframe only;wireframe reset;spacefill reset
+```
+
+| The representations render the structure by the size of its atoms. The rendering by *spacefill*, for example, is expressed as a function of the *van der Waals radius* of the atom. For example:
+
+```{r, eval=FALSE}
+spacefill on / off
+wireframe 0.5 # 0.5 Angstrom (the "." refers to the absolute value)
+backbone 50 # 50/250 Angstrom, or 0.2 Angstrom (no dot refers to relative value)
+cartoon 50% # 50% larger than default
+spacefill 2 # 2/250 Angstrom = 0.008 Angstrom (note no dot)
+spacefill 2.0 # 2 Angstrom (note dot)
+```
+
+### Clipping & shading
+
+```{r, eval=FALSE}
+Clip in view: slab on; slab 30
+Depth view: depth 30
+```
+
+### Whether to display hydrogen or not
+
+```{r, eval=FALSE}
+Insert into model: set pdbAddHydrogens
+Remove from model: set pdbAddHydrogens false
+```
+
+### Displaying disulfide bonds (proteins)
+
+```{r, eval=FALSE}
+ssbonds on or ssbonds off
+ssbonds 40 # renders as rods, with a diameter of 40/250 Angstrom
+ssbonds 0.5 # renders with a diameter of 0.2 Angstrom
+```
+
+| Just to practice, try some of the above commands with the *applet* for *JSmol*, as follows:
+
+[![](jsmol.png){width="20%"}](https://chemapps.stolaf.edu/jmol/jsmol/simple.htm)
+
+## Selecting colors
+
+| The default option for model colors is *CPK (Corey, Pauling, Koltun)*, for carbon (gray), nitrogen (blue), phosphorus or sulfur (yellow), hydrogen (white), iodine (violet), etc. However, it is possible to change colors globally in the model, or specifically for selected groups of atoms. The program accepts the command *color* or *colour*.
+
+```{r, eval=FALSE}
+color [255,125,350] # specific color
+color bonds # apply the color without needing to specify the representation
+color [xFF00FF] # specific color
+color cpk # program default
+color molecule # all atoms connected by a bond
+color formalcharge
+color partialcharge
+color amino # for amino acids
+color structure # for secondary structure
+Proteins: red (alpha-helix), yellow (beta-sheets), blue (turns), white (rest)
+Nucleic acid: violet (DNA), reddish (RNA)
+color chain: chains
+color inherit: objects inherit the color of their associated atoms
+color shapely: color scheme that includes nucleotides
+color group: rainbow gradient (blue; N- or 5'-terminal; red; C- or 3'-terminal)
+```
+
+### Specific colors
+
+| An atom or group of atoms can also be assigned a specific color, as follows:
+
+```{r, eval=FALSE}
+AliceBlue,AntiqueWhite,Aqua,Aquamarine,Azure,Beige,Bisque,Black,
+BlanchedAlmond,Blue,BlueViolet,Brown,BurlyWood,CadetBlue,Chartreuse,
+Chocolate,Coral,CornflowerBlue,Cornsilk,Crimson,Cyan,DarkBlue,DarkCyan,
+DarkGoldenRod,DarkGray,DarkGrey,DarkGreen,DarkKhaki,DarkMagenta,
+DarkOliveGreen,Darkorange,DarkOrchid,DarkRed,DarkSalmon,DarkSeaGreen,
+DarkSlateBlue,DarkSlateGray ,DarkSlateGrey,DarkTurquoise,DarkViolet,
+DeepPink,DeepSkyBlue,DimGray,DimGrey,DodgerBlue,FireBrick,FloralWhite,
+ForestGreen,Fuchsia,Gainsboro,GhostWhite,Gold,GoldenRod,Gray,Grey,Green,
+GreenYellow,HoneyDew,HotPink,IndianRed,Indigo,Ivory,Khaki,Lavender,
+LavenderBlush,LawnGreen,LemonChiffon,LightBlue,LightCoral,LightCyan,
+LightGoldenRodYellow,LightGray,LightGrey,LightG reen,LightPink,LightSalmon,
+LightSeaGreen,LightSkyBlue,LightSlateGray,LightSlateGrey,LightSteelBlue,
+LightYellow,Lime,LimeGreen,Linen,Magenta,Maroon,MediumAquaMarine,MediumBlue,
+MediumOrchid,MediumPurple,MediumSeaGreen,MediumSlateBlue,MediumSpringGreen,
+MediumTurquoise,MediumVioletRed,MidnightBlue,MintCream,MistyRose,Moccasin,
+NavajoWhite,Navy,OldLace,Olive,OliveDrab ,Orange,OrangeRed,Orchid,PaleGoldenRod,PaleGreen,PaleTurquoise,PaleVioletRed,PapayaWhip,PeachPuff,Turkey,Pink,Plum,
+PowderBlue,Purple,Red,RosyBrown,RoyalBlue,SaddleBrown,Salmon,SandyBrown,
+SeaGreen,SeaShell,Sienna,Silver,SkyBlue,SlateBlue,SlateGray,SlateGrey,Snow,
+SpringGreen,SteelBlue,Tan,Teal,Thistle,Tomato,Turquoise,Violet,Wheat,White,
+WhiteSmoke,Yellow,YellowGreen.
+```
+
+## Labeling the model (*label*)
+
+```{r, eval=FALSE}
+Label on/off: label on...or label off
+String: label %c
+Formal charge: label %C
+Partial charge: label %P
+Amino acid residue in protein: %n
+Residue no.: %r
+Atom: %a
+Atom identifier no.: %i
+Element symbol: %e
+String: %c
+```
+
+| To view a specific set of atoms, such as residues in a protein, you can use:
+
+```{r, eval=FALSE}
+select (Ser195,His57,Asp102) and *.ca; label "\%n \%R";color label orange ;set labelfront
+```
+
+| Some specific operations also allow labeling.
+
+```{r, eval=FALSE}
+label binding site # label with the expression
+label binding | site # label with the expression, separated by lines ("|" is the "pipe" command)
+```
+
+| *Jmol* also allows you to label a specific atom, residue, interaction or reaction site, or some group for better identification and exploration of the model. To do this, you can select the structure by *select*, followed by the proposed label. For example:
+
+```{r, eval=FALSE}
+select pro31 # selection of the Proline residue at position 31 of the protein sequence
+label Proline-31
+set echo top left; echo "Model 1" # insertion of text on the screen
+select all; label on # names all atoms with symbol and atomic number
+```
+
+## Selecting parts of the model
+
+| To select a general group of atoms, simply combine with the mouse *Shift+left click+drag* for the selected group (you must click on the icon that represents it in the menu first). For a more specific selection, you can use some of the specific or predefined *atom expressions*, as below:
+
+```{r, eval=FALSE}
+Nature of the molecule:
+all, none, protein, nucleic, dna, rna, carbohydrate, hetero, ligand, solvent, water or hoh, ions, hem, amino
+
+Chemical element
+By name: oxygen, nitrogen, carbon
+By symbol: _N, _C, _Fe
+By atomic no.: elemNo=7, or atomNo=5
+By no. atom identification in the sequence (serial): atomNo<50
+
+Part of the molecule:
+backbone, sidechain, :b (for chain), spine
+
+Residue type
+3-letter abbreviation for amino acids, acidic, basic, polar, neutral, charged, purine, pyrimidine, large, small, buried, surface, cyclic, hydrophilic, hydrophobic, aromatic, cystine, aliphatic, spine, base
+
+Structure 2a. in proteins
+helix, sheet, turn
+```
+
+| The general commands for using the above expressions or combinations of them are, basically:
+
+```{r, eval=FALSE}
+select, restrict, hide, display, delete
+```
+
+| Each expression must be enclosed in parentheses. You can also apply *boolean operations* (*or, and, but not*, or *=, \<, \>, \<=, \>=, !=*).
+
+| The *restrict* command is irreversible in nature, while the *hide* command is reversible in rendering. followed by the desired expression. Some examples:
+
+| Here are some examples:
+
+```{r, eval=FALSE}
+Restrict command
+restrict helix # only keeps the helices of the secondary structure
+restrict ligand # only the ligand
+restrict not ligand # only the protein without prosthetic groups
+restrict 42-60 # only keeps the indicated residue sequence
+restrict f6p # only keeps the identified group (a ligand, in this case)
+restrict not(:a, :b) # keeps chains other than "a" and "b"
+
+Select command
+select Tyr
+select polar
+select all # selects all atoms
+select none # does not select any atoms
+select bmp,amp # selects two ligands
+select (bmp, amp) and oxygen
+select hem and :b # selects the heme group of chain "b"
+select hem and not iron :b # selects the heme group of chain "b", omitting Fe
+select */2 # all atoms of model 2
+select connected(oxygen) # all atoms bonded to an oxygen
+select ser70 :A .ca # alpha carbon of serine no. 70 of chain A
+select hetero and not solvent # heteroatoms except water
+select remove group hetero and not water # only water
+select hetero and not ligand # heteroatoms except ligand
+select buried only # only protein core residues
+select helix or backbone # select helices or protein backbone
+select not helix # select other 2nd protein structures (turn, sheet)
+select 62 and(sidechain or alpha) # sidechain or alpha carbon of residue 62
+select ser70.ca # alpha carbons of serine no. 70
+select ser70 :a.ca # alpha carbons of serine no. 70 of chain "a"
+select (lys,arg) # only Lys and Arg residues
+select (lys,arg) and :b # Lys and Arg residues of chain "b"
+select 19-32 :y # sequence of residues of chain "y"
+select asp47 # Asp residue at position 47
+select [asp]47 :y # asp47 residue of chain "y"
+select (10 or 25) and backbone
+select resNo>14 and resNo<25 and *.CA # alpha carbons of residues 14 to 25
+select hoh.o/2 # oxygen of water molecules in model 2
+select (14,16,18,20) # the numbered residues
+select backbone and *:b # the backbone of chain "b"
+select backbone and not *:b # the backbone of all chains except "b"
+select not hidden...select displayed # everything that is not hidden
+select not selected # everything that was not previously selected
+select carbon and not selected # carbon atoms not previously selected
+
+Delete command
+delete(calcium,nadph)
+```
+
+### Special selections
+
+#### *within* command
+
+| This command allows a recursive selection, that is, a selection within a selection.
+
+```{r, eval=FALSE}
+select within (5, (bca,amp)) # selects two ligands that are 5 Angstroms away from the selected group of atoms
+select within(3.0, _Fe) # all atoms within 3 Angstroms of the iron atom
+```
+
+#### *define* command
+
+| Allows you to define a group of atoms for specific rendering or observation. After defining, simply use *select* or another command to change the model.
+
+```{r, eval=FALSE}
+define test (arg10) # select only Arg10
+define test (arg10 or asn46) # select both residues
+define test (ser195 or asp102 or his57)
+define Site within(3.0, _Cu) # 3 Angstroms away from copper atom
+define PointX within(5.0,arg31) # 5 Angstroms away from Arg31
+define neighbors selected # previously selected
+```
+
+#### Commands *selected*, *hidden*, *displayed*
+
+| Allows you to direct an action to the group of atoms already selected, hidden or displayed, respectively.
+
+## Model magnification (*zoom*)
+
+| There are two basic commands in *Jmol* for magnification:
+
+1. *zoom* : (expression) size
+2. *zoomTo* : time (expression) size
+
+| The second command allows an animation of the model, which will be explained in the homonymous section below. Here are some examples for the *zoom* command.
+
+```{r, eval=FALSE}
+2x magnification: zoom in
+3x magnification: zoom \*3
+2x reduction: zoom out
+3x reduction: zoom /3
+Remove magnification: zoom off
+Restrict ligand and magnification: restrict ligand; zoom 0
+zoom 100: restores the initial size
+```
+
+## Surfaces
+
+| *Jmol* allows you to render some types of surfaces around the atoms of the model. For macromolecules it should be noted that rendering will take longer.
+
+```{r, eval=FALSE}
+
+dots on / off \# van der Waals surface dots only \# only vdw surface present (without model) dots vanderwaals...or dots vdw dots ionic
+
+isosurface on/off # molecular surface
+isosurface solvent # excluding solvent
+isosurface molecular # including solvent
+isosurface molecular 5 # surface at a given VDW radius
+isosurface sasurface # surface accessible solvent
+isosurface mep # "molecular electrostatic potential"
+isosurface map vdw # Van der Waals surface
+isosurface map mep # electrostatic potential
+isosurface molecular map property PartialCharge # or temperature, vanderwaals
+
+geosurface on/off # molecular surface geodesic (curved) geosurface only # only the surface, without model geosurface vdw
+geosurface ionic geosurface 5 # value in Angstrom
+
+Note: To visualize the surfaces including the solvent, you can use the "set solvent on" command first.
+```
+
+## Graphs
+
+| Some two- and three-dimensional graphs can be generated from simple *Jmol* commands. To return to the original model, issue the *model 1* command. Some examples:
+
+```{r, eval=FALSE}
+plot properties resno partialcharge # resno = residue number (plots after command to calculate surface charge - see above)
+plot properties phi psi resno # 3D plot with dihedral angles against residue no. plot rama...or...
+plot ramachandran # Ramachandran plot for structure 2a. in proteins
+Note: to view the phi and psi angles in the model (not in the plot), type: draw rama (draw off to hide)
+
+Other properties: hydrophobicity, mass, temperature, radius, occupancy, chaino
+```
+
+## Creating and reading scripts
+
+| "Scripting" allows the observation and analysis of a specific part of the model under study, by composing code snippets as command lines. In this way, the *script* resembles an *algorithm* with a succession of commands. A *script* can be loaded by calling program files (*File, Open*), or even by dragging the file to the program's screen area.
+
+| A *Jmol* *script* is based on a *Java Script* dialect, and can be driven by a sequence of commands on each line of a simple text file, saving it as *.spt*.
+
+| On the other hand, *Jmol* has its own construction and testing environment, *Script Editor*, accessible through the main *Menu*. In this environment, it is possible to create, open, create, check, and run a *script*.
+
+| The *Editor* can be used when there are several command lines, for better visualization of the algorithmic sequence. In this case, it is also possible to include comments, using:
+
+```{r, eval=FALSE}
+/* comment */
+or
+// comment //
+or
+# comment
+```
+
+| In the *Programming* section, some *scripts* created in the *Editor* will be presented.
+
+| It is also valid to copy/paste some code snippets in the *Console* or *Jmol/JSmol*, separating the commands with *semicolons* on successive lines. This way, the *Script Editor* is simulated in the *Console* itself.
+| It is also possible through *Jmol* to define an initial *script* to be run when the program is opened. To do this:
+
+```{r, eval=FALSE}
+set defaultLoadScript "commands"
+```
+
+## Mutation
+
+| It is also possible to observe consequences of mutating specific residues in a model, such as weak interactions (electrostatics or hydrogen bonds, for example).
+
+```{r, eval=FALSE}
+
+mutate 33Lys \# specifically changes position 33 of the primary sequence to Lysine mutate Ala34 \~W \# alteral Ala to Trp mutate(1:3) \~GAL \# changes the first three positions in the protein to Gly, Ala and Leu
+```
+
+## Visualizing regions with `strut` function
+
+| This function allows you to connect atoms in the structure of a protein, showing a dash between them.
+
+```{r, eval=FALSE}
+select atomno=1392 or atomno=1403
+connect
+strut
+strut 2.0
+color strut pink
+```
+
+## Animations
+
+```{r, eval=FALSE}
+Focusing on the Fe atom in myoglobin: select hem; wireframe only; wireframe 70 \# exclusive rendering of the zooto group 2(\_Fe) 0 \# 2x magnification
+```
+
+### Zoom in (*zoomto*)
+
+| This feature allows you to view in a magnified and temporally adjusted way mind, some parts of the model of interest, such as ligand interaction sites or prosthetic groups. The syntax of the expression is:
+
+```{r, eval=FALSE}
+zoomto or zoomTo (atom/group expression) size or...
+zoomto time (atom/group expression) size
+```
+
+Examples:
+
+```{r, eval=FALSE}
+Zoom in 3x, half a second at a time: zoomto 0.5 *3
+Zoom in 4x, half a second at a time: zoomto 0.5 400
+Focus on a ligand at 2x magnification: zoomto 2(ligand) 0
+Focus on a ligand at 4x magnification, half a second at a time: zoomto 0.5(ligand)* 4
+```
+
+### Delay
+
+| Command that allows you to wait for a certain period (in seconds), before the next action. Normally used in the sequence of commands by the *Console*, throughout a *script*.
+
+### Move
+
+| The *move* and *moveTo* commands allow you to combine rotation, translation, and zoom actions on models. The *move* command reorients the model based on the current coordinates, and has the syntax:
+
+```{r, eval=FALSE}
+move rotX rotY rotZ zoom dX dy dZ slab time
+```
+
+| Where *rot* represents the rotation on a given axis, and *d* the translation on the axis. Examples:
+
+```{r, eval=FALSE}
+move 90 0 0 0 0 0 0 0 1 - rotates the model 90º on the X axis;
+move 0 720 0 0 0 0 0 0 1 - rotates the model two complete turns around the Y axis, during 1 s;
+move 90 15 0 100 0 20 0 0 2 - for 2 s, rotates the model by 90º on the X axis and 15º on the Y axis, increases its size to 100, and translates it by 20% of the panel height, all at the same time
+```
+
+### MoveTo
+
+| Results in an *absolute* orientation of the model, regardless of its previous coordinates. Its insertion is not simple, since it depends on the orientation data of the model when loaded for the first time, and which can be obtained by:
+
+```{r, eval=FALSE}
+show orientation
+```
+
+| An example of the result of the command is:
+
+```{r, eval=FALSE}
+moveto /* time, axisAngle */ 1.0 { 616 -708 -346 47.68} /* zoom, translation */ 400.0 0.0 0.0 /* center, rotationRadius */ {15.174467 28.719118 4.726837} 35.148052 /* navigation center, translation, depth */ {0 0 0} 0 0 0 /* cameraDepth, cameraX, cameraY */ 3.0 0.0 0.0;
+#OR
+#Follows Z-Y-Z convention for Euler angles
+reset;center {15.174467 28.719118 4.726837}; rotate z 130.27; rotate y 44.57; rotate z -147.67; zoom 400.0;
+```
+
+| Note that there are two sets of commands, one for *moveTo* and the other for *reset, center, rotate and translate*. To obtain the model in its original coordinates, simply copy one or the other set of data.
+
+| Using the first set (*moveTo*), the line is copied and the animation time is changed, in this case the value 1.0 in "axisAngle \*/ 1.0".
+
+### Compare
+
+| Compares 2 models and reorients the coordinates of the second one to be juxtaposed to the first one, using a correlation algorithm.
+
+```{r, eval=FALSE}
+load files "$tyrosine" "$epinephrine";
+frame *;
+compare {2.1} {1.1} rotate translate 5.0
+```
+
+### Navigate
+
+| The command allows you to explore the model by simulating a panoramic tour of the interior of the structure. The parameters involve the travel time (or 2s when omitted). For example:
+
+```{r, eval=FALSE}
+navigate depth 50 # immersion in the model in 2s
+navigate 3 rotate y 20 # rotation 20º on the y axis
+navigate 4 trace # walk through the model in 4s
+navigate 3 translate {30 50 70} model slightly translates for 3s
+navigate 5 center {10 20 30} # probe next to the model, and in the coordinates x, y, z
+navigate 2 depth 30 / 5 rotate 180 / depth 20 / translate X 10
+```
+
+## Programming in Jmol
+
+| Programming and loop commands implemented in *Jmol*:
+
+```{r, eval=FALSE}
+IF FOR WHILE STEP BREAK WAIT PAUSE
+BREAK CASE CONTINUE QUIT
+```
+
+### Loop (*loop*)
+
+| Allows you to execute a command line repeatedly.
+
+```{r, eval=FALSE}
+color bonds red; delay 3; color bonds green; loop 1 # the loop is executed every 1 s
+```
+
+## Molecular modeling
+
+| Although quite limited as a tool for molecular modeling purposes, *Jmol* allows some didactic approaches. The following *script* exemplifies the tool in modeling. It can be copied and pasted into the *Script Editor* window, or loaded from a text file.
+
+```{r, eval=FALSE}
+# Molecular modeling #1
+
+load=3fgu;
+define ligbind (ANP, BGC, MG); select ligbind
+connect 3.3
+strut 0.5
+color strut yellow
+hide protein or water
+```
+
+```{r, eval=FALSE}
+# Molecular modeling #2
+
+load =3fgu # load structure
+cartoon only
+hide water
+select(BGC,ANP)
+wireframe only
+
+select MG
+spacefill 100
+color palegreen
+defines ligbind (ANP,BGC,MG)
+
+select remove hetero and not water
+connect 3.3(ligbind and (oxygen or nitrogen)) (selected and (oxygen or nitrogen)) strut yellow # creates lig.H sticks of the protein with the ligands
+zoomTo 0.5(ligbind) *4 # zooms every half second, up to 4x at the ligand site
+
+zoom 0; center 
+navigate 2 DEPTH 30 / ROTATE 120 
+zoomto (mg) *7 
+
+# Note: adapted from Procko, K., Bakheet, S., Beckham, J. T., Franzen, M. A., Jakubowski, H., & Novak, W. R. (2021). Modeling an Enzyme Active Site using Molecular Visualization Freeware. JoVE (Journal of Visualized Experiments), (178), e63170.
+```
+
+
+<!-- ## Settings (*set*) -->

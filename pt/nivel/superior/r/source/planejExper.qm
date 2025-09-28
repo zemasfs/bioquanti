@@ -1,0 +1,289 @@
+---
+title: "Planejamento experimental"
+toc: true
+lang: pt
+bibliography: referencias.bib
+---
+
+## Sistema matricial
+
+|   Relembrando um *sistema matricial* simples, tal como visto no capítulo de *Biotermodinâmica*:
+
+$$
+a_{11}*x_1 + a_{12} * x_2 = b_1
+\\
+a_{21}*x_1 + a_{22} * x_2 = b_2
+$$ {#eq-eqMatrix}
+
+|   Ou seja,
+
+$$
+A = \begin{bmatrix}
+a_{11} & a_{12}\\
+a_{21} & a_{22}
+\end{bmatrix} , 
+$$
+
+$$
+x = \begin{bmatrix}
+b_1\\
+b_2
+\end{bmatrix} , 
+$$
+
+
+$$
+b = \begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix} 
+$$
+
+|   Resolve-se agora os valores de *x* (ou $\Delta$'s) linearmente:
+
+$$
+A * x = b
+$$ {#eq-eqAxb}
+
+
+|   Utilizando-se *álgebra matricial*, soluciona-se a @eq-eqAxb para os valores de *x*:
+
+
+$$
+x = A^{-1} * b 
+$$ {#eq-eqAm1xb}
+
+
+|   Assim, a solução matricial, largamente empregada em situações multivariadas, como como *metodologia de superfície de resposta* e *experimento fatorial*, pode ser obtida pela @eq-linMatr que segue.:
+
+$$
+\beta = (X^T \; X)^{-1} \; X^T*y
+$$ {#eq-linMatr}
+
+
+|       Outros exemplos são ilustrados na @eq-eqsLineares:
+
+$$
+y = b_0+b_1*x, \, ajuste\ linear
+\\
+y = b_0+b_1*x_1+b_2*x_2+...+b_n*x_n, \, ajuste \, multilinear
+\\
+y = b_0+b_1*x_1+b_2*x_2+...+b_n*x_n, \, metodologia \, de \, superfície \, de \, resposta \, linear 
+\\
+y = b_0+b_1*x_1+b_2*x_2+b_{12}*x_1*x_2, \, planejamento \, fatorial \, 2^2
+\\
+y = b_0+b_1*x_1+b_2*x_2+b_3*x_3+b_{12}*x_1*x_2+,b_{13}*x_1*x_3+b_{23}*x_2*x_3+b_{123}*x_1*x_2*x3 \, experimento \, fatorial \, 2^3
+\\
+y = b_0+b_1*x_1+b_2*x_2+b_{11}*x_1^2+b_{22}*x_2^2+b_{12}*x_1*x_2, \, metodologia \, de \,superfície \, de \, resposta \, quadrática 
+\\
+$$ {#eq-eqsLineares}
+
+
+|       Via de regra, todas as aplicações listadas em @eq-eqsLineares podem ser solucionadas com auxílio das relações matriciais das equações @eq-linMatr (ajustes linear, multilinear e superíficie de resposta linear) ou @eq-eqAxb (planejamentos fatoriais). A seguir são exemplificadas duas situações dessa natureza.
+## Rendimento de Reação & Planejamento Fatorial 2$^{2}$
+
+|       O *experimento fatorial* mais simples é o que se avalia a *resposta* de um experimento (rendimento, por ex) em que se variam dois *fatores* (temperatura e tipo de catalisador, por ex) em dois *níveis* cada (baixo e alto). A tabela elaborada no trecho abaixo a partir dos dados explicitados por Neto e cols [@neto2010fazer] exemplifica essa situação.
+
+```{r}
+#  Planejamento fatorial
+
+# Dados do experimento
+temp <- c(40, 60, 40, 60)
+catalis <- c("A", "A", "B", "B")
+rendim <- c(59, 90, 54, 68)
+
+# Tabela do planejamento fatorial
+
+tab.fat <- data.frame(temp, catalis, rendim)
+knitr::kable(tab.fat, caption = "Dados de experimento 
+             fatorial (Neto e cols, 2010).", "pipe") # tabela
+```
+
+|       Para conduzir a análise matricial dos dados é necessário converter a tabela de variáveis independentes (preditoras) em uma *matriz de planejamento codificada*, na qual valores altos (*nível superior*) são representados por *+1* e valores baixos (*nível inferior*) por *-1*. Além disso, também é necessário atribuir-se *+1* à 1a. coluna, e produzir uma 4a. coluna contendo o produto dos preditores codificados. Exemplificando, para temperatura a 40 (-1) e catalisador B (+1), a linha conterá o produto -1. Essa matriz final 4x4 é denominada *matriz de coeficientes de contraste*:
+
+
+$$
+X = \begin{bmatrix}
+1 & -1 & -1 & 1 \\
+-1 & -1 & 1 & 1 \\
+-1 & 1 & -1 & 1 \\
+1 & 1 & 1 & 1 \\
+\end{bmatrix} 
+$$
+
+|       Além disso, é necessário dividir a o resultado da operação matricial por um vetor escalar específico. Resumindo: elabora-se a matrix X codificada dos preditores, a matriz Y da resposta, aplica-se a @eq-eqAxb, e divide-se o resultado por um vetor característico do planejamento fatorial 2$^{2}$ (*c(4,2,2,2)*). O trecho de código abaixo soluciona o problema levantado:
+
+
+```{r}
+# Criação da matriz de planejamento codificada
+X <- matrix(c(1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, 1, 1, 1, 1), 
+            nrow = 4, byrow = TRUE)
+# Criação da matriz de rendimento
+Y <- as.matrix(rendim)
+# Determinação dos coeficientes beta:
+beta <- t(X) %*% Y / c(4, 2, 2, 2)
+beta
+```
+
+|         Dessa forma, interpreta-se o resultado como:
+
+$$
+\begin{pmatrix}
+  M  \\
+  T \\
+  C  \\
+  TC \\
+\end{pmatrix} =
+\begin{pmatrix}
+  67,75  \\
+  22,50 \\
+  -13,50 \\
+  -8,50 \\
+\end{pmatrix}
+$$ {#eq-fator22}
+
+
+
+Onde *M* representa a *média global* da resposta, *T* e *C* os *efeitos principais* (temperatura e catalisador), e *TC* o *efeito da interação*. Em síntese, os resultados sugerem que 1) a temperatura favoreceu o rendimento, especialmente para o catalisador A, 2) há redução do rendimento quando se substitui o catalisador A pelo B, e c) os maiores rendimentos são obtidos com o catalisador A na temperatura mais alta. Expressando-se esses resultados na função linear múltipla:
+
+$$
+y=67,75+22,5*T-13,5*C-8,5*T*C
+$$ {#eq-eqFator}
+
+
+
+|       Curiosamente, chega-se aos mesmos resultados se, ao invés de aplicarmos a @eq-eqAxb, utilizarmos a @eq-linMatr, seguido de multiplicação (e não divisão) por outro vetor (*c(1,2,2,2)*:
+
+```{r}
+beta <- (solve(t(X) %*% X) %*% t(X) %*% Y) * c(1, 2, 2, 2)
+beta
+```
+
+
+
+## Metodologia de Superfície de Resposta (MSR)
+
+|      Esta técnica estatística multivariável também é comumente empregada na modelagem de respostas influenciadas por mais de um fator, por vezes associada ao planejamento fatorial, e com vistas à otimização de uma resposta sem a necessidade de se avaliar todas as combinações possíveis. Isso pode ser particularmente útil quando se deseja otimizar um ensaio cuja resposta depende, por exemplo, de preditores escalares, como a faixa de concentração de determinado reagente e as condições de pH. 
+|       Exemplificando para uma *superfície de resposta linear* [@neto2010fazer], num ensaio em que se deseja verificar o melhor rendimento (*rend, %*) de uma reação variando-se 3 níveis de concentração de reagente (*conc, %*) e três velocidades de agitação magnética (*agit, rpm*), pode-se como dantes elaborar a *matriz de contrastes* a partir das informações da tabela que segue:
+
+```{r}
+# Dados para metodologia de superfície de resposta
+
+conc <- c(45, 55, 45, 55, 50, 50, 50)
+agit <- c(90, 90, 110, 110, 100, 100, 100)
+x1 <- c(-1, 1, -1, 1, 0, 0, 0)
+x2 <- c(-1, -1, 1, 1, 0, 0, 0)
+rendim <- c(69, 59, 78, 67, 68, 66, 69)
+
+tab.msr <- data.frame(conc, agit, x1, x2, rendim)
+knitr::kable(tab.msr, caption = "Dados de experimento de 
+             metodologia de superfície de resposta linear 
+             (Neto e cols, 2010).", "pipe") # tabela
+```
+
+```{r}
+
+# Criação da matriz de coeficientes de contraste
+X <- matrix(c(1, 1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 0, 0, 0, -1, -1, 1, 
+              1, 0, 0, 0), nrow = 7, byrow = FALSE)
+
+# Criação da matriz de rendimento
+Y <- as.matrix(rendim)
+
+# Determinação dos coeficientes beta:
+beta <- solve(t(X) %*% X) %*% t(X) %*% Y
+beta
+```
+|       Dessa forma, a função linear que expressa a superfície de resposta será:
+
+$$
+y=68,00-5,25*conc+4,25*agit
+$$ {#eq-eqMsr}
+
+### Superfície Quadrática de Resposta 
+
+|       Por vezes o modelo linear pode não adequar-se ao planejamento experimental, o que pode ser verificado por uma *Análise de Variância (ANAVA)* do experimento. Nesses casos pode-se aplicar uma *metodologia de superfície quadrática*, e que pode ser expressa como visto na @eq-eqsLineares. Nesses casos é usual uma construção denominada *planejamento em estrela* que acrescenta ao planejamento inicial um idêntico rotacionado 45$^{o}$, e cujos pontos novos estão distantes $\sqrt{2}$ unidades codificadas do ponto central. O exemplo abaixo pretende exemplificar essa metodologia.
+
+```{r}
+
+# Dados para superfície quadrática de resposta
+
+conc <- c(30, 40, 30, 40, 35, 35, 35, 28, 35, 42, 35)
+agit <- c(115, 115, 135, 135, 125, 125, 125, 125, 139, 125, 119)
+x1 <- c(-1, 1, -1, 1, 0, 0, 0, -sqrt(2), 0, sqrt(2), 0)
+x2 <- c(-1, -1, 1, 1, 0, 0, 0, 0, sqrt(2), 0, -sqrt(2))
+rendim <- c(86, 85, 78, 84, 90, 88, 89, 81, 80, 86, 87)
+
+tab.msr2 <- data.frame(conc, agit, x1, x2, rendim)
+knitr::kable(tab.msr2, caption = "Dados de experimento de metodologia de 
+             superfície quadrática de resposta (Neto e cols, 2010).", "pipe")
+# tabela
+```
+
+
+|       Dessa vez a *matriz de coeficentes de contrastes* expande-se para seis colunas em função dos termos *x$_{1}^{2}$*, *x$_{2}^{2}$*, e *x$_{1}$x$_{2}$*, tornando-se:
+
+$$
+\begin{pmatrix}
+  1 & -1 & -1 & 1 & 1 & 1  \\
+  1 & 1 & -1 & 1 & 1 & -1 \\
+  1 & -1 & 1 & 1 & 1 & -1 \\
+  1 & 1 & 1 & 1 & 1 & 1  \\
+  1 & 0 & 0 & 0 & 0 & 0 \\
+  1 & 0 & 0 & 0 & 0 & 0 \\
+  1 & 0 & 0 & 0 & 0 & 0  \\
+  1 & -\sqrt(2) & 0 & 2 & 0 & 0 \\
+  1 & 0 & \sqrt(2) & 0 & 2 & 0 \\
+  1 & \sqrt(2) & 0 & 2 & 0 & 0 \\
+  1 & 0 & -\sqrt(2) & 0 & 2 & 0 \\
+\end{pmatrix}
+$$ {#eq-msr2)
+
+
+|       O procedimento para a supefície quadrática repete a operação matricial realizada com a linear:
+
+```{r}
+
+# Criação da matriz de coeficientes de contraste para a superfície quadrática
+X <- matrix(c(rep(1, 11), -1, 1, -1, 1, 0, 0, 0, -sqrt(2),
+              0, sqrt(2), 0, -1, -1, 1, 1, 0, 0, 0, 0, sqrt(2), 
+              0, -sqrt(2), 1, 1, 1, 1, 0, 0, 0, 2, 0, 2, 0, 1, 1,
+              1, 1, 0, 0, 0, 0, 2, 0, 2, 1, -1, -1, 1, 0, 0, 0, 0, 
+              0, 0, 0), nrow = 11, byrow = FALSE)
+
+# Criação da matriz de rendimento
+Y <- as.matrix(rendim)
+# Determinação dos coeficientes beta:
+beta <- solve(t(X) %*% X) %*% t(X) %*% Y
+beta
+```
+
+|       O resultado expressa função quadrática de superfície encontrada, tal como segue:
+
+$$
+y=89,00+1,51*x_1-2,36*x_2-2,81*x_1^2-2,81*x_2^2+1,75*x_1*x_2
+$$ {#eq-eqMsr2}
+
+|       Pelo resultado acima é possível prever-se as condições otimizadas para o ensaio. Nesse sentido, o `R` permite, por exemplo, a construção de um gráfico tridimensional que represente a função obtida, e sem a necessidade de pacote adicional: tal como segue:
+
+
+```{r, fig.cap = "Superfície quadrática descrita pela equação de MSR com superposição dos valores experimentais." }
+
+## Superfície quadrática de resposta (MSR)
+
+x <- seq(-1, 1, 0.1) # preditor x
+y <- seq(-1, 1, 0.1) # preditor y
+mrs <- function(x, y) {
+  89.00 + 1.51 * x - 2.36 * y - 2.81 * x^2 - 2.81 * y^2 + 1.75 * x * y
+} # função aplicada aos preditores
+z <- outer(x, y, mrs) # saída do gráfico 3D (resposta)
+res <- persp(x, y, z, xlab = "x1", ylab = "x2", zlab = "z", 
+             shade = 0.4, theta = 30, phi = 15, ticktype = "detailed") 
+# plotagem de superfície da função z(x,y)
+pontos <- trans3d(x1, x2, rendim, pmat = res) # comando para adição de pontos experimentais
+points(pontos, pch = 19, col = 1) # adição dos pontos
+```
+
+|       Não obstante, existem para o `R` alguns pacotes para representação tridimensional de dados e funções (`rgl`, `plot3D`, `scatterplot3d), como também para análise de planejamento fatorial (`agricolae`, `afex`, `FMC`), e de metodologia de superfície de resposta (`rsm`).
+
+

@@ -1,0 +1,787 @@
+---
+title: "Biothermodynamics"
+bibliography: referencias.bib
+---
+
+## Bioenergetics {#sec-Bioenerg}
+
+<!-- Beer's Law ? -->
+
+| While *Kinetics* deals with the *flow* of information involving a phenomenon, *Thermodynamics* works with the *forces* involved in it. These forces, called *thermodynamic quantities*, help to understand various biological phenomena, such as the equilibria listed below.
+
+1. Stability of biopolymers;
+2. Ligand-receptor interaction;
+3. Transport of biomolecules and ions;
+4. Conformational changes in biomacromolecules;
+5. Association of biopolymers;
+6. Electron transfer in proteins;
+7. Combustion and synthesis of biomolecules;
+8. Generation of metabolic energy.
+
+| Although *Thermodynamics* is not responsible for explaining atomic theory, molecular mechanisms or reaction rates, its theoretical formalism allows us to evaluate the energy changes (*enthalpy, entropy, and Gibbs energy*) that occur between the initial and final states of a transformation. From these quantities, it is possible to sketch mechanistic models of the transformations involved, based on the empirical set of similar observations reported.
+
+| The *Gibbs equation* for the equilibrium that describes these quantities is:
+
+$$
+\Delta G = \Delta H - T * \Delta S
+$$ {#eq-eqGibbs}
+
+| Examples of this are the transformations in the values ​​of $\Delta$H and $\Delta$S that can be extracted from a conformational transition that accompanies the thermal denaturation of a protein [@cooper2004thermodynamics].
+
+| To do this, it is necessary to determine the value of $\Delta$G of the *phase transition*, which can be done in several ways, and using equally diverse methodology. Thus, through spectroscopic measurements (*molecular absorption, fluorescence, luminescence*), hydrodynamic measurements (*viscosity*, *sedimentation coefficient*, *osmotic pressure*), electrochemical measurements (*potentiometry, voltammetry*), or biological activity measurements, among many others, it is possible to quantify the thermodynamic parameter $\Delta$G. This, in turn, can be extracted from the following relations, considering a *two-state transition*:
+
+$$
+N \rightleftarrows D
+$$ {#eq-eqND}
+
+$$
+K_{eq} = \frac{[D]}{[N]}
+$$ {#eq-eqKeq}
+
+$$
+\Delta G = - R*T*ln(K_{eq})
+$$ {#eq-eqKeqDG}
+
+Where *$K_{eq}$*, *[D]*, and *[N]* represent, respectively, the equilibrium constant for protein denaturation, as well as its concentrations in the denatured and native forms.
+
+| A quick look at @eq-eqGibbs makes it clear that this is a linear function with temperature. Thus, it is plausible to imagine a system in which the thermodynamic quantities above (*$K_{eq}$* and, consequently, *$\Delta$G*) can be determined with temperature variation. Putting it into numbers:
+
+At $35^{o}$C: $\Delta$G$_{desn}$ = $\Delta$H$_{desn}$ - 308 * $\Delta$S$_{desn}$ = +4.4 kJ $mol^{-1}$
+
+At $45^{o}$C: $\Delta$G$_{desn}$ = $\Delta$H$_{desn}$ - 318 * $\Delta$S$_{desn}$ = -5.2 kJ $mol^{-1}$
+
+| Understand that a solution to the problem involves solving the equations sequentially, subtracting one from the other to standardize an unknown (say, $\Delta$S) that applied to the other equation will result in the second unknown (in this case, $\Delta$H). Although plausible, this procedure is manual and loses value if we imagine a 3rd temperature tested for the protein denaturation in question.
+| Another solution, more practical and computational, involves solving the *system of linear equations*, as follows:
+
+$$
+a_{11}*x_1 + a_{12} * x_2 = b_1
+\\
+a_{21}*x_1 + a_{22} * x_2 = b_2
+$$ {#eq-eqSistLin}
+
+Where *$x_1$* and *$x_2$* represent, respectively, $\Delta$H$_{desn}$ and $\Delta$S$_{desn}$.
+
+| In this case, we can set up a *matrix system* such that:
+
+$$
+a_{11}*x_1 + a_{12} * x_2 = b_1
+\\
+a_{21}*x_1 + a_{22} * x_2 = b_2
+$$ {#eq-eqMatrix}
+
+| That is,
+
+$$
+A = \begin{bmatrix}
+a_{11} & a_{12}\\
+a_{21} & a_{22}
+\end{bmatrix} ,
+$$
+
+$$
+x = \begin{bmatrix}
+b_1\\
+b_2
+\end{bmatrix} ,
+$$
+
+$$
+b = \begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix}
+$$
+
+| Now solve the values ​​of *x* (or $\Delta$'s) linearly:
+
+$$
+A * x = b
+$$ {#eq-eqAxb}
+
+| Using *matrix algebra*, solve @eq-eqAxb for the values ​​of *x*:
+
+$$
+x = A^{-1} * b
+$$ {#eq-eqAm1xb}
+
+| Since this is a *system of linear equations*, this solution has in itself the premise that the values ​​of $\Delta$H and $\Delta$S do not vary in the temperature range studied.
+
+## Solution of a system of linear equations in R
+
+| To solve the problem from the previous section using `R`, we first define the *matrix* for *A* and the matrix for *b* such that:
+
+$$
+A = \begin{bmatrix}
+1 & -308\\
+1 & -318
+\end{bmatrix} ,
+$$
+
+$$
+b = \begin{bmatrix}
++4.4\\
+-5.2
+\end{bmatrix}
+$$
+
+| Thus,
+
+```{r, echo = TRUE}
+# Definition of matrices
+A <- matrix(c(1, -308, 1, -318), ncol = 2, byrow = TRUE) # matrix A;
+# the negative sign is due to the function having a negative slope
+b <- matrix(c(4.4, -5.2), ncol = 1) # matrix b
+```
+
+| According to that presented in @eq-eqAm1xb, the matrix solution can be obtained by the `solve` command:
+
+```{r, echo =TRUE}
+# Matrix solution for linear system
+solve(A) %*% b # # the %*% operation indicates the scalar product of two
+# vectors ("dot product")
+```
+
+| In this case, the thermodynamic parameters found were $\Delta$H$_{desn}$ = 300 kJ $mol^{-1}$ and $\Delta$S$_{desn}$ = 960 J $mol^{-1}$.
+
+| Note the "%\*%" notation for the multiplication of two matrices in the last line of the code. This is the *cross multiplication* or *dot product* of two matrices. Matrix multiplication is defined only for two dimensionally compatible matrices in a given order. This implies that the number of columns in the 1st matrix is ​​equal to the number of rows in the 2nd matrix. In this case, the resulting matrix will have the same number of rows as the 1st matrix and the same number of columns as the 2nd matrix. See the example:
+
+$$
+\begin{pmatrix}
+1 \\
+2 \\
+3 \\
+\end{pmatrix} *
+\begin{pmatrix}
+1 & 2 & 3 \\
+\end{pmatrix}
+= \begin{pmatrix}
+1 & 2 & 3 \\
+2 & 4 & 6 \\
+3 & 6 & 9 \\
+\end{pmatrix}
+$$ {#eq-matex}
+
+| Another observation should also be made regarding the matrix solution of linear systems. A quick reflection on the linear nature of Gibbs' @eq-eqGibbs and its application to the solution of thermodynamic parameters for the system of linear equations above suggests that we could obtain other values ​​for $\Delta$G from other tested temperatures. Assuming that there were, say, 5 or 6 values ​​of *T* with their respective values ​​of $\Delta$G$_{desn}$, and reinforcing the premise that the parameters $\Delta$H$_{desn}$ and $\Delta$S$_{desn}$ remained constant throughout the thermal range, we could easily conclude that it is a linear relationship of $\Delta$G$_{desn}$ as a function of $\Delta$H$_{desn}$ *T*.
+| Thus, as seen in the *Enzymes* chapter, we could solve for the parameters $\Delta$H$_{desn}$ and $\Delta$SH$_{desn}$ by *linear fit*. In fact, one of the *Van't Hoff* expressions that define this linear relationship is:
+
+$$
+ln \, K_{eq} = - \frac{\Delta H}{R} * \frac{1}{T} + \frac{\Delta S}{R}
+$$ {#eq-eqVHoff}
+
+| Another direct consequence is that any set of data pairs of dependent (*y*) and independent (*x*) variables, and that exhibit homogeneity of variances and normal distribution, as explained in the *Enzymes* chapter, can also be solved for in its parameters (*intercept* and *slope*) with the help of matrix algebra.
+| In fact, the linear adjustment matrix solution can be obtained from the relation below:
+
+$$
+\beta = (X^T \; X)^{-1} \; X^T*y
+$$ {#eq-linMatr}
+
+| Therefore, the linear adjustment illustrated by the Lineweaver-Burk equation from the *Enzymes* chapter can also be performed with the help of matrices, although some statistical indicators presented in the table generated by the `lm` function are extracted by other functions of the matrix/statistical calculation algorithm. In @eq-linMatr the term in parentheses involves the *inversion* operation of the matrix. In linear algebra there is no division operation for matrices, but only the multiplication of a matrix by a scalar or by the *inverse* of another. And even then, only if it is a *square matrix*. Thus, the term (X$^{T}$ X)$^{-1}$ can only be calculated with *matrix inversion*. In `R` this action is performed by the `solve` command.
+| As before, it is also vitally important that the matrix *X* containing the independent variable is created with unit values ​​on the left, as follows:
+
+$$
+X = \begin{bmatrix}
+1 & x_{1}\\
+1 & x_{2}\\
+1 & x_{3}\\
+... & ...
+\end{bmatrix}
+$$
+
+| Thus, the solution to the problem explained in the Lineweaver-Burk equation from the *Enzymes* chapter can be solved in a matrix as:
+
+```{r}
+
+# Matrix solution for the Lineweaver-Burk kinetic parameters
+
+# Repeating the data for the Lineweaver-Burk variables
+S <- seq(0.1, 1, length.out = 20) # generates a sequence with 20 points
+# between 0 and 1 for substrate values
+Vm <- 10
+Km <- 0.5 # kinetic parameters
+set.seed(1500) # establishes the same random seed as the direct graph
+# of Michaelis-Menten, for reproducibility of the points
+error <- runif(20, 0, 1) # command for uniform error (no. of points, min, max)
+v <- Vm * S / (Km + S) + error # Michaelis-Menten equation
+inv.S <- 1 / S # create variables for the double reciprocal
+inv.v <- 1 / v
+
+# Creation of matrices A and b
+A2 <- matrix(c(rep(1, 20), inv.S), nrow = 20, byrow = FALSE) # create matrix
+# with unit value required before the independent variable
+b2 <- as.matrix(inv.v, nrow = 1, byrow = FALSE) # vector b
+
+# Matrix solution of the linear fit
+beta <- solve(t(A2) %*% A2) %*% t(A2) %*% b2
+beta
+```
+
+| Note that the intercept ($\beta$ 1) and slope ($\beta$ 2) values ​​are close to those found with the help of the `lm` function of `R`.
+
+## Matrices and `R`
+| The use of matrices in solving linear problems and non-linear is quite vast. In fact, a linear fit is solved computationally by the use of matrices, rather than by summations. Likewise, some algorithms for non-linear fit also implement matrix algebra in problem solving (*Gauss-Newton*, *Levenberg-Marquadt*).
+| Therefore, it is interesting to have a quick overview of the matrix potential that `R` has.
+
+```{r, echo = TRUE}
+# Some manipulations with matrices
+
+## Identifying rows and columns
+res <- matrix(c(-308, -318),
+nrow = 2, byrow = TRUE, # matrix definition
+dimnames = list(c("Delta H", "Delta S"), "kJ/mol")
+)
+res
+
+## Arithmetic operations
+m1 <- matrix(c(1, 2, 3, 4), nrow = 2, byrow = T)
+m2 <- matrix(c(4, 5, 6, 7), nrow = 2, byrow = T)
+m1 + 5
+m2 - 7 # addition or subtraction in scalar
+m1^2
+sin(m2) # power or trigonometry
+m1 + m2 # addition of elements in matrices of equal dimension
+m1 * m2 # multiplication of elements in matrices of equal dimension
+m1 %*% m2 # dot product of vectors
+det(m1) # determinant of a matrix
+t(m2) # transposition of a matrix
+diag(m1) # diagonal matrix
+solve(m2) # inverse of a matrix
+eigen(m1) # eigenvalue and eigenvector of a matrix
+```
+
+| `R` also supports several other operations used in numerical and symbolic calculations that use matrices, such as the functions `kronecker` (matrix multiplication), `svd` (*Single Value Decomposition*), `qr` (*QR Decomposition*), and `chol` (*Cholesky Decomposition*).
+
+## Solving thermodynamic parameters of enzyme stability
+
+| Thermodynamic parameters, such as those contained in the *Van't Hoff* expression, @eq-eqVHoff, can also be obtained simultaneously by matrix algebra. For example, it is common in Biotechnology to evaluate thermostability parameters of enzymes subjected to thermal stress (as well as chemical stress, such as pH, urea or use of proteases). This is done in order to verify, for example, whether an enzyme can withstand high temperatures in industrial processes, to compare enzymes modified by site-directed mutation, or to evaluate the behavior of enzymes associated with various pathogenesis. The formalism of this analysis goes through the *Arrhenius Collision Theory*, as well as the *Eyring Transition State Theory*, resulting in the linear system of equations as follows:
+
+$$
+\begin{cases}\Delta G^\ddagger = \Delta H^\ddagger-T* \Delta S^\ddagger
+\\
+ln(\frac{kcat*h}{K_B*T})=-\frac{1}{RT}*\Delta H^\ddagger + \frac{1}{R}*\Delta S^\ddagger
+\end{cases}
+$$ {#eq-termSist}
+
+Where the terms with $\ddagger$ symbolize the variations of quantities related to the activation (or deactivation) of the enzyme (*transition state of the activated complex*), *$K_{B}$* represents the Boltzmann constant (1.381x10$^{-23}$ JK$^{-1}$), *h* the Planck constant (6.686x10$^{-34}$ J\*s), and *R* the general gas constant (8.314 JK$^{-1}$ mol$^{-1}$). It is not always possible to converge a matrix solution by simply using cross multiplication (*dot product*).
+
+| The code snippet below exemplifies this attempt, based on the data published by Riaz et al [@bhatti2007effect] below, and previously considering the matrices *A* and *b* as a function of the parameters specified by the authors:
+
+$$
+\Delta G^{\ddagger}=65920\, J\,mol^{-1} \\
+T = 328 K \\
+kcat = 217 s^{-1}
+$$ {#eq-Bhatti}
+
+$$
+A = \begin{bmatrix}
+1 & -328\\
+-3.67e-4 & 0.120\\
+\end{bmatrix} ,
+$$
+
+$$
+b = \begin{bmatrix}
+65920\\
+-24.17\\
+\end{bmatrix}
+$$
+
+```{r}
+# Attempt at a simple matrix solution in published data
+# (Appl. Microbiol. Biotechnol, 73, 1290, 2007):
+
+A <- matrix(c(1, -3.67e-4, -328, 0.120), nrow = 2, byrow = TRUE)
+b <- matrix(c(65921, -24.17), nrow = 2)
+solve(A) %*% b
+```
+
+| Note the inconsistency for the resulting thermodynamic parameters. The matrix solution by the `solve` command also suffers from solving the problem, incurring an error if executed, as in the following excerpt. Also note the distinct possibility for constructing the matrices.
+
+```{r eval=FALSE}
+Aframe <- data.frame(c(1, -3.67e-4), c(-328, 0.120))
+A <- as.matrix(Aframe)
+b <- as.matrix(c(65921, -24.17))
+solve(t(A) %*% A) %*% t(A) %*% b
+```
+
+| For these more complex situations, it may be useful to use `R` packages, such as `rootSolve` already used or `nleqslv` used previously. In this sense, the root search minimization for the system of equations can be demonstrated as follows:
+
+```{r}
+
+# Minimization for roots of a system of thermodynamic equations
+
+library(rootSolve)
+T <- 328
+R <- 8.314
+h <- 6.626e-34
+kb <- 1.381e-23
+kcat <- 217
+DG <- -R * T * log((kcat * h) / (kb * T)) # 65920 J/mol
+model <- function(x) c(x[1] - T * x[2] - DG, x[2] / R - x[1] / (R * T) -
+log((kcat * h) / (kb * T)))
+(ss <- multiroot(model, start = c(50000, 50000)))
+```
+
+| By this *numerical solution* the values ​​found for the parameters were $\Delta$ H$^{\ddagger}$ = 40.8 kJmol$^{-1}$ and $\Delta$ S$^{\ddagger}$ = -76.5 Jmol$^{-1}$K$^{-1}$.
+| Comparing the values, the authors found $\Delta$ H$^{\ddagger}$ = 33.3 kJmol$^{-1}$ and $\Delta$ S$^{\ddagger}$ = -99.8 Jmol$^{-1}$K$^{-1}$. Note the similarity of the results obtained by minimizing roots with the parameters found by the authors. The value of $\Delta$ H$^{\ddagger}$ for these, however, was obtained only from obtaining the experimental value of *Arrhenius activation energy (Ea)*, by the slope of a linearized graph of the reaction rate, as follows:
+
+$$
+k = A *e^{-Ea/RT}
+\\
+ln(k) = \frac{\Delta S^{\ddagger}}{R} - \frac{\Delta H^{\ddagger}}{R} * \frac{1}{T}
+$$ {#eq-Arrhenius}
+
+| Although a significant adequacy of the values ​​obtained by the authors and at a single temperature is noted, caution must be exercised with the procedure, since minimizations usually require good initialization seeds of the algorithm to produce good results. Furthermore, the very nature of the thermodynamic relationship between a reaction rate (such as *kcat*) and the resulting Gibbs energy change occurs on an exponential scale:
+
+$$
+k = f(kcat) = e^{-\Delta G^{\ddagger}/RT}
+$$ {#eq-dGkcatRel}
+
+| This means in practice that small changes in $\Delta$ G$^{\ddagger}$ result in huge changes in the value of *k* (in this case, *kcat*). For this reason, small differences in the value of $\Delta$ G$^{\ddagger}$ can result in huge differences in $\Delta$ H$^{\ddagger}$ and $\Delta$ S$^{\ddagger}$ for the solution of the linear system. To illustrate this impact more directly, try changing the value of $\Delta$ G$^{\ddagger}$, rounding it:
+
+```{r}
+require(rootSolve)
+T <- 328
+R <- 8.314
+h <- 6.626e-34
+kb <- 1.381e-23
+kcat <- 217
+DG <- 66000
+model <- function(x) c(x[1] - T * x[2] - DG, x[2] / R - x[1] / (R * T) -
+log((kcat * h) / (kb * T)))
+(ss <- multiroot(model, start = c(50000, 50000)))
+```
+
+## Enthalpy of Reaction by Matrices
+
+| Chemical reactions are usually represented by the following equation:
+
+$$
+0 = \sum_{i=1}^{N} \nu_i B_i
+$$ {#eq-eqReacGen}
+
+| Thus, if we observe the representations that accompany chemical reactions, we will see that they also constitute *linear functions*, as in the examples below:
+
+$$
+2 C_2H_2(g)+ 5 O_2(g) \rightleftarrows 4 CO_2(g) + 2 H_2O(l), \\
+\Delta_fH^o = -2600 \,
+kJ/mol\\
+2 C_2H6(g) + 7 O_2(g) \rightleftarrows 4 CO_2(g) + 6 H_2O(l), \\
+\; \Delta_fH^o = -3210 \, kJ/mol \\
+H_2(g) + \frac{1}{2} O_2(g) \rightleftarrows H_2O(l), \\
+; \Delta_fH^o = -286 \, kJ/mol\\
+C_2H_2(g) + 2H_2(g) \rightleftarrows C_2H_6(g), \\
+\; \Delta_fH^o = ?
+$$ {#eq-eqReac}
+
+| And, if we select some reactions that have relationships between them, such as those presented in @eq-eqReac above, we will then have a *system of linear equations*, capable of being solved by matrix algebra. This relationship between chemical reactions that involve the formation of compounds refers to *Hess's Law*.
+| Mathematically, *Hess's Law* can be expressed as:
+
+$$
+\Delta_fH^o = \sum_{n=1}^{\infty} \nu \Delta_fH^o_P - \sum_{n=1}^{\infty} \nu \Delta_fH^o_R
+$$ {#eq-eqHess}
+
+Where $\nu$ represents the *stoichiometry* of the reaction, that is, the number of *moles* of each compound/element, while *P* and *R* refer to the *Product* and *Reactant*.
+
+| Returning to the @eq-eqReac example, what we want is to obtain the value of the *reaction enthalpy* for ethane (*$C_2H_6$*), based on the reaction enthalpy values ​​of the related species [@khalil2000calculating]. There are at least three possible solutions, in which the reaction enthalpy can be determined by the *bond enthalpy*, by the *formation enthalpy* itself, and by *Hess's Law*, which can be calculated using matrices.
+| To do this, it is necessary to 1) compose the matrices *A* and *b*, 2) calculate the vector of coefficients *beta*, and 3) perform the scalar product (%\*%) of *beta* with a matrix formed by the formation enthalpy values. The rationale for composing the matrices involves listing each compound with its reaction stoichiometry, and requires that a negative value be given to *reactants*, while a positive value is given to products.
+| The table below illustrates this construction for the problem in question.
+
+```{r}
+library(knitr) # to generate the table
+comp <- c("C2H2", "O2", "CO2", "H2O", "C2H6", "H2") # list of compounds
+# involved
+rea1 <- c(-2, -5, +4, +2, 0, 0) # stoichiometry (reaction1)
+rea2 <- c(0, -7, +4, +6, -2, 0) # stoichiometry (reaction2)
+rea3 <- c(0, -0.5, 0, +1, 0, -1) # stoichiometry (reaction3)
+incog <- c(-1, 0, 0, 0, +1, -2) # stoichiometry of the reaction with enthalpy
+# unknown
+tab_esteq <- data.frame(comp, rea1, rea2, rea3, incog) # dataframe with the
+# results
+colnames(tab_esteq) <- c("compound", "reaction 1", "reaction 2", "reaction 3",
+"ethane") # name the columns
+knitr::kable(tab_esteq, caption = "Reaction stoichiometry for a matrix solution of ethane formation (C2H6).", "pipe") # table
+```
+
+| And the code snippet that follows calculates the value of $\Delta H_r^o$ for the formation of ethane.
+
+```{r, echo=TRUE}
+# Matrix solution for enthalpy of formation
+A <- matrix(c(-2, 0, 0, -5, -7, -0.5, 4, 4, 0, 2, 6, 1, 0, -2, 0, 0, 0, -1),
+nrow = 6, byrow = T) # create matrix of reactions with known
+# enthalpy variation
+b <- matrix(c(-1, 0, 0, 0, 1, -2), nrow = 6, byrow = T) # create matrix of
+# stoichiometric coefficients of reaction with unknown
+# enthalpy variation
+beta <- solve(t(A) %*% A) %*% t(A) %*% b # beta calculation
+energ <- matrix(c(-2600, -3210, -286), nrow = 1, byrow = T) # create matrix
+# with enthalpy values
+
+ethane <- energ %*% beta
+cat("Value for deltaHr ethane: ", ethane, " kJ/mol")
+```
+
+## Thermodynamic Quantities by Polynomial Fit
+
+| As seen in the previous sections of this chapter and in the *Enzymes* chapter, *linear relations* allow the extraction of kinetic or thermodynamic parameters associated with biophysical-chemical phenomena, such as in the study of ligand associations with biopolymers, self-association of biomacromolecules, enzyme kinetics, or thermodynamic stability equilibrium of biopolymers. Regarding the latter, @eq-eqVHoff illustrates the linear relationship between a thermodynamic parameter monitored during the experiment, such as *$K_{eq}$* or *$\Delta$G*, and temperature (although other perturbations could also be viable, such as pH, denaturant content, ionic strength, etc.).
+| However, we could not use linear matrix relationships or linear fits to solve quantitative parameters in situations that do not rely on linear behavior between variables, as reported by @eq-eqVHoff, for example.
+
+| To illustrate, the relationship between temperature and the value for $\Delta$G of the self-association of apolipoprotein Apo A-II present in HDL lipoprotein does not exhibit a linear profile, and can be obtained from the literature with the help of the following code snippet: [@waelbroeck1979thermodynamics].
+
+```{r, echo=TRUE, label = "fig-insuRec", fig.cap="Temperature dependence of the Gibbs energy change of the interaction of insulin with its receptor."}
+
+# Dependence of T on deltaG for insulin and receptor
+
+T <- c(5.29, 10.07, 15.23, 20.21, 25.11, 30.29, 37.39) + 273
+# temperature data, in degrees Kelvin
+dG <- c(11.74, 12.17, 12.46, 12.73, 12.88, 12.98, 13.13) * -1e3
+# -deltaG data, in kcal/mol
+plot(T, dG,
+xlab = "T, K", ylab = expression(paste(Delta, "G, kcal/mol"))
+)
+```
+
+| @fig-insuRec shows a parabolic trend between the test temperature and the Gibbs energy variation of the process. Thus, a 3rd degree *polynomial* can be fitted to the data, as follows.
+
+```{r, echo =TRUE, label = "fig-TdG", fig.cap="Polynomial fit to the Gibbs energy variation data of the interaction of insulin with its receptor." }
+
+# Polynomial fit of thermodynamic parameters
+
+pol3 <- lm(dG ~ poly(T, 3, raw = TRUE)) # fit to 3rd degree polynomial; # "raw=TRUE" is essential
+# Alternatively, one can also fit polynomials as
+# pol3<-lm(dG ~ T + I(T^2)+I(T^3))
+
+summary(pol3)
+plot(T, dG,
+xlab = "T, K", ylab = expression(paste(Delta, "G, kcal/mol"))
+# graph of T x deltaG
+)
+lines(T, fitted(pol3), col = "red") # curve fitted to the data
+```
+
+| Here it is worth mentioning that obtaining the parameters of a polynomial can also be validated with the help of linear algebra (matrices). For example, build the *matrix A* of the temperature values, and the *matrix b* of the values ​​of $\Delta$G:
+
+$$
+A = \begin{bmatrix}
+1 & 278.29\\
+1 & 283.07\\
+1 & 288.23\\
+1 & 293.21\\
+1 & 298.11\\
+1 & 303.29\\
+1 & 310.39\\
+\end{bmatrix} ,
+$$
+$$
+b = \begin{bmatrix}
+-11740\\
+-12170\\
+-12460\\
+-12730\\
+-12880\\
+-12980\\
+-13130\\
+\end{bmatrix}
+$$
+
+| In this case, the matrix operation takes into account the conversion of the matrix *A* of the independent variable into an *alternation matrix*, also known as *Vandermonde matrix*. A Vandermonde matrix is ​​presented as follows:
+
+$$
+matrix \,V = \begin{bmatrix}
+1 & x_1 & x_1^2 & x_1^3 & ... \\
+1 & x_2 & x_2^2 & x_2^3 & ... \\
+1 & x_3 & x_3^2 & x_3^3 & ...\\
+1 & ...& ... & ... & ...\\
+\end{bmatrix} ,
+$$
+
+| An apparent limitation of this procedure is that the adjustment must be performed with few experimental points, since the exponential term grows with the number of points. On the other hand, the matrix solution circumvents the need to obtain statistical sums of the variables. `R` has a package to automate this transformation, `matrixcalc`, exemplified in the code snippet below:
+| Now just apply the same matrix relation of @eq-eqAm1xb, in this case, for four interleaved points of the experimental data above, and therefore producing a 4th degree polynomial:
+
+```{r}
+
+# Polynomial adjustment 4th degree for thermodynamic parameters
+
+T <- c(5.29, 15.23, 25.11, 37.39) + 273 # temperature data,
+# in degrees Kelvin
+dG <- c(11.74, 12.46, 12.88, 13.13) * -1e3 #
+
+library(matrixcalc)
+# Creating matrices A (Vandermonde) and b
+b <- as.matrix(dG, nrow = 4, byrow = TRUE) # vector b
+A <- vandermonde.matrix(alpha = T, n = 4)
+A # function to create alternation matrix (Vandermonde)
+sol.vnd <- solve(A) %*% b
+sol.vnd # polynomial coefficients (4th degree)
+```
+
+| To plot the data, simply convert the polynomial coefficients above into the resulting polynomial expression, which can be done with the `polynom` package:
+
+```{r}
+library(polynom) # converts vector of coefficients into symbolic polynomial
+p <- as.polynomial(sol.vnd)
+p2 <- as.function(p) # allows converting the polynomial to the curve function
+plot(T, dG)
+curve(p2, from = 273, to = 315, add = TRUE) # smooth polynomial curve
+```
+
+| Although the polynomial fit, either by the `R` eigenfunction (`lm`) or by the matrix solution above, reveals good adherence of the model to the experimental data, as represented by @fig-TdG and the results table above, there is no correlation of thermodynamic parameters, since it is an empirical mathematical model, and not an analytical one for the system.
+| However, it is possible to obtain a good approximation of the quantities $\Delta$H (enthalpy), $\Delta$S (entropy) and $\Delta$Cp (heat capacity) that phenomenologically model the thermodynamic behavior at a given temperature, by specific relations between these quantities [@edelhoch1976thermodynamic].
+
+$$
+\Delta S = -(\frac{\partial \Delta G}{\partial T})_p
+$$ {#eq-eqdS}
+
+| In short, the variation of entropy can be defined as the gradient of the variation of Gibbs energy with temperature. Another way of saying it would be to state that the entropy variation can also be defined as the first derivative of that relation, which can be defined empirically by:
+
+$$
+\Delta G = a+bT+cT^2+dT^3
+$$ {#eq-eqGibbsEmp}
+
+Thus, the value of $\Delta$S can be obtained by the first derivative of the empirical relation above (@eq-eqGibbsEmp):
+
+$$
+\Delta S = -(\frac{\partial \Delta G}{\partial T})_p = -b-2cT-3dT^2
+$$ {#eq-eqdSEmp}
+
+The value of $\Delta$H, in turn, can now be extracted from the @eq-eqGibbs repeated here, together with the @eq-eqGibbsEmp:
+
+$$
+\Delta G = \Delta H - T * \Delta S
+$$ {#eq-eqGibbs}
+
+$$
+\Delta H = \Delta G +T * \Delta S
+$$ {#eq-eqdH}
+
+| Applying the empirical equations for the thermodynamic parameters above:
+
+$$
+\Delta H = (a+bT+cT^2+dT^3) +T(-b-2cT-3dT^2)
+$$ {#eq-eqdHEmp}
+
+$$
+\Delta H = a-cT^2-2dT^3
+$$ {#eq-eqdHEmp2}
+
+| Similarly, the *heat capacity* at constant pressure can be defined as:
+
+$$
+\Delta Cp = -(\frac{\partial \Delta H}{\partial T})_p
+$$ {#eq-eqdCp}
+
+That is, the value of $\Delta$Cp can be approximated by the first derivative of $\Delta$H (@eq-eqdHEmp) over T. That is:
+
+$$
+\Delta Cp = -2cT-6dT^2
+$$ {#eq-eqdCpEmp}
+
+| Although they are approximations, the thermodynamic parameters thus obtained reflect the possibility of describing a phenomenon, such as the interaction of insulin with its receptor (@waelbroeck1979thermodynamics), from the perspective of preponderant weak bonds, such as hydrogen bonds, van der Waals forces, salt effect, electrostatic interactions and hydrophobic effect [@ross1981thermodynamics], only by monitoring an equilibrium constant with temperature. The code snippet below solves the thermodynamic parameters for the complexation of insulin with its receptor at 25$^o$C by the method described.
+
+```{r, echo=TRUE}
+# Polynomial solution of thermodynamic parameters for interaction of
+# insulin with receptor
+
+T <- c(5.29, 10.07, 15.23, 20.21, 25.11, 30.29, 37.39) +
+273 # temperature data, in degrees Kelvin
+dG <- c(11.74, 12.17, 12.46, 12.73, 12.88, 12.98, 13.13) *
+-1e3 # -deltaG data, in kcal/mol
+
+# Fit to 2nd degree polynomial
+pol3 <- lm(dG ~ poly(T, 3, raw = TRUE)) # fit to 3rd degree polynomial degree
+
+Tref <- 298 # reference temperature, in degrees Kelvin
+
+# Calculations
+dG <- coef(pol3)[1] + coef(pol3)[2] * Tref + coef(pol3)[3] *
+Tref^2 + coef(pol3)[4] * Tref^3 # deltaG
+dS <- -coef(pol3)[2] - 2 * coef(pol3)[3] * Tref - 3 * coef(pol3)[4] *
+Tref^2 # deltaS
+dH <- coef(pol3)[1] - coef(pol3)[3] * Tref^2 - 2 * coef(pol3)[4] *
+Tref^3 # deltaH
+dCp <- -2 * coef(pol3)[3] * Tref - 6 * coef(pol3)[4] * Tref^2 # deltaCp
+
+# Parameters in 298 K
+cat("deltaG value: ", dG, "cal/mol", "\n")
+cat("deltaS value: ", dS, "cal/mol/K", "\n")
+cat("deltaH value: ", dH, "cal/mol", "\n")
+cat("deltaCp value: ", dCp, "cal/mol/K", "\n")
+```
+
+| The values ​​found for the interaction are very close to those reported by the authors at 25$^o$C (@waelbroeck1979thermodynamics), although they used a fit with a 2nd degree polynomial. If you change the code snippet above to a polynomial of the same degree and omit the terms of the thermodynamic equations that identify the coefficient *d*, a value of $\Delta$Cp of -735 kcal/mol should be observed, very similar to the reported value of -766 kcal/mol.
+
+## Thermodynamic Stability of Biopolymers
+
+| The thermodynamic stability of proteins, enzymes and nucleic acids is essential for the study of new engineered biopolymers, modified complex matrices (artificial plasma, for example), as well as for the research of drug and medicine candidates. In general terms, the biopolymer under evaluation is considered in a *two-state model*, *native* and *denatured*, as presented in the @eq-eqKeq of this chapter.
+
+| However, as the experimental determination of *[N]* and *[D]* concentrations becomes complex, we seek to obtain a relationship between them, specifically, their fraction, such that:
+
+$$
+f_D+f_N = 1
+$$ {#eq-eqfDfN}
+
+Which results in:
+
+$$
+f_N = 1 - f_D
+$$ {#eq-eqSfD}
+
+| Thus, an experimental signal *S* obtained in the presence of *N* and *D* fractions in a biopolymer sample can be represented as:
+
+$$
+S = f_N * S_N +f_D * S_D
+$$ {#eq-eqS}
+
+| Substituting @eq-eqSfD in @eq-eqS we obtain:
+
+$$
+f_D = \frac{S_i-S_N}{S_D-S_N}
+$$ {#eq-eqfD}
+
+Where *Si* represents the signal at point *i*.
+
+| Thus, even if the concentrations *[N]* and *[D]* are not directly obtained, their fractions can be recovered from the signal obtained from denaturation tests against various perturbants, such as temperature, pH, salts or denaturing reagents (urea, guanidine chloride, for example).
+
+| In this way, the value of the equilibrium thermodynamic constant of denaturation K$_D$ can also be recovered, such that:
+
+$$
+K_D = \frac{[D]}{[N]}=\frac{f_D}{f_N}
+$$ {#eq-eqKD}
+
+| Inserting @eq-eqSfD into @eq-eqKD, we obtain:
+
+$$
+K_D = \frac{f_D}{1-f_D}
+$$ {#eq-eqKD2}
+
+And, therefore,
+
+$$
+\Delta G_D = -RT*ln\;K_D
+$$ {#eq-eqdGD}
+
+| In this way, it is possible to evaluate the thermodynamic stability of a biopolymer by its *stability curve*, contrasting the *perturbant* against the value of *$\Delta$G$_D$* obtained by the above procedures.
+
+| Analytically, a stability curve can be generated from the constant parameters in the *integrated Gibbs-Helmholtz equation* (@licata2011analysis):
+
+$$
+\Delta G(T) = \Delta H_m(\frac{Tm-T}{Tm})-\Delta Cp[Tm-T(1-ln \; \frac{Tm}{T})])
+$$ {#eq-eqGibHelm}
+
+| Thus, a stability curve can be illustrated by the following code snippet:
+
+```{r, echo=TRUE,fig.cap="Simulated stability curve for the denaturation of a protein. Tm = 75oC, DeltaHm = 180 kcal/mol, and DeltaCp = 3 kcal/mol/K." }
+# Denaturation curve for protein
+
+Tm <- 85
+dHm <- 180
+dCp <- 3
+x <- 0:80
+
+curve(dHm * (1 - x / Tm) + dCp * ((x - Tm - x * log(x / Tm)))
+, xlim = c(0, 80)) # Nicholson1996; Sholz2009
+```
+
+## Quantitative Structure-Function Relationship (QSAR) and Multilinear Fitting
+
+| The same procedures employed to solve matrix problems, specifically with @eq-linMatr, can also accommodate a QSAR (Quantitative Structure-Function Relationship) analysis of interest. For example, benzodiazepinone derivatives (TIBO) are known to inhibit reverse transcriptase [@tong2018qsar], an enzyme that catalyzes the conversion of RNA into viral DNA in acquired immune deficiency syndrome (AIDS). In this sense, observations derived from the QSAR study can contribute to the design of potential HIV transcriptase inhibitors. Thus, Tong et al. proposed a multilinear predictive model relating some properties of TIBO analogues with biological activity, as follows:
+
+$$
+pIC_{50}=x_0+x_1*S+x_2*W
+$$ {#eq:eqTIBO}
+
+Where *pIC$_{50}$* represents the measured biological activity (*-log IC$_{50}$*), *S* indexes solubility values, and *W* refers to the width parameter of the first atom of the substituent group. These data are tabulated below:
+
+```{r}
+
+# Tabulation data for QSAR
+
+group <- c("H", "Cl", "SCH3", "OCH3", "CN", "CHO", "Br", "CH3", "CCH")
+# substituent groups in TIBO
+S <- c(3.53, 4.24, 4.09, 3.45, 2.96, 2.89, 4.39, 4.03, 3.8) # solubility parameter
+W <- c(1, 1.8, 1.7, 1.35, 1.6, 1.6, 1.95, 1.6, 1.6)
+# group width parameter
+pIC50 <- c(7.36, 8.37, 8.3, 7.47, 7.25, 6.73, 8.52, 7.87, 7.53)
+# biological activity of TIBO
+
+tab.tibo <- data.frame(group, S, W, pIC50)
+knitr::kable(tab.tibo, caption = "multivariate data of biological activity of TIBO and predictive parameters.", "pipe") # table
+```
+
+| Note that there are two predictor variables and one dependent variable, and whose solution can be found by *multilinear or multiple linear fit*. `R` allows this to be done in at least two ways: internal linear fit function (`lm`) or matrix algebra.
+
+### Multiple linear fit by `lm` function:
+
+| In a simplified way, one can obtain the multivariate expression that defines the relationship of the predictive quantities *W* and *S* with the biological activity of TIBO by:
+
+```{r}
+
+# Multilinear fitting in QSAR
+
+lm.tibo <- lm(tab.tibo$pIC50 ~ tab.tibo$S + tab.tibo$W)
+# command for multilinear fitting;
+
+# Alternatively,
+# lm.tibo <- lm(cbind(S,W)~pIC50)
+summary(lm.tibo)
+```
+
+| Note the most direct way to assign already declared variables to an `R` function (*dataframe $ vector). This is the simplest way, since it does not depend on extra packages (like `dplyr`), although it is less readable.
+
+| Expressing the results in multiple linear function:
+
+$$
+y=5.75+0.14*S+0.95*W
+$$ {#eq-eqTIBO2}
+
+### Multiple linear adjustment by matrices:
+
+| The *beta* coefficients obtained above can also be found by linear algebra, using the *b* biological activity matrix and the *A* matrix containing the independent variables, this one also created with unit values ​​on the left, as before, followed by the application of @eq-linMatr:
+
+$$
+X = \begin{bmatrix}
+1 & S_{1} & W_{1} \\
+1 & S_{2} & W_{2}\\
+1 & S_{3} & W_{3}\\
+... & ...
+\end{bmatrix}
+$$
+
+```{r}
+# Creating matrices A and b
+A <- matrix(c(rep(1, 9), S, W), nrow = 9, byrow = FALSE)
+# creates matrix with unit value required before the independent variable
+b <- as.matrix(pIC50, nrow = 1, byrow = FALSE) # vector b
+
+# Matrix solution of linear adjustment
+beta <- solve(t(A) %*% A) %*% t(A) %*% b
+beta
+```
+
+| Note that the values ​​for the coefficients are coincident. In practice, the multiple linear adjustment procedure can be used, as in the example above, to predict a response (such as pIC$_{50}$) as a function of predictor variables (such as S and W).
+| This multilinear matrix procedure can also be applied to other types of multivariate analysis, such as *factorial experiment* and *response surface methodology*. This is due to the very nature of these systems, when linear. See the applications below. Even for *quadratic response surface methodology* (where the parameters vary with the square of the predictor variables), the matrix solution (@eq-linMatr) is also possible.
+
+$$
+y = b_0+b_1*x, \, linear fit\
+\\
+y = b_0+b_1*x_1+b_2*x_2+...+b_n*x_n, \, fit \, multilinear
+\\
+y = b_0+b_1*x_1+b_2*x_2+...+b_n*x_n, \, methodology \, of \, surface \, of \, response \, linear
+\\
+y = b_0+b_1*x_1+b_2*x_2+b_{12}*x_1*x_2, \, planning \, factorial \, 2^2
+\\
+y = b_0+b_1*x_1+b_2*x_2+b_3*x_3+b_{12}*x_1*x_2+,b_{13}*x_1*x_3+b_{23}*x_2*x_3+b_{123}*x_1*x_2*x3 \, experiment \, factorial \, 2^3
+\\
+y = b_0+b_1*x_1+b_2*x_2+b_{11}*x_1^2+b_{22}*x_2^2+b_{12}*x_1*x_2, \, quadratic \, response \, surface \, methodology
+\\
+$$ {#eq-eqsLineares}
+
+| As a rule, all applications listed in @eq-eqsLineares can be solved with the help of matrix relations of the equations @eq-linMatr (linear, multilinear and linear response surface adjustments) or @eq-eqAxb (factorial designs). Two situations of this nature are exemplified below.
+
+### A word about matrices and applications
+
+| As already noted, the use of matrices extends to various situations, not necessarily of a Biochemical or Biophysical nature, data adjustments, Hess's or Lambert-Beer's Law, as well as the construction of a menu (matrix of ingredients for each dish by price of each ingredient), or the daily caloric expenditure in physical activity (matrix of weekly workload of each activity by matrix of caloric expenditure of the activity). In fact, they are tools used in Bioinformatics, Economics, Ecology, Engineering, and many other areas, satisfying the basic relations between the variables under study. These conditions, in turn, represent nothing more than *the sum of products*, in which these are manifested by quantities declared in the problem. Thus, a small representation of the statement above could be illustrated simply as:
+
+$$
+y = \sum_{n=1}^{\infty} (x_1*x_2)
+$$ {#eq-soulMatrix}
+

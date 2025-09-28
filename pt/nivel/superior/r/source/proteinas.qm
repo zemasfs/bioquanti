@@ -1,0 +1,427 @@
+---
+title: "Proteínas"
+toc: true
+lang: pt
+bibliography: referencias.bib
+---
+
+
+## Composição de aminoácidos {#sec-Proteinas}
+
+|     Proteínas constituem biopolímeros formados por 20 aminoácidos. Dessa forma pode-se avaliar facilmente a composição de qualquer proteína disponível em banco de dados, como o *PDB* visto no capítulo de *Aminoácidos*. Tomando-se a albumina de soro humano como exemplo, código *AAA98797* do *National Center for Biotechnology Information*, é possível contabilizar os 20 tipos de aminoácidos que compõe sua sequência. Para isto basta considerar a sequência *FASTA* como uma *string*, e extrair a quantidade de cada letra, utilizando-se a biblioteca *stringr*, como segue.
+
+
+|     Primeiro, obtém-se a sequência *FASTA* da albumina de soro. 
+
+```{r  bsa seq}
+seq <- "MKWVTFISLLFLFSSAYSRGVFRRDAHKSEVAHRFKDLGEENFKALVLIAFAQYLQQCPFEDHVKLVNEV
+TEFAKTCVADESAENCDKSLHTLFGDKLCTVATLRETYGEMADCCAKQEPERNECFLQHKDDNPNLPRLV
+RPEVDVMCTAFHDNEETFLKKYLYEIARRHPYFYAPELLFFAKRYKAAFTECCQAADKAACLLPKLDELR
+DEGKASSAKQRLKCASLQKFGERAFKAWAVARLSQRFPKAEFAEVSKLVTDLTKVHTECCHGDLLECADD
+RADLAKYICENQDSISSKLKECCEKPLLEKSHCIAEVENDEMPADLPSLAADFVESKDVCKNYAEAKDVF
+LGMFLYEYARRHPDYSVVLLLRLAKTYETTLEKCCAAADPHECYAKVFDEFKPLVEEPQNLIKQNCELFE
+QLGEYKFQNALLVRYTKKVPQVSTPTLVEVSRNLGKVGSKCCKHPEAKRMPCAEDYLSVVLNQLCVLHEK
+TPVSDRVTKCCTESLVNRRPCFSALEVDETYVPKEFNAETFTFHADICTLSEKERQIKKQTALVELVKHK
+PKATKEQLKAVMDDFAAFVEKCCKADDKETCFAEEGKKLVAASQAALGL"
+```
+
+|     Pode-se observar que há espaços vazios, que podem ser omitidos por razões estéticas ou não, já que o pacote *stringr* não os contabilizará, contrariamente a pacotes mais específicos para sequências biológicas, como o *seqinr* visto anteriormente. Mas se desejar omitir esses espaços, basta executar o código abaixo.
+
+```{r, eval=FALSE}
+seq <- seq[seq != "\n"]
+seq # operação booleana != significa "não"
+```
+
+A seguir, obtém-se o quantitativo de uma letra específica da sequência.
+
+```{r}
+library(stringr)
+aa <- str_count(seq, pattern = "A")
+aa
+```
+
+|     Veja que o comando `str_count` contabiliza apenas a letra "A" na sequência. Dessa forma, é possível obter todos os 20 aminoácidos, repetindo-se esse comando.
+
+```{r}
+library(stringr)
+ala <- str_count(seq, pattern = "A")
+arg <- str_count(seq, pattern = "R")
+asn <- str_count(seq, pattern = "N")
+asp <- str_count(seq, pattern = "D")
+cys <- str_count(seq, pattern = "C")
+glu <- str_count(seq, pattern = "E")
+gln <- str_count(seq, pattern = "Q")
+gly <- str_count(seq, pattern = "G")
+his <- str_count(seq, pattern = "H")
+ile <- str_count(seq, pattern = "I")
+leu <- str_count(seq, pattern = "L")
+lys <- str_count(seq, pattern = "K")
+met <- str_count(seq, pattern = "M")
+phe <- str_count(seq, pattern = "F")
+pro <- str_count(seq, pattern = "P")
+ser <- str_count(seq, pattern = "S")
+thr <- str_count(seq, pattern = "T")
+trp <- str_count(seq, pattern = "W")
+tyr <- str_count(seq, pattern = "Y")
+val <- str_count(seq, pattern = "V")
+```
+
+E, para visualizar o resultado numa tabela:
+
+
+```{r, bsa compos, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
+aa_3abrev <- c("Ala", "Arg", "Asn", "Asp", "Cys", "Glu", "Gln", "Gly", "His", "Ile", "Leu", "Lys", "Met", "Phe", "Pro", "Ser", "Thr", "Trp", "Tyr", "Val")
+aa_quant <- c(ala, arg, asn, asp, cys, glu, gln, gly, his, ile, leu, lys, met, phe, pro, ser, thr, trp, tyr, val) # vetor com o quantitativo de aminoácidos da proteína
+aa_seq <- data.frame(aa_3abrev, aa_quant) # dataframe com os resultados
+colnames(aa_seq) <- c("Tipo", "Qtde") # renomear as colunas
+
+
+# Composição de aminoácidos em albumina de soro humano
+aa_seq # apresenta a tabela
+```
+
+|       O 'R' possui alguns comandos para a geração estética de tabelas, entre os quais os incluídos no pacote 'knitr', como segue:
+```{r}
+library(knitr) # para gerar a tabela
+
+knitr::kable(aa_seq, caption = "Composição de aminoácidos em albumina 
+             # de soro humano.", "pipe") # tabela
+```
+
+|     Observe que, à despeito do resultado obtido, houve certo trabalho em se obter a composição da albumina, a partir das 20 linhas modificadas para cada aminoácido. Uma alternativa mais prática consiste em considerar um *loop* que execute a extração da informação desejada para um vetor contendo a abreviação de uma letra para cada aminoácido. 
+
+```{r loop table bsa}
+aa_1abrev <- c("A", "R", "N", "D", "C", "E", "Q", "G", "H", "I", "L", "K", "M",
+               "F", "P", "S", "T", "W", "Y", "V")
+for (i in aa_1abrev) {
+  aa_quant2 <- str_count(seq, pattern = aa_1abrev)
+  return(aa_quant2) # sintaxe opcional para função com apenas uma saída
+}
+
+
+aa_seq <- data.frame(aa_3abrev, aa_quant2) # dataframe com os resultados
+colnames(aa_seq) <- c("Tipo", "Qtde") # renomear as colunas
+knitr::kable(aa_seq, caption = "Composição de aminoácidos em albumina de soro
+             humano (uso de loop).", "pipe") # tabela
+```
+
+|     Dessa forma obtém-se o mesmo resultado, mas com menor consumo de memória e maior velocidade de processamento, características em qualquer lógica de programação. Apesar do *loop* exemplificar uma automação, a função `str_count` retém em si um *loop* interno, já que aplica uma função de contagem de elementos a uma sequência, a partir de um padrão pré-definido (o vetor *aa_1abrev*, no caso). Dessa forma, pode-se simplificar ainda mais o script, não necessitando do *loop* externo.
+
+```{r}
+str_count(seq, pattern = aa_1abrev)
+```
+
+|     Diversas funções do R exibem esse *loop* interno, e que pode ser aplicado em vetores, listas, matrizes e *dataframes* (planilha de dados). As mais simples envolvem a aplicação de uma função pré-programada do R a um vetor, por ex:
+
+```{r}
+y <- c(1, 2, 4, 8, 16, 32)
+mean(y)
+sum(y)
+```
+|       Outra vetorização frequente decorre da aplicação de uma *função* de usuário a vetor, reduzindo a necessidade de repetição de comandos, como no exemplo abaixo:
+
+```{r size prot estim} 
+# Tamanho médio estimado de uma proteína a partir do no. de resíduos de
+# aminoácidos
+prot.tamanho <- function(x) {
+  MM <- x * 110 # 'x' representa o número de aminoácidos da proteína
+  return(MM)
+}
+
+prot.tamanho(575) # no. de resíduos de aminoácidos de albumina humana
+```
+
+|       Outra forma de vetorização envolve a família de funções `apply`, composta pelos comandos `apply`, `sapply`, `tapply`, `lapply`, e `mapply`. Embora possuam processamento mais rápido que funções de *loop* externo para uso de matrizes muito complexas, cada qual é voltado a um objeto distinto ou situação específica do R (retorno de lista, vetor ou matriz), permite o uso de `subset` (subconjuntos de dados), utiliza funções do R ou funções previamente definidas pelo usuário, e roda em apenas uma linha de comando. Essas vantagens contrapõe-se ao uso de *loop for* aplicado para vetores. Contudo, a vetorização opera muito bem quando se deseja aplicar ou mapear  uma função a um vetor/matriz/lista. Quando, por outro lado, se deseja aplicar uma função cujo resultado dependa de mais de um vetor/matriz/lista, o *loop for* torna-se indispensável, como na titulação de ácidos fracos do capítulo de *Aminoácidos*.
+
+|     Seja qual for o método empregado (e aí vale destacar as chamadas *boas práticas de programação* na construção de *scripts* [^label-1]), é possível construir uma composição mais geral para o conjunto de resíduos da proteína. Assim, podemos obter qualquer relação quantitativa a partir da sequência, já que a estamos tratando como uma *string*. Exemplificando, uma tabela contendo a classe de cada aminoácido que compõe a sequência.
+
+[^label-1]: Algumas práticas de programação (*Best Codes*):
+1) organizar um projeto em pastas (ex: dados,figuras,scripts) ou criar um pacote do R como opção; 2) criar seções num código pra facilitar localização; 3) nomear os *code chunks* (pedaços de código); 4) colocar no início do código as bibliotecas utilizadas, fontes, e chamada de dados (evita procurar algo necessário pro *script* rodar ao longo do código); 5) identar, preferivelmente com 1 ou 2 comandos por linha; 6) parâmetros de função sempre dentro de função; 7) evitar parâmetros globais; 8) não usar 'attach'; 8) usar parâmetros com nomes intuitivos (e não x e y; ex: nome_função); 9) atribuir nomes à objetos com uma das três convenções nominais (ex: KiCompet, ki_compet, ki.compet).
+
+
+```{r}
+aa_ac <- aa_seq[4, 2] + aa_seq[6, 2] # AA ácicos
+aa_bas <- aa_seq[2, 2] + aa_seq[9, 2] + aa_seq[12, 2] # AA básicos
+aa_arom <- aa_seq[14, 2] + aa_seq[18, 2] + aa_seq[19, 2] # AA aromáticos
+aa_alif <- aa_seq[10, 2] + aa_seq[11, 2] + aa_seq[15, 2] + aa_seq[1, 2] +
+  aa_seq[20, 2] # AA alifáticos
+aa_pol <- aa_seq[3, 2] + aa_seq[5, 2] + aa_seq[7, 2] + aa_seq[8, 2] + 
+  aa_seq[13, 2] + aa_seq[16, 2] + aa_seq[17, 2] ## AA polares neutros
+```
+|     Agora, ao invés de se construir uma tabela com a contagem desses grupos, façamos o percentual dos mesmos, para uma visão mais geral da sequência.
+
+```{r}
+aa_tot <- str_count(seq, pattern = "") # comprimento da sequência
+class_perc <- round(c(aa_ac, aa_bas, aa_arom, aa_alif, aa_pol) / aa_tot * 100)
+```
+
+E agora, sim, constroi-se a tabela.
+
+```{r}
+aa_class <- c("ácido", "básico", "aromático", "alifático", "polar")
+aa_perc <- data.frame(aa_class, class_perc) # dataframe com os resultados
+colnames(aa_perc) <- c("Classe", "%") # renomear as colunas
+knitr::kable(aa_perc, caption = "Distribuição de classes de aminoácidos 
+             em albumina humana.", "pipe") # tabela
+```
+
+|     Percebe-se pela tabela acima que a distribuição de classes de resíduos de aminoácidos na albumina é razoavelmente homogênea, o que contribui para sua função anfotérica de transporte para compostos polares (ex:cálcio) e apolares (ex: colesterol, ácidos graxos).
+
+## Tabela de  Purificação de Proteínas & R como planilha eletrônica
+
+|      Não obstante a facilidade com que podemos elaborar/editar planilhas eletrônicas convencionais (*spreadsheet*; ex: MS Excel, Libreoffice Calc, Gnumeric, etc), o 'R' também permite trabalhar-se com planilhas. Ainda que menos intuitivo como as mencionadas, a scriptagem no R permite a elaboração/edição de planilhas de alta complexidade, dada a natureza da programação estatística que envolve a suite.
+|       Para exemplificar a construção de uma planilha simples, tomemos como exemplo uma *Tabela de Purificação de Proteínas*, usualmente utilizada em Biotecnologia e áreas afins. A forma mais simples de construção de uma planilha envolve 1) a elaboração individual de vetores, e 2) a união dos vetores em uma planilha. 
+|       Os procedimentos para purificação (ou isolamento, fracionamento) proteica envolvem técnicas como **tratamento químico (precipitação por sulfato de amônio, acetona)**, **tratamento ácido**, **tratamento térmico**, **diálise**,  **cromatografia (filtração molecular, troca-iônica, afinidade, fase reversa)**, entre outros. Para aferição do grau de pureza da amostra obtida utilizam-se normalmente a **eletroforese** simples, **focalização isoelétrica**, **eletroforese 2D**, uso de **anticorpos monoclonais**, e **ensaios de atividade** específicos, dentre vários.
+|       Para a tabela de purificação são exigidos somente os vetores de **massa de amostra** e de **atividade enzimática da amostra**, obtidos em cada etapa de purificação. Uma planilha simples poderia ser construida como:
+
+
+```{r plan purif}
+# Elaboração de planilha simples de purificação de enzima
+# (cada elemento do vetor representa uma etapa de purificação)
+
+# 1. Definição dos vetores principais:
+prot.total <- c(6344, 302, 145, 34, 10, 3.8) # proteína, mg
+ativ.tot <- c(200, 122, 106, 70, 53, 24) * 1000 # atividade, U
+
+# 2. Construção da planilha:
+purif.plan <- data.frame(prot.total, ativ.tot)
+purif.plan
+```
+
+|       A planilha construida compõe agora um 'dataset' do R. Há outras formas de construção simples, também, como o uso da função 'cbind' (pra união de colunas) ou 'rbind' (união de linhas; rows):
+
+```{r plan purif cbind}
+purif.plan2 <- cbind(prot.total, ativ.tot)
+purif.plan2
+```
+
+|       Seja qual for o procedimento, pode-se alterar os nomes das colunas, como segue:
+
+```{r plan purif colnames}
+# Edição de nome de colunas
+colnames(purif.plan2) <- c("totalProt", "enzAtiv")
+purif.plan2
+```
+
+|       Como numa planilha convencional, também é possível se criar novos vetores calculados a partir dos iniciais:
+
+```{r plan purif calc}
+purif.plan3 <- data.frame(prot.total, ativ.tot, ativ.tot / prot.total)
+options(digits = 1) # opção para no. de casas decimais
+colnames(purif.plan3) <- c("prot.total", "ativ.tot", "ativ.specif")
+rownames(purif.plan3) <- c("extr.bruto", "NH4SO2", "acetona", 
+                           "Sephadex G-100", "DEAE-celulose", "C8-fase rev")
+purif.plan3
+```
+
+|       A planilha pode ser editada em seus valores, também, bastando pra isso atribuir um novo nome para que as modificações sejam salvas:
+
+```{r plan purif edit, eval=FALSE}
+# Edição simples de planilha (alterações de valores e nomes de colunas)
+
+purif.plan4 <- edit(purif.plan3) # ou data.entry( )
+```
+
+|       É claro, também, que se pode importar os dados de uma planilha já construida em outro programa. Exemplificando para uma planilha salva como *CSV*: 
+
+```{r plan purif import, eval = FALSE}
+# Importação de dados de outra planilha (CSV):
+
+# 1. Importação com nome da planilha desejada:
+purif.plan5 <- read.table("planilha.csv", header = T, sep = ",")
+
+# 2. Importação com tela de busca da planilha desejada:
+purif.plan5 <- frame <- read.csv(file.choose())
+```
+
+|       Um grande número de operações pode ser conduzido em planilhas no 'R', tais como inserção, deleção, modificação, agregação (*merge*), filtragem, extração de subconjunto, operações matemáticas e cálculos estatísticos (média, desvio-padrão, etc). Pode-se também converter a planilha em uma tabela de visual mais completo, por uso da biblioteca 'tibble', parte de um conjunto de pacotes utilizado em ciência de dados denominado *Tidyverse* :
+
+```{r plan purif convert tibble}
+library(tibble)
+purif.plan6 <- as_tibble(purif.plan3)
+purif.plan6
+```
+
+
+|       O *Tidyverse* compõe um ecossistema de pacotes do 'R' que comungam da mesma filosofia, gramática e estrutura de dados. Entre esses pacotes inlcui-se o 'tibble' (tabelas), 'ggplot2' (gráficos de alta qualidade visual), e 'dplyr' (manipulação de dados). No que tange ao 'dplyr', é bastante flexível a criação e edição de planilhas, e que são convertidas a tabelas, tal como segue para o exemplo da purificação acima:
+```{r plan purif dplyr}
+# Tabela de purificação de enzima com pacote 'dplyr':
+
+library(dplyr)
+purif.plan7 <- mutate(purif.plan, ativ.esp = ativ.tot / prot.total)
+purif.plan7
+```
+
+|       Observe que com o pacote 'dplyr' a inserção de uma nova coluna não requereu um novo vetor para nomes de colunas ('colnames'). Além disso, a planilha final foi elaborada junto à gramática do pacote 'tibble' do *Tidyverse*. Essa facilidade também se extende para os processos de edição e filtragem da planilha, tal a extração de uma coluna modificada:
+
+```{r plan purif altera coluna}
+ativ.tot.kU <- transmute(purif.plan7, ativ.tot = ativ.tot / 1e3)
+ativ.tot.kU # vetor de atividade específica em U x 10^3
+```
+
+|       Dessa forma pode-se construir uma tabela completa de purificação, elencando-se, além da *atividade específica*, o *nível de purificação* (de quantas vezes a atividade específica aumentou em relação à da amostra inicial) e o *rendimento* obtido (de quantas vezes o teor da enzima alvo reduziu em relação à amostra inicial - atividade remanescente):
+
+```{r}
+purif.plan8 <- mutate(purif.plan7,
+  purif = ativ.esp / ativ.esp[1], # nível de purificação
+  rend.perc = 100 * ativ.tot / ativ.tot[1]
+) # rendimento percentual
+
+# Convetendo à tabela...
+library(knitr)
+knitr::kable(purif.plan8, caption = "Tabela de purificação para uma enzima", "pipe")
+```
+
+|       Adicionalmente, o 'R' possui alguns pacotes que agilizam a criação/edição de planilhas de modo interativo e mais próximo ao de uma planilha eletrônica convencional, dentre os quais destaca-se o pacote 'DT', uma biblioteca elaborada em *JavaScript* que produz uma planilha editável em *HTML*:
+
+```{r plan purif DT, eval=FALSE, include=TRUE}
+library(DT)
+purif.plan9 <- as.data.frame(purif.plan8)
+rownames(purif.plan9) <- c("extr.bruto", "NH4SO2", "acetona", 
+                           "Sephadex G-100", "DEAE-celulose",
+                           "C8-fase rev") # converte a tabela de purificação
+# em planilha para se utilizada pelo pacote DT
+datatable(purif.plan9) %>% formatRound(1:5, 1) # colunas com 1 casa decimal
+```
+
+|       Por tratar-se de saída em HTML interativo, o resultado do trecho de código precisa ser omitido para a correta compilação pelo 'R' (eval=FALSE, include=TRUE).
+
+|       A biblioteca 'DT' permite, entre outros, reordenamento, filtragem, e mesmo edição dos valores, de modo interativo (basta clicar na célula desejada):
+
+```{r plan purif DT edit, eval=FALSE, include=TRUE}
+DT::datatable(purif.plan9, editable = "cell")
+```
+
+
+## Interação de oxigênio com mioglobina e hemoglobina
+
+|     Tanto a mioglobina (*PD 1MBO*) como a hemoglobina humanas (*PDB 6BB5*) constituem proteínas de transporte do oxigênio molecular. A hemoglobina, de estrutura quaternária, o faz dos pulmões aos tecidos, enquanto que a mioglobina, terciária, o distribui entre esses. Suas curvas de saturação com oxigênio são bem conhecidas em livros-texto, cujo aprendizado pode agregar valor quando simuladas.
+
+|     Dessa forma, pode-se considerar a ligação do O$_{2}$ à mioglobina como uma fração de saturação *y* dada em função de sua meia satuação a 50% de pressão de O$_{2}$ (constante de dissociação *$K_{50}$* de 2.8 mmHg). 
+
+
+$$
+y=\frac{pO_2}{K_{50}+pO_2}
+$$ {#eq-Mb}
+
+Por outro lado, o valor de *$K_{50}$* para a hemoglobina é de 26 mmHg, mas sua função exprime-se de forma diferente à da mioglobina:
+
+$$
+y=\frac{pO_2^{nH}} {K_{50}^{nH}+pO_2^{nH}}
+$$ {#eq-Hb}
+
+
+
+Nessa @eq-Hb, *nH* representa o coeficiente de cooperatividade de Hill, que resume a energia distribuida entre as quatro constantes microscópicas de dissociação de O$_{2}$ aos quatro centros porfirínicos da hemoglobina (grupos *heme*). Simulando ambas as curvas:
+
+```{r, fig.cap="Isoterma de saturação de oxigênio à mioglobina (linha contínua) e hemoglobina (linha pontilhada), indicando o intercepto em pO2 de 50% (meia saturação)."}
+K50 <- 2.8
+curve(x / (K50 + x),
+  xlim = c(0, 100),
+  xlab = "pO2 (mmHg)", ylab = "y", lty = "dotted"
+)
+
+K50 <- 26
+nH <- 2.8
+curve(x^nH / (K50^nH + x^nH),
+  xlim = c(0, 100),
+  xlab = "pO2 (mmHg)", ylab = "y", col = "red",
+  add = TRUE
+) # "add" permite adicionar curvas ao gráfico
+abline(0.5, 0, lty = 2) # acrescenta linha de base em meia saturação
+```
+
+|    Como mencionado no parágrafo anterior, aos quatro centros de ligação com oxigênio molecular reportam-se quatro constantes microscópicas de equilíbrio de dissociação, de *K1* a *K4*. Simplificando o valor de pO$_{2}$ para *L*, ligante, é possível também representar a ligação de O$_{2}$ à hemoglobina pela equação de Adair [@pauling1935oxygen]:
+
+
+$$
+y=\frac{K1*L+2*K2*K1*L^2+3*K3*K2*K1*L^3+4*K4*K3*K2*K1*L^4} {4*(1+K1*L+2*K2*K1*L^2+3*K3*K2*K1*L^3+4*K4*K3*K2*K1*L^4)}
+$${#eq-HbKmicro}
+
+|     Ocorre que existe um efeito estatístico associado à interação em estudo, já que o O$_{2}$ possui 4 sítios iniciais de interação à hemoglobina [@tyuma1973analysis], valores que reduzem até a saturação dos 4 sítios. Dessa forma, é necessário contabilizar as constantes microscópicas *Ki* em razão desse comprometimento estatístico:
+
+
+$$
+Ki_{corr} = \frac{i}{N-1+i}*Ki
+$$ {#eq-HbKSta}
+
+|     No R, isso pode ser auxiliado por um *loop for*:
+
+```{r}
+K <- c(0.011, 0.016, 0.118, 0.400) # vetor de constantes microscópicas de 
+# dissociação de Hb para O2
+L <- seq(1, 201, 2) # vetor de teores de O2
+
+Kcorr <- c() # inicializa um vetor vazio para saída do vetor corrigido de Ki
+N <- 4 # declara o número de sítios na Hb
+for (i in 1:N) Kcorr[i] <- i / (N - i + 1) * K[i]
+Kcorr # apresenta o vetor de valores de Ki corrigidos para o efeito estatístico
+```
+
+|     Perceba que os valores para *Ki* corrigidos estão em proporção que segue a disponibilidade de sítios, de 4 vezes menor para o 1o. sítio (maior ligação), até 4 vezes maior para o 4o. sítio (menor ligação). Agora é possível aplicar-se a @eq-HbKmicro utilizando-se as constantes calculadas como segue:
+
+```{r, fig.cap="Isoterma de saturação de oxigênio à hemoglobina pela equação de Adair."}
+numer <- K[1] * L + 2 * K[2] * K[1] * L^2 + 3 * K[3] * K[2] * K[1] * L^3 + 
+  4 * K[4] * K[3] * K[2] * K[1] * L^4
+denom <- 1 + numer
+y <- numer / denom
+plot(L, y, xlab = "pO2", type = "l", col = 2)
+```
+
+|       Por fim, também é possível obter a curva de ligação utilizando-se uma variação de *loop for* na qual a @eq-HbKmicro é produzida por iteração, como segue [@bloomfield2009computer]:
+
+```{r, fig.cap="Curva de saturação de oxigênio à hemoglobina obtida por iteração da equação de Adair, tal como corrigida para o efeito estatístico."}
+# Cálculo de y em cada L
+Yi <- function(L, Kcorr) {
+  N <- length(Kcorr)
+  conc <- c()
+  conc[1] <- L * Kcorr[1]
+  for (i in 2:N) conc[i] <- conc[i - 1] * L * Kcorr[i]
+  numer2 <- sum((1:N) * conc) / N
+  denom2 <- 1 + sum(conc)
+  return(numer2 / denom2)
+}
+
+# Cálculo de y para o vetor de L
+Y <- function(L, Kcorr) {
+  YY <- c()
+  for (j in 1:length(L)) YY[j] <- Yi(L[j], Kcorr)
+  return(YY)
+}
+
+#  Aplicação da função de y para L e gráfico
+Yfinal <- Y(L, Kcorr)
+plot(L, Yfinal, type = "l", col = 2, xlab = "pO2", ylab = "y")
+```
+
+|       Observe que há mínimas diferenças entre as curvas obtidas pelos distintos procedimentos, em razão dos diferentes algoritmos utilizados.
+
+## Alguns pacotes do R para estudo de proteínas
+
+|       Alguns pacote do R são bastante úteis no estudo de proteínas, em especial a biblioteca `seqinr` vista no capítulo de *Aminoácidos*, e que computa diversos valores e informações para sequências proteicas, tais como *pI*, index de hidroxipatia, distribuição de resíduos, entre outros. O sítio do projeto [^seqinrSitio-1] contém informação detalhada para seu uso. Utilizando-se o mesmo procedimento para obtenção da sequência *FASTA* para a lisozima do capítulo de *Aminoácidos* (código CAA32175 no sítio *NCBI*), pode-se obter um conjunto extenso de informações da proteína, como exemplificado abaixo:
+
+[^seqinrSitio-1]: Sítio do projeto Seqinr: http://seqinr.r-forge.r-project.org/
+
+```{r}
+library(seqinr)
+lisozima <- c("KVFERCELARTLKRLGMDGYRGISLANWMCLAKWESGYNTRATNYNAGDRSTDYGIFQ
+INSRYWCNDGKTPGAVNACHLSCSALLQDNIADAVACAKRVVRDPQGIRAWVAWRNRCQNRDVRQYVQGCGV")
+seq_liso <- s2c(lisozima) # converte sequência de string de aminoácidos para 
+# o padrão do seqinr (vetor de caracteres)
+seq_liso2 <- seq_liso[seq_liso != "\n"] # eliminação de espaços exigida pelo
+ # seqinr advindos do procedimento de copiar/colar.
+seq_liso2
+pmw(seq_liso2) # peso molecular da proteína
+aaa(seq_liso2) # distribuição de resíduos
+AAstat(seq_liso2, plot = TRUE) # gráfico de distribuição, composição 
+# e proporção de resíduos, valor de pI
+```
+
+|       Entre outras funções constantes do `seqinr` inclui-se a conversão de aminoácidos para abreviações de 1 e 3 letras (`a`e `aaa`, respectivamente), listagem de 544 propriedades físico-químicas dos 20 aminoácidos proteicos (`aaindex`),`pK` (autoexplicativo, e visto anteriormente),  e cômputo isolado de *pI* (`computePI`) e de massa molecular (`pmw`), além de várias outras, tanto para proteômica como para genômica. 
+|       Outro pacote do R interessante para estudo de proteínas é o *Peptides* [^Peptides-1],  que também computa diversas propriedades físico-químicas para sequências de aminoácidos, além de possibilitar a integração de plotagem com o pacote de dinâmica molecular *GROMACS*. Como para o `seqinr`, o `Peptides` necessita de conversão da sequência em *string* para o padrão vetorial reconhecido. Entre as funções do pacote destacam-se o cômputo de 66 descritores para cada aminoácido de uma sequência (`aaDescriptors`), a composição da sequência por classificação dos resíduos (`aaComp`), o cômputo de índice alifático (`aIndex`), o índice de hidrofobicidade (`hydrophobicity`), índice de instabilidade (`instalIndex`), relação de massa/carga (`mz`), massa molecular (`mw`), e pI (`pI`), entre outros.
+|       Entre pacotes mais direcionados ao estudo comparativo e visualização de estruturas, bem como para descritores de bioinformática e quimiogenômica vale mencionar `Bio3d`, `Autoplotprotein`, `protr`, `BioMedR`, e `UniprotR`, entre muitos. 
+
+[^Peptides-1]: Pacote Peptides: https://cran.r-project.org/web/packages/Peptides/index.html
+
+
+

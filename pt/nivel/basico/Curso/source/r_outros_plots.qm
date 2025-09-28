@@ -1,0 +1,138 @@
+---
+title: "5 - Outros gráficos com `plotly`"
+format: html
+toc: true
+number-sections: true
+lang: pt
+---
+
+
+## Outros tipos de gráficos
+
+|       Também é possível elaborar outros gráficos, como de *linhas, barras, histograma, ou box-plot* ("caixa de bigodes"). Algumas dessas possibilidades são ilustradas abaixo.
+
+
+
+![Alguns tipos de gráficos apresentadados no Manual de Apoio. Fonte: MAPA: ensino médio - Matemática e suas tecnologias. 2º Bim. 3º Ano, p.9, 10, 22, e 23.](tiposGraficos_mapa.png)
+
+
+|       No `plotly` há uma gama de gráficos possíveis. Experimente alguns tipos:
+
+```{r} 
+# Linhas
+library(plotly)
+x = 1:5
+plot_ly(x = ~x, y = ~x^5, type = 'scatter', mode = 'lines')
+```
+ 
+```{r}
+# Barras
+library(plotly)
+
+classes <- c("A", "B", "C", "D") # dados para o gráfico de barras
+percentuais <- c(25, 35, 20, 20)
+
+plot_ly(x = ~classes, y = ~percentuais, type = 'bar')
+```
+
+
+```{r}
+library(plotly)
+classes <- c("A", "B", "C", "D") # dados para o gráfico de barras
+percentuais <- c(25, 35, 20, 20)
+
+# Gráfico de torta
+plot_ly(labels = classes, values = percentuais, type = 'pie')
+```
+
+
+```{r}
+# Histograma
+library(plotly)
+
+x <- rnorm(1000) # comando pra gerar dados aleatórios no `R`
+plot_ly(x = ~x, type = "histogram")
+```
+
+
+```{r}
+# Boxplot
+
+library(plotly)
+x <- rnorm(50) # gera dados aleatórios
+y <- rnorm(50, mean = 1) # gera a variação estatística nos dados
+
+
+plot_ly(y = ~x, type = "box", name = 'Grupo 1') %>%  # adiciona os dois box para os dados
+  add_trace(y = ~y, type = "box", name = 'Grupo 2')
+```
+
+|       Também é possível combinar alguns tipos, como um gráfico de *pontos e linhas*:
+
+```{r}
+# Pontos e linhas
+library(plotly)
+x <- 1:10
+plot_ly(x = ~x, y = ~x^2, type = 'scatter', mode = 'markers, lines') # também dá se 'markers+lines'
+```
+\
+
+## Gráficos 3D
+
+|       Para encerrar essa parte, *gráficos tridimensionais* ! A versão básica de um gráfico 3D é bem simples de se executar no `plotly`, e seu efeito visual e de interatividade são bem expressivos !
+
+|       Um exemplo de gráfico 3D pode ser obtido das relações de *raio, área superficial, e volume* de uma esfera, tal como segue.
+
+
+
+![Relações matemáticas de área superficial e de volume de uma esfera em função de seu raio. Fonte: MAPA: ensino médio - Matemática e suas tecnologias. 1º Bim. 3º Ano, p.15.](esfera3D_mapa.png)
+
+|       Agora vamos elaborar o gráfico 3D interativo no `plotly`. O mais simples seria com as etiquetas com os nomes padrão, *x, y e z*. Mas é melhor acrescentar o comando *layout* para dar significado físico e melhorar a interpretação do gráfico.
+
+```{r}
+library(plotly)
+
+# Dados:
+r = seq(0,100, length.out = 50)
+AreaSup = 4*pi*r^2 # cálculo de área superficial da esfera
+Volume = 4/3*pi*r^3 # cálculo do volume da esfera
+
+# Gráfico:
+library(plotly)
+plot_ly(x = r, y = AreaSup, z = Volume, 
+        mode= 'markers+lines')%>%
+  layout(scene = list(
+         xaxis=list(title="raio"),
+         yaxis=list(title="área superficial"),
+         zaxis=list(title="volume")))
+
+```
+\
+
+|       Observe que o gráfico é interativo também sobre outros aspectos, como sua *rotação em qualquer dos 3 eixos*. Sob o ponto de vista de conteúdo, esse gráfico ilustra como que os valores de área superficial, e mais ainda de volume, são enormemente variados em função do raio de uma esfera. Isso também justifica em parte o grande sucesso do uso de *nanopartículas* em Ciência e Tecnologia nos dias atuais (alta área de superfície em tamanho reduzido).
+
+|       Outro gráfico tridimensional interessante é o de *superfície 3D*. Como o de cima, poucas linhas são necessárias para defini-lo. A diferença é que você pode trabalhar com uma *equação*,para a superfície, veja:
+
+```{r}
+x <- seq(-5, 5, length.out = 50)
+y <- seq(-5, 5, length.out = 50)
+z <- outer(x, y, function(x, y) x^2 - y^2) # equação x^2+y^2
+
+plot_ly(x = ~x, y = ~y, z = ~z, type = 'surface') %>%
+  layout(title = "Gráfico de Superfície")
+```
+
+
+|       Existem outros tipos de gráficos para o `plotly`, pelo que vale uma visitinha ao [website](https://plotly.com/r/) para mais informações.
+
+## `Plotly` por comandos de mouse !!
+
+|       Ainda que esse treinamento insista nas vantagens de se utilizar linhas de comando ao invés de cliques de *mouse*, não podemos nos furtar de apresentar uma solução desse tipo para quem prefere o uso do recurso. Entre alguns aplicativos online, destacamos o [Plotly Chart Studio](https://chart-studio.plotly.com/create/) abaixo, que permite a construção de gráficos interativos variados com o pacote.
+
+[![*Plotly Chart Studio*, um recurso para criação de gráficos e mapas interativos com `plotly`, mas com uso de cliques de *mouse* ao invés de linhas de comando.](chart_studio.png)](https://chart-studio.plotly.com/create/)
+
+## Referência do pacote:
+
+*   [Geral](https://cran.r-project.org/web/packages/plotly/index.html)
+*   [Manual](https://cran.r-project.org/web/packages/plotly/plotly.pdf)
+*   [Tutorial](https://plotly.com/r/)

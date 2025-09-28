@@ -1,0 +1,671 @@
+---
+title: "Proteins"
+---
+
+
+<!-- Google tag (gtag.js) -->
+
+```{=html}
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+```
+```{=html}
+<script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+
+ gtag('config', 'G-S1L73VGCG5');
+</script>
+```
+
+
+## **What's on the PDB page (RSBC - Protein Data Bank)**
+
+| The PDB database is the largest [digital repository of proteins](https://www.rcsb.org/), currently containing almost 200,000 macromolecular structures deposited from X-ray diffraction and nuclear magnetic resonance data, and used for research and education. Access the page and see its contents.
+
+| Access the [PDB](https://www.rcsb.org/){target="_blank"} page and type *1AL1* (capital or lower case) in the search field. It is also possible to render the structure in *JSmol* directly by typing *load=1al1* in the window that opens below.
+
+[![](jsmol.png){width="20%"}](https://chemapps.stolaf.edu/jmol/jsmol/simple.htm)
+
+| If you want a *direct link* try [1AL1](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1al1&script=Console){target="_blank"}.
+
+| Verify that the model loaded *on the PDB page* refers to a structure called an *alpha-helix*. There is a variety of information and *links* to access the structure information, such as the *Structure summary*, *3D View*, *Sequence* tabs, and the *Macromolecules*, *Small molecules* (linkers, modified residues), or *Experimental data* (how the data were obtained) boxes. In *Macromolecules*, for example, you will see that the structure 1AL1 reveals a peptide with the sequence ELLKKLLEELKG, considering the single-letter abbreviations for amino acids. In the upper right corner, you can download the structure (*Download files*) in several formats, including the PDB format, which is read by *Jmol* and other molecular viewers. In the *Experiment* tab, you can identify how the data was obtained (methodology).
+
+## **What's in the PDB file**
+
+| Using the *PDB website*, *Jmol* or the *JSmol applet*, download the *1acj.pdb* file to your computer or mobile device. Open the file in a simple *text editor* and observe the header information (*header*), the compound (*compnd*), the source (*source*), the experimental data of origin (*expdta*), authors, review date, journal in which the structure was published, resolution, and other data.
+
+| To illustrate the model dynamically, load the file [1acj.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1acj&script=Console){target="_blank"} into *JSmol*.
+
+| Now, in the *text file*, observe the information contained in a large table whose first column has the term *ATOM*. This is the structural information of all the atoms in the compound (note that *1acj, acetylcholinesterase*, has 4193 atoms in the crystal!)
+
+| Just below there is another table, this one starting with the column *HETAM*, and referring to the structural information of a compound formed by heteroatoms, that is, atoms that do not participate in the protein structure, such as a \index{ligand}ligand.
+
+| In these two tables, the last column refers to the type of atom, and the penultimate column refers to the temperature factor (*B-factor*)\index{B-factor}. This factor expresses high values ​​(\>50) when the atom is in high vibration (protein surface, for example, due to contact with the solvent) or low values, when the vibration is reduced (inside the protein, therefore). The column immediately following refers to the degree of occupancy (*occupancy*) of the atom in the crystal; 1.00 indicates the same conformation for the atoms, while different values ​​indicate multiple conformations.
+| The three previous columns refer to the *X, Y and Z coordinates* of each atom, which are used for the three-dimensional construction of the structure and geometric calculations (interatomic distance, for example).
+
+## 3D Viewers of the RCSB Page - PDB
+
+| The PDB molecule portal also has viewers for renderable models from the PDB structure file. Check this out on the [RSCB-PDB](https://www.rcsb.org/){target="_blank"} home page. Type *1mbo* or any other PDB identifier in the search field and go to the *3D View* tab. Note that the model is rendered in three dimensions. This is an application from the PDB *website* itself, and its implementation is based on the [Mol\*](https://molstar.org/){target="_blank"} viewer developed by *Molstar*.
+
+| On the other hand, going to the bottom right corner of the page, it is possible to observe the structure rendered by two other programs, in *Select a different viewer*: *NGL (WebGL)*, and *JSmol* itself!
+
+## **General Anatomy of a Protein**
+
+| Open the *Console* and download the following file from the structure bank, or from the PDB page itself:
+
+[1lev.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1lev&script=Console){target="_blank"}
+
+| What structure is this? *Domain of porcine kidney fructose-1,6-bisphosphatase* complexed to a ligand (see the *Console* information by *Jmol*, or by the *PDB site*, or by the *show file* command already seen. Although it reflects only one molecule, the model does not allow distinction of peculiarities of the structure. In this sense, try the actions below for better visualization and study, pasting each line in the *Console* and executing one at a time.
+
+```{r, eval=FALSE}
+cartoon only # renders as "cartoon"
+color structure # changes the color of the model according to its structure 2a.
+spin 10 # rotates the model at a certain speed
+spin off # to stop the rotation
+```
+
+| In any protein structure in an aqueous medium, the hydrophobic amino acid residues tend to be located in the *core* (interior) of the protein, while the polar ones are on its *surface*. To test this, visualize the protein by following the code snippet below.
+
+```{r, eval=FALSE}
+spacefill only; select hydrophobic; color green; select positive; color blue; select negative; color red; select aromatic; color magenta # distribute colors to amino acid classes
+rotate # observe the distribution of charged and aromatic residues
+slab on; slab 50 # perform a sagittal cut in the atomic orbitals (slicing, 50% in this case)
+slab off # remove the slicing feature
+```
+
+| To visualize the protein structure with *different renderings*, try:
+```{r, eval=FALSE}
+backbone only; backbone 50
+trace only; trace 100
+```
+
+### **Protein structural hierarchy**
+
+| In order to facilitate the observation and study of parts of a protein, its structure is didactically subdivided into *sequences* (or *structures*), from primary to quinquennial.
+
+#### **Primary structure**
+
+| The *primary structure or sequence*\index{primary sequence} of a protein is defined by the sequence of its amino acid residues, numbered from the amino terminal (-NH$_{2}$) to the carboxy terminal (-COOH).
+| To view the primary structure of the enzyme under study, type: *show sequence*.
+| Knowledge of the primary sequence of a protein allows for a wide variety of predictive structural calculations, including its *molecular mass*, \index{isoelectric point}*isoelectric point (pI)*, *polarity* and *amphipathicity* characteristics, as well as its structural prediction in three-dimensional space.
+
+#### **Secondary structure**
+
+| The secondary structure of proteins is basically formed by *helices*, *folds (sheets)* and *loops*. The identification of each is facilitated by the viewer, as shown above (*color structure* command). When the loop is formed by less than six residues and causes an abrupt change in the direction of the polypeptide chain, it constitutes a *turn*\index{turn}.
+
+| For an interactive study of the *secondary structure*, load the file [8cat.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=8cat&script=Console){target="_blank"}. Since the default initial view in *Jmol* is *ball&stick*, try:
+
+```{r, eval=FALSE}
+restrict protein;cartoon only; color structure
+```
+
+| This is bovine *catalase*, an enzyme with hydroperoxidase activity, commonly present in red blood cells. The *default* representation (by definition) of the *structure* coloration gives yellow color to the sheets, red to the helices and white to the turns.
+
+| To confirm these structures, type:
+
+```{r, eval=FALSE}
+show info # information about chains and structure 2a. in the model
+```
+
+| There are also other types of secondary structures besides those mentioned. To visualize them besides the standard coloring, it is necessary for the program to calculate the secondary structures by an internal algorithm called **DSSP - Define Secondary Structure** \index{calculus of structures 2as}. To do so:
+
+```{r, eval=FALSE}
+calculate structure
+```
+
+| Note that the protein model has disappeared. To view it again, type or use the arrow keys to return to the cartoon representation and structure coloring command (*cartoon only; color structure*).
+
+| Now you can see that, after the calculation by the secondary structure algorithm, the image has undergone changes, with new colors appearing, purple for some helices and blue for some turns. These structures have a *coded identification* as shown below, and displayed by the Console in each section:
+
+```{r, eval=FALSE}
+H - alpha-helix
+E - extended strand of a beta-sheet
+T - turn with H bond
+B - isolated beta-bridge residue (only two H bonds)
+G - 3/10 helix
+I - pi helix
+S - torsion (minimum change of 70 degrees in the curvature of the structure)
+```
+
+##### Folds or beta-sheets
+
+| Folds or sheets\index{sheets} can be *parallel* or *antiparallel*, the former being more common due to the nature of the primary structure. To visualize a folded parallel, load [2pec.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=2pec&script=Console){target="_blank"})
+
+| Provide a convenient visualization by *cartoon* or *rockets*, and a coloring by group:
+
+```{r, eval=FALSE}
+cartoon only # or rockets only
+color group # or Group, or groups, or Groups
+```
+
+| This *coloring scheme* stains the protein from the amino terminal (NH$_{2}$-t) region in blue to the carboxyl terminal (COOH-t) region in red.
+
+| For a better understanding of the secondary structure, load the file [2lyz.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=2lyz&script=Console){target="_blank"} related to *lysozyme*, a glycan hydrolase. And then:
+
+```{r, eval=FALSE}
+show info # observation of structures 2as.
+cartoon only; color structure
+calculate structure # algorithm for optimizing structures 2as.
+cartoon only; color structure # just click the up arrow on the keyboard to retrieve the command line
+Now...
+restrict 42-60 # restricts the view of beta sheets in the protein to a certain region
+```
+
+| Note that the selected sheet has an *antiparallel* direction; if it is not clear, change the rendering to:
+
+```{r, eval=FALSE}
+rockets only
+spin 20 # spin off to turn off
+wireframe only; wireframe 50; color cpk
+calculate hbonds; hbonds 0.2 # visualization of H-bonds in the structure
+zoom 150
+```
+
+| The same can be done to understand the *H-bonds* in an alpha helix\index{alpha helix}. To do so, return to the original structure and make the following changes:
+
+Note that the structural codes have appeared in the *Console* and distinct colors in the image.
+
+```{r, eval=FALSE}
+select all; cartoon only; color structure; zoom 0
+calculate structure
+cartoon only; color structure # visualization of the 2nd calculated structures
+```
+
+| Now select a $\alpha$-helix. To do this, see that in the *Console*, the $\alpha$-helices are represented by *H*, as already explained. Choose a region containing H and restrict your observation. You can select one with the region described in the *Console* (for example: H : A:109_A:114), or click on the beginning and end of a helix you want in the image, checking the position of the amino acid residue in the *Console.* For example:
+
+```{r, eval=FALSE}
+restrict 26-36 # restricts the view to a selected alpha-helix
+wireframe 50; color cpk
+calculate hbonds
+```
+
+| Rotate the molecule and see how the side chain of the residues is distributed in the structure. An $\alpha$-helix has 3.6 residues per turn, and a pitch of 0.54 nm (vertical distance between two turns). Finally, observe how the H-bonds are distributed. There are also other types of helices, such as the 3/10 helix, to be explored in the next sections.
+
+##### Ramachandran Diagram
+
+| In short, the *Ramachandran diagram*\index{Ramachandran diagram} refers to a graph represented on the plane indicating the values ​​of the potential dihedral angles for the formation of $\alpha$-helix, $\beta$-sheets and turns, and is widely used in the structural prediction of proteins. To view it, type in the *Console*:
+
+```{r, eval=FALSE}
+load=9pap # load the model of papain, a proteolytic enzyme from papaya
+plot rama # or...plot ramachandran
+```
+
+| The chromatic representation can be interpreted in *Jmol* with the same color scheme as the original rendering. Thus, $\beta$-sheets are colored in yellow, $\alpha$-helices in red, and 3/10 helices in purple. Note the content of beta sheets and $\alpha$-helices in different quadrants, and depending on the dihedral angles $\phi$ and $\psi$.
+| Also note the scattering of white dots outside these regions. Click on some that are outside and identify the amino acid. Not by chance, there are a large number of Gly residues, probably participating in secondary structures of turns. You can generalize this visualization by *display gly*. And you can also check where these residues are in the three-dimensional structure of the protein by typing *model 1*. Now, return to the original representation:
+
+```{r, eval=FALSE}
+plot rama;
+display all;
+```
+
+| Memorize the region covered by alpha helices (red), and identify the *Pro* residues:
+
+```{r, eval=FALSE}
+display all;
+display pro
+```
+
+| Note that only one residue of *Pro* is found in a region predicted for an alpha helix. In practice, *Pro* does not participate in alpha helices because it has a *pyrrolidine ring* in the side chain, which blocks the orientation of this structure, a steric hindrance.
+
+| Other representations of properties are also possible with *Jmol*, as explained in the *Commands* chapter, such as *mass*, *hydrophobicity*, *partial charge*. To illustrate a three-dimensional plot of dihedral angles as a function of residue number, for example, type:
+
+```{r, eval=FALSE}
+plot properties phi psi resno
+```
+
+The *Proteopedia* portal has a very interesting interactive *link* for learning about the *Ramachandran Diagram* called [Ramachandran Plot Inspection](https://proteopedia.org/wiki/index.php/Tutorial:Ramachandran_Plot_Inspection){target="_blank"}.
+
+##### Supersecondary structures
+
+| They have this name because they are located in an intermediate organization between secondary and tertiary structures. It is a combination of a few secondary structures with a specific geometric arrangement (*motifs*\index{motif}). As an initial example, load the file [1yme.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1yme&script=Console){target="_blank"}, referring to the enzyme carboxypeptidase.
+
+```{r, eval=FALSE}
+cartoon only;color structure
+restrict 61-108 # visual restriction for a supersecondary structure
+backbone only; backbone 100; color grey
+spin 15
+```
+
+| This structure is formed by a *beta-alpha-beta* unit\index{beta-alpha-beta}. With a little creativity the image seems to resemble a *staple*\index{staple}. Not surprisingly, its structural definition is "hairpin". Another hairpin presented by carboxypeptidase, in a different view, can be obtained by: *restrict 201-242; rockets only; color structure*.
+
+| Now restrict the image to the other supersecondary structure:
+
+```{r, eval=FALSE}
+restrict 73-102; cartoon only; color structure
+```
+
+| Although it is inserted in a supersecondary structure *alpha-beta-alpha*, it is a *motif*, a structure that repeats itself over a large extent in proteins. In this case, the motif *alpha-turn-alpha*\index{alpha-turn-alpha}, or alpha-alpha hairpin.
+
+| Another supersecondary structure that is curious even in its name is the *beta sandwich* presented by the structure [1bmw.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1bmw&script=Console){target="_blank"}. Perform the standard *cartoon* rendering and structure coloring, and note the reason for the name by the juxtaposition of two antiparallel beta sheets.
+| You can find all the secondary structures and motifs of a protein by searching for a PDB-related site: \index{PDBSum}[PDBSum Database](http://www.ebi.ac.uk/thornton-srv/databases/cgi-bin/pdbsum/\GetPage.pl?pdbcode=index.html). Access it, search for carboxypeptidase (*1yme*), choose the *Protein* tab, and see the wealth of carboxypeptidase secondary structures and motifs, all with *links* to other information and related sites on the Internet.
+
+| To interact with the Jmol loaded with the carboxypeptidase above, select the *beta hairpin* structure in the *PDB Sum* site by clicking on its *link* in the *Protein* tab. The opened window informs you that this *beta hairpin*\index{beta hairpin}} goes from residue Val33 to Arg40. Well, identify it by selecting it in Jmol, first marking the protein with a wireframe representation. **Tip: copy and paste the code snippet below into the Jmol/JSmol Console**. Separating the commands with *semicolons* in successive lines simulates the *Script Editor* in the *Console* itself.
+
+```{r, eval=FALSE}
+select all;
+backbone only;
+color grey;
+select 33-40;
+wireframe only;
+wireframe 50;
+color magenta
+```
+
+| For another supersecondary structure, now load the file [1kt7.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1kt7&script=Console){target="_blank"}, retinol-binding protein. Visualize it as usual in *cartoon.* Rotate the structure. The yellow section comprises the supersecondary structure called *beta-barrel*\index{beta-barrel}.
+| Similarly, there is also the *alpha-barrel*\index{alpha-barrel}. To visualize it, load the model [3lay.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=3lay&script=Console){target="_blank"}, a sequence of the zinc-binding protein in *salmonella*. Try the default rendering (structure and coloring) and rotate the molecule.
+
+| Another very common supersecondary structure that interacts with nucleic acid clefts is called a *helix-turn-helix*. An example can be found in the DNA-binding protein domain of the *lac repressor*, [1lcc.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1lcc&script=Console){target="_blank"}. Load the structure, provide a suitable visualization, and see how it interacts with the DNA molecule.
+
+| Several other supersecondary structures can occur in proteins, such as the *zinc finger*\index{zinc finger}, the \index{leucine zipper}*leucine zipper*, the \index{EF hand}*EF hand*, and the \index{greek key}*greek key*.
+
+| The *zinc finger* and leucine zipper are commonly found interacting with DNA. Try loading [1aay.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1aay&script=Console){target="_blank"} and typing or copying/pasting the following sequence:
+
+```{r, eval=FALSE}
+cartoon only;
+color structure;
+select hetero and not solvent;
+spacefill 300;
+color cpk
+```
+
+| Just to get an idea of the *leucine zipper*, , load [1ysa.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1ysa&script=Console){target="_blank"} and type:
+
+```{r, eval=FALSE}
+cartoon only;
+color structure;
+select leu;
+spacefill 300;
+color cpk
+select positive;
+wireframe 100;
+color lightblue
+```
+
+| In addition to the amphipathic nature of the helices, their interaction with DNA occurs through positive residues in view of the acidic nature of the double strand.
+
+| In turn, the so-called *EF hand* is a *motif* commonly found in calcium ion-binding proteins, such as *calmodulin*, [1cll.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1cll&script=Console){target="_blank"}. Load the structure, provide the usual visualization and type:
+
+```{r, eval=FALSE}
+select hetero and not solvent;
+spacefill 300;
+color cpk
+```
+
+| By clicking on a green sphere, its identification, a calcium atom, appears in the *Console*. To highlight the motif, type:
+
+```{r, eval=FALSE}
+select 117-147;
+color white
+```
+
+| As you may have noticed, this motif is similar to the *helix-turn-helix* motif, but it is distinguished from it by being specific for calcium binding.
+| The *Greek key*, another supersecondary structure, comprises an arrangement of antiparallel strands, and can be visualized in [1a2t.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1a2t&script=Console){target="_blank"}, a nuclease from *staphylococcus*. It is a little difficult to observe, so a more specific staining is necessary, as follows:
+
+(perform it after the usual visualization):
+
+```{r, eval=FALSE}
+select all;
+cartoon only;
+color structure;
+select 7-19;
+color red;
+select 21-28;
+color red;
+select 29-36;
+color green;
+select 71-77;
+color blue
+```
+
+| Note that the first and second strands in red are in an antiparallel arrangement to each other. The third strand in green is antiparallel to the first (red) strand, outlining the Greek key. The metaphorical drawing of a Greek key, however, is best compared to its two-dimensional structure found in textbooks.
+
+#### **Tertiary Structure**
+
+| The *tertiary structure*\index{tertiary structure} is composed of a single polypeptide chain in a three-dimensional arrangement. Although there are a virtually infinite number of possibilities for these arrangements, proteins are sometimes classified into groups with common functional or structural similarity, and even phylogenetic similarity.
+
+##### Conservation
+
+| To get an idea of ​​the tertiary structural conservation of proteins, download the structure of the electron transport protein *cytochrome c*, and from 3 sources: fish, rice, and baker's yeast. In this case, since these are files loaded from physical media, it is necessary to perform their *download* in advance in the program's root directory (or in the one made root, by the command *cd ?*.
+
+```{r, eval=FALSE}
+# Downloading the structures:
+load=5cyt.pdb;write 5cyt.pdb
+load=1ccr.pdb;write 1ccr.pdb
+load=1ycc.pdb;write 1ycc.pdb
+
+# Loading the models
+load files "5cyt.pdb" "1ccr.pdb" "1ycc.pdb"
+
+# Representation of the three structures with different colors and on the same screen:
+frame* # all models on the same screen
+select all;
+trace only;
+select 1.1; color white; # cit. c de peixe
+select 2.1; color green; # cit. c de arroz
+select 3.1; color blue # cit. c de yeast
+```
+
+| Rotate the structures and see their conservation in different phyla.
+| Having trouble understanding conservation? *Jmol* allows an animation of the molecules, useful for structural alignment. To do so, type or copy/paste into the *Console*:
+
+```{r, eval=FALSE}
+compare {1.1} {2.1} rotate translate 2; # conjugate rotation and translation between cit. c of fish and rice
+compare {3.1} {2.1} rotate translate 2; # conjugate rotation and translation between cit. c of yeast and rice
+reset # center the models
+zoomto 0.5 *1.5 # increase the size of the models progressively to 50% more, and at a rate of 0.5s at a time
+spin 15 # rotation
+delay 10; # 20s waiting time
+spin off # turn off the rotation
+```
+
+| If you got this far by running the two code snippets above, congratulations! You have just "run" *scripts* that automate structural observation and analysis, a great advantage of *Jmol*.
+
+##### Conformational stability
+
+| Proteins can be classified as *globular* and *fibrous.* To study a globular protein, load papain, [9pap.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=9pap&script=Console){target="_blank"}. Omit the solvent visualization and visualize it as wireframe, and rotate the model:
+
+```{r, eval=FALSE}
+restrict protein;
+wireframe only; wireframe 50
+spin on # to stop, "spin off"
+```
+
+| How many amino acid residues does papain have and what is its primary sequence?
+
+```{r, eval=FALSE}
+ show sequence
+# shows sequence 1a.
+show info # shows sequence 2a.
+```
+
+| How can a protein stabilize itself conformationally? By *covalent forces* and *weak forces*. The first ones reside in the *peptide bond* present in the structure, in number of *n-1* amino acid residues, as well as in the proximity of two thiol groups of Cys residues, forming *disulfide bonds*\index{disulfide bond}. These bonds are represented in yellow in the structure, but can be highlighted by typing or pasting the following code snippet:
+
+```{r, eval=FALSE}
+trace only;
+ssbonds on;
+set ssbonds backbone;
+ssbonds 100
+```
+
+| To visualize the residues involved in the bond as well as the remaining free thiols, select only *Cys.* In papain, all *Cys* are involved in the formation of the disulfide bond:
+
+```{r, eval=FALSE}
+ssbonds off;
+select cys;
+wireframe 100;
+color cpk
+```
+
+| Now visualize the *hydrogen bonds* contained in the structure:
+
+```{r, eval=FALSE}
+restrict protein;
+trace only; calculate hbonds
+set hbonds backbone # allows you to associate H-bonds to the carbon skeleton (alternative: "set hbonds sidechain)
+```
+
+| If you manually rotate the molecule you will also notice a distribution of H-bonds between *beta sheets* and *alpha helices* of the protein's secondary structure. To turn off H-bonds: *hbonds off*.
+
+| Since every atom interacts with another by *dispersion forces* or electronic delocalization (*van der Waals and London*), try visualizing the *van der Waals clouds* with:
+
+```{r, eval=FALSE}
+dots on # "dots off" to remove the VDW surface
+```
+
+| Electrostatic interactions also contribute to protein stabilization, as can be seen by typing:
+
+```{r, eval=FALSE}
+trace 10;
+select charged;
+wireframe 50;
+color yellow
+```
+
+| By rotating the structure, observe that these charged residues are located more on the surface of the protein. Identify the opposite charges of these residues, as well as those of a hydrophobic nature by:
+
+```{r, eval=FALSE}
+select positive;color blue;select negative; color red # acidic and basic residues
+select aromatic; wireframe 50; color green # hydrophobic residues
+```
+
+| The *hydrophobic effect* (or hydrophobic interaction) participates as a complementary weak force for the native conformation of the protein, as can be initially observed by the positioning of the aromatic residues identified in the model. Generalizing to all hydrophobic residues, it is possible to perceive their massive contribution to the stability of the protein. It is also possible to discern the aromatic residues among the hydrophobic ones:
+
+```{r, eval=FALSE}
+select trp;color magenta;select phe; color pink;select tyr;color aquamarine
+```
+
+| Note that while phenolic *Tyr* interacts with the solvent, indolic *Trp* remains mainly in the protein core. :
+
+| The conformational stability of a protein is therefore dictated by strong and weak forces between its atoms and the solvent, in a three-dimensional arrangement that depends on the rotations allowed around each amino acid residue. By analyzing the *dihedral angles phi and psi* around the peptide bond (see the chapter on *Peptides*), it is possible to predict the tertiary structure based on the primary structure of the molecule. More precisely, however, it is possible to predict the secondary structure, as represented by the *Ramachandran diagram*.
+
+##### Prosthetic groups
+
+| Several proteins depend functionally on organic structures of different origin from amino acids, the prosthetic groups (*apoprotein*\index{apoprotein}+*prosthetic group* = *holoprotein*\index{holoprotein}). For example, load the respiratory pigment myoglobin, [1mbo.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1mbo&script=Console){target="_blank"}. --\>
+
+| Disappear with the solvent, represent it as a trace and highlight the prosthetic group. To identify the latter, it is necessary to know which group it belongs to in the model: *show groups*. In this case, the group appears named as *hem*.
+
+```{r, eval=FALSE}
+restrict protein;
+trace only;
+trace 30;
+select hem;
+wireframe 100; color cpk
+spin 20;
+delay 10;
+spin off
+```
+
+| The prosthetic group of myoglobin (and also of hemoglobin and some cytochromes) configures a *porphyrin* ring or *heme group*\index{heme group}) formed by the juxtaposition of four *pyrrole rings*, with the *Fe* atom as the central one for the interaction with molecular oxygen. To highlight this oxygen, look for the group to which it belongs, as done above.
+
+```{r, eval=FALSE}
+select oxy;spacefill 200
+```
+
+| Isolate the heme group of the protein with molecular oxygen, bring it closer, and
+
+observe its structure next to the $O_{2}$ molecule.
+
+```{r, eval=FALSE}
+restrict (hem,oxy) and not protein;
+zoom 0
+```
+
+| Note how the structure of the heme group coordinated with oxygen is planar. This is due to the binding of O$_{2}$ with the Fe(III) of the metmyoglobin porphyrin, resulting in Fe(II)-O$_{2}$, and converging the slightly curved conformation of the ring to planar.
+
+##### Fibrous proteins
+
+| Another large group alongside globular proteins is the fibrous proteins. To illustrate this, load the structure of collagen, [1cgd.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1cgd&script=Console){target="_blank"}, eliminate the solvent, and visualize the model in line drawing and by coloring the chains:
+
+```{r, eval=FALSE}
+restrict protein;
+trace only;
+trace 100;
+color chain
+```
+
+| Rotate the structure and notice the interlacing of 3 strands. Check if the secondary structure matches your observation by *show info*. Note that there are no turns or bends.
+
+| Show the amino acid residues by *show groups*. Note that the molecule is composed only of *Gly*, *Ala*, *Pro*, and *Hyp* (*hydroxyproline*). This interlacing comprises the *3/10 helices* \index{helix 3/10} of collagen. Provide the primary sequence by *show sequence* and note how these residues are distributed.
+
+| Also note how its stretch is greater than that of alpha helices, restricting the observation to the *C* chain only: *restrict :C*. In the 3/10 helix of collagen, the pitch is 0.94 nm (larger, therefore, than for $\alpha$-helix, 0.54 nm). To check this, simply double-click with the right mouse button on a part of the helix, and drag it to another part, until it covers approximately 0.9 nm.
+| Finally, see how the H-bonds are distributed in the structure:
+
+```{r, eval=FALSE}
+calculate hbonds;
+hbonds 50;
+color hbonds yellow;
+hbonds 0.5
+```
+
+| Now load another fibrous protein, *fibroin* from the silkworm, [1slk.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1slk&script=Console){target="_blank"}. First, observe the structure without the didactic visualization by *cartoon* or similar. At first glance, do they appear to have alpha helices? Check with *show info*. Note that there are 15 polypeptide chains in the molecule. To distinguish them, *color chain*. How do you expect the interaction between the chains to be?
+
+```{r, eval=FALSE}
+calculate hbonds;
+set hbonds backbone;
+hbonds 50;
+color hbonds white
+```
+
+| What is the amino acid composition (*show groups*)? Note that the structure is composed of a homopolymer of *Ala* and *Gly*, in addition to an acetylated N-terminus (*ACE*) and a methylated C-terminus (*NME*) in each chain. Now restrict the view to just four chains. For better visualization, select a white background: \emph{background white} (and since the H-bonds are also white: \emph{hbonds off}). Now: \emph{restrict(:A,:B,:C,:D);wireframe 50}. Rotate the structure and observe its parallelism. What secondary structure is this? Type: *rockets only*. Observe the antiparallel orientation of the represented $\beta$-sheet section.
+
+| Now load the main chain of feline pyruvate kinase, [1pkm.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1pkm&script=Console){target="_blank"}. Visualize it as usual, rotate the molecule and find out how many domains it has. Note that each domain constitutes a distinct compact unit. To make things easier:
+
+```{r, eval=FALSE}
+select 116-219;color blue;
+select 1-115;color green;
+select 220-388;color red;
+select 389-530;color pink
+```
+
+| Sometimes domains can form very similar structures, although in very different proteins. To observe this, load the microbial *lactate dehydrogenase* [1ldn.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1ldn&script=Console){target="_blank"}. If you get the structure information (*show info*), you will see that the model consists of two crystallographic molecules. Add to the frame (*frame*) the microbial *succinate dehydrogenase* [1emd.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1emd&script=Console){target="_blank"}. For this additional loading, it is necessary that the structure is already in the root directory of *Jmol.* To do this, load the structure normally and save it by right-clicking and selecting *File, Save*. To add the structure to the previous molecule:
+
+```{r, eval=FALSE}
+load append "1emd.pdb" # command to add models to the program screen
+```
+
+| Place both molecules in the same frame, visualize them in strips (*cartoon*), but with different colors, and limit the pyruvate kinase to its A chain, enlarging the final image:
+
+```{r, eval=FALSE}
+frame*
+select all; cartoon only; select 1.1; color white; select 2.1; color green
+select 1.1; restrict :A
+zoom 0
+```
+
+| Finally, align\index{structural alignment} the domain structures and rotate the molecules to visualize their similarity:
+
+```{r, eval=FALSE}
+compare {2.1} {1.1} rotate translate 2
+```
+
+| Note that, although enzymes of microbial origin act on different substrates, the chains have structurally similar domains
+
+#### **Quaternary Structure**
+
+| This additional level of organization (*structural hierarchy*) has already been discussed in the previous sections. The quaternary structure comprises proteins with more than one polypeptide chain (collagen, hemoglobin, IgG, for example). There is also the *quinquenary structure*, which corresponds to supramolecular associations formed by the combination of polypeptide chains with each other (protein complexes), or with nucleic chains (nucleoproteins), or lipid chains (biomembranes).
+| They are dimers, trimers, and oligomers, in general, each of which can perform similar or very distinct functions among its monomers. Functionally, quaternary proteins sometimes have complex interconnected actions, *several active sites* exhibiting sequential kinetics, as well as *interaction sites with natural ligands* to modulate their biological activity.
+
+##### Hemoglobin
+
+| Among the most described quaternary structures is *hemoglobin*, one of several oxygen transport proteins, such as *leghemoglobins* (legumes), *chlorocruorins* (annelids), *hemerythrin* and *hemocyanin* (invertebrates). Human hemoglobin can be loaded by the file [1thb.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1thb&script=Console){target="_blank"}. Visualize it as a *cartoon* or *trace*, and color by structure (*color structure*).
+
+| What is the predominant structure? Are there any folds? How many chains does it have? Check with *show info*.
+
+| Hemoglobin exists in two distinct *conformations*\index{T and R conformation}}, *T* (low affinity for O$_{2}$) and *R* (high affinity for O$_{2}$). The equilibrium between these states results in the *cooperativity*\index{cooperativity} of its binding with the four O$_{2}$ molecules. In this PDB file, hemoglobin (*Hb*) is bound to O$_{2}$ in only two chains, but crystallized in the *T* conformation.
+
+| Unlike myoglobin, which saturates with a single $O_{2}$ molecule with a single affinity (*hyperbolic saturation curve*), hemoglobin binds to O$_{2}$ with initially increasing affinities, producing a *sigmoidal saturation curve*. For example, the affinity of the 4th oxygen molecule is about 100 times greater than that of the 1st for hemoglobin.
+| This cooperativity translates into a conformational change produced in hemoglobin upon binding to O$_{2}$, from its *T* state to the *R* state. Briefly, the motion of the heme plane is transmitted to the F helix by a His (helix F8, proximal histidine His87) bound to the Fe atom. Conformational changes in a unit are transmitted across the interfaces of the $\alpha$$_{1}$-$\beta$$_{2}$ and $\alpha$$_{2}$-$\beta$$_{1}$ subunits.
+| This difference between the affinities of Hb and Mb for O$_{2}$ causes *Mb* to saturate at a pressure of 2.8 torr (venous capillaries, 30 torr), while *Hb* saturates at 30 torr (one hundred times higher; pulmonary alveoli - 100 torr).
+
+| For direct observation of *Hb*, visualize the model with coloring by cartoon chains, identify and highlight the heme prosthetic group (porphyrin ring):
+
+```{r, eval=FALSE}
+select protein;
+hide solvent;
+cartoon only;
+color chain;
+show groups;
+select hem
+wireframe 100;color cpk
+spin 10
+delay 5
+spin off
+```
+
+| Identify the chains by clicking on each one. Also identify any possible ligands by typing *show groups*. Inositol hexaphosphate (*IHP*) can then be visualized by:
+
+```{r, eval=FALSE}
+select ihp;wireframe 50;color cpk
+```
+
+| IHP is analogous to *2,3-BPG* (bisphosphoglycerate) of non-mammalian organisms. Rotate the Hb and notice that the IHP is interacting with the chains in a cleft, near the B and D subunits of the protein.
+
+| 2,3-BPG binds to the *T* state of Hb but not to the *R* state, thus reducing the protein's affinity for oxygen. This allows about 40% free oxygen in venous blood. Fetal hemoglobin does not bind as strongly to 2,3-BPG, allowing a high affinity of O$_{2}$ for the protein.
+
+| How do the Hb chains interact with each other? Which subunits bind to the IHP?
+
+```{r, eval=FALSE}
+select protein; spacefill
+label \%c # label the "c" chain of Hb
+```
+
+| The A and B chains represent an *alpha/beta dimer*. Note the extensive contacts between these chains, as well as between the C and D chains (also alpha/beta). But notice that there are very few contacts between the A and C chains, as well as between B and D, these pairs formed by alpha chains or beta chains. To visualize how the IHP with its six negative phosphate groups interacts with the protein:
+
+```{r, eval=FALSE}
+select positive;color blue
+```
+
+| Now visualize only the *C* chain, colored from the N-terminal to the C-terminal region, with its heme group, and without the overlapping spheres:
+
+```{r, eval=FALSE}
+select all; spacefill off; cartoon only;
+restrict :c and not ihp;
+color group;
+select hem and not iron and :c;
+wireframe 100;color cpk; zoom 0;
+select iron and :c; spacefill 200;color cpk
+```
+
+| How does molecular oxygen interact with hemoglobin?
+
+"Turn off" the ribbon representation (\emph{cartoon}): \emph{select protein;cartoon off}.
+
+```{r, eval=FALSE}
+select protein and :c;trace only;trace 10; color groups # chain "b" with highlighted heme group
+select (his58,his87,val62,phe43) and :c # selection of residues close to the heme group
+define Obind selected # defines the selected residues with a label
+select Obind; wireframe 50;color cpk # didactically represents the group
+select oxy and :c;spacefill 150;color cpk # shows O2 in the structure
+```
+
+| Note the proximity of the side chains of His, Val and Phe to the center of the heme group. It can be better visualized with:
+
+```{r, eval=FALSE}
+select (Obind, oxy and :c); dots on ("dots off" to omit the VDW clouds)
+```
+
+| To make it easier, name the selected residues at the alpha carbon:
+
+```{r, eval=FALSE}
+select Obind :*.ca; label "\%n \%R"; color label white
+```
+
+| The interaction of the ferric iron atom (Fe$^{2+}$) of the heme group occurs through six ligands, four of which are the tetrapyrrolic nitrogens of the \index{prosthetic group} *prosthetic group* of *Hb*, one of which is the nitrogen of the imidazole ring of the proximal histidine His87 and the sixth ligand is the molecular oxygen between the Fe atom and the side chain of the distal histidine His58. Rotate the structure and see why His87 is proximal. In addition, Val62 and Phe43 contribute to the hydrophobic environment of interaction with molecular oxygen. In the *deoxygenated state* the Fe atom of the heme group is only pentacoordinated.
+
+| Finally, a curiosity: the binding of oxygen displaces the porphyrinic Fe within the tetrapyrrole plane by only *0.4 angstroms*, enough to displace the alpha helix in which proximal His87 is inserted closer to the heme.
+
+##### Other quaternary proteins
+
+| There are a large number of quaternary proteins, some with dozens of polypeptide chains and/or with a large number of domains. During future discussions on metabolic activity, some of these proteins will be studied in greater depth, but for now, we will only visualize the structural complexity in a few examples.
+
+| Load an antibody, immunoglobulin G, [1igt.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1igt&script=Console){target="_blank"}. Rotate the molecule without changing its view, and you will see that it is a complex protein, in the classic shape of the letter "Y", with at least three large domains linked by a few residues.
+
+| Also note that in the *Console* header, there are several sugars linked to the protein, configuring a *glycoprotein*. Then render the structure as usual: (*cartoon only;color structure*). Nominally, its chains are divided into heavy and light, the latter formed by $\beta$ sheets that make contact with the antigen.
+
+| Now, which chains contact the cell surface? Rotating the structure makes it unclear. However, these domains of the heavy chains are linked to carbohydrates. Therefore, visualize the *"trunk of the Y"* by:
+
+```{r, eval=FALSE}
+select hetero and not solvent;wireframe 50;color cpk
+```
+
+| Another very complex quaternary structure is the photosystem of *Rhodopseudomonas*, [1prc.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1prc&script=Console){target="_blank"}. Load it and represent it by ribbons and coloring chains: *cartoon only;color chain*.
+
+| This photosystem is formed by two identical subunits (light and dark green) and two others (pink and red) linked to various photosynthetic pigments:
+
+```{r, eval=FALSE}
+select hetero;wireframe 100;color cpk
+```
+
+| For a final example of quaternary structure, the complexity of a bacterial chaperone called *GroEl*, a protein that helps other proteins fold correctly [1aon.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1aon&script=Console){target="_blank"}. Load the structure, provide an appropriate visualization with chain coloring, as before, and only then rotate the molecule to visualize its structural complexity. Proteins under folding interact in the central cavity of GroEl. Chaperones depend on ATP for their action, which can be observed by their identification with *show groups*:
+
+```{r, eval=FALSE}
+select all; color grey; select adp;wireframe 300;color cpk
+```
+
+#### **Five-year structure**
+
+| An example of the highest level of protein structural complexity, the quinquenary structure can be observed in *nucleosomes* (nucleoproteins), as in [1aoi.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1aoi&script=Console){target="_blank"}. Load the molecule, and visualize it as ribbons and stained by structure.
+
+| Ribosomes also exhibit a 5-year structure, due to their interaction with nucleic acids. To do so, load the file [1qrs.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1qrs&script=Console){target="_blank"}, and visualize the structure as ribbons and stained by structure or chain.
+

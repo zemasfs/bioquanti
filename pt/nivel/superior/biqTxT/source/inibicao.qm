@@ -1,0 +1,259 @@
+---
+title: "Inibição Enzimática"
+lang: pt
+---
+
+
+```{=html}
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+```
+```{=html}
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+```
+
+
+
+## Introdução
+
+|       A atividade enzimática pode ser reduzida na presença de vários efetores, entre moléculas endógenas ou exógenas do metabolismo celular, incluindo o próprio substrato. Genericamente a *inibição enzimática* classifica-se como *irreversível* quando a ativide decai pela ligação covalente de um inibidor, ou *reversível*, quando há um equilíbrio de associação/dissociação com a macromolécula. A seguir serão ilustradas inibições reversíveis.
+
+## Detalhes
+
+### Inibição pelo substrato
+
+|       Uma inibição enzimática comum ao metabolismo é a protagonizada pelo próprio substrato em excesso no meio, sendo definida por:
+
+```{=tex}
+\begin{equation}
+v=\frac{Vm*S}{S(1+\frac{S}{Ks})+Km}
+\end{equation}
+```
+
+|       Dessa forma, o gráfico resultante de uma inibição por excesso de substrato pode ser reproduzido por:
+
+```{r, echo=FALSE, figInibS, fig.cap = "Comportamento cinético de uma enzima inibida por excesso de substrato."}
+S <- seq(0, 10, 0.1)
+v_alos <- function(S, Vm = 10, Km = 0.5, Ks = 2) {
+  Vm * S / (S * (1 + S / Ks) + Km)
+}
+curve(v_alos, xlim = c(0, 10), xlab = "S", ylab = "v")
+```
+
+|       Percebe-se pela figura que a atividade da enzima alcança um limite sendo reduzida com o aumento do teor de substrato.
+
+### Modelos de inibição enzimática
+
+|       A inibição de enzimas por moléculas que não o próprio substrato pode ser representada por um diagrama no qual o efetor altera um dos elementos representados no diagrama abaixo.
+
+
+```{r, inibDiag, echo=FALSE, out.width="60%", fig.cap="Diagrama representativo dos tipos de inibição enzimática. kcat: constante catalítica; Ki: constante de equilíbrio de dissociação do inibidor, com índices para inibição competitiva (Ki), incompetitiva (Kiu) e não competitiva (Kic e Kiu)."}
+knitr::include_graphics("inibDiag.png")
+```
+
+|       Nesse caso, pode-se definir os três tipos principais de inibição enzimática reversível como *inibição competitiva, incompetitiva e não competitiva (pura ou mista)*. Em síntese, a *inibição competitiva* dá-se quando o inibidor complexa-se ao sítio ativo da enzima; a *inibição incompetitiva*, quando o inibidor interage com o complexo enzima-substrato; e a *inibição não competitiva*, quando o inibidor liga-se em outro local que não o sítio ativo da enzima, podendo ainda ser *pura* (Kiu = Kic) ou *mista* (Kiu > ou < Kic).
+|       Um modelo matemático que abrange esses três tipos de inibição enzimática é descrito na equação abaixo:
+
+```{=tex}
+\begin{equation}
+v=\frac{Vm*S}{Km(1+\frac{I}{Kic})+S(1+\frac{I}{Kiu})}
+\end{equation}
+```
+
+|       Dessa forma, a equação acima reduz-se em seus termos multiplicadores no denominador, em função do tipo de inibição enzimática presente, até o modelo primitivo de Michaelis-Mentem, quando na ausência do inibidor.
+|      
+
+### Curva de Michaelis-Mentem para modelos de inibição enzimática 
+
+|       As curvas diretas de cinética enzimática sofrem alterações de perfil em função dos três tipos principais de inibição enzimática reversível, tais como ilustrado abaixo 
+
+```{r, echo=FALSE, inibMM, fig.cap="Curva de Michaelis-Mentem na presença de inibidores de comportamento clássico."}
+par(mfrow = c(2, 2)) # divide a área de plotagem
+S <- seq(0, 10, 0.1) # geração de teores de S
+contr <- function(S, Vm = 10, Km = 0.5) {
+  Vm * S / (Km + S)
+} # função de MM, sem inibição
+curve(contr, xlim = c(0, 10), xlab = "S", ylab = "v", main = "Competitiva") # cuva controle; veja que o título tem que ser adicionado para a 1a. de par de curvas, controle e inibição
+
+# Modelos de inibição:
+
+# Competitiva
+comp.i <- function(S, Vm = 10, Km = 0.5, I = 2, Kic = 0.2) {
+  Vm * S / (Km * (1 + I / Kic) + S)
+}
+curve(comp.i, add = TRUE, col = "red", lty = 2) # competitiva
+
+# Não competitiva pura
+pura.i <- function(S, Vm = 10, Km = 0.5, I = 2, Ki = 1) {
+  Vm * S / (Km * (1 + I / Ki) + S * (1 + I / Ki))
+}
+curve(contr, xlim = c(0, 10), xlab = "S", ylab = "v", main = "Não Compet. Pura")
+curve(pura.i, add = TRUE, col = "red", lty = 2) # não competitiva pura (Kiu=Kic=Ki)
+
+# Não competitiva mista
+mista.i <- function(S, Vm = 10, Km = 0.5, I = 2, Kic = 0.2, Kiu = 1) {
+  Vm * S / (Km * (1 + I / Kic) + S * (1 + I / Kiu))
+}
+curve(contr, xlim = c(0, 10), xlab = "S", ylab = "v", main = "Não Compet. Mista")
+curve(mista.i, add = TRUE, col = "red", lty = 2) # não competitiva mista
+
+# Incompetitiva
+incomp.i <- function(S, Vm = 10, Km = 0.5, I = 2, Kiu = 1) {
+  Vm * S / (Km + S * (1 + I / Kiu))
+}
+curve(contr, xlim = c(0, 10), xlab = "S", ylab = "v", main = "Incompetitiva")
+curve(incomp.i, add = TRUE, col = "red", lty = 2) # incompetitiva
+layout(1) # retorna à janela gráfica original
+```
+
+|       Veja que para o *modelo competitivo* a velocidade limite *Vm* da reação tende a ser alcançada, já que a ocupação do sítio ativo da enzima é mutualmente exclusiva entre substrato e inibidor, privilegiando o primeiro quando em alto teor. 
+
+|       Por outro lado, o valor de *Vm* não é tangível para os demais modelos de inibição, já que o inibidor se liga em outro sítio na enzima (*não competitivo*) ou ao próprio substrato, e esse conjunto à enzima (*incompetitivo*).
+
+#### Diagnóstico de modelos de inibição enzimática por Lineweaver-Burk
+
+|       As transformações lineares da equação de Michaelis-Mentem são muito úteis no diagnóstico visual de modelos de inibição. Nesse sentido, o emprego da linearização por *duplos-recíprocos* para esses modelos resutará nas equações de inibição que seguem:
+
+```{=tex}
+\begin{equation}
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km(1+\frac{I}{Kic})}{Vm}*\frac{1}{S} \quad ;\,  competitivo
+\end{equation}
+```
+
+```{=tex}
+\begin{equation}
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km(1+\frac{I}{Ki})}{Vm}*\frac{1}{S(1+\frac{I}{Ki})} \quad ;\,  puro
+\end{equation}
+```
+
+```{=tex}
+\begin{equation}
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km(1+\frac{I}{Kic})}{Vm}*\frac{1}{S(1+\frac{I}{Kiu})} \quad ;\,  misto
+\end{equation}
+```
+
+```{=tex}
+\begin{equation}
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km}{Vm}*\frac{1}{S(1+\frac{I}{Kiu})} \quad ;\,  incompetitivo
+\end{equation}
+```
+
+|       Observe que os termos multiplicadores inseridos em *S* e *Km* na equação de duplo-recíproco apenas alteram seu formalismo apresentado equação de *Lineweaver-Burk*. O diagnóstico visual para os modelos é representado a seguir.
+
+```{r, echo=FALSE, inibLB, warning=FALSE, fig.cap="Diagnóstico de modelos de inibição enzimática por Lineweaver-Burk."}
+# Substrato e Inibidor
+S <- seq(0.1, 10, length = 10) # cria um vetor para substrato
+I <- 2 # concentração de inibidor
+
+# Parâmetros cinéticos:
+Km <- 0.5
+Vm <- 10
+Kic <- 0.2
+Ki <- 0.2
+Kiu <- 1
+
+# Equações
+v <- Vm * S / (Km + S) # equação de MM
+v.comp <- Vm * S / (Km * (1 + I / Kic) + S) # competitivo
+v.puro <- Vm * S / (Km * (1 + I / Ki) + S * (1 + I / Ki)) # não competitivo puro
+v.misto <- Vm * S / (Km * (1 + I / Kic) + S * (1 + I / Kiu)) # não competitivo misto
+v.incomp <- Vm * S / (Km + S * (1 + I / Kiu))
+
+# Gráficos
+par(mfrow = c(2, 2)) # área de plot pra 4 gráficos
+
+plot(1 / S, 1 / v, type = "l", main = "Competitivo", ylim = c(0, 2))
+points(1 / S, 1 / v.comp, type = "l", col = "red")
+plot(1 / S, 1 / v, type = "l", main = "Puro", ylim = c(0, 5))
+points(1 / S, 1 / v.puro, type = "l", col = "red")
+plot(1 / S, 1 / v, type = "l", main = "Misto", ylim = c(0, 2))
+points(1 / S, 1 / v.misto, type = "l", col = "red")
+plot(1 / S, 1 / v, type = "l", main = "Incompetitivo", ylim = c(0, 1))
+points(1 / S, 1 / v.incomp, type = "l", col = "red")
+
+layout(1) # volta à janela gráfica normal
+```
+
+
+#### Ki & IC$_{50}$
+
+|       A concentração inibitória a 50\% do teor de inibidor, definida como *IC$_{50}$*, pode ser determinada empiricamente sem o conhecimento dos parâmetros de catálise enzimática envolvidos. 
+
+|       Para isso, basta se obter um valor de inibição relativa num ensaio a concentração fixa de *S*, variando-se o teor de inibidor. De fato, análogos ao *IC$_{50}$* existem em ampla gama nas *Ciências Naturais*, não envolvendo necessariamente qualquer informação cinética ou termodinâmica dos compostos envolvidos, mas tão somente a informação empírica do resultado. Exemplificando, os parâmetros *DE$_{50}$* (dose efetiva) ou *DL$_{50}$* (dose letal), e mesmo projeções de *X$_{50}$*, tal como *Tm* (temperatura de desnaturação a 50%), e o valor de *pKa* em tampões (pH em que as espécies encontram-se 50% ionizadas/protonadas em solução).
+
+
+|   No entanto, existe uma relação útil entre a constante de equilíbrio de dissociação do inibidor *Ki* e o valor de *IC$_{50}$* que permite sua permuta, desde que conhecido o modelo de inibição. Generalizando para os modelos de inibição, pode-se definir uma equação geral pra  *relação de Cheng-Prusoff* como:
+
+```{=tex}
+\begin{equation}
+IC_{50} = \frac{(1+\frac{S}{Km})}{(\frac{1}{Kic})+(\frac{1}{Km*Kiu})}
+\end{equation}
+```
+
+|       Exemplificando, para um *modelo competitivo* de inibição, onde *Kiu* é nulo:
+
+```{=tex}
+\begin{equation}
+IC_{50} = Kic(1+\frac{S}{Km})
+\end{equation}
+```
+
+### Cinética de estado pré-estacionário
+
+|       Existem basicamente três tipos de comportamentos cinéticos para as enzimas: comportamento de *Henry-Michaelis-Mentem-Briggs-Haldane*, sucintamente denominado por *michaeliano* ou de *estado estacionário (steady-state)*, comportamento de *fase lag* (quando o substrato leva algum tempo para ser convertido em produto), e comportamento de *burst*, *transiente*, ou de *estado pré-estacionário* (quando uma fase com rápida liberação de produto precede o estado estacionário).
+
+|       Algumas enzimas trabalham seguindo a cinética de *burst*, entre as quais algumas nucleosidades e glicosidases, e dehalogenases. A cinética de estado pré-estacionário segue um formalismo um pouco distinto, e que depende do quantitativo de etapas reacionais. Exemplificando abaixo para uma reação de 3 etapas:
+
+```{=tex}
+\begin{equation}
+E+S \begin{array}{c}
+_{k1}\\
+ \rightleftharpoons\\
+^{km1} \end{array} 
+E*S
+\begin{array}{c}
+_{k2}\\
+ \rightleftharpoons\\
+^{km2} \end{array} 
+E*P 
+\begin{array}{c}
+_{k3}\\
+\rightarrow \\
+  ^{}\end{array}
+E+P
+\end{equation}
+```
+
+
+```{r, echo=FALSE, figBurst, fig.cap="Formação de produto num modelo cinético de estado pré-estacionário."}
+# Parâmetros
+k2 <- 387
+km2 <- 3
+k3 <- 22
+xmin <- 0
+xmax <- 0.075 # definição de limites para função
+
+# Variáveis da equação de simulação (função dos parâmetros)
+kobs <- k2 + km2 + k3
+Ao <- k2 * (k2 + km2) / kobs^2
+kcat <- k2 * k3 / kobs
+
+# Definição da função de simulação
+sim <- function(x, kobs, Ao, kcat) {
+  Ao * (1 - exp(-kobs * x)) + kcat * x
+}
+
+# Curval de simulação
+curve(sim(x, kobs = kobs, Ao = Ao, kcat = kcat),
+  col = "blue",
+  type = "o", xlim = c(xmin, xmax), cex = 0.5,
+  xlab = "tempo", ylab = "[P]"
+)
+```
+
+

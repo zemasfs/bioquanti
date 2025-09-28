@@ -1,0 +1,134 @@
+---
+title: "ScriptRplot"
+format: html
+toc: true
+lang: pt
+---
+
+|   *ScriptRplot*, uma corruptela para *script* com `R` para a produção de *plots*, permite a produção de gráficos com o pacote `ggplot2` do *R* por comandos de texto, embora *sem o conhecimento da sintaxe da linguagem ou do pacote*. 
+
+|   O pacote *ggplot2*, como referido na seção do *R* neste website, faz parte de um ecossistema de análise e visualização de dados denominado *Tidyverse*, e cujos recursos são carregados por pacote homônimo. A estrutura gramatical da biblioteca permite a produção de gráficos de qualidade para publicação técnico-científica, como ilustrado em diversas páginas na rede.
+
+Diferentemente da sintaxe convencional de programação de R e do sistema gráfico do pacote, o *ScriptRplot* oferece ao usuário os ajustes necessários à plotagem em linguagem natural. Não obstante, também fornece a linha completa de comandos para a compilação do gráfico pretendido. 
+
+|   O *script* foi concebido itemizando as 7 camadas propostas na *gramática de gráficos* de Wilkinson [^1] presente no pacote `ggplot2`, mas dipersas numa sequência autoral itemizada para a confecção do gráfico, como segue:
+
+[^1]: Wickham, Hadley. "A layered grammar of graphics." Journal of computational and graphical statistics 19.1 (2010): 3-28.
+
+
+```{r, eval=FALSE}
+
+### Estrutura de camadas para o ScriptRplot
+
+1. Data load - carregamento de dados;
+2. Reshape - conversão facultativa de dados de formato Wide para Long exigido pelo pacote;
+3. Preamble - transformações prévias no conjuto de dados (atualmente, somente uma conversão facultativa de variável numérica em categórica);
+4. Dataset- atribuição de variáveis dependente e independente
+5. Grouping - atribuição de variável de grupo;
+6. Error bar - barra de erros e formatação;
+7. Symbol - tipo e atribuições para símbolos;
+8. Line - tipo e atribuições para linhas;
+9. Curve - linhas matemáticas de tendência e formatação;
+10. Other plots - atribuições facultativas para barras, histogramas, gráfico de matriz de dados, simulação de curvas matemáticas, e apresentação de paineis;
+11. Axis - atribuição dos eixos (primário e secundário);
+12. Linhas - adição e formatação de linhas verticais e horizontais;
+13. Zoom - nível de cobertura dos eixos do gráfico;
+14. Additional colour scale - paletas adicionais de cores;
+15. Additional expression - expressões aditivas facultativas;
+16. Legend - formatação de legendas;
+17. Caption - formatação de rótulos (títulos, subtítulos);
+18. Text - inserção e posicionamento de texto; 
+```
+
+|   Para cada ítem elencado acima, o *ScriptRplot* oferece um rápido comentário sobre as possibilidades de inserção, o que reforça sua chancela ao *Ensino Reprodutível*.
+\
+
+|   Dessa forma, é possível experimentar variações diversas para a plotagem, ao mesmo tempo em que se permite uma apropriação paulatina e até mesmo lúdica da sintaxe exigida pelo `ggplot2`; embora essa não seja necessária à compilação do gráfico, bastando-se apenas a inserção sequencial e facultativa de seus elementos. Uma vez configurado textualmente os elementos gráficos, o *ScriptRplot* segue convertendo as variáveis do usuário em variáveis para interpretação do compilador do *R*. As variáveis convertidas a partir dos componentes gráficos são apresentadas abaixo.
+
+
+
+```{r, echo=FALSE}
+##| label: tbl-components
+
+library(knitr)
+kable(
+  data.frame(
+    Elemento = c(
+      "Mapping", "Título e Legenda", "Rótulos", "Barras de erro", "Legenda", "Guias", 
+      "Anotação de texto", "Valores dos eixos", "Rótulos dos eixos", "Zoom", 
+      "Linha horizontal", "Linha vertical", "Linha inclinada",
+      "Tipo 1 - Todos os pontos", "Tipo 2 - Agrupamento", "Resumo estatístico",
+      "Linha 1 - Todos os pontos", "Linha 2 - Agrupamento",
+      "Curva 1 - Todos os pontos", "Curva 2 - Agrupamento",
+      "Barra/Histograma", "Simulação",
+      "Comando Principal", "Complementos"
+    ),
+    Objeto = c(
+      "main", "titles", "labels", "error_bar", "plot_legend", "legend_guide", 
+      "annotation", "axis_values", "axis_labels", "axis_lim", 
+      "line_add_horiz", "line_add_vert", "line_add_incl",
+      "type_allpoints", "type_group", "summary_stats",
+      "line_all", "line_group",
+      "curve_all", "curve_group",
+      "bar_hist", "simul",
+      "p_main", "p"
+    ),
+    Comando = c(
+      'ggplot(data=dataset, mapping)',
+      'theme(plot.title = ..., plot.caption = ...)',
+      'labs(x=..., y=..., title=..., ...)',
+      'geom_errorbar(... aes(ymin=y-error_down, ymax=y+error_up))',
+      'theme(legend.title=..., legend.position=..., ...)',
+      'guides(colour=..., size=..., ...)',
+      'annotate("text", x=..., y=..., label=..., parse=TRUE)',
+      'theme(axis.text.x=..., axis.text.y=...)',
+      'theme(axis.title.x=..., axis.title.y=...)',
+      'coord_cartesian(xlim=c(x_min,x_max), ylim=c(y_min,y_max))',
+      'geom_hline(yintercept=..., ...)',
+      'geom_vline(xintercept=..., ...)',
+      'geom_abline(intercept=..., slope=..., ...)',
+      'allpoints(shape=..., colour=..., ...)',
+      'grouping(stroke=..., aes(shape=..., ...))',
+      'stat_summary(fun.data=..., fun=..., ...)',
+      'geom_line(size=..., alpha=..., ...)',
+      'geom_line(size=..., aes(...))',
+      'geom_smooth(data=subset(...), method=..., aes(...))',
+      'geom_smooth(data=subset(...), method=..., aes(...))',
+      'hist_bar(stat=..., bins=..., aes(...))',
+      'simulation(fun=..., geom=..., ...)',
+      'main + theme_plot + ... + bar_hist + ...',
+      'p_main + axis_inversion + ... + simul + legend_inversion'
+    )
+  ),
+  caption = "Componentes gráficos para o *ScriptRplot* junto à gramática de gráficos do pacote `gglot2` para *R*.",
+  align = 'lll'
+)
+
+```
+\
+
+
+## Código-fonte para o *ScriptRplot*
+
+|   Segue o código para livre distribuição e adaptação junto ao *ScriptRplot*. O código permite a construção de um gráfico a partir de dados carregados pelo usuário no próprio *script*, e fornecidos abaixo. **Lembre-se**: é necessário que os dados para o gráfico estejam no mesmo diretório de sessão do *RStudio*, e juntamente ao *script*.
+
+### Download
+
+[ScriptRplot versão 1.0 ](scriptRplot_1.0.R)
+
+[Dados para o gráfico](dados_puromycin.csv)
+\
+
+|   Quando compilado, o *script* resulta no gráfico que segue, para visualização da atividade cinética em [ensaio de inibição com puromicina](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/Puromycin). 
+
+|   Observe que o gráfico apresenta a inserção de 1) dados multivariados, com 2) símbolos e 3) espessura definida, 4) tipos distintos, 5) preenchimento e 6) cores distintas para cada subconjunto, 7) barras de erro, 8) disposição em painel, 9) configuração e tema específicos, e 10) ajuste não linear em subconjuntos para cada nível dos dados, e por equação introduzida pelo usuário.
+
+![Saída gráfica do *ScriptRplot* (versão 1.0) para os dados  atividade enzimática sob ação do antibiótico puromicina.](puromicina.png){width="80%"}
+
+|   **E o mais importante:**  à despeito da complexidade envolvida na visualização dos dados, o *scriptRplot* permite a construção do gráfico sem necessidade de conhecimento da sintaxe da linguagem *R* de programação, bem como do pacote envolvido (`ggplot2`). Dessa forma, basta "rodar" o *script*, embora seja plausível e desejável sua modificação. Todas essas características ímpares coadunam para a oferta de um *Ensino Reprodutível* voltado à construção de *gráficos elegantes*.
+
+
+
+
+
+

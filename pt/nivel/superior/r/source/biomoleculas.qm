@@ -1,0 +1,72 @@
+---
+title: "Biomoléculas"
+toc: true
+lang: pt
+bibliography: referencias.bib
+---
+
+## Biomoléculas e dimensões {#sec-biomol}
+
+
+|       Quantidades podem ser convertidas com auxílio do R, desde que definidas as unidades envolvidas. Exemplificando, podemos converter e calcular o tempo decorrido de um evento em diferentes unidades, como segue:
+
+```{r label='conversões'}
+# Algumas conversões de unidades de tempo
+seg <- 1
+min <- 60 * seg
+hr <- 60 * min
+dia <- 24 * hr
+anos <- 365 * dia
+# Qual o valor em segundos para um dia inteiro ?
+dia / seg
+# Qual o valor em minutos para um ano inteiro ?
+anos / min
+
+# E qual a idade da Terra em segundos (4.5e9 anos) ?
+4.5e9 * anos / seg
+```
+
+|       Também é possível converter unidades entre si, como nas quantidades abaixo:
+
+```{r conversao molar}
+# Conversões de quantidades molares
+mmol <- 1 # definições de quantidades
+umol <- 1e-3 * mmol # micromol
+nmol <- 1e-3 * umol # nanomol
+pmol <- 1e-3 * nmol # picomol
+
+# Quantos picomol possui 6,25 mmol ?
+6.25 * mmol / pmol
+```
+
+## Versatilidade estrutural em biopolímeros
+
+|       Biopolímeros, ou biomacromoléculas, podem ser considerados polímeros com unidades monoméricas compostas por biomoléculas. Assim, proteínas, ácidos nucleicos ou glicanos (polissacarídios) são respectivamente formados por aminoácidos (20 tipos codificáveis em proteínas, a partir de 64 códons do código genético), bases nitrogenadas (4 tipos com citosina do DNA substituida por uracila no RNA) e monossacarídios (inferior a 6 tipos).
+|       Do ponto de vista da variabilidade estrutural, tomando-se por base apenas a combinação de monômeros, é possível prever o número de estruturas distintas pela simples relação [@otaki2005availability]:
+
+
+$$
+no. biopolímeros = {monômeros}^{sequência}
+$$ {#eq-variab}
+
+|       No 'R' a operação é bem simples, como no exemplo abaixo:
+
+```{r}
+
+# Cálculo de estruturas peptídicas possíveis numa
+# sequência de 8 elementos (ex: angiotensina II)
+
+20^8
+```
+
+|       É claro que essa variabilidade simulada não se concretiza na Natureza, posto que o cálculo pressupõe a repetição de qualquer monômero ao longo da sequência, ou de conjuntos ou alterâncias desses. Ou seja, peptídeos com somente um tipo ou dois de aminoácidos, por exemplo, não são fisiologicamente viáveis. Isso se concretiza quando observamos que existem em torno de 35 mil proteínas expressas pelo genoma humano, e cujo tamanho médio encontra-se em torno de 476 resíduos de aminoácidos. Se aplicarmos a equação \eqref{eq-variab} acima para essa situação, encontraríamos...
+
+```{r}
+# Cálculo de estruturas proteicas humanas possíveis numa sequência média de
+# 476 resíduos de aminoácidos.
+
+20^476
+```
+
+|       Ou seja, nem mesmo o `R` é capaz de calcular, uma vez que o tamanho da sequência é limitada computacionalmente no programa a 237 resíduos (20$^{237}$ = 1.1x10$^{307}$). Ainda que pareça uma limitação, veja que resulta em valor muito acima do número de Avogadro (6,02x10$^{23}$), e mesmo acima do limite computacional para alguns programas matemáticos, tais como os encontrados em algoritmos da internete (`Google`), e programas matemáticos (ex: `Gnu Octave`). Ainda assim, o `Maxima`, programa matemático de distribuição livre, informa que 20$^{476}$ representa um valor com 570 dígitos (algo como 10$^{569}$).
+|       Em contrapartida, esses cálculos simples também não levam em conta que biomoléculas podem apresentar diversos tipos de *isomeria*, como óptica (D/L), posicional, geométrica (cis/trans), configuracional (syn/anti), ou conformacional (bote/cadeira), o que eleva consideravelmente o número de estruturas possíveis na Natureza.
