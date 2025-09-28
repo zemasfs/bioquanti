@@ -1,0 +1,335 @@
+---
+title: "Geography"
+number-sections: true
+toc: true
+lang: en
+class: fundo-basico
+---
+
+<!-- ############# SOCIOECONOMIC DATA - MAP ################# --->
+
+<div class="geo-fundo"> <!--modifies for each area-->
+
+## Some socioeconomic data of Brazilian municipalities (EM13CHS402, EM13CHS302, EM13CHS304)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+
+library(plotly)
+
+# Fictitious data of Brazilian states
+dados_estados <- data.frame(
+State = c("São Paulo", "Rio de Janeiro", "Minas Gerais", "Bahia", "Paraná"),
+Acronym = c("SP", "RJ", "MG", "BA", "PR"),
+Population = c(46289333, 17366189, 21411923, 14930634, 11947904),
+Capital = c("São Paulo", "Rio de Janeiro", "Belo Horizonte", "Salvador", "Curitiba"),
+HDI = c(0.783, 0.761, 0.731, 0.714, 0.749),
+IDEB = c(4.9, 4.6, 4.7, 4.2, 4.8),
+lat = c(-23.55, -22.91, -19.92, -12.97, -25.42),
+lon = c(-46.63, -43.20, -43.94, -38.52, -49.27)
+)
+
+# Interactive map with information on mouseover
+fig <- plot_ly(
+data = dados_estados,
+type = 'scattergeo',
+mode = 'markers',
+lat = ~lat,
+lon = ~lon,
+text = ~paste(
+"<b>State:</b>", State, "<br>",
+"<b>Capital:</b>", Capital, "<br>",
+"<b>Population:</b>", Population, "<br>",
+"<b>HDI:</b>", HDI, "<br>",
+"<b>IDEB:</b>", IDEB
+),
+hoverinfo = 'text',
+marker = list(size = 10, color = 'blue', opacity = 0.7)
+) %>% layout(
+title = "Interactive Map of Brazil - Information by State",
+geo = list(
+scope = 'south america',
+resolution = 50,
+showland = TRUE,
+showcountries = TRUE,
+countrycolor = "gray",
+showlakes = TRUE,
+lakecolor = "lightblue",
+showsubunits = TRUE,
+subunitcolor = "white"
+)
+)
+
+fig
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Fictitious data of the states of Brazil
+dados_estados <- data.frame(
+State = c("São Paulo", "Rio de Janeiro", "Minas Gerais", "Bahia", "Paraná"),
+Acronym = c("SP", "RJ", "MG", "BA", "PR"),
+Population = c(46289333, 17366189, 21411923, 14930634, 11947904),
+Capital = c("São Paulo", "Rio de Janeiro", "Belo Horizonte", "Salvador", "Curitiba"),
+HDI = c(0.783, 0.761, 0.731, 0.714, 0.749),
+IDEB = c(4.9, 4.6, 4.7, 4.2, 4.8),
+lat = c(-23.55, -22.91, -19.92, -12.97, -25.42),
+lon = c(-46.63, -43.20, -43.94, -38.52, -49.27)
+)
+
+# Interactive map with information when hovering the mouse
+fig <- plot_ly(
+data = dados_estados,
+type = 'scattergeo',
+mode = 'markers',
+lat = ~lat,
+lon = ~lon,
+text = ~paste(
+"<b>State:</b>", State, "<br>",
+"<b>Capital:</b>", Capital, "<br>",
+"<b>Population:</b>", Population, "<br>",
+"<b>HDI:</b>", HDI, "<br>",
+"<b>IDEB:</b>", IDEB
+),
+hoverinfo = 'text',
+marker = list(size = 10, color = 'blue', opacity = 0.7)
+) %>%
+layout(
+title = "Interactive Map of Brazil - Information by State",
+geo = list( 
+scope = 'south america',
+ resolution = 50,
+ showland = TRUE,
+ showcountries = TRUE,
+ countrycolor = "gray",
+ showlakes = TRUE,
+ lakecolor = "lightblue",
+ showssubunits = TRUE,
+ subunitcolor = "white"
+ )
+ )
+
+fig
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="geo-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing the commands below in the code snippet:
+
+```{r, eval = FALSE}
+# Add after line with hoverinfo
+
+marker = list(
+size = 15,
+color = ~IDH,
+colorscale = "Viridis", # Color scale that varies according to the IDH
+colorbar = list(title = "IDH"), # Add a legend for the color scale
+opacity = 0.8
+
+```
+
+</div>
+
+\
+<!-- ############# BRAZILIAN AREA AND POPULATION ################ --->
+
+<div class="geo-fundo"> <!--modify for each area-->
+
+## Relationship between area and population in Brazilian municipalities (EM13MAT405, EM13MAT407, EM13CHS101, EM13CHS104, EM13CNT301)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+url <- "https://raw.githubusercontent.com/turicas/rows/refs/heads/develop/examples/data/brazilian-cities.csv" # defines the link to the data
+data <- read.csv(url) # read the data file
+
+library(plotly)
+plot_ly(data, x = ~area, y = ~inhabitants,
+type = "scatter",
+mode = 'markers',
+marker = list(line = list(width = 1)),
+text = ~paste("City: ", city, "<br>State: ", state), # Text on hover
+hoverinfo = 'text', # Show only the defined text
+frame = ~state)%>%
+layout(
+title = "Area and population distribution in Brazilian cities",
+xaxis = list(title = "States", type = "log"),
+yaxis = list(title = "Population", type = "log"),
+showlegend = FALSE
+) %>%
+animation_opts(
+frame = 500, # Animation speed
+transition = 0,
+redraw = FALSE
+)
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+url <- "https://raw.githubusercontent.com/turicas/rows/refs/heads/develop/examples/data/brazilian-cities.csv" # define the link to the data
+data <- read.csv(url) # read the data file
+
+library(plotly)
+plot_ly(data, x = ~area, y = ~inhabitants,
+type = "scatter",
+mode = 'markers',
+marker = list(line = list(width = 1)),
+text = ~paste("City: ", city, "<br>State: ", state), # Text on hover
+hoverinfo = 'text', # Show only the defined text
+frame = ~state)%>%
+layout(
+title = "Area and population distribution in Brazilian cities",
+xaxis = list(title = "States", type = "log"),
+yaxis = list(title = "Population", type = "log"),
+showlegend = FALSE
+) %>%
+animation_opts(
+frame = 500, # Animation speed
+transition = 0,
+redraw = FALSE
+)
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="geo-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing alternatively the commands below in the code snippet:
+
+```{r, eval = FALSE}
+color = ~state, # Added to vary the color according to the state
+
+```
+
+</div>
+
+\
+<!-- ############# WORLD ENERGY MATRICES - MAP ################ --->
+
+<div class="geo-fundo"> <!--modifies for each area area-->
+
+## Data on world energy matrices over the years (EM13CHS106, EM13CHS302, EM13CNT309)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Fictitious data on world energy matrices (percentages per year)
+data <- data.frame(
+Year = rep(2000:2020, each = 4),
+Source = rep(c("Renewable", "Coal", "Oil", "Natural Gas"), times = 21),
+Percentage = c(
+# Fictitious data that simulate the evolution of energy sources
+seq(20, 40, length.out = 21), # Renewable
+seq(40, 30, length.out = 21), # Coal
+seq(30, 20, length.out = 21), # Oil
+seq(10, 10, length.out = 21) # Natural Gas
+)
+)
+
+# Interactive graph
+fig <- plot_ly(
+data = data,
+x = ~Year,
+y = ~Percentage,
+color = ~Source,
+type = 'bar',
+colors = c("green", "black", "brown", "blue")
+) %>%
+layout(
+title = "Evolution of World Energy Matrices",
+barmode = "stack",
+xaxis = list(title = "Year"),
+yaxis = list(title = "Percentage (%)"),
+legend = list(title = list(text = "Energy Source"))
+)
+
+fig
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Fictitious data on world energy matrices (percentages per year)
+data <- data.frame(
+Year = rep(2000:2020, each = 4),
+Source = rep(c("Renewable", "Coal", "Oil", "Natural Gas"), times = 21),
+Percentage = c(
+# Fictitious data that simulates the evolution of energy sources
+seq(20, 40, length.out = 21), # Renewable
+seq(40, 30, length.out = 21), # Coal
+seq(30, 20, length.out = 21), # Oil
+seq(10, 10, length.out = 21) # Natural Gas
+)
+)
+
+# Interactive graph
+fig <- plot_ly(
+data = data,
+x = ~Year,
+y = ~Percentage,
+color = ~Source,
+type = 'bar',
+colors = c("green", "black", "brown", "blue")
+) %>%
+layout(
+title = "Evolution of World Energy Matrices",
+barmode = "stack",
+xaxis = list(title = "Year"),
+yaxis = list(title = "Percentage (%)"),
+legend = list(title = list(text = "Energy Source"))
+)
+
+fig
+```
+
+<!-- ::: -->
+
+</div>
+
+<div class="geo-fundo2"> <!--modify for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing the commands below in the code snippet:
+
+```{r, eval = FALSE}
+opacity = 0.8 # Changed the opacity of the bars
+
+```
+
+</div>
+
+\
+
