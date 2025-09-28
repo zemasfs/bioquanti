@@ -432,6 +432,34 @@
     ]
   },
   {
+    "objectID": "nivel/basico/R/source/geografia_en.html",
+    "href": "nivel/basico/R/source/geografia_en.html",
+    "title": "Geography",
+    "section": "",
+    "text": "library(plotly)\n\n# Fictitious data of the states of Brazil\ndados_estados &lt;- data.frame(\nState = c(\"São Paulo\", \"Rio de Janeiro\", \"Minas Gerais\", \"Bahia\", \"Paraná\"),\nAcronym = c(\"SP\", \"RJ\", \"MG\", \"BA\", \"PR\"),\nPopulation = c(46289333, 17366189, 21411923, 14930634, 11947904),\nCapital = c(\"São Paulo\", \"Rio de Janeiro\", \"Belo Horizonte\", \"Salvador\", \"Curitiba\"),\nHDI = c(0.783, 0.761, 0.731, 0.714, 0.749),\nIDEB = c(4.9, 4.6, 4.7, 4.2, 4.8),\nlat = c(-23.55, -22.91, -19.92, -12.97, -25.42),\nlon = c(-46.63, -43.20, -43.94, -38.52, -49.27)\n)\n\n# Interactive map with information when hovering the mouse\nfig &lt;- plot_ly(\ndata = dados_estados,\ntype = 'scattergeo',\nmode = 'markers',\nlat = ~lat,\nlon = ~lon,\ntext = ~paste(\n\"&lt;b&gt;State:&lt;/b&gt;\", State, \"&lt;br&gt;\",\n\"&lt;b&gt;Capital:&lt;/b&gt;\", Capital, \"&lt;br&gt;\",\n\"&lt;b&gt;Population:&lt;/b&gt;\", Population, \"&lt;br&gt;\",\n\"&lt;b&gt;HDI:&lt;/b&gt;\", HDI, \"&lt;br&gt;\",\n\"&lt;b&gt;IDEB:&lt;/b&gt;\", IDEB\n),\nhoverinfo = 'text',\nmarker = list(size = 10, color = 'blue', opacity = 0.7)\n) %&gt;%\nlayout(\ntitle = \"Interactive Map of Brazil - Information by State\",\ngeo = list( \nscope = 'south america',\n resolution = 50,\n showland = TRUE,\n showcountries = TRUE,\n countrycolor = \"gray\",\n showlakes = TRUE,\n lakecolor = \"lightblue\",\n showssubunits = TRUE,\n subunitcolor = \"white\"\n )\n )\n\nfig"
+  },
+  {
+    "objectID": "nivel/basico/R/source/geografia_en.html#some-socioeconomic-data-of-brazilian-municipalities-em13chs402-em13chs302-em13chs304",
+    "href": "nivel/basico/R/source/geografia_en.html#some-socioeconomic-data-of-brazilian-municipalities-em13chs402-em13chs302-em13chs304",
+    "title": "Geography",
+    "section": "",
+    "text": "library(plotly)\n\n# Fictitious data of the states of Brazil\ndados_estados &lt;- data.frame(\nState = c(\"São Paulo\", \"Rio de Janeiro\", \"Minas Gerais\", \"Bahia\", \"Paraná\"),\nAcronym = c(\"SP\", \"RJ\", \"MG\", \"BA\", \"PR\"),\nPopulation = c(46289333, 17366189, 21411923, 14930634, 11947904),\nCapital = c(\"São Paulo\", \"Rio de Janeiro\", \"Belo Horizonte\", \"Salvador\", \"Curitiba\"),\nHDI = c(0.783, 0.761, 0.731, 0.714, 0.749),\nIDEB = c(4.9, 4.6, 4.7, 4.2, 4.8),\nlat = c(-23.55, -22.91, -19.92, -12.97, -25.42),\nlon = c(-46.63, -43.20, -43.94, -38.52, -49.27)\n)\n\n# Interactive map with information when hovering the mouse\nfig &lt;- plot_ly(\ndata = dados_estados,\ntype = 'scattergeo',\nmode = 'markers',\nlat = ~lat,\nlon = ~lon,\ntext = ~paste(\n\"&lt;b&gt;State:&lt;/b&gt;\", State, \"&lt;br&gt;\",\n\"&lt;b&gt;Capital:&lt;/b&gt;\", Capital, \"&lt;br&gt;\",\n\"&lt;b&gt;Population:&lt;/b&gt;\", Population, \"&lt;br&gt;\",\n\"&lt;b&gt;HDI:&lt;/b&gt;\", HDI, \"&lt;br&gt;\",\n\"&lt;b&gt;IDEB:&lt;/b&gt;\", IDEB\n),\nhoverinfo = 'text',\nmarker = list(size = 10, color = 'blue', opacity = 0.7)\n) %&gt;%\nlayout(\ntitle = \"Interactive Map of Brazil - Information by State\",\ngeo = list( \nscope = 'south america',\n resolution = 50,\n showland = TRUE,\n showcountries = TRUE,\n countrycolor = \"gray\",\n showlakes = TRUE,\n lakecolor = \"lightblue\",\n showssubunits = TRUE,\n subunitcolor = \"white\"\n )\n )\n\nfig"
+  },
+  {
+    "objectID": "nivel/basico/R/source/geografia_en.html#relationship-between-area-and-population-in-brazilian-municipalities-em13mat405-em13mat407-em13chs101-em13chs104-em13cnt301",
+    "href": "nivel/basico/R/source/geografia_en.html#relationship-between-area-and-population-in-brazilian-municipalities-em13mat405-em13mat407-em13chs101-em13chs104-em13cnt301",
+    "title": "Geography",
+    "section": "2 Relationship between area and population in Brazilian municipalities (EM13MAT405, EM13MAT407, EM13CHS101, EM13CHS104, EM13CNT301)",
+    "text": "2 Relationship between area and population in Brazilian municipalities (EM13MAT405, EM13MAT407, EM13CHS101, EM13CHS104, EM13CNT301)\n\n\n\n\n\n\n\n\n\n\n\nurl &lt;- \"https://raw.githubusercontent.com/turicas/rows/refs/heads/develop/examples/data/brazilian-cities.csv\" # define the link to the data\ndata &lt;- read.csv(url) # read the data file\n\nlibrary(plotly)\nplot_ly(data, x = ~area, y = ~inhabitants,\ntype = \"scatter\",\nmode = 'markers',\nmarker = list(line = list(width = 1)),\ntext = ~paste(\"City: \", city, \"&lt;br&gt;State: \", state), # Text on hover\nhoverinfo = 'text', # Show only the defined text\nframe = ~state)%&gt;%\nlayout(\ntitle = \"Area and population distribution in Brazilian cities\",\nxaxis = list(title = \"States\", type = \"log\"),\nyaxis = list(title = \"Population\", type = \"log\"),\nshowlegend = FALSE\n) %&gt;%\nanimation_opts(\nframe = 500, # Animation speed\ntransition = 0,\nredraw = FALSE\n)"
+  },
+  {
+    "objectID": "nivel/basico/R/source/geografia_en.html#data-on-world-energy-matrices-over-the-years-em13chs106-em13chs302-em13cnt309",
+    "href": "nivel/basico/R/source/geografia_en.html#data-on-world-energy-matrices-over-the-years-em13chs106-em13chs302-em13cnt309",
+    "title": "Geography",
+    "section": "3 Data on world energy matrices over the years (EM13CHS106, EM13CHS302, EM13CNT309)",
+    "text": "3 Data on world energy matrices over the years (EM13CHS106, EM13CHS302, EM13CNT309)\n\n\n\n\n\n\n\n\n\n\n\nlibrary(plotly)\n\n# Fictitious data on world energy matrices (percentages per year)\ndata &lt;- data.frame(\nYear = rep(2000:2020, each = 4),\nSource = rep(c(\"Renewable\", \"Coal\", \"Oil\", \"Natural Gas\"), times = 21),\nPercentage = c(\n# Fictitious data that simulates the evolution of energy sources\nseq(20, 40, length.out = 21), # Renewable\nseq(40, 30, length.out = 21), # Coal\nseq(30, 20, length.out = 21), # Oil\nseq(10, 10, length.out = 21) # Natural Gas\n)\n)\n\n# Interactive graph\nfig &lt;- plot_ly(\ndata = data,\nx = ~Year,\ny = ~Percentage,\ncolor = ~Source,\ntype = 'bar',\ncolors = c(\"green\", \"black\", \"brown\", \"blue\")\n) %&gt;%\nlayout(\ntitle = \"Evolution of World Energy Matrices\",\nbarmode = \"stack\",\nxaxis = list(title = \"Year\"),\nyaxis = list(title = \"Percentage (%)\"),\nlegend = list(title = list(text = \"Energy Source\"))\n)\n\nfig"
+  },
+  {
     "objectID": "nivel/basico/jsplotly/jsplotly_bas_en.html",
     "href": "nivel/basico/jsplotly/jsplotly_bas_en.html",
     "title": "JSPlotly at School",
