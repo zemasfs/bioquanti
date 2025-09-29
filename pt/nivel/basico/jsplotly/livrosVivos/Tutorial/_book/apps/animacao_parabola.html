@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <title>Animação: ponto se movendo em y = x²</title>
+</head>
+<body>
+  <div id="grafico" style="width: 100%; height: 90vh;"></div>
+
+  <script>
+    const x_vals = Array.from({ length: 41 }, (_, i) => -5 + i * 0.25);
+
+    const frames = x_vals.map((x, i) => ({
+      name: String(i),
+      data: [{
+        x: [x],
+        y: [x * x],
+        mode: 'markers',
+        marker: { size: 12, color: 'red' }
+      }]
+    }));
+
+    const parabola = {
+      x: x_vals,
+      y: x_vals.map(x => x * x),
+      mode: 'lines',
+      line: { color: 'blue' },
+      name: 'y = x²'
+    };
+
+    const movingPoint = {
+      x: [x_vals[0]],
+      y: [x_vals[0] * x_vals[0]],
+      mode: 'markers',
+      marker: { size: 12, color: 'red' },
+      name: 'ponto'
+    };
+
+    const layout = {
+      title: 'Animação: ponto se movendo em y = x²',
+      xaxis: { range: [-6, 6], title: 'x' },
+      yaxis: { range: [0, 30], title: 'y' },
+      updatemenus: [{
+        type: 'buttons',
+        showactive: false,
+        buttons: [{
+          label: '▶️ Play',
+          method: 'animate',
+          args: [null, {
+            frame: { duration: 100, redraw: true },
+            fromcurrent: true,
+            mode: 'immediate'
+          }]
+        }]
+      }]
+    };
+
+    Plotly.newPlot('grafico', [parabola, movingPoint], layout).then(function() {
+      Plotly.addFrames('grafico', frames);
+    });
+  </script>
+</body>
+</html>
