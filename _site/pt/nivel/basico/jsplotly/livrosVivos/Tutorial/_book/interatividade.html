@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Introdução – Usando o JSPlotly</title>
+<title>3&nbsp; Interatividade com JSPlotly – Usando o JSPlotly</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./interatividade.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./introducao.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -491,7 +525,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introducao.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introdução</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interatividade.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade com JSPlotly</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -524,13 +558,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./introducao.html" class="sidebar-item-text sidebar-link active">
+  <a href="./introducao.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./interatividade.html" class="sidebar-item-text sidebar-link">
+  <a href="./interatividade.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade com JSPlotly</span></span></a>
   </div>
 </li>
@@ -544,10 +578,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#estrutura-do-aplicativo" id="toc-estrutura-do-aplicativo" class="nav-link active" data-scroll-target="#estrutura-do-aplicativo"><span class="header-section-number">2.1</span> Estrutura do aplicativo</a></li>
-  <li><a href="#uso-do-jsplotly-vivo-na-página" id="toc-uso-do-jsplotly-vivo-na-página" class="nav-link" data-scroll-target="#uso-do-jsplotly-vivo-na-página"><span class="header-section-number">2.2</span> Uso do <em>JSPlotly vivo</em> na página</a>
+  <li><a href="#interatividade" id="toc-interatividade" class="nav-link active" data-scroll-target="#interatividade"><span class="header-section-number">3.1</span> Interatividade</a></li>
+  <li><a href="#botões-da-barra-de-modos" id="toc-botões-da-barra-de-modos" class="nav-link" data-scroll-target="#botões-da-barra-de-modos"><span class="header-section-number">3.2</span> Botões da barra de modos</a></li>
+  <li><a href="#botões-do-editor-de-códigos" id="toc-botões-do-editor-de-códigos" class="nav-link" data-scroll-target="#botões-do-editor-de-códigos"><span class="header-section-number">3.3</span> Botões do editor de códigos</a>
   <ul class="collapse">
-  <li><a href="#redimensionando-a-página-para-conforto-visual-do-jsplotly" id="toc-redimensionando-a-página-para-conforto-visual-do-jsplotly" class="nav-link" data-scroll-target="#redimensionando-a-página-para-conforto-visual-do-jsplotly"><span class="header-section-number">2.2.1</span> Redimensionando a página para conforto visual do <em>JSPlotly</em></a></li>
+  <li><a href="#botão-add" id="toc-botão-add" class="nav-link" data-scroll-target="#botão-add"><span class="header-section-number">3.3.1</span> Botão <em>add</em></a></li>
+  <li><a href="#botão-remove" id="toc-botão-remove" class="nav-link" data-scroll-target="#botão-remove"><span class="header-section-number">3.3.2</span> Botão <em>remove</em></a></li>
+  <li><a href="#botões-clean-e-delete" id="toc-botões-clean-e-delete" class="nav-link" data-scroll-target="#botões-clean-e-delete"><span class="header-section-number">3.3.3</span> Botões <em>clean</em> e <em>delete</em></a></li>
+  <li><a href="#botão-script" id="toc-botão-script" class="nav-link" data-scroll-target="#botão-script"><span class="header-section-number">3.3.4</span> Botão <em>script</em></a></li>
+  <li><a href="#botão-html-e-botão-clone" id="toc-botão-html-e-botão-clone" class="nav-link" data-scroll-target="#botão-html-e-botão-clone"><span class="header-section-number">3.3.5</span> Botão <em>html</em> e botão <em>clone</em></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -557,7 +596,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introdução</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade com JSPlotly</span></h1>
 </div>
 
 
@@ -574,71 +613,68 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;<em>JSPlotly</em> é um aplicativo pra criar objetos virtuais de aprendizagem. Com ele é possível criar gráficos 2D e 3D, tabelas, diagramas, fluxogramas, realizar cálculos, produzir objetos tridimensionais, animações, simulações, jogos, sonorização, objetos multimídia (animação+som), e até prototipagem experimental (Arduino, por ex).</div>
-<div class="line-block">&nbsp;&nbsp;Ainda que possibilite isso tudo (e um pouco mais…), apresenta-se como um pequeno arquivo HTML pra ser carregado em qualquer navegador de internet. Assim, <em>JSPlotly</em> não depende de sistema operacional (Windows, Linux, Android, iOS) e nem de dispositivo (desktop, notebook, tablet, celular). Por ser pequenino e com atributo HTML, pode-se compartilhar o programa e o objetos produzidos por qualquer meio físico ou digital, incluindo redes sociais.</div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;Quer ver como é simples ? Dê uma olhada na tela única do <em>JSPlotly</em> abaixo.</div>
-<p><br>
-</p>
-<div id="fig-tela" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-tela-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/tela.png" class="img-fluid figure-img">
+<section id="interatividade" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="interatividade"><span class="header-section-number">3.1</span> Interatividade</h2>
+<div class="line-block">&nbsp;&nbsp;Há diversas formas de interagir com o aplicativo e os objetos gerados por esse, grande parte mediada por mouse em desktop/notebook, por telas capacitivas de <em>smartphones</em>. Ilustrando para uso do mouse, voltemos ao exemplo da parábola abaixo. Depois de clicar no botão <em>add</em>, experimente:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Passar o mouse sobre os pontos do gráfico (<span class="st">"mouse over"</span> ou <span class="st">"hover"</span>);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Desenhar um retângulo em qualquer área para ampliação (<span class="st">"zoom"</span>); retorna<span class="sc">-</span>se ao tamanho original com um duplo clique;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Usar o <span class="st">"zoom"</span> com o botão de rolagem do mouse;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Escrever qualquer coisa nos rótulos do gráfico, como o título, a etiqueta do eixo das <span class="fu">abscissas</span> (eixo <span class="st">"X"</span>), e das <span class="fu">ordenadas</span> (eixo <span class="st">"Y"</span>);</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Deslocar o gráfico na horizontal<span class="sc">/</span>vertical, posicionando o mouse próximo dos algarismos de cada eixo, clicando<span class="sc">-</span>se com o botão esquerdo, e arrastando<span class="sc">-</span><span class="fu">o</span> (<span class="st">"pan"</span>);</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tela-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.1: Tela única do <em>JSPlotly</em>, apresentando o ecrã gráfico à esquerda e o editor de códigos Ace à direita.
-</figcaption>
-</figure>
-</div>
-<section id="estrutura-do-aplicativo" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="estrutura-do-aplicativo"><span class="header-section-number">2.1</span> Estrutura do aplicativo</h2>
-<div class="line-block">&nbsp;&nbsp;Observe que o aplicativo é dividido entre uma <em>área gráfica</em> (esquerda) e um <em>editor de códigos</em> com alguns botões (direita).A área de códigos serve para o que naturalmente se apresenta: digitar, colar, ou editar códigos. A área gráfica apresenta a interpretação da linguagem para esses códigos. Os comandos são introduzidos por <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript">JavaScript (JS)</a>, uma linguagem de programação moderna, utilizada por grandes empresas e <em>big techs</em>, e focada na interatividade entre a página web e o usuário. Diferente de outras linguagens, <em>JavaScript</em> não precisa ser compilada, já que é interpretada a partir de máquinas homônimas de navegadores comuns (<em>browser</em>).</div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;<strong><span class="orange">Agora vamos à parte divertida !!!</span></strong></div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;Segue abaixo novamente a mesma tela do <em>JSPlotly</em>. Aparentemente é igual à anterior. Mas quer saber a diferença ? Clique na imagem e você será direcionado ao aplicativo presente no <a href="https://bioquanti.netlify.app/">Bioquanti</a>, um site desenvolvido para apresentar códigos para conteúdos em ensino superior e básico, e com vários exemplos de objetos pro <em>JSPlotly</em>..</div>
-<p><br>
-</p>
-<div id="fig-tela" class="quarto-float quarto-figure quarto-figure-center anchored" target="_blank">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-tela-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="https://bioquanti.netlify.app/pt/nivel/superior/jsplotly/jsplotly" target="_blank"><img src="figs/tela.png" class="img-fluid figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tela-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.2: O aplicativo <em>JSPlotly</em>, agora “vivo” ! Basta clicar na imagem para uma experiência interativa com o app.
-</figcaption>
-</figure>
-</div>
-<!-- Este é um <span style="color:#e53935">aviso em vermelho</span> -->
-<!-- e aqui um <span style="color:dodgerblue">trecho azul</span>. -->
-<!-- Isto está [colorido em vermelho]{.red}, isto em [azul]{.blue}, -->
-<!-- e uma [etiqueta bonita]{.note}. -->
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;O <strong>aplicativo “vivo”</strong> pode ser utilizado de forma independente, armazenado em mídia ou compartilhado facilmente pela web. Contudo, esse material pretende abordá-lo diretamente em nuvem, <em><span class="red">misturando texto e programa</span></em>. Nesse caso, estamos falando de verdadeiros <strong><span class="red">livros vivos</span></strong>!!!</div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;Para experimentar esse conceito de <em>livro vivo</em>, observe abaixo o aplicativo <em>JSPlotly</em>, inteirinho e funcional, mas desta vez inserido nesta página web.</div>
 <p><br>
 </p>
 <div style="margin:1rem 0; padding-right:16px;">
   <iframe src="apps/JSPlotly2q.html" width="100%" height="760" style="border:0;border-radius:10px;"></iframe>
 </div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;É desta forma que pretende-se abordar os diferentes tópicos com o programa, ou seja, combinando instruções na página com o próprio <em>JSPlotly</em> e, dessa forma, <em>“vivificando”</em> o aprendizado de temas com o aplicativo.</div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;Bom, seguindo neste tópico sobre a estrutura do aplicativo, passe o mouse sem clicar em nada na imagem acima, e veja quanta interatividade é visualizada na mudança do ponteiro do mouse: links para sites na barra superior (<em>JavaScript</em>, <em>Plotly.js</em>, <em>Bioquanti</em>, <em>GSPlotly</em>), ícones acima do gráfico, o próprio gráfico, o botão de carregamento de arquivos (<em>browse</em>), o editor de códigos, e os botões abaixo desse.</div>
 <p><br>
 </p>
 </section>
-<section id="uso-do-jsplotly-vivo-na-página" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="uso-do-jsplotly-vivo-na-página"><span class="header-section-number">2.2</span> Uso do <em>JSPlotly vivo</em> na página</h2>
-<div class="line-block">&nbsp;&nbsp;Segue novamente o aplicativo, agora pra você experimentar algumas ações.</div>
+<section id="botões-da-barra-de-modos" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="botões-da-barra-de-modos"><span class="header-section-number">3.2</span> Botões da barra de modos</h2>
+<div class="line-block">&nbsp;&nbsp;Além dessa interatividade básica, o <em>JSPlotly</em> permite várias outras, como a promovida pelos botões da barra de modos (<em>modeBar</em>) logo acima do gráfico, e identificada pelos ícones a seguir:</div>
+<p><br>
+</p>
+<p><img src="figs/modebar.png" id="fig-modebar" class="img-fluid" style="width:70.0%" alt="Ícones de interatividade da barra superior do aplicativo"><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;Da direita para a esquerda os ícones permitem:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Inserir um texto próximo de um dado do gráfico, e indicado por uma seta;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Trocar a cor do traço do gráfico;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Salvar o gráfico como <span class="fu">PNG</span> (imagem rasterizada, bom pra web) ou <span class="fu">SVG</span> (imagem vetorial, mais precisa);</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Indicar as coordenadas <span class="st">"x"</span> e <span class="st">"y"</span> de cada ponto no gráfico por linha tracejada;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Autoescalonar o gráfico;</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fl">6.</span> Inserir um círculo;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fl">7.</span> Inserir um quadrado;</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fl">8.</span> Desenhar à mão livre;</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fl">9.</span> Desenhar uma reta;</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fl">10.</span> Deslocar o gráfico na área por <span class="st">"span"</span>;</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fl">11.</span> Aplicar um <span class="st">"zoom"</span>;</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fl">12.</span> Direcionar o gráfico pra edição detalhada por cliques de mouse no site do desenvolvedor, <span class="st">"Chart Studio"</span> (https<span class="sc">:</span><span class="er">//</span>chart<span class="sc">-</span>studio.plotly.com<span class="sc">/</span>create<span class="sc">/</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="botões-do-editor-de-códigos" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="botões-do-editor-de-códigos"><span class="header-section-number">3.3</span> Botões do editor de códigos</h2>
+<div class="line-block">&nbsp;&nbsp;Agora uma explicação sobre os botões abaixo do editor de códigos. São 7 botões, para simplificar o carregamento, cópia e compartilhamento, tanto do gráfico interativo, como do código que se encontra no editor, como também para ambos. E até mesmo para o aplicativo em si, personalizado para um determinado código.</div>
+<div class="line-block">&nbsp;&nbsp;O quadro a seguir mostra o que faz cada botão, com detalhes de uso explicado logo em seguida. Mais uma vez, vamos usar a boa e velha parábola como exemplo pra você experimentar a funcionalidade de cada botão.</div>
+<div class="line-block">&nbsp;&nbsp;Ah, sim ! Relembrando, os botões sempre aparecem abaixo do editor de códigos. Mas a disposição do <em>JSPlotly</em> pode variar entre equipamentos. Exemplificando, os botões podem aparecer espalhados abaixo do editor que fica à direita do gráfico, ou empilhados embaixo do editor, por sua vez abaixo do gráfico. Isso depende de qual equipamento você está utilizando para o <em>JSPlotly</em>, se um desktop de mesa, notebook, tablet ou smartphone, e mesmo o nível de <em>zoom</em> da tela do navegador.</div>
+<div class="line-block">&nbsp;&nbsp;Quer testar essa disposição num mesmo dispositivo ? Basta clicar no <em>botão central superior</em> que esconde/mostra a barra lateral. E se estiver usando um celular, Experimente !</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Botões de funcionalidades do JSPlotly:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">"add"</span><span class="sc">:</span> adiciona um objeto na área gráfica a partir do código contido no </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   editor;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">"remove"</span><span class="sc">:</span> apaga o último traço de um gráfico<span class="sc">/</span>objeto;</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">"clean"</span><span class="sc">:</span> limpa a área gráfica;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">"delete"</span><span class="sc">:</span> limpa o editor de códigos;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">"script"</span><span class="sc">:</span> salva o código em formato de texto;</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">"html"</span><span class="sc">:</span> salva o objeto como arquivo HTML, preservando sua interatividade;</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">"clone"</span><span class="sc">:</span> copia o código em sua última edição juntamente com próprio JSPlotly</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;E dá-lhe a parábola pra você testar os botões do editor….</div>
 <p><br>
 </p>
 <div style="margin:1rem 0; padding-right:16px;">
@@ -646,16 +682,100 @@ Figura&nbsp;2.2: O aplicativo <em>JSPlotly</em>, agora “vivo” ! Basta clicar
 </div>
 <p><br>
 </p>
-<div class="line-block">&nbsp;&nbsp;Observe que há um código <em>JS</em> no editor, contendo linhas de comando. Clique no botão <em>“add”</em> abaixo do editor e veja que surge um gráfico de parábola. Esse gráfico, assim como todos os objetos produzidos com o <em>JSPlotly</em> são <em>interativos.</em> Isto quer dizer que você pode <em>interagir</em> com o objeto produzido, no caso o gráfico. Essa interatividade do objeto é garantida por uma biblioteca específica desenvolvida em <em>JavaScript</em>, <a href="https://plotly.com/javascript/">Plotly.js</a>.</div>
-<div class="line-block">&nbsp;&nbsp;Bibliotecas (ou pacotes) são conjuntos de códigos que, quando inseridos num algoritmo, permitem automatizar tarefas dentro de uma linguagem de programação, e sem a necessidade de escrevê-las “do zero”. Há diversas bibliotecas para <em>JavaScript</em>, algumas utilizadas no <em>JSPlotly</em>, como <a href="https://tonejs.github.io/">tone.js</a> para sons e <a href="https://p5js.org/">p5.js</a> para objetos multimídia.</div>
+<section id="botão-add" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="botão-add"><span class="header-section-number">3.3.1</span> Botão <em>add</em></h3>
+<div class="line-block">&nbsp;&nbsp;O botão <em>add</em> é o principal do editor. Com ele você adiciona o código no interpretador de <em>JavaScript</em> do navegador, possibilitando a construção do gráfico (ou de outro objeto interativo, como veremos adiante). Agora, o botão <em>add</em> possui outra função bem bacana, e que você pode experimentar nesse momento com 2 cliques:</div>
 <p><br>
 </p>
-<section id="redimensionando-a-página-para-conforto-visual-do-jsplotly" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="redimensionando-a-página-para-conforto-visual-do-jsplotly"><span class="header-section-number">2.2.1</span> Redimensionando a página para conforto visual do <em>JSPlotly</em></h3>
-<div class="line-block">&nbsp;&nbsp;Observe que o aplicativo apresenta-se junto à barra lateral, o que acaba causando sua redução visual e mesmo omissão de alguns detalhes. Para melhor conforto e trabalho com o <em>JSPlotly</em>, você pode <strong><span class="darkgreen">clicar no ícone do canto superior esquerdo da página</span></strong>, próximo ao título deste capítulo, experimentará o encolhimento da <strong>barra lateral</strong>, e consequente readequação visual do <em>JSPlotly</em>. Assim, poderá ajustar como deseja que o <em>JSPlotly</em> seja apresentado. Isso é útil quando se quer explorar o aplicativo visualizando-o de modo mais confortável.</div>
-<div class="line-block">&nbsp;&nbsp;Adicionalmente, a disposição esquerda/direita também adequa-se ao tipo de dispositivo utilizado. Se for um celular, por exemplo, ela poderá mudar para cima/embaixo, bastando-se colocá-lo na vertical, ou esquerda/direita se o dispositivo ficar na horizontal (com permissão para girar a tela, claro).</div>
+<ol type="1">
+<li>Clique no <em>add</em> do editor para adicionar a parábola;</li>
+<li>Apague o sinal de <em>“-”</em> que está logo acima no código, na variável <em>“const a = -0.2”</em>;</li>
+<li>Clique novamente no botão <em>add</em>.<br>
+</li>
+</ol>
+<div class="line-block">&nbsp;&nbsp;Tchan, tchan, tchaaan !!! Veja que agora o gráfico <em>“(add)icionou”</em> mais um traço ao gráfico original. E ainda por cima com cor diferente e legenda !!</div>
 <p><br>
 </p>
+<p><img src="figs/addParabola.png" id="fig-addParabola" class="img-fluid" alt="Gráfico de parábola sobrepondo a equação original à sua alteração na constante “a” (retirada do sinal negativo)."><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;E para dar um jeitão mais bacana ao gráfico, dá-lhe outra funcionalidade interativa: a legenda. Veja que você pode clicar e arrastar a legenda para outra parte do gráfico. Além disso, também pode mudar o texto legenda, já que o gráfico sobreposto possui o mesmo título do anterior. Exemplificando:</div>
+<p><br>
+</p>
+<ol type="1">
+<li>Clique no texto em azul na legenda e digite <em>“a = - 0,2”</em>;</li>
+<li>Agora clique no texto em laranja e digite <em>“a = 0,2”</em></li>
+</ol>
+<div class="line-block">&nbsp;&nbsp;Pronto, agora você tem um gráfico mais <em>“limpinho”</em> na legenda, como no debaixo.</div>
+<p><img src="figs/addParabola_legenda.png" id="fig-addParabola_legenda" class="img-fluid" alt="Gráfico de parabóla personalizado com edição de texto direto na legenda e o reposicionamento dessa com clique/arraste por mouse."><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;Essa possibilidade com o botão <em>add</em> para adicionar traços é particularmente interessante quando se deseja comparar um gráfico (ou objeto) com outro, para se verificar o que mudou na área gráfica com a alteração do código. Ou seja, isso é muito bom pra explorar parâmetros de uma equação, por exemplo, com vistas a compreender melhor como essa equação funciona quando colocada na forma de um gráfico. O nome chique pra isso é <em>exploração ou manipulação paramétrica</em>. Em resumo, elabora-se um gráfico e o sobrepõe com um ou mais gráficos alterando-se um ou mais parâmetros da equação. No caso de um objeto diferente de um gráfico, a exploração dá-se com mudança de outros detalhes do código (com cores, por exemplo).</div>
+</section>
+<section id="botão-remove" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="botão-remove"><span class="header-section-number">3.3.2</span> Botão <em>remove</em></h3>
+<div class="line-block">&nbsp;&nbsp;Tá em inglês, mas poderia tranquilamente ser compreendido em língua pátria, mesmo. Esse botao remove o último traço adicionado na área gráfica. Sua utilidade é também importante, pois permite que se retire de um gráfico um ou mais traços que não ficaram do jeito que se desejava. Exemplificando, digamos que para a parábola do exemplo acima o legal seria comparar o efeito da constante <em>“a”</em> com um valor que não fosse somente pela retirada do sinal negativo. A figura abaixo ilustra como ficaria o gráfico se você <em>“(remove)”esse</em> esse traço e adicionasse outro, com valor diferente para a constante.</div>
+<div id="fig-comparaParabola" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-comparaParabola-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-comparaParabola" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-remove1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-remove1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/remove1.png" class="img-fluid figure-img" data-ref-parent="fig-comparaParabola">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-remove1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Parábola com o código original, e <em>a = -0.2</em>.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-comparaParabola" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-remove2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-remove2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/remove2.png" class="img-fluid figure-img" data-ref-parent="fig-comparaParabola">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-remove2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Parábola com adição de traço para <em>a = 0.2</em>.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-comparaParabola" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-remove2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-remove2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/remove3.png" class="img-fluid figure-img" data-ref-parent="fig-comparaParabola">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-remove2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Parábola para remoção do traço anterior (<em>remove</em>) e nova adição de traço (<em>add</em>), dessa vez com <em>a = -0.5</em>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-comparaParabola-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.1: Sequência de gráficos de parábolas para exemplificar o uso do botão <em>add</em> para inserção e <em>remove</em> para remoção de traços.
+</figcaption>
+</figure>
+</div>
+<p><br>
+</p>
+</section>
+<section id="botões-clean-e-delete" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="botões-clean-e-delete"><span class="header-section-number">3.3.3</span> Botões <em>clean</em> e <em>delete</em></h3>
+<div class="line-block">&nbsp;&nbsp;Esses botões servem para limpeza. O botão <em>clean</em> atua limpando a área gráfica. Pode ser que às vezes <em>“sobre”</em> alguns elementos de interatividade de um gráfico anterior, como uma barra deslizante, por exemplo. Nesse caso, o melhor é recarregar a tela do navegador (Ctrl+F5 ou Ctrl+R, dependendo do <em>browser</em>, ou um botão à esquerda de sua barra de endereços).</div>
+<div class="line-block">&nbsp;&nbsp;Já o botão <em>delete</em> limpa o editor de códigos, o que pode ser útil quando se deseja colar aí um novo código, por exemplos.</div>
+<p><br>
+</p>
+</section>
+<section id="botão-script" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="botão-script"><span class="header-section-number">3.3.4</span> Botão <em>script</em></h3>
+<div class="line-block">&nbsp;&nbsp;Esse botão permite que você salve o código para recuperá-lo futuramente, para editá-lo num outro momento, ou para compartilhá-lo com alguém. Ele é salvo com o atributo <em>js</em> indicando um código em <em>JavaScript</em> para carregamento no <em>JSPlotly</em>. Mas você pode personalizar o nome, e abri-lo em qualquer editor de texto, mesmo num simples bloco de notas.</div>
+</section>
+<section id="botão-html-e-botão-clone" class="level3" data-number="3.3.5">
+<h3 data-number="3.3.5" class="anchored" data-anchor-id="botão-html-e-botão-clone"><span class="header-section-number">3.3.5</span> Botão <em>html</em> e botão <em>clone</em></h3>
 
 
 </section>
@@ -1063,14 +1183,11 @@ Figura&nbsp;2.2: O aplicativo <em>JSPlotly</em>, agora “vivo” ! Basta clicar
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Livro Vivo: Usando o JSPlotly">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Livro Vivo: Usando o JSPlotly</span></span>
+      <a href="./introducao.html" class="pagination-link" aria-label="Introdução">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introdução</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./interatividade.html" class="pagination-link" aria-label="Interatividade com JSPlotly">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade com JSPlotly</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
