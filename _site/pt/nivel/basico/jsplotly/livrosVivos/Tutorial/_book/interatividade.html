@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Interatividade com JSPlotly – Usando o JSPlotly</title>
+<title>3&nbsp; Interatividade – Usando o JSPlotly</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./gsplotly.html" rel="next">
 <link href="./introducao.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -435,6 +436,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 </style>
 <style>
+  /* espaçamento padrão entre parágrafos */
+  .content p { 
+    margin-top: 0;
+    margin-bottom: 1.2rem;  /* aumente/diminua aqui */
+    line-height: 1.55;      /* opcional: linhas mais arejadas */
+  }
+
+  /* um pouco mais de espaço quando um parágrafo vem logo após outro */
+  .content p + p {
+    margin-top: 0.8rem;
+  }
+
+  /* parágrafos dentro de callouts/listas costumam ser “apertados” */
+  .callout p { margin-bottom: 0.8rem; }
+  li p { margin-bottom: 0.6rem; }
+</style>
+<style>
   :root{
     --lv-sidebar-w: 330px;
     --lv-side-solid: #e8f0ff;  /* cor da sidebar */
@@ -463,7 +481,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interatividade.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade com JSPlotly</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interatividade.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -491,19 +509,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Livro Vivo: Usando o JSPlotly</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introducao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O aplicativo</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interatividade.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade com JSPlotly</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gsplotly.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bot de IA para códigos</span></span></a>
   </div>
 </li>
     </ul>
@@ -535,7 +559,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade com JSPlotly</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade</span></h1>
 </div>
 
 
@@ -756,12 +780,26 @@ Figura&nbsp;3.3: Sequência de gráficos de parábolas para exemplificar o uso d
 </div>
 <p><br>
 </p>
+<div class="line-block">&nbsp;&nbsp;Só pra te mostrar como fica, veja a imagem abaixo, uma <em><span style="color:green">representação viva do que faz o botão html</span></em>. Basta clicar na imagem para acessar a velha e boa parábola que vem como padrão no <em>JSPlotly</em>, mas como um arquivo interativo pronto pra estudo ou compartilhamento !</div>
+<div id="fig-tela" class="quarto-float quarto-figure quarto-figure-center anchored" target="_blank">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tela-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="figs/htmlVivo.html" target="_blank"><img src="figs/parabola.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tela-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.4: A parábola <em>viva</em>, tal como armazenada pelo botão <em>html</em>.
+</figcaption>
+</figure>
+</div>
+<!-- Este é um <span style="color:#e53935">aviso em vermelho</span> -->
+<!-- e aqui um <span style="color:dodgerblue">trecho azul</span>. -->
+<!-- Isto está [colorido em vermelho]{.red}, isto em [azul]{.blue}, -->
+<!-- e uma [etiqueta bonita]{.note}. -->
 </section>
 <section id="botão-clone" class="level3" data-number="3.3.6">
 <h3 data-number="3.3.6" class="anchored" data-anchor-id="botão-clone"><span class="header-section-number">3.3.6</span> Botão <em>clone</em></h3>
-<div class="line-block">&nbsp;&nbsp;Esse botão possui a função apresentada no próprio nome, ou seja, ele <em>“clona”</em> o <em>JSPlotly</em> com um código específico, já customizado ou não. Isso é particularmente útil quando se quer não apenas guardar/compartilhar um código (botão <em>script</em>) ou um objeto interativo (botão <em>html</em>), mas sim quando se deseja guardar/compartilhar o aplicativo inteiro com o código padrão escolhido.</div>
-<div class="line-block">&nbsp;&nbsp;Dessa forma, o botão <em>clone</em> agrega um valor a mais, já que possibilita avaliar um objeto de aprendizagem interativo juntamente com seu código, facultando a edição desse para personalização do objeto. Ilustrando seu uso prático, quando se deseja guardar/compartilhar um objeto e seu código para aprimoramento, por exemplo.</div>
-<p>XXXX</p>
+<div class="line-block">&nbsp;&nbsp;Esse botão é o mais <em>disruptivo</em>, como se diz nesses tempos. O <em>clone</em> cumpre a função que seu nome apresenta, ou seja, ele <em>“clona”</em> o <em>JSPlotly</em> com um código específico, já customizado ou não. Isso é particularmente útil quando se quer não apenas guardar/compartilhar um código (botão <em>script</em>) ou um objeto interativo (botão <em>html</em>), mas sim quando se deseja guardar/compartilhar o aplicativo inteiro com o código padrão escolhido e já customizado.</div>
+<div class="line-block">&nbsp;&nbsp;Dessa forma, o botão <em>clone</em> agrega um valor a mais, já que possibilita trabalhar com um objeto interativo juntamente com seu código, facultando a edição desse para personalização do objeto. Ilustrando seu uso prático, quando se deseja guardar/compartilhar um objeto e seu código para aprimoramento, por exemplo. Bom, como o <em>clone</em> <em>“clona”</em> um gráfico com seu código junto ao aplicativo, não teria a menor graça reproduzir <em>“mais do mesmo”</em> aqui !</div>
 
 
 </section>
@@ -1169,11 +1207,14 @@ Figura&nbsp;3.3: Sequência de gráficos de parábolas para exemplificar o uso d
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="./introducao.html" class="pagination-link" aria-label="Introdução">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introdução</span></span>
+      <a href="./introducao.html" class="pagination-link" aria-label="O aplicativo">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O aplicativo</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./gsplotly.html" class="pagination-link" aria-label="Bot de IA para códigos">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bot de IA para códigos</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

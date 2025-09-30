@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; O aplicativo – Usando o JSPlotly</title>
+<title>4&nbsp; Bot de IA para códigos – Usando o JSPlotly</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./interatividade.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./interatividade.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -418,21 +417,34 @@ ul.task-list li input[type="checkbox"] {
   li p { margin-bottom: 0.6rem; }
 </style>
 <style>
-  :root{
-    --lv-sidebar-w: 330px;
-    --lv-side-solid: #e8f0ff;  /* cor da sidebar */
-    --lv-main-solid: #f5f8fc;  /* <<< cor do CONTEÚDO */
-  }
-  /* use cores sólidas: */
-  #quarto-sidebar{ background: var(--lv-side-solid) !important; }
-  main.content,
-  #quarto-margin-sidebar{
-    background: var(--lv-main-solid) !important;
-  }
-  /* opcional: reduzir o espaço entre colunas */
-  #quarto-content.page-columns{ gap: 10px 16px; }
-  #quarto-sidebar{ width: var(--lv-sidebar-w); }
+:root{
+  --lv-sidebar-w: 330px;
+  --lv-side-solid: #e8f0ff;  /* cor da sidebar */
+  --lv-main-solid: #f5f8fc;  /* <<< cor do CONTEÚDO */
+}
+/* use cores sólidas: */
+#quarto-sidebar{ background: var(--lv-side-solid) !important; }
+main.content,
+#quarto-margin-sidebar{
+  background: var(--lv-main-solid) !important;
+}
+/* opcional: reduzir o espaço entre colunas */
+#quarto-content.page-columns{ gap: 10px 16px; }
+#quarto-sidebar{ width: var(--lv-sidebar-w); }
 </style>
+<style>
+   /* ===== largura máxima do conteúdo ===== */
+  :root { --content-max-width: 1600px; }
+
+  /* ===== cores utilitárias (suas classes) ===== */
+  .red  { color: #e53935; }
+  .blue { color: dodgerblue; }
+  .darkblue  { color: #003366; }   /* azul escuro */
+  .darkgreen { color: #006400; }   /* verde escuro */
+  .orange    { color: #ff8c00; }   /* laranja */
+  .purple    { color: #800080; }   /* roxo */
+  .note { color:#6f42c1; background:#f3e8ff; padding:2px 6px; border-radius:6px; }
+ </style>
 
 
 </head>
@@ -446,7 +458,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introducao.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O aplicativo</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gsplotly.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bot de IA para códigos</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -479,7 +491,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./introducao.html" class="sidebar-item-text sidebar-link active">
+  <a href="./introducao.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O aplicativo</span></span></a>
   </div>
 </li>
@@ -491,7 +503,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gsplotly.html" class="sidebar-item-text sidebar-link">
+  <a href="./gsplotly.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bot de IA para códigos</span></span></a>
   </div>
 </li>
@@ -500,32 +512,20 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Índice</h2>
-   
-  <ul>
-  <li><a href="#o-site-bioquanti" id="toc-o-site-bioquanti" class="nav-link active" data-scroll-target="#o-site-bioquanti"><span class="header-section-number">2.0.1</span> O site <em>Bioquanti</em></a></li>
-  <li><a href="#botando-a-mão-na-massa" id="toc-botando-a-mão-na-massa" class="nav-link" data-scroll-target="#botando-a-mão-na-massa"><span class="header-section-number">2.1</span> Botando a mão na massa !</a></li>
-  <li><a href="#estrutura-do-aplicativo" id="toc-estrutura-do-aplicativo" class="nav-link" data-scroll-target="#estrutura-do-aplicativo"><span class="header-section-number">2.2</span> Estrutura do aplicativo</a></li>
-  <li><a href="#uso-do-jsplotly-vivo-na-página" id="toc-uso-do-jsplotly-vivo-na-página" class="nav-link" data-scroll-target="#uso-do-jsplotly-vivo-na-página"><span class="header-section-number">2.3</span> Uso do <em>JSPlotly vivo</em> na página</a>
-  <ul class="collapse">
-  <li><a href="#redimensionando-a-página-para-conforto-visual-do-jsplotly" id="toc-redimensionando-a-página-para-conforto-visual-do-jsplotly" class="nav-link" data-scroll-target="#redimensionando-a-página-para-conforto-visual-do-jsplotly"><span class="header-section-number">2.3.1</span> Redimensionando a página para conforto visual do <em>JSPlotly</em></a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O aplicativo</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bot de IA para códigos</span></h1>
 </div>
 
 
 
-<div class="quarto-title-meta column-body">
+<div class="quarto-title-meta column-page-right">
 
     
   
@@ -537,118 +537,59 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;<em>JSPlotly</em> é um aplicativo pra criar objetos virtuais de aprendizagem. Com ele é possível criar gráficos 2D e 3D, tabelas, diagramas, fluxogramas, realizar cálculos, produzir objetos tridimensionais, animações, simulações, jogos, sonorização, objetos multimídia (animação+som), e até prototipagem experimental (Arduino, por ex).</div>
-<div class="line-block">&nbsp;&nbsp;Ainda que possibilite isso tudo (e um pouco mais…), apresenta-se como um pequeno arquivo HTML pra ser carregado em qualquer navegador de internet. Assim, <em>JSPlotly</em> não depende de sistema operacional (Windows, Linux, Android, iOS) e nem de dispositivo (desktop, notebook, tablet, celular). Por ser pequenino e com atributo HTML, pode-se compartilhar o programa e o objetos produzidos por qualquer meio físico ou digital, incluindo redes sociais.</div>
-<div class="line-block">&nbsp;&nbsp;O <em>JSPlotly</em> é livre !!! Tanto pra baixar como para personalizá-lo, como garantido por sua <a href="https://creativecommons.org/licenses/by-nc/4.0/">licença CC BY-NC 4.0</a>. Assim, você pode utilizá-lo, copiá-lo, distribui-lo e mesmo adaptá-lo para <em>fins não comerciais</em>, desde que mencione o autor original.</div>
-<section id="o-site-bioquanti" class="level3" data-number="2.0.1">
-<h3 data-number="2.0.1" class="anchored" data-anchor-id="o-site-bioquanti"><span class="header-section-number">2.0.1</span> O site <em>Bioquanti</em></h3>
-<div class="line-block">&nbsp;&nbsp;O aplicativo, suas características, seu modo de uso e <em>mais de uma centena de objetos de aprendizagem interativos</em> estão abertamente disponíveis junto ao website <a href="https://bioquanti.netlify.app/">Bioquanti</a>. O site é uma iniciativa para propagar a ideia de se utilizar código de programação voltados para a construção de objetos didáticos para conteúdos curriculares, tanto para o ensino básico como para o ensino superior e pesquisa científica. Numa <em>“frasezinha”</em> de efeito: <em>códigos para conteúdos</em>.</div>
-<div class="line-block">&nbsp;&nbsp;O <em>Bioquanti</em> foi desenhado para seu autoinstrucional, ou seja, para que você consiga acompanhar o seu conteúdo e reproduzir/adaptar os códigos para a construção de diversos tipos de objetos didáticos sem necessitar de um(a) professor(a). Lá você encontrará tutoriais, <em>ebooks</em>, objetos didáticos interativos, códigos diversos, vídeos, e intruções gerais para o uso de <em>quatro programas</em> de distribuição livre.</div>
-<div class="line-block">&nbsp;&nbsp;Esses programas são o <em>JSPlotly</em>, para construção de objetos de aprendizagem interativos variados, o <em>Jmol</em> para visualização tridimensional de moléculas, o <em>R</em> e sua interface gráfica <em>RStudio</em> para tudo que possa pensar em ensino e pesquisa, e o <em>Sisma</em>, um programa feito na UNIFAL-MG para simular a dinâmica de fluxos em um diagrama. Todos esses programas são livres, assim como todos os materiais contidos no site. Veja uma imagem da página principal do site abaixo.</div>
+<div class="line-block">&nbsp;&nbsp;Como visto nas seções anteriores, o <em>JSPlotly</em> trabalha com códigos de programação ! São comandos escritos em linguagem <em>JavaScript</em>, a qual é interpretada junto a máquinas homônimas de navegadores modernos (ex: Chrome, Firefox, Safari, Opera, Edge, etc). Agora…convenhamos…além de amantes das <em>Ciências da Computação</em>, quem gosta de códigos de programação ?!</div>
+<div class="line-block">&nbsp;&nbsp;Pensando nisso foi desenvolvido junto ao aplicativo um <em>gerador de códigos pro JSPlotly por assistente de inteligência artificial (IA)</em> !!! Isso quer dizer que <span class="orange"><strong>você não precisa saber nada sobre programação !!!</strong></span>.</div>
 <p><br>
 </p>
-<div class="#fig-bioquanti">
-<div id="fig-bioquanti" class="quarto-float quarto-figure quarto-figure-center anchored" target="_blank">
+<div class="line-block">&nbsp;&nbsp;Quer fazer o um teste ?</div>
+<p><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;Clique no link do <a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly?model=gpt-4o">GSPlotly</a> (<em>G</em> para <em>gerador</em>) ou na imagem abaixo, e peça ao gerador para construir alguma coisa…digamos….</div>
+<div class="line-block">&nbsp;&nbsp;<span class="note">…“faça um gráfico de barras sobre as principais regiões de terras raras”…</span></div>
+<p><br>
+</p>
+<div class="#fig-gsplotly">
+<div id="fig-gsplotly" class="quarto-float quarto-figure quarto-figure-center anchored" target="_blank">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-bioquanti-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="https://bioquanti.netlify.app/" target="_blank"><img src="figs/bioquanti.png" class="img-fluid figure-img"></a>
+<div aria-describedby="fig-gsplotly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly" target="_blank"><img src="figs/gsplotly.png" class="img-fluid figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bioquanti-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.1: Página de visita do site Bioquanti, apresentando uma barra lateral contendo acesso para 4 programas de livre distribuição e materiais correlatos ao ensino e à pesquisa
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gsplotly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.1: Tela do <em>GSPlotly</em> para criação de códigos ao simulador JSPlotly. Clique na imagem para acessar o gerador!
 </figcaption>
 </figure>
 </div>
 </div>
 <p><br>
 </p>
-</section>
-<section id="botando-a-mão-na-massa" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="botando-a-mão-na-massa"><span class="header-section-number">2.1</span> Botando a mão na massa !</h2>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;Agora, voltando ao <em>JSPlotly</em>. Quer ver como é simples utilizá-lo ? Dê uma olhada na tela única do aplicativo abaixo.</div>
-<p><br>
-</p>
-<div id="fig-tela" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-tela-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/tela.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tela-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.2: Tela única do <em>JSPlotly</em>, apresentando o ecrã gráfico à esquerda e o editor de códigos Ace à direita.
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="estrutura-do-aplicativo" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="estrutura-do-aplicativo"><span class="header-section-number">2.2</span> Estrutura do aplicativo</h2>
-<div class="line-block">&nbsp;&nbsp;Observe que o aplicativo é dividido entre uma <em>área gráfica</em> (esquerda) e um <em>editor de códigos</em> com alguns botões (direita).A área de códigos serve para o que naturalmente se apresenta: digitar, colar, ou editar códigos. A área gráfica apresenta a interpretação da linguagem para esses códigos. Os comandos são introduzidos por <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript">JavaScript (JS)</a>, uma linguagem de programação moderna, utilizada por grandes empresas e <em>big techs</em>, e focada na interatividade entre a página web e o usuário. Diferente de outras linguagens, <em>JavaScript</em> não precisa ser compilada, já que é interpretada a partir de máquinas homônimas de navegadores comuns (<em>browser</em>).</div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;<strong><span class="orange">Agora vamos à parte divertida !!!</span></strong></div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;Segue abaixo novamente a mesma tela do <em>JSPlotly</em>. Aparentemente é igual à anterior. Mas quer saber a diferença ? Clique na imagem e você será direcionado ao aplicativo presente no <a href="https://bioquanti.netlify.app/">Bioquanti</a>, um site desenvolvido para apresentar códigos para conteúdos em ensino superior e básico, e com vários exemplos de objetos pro <em>JSPlotly</em>..</div>
-<p><br>
-</p>
-<div id="fig-tela" class="quarto-float quarto-figure quarto-figure-center anchored" target="_blank">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-tela-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="https://bioquanti.netlify.app/pt/nivel/superior/jsplotly/jsplotly" target="_blank"><img src="figs/tela.png" class="img-fluid figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tela-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.3: O aplicativo <em>JSPlotly</em>, agora “vivo” ! Basta clicar na imagem para uma experiência interativa com o app.
-</figcaption>
-</figure>
-</div>
-<!-- Este é um <span style="color:#e53935">aviso em vermelho</span> -->
-<!-- e aqui um <span style="color:dodgerblue">trecho azul</span>. -->
-<!-- Isto está [colorido em vermelho]{.red}, isto em [azul]{.blue}, -->
-<!-- e uma [etiqueta bonita]{.note}. -->
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;O <strong>aplicativo “vivo”</strong> pode ser utilizado de forma independente, armazenado em mídia ou compartilhado facilmente pela web. Contudo, esse material pretende abordá-lo diretamente em nuvem, <em><span class="red">misturando texto e programa</span></em>. Nesse caso, estamos falando de verdadeiros <strong><span class="red">livros vivos</span></strong>!!!</div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;Para experimentar esse conceito de <em>livro vivo</em>, observe abaixo o aplicativo <em>JSPlotly</em>, inteirinho e funcional, mas desta vez inserido nesta página web.</div>
-<p><br>
-</p>
+<div class="line-block">&nbsp;&nbsp;Observe que o <em>GSPlotly</em> fornece o código <em>JavaScript</em> quase que instantaneamente, e ainda por cima dá algumas dicas pra melhoria do próprio código !</div>
+<div class="line-block">&nbsp;&nbsp;Agora é só copiar o código pelo ícone que aparece no canto superior direito (<em>“copy code”</em>) e rodar no <em>JSPlotly</em>. Para isso:</div>
+<ol type="1">
+<li>Copie o código;</li>
+<li>Clique em <em>delete</em> no <em>JSPlotly</em> abaixo;</li>
+<li>Cole o código;</li>
+<li>Clique em <em>add</em>.</li>
+</ol>
 <div style="margin:1rem 0; padding-right:16px;">
-  <iframe src="apps/JSPlotly2q.html" width="100%" height="760" style="border:0;border-radius:10px;"></iframe>
+  <iframe src="https://bioquanti.netlify.app/pt/nivel/superior/jsplotly/jsplotly" width="100%" height="760" style="border:0;border-radius:10px;"></iframe>
 </div>
 <p><br>
 </p>
-<div class="line-block">&nbsp;&nbsp;É desta forma que pretende-se abordar os diferentes tópicos com o programa, ou seja, combinando instruções na página com o próprio <em>JSPlotly</em> e, dessa forma, <em>“vivificando”</em> o aprendizado de temas com o aplicativo.</div>
+<div class="line-block">&nbsp;&nbsp;Se deu tudo certo, você deverá ver algo parecido com a imagem <em>interativa</em> abaixo:</div>
 <p><br>
 </p>
-<div class="line-block">&nbsp;&nbsp;Bom, seguindo neste tópico sobre a estrutura do aplicativo, passe o mouse sem clicar em nada na imagem acima, e veja quanta interatividade é visualizada na mudança do ponteiro do mouse: links para sites na barra superior (<em>JavaScript</em>, <em>Plotly.js</em>, <em>Bioquanti</em>, <em>GSPlotly</em>), ícones acima do gráfico, o próprio gráfico, o botão de carregamento de arquivos (<em>browse</em>), o editor de códigos, e os botões abaixo desse.</div>
-<p><br>
-</p>
-</section>
-<section id="uso-do-jsplotly-vivo-na-página" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="uso-do-jsplotly-vivo-na-página"><span class="header-section-number">2.3</span> Uso do <em>JSPlotly vivo</em> na página</h2>
-<div class="line-block">&nbsp;&nbsp;Segue novamente o aplicativo, agora pra você experimentar algumas ações.</div>
-<p><br>
-</p>
-<div style="margin:1rem 0; padding-right:16px;">
-  <iframe src="apps/JSPlotly2q.html" width="100%" height="760" style="border:0;border-radius:10px;"></iframe>
+<div id="fig-terrasraras" class="quarto-float quarto-figure quarto-figure-center anchored" target="_blank">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-terrasraras-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="figs/terrasraras.html" target="_blank"><img src="figs/terrasraras.png" class="img-fluid figure-img"></a>
 </div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;Observe que há um código <em>JS</em> no editor, contendo linhas de comando. Clique no botão <em>“add”</em> abaixo do editor e veja que surge um gráfico de parábola. Esse gráfico, assim como todos os objetos produzidos com o <em>JSPlotly</em> são <em>interativos.</em> Isto quer dizer que você pode <em>interagir</em> com o objeto produzido, no caso o gráfico. Essa interatividade do objeto é garantida por uma biblioteca específica desenvolvida em <em>JavaScript</em>, <a href="https://plotly.com/javascript/">Plotly.js</a>.</div>
-<div class="line-block">&nbsp;&nbsp;Bibliotecas (ou pacotes) são conjuntos de códigos que, quando inseridos num algoritmo, permitem automatizar tarefas dentro de uma linguagem de programação, e sem a necessidade de escrevê-las “do zero”. Há diversas bibliotecas para <em>JavaScript</em>, algumas utilizadas no <em>JSPlotly</em>, como <a href="https://tonejs.github.io/">tone.js</a> para sons e <a href="https://p5js.org/">p5.js</a> para objetos multimídia.</div>
-<p><br>
-</p>
-<section id="redimensionando-a-página-para-conforto-visual-do-jsplotly" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="redimensionando-a-página-para-conforto-visual-do-jsplotly"><span class="header-section-number">2.3.1</span> Redimensionando a página para conforto visual do <em>JSPlotly</em></h3>
-<div class="line-block">&nbsp;&nbsp;Observe que o aplicativo apresenta-se junto à barra lateral, o que acaba causando sua redução visual e mesmo omissão de alguns detalhes. Para melhor conforto e trabalho com o <em>JSPlotly</em>, você pode <strong><span class="darkgreen">clicar no ícone do canto superior esquerdo da página</span></strong>, próximo ao título deste capítulo, experimentará o encolhimento da <strong>barra lateral</strong>, e consequente readequação visual do <em>JSPlotly</em>. Assim, poderá ajustar como deseja que o <em>JSPlotly</em> seja apresentado. Isso é útil quando se quer explorar o aplicativo visualizando-o de modo mais confortável.</div>
-<div class="line-block">&nbsp;&nbsp;Adicionalmente, a disposição esquerda/direita também adequa-se ao tipo de dispositivo utilizado. Se for um celular, por exemplo, ela poderá mudar para cima/embaixo, bastando-se colocá-lo na vertical, ou esquerda/direita se o dispositivo ficar na horizontal (com permissão para girar a tela, claro).</div>
-<p><br>
-</p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-terrasraras-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.2: <em>JSPlotly</em> interativo contendo o código para a construção de um gráfico de barras para reservas mundiais de terras raras, tal como sugerido acima ao gerador <em>GSPlotly</em> de IA.
+</figcaption>
+</figure>
+</div>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1050,16 +991,13 @@ Figura&nbsp;2.3: O aplicativo <em>JSPlotly</em>, agora “vivo” ! Basta clicar
     }
   });
   </script>
-<nav class="page-navigation column-body">
+<nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Introdução">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span>
+      <a href="./interatividade.html" class="pagination-link" aria-label="Interatividade">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./interatividade.html" class="pagination-link" aria-label="Interatividade">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Interatividade</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
