@@ -1224,7 +1224,7 @@ $$
 ```
 \
 
-### ZeMol: um visualizador 3D para modelos moleculares
+### ZeMol - Visualizador 3D para modelos moleculares
 
 #### Contexto: {.unnumbered}
 
@@ -1322,7 +1322,7 @@ $$
 \
 
 
-### CinDroga - Experimentação simulada para prospecção de composto líder como inibidor enzimático
+### CinDroga - Prospecção para composto líder como inibidor enzimático
 
 
 |   O *JSPlotly* pode operar como um aplicativo completo de simulação em situações variadas. O exemplo que se apresenta refere-se a seu uso como um painel (*dashboard*) para simular o potencial de uma molécula fictícia em triagem visando a seleção de composto líder (*lead compound*) como inibidor a um alvo enzimático.
@@ -1333,17 +1333,25 @@ $$
 [![](Eq/leadCompound.png)](Eq/jsp_leadCompound.zip){target="_blank"}
 
 
+**Instruções gerais**
 
-|   Há dois modos para estudo para uso do *CinDroga*: inserindo-se parâmetros cinéticos e termodinâmicos para observar os resultados expressos em gráficos (botão *parâmetros*), ou caracterizar os parâmetros a partir dos gráficos (botão *diagnóstico*). 
+1. No campo superior do app há 4 botões:
+* *reset* - renova a simulação para outros dados e gráficos;
+* *html* - salva os gráficos e dados em arquivo interativo;
+* *diagnóstico* - abre janela *popup* para o diagnóstico do modelo de inibição e valores de parâmetros;
+* *parâmetros* - abre janela para simulação gráfica frente a parâmetros do usuário.
+
+
+2. Há dois modos para estudo para uso do *CinDroga*: inserindo-se parâmetros cinéticos e termodinâmicos para observar os resultados expressos em gráficos (botão *parâmetros*), ou caracterizar os parâmetros a partir dos gráficos (botão *diagnóstico*). 
 
 |   Os gráficos simulam os resultados obtidos para as *representações de Michaelis-Mentem, Lineweaver-Burk, curva dose-reposta, e gráfico de van't Hoff.*
 \
 
-**Parâmetros quantitativos**
+#### Parâmetros {.unnumbered}
 
-|   Seja qual for o modo experimentado, os parâmetros são:
+|   Seja qual for o modo experimentado, se para identificar o potencial do composto , os parâmetros são:
 
-* *Ki*, constante de equilíbrio de dissociação do inibidor;
+* *Ki*, constante de equilíbrio de dissociação do inibidor (desejável < 10$\mu$M);
 * Vmax, velocidade limite da reação enzimática;
 * Km, constante de Michaelis-Mentem;
 * $\Delta$H, variação de entalpia de ligação com inibidor;
@@ -1393,10 +1401,11 @@ $$
 
 * IC$_{50}$, concentração do inibidor que confere 50% de resposta (adequado quando < 10$\mu$M);
 * nH, constante de Hill (índice de cooperatividade)
+\
 
-**Instruções**
+#### Uso do CinDrogra para identificação de um composto líder {.unnumbered}
 
-|   Para usar o *CinDroga* para caracterizar um candidato a composto líder basta carregar o script (*add*). Serão apresentados 1) os descritores do composto, 2) quatro gráficos com simulação de resultados experimentais de cinética (Michaelis-Mentem, Lineweaver-Burk, e curva dose-resposta) e termodinâmica (van't Hoff). A partir da visualização é possível se determinar:
+|   A partir da visualização de gráficos e descritores da molécula fictícia, é possível se determinar:
 
 1. O tipo de inibição reversível (competitiva, incompetitiva, não competitiva pura, não competitiva mista);
 
@@ -1418,10 +1427,14 @@ $$
 
 ```{r, eval=FALSE}
 1. Compare os tipos de inibição enzimática por inspeção visual dos gráficos de Michaelis-Mentem e de Lineweaver-Burk, dando ênfase às variações ou não de "Km" e "Vmax" entre esses;
-2. Calcule o valor de "Ki" por métodos distintos utilizando-se o campo de preenchimento para os parâmetros da Tabela:
-  a) obtendo-se o valor de "1/Ki" para plot de I x (alfa-1) do botão "alfa-replot" (inclinação da reta);
+
+2. Calcule o valor de "Ki" por métodos distintos utilizando-se o campo de preenchimento para "replot" de parâmetros da Tabela:
+    a) obtendo-se o valor de "1/Ki" para plot de I x (alfa-1) do botão "alfa-replot" (inclinação da reta);
   b) por intercepto "-Ki" a partir de plots de I x Vm_app, Km_app, ou Km/Vm_app (dependendo do modelo de inibição);
-3. Experimente o modo "parâmetros" com valor de "nH" diferente de 1 (ex: 2.8), para avaliar o comportamento da curva dose-reposta sob efeitos de cooperatividade;
+  c) por "inclinação" ou "intercepto" de replots de Lineweaver-Burk contra I
+
+3. Experimente o modo "parâmetros" com valor de "nH" diferente de 1 (ex: 2,8), para avaliar o comportamento da curva dose-reposta sob efeitos de cooperatividade;
+
 4. Experimente o modo "parâmetros" com valor para capacidade calorífica diferente de zero (ex: -2000), para avaliar a possibilidade de efeitos secundários na ligação em função da temperatura, como transição conformacional da enzima;
 ```
 \
