@@ -1580,9 +1580,9 @@ SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
 <p><br>
 </p>
 <p><em>Observação</em>: o <em>CinDroga</em> possui códigos internos para estilos e montagens do painel e que interferem no <em>bootstratp</em> do criador de páginas utilizado (pacote <em>Quarto</em> para <em>R</em>). Nesse sentido, é preferível baixá-lo como um arquivo comprimido e executá-lo isoladamente, clicando-se na imagem que segue.</p>
-<p><a href="Eq/jsp_leadCompound.html.zip" target="_blank"><img src="Eq/leadCompound.png" class="img-fluid"></a></p>
+<p><a href="Eq/jsp_leadCompound.zip" target="_blank"><img src="Eq/leadCompound.png" class="img-fluid"></a></p>
 <div class="line-block">&nbsp;&nbsp;Há dois modos para estudo para uso do <em>CinDroga</em>: inserindo-se parâmetros cinéticos e termodinâmicos para observar os resultados expressos em gráficos (botão <em>parâmetros</em>), ou caracterizar os parâmetros a partir dos gráficos (botão <em>diagnóstico</em>).</div>
-<div class="line-block">&nbsp;&nbsp;Os gráficos simulam os resultados obtidos para as <em>representações de Michaelis-Mentem, Lineweaver-Burk, curva dose-reposta, e gráfico de van’t Hoff. </em></div>
+<div class="line-block">&nbsp;&nbsp;Os gráficos simulam os resultados obtidos para as <em>representações de Michaelis-Mentem, Lineweaver-Burk, curva dose-reposta, e gráfico de van’t Hoff.</em></div>
 <p><br>
 </p>
 <p><strong>Parâmetros quantitativos</strong></p>
@@ -1627,7 +1627,8 @@ LLE=pIC_{50}-logP
 </ul>
 <p><span class="math display">\[
 BEI=\frac{pIC_{50}}{MW}
-\]</span> <em>Onde:</em> MW, kDa; faixas típicas pela <em>regra de Lipinski</em> (regra dos 5): MW&lt;=500, HBD&lt;=5, HBA&lt;=10, cLogP&lt;=5. E também LE &gt;= 0.3; LLE &gt;= 5.</p>
+\]</span><br>
+<em>Onde:</em> MW, kDa; faixas típicas pela <em>regra de Lipinski</em> (regra dos 5): MW&lt;=500, HBD&lt;=5, HBA&lt;=10, cLogP&lt;=5. E também LE &gt;= 0.3; LLE &gt;= 5.</p>
 <div class="line-block">&nbsp;&nbsp;Já a curva dose-reposta do inibidor permite a determinação de:</div>
 <ul>
 <li>IC<span class="math inline">\(_{50}\)</span>, concentração do inibidor que confere 50% de resposta (adequado quando &lt; 10<span class="math inline">\(\mu\)</span>M);</li>
@@ -1648,9 +1649,12 @@ BEI=\frac{pIC_{50}}{MW}
 <section id="sugestão-31" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="sugestão-31">Sugestão</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Compare os tipos de inibição enzimática por inspeção visual dos gráficos de Michaelis<span class="sc">-</span>Mentem e de Lineweaver<span class="sc">-</span>Burk, dando ênfase às variações ou não de Km e Vmax entre esses;</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente o modo <span class="st">"parâmetros"</span> com valor de nH diferente de <span class="dv">1</span>, para avaliar o comportamento da curva dose<span class="sc">-</span>reposta sob efeitos de cooperatividade;</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Experimente o modo <span class="st">"parâmetros"</span> com valor para capacidade calorífica diferente de zero, para avaliar a possibilidade de efeitos secundários na ligação em função da temperatura, como transição conformacional da enzima;</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Compare os tipos de inibição enzimática por inspeção visual dos gráficos de Michaelis<span class="sc">-</span>Mentem e de Lineweaver<span class="sc">-</span>Burk, dando ênfase às variações ou não de <span class="st">"Km"</span> e <span class="st">"Vmax"</span> entre esses;</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Calcule o valor de <span class="st">"Ki"</span> por métodos distintos utilizando<span class="sc">-</span>se o campo de preenchimento para os parâmetros da Tabela<span class="sc">:</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  a<span class="er">)</span> obtendo<span class="sc">-</span>se o valor de <span class="st">"1/Ki"</span> para plot de I <span class="fu">x</span> (alfa<span class="dv">-1</span>) do botão <span class="st">"alfa-replot"</span> (inclinação da reta);</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  b<span class="er">)</span> por intercepto <span class="st">"-Ki"</span> a partir de plots de I x Vm_app, Km_app, ou Km<span class="sc">/</span><span class="fu">Vm_app</span> (dependendo do modelo de inibição);</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Experimente o modo <span class="st">"parâmetros"</span> com valor de <span class="st">"nH"</span> diferente de <span class="dv">1</span> (ex<span class="sc">:</span> <span class="fl">2.8</span>), para avaliar o comportamento da curva dose<span class="sc">-</span>reposta sob efeitos de cooperatividade;</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Experimente o modo <span class="st">"parâmetros"</span> com valor para capacidade calorífica diferente de <span class="fu">zero</span> (ex<span class="sc">:</span> <span class="sc">-</span><span class="dv">2000</span>), para avaliar a possibilidade de efeitos secundários na ligação em função da temperatura, como transição conformacional da enzima;</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
