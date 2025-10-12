@@ -1,0 +1,137 @@
+---
+title: "2 - Comandos básicos do R"
+format: html
+toc: true
+number-sections: true
+lang: pt
+---
+
+
+<div class = "reminder-objetivos">
+Objetivos:\
+  1. Entender para que servem as janelas e abas do RStudio\
+  2. Compreender a lógica de comandos e atributos do R\
+  3. Utilizar comandos por script
+  
+</div>
+
+
+
+|       O `R` é um programa que opera por linha de comando. Isso é um pouco chato, como já visto, porque qualquer erro na digitação de um comando resulta na interrupção da leitura do código. Mas, por outro lado, e também como já visto, *linhas de comando encadeadas e comentadas permitem a reprodução e modificação de trechos de códigos convergentes a um produto* qualquer, no caso, objetos didáticos ao ensino médio, e *sem a necessidade de se memorizar cliques de mouse e operações técnicas*.
+
+|       Diferente do *Jmol*, contudo, o `R` é bem chatinho na sintaxe, não sendo possível mesclar fonte maiúsculas ou minúsculas, bem como singular ou plural. Para que o código funcione, é necessário sua correta digitação. Mas *pode-se tranquilamente aumentar ou reduzir o espaço entre comandos*, o que não faz diferença pro compilador do `R`.
+
+|       Algumas operações são realizadas alternativamente por *mouse*, *linha de comando*, ou ambos, dependendo da ação. A seguir serão apresentadas algumas funcionalidades básicas para a reprodução de códigos para objetos didáticos, sem descrições detalhadas da operação própria do *R & RStudio*, para simplificar e tornar mais objetivo este trabalho. 
+
+|       Se você desejar saber mais a respeito de ambos os programas, versão instalada ou em nuvem, sugerimos os inúmeros sites e tutoriais disponíveis na internet, bem como centenas de livros já escritos no assunto, e cursos *on-line* em várias plataformas de ensino.
+
+\
+
+## Uma visão da interface *RStudio* 
+
+\
+    | O *Rstudio* nada mais faz do que permitir uma *interace gráfica para o usuário* do `R` (ou *GUI*, do inglês, *Graphic User Interface*), esse um programa executado por linguagem própria de códigos, assim como o *Jmol*.  Diversas operações também são realizadas alternativamente sem comandos ou códigos, como abrir e salvar um arquivo, ou visualizar e salvar um gráfico, por exemplo. Vejamos a divisão da janela principal do *Rstudio*.
+
+![Janela básica do RStudio. A - área de digitação de comandos (*prompt*); B - área de abas de trabalho (diretório, gráficos, pacotes, etc); C - arquivos que aparecem na aba homônima; D - área de abas de administração (ambiente, história de comandos, etc).](rstudioWindows2.png)
+
+|       Para nosso trabalho, contudo, será interessante uma área adicional, a *área de scripts*, a qual se acessa como segue:
+
+
+
+```{r, eval=FALSE}
+File --> New File --> RScript
+
+... ou por atalho:Ctrl + Shift + N
+
+```
+
+\
+
+![](rstudioScript.png)
+\
+
+|       Veja que agora a janela principal se dividiu em mais uma parte, a que incluiu a aba nova para *scripts*.
+\
+
+![Janela principal do *RStudio* contendo a aba para elaboração e execução de *scripts*.](rstudioScriptAberta.png)
+\
+
+
+## Como funcionam os comandos no `R`
+
+|       Todos os comandos do `R` são compostos por um *nome* seguido de *argumentos*, esses entre parênteses. Seguem exemplos
+
+```{r, eval=FALSE}
+comando(argumento 1, argumento 2, argumento 3, ...)
+
+Exemplos:
+  plot(x,y)
+  mean(z)
+  read.csv(file = "meus.dados.csv")
+```
+\
+
+
+## Elaborando um *script* no `R`
+
+|       Para se produzir um *script* no `R`, a melhor forma é redigir as linhas de comando de modo similar ao que foi realizado com o visualizador molecular 3D *Jmol* em seu *Console*, separando-os por linhas individuais. Veja um exemplo de cálculo simples:
+
+```{r}
+x = 5
+x^2 +7
+```
+\
+
+|      E para executar o *script* acima, basta copiá-lo e colá-lo na área de *script* aberta. E aí vai uma **dica de ouro**. Veja que no canto superior direito do *script* existe um *ícone de colagem* do texto do *script*. Basta clicar nesse ícone que o texto estará copiado.
+
+|       Agora é só colar na aba do *script* aberto (em nuvem, por exemplo) e executá-lo como segue.
+
+\
+
+## Executando um *script* no `R`
+
+|       Existem algumas formas de se executar um *script*, como no exemplo acima, no `R`. Seguem as mais comuns:
+
+```{r, eval=FALSE}
+1. Se deseja executar algumas linhas de um *script*, pode-se selecionar as linhas e clicar Ctrl + Enter ;
+
+2. Se desejar executar todo o *script*, seleciona-se todo o texto (Ctrl + A) seguido da ação acima, Ctrl + Enter ;
+   Opcionalmente, pode-se clicar no ícone "-->Source" ;
+   
+3. Se desejar executar apenas uma linha, basta clicar na linha seguido de Ctrl + Enter ;
+   Opcionalmente, pode-se clicar no ícone "-->Run" ;
+
+```
+
+\
+
+<div class="reminder-markdown">
+
+**Agora é com você:**
+
+  A partir do script rodado, e transcrito abaixo:\
+x = 5 \
+x^2 +7 \
+
+Modifique a segunda linha de comando para o cálculo em "x" utilizando outras operações. Sugetões: \
+  sqrt(x)  ; raiz quadrada \
+  log10(x) ; logaritmo de base 10 \
+  sin(x)   ; seno 
+
+</div>
+
+
+## Algumas recomendações sobre a digitação num *script* do `R`:
+
+|       Existem algumas premissas básicas pra que um *script* do `R` seja lido de forma clara por seu elaborador, bem como compilado corretamente pelo programa:
+
+1.  *Digitação*: sempre que houver um erro no *script* no *Rstudio*, surgirá uma cruz vermelha ao lado esquerdo da linha de comando; contornado o erro, o sinal desaparece;
+2.  *Comentários*: para que o *script* seja lido também por *"um ser humano"*, é aconselhável tecer comentários nas linhas de comando (iniciados por *\#* ) - umas das bases do *Ensino Reprodutível*;
+3.  *Identação*: permita "identação" quando a linha estiver um pouco longa, clicando na tecla *Enter* após uma separação de argumentos por *"vírgula"*. Dessa forma, a linha continua logo abaixo, mas com um pequeno deslocamento à direita. Isso facilita a legibilidade do código.
+4.  *Nomes*: os comandos do `R` são em língua inglesa. Dessa forma, deve-se evitar o uso de variáveis e nomes de arquivos com acentuação ou sinais gráficos em Português (ex: *ç*, *~*). Além disso, o `R`é um compilador de códigos. Se você definir um nome composto para um arquivo ou variável, ou seja, com espaço entre os termos (como é normal no cotidiano. ex: meu arquivo), o `R` tentará executar os termos separadamente (ex: "meu", e depois, "arquivo"), o que incorrerá na interrupção de leitura e numa mensagem de erro. Assim, para nomes de variáveis e arquivos, dê preferência a um dos 3 tipos de **convenções comuns usadas em programação**, a saber:
+
+* separação por *underline, " \_ "* ou hífen; ex: minha_variável, minha-variável
+* separação por maiúscula; ex: minhaVariável
+* separação por pontos; ex: minha.variável
+
+

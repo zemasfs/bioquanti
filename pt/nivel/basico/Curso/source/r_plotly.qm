@@ -1,0 +1,183 @@
+---
+title: "4 - Gráficos interativos com `plotly`"
+format: html
+toc: true
+number-sections: true
+lang: pt
+---
+
+<div class = "reminder-objetivos">
+Objetivos:\
+  1. Compreender para que serve o "plotly" e seu potencial interativo para ensino e aprendizagem\
+  2. Utilizar o "plotly" por scripts para a construção de gráficos interativos\
+  3. Verificar a interatividade dos gráficos criados\
+</div>
+
+
+
+|       A biblioteca `plotly` é uma das mais ricas do `R` para gráficos interativos. Permite, entre outros, efeitos de *zoom* no gráfico, bem como de *mouse over*, em que a simples passagem do mouse sobre um elemento do gráfico abre as informações daquele ponto. Além disso, permite animações controladas pelo usário, a inseração de seletores, de controles deslizantes, menus e botões.
+\
+
+|       Complementarmente, por possibilitar uma integração a uma linguagem desses tempos chamada *JavaScript*, a biblioteca também é utilizada em alguns paineis de dados, como no [Power Bi](https://www.microsoft.com/pt-br/power-platform/products/power-bi) da *Microsoft*, uma coleção de aplicativos conectados para a visualização de dados. De fato, é a própria biblioteca `plotlyjs` escrita em *JavaScript*, externa ao `R` e *RStudio*, que é incorporada ao `R`.
+
+
+|       A elaboração de gráficos pelo `plotly` requer alguns comandos simples. E a boa notícia é que o gráfico produzido já *"sai"* apresentando interatividade, como ampliação/redução, deslocamento dos dados em eixos, e efeitos de informação por passagem do *mouse*, salvamento como imagem *PNG*, entre outros. Para construir um gráfico qualquer precisa-se de *dados*. Basicamente há 3 formas para se obter os dados:
+
+```{r, eval=FALSE}
+* Criando-se os dados ;
+* Criando-se uma equação que vai gerar os dados ;
+* Importando-se os dados (de uma planilha, por ex)
+```
+
+\
+
+
+## Criando um gráfico interativo
+
+|       Vamos começar criando os dados a partir de uma equação aplicada a um *vetor.* Para isso, precisamos...do vetor !  Visualize um vetor como se fosse uma coluna (ou linha) do Excel. No `R` os vetores são criados por *concatenação* de valores separados por *vírgula*, tal como segue:
+
+```{r}
+x = c(1,2,3,4,5) # um vetor; o "c" indica "concatenação"
+ # atribui valores de 1 a 5 à variável "x"
+
+# Alternativamente,
+
+x = 1:5 # também atribui valores de 1 a 5 à variável "x"
+```
+
+|       Para elaborar o gráfico interativo, ilustremos a equação de *lançamento vertical* abaixo. Essa imagem, bem como as demais utilizadas para ilustrar o potencial de uso do *R & RStudio* ao ensino básico, foram extraidas dos cadernos do [MAPA (Material de Apoio Pedagógico para Aprendizagens de Minas Gerais](https://seliga.educacao.mg.gov.br/cadernos-mapa-2025).
+
+
+![Equações de lançamento vertical, para ascensão e queda de um projétil, e exercício correlato. Fonte: MAPA: ensino médio - 2º Bim. 1º Ano. Matemática e suas tecnologias, p.27.](lancamentoVert_mapa.png)
+\
+
+
+
+|        Agora faremos um gráfico interativo a partir desses dados. Mas antes, claro, é necessário instalar o pacote `plotly` no  `R`. Você pode instalá-lo pela aba *Packages* do *RStudio*, se já não fez, e como explicado na seção anterior sobre *Pacotes*.
+\
+
+
+|       Etapa final... construir um *gráfico de dispersão de pontos* da função de ascensão vertical. 
+
+
+|       Para fazer isso, basta copiar o trecho abaixo e colá-lo num novo *script* `R`. E executá-lo de qualquer das formas mencionadas em seção anterior.
+\
+
+```{r}
+# Dados:
+t = 1:20 # define o vetor de tempo
+Vo = 100 # velocidade inicial, 100 m/s
+g = 9.8 # aceleração da gravidade, m/s^2
+
+# Equação (ascensão vertical):
+
+H = Vo*t-1/2*g*t^2
+
+# Gráfico interativo:
+library(plotly)
+plot_ly(x = ~t, y = ~H)
+
+# Observação:
+# Sintaxe do plotly: ~variável, para atribuir uma variável (x ou y)
+#                    type: para atribuir um tipo de gráfico
+```
+
+
+|       O `R` costuma apresentar algumas mensagens (*Warnings*) após rodar os comandos. Não são erros, mas informações adicionais, tais como na reprodução do gráfico anterior. Nesse caso, a informação é que está faltando caracterizar o tipo de gráfico, um espalhamento de pontos (*scatter*) :
+
+
+```{r, eval=FALSE}
+plot_ly(x = t, y = H, type = 'scatter')
+```
+
+
+
+|       Agora observe quanta interatividade surgiu com o simples comando acima, passando o *mouse* pelos pontos do gráfico, ou clicando-se nos ícones que apareceram acima do gráfico. Teste essa interatividade:
+
+*   Passando o *mouse* sobre os pontos do gráfico (*hover*) você obterá as coordenadas de cada ponto;    
+*   Usando o botão de rolagem do *mouse* você amplia ou reduz o gráfico
+*   Clicando com o botão esquerdo do *mouse* em qualquer parte do gráfico e desenhando um retângulo você obterá uma ampliação da área;
+*   Se der dois cliques após a ampliação você retornará ao gráfico original;
+*   Posicionando o ponteiro do *mouse* entre os valores de um eixo, e arrastando o *mouse*, você verá um deslocamento do eixo selecionado;
+*   Selecionando um ícone no canto superior direito do gráfico, você poderá, na sequência a partir da esquerda, baixar o *plot* como imagem, realizar uma ampliação, deslocar os eixos, selecionar os pontos dentro de uma caixa, ou dentro de um laço, ampliar, reduzir, escalonar ao tamanho original, realinhar os eixos aos do plot original, observar as coordenadas (x e y), observar somente a coordenada *y*, e retornar ao início.
+
+
+## Salvando o gráfico
+
+|       Agora uma <span style="color:orange;">**característica bem interessante do `plotly`: você pode salvar o gráfico mantendo toda a sua interatividade num arquivo** *HTML*. Dessa forma qualquer pessoa será capaz de abrir seu gráfico em um *browser* de internet (*Firefox, Chrome, Edge*, por ex), o que lhe permitirá observar os detalhes e a ação interativa em qualquer computador, notebook, *tablet* ou *smartphone* !!!</span>
+
+
+|       E pra salvar **seu 1o. gráfico interativo** é muito simples: 
+
+```{r, eval=FALSE}
+
+1. Após feito o gráfico, clique em "Export", logo acima do gráfico na aba `Plots`;
+2. Clique em "Save As Web Page"
+3. Escolher um nome pro gráfico e salvá-lo
+```
+
+
+|       Agora basta localizar o arquivo em seu computador, abrir o arquivo automaticamente em um *browser*, e verificar que sua interatividade foi mantida. **E para compartilhá-lo, se desejar, basta enviar o arquivo do gráfico interativo para alguém ou exibi-lo num projetor multimídia**. 
+
+
+## Trabalhando com relações matemáticas nas variáveis
+
+|       Às vezes é interessante na construção de um gráfico que se permita executar um cálculo em uma variável, sem que com isso tenha que se elaborar um novo vetor. Vamos exemplificar isso para uma *transformação isotérmica do estudo de gases (lei de Boyle-Mariotte)*, como segue:
+
+
+![Relação de pressão e volume numa transformação isotérmica. Fonte: MAPA: ensino médio - Ciências da natureza e suas tecnologias. 2º Bim. 3º Ano, p.28.](gases_mapa.png)
+
+
+|       Exemplificando, se você está trabalhando num planilha eletrônica (ex: *Excel*) e deseja construir um gráfico da relação acima, digamos *V* *versus* *p*, terá que montar uma coluna com essa operação. No `plotly`, assim como no `R` como um todo, não precisa, já que *p* pode ser considerado como *1/V constante*. De fato, essa *constante* é representada pela *constante geral dos gases ideais, R*, de valor conhecido.
+
+
+|       Resolvendo para a situação acima:
+
+```{r}
+# Dados:
+R = 8.314 # J/(mol*K), constante geral dos gases ideias
+V = seq(0,22.4, length.out=50)  # vetor de "Volume" (em litros), com 50 pontos
+T = 298 # K, temperatura absoluta
+
+
+# Equação
+# pV = RT; p = RT/V
+p = R*T/V
+
+# Gráfico:
+library(plotly)
+plot_ly(x = V, y = ~R*T/V, type = 'scatter', mode='lines')
+```
+
+
+|       Agora, se quiser nomear as *etiquetas dos eixos* e fornecer um *título* ao gráfico para apresentar melhor o significado físico das quantidades envolvidas, basta acrescentar o comando `layout`, como segue:
+
+```{r, eval=TRUE}
+library(plotly)
+library(magrittr) # biblioteca para o operador pipe "%>%"
+plot_ly(x = V, y = ~R*T/V, type = 'scatter', mode='lines') %>%
+layout(
+    title = "Transformação Isotérmica de um Gás",
+    xaxis = list(title = "Volume V, L"),
+    yaxis = list(title = "Pressão p, bar")
+)
+```
+
+
+
+<div class="reminder-markdown">
+
+**Agora é com voce:**
+
+Abra um novo script e construa um gráfico que apresente uma relação qualquer entre variáveis, tal como sugerido abaixo:
+
+1. Crie os valores da variável independente (ex: x = 1:10); \
+2. Carregue a biblioteca `plotly` - `library(plotly)` ; \
+3. Digite uma linha geral de comando pro gráfico: \
+   `plot_ly(x = ~x, y = ~sqrt(x), type = "scatter") ` \
+4. Selecione essas linhas, dê um Ctrl+Enter, e observe a saída (ou seja, o gráfico, na aba `plots` ; \
+5. Modifique a variável "y", substituindo o valor de "x" por alguma outra relação, tal como: `~exp(x)` - exponencial, `~sin(10*x)` - seno, ~sqrt(x)` - raiz quadrada; \
+
+</div>
+\
+

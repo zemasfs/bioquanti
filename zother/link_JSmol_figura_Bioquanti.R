@@ -1,0 +1,1 @@
+<a href="https://chemapps.stolaf.edu/jmol/jmol.php?script=Console&source=https://bioquanti.netlify.app/pt/nivel/basico/jardim/glutamato.png">

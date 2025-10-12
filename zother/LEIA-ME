@@ -1,0 +1,28 @@
+I. COMPILAÇÃO:
+
+O site é bilingue, mas não pode ser renderizado pelo diretório raíz, e sim por cada subsite, isoladamente (en e pt). 
+
+Assim, não funcionam _quarto.yml e index.html gerais !!
+
+Isso porque pelo raíz, seria necessário um _quarto.yml e que, necessariamente irá pra um index.qmd geral, sem o layout diferenciado (navbar e sidebar).
+
+Assim, o arquivo project.Rproj serve apenas para centralizar o site. Outras opções tentadas (foram +30) não deram certo, incluindo "language-toggle: true", não implementada nem na última versão do quarto, e que está instalada no note Dell (1.7) .
+
+########### Para compilar o site: #################
+
+1. Vá pro Terminal (da pasta do projeto, ou no RStudio-nesse caso, também na pasta do projeto) e digite:
+
+quarto render pt && quarto render en
+
+2. Rode o arquivo _site/pt/index.html
+
+Os botões PT e EN são funcionais para o layout individual dos subsites (_quarto.yml individual).
+
+2. ARQUITETURA BÁSICA
+Apesar de ser mais organizado o compartilhamento de imagens entre os dois subsites, pra não duplicar imagens e aumentar o tamanho, o total de cada subsite com qmd e imagens é de 200Mb na pasta "nivel", o que dá 400mb totais. Num primeiro momento, parece mais fácil do que endereçar todas as figuras do site, pra PT e pra EN.
+
+A estratégia é compilar todo o site (~300 qmd), e depois atribuir no cabeçalho de todos os arquivos a instrução "draft: true", para não compilar depois. Além disso, referenciar cada arquivo no _quarto.yml individual como html, e não como qmd.
+Quando quiser atualizar um arquivo, basta desbloqueá-lo, comentando "draft: true".
+
+Assim, preservar-se todos os arquivos qmd do site, sem contudo compilá-los sempre !!
+

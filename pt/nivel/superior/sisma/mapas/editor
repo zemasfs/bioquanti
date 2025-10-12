@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor Interativo de Equações</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.20.0/plotly.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { display: flex; justify-content: space-between; align-items: flex-start; }
+        #grafico { width: 55%; height: 500px; }
+        #editor-container { width: 40%; }
+        #editor { width: 100%; height: 350px; border: 1px solid #ccc; }
+        .button-container { display: flex; gap: 10px; margin-top: 10px; }
+        button { padding: 10px; cursor: pointer; border: none; font-size: 14px; }
+        .add-btn { background-color: #28a745; color: white; }
+        .reset-btn { background-color: red; color: white; }
+        .save-btn { background-color: blue; color: white; }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align: center;">Editor Interativo de Equações Matemáticas</h2>
+    <div class="container">
+        <!-- Área do gráfico -->
+        <div id="grafico"></div>
+
+        <!-- Editor de código -->
+        <div id="editor-container">
+            <h3>Edite o código Plotly e clique para adicionar curvas:</h3>
+            <div id="editor"></div>
+            <input type="text" id="filename" placeholder="Nome do arquivo" value="minha_equacao">
+            <div class="button-container">
+                <button class="add-btn" onclick="adicionarCurva()">Adicionar Nova Curva</button>
+                <button class="reset-btn" onclick="resetarGrafico()">Resetar Gráfico</button>
+                <button class="save-btn" onclick="salvarArquivo()">Salvar Código</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var curvas = []; // Lista para armazenar as curvas adicionadas
+        var cores = ["red", "blue", "green", "purple", "orange", "brown", "pink", "gray"]; 
+        var corIndex = 0; 
+
+        // Código inicial do editor
+        var codigoInicial = `const Vm = 200;\nconst Km = 10;\nconst a = 2;\nconst x_values = Array.from({length: 200}, (_, i) => i * (50 / 199));\nconst y_values = x_values.map(S => (Vm * Math.pow(S, a)) / (Math.pow(Km, a) + Math.pow(S, a)));\nreturn { x_values, y_values, x_range: [0, 50], y_range: [0, Vm] };`;
+
+        // Inicializar editor
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/github");
+        editor.session.setMode("ace/mode/javascript");
+        editor.setValue(codigoInicial, -1);
+
+        // Função para adicionar uma nova curva ao gráfico
+        function adicionarCurva() {
+            try {
+                var codigoUsuario = editor.getValue().trim();
+                var func = new Function(codigoUsuario + "; return { x_values, y_values, x_range, y_range };");
+                var resultado = func();
+                
+                if (!resultado.x_values || !resultado.y_values) {
+                    throw new Error("Parâmetros inválidos!");
+                }
+
+                var corAtual = cores[corIndex % cores.length];
+                corIndex++;
+
+                var novaCurva = {
+                    x: resultado.x_values,
+                    y: resultado.y_values,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { color: corAtual, width: 2 },
+                    name: 'Nova Função'
+                };
+
+                curvas.push(novaCurva);
+
+                Plotly.newPlot('grafico', curvas, {
+                    title: 'Equações Matemáticas',
+                    xaxis: { title: 'X', range: resultado.x_range },
+                    yaxis: { title: 'Y', range: resultado.y_range },
+                    showlegend: true
+                });
+
+            } catch (error) {
+                alert("Erro no código! Verifique a sintaxe.");
+                console.error(error);
+            }
+        }
+
+        // Função para resetar o gráfico
+        function resetarGrafico() {
+            curvas = [];
+            corIndex = 0;
+            Plotly.newPlot('grafico', [], {
+                title: 'Equações Matemáticas',
+                xaxis: { title: 'X', range: [0, 50] },
+                yaxis: { title: 'Y', range: [0, 200] },
+                showlegend: true
+            });
+        }
+
+        // Função para salvar código editado
+        function salvarArquivo() {
+            var nomeArquivo = document.getElementById("filename").value || "minha_equacao";
+            var blob = new Blob([editor.getValue()], { type: "text/javascript" });
+            var link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = nomeArquivo + ".js";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Inicializar gráfico vazio
+        resetarGrafico();
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,1493 @@
+---
+title: "Simulações Interativas Para Biofísico-química com JSPlotly"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   Para ilustrar o potencial de uso do *JSPlotly* para Bioquímica e áreas correlatas, seguem alguns exemplos de **simulações, análise de dados, e mesmo aplicativos**, e cujos conteúdos são frequentemente encontrados em livros-texto e fontes técnico-científicas. Para um melhor aproveitamento de cada tema, experimente seguir as sugestões dos códigos para cada objeto. 
+\
+
+## Menu {.unnumbered}
+
+**Instruções gerais**
+
+
+```{r, eval=FALSE}
+
+1. Escolha um tema;
+2. Clique no gráfico correspondente;
+3. Clique em "add";
+4. Use o mouse para interatividade e/ou edite o código. 
+
+Lembrete: o editor usa desfazer/refazer infinitos no código (Ctrl+Z / Shift+Ctrl+Z) !
+```
+
+
+
+## Simulações
+
+### Equilíbrio ácido-básico e sistema tampão
+
+#### Contexto: {.unnumbered}
+
+|   O exemplo ilustra a adição de base num sistema contendo um ácido fraco e sua base conjugada. A equação de titulação refere-se a um *ácido triprótico*, o ácido fosfórico do tampão homônimo, mas serviria igualmente para outros tantos, como os presentes no ciclo de Krebs (citrato, isocitrato). 
+
+
+#### Equação: {.unnumbered}
+
+$$
+fa= \frac{1}{1 + 10^{pKa1 - pH}} + \frac{1}{1 + 10^{pKa2 - pH}} + \frac{1}{1 + 10^{pKa3 - pH}}
+$$
+*Onde*,
+fa = fração de ácido (grupos protonáveis)
+\
+
+[![](Eq/tit_acbase.png)](Eq/jsp_acbase.html){target="_blank"}
+\
+<!---div class="jsplotly_sup-fundo"> --->
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval =FALSE}
+"A. Convertendo a curva de tampão fosfato (triprótico) para tampão bicarbonato (diprótico)"
+
+1. Altere os valores de pKa para o tampão bicarbonato: pKa1 =      6.1, e pKa2 = 10.3;
+2. Coloque um valor muito grande para pKa3 (ex:1e20). 
+3. Clique em "add plot".
+
+Explicação: pKa é um termo que representa o logaritmo de uma constante de dissociação (-log[Ka]). Com um valor extremo, o denominador torna-se igualmente imenso, anulando o termo que leva pKa3. Em JavaScript e outras linguagens, "e" representa a notação para potência de 10.
+
+"B. Convertendo a curva de tampão bicarbonato para acetato"
+
+1. Basta repetir o procedimento acima, com pKa1 = 4.75, e eliminando-se pKa2.
+
+```
+\
+
+### Estado de ionização de grupos químicos de biomoléculas
+
+#### Contexto: {.unnumbered}
+
+|   O *JSPlotly* também permite a observação de alguns conceitos facilitados por *aprendizagem baseada em animação* junto às representações gráficas obtidas por funções matemáticas. No exemplo que segue, o objeto interativo ilustra o estado de protonação para os principais grupos químicos encontrados em biomoléculas.
+\
+
+**Instrução**
+
+
+1. Após clicar na imagem correlata abaixo, clique em "add" e observe o gráfico de titulação ácido-basica gerado. O eixo das abscissas (eixo x) possui uma faixa extensa de valores de pH, e o eixo das ordenadas a carga que a molécula com potencial de ionização se manifesta em cada pH, e em função de seu valor de pKa;
+
+2. Clique em "Animar" para observar o deslocamento de uma bolinha ao longo da curva de titulação, até um valor de pH pré-definido no script do simulador, e em função de seu pKa;
+
+3. Modifique no *script* o tipo de grupo ionizável (em *"let grupo_edit = "*) e/ou o pH final desejado (*"let pH_final_edit = "*), para avaliar o estado de ionização de um novo grupo;
+
+4. Clique em "Reset" e "Animar", para observar a nova animação.
+
+[![](Eq/pHpKa.png)](Eq/jsp_pHpKa.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Troque o pH e o tipo de grupo que se pretende observar;
+2. Simule o estado de ionização de moléculas diferentes, como fármacos com ácido carboxílico (ex: ácido acetilsalicílico...aspirina), no pH sanguíneo e na cavidade gástrica;
+3. Crie um novo grupo ionizável e preveja seu estado de ionização. Para isso, basta alterar a informação em 3 constantes ao início do script: grupos, pKas, e tipos.
+  a. 
+```
+\
+
+### Rede de carga líquida em peptídios
+
+#### Contexto: {.unnumbered}
+
+|   O código refere-se à rede de carga líquida presente numa sequência qualquer de resíduos de aminoácidos. Aqui é ilustrada a *angiotensina II*, importante peptídio para regulação da pressão arterial e equilíbrio eletrolítico, e cuja enzima conversora está associada ao mecanismo de invasibilidade celular por SARS-CoV-2.
+
+
+#### Equação: {.unnumbered}
+
+|   Para essa simulação não há uma equação direta, já que o algoritmo precisa decidir a carga em função da natureza básica ou ácido do resíduo em determinado valor de pH (observe o *script*). Assim:
+
+$$
+q =
+\begin{cases}
+-\dfrac{1}{1 + 10^{pK_a - pH}} & \text{(grupo ácido)} \\\\
+\dfrac{1}{1 + 10^{pH - pK_a}} & \text{(grupo básico)}
+\end{cases}
+$$
+\
+
+*Onde*,
+
+- pKa = valor do antilogarítmo de base 10 para a constante de equilíbrio de dissociação do ácido, Ka (ou log[Ka]).
+
+
+[![](Eq/cargaAA3.png)](Eq/jsp_cargaAA3.html){target="_blank"}
+\
+<!---div class="jsplotly_sup-fundo"> --->
+
+### Sugestão: {.unnumbered}
+
+```{r, eval =FALSE}
+1. Selecione a sequência peptídica abaixo, e observe a distribuição de cargas:
+  
+"Ala,Lys,Arg,Leu,Phe,Glu,Cys,Asp,His"
+
+2. Simule a condição de pH do estômago ("const pH = 1.5"), e verifique a alteração de cargas no peptídio. 
+
+3. Selecione um peptídio fisiológico (oxitocina, por ex), observe sua carga no sangue (pH 7.5), e reflita sobre seu potencial de interação eletrostática com componentes celulares.
+
+"Cys,Tyr,Ile,Gln,Asn,Cys,Pro,Leu,Gly"  - oxitocina
+```
+\
+
+
+### Carga, pH, pKa & pI de aminoácidos (animação)
+
+
+#### Contexto: {.unnumbered}
+
+|   Este objeto aborda um potencial diferente para o *JSPlotly*, qual seja, o *aprendizado baseado em animação*. Para ilustrar essa abordagem, segue uma animação para a observação de carga de um aminoácido baseada no valor de seu *pKa*, e na informação de seu *pI*, o ponto isoelétrico do composto (valor de pH em que a espécie possui carga líquida nula). 
+
+|   Para visualizar o valor da carga *q* (*"estado atual"*), clique no botão "add" seguido de "Animar". Para outra animação, basta selecionar o aminoácido (*"let aa_edit ="*) e o pH final em que se deseja observar sua carga (*"let pH_final_edit = "*). A animação também permite compara a carga de um aminoácido livre com a do resíduo correspondente numa cadeia polipeptídica (opção *"let contexto_edit  = "*). Observe que a animação fornece uma legenda informando o valor de pKa do composto para seus grupos ionizáveis.
+
+
+[![](Eq/AA_pHpKapI.png)](Eq/jsp_AA_pHpKapI.html){target="_blank"}
+\
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval =FALSE}
+1. Simule a condição de um aminoácido no pH do sangue e no do estômago;
+2. Compare os valores de pH de um aminoácido livre, com o de seu resíduo em cadeia;
+3. Altere a opção booleana em "const showSites", para observar as curvas de cada grupo ionizável.
+  
+```
+\
+
+
+
+### Ponto Isoelétrico em Proteínas 
+
+
+#### Contexto: {.unnumbered}
+
+|   O *script* para esta simulação baseia-se na distribuição da rede de cargas para um polieletrólito, e a identificação do valor de pH em que essa rede é nula, ou seja o *ponto isoelétrico (ou isoiônico), pI*. O exemplo utiliza a sequência primária da lisozima, hidrolase que atua no rompimento da parede microbiana. 
+
+#### Equação: {.unnumbered}
+
+
+$$
+q_{\text{net}}(pH) = \sum_{i=1}^{N} \left[ n_i \cdot q_{B_i} + \frac{n_i}{1 + 10^{pH - pK_{a_i}}} \right]
+$$
+\
+*Onde*,
+
+- qnet = carga líquida total;
+- qB$_{i} = carga da forma básica para o resíduo i (por exemplo, +1 para Lys, 0 para Asp);
+- n$_{i}$ = número de grupos do resíduo *i*.
+
+[![](Eq/pI.png)](Eq/jsp_pI.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+"Descobrindo o pI para outras proteínas"
+
+1. Pode-se verificar a titulação de qualquer outra proteína ou sequência peptídica por simples substituição da sequência primária contida no código. Uma forma ascertiva de realizar essa substituição envolve:
+  a. Procurar a sequência "FASTA" da proteína no NCBI ("https://www.ncbi.nlm.nih.gov/protein/") - ex: "papain";
+  b. Clicar em "FASTA" e copiar a sequência 1a. obtida;
+  c. Colar a sequência num site para quantificação de resíduos (ex: "https://www.protpi.ch/Calculator/ProteinTool");
+4. Substituir a sequência no código. 
+```
+\
+
+### Hidrofobicidade em sequências de aminoácidos
+
+#### Contexto: {.unnumbered}
+
+|   A observação de níveis de hidrobicidade de aminoácidos pode ser de utilidade para o estudo e a predição de sequências de resíduos, tais como encontradas na porção central de hélices de proteínas transmembrânicas, como para identificação de sítios específicos em enzimas, como fendas e bolsões hidrofóbicos.
+
+|   Esses níveis são classificados de modo relativos, dando origem a alguns índices como a *escala de Kyte–Doolittle*, que atribui a cada aminoácido um valor de hidropatia (hidrofobicidade/hidrofobicidade) estimado a partir de dados experimentais e observacionais. Valores positivos indicam tendência hidrofóbica (ex: Ile, Val, Leu) e valores negativos indicam tendência hidrofílica (ex: Asp, Glu, Lys, Arg). O índice permite destacar trechos propensos a ambientes não polares, bem como regiões expostas ao solvente aquoso.
+
+
+
+#### Equação: {.unnumbered}
+
+$$
+\tilde{y}_i \;=\; \frac{1}{w} \sum_{k=i-m}^{i+m} y_k,
+\qquad w = 2m+1
+$$
+\
+
+*Onde*,
+
+\begin{aligned}
+y_i &:\; \text{valor de hidrofobicidade na posição $i$ da sequência} \\
+\tilde{y}_i &:\; \text{valor suavizado (média móvel) na posição $i$} \\
+m &:\; \text{meia-janela (número de vizinhos de cada lado)} \\
+w &:\; \text{largura total da janela ($w=2m+1$)} \\
+i &:\; \text{posição do aminoácido na sequência ($1 \leq i \leq N$)}
+\end{aligned}
+
+
+[![](Eq/hidrofob.png)](Eq/jsp_hidrofob.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r,eval=FALSE}
+1. Experimente trocar a sequência para uma conhecida;
+2. Compare uma sequência polar com uma apolar por sobreposição ("add");
+3. Transcreva uma sequência de hélice transmembrânica de uma proteína acessando seus dados pelo site PDB
+```
+\
+
+
+### Interação de oxigênio com mioglobina e hemoglobina
+
+#### Contexto: {.unnumbered}
+
+|   A molécula de oxigênio pode combinar-se ao grupo *heme* de mioglobina e hemoglobina de forma distinta, em função da cooperatividade exibida nesta última frente à sua estrutura quaternária. O modelo que segue exemplica essa interação, por uso da *equação de Hill*. 
+
+
+#### Equação: {.unnumbered}
+
+
+$$
+Y= \frac{pO_2^{nH}}{p_{50}^{nH} + pO_2^{nH}}
+$$
+\
+
+*Onde*
+
+- Y = grau de saturação de oxigênio na proteína;
+- pO$_{2}$ = pressão de oxigênio;
+- p$_{50}$ = pressão de oxigênio a 50% de saturação;
+- nH = coeficiente de Hill para a interação;
+\
+
+
+[![](Eq/O2.png)](Eq/jsp_O2.html){target="_blank"}
+\
+<!---div class="jsplotly_sup-fundo"> --->
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval =FALSE}
+1. Rode o aplicativo ("add plot"). Veja que o valor de "nH" da constante de Hill é "1", ou seja, sem efeito de cooperatividade.
+
+2. Agora substitua o valor de "nH" pelo coeficiente de Hill para a hemoglobina, 2.8, e rode novamente !
+```
+\
+
+
+### Efeito de Bohr em hemoglobina (pH)
+
+
+#### Contexto: {.unnumbered}
+
+|   Algumas condições fisiológicas ou patológicas podem alterar a afinidade de ligação do oxigênio com a hemoglobina, tais como a temperatura, alguns metabólitos (2,3-BPG), e o teor hidrogeneiônico da solução.
+
+#### Equação: {.unnumbered}
+
+$$
+Y(pO_2) = \frac{{pO_2^n}}{{P_{50}^n + pO_2^n}}, \quad \text{com } P_{50} = P_{50,\text{ref}} + \alpha (pH_{\text{ref}} - pH)
+$$
+\
+*Onde*,
+
+- Y =  saturação da hemoglobina,
+- pO$_{2}$ =  pressão parcial de oxigênio (em mmHg),
+- P$_{50}$ = pressão de O$_{2}$ na qual a hemoglobina está 50% saturada,
+- P$_{50,ref}$ = 26 mmHg (valor padrão),
+- $\alpha$ = 50 (intensidade do efeito de Bohr),
+- pH$_{ref}$ = 7,4,
+- n = 2,8 = coeficiente de Hill para a hemoglobina.
+
+
+
+[![](Eq/jspl_bohr.png)](Eq/jspl_bohr.html)
+
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente alterar o pH de referência para a interação;
+2. Simule outros modelos alostéricos alterando o valor de "n"
+```
+\
+
+
+### Catálise e inibição enzimática
+
+#### Contexto: {.unnumbered}
+
+|   A simulação que segue visa oferecer uma equação geral para estudos de inibição enzimática, que contemple os *modelos competitivo, incompetitivo e competitivo (puro ou misto)*, também permitindo o estudo de catálise enzimática na ausência de inibidor. 
+
+#### Equação: {.unnumbered}
+
+
+$$
+v=\frac{Vm*S}{Km(1+\frac{I}{Kic})+S(1+\frac{I}{Kiu})}
+$$
+\
+*Onde*
+
+- S = teor de substrato para reação;
+- Vm = velocidade limite da reação (nos livros, velocidade máxima);
+- Km = constante de Michaelis-Mentem;
+- Kic = constante de equilíbrio de dissociação de inibidor para modelo competitivo; 
+- Kiu = constante de equilíbrio de dissociação de inibidor para modelo incompetitivo
+\
+
+
+[![](Eq/kin_inib.png)](Eq/jsp_kin_inib.html){target="_blank"}
+\
+<!---div class="jsplotly_sup-fundo"> --->
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval =FALSE}
+"A. Catálise enzimática na ausência de inibidor."
+1. Basta rodar o aplicativo com a equação geral. Veja que os valores para Kic e Kiu estão elevados (1e20). Dessa forma, com "constantes de dissociação" alta, a interação do inibidor com a enzima é irrelevante, retornando o modelo à equação clássica de Michaelis-Mentem.
+2. Experimente alterar os valores de Vm e Km, comparando gráficos.
+3. Use o recurso de coordenadas geográficas da barra de ícones ("Toggle Spike Lines"), para consolidar o significado matemático de Km, bem como observar o efeito de valores distintos desse sobre a visualização do gráfico.
+
+"B. Modelo de inibição competitiva."
+1. Para observar ou comparar o modelo michaeliano com o de inibição competitiva, basta substituir o valor de Kic para um número consistente (ex: Kic= 3).
+
+"C. Modelo de inibição incompetitiva."
+1. A mesma sugestão acima serve para o modelo incompetitivo, desta vez substituindo o valor para Kiu.
+ 
+"D. Modelo de inibição não competitiva pura."
+1. Neste modelo, a simulação dá-se por valores iguais para Kic e Kiu.
+
+"E. Modelo de inibição não competitiva mista."
+1. Para este modelo, basta alocar valores distintos para Kic e Kiu.
+```
+\
+
+
+### Linearização de dados cinéticos por Lineweaver-Burk
+
+#### Contexto {.unnumbered}
+
+|   Uma das (várias) dificuldades ao aprendizado em Bioquímica refere-se ao letramento para interpretação de gráficos. Entre esses, a natureza hiperbólica do modelo michaeliano é tratata alternativamente por diversas transformações das variáveis *S* e *v*, destacando-se na literatura a linearização por *duplo-recíproco*, ou transformação de *Lineweaver-Burk*. 
+
+|   O exemplo que segue ilustra a relação entre as variáveis dependente e independente do modelo original e transformado, utilizando-se outro recurso da biblioteca *Plotly.js*: a possibilidade de seleção cruzada de pontos. 
+
+|   Para observar essa funcionalidade, selecione um conjunto de pontos em um dos *subplots* do gráfico que segue, e observe sua seleção automática no outro subplot.
+
+
+#### Equação {.unnumered}
+
+|   A transformação linear de Lineweaver-Burk é dada abaixo:
+
+$$
+\frac{1}{v} = \frac{1}{S}*\frac{Km}{Vm} + \frac{1}{Vm}
+$$
+\
+
+[![](Eq/LB.png)](Eq/jsp_LB.html){target="_blank"}
+
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente selecionar os extremos do gráfico de Michaelis-Mentem (curva hiperbólica), e observe os mesmos pontos no duplo-recíproco. Quais valores são mais confiáveis nesse último, os primeiros ou os últimos ?
+
+2. Pesquise sobre outras formas de linearização (ex: Eadie-Hofstee; "v/S" X "v"), e veja como a transformação e seleção de pontos se apresenta. Para isso, altere as constantes abaixo:
+    const invS = S.map(s => 1/s);
+    const invV = V.map(v => 1/v);
+```
+\
+
+
+#3# Diagnóstico de Inibição Enzimática (Michaelis-Mentem e Lineweaver-Burk)
+
+#### Contexto {.unnumbered}
+
+|   Como apresentado acima e presente nos textos da área, é possível linearizar a curva de Michaelis-Mentem para uma observação mais simples ao diagnóstico de modelos de inibição enzimática. O objeto abaixo se propõe a essa interpretação. Para tanto, mantenha a *enzima controle* sem adição de inibidor no código (*I=0*). Para buscar um modelo de inibição, insira um valor para *I* e altere a(s) constantes de equilíbrio de dissociação do inibidor, *kic* e/ou *kiu*.
+
+[![](Eq/inib_diag.png)](Eq/jsp_inib_diag.html){target="_blank"}
+
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Simule as condições para uma inibição competitiva, inserindo um valor para o teor de inibidor ("I") e alterando o valor de "Km";
+2. Faça o mesmo para um modelo incompetitivo, embora alterando o valor de "Vm";
+3. Experimemente o modelo não competitivo puro, alterando "Km" e "Vm" para um mesmo valor;
+4. Teste a inibição competitiva mista, inserindo valores distintos para "Km" e para "Vm."
+```
+\
+
+
+### Equação de van der Waals para gases ideais
+
+
+#### Contexto: {.unnumbered}
+
+|   Uma adaptação que relaciona as quantidades termodinâmicas de pressão, volume e temperatura para gases ideais, é a *equação de van der Waals*. Nessa são computados coeficientes que estimam a existência de um volume e de interações inter-partículas. Dessa forma, a equação de van der Waals corrije a de gases ideais considerando um termo para compensação de forças intermoleculares (a/V$^{2}$) e o volume disponível, esse descontando o volume ocupado pelas próprias moléculas do gás.
+
+
+|   Na simulação é oferecida uma interatividade adicional pela presença de *sliders* (controles deslizantes) para temperatura, e para os coeficientes de volume finito (*b*) e interação entre partículas (*a*).
+
+#### Equação: {.unnumbered}
+
+
+$$
+P = \frac{RT}{V - b} - \frac{a}{V^2}
+$$
+
+- P = pressão do gás (atm);
+- V = volume molar (L);
+- T = temperatura (K);
+- R = 0,0821 = constante dos gases ideais (L·atm/mol·K);
+- a = constante de atração intermolecular (L$^{2}$·atm/mol$^{2})
+- b = constante de volume excluído (L/mol)
+
+
+
+[![](Eq/vanderWaals.png)](Eq/jsp_vanderWaals.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+
+1. Experimente variar os parâmetros da equação por meio do "slider" para temperatura, bem como para os coeficientes "a e b".
+2. Discorra sobre qual dos coeficientes possui maior efeito no perfil da curva, e a razão para isso.
+
+```
+\
+
+### Equilíbrio de produção de ATP a partir de reagentes, temperatura, e pH
+
+#### Contexto: {.unnumbered}
+
+|   A produção de ATP intracelular envolve a relação clássica de equilíbrio químico entre reagentes e produtos em função da temperatura de reação, e ajustada para determinado valor de pH. Variando-se um e/ou outro teor de reagente, ou parâmetro físico-químico, é possível quantificar o produto pela reação termodinâmica que segue:
+
+
+#### Equação: {.unnumbered}
+
+$$
+\Delta G = \Delta G^{\circ'} + RT \ln\left(\frac{[\text{ADP}] \cdot [\text{P}_i]}{[\text{ATP}]}\right) + 2{,}303 \cdot RT \cdot n_H \cdot \text{pH}
+$$
+
+*Onde*,
+
+- $\Delta$G = energia de Gibbs da reação (positivo para síntese espontaneamente desfavorável, kJ/mol);
+- $\Delta$G$^{o'}$ = 30,5 kJ/mol energia de Gibbs padrão biológica para a síntese de ATP;
+- R = 8,314 J/mol/K (constante geral dos gases);
+- T=310 K (temperatura fisiológica);
+- nH$^{+}$ = 1 (número de prótons envolvidos na reação);
+- [ADP], [Pi], [ATP] = concentrações molares de reagentes e produto
+
+
+[![](Eq/ATP.png)](Eq/jsp_ATP.html){target="_blank"}
+
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Altere as quantidades envolvidas na expressão, e compare com visualizações precedentes. Exemplificando, temperatura, pH, e teores de ADP e Pi.
+```
+
+
+### Variação da energia de Gibbs com a temperatura
+
+
+#### Contexto: {.unnumbered}
+
+|   A relação de Gibbs-Helmholtz prevê que a energia de Gibbs varia de modo não linear com a temperatura, nas reações que envolvem mudança na capacidade calorífica do sistema ($\Delta$Cp). Essa forma expandida da equação de Gibbs para capacidade calorífica variável é apresentada em diversos fenômenos bioquímicos, tais como na transição de fases da estrutura de biomembranas submetidas à um desafio de compostos, ou na mudança conformacional que acompanha a estrutura proteica sob aquecimento. \
+
+#### Equação: {.unnumbered}
+
+$$
+\Delta G(T) = \Delta H^\circ - T\,\Delta S^\circ + \Delta C_p \left(T - T_0 - T \ln\left(\frac{T}{T_0}\right)\right)
+$$
+
+*Onde*,
+
+- $\Delta$G(T) = energia de Gibbs da reação em cada valor de temperatura, kJ/mol);
+- $\Delta$H$^{o}$ = entalpia padrão da reação a T$_{0}$, normalmente 298 K (J/mol);
+- $\Delta$S$^{o}$ = entropia padrão da reação a T$_{0}$;
+- $\Delta$Cp = variação da capacidade calorífica da reação (J/mol·K), assumida constante com a temperatura;
+- T = temperatura de interesse (K);
+- T$_{0}$ = temperatura de referência, geralmente 298 K. 
+- R = 8,314 J/mol/K (constante geral dos gases);
+
+
+[![](Eq/gibbs.png)](Eq/jsp_gibbs.html){target="_blank"}
+
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente variar um ou mais parâmetros da expressão;
+2. Teste o comportamento da curva de Gibbs em uma temperatura de referência elevada (simulação para organismo extremófilo);
+3. Simule a situação onde a variação da capacidade calorífica é nula
+```
+
+
+### Espectroscopia de impedância eletroquímica (EIS)
+
+#### Contexto: {.unnumbered}
+
+|       A espectroscopia de impedância eletroquímica (EIS) é uma técnica analítica que mede a resposta de um sistema eletroquímico a uma perturbação senoidal de pequena amplitude (ex: 5-10 mV), aplicada em uma ampla faixa de frequências (ex: 100 kHz-1mHz). A EIS permite obter-se informações sobre processos interfaciais, como transferência de carga, difusão de íons e formação de filmes passivos, por meio da análise da impedância complexa do sistema. Trata-se de uma técnica não destrutiva, amplamente utilizada em áreas como corrosão, baterias, células a combustível, biossensores e revestimentos protetores. 
+
+#### Equação: {.unnumbered}
+
+
+|       Um modelo eletroquímico de impedância (EIS) com componentes típicos de circuitos equivalentes constitui o de Randles modificado: resistor série *Rs*, um resistor *Rp* em paralelo com um *CPE* (Elemento de Fase Constante), e um elemento *Warburg*. Uma representação comum para EIS é o gráfico de *Nyquist*, em que o eixo real representa resistência (Zre) e o eixo imaginário a reatância negativa (−Zim).  O formalismo envolvido está na equação abaixo:
+
+
+$$
+Z_{\text{total}}(\omega) = R_s + \left[ \left( \frac{1}{R_p} + Q (j\omega)^n \right)^{-1} \right] + \frac{\sigma}{\sqrt{\omega}} (1 - j)
+$$
+
+*Onde:*
+
+- Z$_{total}$ = impedância total em determinada frequência ;
+- $\omega$ = Frequência angular (rad/s), $\omega$=2πf ou $\omega$=2πf;
+- R$_{p}$ = Resistência ôhmica (resistência da solução eletrolítica, fios, contatos etc.) ;
+- R$_{p}$ = Resistência de polarização (associada a processos de transferência de carga, como reações eletroquímicas);
+- *Q* = Constante associada ao elemento de fase constante (CPE), substitui um capacitor ideal para representar comportamentos não ideais ;
+- *n* = Expoente do CPE, entre 0 e 1; define o grau de idealidade do comportamento capacitivo (n = 1: capacitor ideal; n < 1: dispersão);
+- $\sigma$ = Coeficiente de Warburg, associado à difusão de íons no sistema eletroquímico ;
+- *j* = Unidade imaginária, j$^{2}$ = −1;
+
+
+|       Um modelo eletroquímico de impedância (EIS) com componentes típicos de circuitos equivalentes constitui o de Randles modificado: resistor série *Rs*, um resistor *Rp* em paralelo com um *CPE* (Elemento de Fase Constante), e um elemento *Warburg*. Uma representação comum para EIS é o gráfico de *Nyquist*, em que o eixo real representa resistência (Zre) e o eixo imaginário a reatância negativa (−Zim). 
+
+
+[![](Eq/EIS.png)](Eq/jsp_EIS.html){target="_blank"}
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+
+1. Verifique o efeito de Rs no gráfico, anulando o seu valor (resistência da solução);
+2. Observe a deformação do semicírculo variando os valores do elemento de fase constante (ex: Q = 1e-3; n = 0.6 - dispersão do comportamento capacitivo); 
+2.  Experimente combinar outros valores dos parâmetros do cabeçalho do código, para evidenciar situações correntes em eletroanálise: Rs, Rp, Q, n, e sigma;
+3. Reduza o modelo de Warburg com elemento de fase constante a um modelo de Randles simples, e formado apenas por 2 resistores em série, o segundo em paralelo com um capacitor ideal, e sem difusão de Warburg (sigma = 0; n = 1).
+```
+
+
+### Voltametria cíclica
+
+#### Contexto: {.unnumbered}
+
+|   A voltametria cíclica (VC) é uma técnica eletroanalítica para caracterização de processos redox interfaciais (eletrodo-solução). Quando utilizado um analito padrão em equilíbrio quantitativo entre as formas oxidada e reduzida, o gráfico resultante adquire um perfil incomum, e denominado *duck shape*, ou forma de pato. Isso decorre do formato peculiar frente a uma varredura potenciométrica bidirecional sobre um conjunto de eletrodos por um *potenciostato*, e resultando em ciclos de oxidação e posterior redução (aplicação de potenciais positivos seguido de negativos). A forma, o valor e a distância entre os picos resultantes permitem identificar e caracterizar o analito, bem como seus processos redox envolvidos no experimento. 
+
+#### Equação: {.unnumbered}
+
+|   Embora o formalismo para voltametria cíclica seja complexo e envolva a solução de *equações diferenciais ordinárias* (bem como as técnicas eletroanalíticas, de modo geral), estando distante do objetivo deste material, pode-se resumir o fluxo de corrente resultante pela *equação de Buttler-Volmer* que segue:
+
+$$
+j = j_0 \left[ \exp\left(\frac{\alpha n F (E - E^0)}{RT}\right) - \exp\left(\frac{-(1 - \alpha) n F (E - E^0)}{RT}\right) \right]
+$$
+*Onde:*
+
+- j = densidade de corrente;
+- j$_{0}$ = corrente de troca;
+- $\alpha$ = coeficiente de transferência de carga;
+- E = potencial aplicado ao eletrodo;
+- E$^{0}$ = potencial padrão do eletrodo;
+- n = número de elétrons;
+- F = constante de Faraday (96485 C·mol⁻¹)
+- R = constante geral dos gases (8.314 J·mol⁻¹·K⁻¹);
+- T = temperatura
+\
+
+|   Para um modelo de difusão de eletroanalito e acúmulo na superfície eletródica, a equação geral para a condição de contorno onde a taxa de conversão redox é proporcional à corrente de difusão, pode ser representada pela *equação da 2a. Lei de Fick * para transporte de massa: 
+
+$$
+\frac{\partial C(x,t)}{\partial t} = D \frac{\partial^2 C(x,t)}{\partial x^2}
+$$
+
+*Onde:*
+
+- C(x,t) = concentração da espécie eletroanalítica (mol/cm³), em função da posição *x* e do tempo *t*;
+- D = coeficiente de difusão da espécie (cm²/s);
+- t = tempo (s);
+- x = distância da superfície do eletrodo (cm);
+- $\delta$ = notação para derivada parcial.
+\
+
+
+|    O equilíbrio químico da reação redox é dado pela razão entre as concentrações da forma oxidada e reduzida na interface eletrodo/solução quando o sistema está em equilíbrio (ou quase-equilíbrio), conforme a *equação de Nernst*: 
+
+$$
+E = E^0 + \frac{RT}{nF} \ln \left( \frac{[\text{Ox}]}{[\text{Red}]} \right)
+$$
+
+
+|   A corrente resultante é obtida pela *Lei de Faraday*:
+
+$$
+i(t) = n F A D \left. \frac{\partial C(x,t)}{\partial x} \right|_{x=0}
+$$
+*Onde:*
+
+- A = área de superfície eletródica (cm²);
+- i(t) = corrente no tempo *t* (A, Àmpere).
+
+
+#### Simulador de Voltametria Cíclica {.unnumbered}
+
+
+|   Para ilustrar o potencial da plataforma *JSPlotly/GSPlotly* para o desenvolvimento de *experimentos virtuais* complexos, segue um *simulador de voltametria cíclica* resultante dos procedimentos acima (bem como de algumas horas de engenharia de prompt!!). 
+
+|   O exemplo ilustra um comportamento típico em voltametria cíclica (e o curioso *duck shape*), e contempla uma modelagem de difusão e acúmulo de espécies eletroativas próximo à superfície do eletrodo. O código utiliza uma *solução numérica* para obter a densidade de corrente ao longo do tempo, considerando os efeitos da varredura cíclica do potencial aplicado, o transporte de massa, e a cinética da reação.
+
+|   Em suma, resolve numericamente a equação de Fick com condição de contorno dinâmica, aplica a equação de Nernst na fronteira (superfície do eletrodo) para determinar a conversão entre espécies, usa o método das diferenças finitas ou esquema explícito para avançar no tempo, e obtém a corrente aplicando a Lei de Faraday, pela derivada do fluxo na interface.
+
+|   Achou complexo ? Então que tal: o código une Fick (transporte) e Nernst (equilíbrio redox local) para modelar com precisão a forma do voltamograma, obtendo-se uma simulação física com realismo significativo para voltametria cíclica.
+\
+
+
+
+[![](Eq/cv.png)](Eq/jsp_cv.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Observe o quantidade de valores ao início do código, tangíveis a uma "manipulação paramétrica". Procure saber o que representam, e busque variar seus valores de modo consciente, objetivando agregar valor ao aprendizado da simulação. Essa é a alma da "manipulação paramétrica" que envolve o "ensino reprodutível" !!
+```
+
+
+
+### Diagramas e fluxogramas
+
+#### Contexto: Diagrama {.unnumbered}
+
+
+|       Pela natureza da biblioteca *Plotly.js*, também é possível a geração de códigos no *JSPlotly* sem o envolvimento de uma equação, tal como para representação de diagramas e fluxogramas, entre outros. O exemplo abaixo ilustra uma representação do ciclo de Krebs, e o seguinte um fluxograma experimental.
+
+
+[![](Eq/krebs.png)](Eq/jsp_krebs.html){target="_blank"}
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente reposicionar melhor enzimas e metabólitos, apenas clicando e arrastando os termos;
+2. Experimente substituir os nomes que estão no código para a produção de outro ciclo metabólico, como o ciclo da ureia.
+```
+
+
+#### Contexto: Fluxograma {.unnumbered}
+
+
+[![](Eq/fluxograma.png)](Eq/jsp_fluxograma.html){target="_blank"}
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Reposicione termos e conectores com arraste de mouse;
+2. Para um fluxograma diferente no conteúdo, modifique os termos no código;
+2. Para um fluxograma diferente no formato, altere as características de fonte e conectores na constante "annotations".
+
+
+```
+\
+
+## Análise de dados
+
+### Inserção de dados do usuário
+
+
+#### Contexto {.unnumbered}
+
+|   Por vezes é interessante trabalhar-se com os próprios dados discretos, buscando-se uma relação de tendência, matemática ou simplesmente visual, para a relação de variáveis. Segue um exemplo de gráfico interativo com dados do usuário.
+\
+
+[![](Eq/dados.png)](Eq/jsp_dados.html){target="_blank"}
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente alterar os dados inseridos, sobrepondo ou não o gráfico;
+2. Experimente alterar a representação de dados em "mode" e "type", para pontos, linhas, pontos+linhas, barras.
+```
+
+\
+
+### Carregamento de arquivo para análise
+
+#### Contexto - Arquivo CSV {.unnumbered}
+
+|   Por vezes, há necessidade de se analisar resultados referentes a um conjunto de dados presente numa planilha. Para essa situação, o exemplo a seguir ilustra o carregamento de dois vetores de dados a partir de um arquivo *CSV* (*comma separated value*), formato comumente utilizado em exportação/importação em planilhas eletrônicas, e seu gráfico resultante.  
+
+[![](Eq/csv.png)](Eq/jsp_csv.html){target="_blank"}
+
+**Instruções:**
+
+- 1 Clique em *add plot* e selecione um arquivo CSV no botão *browse* superior que é apresentado. Nota: variável *X* na 1a. coluna do arquivo, e variável *Y* na 2a. coluna;
+- 2. Clique em *add plot* novamente para a visualização do gráfico resultante.
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente outros arquivos CSV;
+2. Varie os aspectos do gráfico, como tipo, cor, tamanho do marcador, etc.
+```
+
+
+
+### Ajuste linear de dados
+
+#### Contexto: {.unnumbered}
+
+|   Em diversas situações da pesquisa experimental, faz-se necessário correlacionar os dados de uma variável dependente com uma variável preditora frente à equação que segue.
+
+
+#### Equação: {.unnumbered}
+
+
+$$
+y = \alpha x + \beta + \varepsilon
+$$
+
+*Onde:*
+
+- y = variável dependente; 
+- x = variável independente; 
+- $\alpha$ = inclinação da reta ajustada (*slope*); 
+- $\beta$ = intercepto da reta ajustada;
+- $\epsilon$ = erro da medida.
+
+
+|   Pode-se obter os parâmetros de *inclinação e intercepto* por alguns procedimentos, como *mínimos quadrados*, *álgebra matricial*, ou por *somatórias* simples. Nesse último caso, o cálculo de parâmetros e de erro pode ser computado como segue:
+
+$$
+\alpha = \frac{n \sum x_i y_i - \sum x_i \sum y_i}{n \sum x_i^2 - \left( \sum x_i \right)^2}
+$$
+
+$$
+\beta = \frac{\sum y_i - \alpha \sum x_i}{n}
+$$
+
+$$
+\hat{y}_i = \alpha x_i + \beta
+$$
+
+$$
+\varepsilon_i = \left| y_i - \hat{y}_i \right|
+$$
+
+
+
+|   Uma representação para ajuste linear com dados arbitrários é fornecida abaixo:
+\
+
+[![](Eq/ajLin.png)](Eq/jsp_ajLinR2.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Apresente os pontos sobrepostos ou não à reta do ajuste. Para a sobreposição, escolha "mostrarPontos = true" e "mostrarReta = true";
+2. Altere os dados e realize novo ajuste, para obtenção de outros parâmetros da reta.
+```
+
+
+### Regressão polinomial
+
+#### Contexto: {.unnumbered}
+
+|   Em algumas situações, o ajuste linear não confere uma tendência adequada para modelagem de dados experimentais, o que suscita o emprego de outros modelos, tais como *exponencial, hiperbólico, logarítmico, de potência, e polinomial*. Tendências polinomiais são comuns em fenômenos naturais, com o tratamento matemático dos dados ocorrendo por diferentes métodos, como somatórias simples, mínimos quadrados, ou álgebra linear. Segue um exemplo de regressão polinomial com graus ajustáveis no código.
+
+#### Equação
+
+|   A minimização de erros para a curva polinomial é obtida por uma *regressão por mínimos quadrados* generalizada, e aplicação de *matriz de Vandermonde*, como segue.
+
+|   Seja os vetores x=[x$_{1}$,x$_{2}$,…,x$_{n}$] e y=[y$_{1}$,y$_{2}$,…,y${_n}$], deseja-se ajustar o polinômio:
+
+$$
+y = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_g x^g
+$$
+|   Dessa forma, elabora-se a matriz de Vandermonde como:
+
+$$
+X =
+\begin{bmatrix}
+1 & x_1 & x_1^2 & \cdots & x_1^g \\\\
+1 & x_2 & x_2^2 & \cdots & x_2^g \\\\
+\vdots & \vdots & \vdots & & \vdots \\\\
+1 & x_n & x_n^2 & \cdots & x_n^g
+\end{bmatrix}
+$$
+
+
+|   Para encontrar os *coeficientes $\beta$* que minimizem o erro quadrático, soluciona-se o sistema linear em sequência:
+
+$$
+\boldsymbol{\beta} = (X^T X)^{-1} X^T \mathbf{y}
+$$
+\
+
+*Onde:*
+
+- *T* representa a matriz transposta
+\
+
+
+
+[![](Eq/polinomial.png)](Eq/jsp_polinomial.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente o grau 1 para o polinômio, ou seja, uma redução do tratamento ao ajuste linear;
+2. Altere a formatação de rótulos, cores, tamanhos, etc, no código;
+3. Sobreponha alguns ajustes, edite e reposicione a legenda;
+4. Teste o código com outro vetor de dados.
+```
+
+
+### Regressão multilinear
+
+#### Contexto: {.unnumbered}
+
+|   Ajuste linear múltiplo é de grande utilidade quando se deseja prever um comportamento em função de duas ou mais variáveis preditoras. O procedimento envolve uma *matriz de projeto* (ou *operador de projeção*) similar à *matriz de Vandermonde*.
+
+
+#### Equação: {.unnumbered}
+
+|   A solução analítica para a matriz de projetos envolve resolver uma matriz de coeficientes $\beta$ para um conjunto de valores preditores do vetor de resposta *y*, como segue:
+
+$$
+y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi} + \varepsilon_i
+$$
+
+$$
+\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+$$
+
+$$
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
+$$
+
+*Onde:*
+- $\beta$ = vetor de coeficientes;
+- *y* = vetor de respostas;
+- *X* = matriz de projeto;
+- $\epsilon$ = ruído aleatório
+
+
+|   Dessa forma, valores preditos e erro associado são obtidos por:
+
+$$
+\hat{\mathbf{y}} = \mathbf{X} \hat{\boldsymbol{\beta}}
+$$
+$$
+\mathbf{e} = \mathbf{y} - \hat{\mathbf{y}}
+$$
+
+
+|   Por óbvio, a representação gráfica para um ajuste multilinear está limitada a duas variáveis independentes, *x1* e *x2*, além da variável resposta (*gráfico 3D*), embora o cálculo matricial permita diversas variáveis preditoras (espaço hiperdimensional). Tangente à primeira situação, segue um exemplo.
+
+**Instruções**
+
+1. Observer que há um flag booleano (*mostrarAjuste*) ao início do código: *false* para dados somente, e *true* para o ajuste;
+
+2. Pode-se clicar em *add plot* para visualizar os dados com o flag em *false*, seguido de outro *add plot* com o flag em *true*.
+\
+
+[![](Eq/multilinear.png)](Eq/jsp_multilinear.html){target="_blank"}
+\
+
+|   Rotacione o gráfico e observe a superfície em torno dos pontos. Diferente de um ajuste linear, os pontos estão distribuídos de forma não contínua no espaço.
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Resultados de QSAR ("Quantitative Structure-Activity Relationship") utilizam análise por ajuste multilinear para identificar a força das variáveis preditoras. Experimente na internet um conjunto de dados que possua 2 variáveis (ex: concentração, pH, composto A, B, etc.)
+2. Para mais variáveis preditoras, veja o código que segue !!
+```
+
+
+### Ajuste linear múltiplo com 3 ou mais variáveis preditoras
+
+#### Contexto {.unnumbered}
+
+|   Embora o *JSPlotly* tenha sido concebido para a produção de gráficos e mapas interativos com uso da biblioteca *Plotly.js* sobre os ombros da linguagem *JavaScript*, essa extende as possibilidades de aplicação além das representações gráficas. Um exemplo disso permeia o código que segue, para um *ajuste multilinear* para uma situação com 4 variáveis preditoras.
+
+
+[![](Eq/multilin4Var.png)](Eq/jsp_multilin4Var.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente variar o número de preditores (xi). Para isso:
+  a. Sem quiser reduzir, basta retirar o(s) vetor(res) desejados, e corrigir seu quantitativo na linha: "const X = x1.map((_, i)";
+  b. Se quiser aumentar, acrescente um novo vetor na linha correspondente, e atualize o quantitativo no mapeamento de "const X = x1.map((_, i)".
+```
+
+
+
+### Metodologia de Superfície de Resposta  (MSR)
+
+#### Contexto {.unnumbered}
+
+|   Uma variação de ajuste multilinear envolve a *metodologia de superfície de resposta*, comumente linear (plano) ou quadrática (curvilinear), aplicada em modelagem e otimização de processos experimentais com múltiplas variáveis independentes. Seu objetivo é ajustar uma equação matemática que represente a relação entre os fatores experimentais e a variável resposta, permitindo prever comportamentos e identificar condições ótimas. 
+
+|   Para experimentos com dois fatores, utiliza-se comumente um modelo quadrático de segunda ordem, o qual permite representar superfícies com curvatura. A ideia central do experimento é selecionar valores e seus códigos (-1,0,1), representando, respectivamente, uma quantidade abaixo, uma quantidade média, e uma acima, para determinada variável preditora.
+
+#### Equação: {.unnumbered}
+
+|   O modelo geral quadrático para 2 fatores é representado por:
+
+
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_{11} x_1^2 + \beta_{22} x_2^2 + \beta_{12} x_1 x_2 + \varepsilon
+$$
+
+|   Com a forma matricial do modelo representada por:
+
+$$
+\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+$$
+
+|   E a estimativa dos coeficientes $\beta$ por mínimos quadrados, de modo similar ao ajuste multilinear, por:
+
+
+$$
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
+$$
+\
+
+
+
+
+[![](Eq/msr.png)](Eq/jsp_msr.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Como sugerido anteriormente, experimente utilizar dados da literatura ou de outra fonte cujas respostas já são conhecidas, substituindo os respectivos vetores ao início do código. Isso permite comparar a eficácia de uso da ferramenta apresentada.
+```
+
+
+
+### Suavização de dados - Spline e filtro de Savitzky-Golay 
+
+
+|       Em pesquisa experimental a detecção de sinais ocasionalmente ocorre na presença de níveis significativos de ruído, tal como ocorre em varredura contínua espectral sob variação de comprimento de onda, ou na detecção de sinais elétricos no tempo. Nesse caso, não há uma equação analítica que descreva o comportamento do sinal, embora algumas ferramentas de processamento digital possam confiar uma curva de tendência no tratamento de dados, reduzindo significativamente o nível de ruído, tais como por *curva de spline* e *filtro de Savitzky-Golay*.    
+
+
+#### Contexto - Spline cúbica {.unnumbered}
+
+|       Uma técnica de interpolação bastante comum refere-se ao uso de spline cúbica por polinômios de grau 3 interconectando janelas de dados. O tratamento consiste em aplicar as funções polinomiais em subintervalos dos pontos, promovendo uma suavização entre as janelas de dados.  
+
+
+#### Equação  {.unnumbered}
+
+Matematicamente, a spline é aplicada de tal forma que:
+
+$$
+S_i(x) = a_i + b_i(x - x_i) + c_i(x - x_i)^2 + d_i(x - x_i)^3
+$$
+
+
+*Onde:*
+
+- S$_{i}$(x) = função spline cúbica no intervalo *[xi,xi+1]*;
+- a$_{i, b$_{i}$, c$_{i}$, d$_{i}$ = coeficientes específicos para o segmento *i*;
+- x$_{i}$ = ponto inicial do intervalo;
+- *x* = variável independente.
+
+
+#### Contexto - Filtro de Savitzky-Golay {.unnumbered}
+
+|        Já a técnica de suavização por filtro de Savitzky-Golay aplica uma regressão polinomial local a uma janela móvel, por mínimos quadrados e grau pré-determinado, preservando sinais de picos, vales e bandas. Distinto da spline cúbica, o filtro produz uma curva contínua global, e não um conjunto de curvas interconectadas. 
+
+#### Equação {.unnumbered}
+
+Matematicamente:
+
+
+$$
+\tilde{y}_i = \sum_{j=-m}^{m} c_j \cdot y_{i+j}
+$$
+
+*Onde:*
+
+- y$_{i}$ =  valor suavizado na posição *i*;
+- y$_{i+j}$ = valores reais da série dentro da janela;
+- c$_{i}$ = coeficientes do filtro derivados de uma regressão polinomial;
+- *m* = número de pontos de cada lado da janela central.
+
+|   Segue um exemplo de código para o *JSplotly* e que ilustra o uso dos dois métodos de interpolação.
+
+[![](Eq/splineGolay.png)](Eq/jsp_splineGolay.html){target="_blank"}
+\
+
+**Instruções:**
+
+- 1. O código possui dois *flags true/false*, um para "usarGolay" e outro para "usarSpline";
+- 2. Visualize os dados brutos adotando *false* para ambos os flags;
+- 3. Para sobrepor uma spline cúbica mude sua constante para *true*;
+- 4. Para sobrepor o filtro de Savitzky-Golay, mude sua constante para *true*;
+- 5. Para ajustar o filtro, modifique seus parâmetros nas constantes *janela* (janela móvel) e/ou *grau* (grau do polinômio).
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Compare os efeitos de suavização pelos dois tratamentos de interpolação polinomial;
+2. Aplique apenas o filtro, ajustando parâmetros de janela móvel e grau polinomial;
+3.  Experimente a interpolação com outros dados brutos no código, substituindo as constantes "x_values" e "y_raw" por vetores numéricos;
+```
+
+
+### ANAVA e teste de Tukey-HSD
+
+#### Contexto: {.unnumbered}
+
+|   Em pesquisa é comum proceder a análise de um conjunto de dados comparando-se a variância entre grupos com a obtida dentro de cada grupo, ou *Análise de Variância (ANAVA)*.  Uma vez obtida a informação estatística de que há diferença entre os grupos superior à interna, procede-se um teste *pos-hoc* para comparação de médias, como o *teste de Tukey-HSD* (*Honest Significant Difference*). 
+
+#### Equação: {.unnumbered}
+
+|   A equação que caracteriza um teste de Tukeu-HSD é fornecida abaixo (correção para grupos desbalanceados):
+
+
+$$
+\text{HSD}_{ij} = q_{\alpha} \cdot \sqrt{\frac{\text{MS}_{\text{within}}}{2} \left( \frac{1}{n_i} + \frac{1}{n_j} \right)}
+$$
+
+*Onde:*
+
+- HSD = valor mínimo da diferença entre duas médias para que ela seja considerada significativa;
+- q$_{\alpha}$ =  valor crítico da distribuição studentizada *q* (distribuição de Tukey), dependendo do número de grupos e do nível de significância $\alpha$;
+- MS$_{within}$ = quadrado médio dentro dos grupos (erro) obtido da ANAVA;
+- n: número de observações por grupo (*i* e *j* se houver grupos de tamanhos diferentes). 
+\
+
+
+[![](Eq/tukey.png)](Eq/jsp_tukey.html){target="_blank"}
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Você pode clicar e arrastar os marcadores de mínima diferença (a,b,etc) acima do gráfico, para melhor ajuste visual, bem como a tabela de ANAVA e o resultado do teste estatístico;
+2. Altere os valores dos vetores, refaça a análise e o gráfico simultâneos, e perceba a diferença nos valores obtidos. Observe que, como informado na borda inferior, é necessário atualizar a página do site para anular dados anteriores retidos em memória cache;
+3. Insira outros dados nos vetores respectivos, seus ou de outra fonte;
+4. Insira novos vetores de dados, ou delete algum, para um cálculo e gráfico personalizado.
+
+```
+
+
+
+### Ajuste não linear de dados
+
+|   Modelagem é uma área de emprego comum nas ciências naturais, quando se deseja previsão ou correlação matemática de dados experimentais. Modelos podem constituir-se lineares ou não. Quando não lineares, podem ser aplicados de forma empírica para os dados (ex: funções quadráticas, logarítmicas, exponenciais ou de potência), ou a partir de uma função matemática explanatória do modelo. 
+
+|   Nesse caso são empregadas técnicas para ajuste não linear dos dados ao modelo, como *Simplex*,  *Gauss*, *Newton-Raphson*, *Levenberg-Marquadt*, ou *mínimos quadrados* por exemplo. Seja qual for o método, o ajuste não linear difere-se do linear em pressupostos e tratamento dos dados (veja uma rápida explicação [aqui](https://bioquanti.netlify.app/pt/nivel/superior/r/enzimas#ajuste-n%C3%A3o-linear). 
+
+#### Contexto: Interação ligante-proteína (algoritmo de *grid search*) {.unnumbered}
+
+
+|   O exemplo a seguir ilustra a aplicação de um ajuste não linear de dados de interação molecular por modelo de Langmuir, e tratamento por *minimização do erro quadrático por varredura manual*. Nesse tratamento, calcula-se a *soma dos erros quadráticos (RMSE)* para combinações de *a* e *b*, selecionando-se o par com menor erro calculado. Nesse caso, por simplificação, apesar do *JSPlotly* trabalhar com bibliotecas mais específicas, a regressão não linear dá-se por mínimos quadrados, mas realizada por *grid search*, e não por métodos iterativos clássicos. Assim, um conjunto de valores é testado para o par (a, b) em uma malha definida previamente (tabela de combinações), permitindo a identificação dos parâmetros que melhor descrevem os dados experimentais segundo o critério de erro mínimo.
+\
+
+#### Equação: {.unnumbered}
+
+|   A equação de Langmuir é representada abaixo:
+
+$$
+Y = \frac{aX}{K_d + X}
+$$
+*Onde:*
+
+- Y = fração de sítios ocupados;
+- X = concentração do ligante livre;
+- *a* = valor de saturação (sítios de mesma afinidade completamente ocupados);
+- *Kd* = constante de equilíbrio de dissociação do complexo.
+
+
+
+|   Nesse caso, a função de mínimos quadrados não linear fica:
+
+$$
+SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
+$$
+
+
+*Onde:*
+
+*SSR* = soma dos quadrados dos resíduos (inversamente propocional à qualidade do ajuste)
+\
+
+
+[![](Eq/ajNonLin.png)](Eq/jsp_ajNonLin.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Como no exemplo anterior, apresente alternativamente os pontos e a curva de ajuste pela operação "booleana" ("mostrarPontos = true/false"; "mostrarCurva = true/false");
+2. Altere os dados e realize novo ajuste, para obtenção de outros parâmetros da equação (Kd, SSR, R², R² ajustado). Obs: R² adj corresponde ao valor de R² corrigido para o número de parâmetros do modelo (no caso, "2"), incidindo diretamente nos "graus de liberdade" para o ajuste.
+```
+\
+
+                               
+#### Contexto - Inibição competitiva em cinética enzimática (algoritmo de Gauss-Newton) {.unnumbered}   
+
+
+|   O método de *Gauss-Newton* ajusta iterativamente modelos não lineares a conjuntos de dados experimentais. Ele é especialmente eficiente quando o modelo é *quase linear* em relação aos parâmetros e os resíduos são moderadamente pequenos. O objetivo é encontrar os parâmetros $\theta$ que minimizam a soma dos quadrados dos resíduos entre os dados observados *yi* e os valores preditos pelo modelo f(xi,$\theta$. Diferente do método de Newton-Raphson completo, o Gauss-Newton evita o cálculo explícito da Hessiana, utilizando uma aproximação baseada na Jacobiana dos resíduos.
+
+
+#### Equação: {.unnumbered}
+
+|   Essa aproximação resulta em um sistema linear que pode ser resolvido a cada iteração para atualizar os parâmetros do modelo. A fórmula central do método consiste na multiplicação da Jacobiana transposta *JT* pela própria Jacobiana *J*, formando uma matriz simétrica que aproxima a Hessiana. O vetor de resíduos *r* é então usado para determinar a direção de atualização $\Delta\theta$, com a seguinte equação:
+
+$$
+\theta_{k+1} = \theta_k + \left(J^T J\right)^{-1} J^T \cdot r
+$$
+
+|   Para ilustrar o potencial do aplicativo em ajuste não linear iterativo, segue um exemplo para cinética enzimática utilizando-se um *modelo de inibição competitiva*. 
+
+|   O código permite ajustar as *sementes*, *tolerância*, e número de *iterações*, e oferece o gráfico (pontos/linha ajustada, manualmente), e parâmetros estatísticos da regressão.
+\
+
+**Instruções**
+
+- 1. Perceba que o código possui um flag para *true/false* na constante *ajuste*. Deixe-o em *false* para a representação dos dados, somente (vetores *x* e *y*, ou *S* e *v*);
+- 2. Na área da *Plot* do código, acerte a constante *trace* para que fique com os vetores de dados, também;
+- 3. Clique em *add plot* para visualizar os pontos experimentais;
+- 4. Para superimpor a curva ajustada, atualize as constantes *ajuste* e *trace* (vetores *S_fit* e *v_fit*), e escolha *lines* em *mode*.
+
+[![](Eq/ajNonLinGauss2.png)](Eq/jsp_ajNonLinGauss3.html){target="_blank"}
+\
+
+
+
+## Aplicativos
+
+### CarboId - Experimentação simulada para caracterização de aminoácidos e cadeias  
+
+#### Contexto: {.unnumbered}
+
+|   O *JSPlotly* permite se trabalhar com um conjunto de interações não necessariamente atreladas à equações e suas representações gráficas. O exemplo a seguir ilustra seu potencial para uma simulação de um experimento clássico em Bioquímica: *a caracterização de aminoácidos, peptídios, e proteínas, por reações cromogênicas em tubos de ensaio*. Como o escopo deste material é apresentar e facultar o uso de *OIERs* variados (*objetos interativos de ensino reprodutível*), recomenda-se ao usuário a busca de fontes de informação tangentes às reações descritas brevemente a seguir. 
+
+
+#### Instruções do simulador {.unnumbered}
+
+
+|   O simulador permite duas opções: a) descobrir a natureza de uma amostra ou b) descobrir o padrão de cores de reações para uma amostra escolhida.
+\
+
+**Opção A: descobrir a natureza de uma amostra:**
+
+|   Aqui é possível *"jogar"* para verificar se está diante de uma amostra de proteína/peptídio (cadeia), de um aminoácido (AA), de uma mistura específica de AAs, ou de de AA(s) presente numa cadeia. Para isso:
+
+1. Clique na imagem abaixo e dê um *"add"*. Será gerado um conjunto de 7 barras coloridas, representando as cores obtidas em tubos de ensaio para 7 reações distintas para caracterização proteica:  ninhidrina, biureto, Pauly, xantoproteica, Sakagushi, Millon, e enxofre (Cys);
+
+2. Descubra o tipo de amostra em função do padrão de cores dos tubos apresentado, fornecendo um palpite. O palpite deve ser por tipo (no menu *"Palpite (tipo)"* - AA, cadeia, ou mistura de AAs) e por perfil (no menu *"Palpite (perfil)"* - aleatório, AA(s) específico(s) ou mistura específica);
+
+3. Após a seleção nos 2 menus, clique em *"Conferir"*. Se tiver acertado, um *"Placar"* logo abaixo irá computar o número de acertos/número de amostras *"jogadas"*;
+
+4. Se errar, tente de novo ou busque a explicação do padrão de cores em *"Explicar"*;
+
+5) Existem duas outras possibilidades: *"Modo difícil"*, que esconde o nome das reações, embora mantendo sua sequência, e *"Embaralhar"*, que altera a ordem dos tubos;
+
+6) Para uma nova amostra, basta clicar em *"Nova amostra"*;
+
+
+**Opção B: descobrir o padrão de cores de uma reação para uma amostra selecionada:**
+
+1. Selecione uma amostra em *"Gerar"*, e clique em *"Nova amostra"*. Será gerado um conjunto de tubos com o padrão de reações esperado para a amostra.
+
+[![](Eq/Id-Prot-7.png)](Eq/jsp_Id-Prot-7.html){target="_blank"}
+
+
+
+#### Sugestão: {.unnumbered}
+
+```{r eval =FALSE}
+1. Experimente clicar em "Nova amostra" para verificar a frequência de possibilidades;
+2. Experimente as duas opções de operação do "jogo" (sim, é um jogo...afinal, tem um placar!);
+3. Experimente o "modo difícil" (sem referência às reações em sequência) ou "embaralhar" (permuta da ordem das reações). Por óbvio, contudo, evite os dois simultaneamente !
+```
+\
+
+### ZeMol - Visualizador 3D para modelos moleculares
+
+#### Contexto: {.unnumbered}
+
+|   Pelas características combinadas do uso de *JavaScript* e da biblioteca *Plotly.js*, é possível extender o potencial de aplicação do *JSPlotly* para a construção de verdadeiros aplicativos HTML. Um claro exemplo desse alcance é ilustrado abaixo, para um visualizador molecular de natureza similar a alguns pré-existentes e empregados em ensino e pesquisa (*Jmol*, *Pymol*, etc).
+
+|   Embora seja obviamente bem menor na extensão de suas funcionalidades quando comparado a outros aplicativos, o assim alcunhado *"ZeMol"* possui menos de 70 kB de memória, e apresenta funcionalidades como:
+
+- modelos carregados online do site [PDB](https://www.rcsb.org/) ou [PubChem](https://pubchem.ncbi.nlm.nih.gov/);
+- modelos carregados da memória física do dispositivo (formatos PDB, MOL, SDF, XYZ, TXT);
+- informações de identificação do arquivo PDB (ou nome do arquivo PubChem);
+- cabeçalho contendo quantitativo de cadeias, ligantes, íons, e ligações dissulfeto;
+- identificação apenas dos carbonos $\alpha$ de cada resíduo do esqueleto polipetídico, facilitando a visualização do modelo;
+- visualização automática de ligações dissulfeto;
+- identificação de resíduos, ligantes, e íons, por *hover* de mouse sobre o modelo;
+- *checkbox* para visualização de estrutura secundária de proteínas (hélice, folha-$\beta$);
+- *checkbox* para índice de polaridade dos resíduos;
+- *sliders* para tamanho do carbono CA (PDB) ou átomos no geral, e opacidade do modelo (útil pra destaque de fendas, estrutura 2a., cadeia carbônica, ligantes, íons);
+- ocultar/mostrar partes distintas do modelo, clicando-se em sua legenda (cadeia, íons, hélice/folhas, ligantes);
+- Destaque de AAs (individual, sequência, todos de um tipo, grupos pré-definidos no *script*);
+- HTML autosuficiente no salvamento, *"congelando"* o modelo nas características que se deseja apresentar; 
+- *Zoom* em dispositivos móveis (um dedo fixo na tela e outro arrastando o modelo) e *Pan* (deslocamento do modelo com 2 dedos na tela) - ações também presentes nos ícones acima do modelo;
+- ajustes facultativos no próprio *script* (tamanhos, cores, espessuras, grupos de AAs, tipo e espessura de traços, por ex).
+
+
+[![](Eq/ZeMol.png)](Eq/ZeMol.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Carregue um modelo com código PDB, ou uma molécula do site PubChem;
+2. Se proteína, experimente os efeitos separados e combinados dos "sliders" para tamanho do CA e opacidade;
+3. Observe a polaridade dos resíduos proteicos no "checkbox" homônimo;
+4. Experimente ampliar/reduzir ou deslocá-lo na tela com auxílio do mouse, ou fazê-lo num smartphone conforme a instrução dada acima; 
+5. Mostre ou esconda alternativamente cada cadeia ou todas, ligantes e íons, clicando-se nos termos respectivos da legenda;
+6. Selecione resíduos de interesse do modelo, como sítio catalítico, de ligação a coenzimas, ou de regulação da atividade. Para isso, digite no campo correlato e clique em "destacar". Algumas sugestões:
+  a. Individuais: Arg15, ASP117, 15, A:15, A:ARG15; 
+  b. Faixas: 15-30, A:15-30, Arg15-Asp30; 
+  c. Múltiplos separados por vírgula: "Arg15, Asp117";
+  d. Grupos: "aromatico", "polar", "apolar", "basico", "acido", "small".
+
+```
+\
+
+
+### ProtId - Experimentação simulada para caracterização de carboidratos
+
+
+#### Contexto: {.unnumbered}
+
+
+|   Assim como apresentado para a *caracterização de aminoácidos e cadeias acima*, segue uma experimentação simulada para a caracterização de carboidratos. A lógica é a mesma: fornecidos os resultados cromogênicos para reações específicas em tubos de ensaio (gráfico de barras), o usuário busca caracterizar o carboidrato. Isso é feito em relação às reações de:
+
+1. Teste de Molish - detecta carboidratos (anel púrpura); reação com $\alpha$-naphtol produzindo furfural ou hidroximetilfurfural;
+
+2. Teste de lugol (I$_{2}$/KI) - detecta polissacarídios (tubo azul escuro);
+3. Teste de Benedict - detecta monossacarídos redutores (e também lactose); tubo com precipitado laranja escuro/tijolo; 
+4. Teste de Selliwanoff (resorcinol) - diferencia cetoses (tubo vermelho) de aldoses (tubo rosa fraco); 
+5. Teste de Barfoed - diferencia mono (tubo com precipitado vermelho - óxido cuproso) de oligossacarídios (tubo amarelado).
+
+
+#### Instruções do simulador {.unnumbered}
+
+**Opção A: descobrir a natureza de uma amostra:**
+
+|   Para descobrir a natureza de uma amostra, siga como no aplicativo para *caracterização de aminoácidos e cadeias acima*. Para isso:
+
+1. Clique na imagem abaixo e dê um *"add"*. Será gerado um conjunto de 5 barras coloridas, representando as cores obtidas em tubos de ensaio para as 5 reações distintas para caracterização de carboidratos:  Molish, Lugol, Benedict, Selliwanoff, e Barfoed.
+
+2. Descubra o tipo de amostra em função do padrão de cores dos tubos apresentado, fornecendo um palpite. O palpite deve ser por tipo (no menu *"Palpite (tipo)"* - monossacarídio, di-oligossacarídio, polissacarídio, água. E por perfil (no menu *"Palpite (perfil)"* - redutor, não redutor, aldose, cetose, monossacarídio, di-oligossacarídio, e polissacarídio;
+
+3. Após a seleção nos 2 menus, clique em *"Conferir"*. Se tiver acertado, um *"Placar"* logo abaixo irá computar o número de acertos/número de amostras *"jogadas"*;
+
+4. Se errar, tente de novo ou busque a explicação do padrão de cores em *"Explicar"*;
+
+5) Existem duas outras possibilidades: *"Modo difícil"*, que esconde o nome das reações, embora mantendo sua sequência, e *"Embaralhar"*, que altera a ordem dos tubos;
+
+6) Para uma nova amostra, basta clicar em *"Nova amostra"*;
+
+
+**Opção B: descobrir o padrão de cores de uma reação para uma amostra selecionada:**
+
+1. Selecione uma amostra em *"Gerar"*, e clique em *"Nova amostra"*. Será gerado um conjunto de tubos com o padrão de reações esperado para a amostra.
+
+[![](Eq/Id_CHO.png)](Eq/jsp_Id-CHO.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r eval =FALSE}
+1. Experimente clicar em "Nova amostra" para verificar a frequência de possibilidades;
+2. Experimente as duas opções de operação do "simulador/aplicativo/jogo");
+3. Experimente o "modo difícil" (sem referência às reações em sequência) ou "embaralhar" (permuta da ordem das reações). Por óbvio, contudo, evite os dois simultaneamente !
+```
+\
+
+
+### CinDroga - Prospecção para composto líder como inibidor enzimático
+
+
+|   O *JSPlotly* pode operar como um aplicativo completo de simulação em situações variadas. O exemplo que se apresenta refere-se a seu uso como um painel (*dashboard*) para simular o potencial de uma molécula fictícia em triagem visando a seleção de composto líder (*lead compound*) como inibidor a um alvo enzimático.
+\
+
+*Observação*: o *CinDroga* possui códigos internos para estilos e montagens do painel, e que interferem no *bootstratp* do criador de páginas web utilizado para o *Bioquanti* (pacote *Quarto* para *R*). Nesse sentido, para acessá-lo é necessário baixar o arquivo comprimido abaixo, descompactá-lo e carregar o aplicativo diretamente. Para isso, basta clicar na imagem que segue.
+\
+
+[![](Eq/leadCompound.png)](Eq/cindroga24.zip){target="_blank"}
+
+
+**Instruções gerais**
+
+1. No campo superior do app há 4 botões:
+* *reset* - renova a simulação para outros dados e gráficos;
+* *html* - salva os gráficos e dados em arquivo interativo;
+* *diagnóstico* - abre janela *popup* para o diagnóstico do modelo de inibição e valores de parâmetros;
+* *parâmetros* - abre janela para simulação gráfica frente a parâmetros do usuário.
+
+
+2. Há dois modos para estudo para uso do *CinDroga*: inserindo-se parâmetros cinéticos e termodinâmicos para observar os resultados expressos em gráficos (botão *parâmetros*), ou caracterizar os parâmetros a partir dos gráficos (botão *diagnóstico*). 
+
+|   Os gráficos simulam os resultados obtidos para as *representações de Michaelis-Mentem, Lineweaver-Burk, curva dose-reposta, e gráfico de van't Hoff.*
+\
+
+#### Parâmetros {.unnumbered}
+
+|   Seja qual for o modo experimentado, se para identificar o potencial do composto , os parâmetros são:
+
+* *Ki*, constante de equilíbrio de dissociação do inibidor (desejável < 10$\mu$M);
+* Vmax, velocidade limite da reação enzimática;
+* Km, constante de Michaelis-Mentem;
+* $\Delta$H, variação de entalpia de ligação com inibidor;
+* $\Delta$S, variação de entropia de ligação com inibidor;
+* $\Delta$Cp, variação de capacidade calorífica da ligação com inibidor;
+
+
+|   Além desses parâmetros, a molécula fictícia conta com alguns *descritores*, a saber:
+
+* MW, peso molecular;
+* HAC, número de átomos pesados (todos, exceto hidrogênio);
+* HBD, número de doadores de ligação de H;
+* HBA, número de aceptores de ligação de H;
+* logP, logaritmo do coeficiente de partição da molécula
+
+|   Esses descritores permitem o cálculo para outros critérios visando a  seleção de líder:
+
+* LE, eficiência de ligante (*ligand efficiency*):
+\
+$$
+LE = \frac{\Delta G}{HAC};
+$$
+\
+
+$$
+LE = 1.37 \frac{pIC_{50}}{HAC}
+$$
+\
+
+*Onde* pIC$_{50}$ = -log(IC$_{50}$);
+
+* LLE, eficiência lipofílica do ligante (*lipophilic ligand efficiency*; valores >5 são considerados bons),
+
+$$
+LLE=pIC_{50}-logP
+$$
+
+* BEI, índice de eficiência da ligação (*binding efficiency index*),
+
+$$
+BEI=\frac{pIC_{50}}{MW}
+$$
+\
+*Onde:* MW, kDa; faixas típicas pela *regra de Lipinski* (regra dos 5): MW<=500, HBD<=5, HBA<=10, cLogP<=5. E também LE >= 0.3; LLE >= 5.
+
+|   Já a curva dose-reposta do inibidor permite a determinação de:
+
+* IC$_{50}$, concentração do inibidor que confere 50% de resposta (adequado quando < 10$\mu$M);
+* nH, constante de Hill (índice de cooperatividade)
+\
+
+#### Uso do CinDrogra para identificação de um composto líder {.unnumbered}
+
+|   A partir da visualização de gráficos e descritores da molécula fictícia, é possível se determinar:
+
+1. O tipo de inibição reversível (competitiva, incompetitiva, não competitiva pura, não competitiva mista);
+
+2. O valor de *Ki* por construção de gráficos secundários variados a partir da tabela de preenchimento de parâmetros (*Tabela para Ki*) - plota-se a concentração *I* do inibidor *versus* Km, Vm, ou Km/Vm aparentes. Alternativamente, plota-se *I* contra o valor de *($\alpha$-1)*, onde $\alpha$ representa *"1+I/Ki"*;
+
+3. O valor de IC$_{50}$ e de *nH* (inclinação do ponto médio) pela curva de dose-resposta do inibidor (estimativa de cooperatividade na ligação);
+
+4. O valor de $\Delta$H e $\Delta$S para o plot de Van't Hoff. No caso em que o gráfico apresentar-se curvilinear, também o valor valor de $\Delta$Cp;
+
+5. Os valores de *LE* e *LLE*;
+
+6. Avaliar o candidato junto às regras de Lipinski.
+
+
+|   Dessa forma, pode-se utilizar o *CinDroga* para uma simulação significativa à triagem de um inibidor como *lead compound* à uma enzima-alvo.
+
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Compare os tipos de inibição enzimática por inspeção visual dos gráficos de Michaelis-Mentem e de Lineweaver-Burk, dando ênfase às variações ou não de "Km" e "Vmax" entre esses;
+
+2. Calcule o valor de "Ki" por métodos distintos utilizando-se o campo de preenchimento para "replot" por nível de inibidor (tabela de "Parâmetros aparentes"):
+    a) obtendo-se o valor de "1/Ki" para plot de I x (alfa-1) do botão "alfa-replot" (inclinação da reta);
+  b) por intercepto "-Ki" a partir de plots de I x Vm_app, Km_app, ou Km/Vm_app (dependendo do modelo de inibição);
+  c) por "inclinação" ou "intercepto" de replots de Lineweaver-Burk contra I
+
+3. Experimente o modo "parâmetros" com valor de "nH" diferente de 1 (ex: 2,8), para avaliar o comportamento da curva dose-reposta sob efeitos de cooperatividade;
+
+4. Experimente o modo "parâmetros" com valor para capacidade calorífica diferente de zero (ex: -2000), para avaliar a possibilidade de efeitos secundários na ligação em função da temperatura, como transição conformacional da enzima;
+```
+
+
+#### Referências: {.unnumbered}
+
+1. Marangoni, Alejandro G. Enzyme kinetics: a modern approach. John Wiley & Sons, 2003.
+2. Copeland, Robert A. Evaluation of enzyme inhibitors in drug discovery: a guide for medicinal chemists and pharmacologists. John Wiley & Sons, 2013.
+3. Copeland, Robert A. Enzymes: a practical introduction to structure, mechanism, and data analysis. John Wiley & Sons, 2023.
+4. Leone, Francisco A. Fundamentos de cinética enzimática. Editora Appris, 2021.
+\
+
+### Gizz - Lousa Digital 
+
+|   A natureza do objeto abaixo dispensa apresentações. Trata-se mais um entre os muitos aplicativos para simular uma lousa, ou quadro de giz/caneta digital. Diferente de seus concorrentes, contudo:
+
+1. Pode ser exportada como arquivo autossuficiente HTML em botão da própria lousa, e permitindo compartilhamento da imagem gerada, bem como continuidade de sua edição;
+2. Faculta a personalização do código que o produz, permitindo inserir/alterar canetas, espessuras, e ações distintas não previstas no código-fonte.
+\
+
+[![](Eq/lousa.png)](Eq/lousa.html){target="_blank"}
+\
+
+
+|   Tangente à suas facilidades, a lousa digital permite:
+
+- Escrever com 7 cores e 3 espessuras distintas;
+- Acessar 4 planos de fundo de coloração diferente;
+- Sobrepor o plano com um *grid*;
+- Utilizar um apagador (*erase*);
+- Utilizar um *apontador laser* para localização transiente do que se pretende assinalar;
+- Salvar a imagem como PNG, indicando data e hora;
+- Comandos para desfazer (*undo*) e de limpeza (*clean*) do quadro;
+- Atalhos de teclado: E=borracha; L=laser; Z desfaz, X limpa, H salva HTML
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Pode-se alterar a espessura das canetas em "var baseWidth = 1;" ;
+2. Os botões 1x, 2x, 4x são multiplicadores; edite as linhas de criação dos botões pra trocar rótulo/multiplicador (ex.: "addSize('3x', 3, true)").
+```
+
+
+
+
+
+
+
+
+
+
+
+
+                              
+

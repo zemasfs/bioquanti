@@ -1,0 +1,613 @@
+---
+title: "Interação molecular"
+toc: true
+lang: pt
+bibliography: referencias.bib
+---
+  
+  
+## Interação ligante-biopolímero {#Binding}
+
+|       Quando se menciona interação entre biomoléculas, normalmente se faz referência à processos adsortivos envolvendo um biopolímero (proteína, ácido nucleico, glicano), e um ligante de baixo peso molecular, embora o formalismo também se aplique com alguma restrição a interações entre biopolímeros, e mesmo células inteiras.
+|       O formalismo mais comum para interação biomolecular é o que envolve a formação de complexo adsortivo entre uma proteína e um ligante (*ligand binding*), exemplificado para íons (Ca$^{2+}$, Mg$^{2+}$, etc), fármacos e candidatos, produtos naturais, e antígenos, dentre vários. 
+|       Perguntas simples acerca da *interação ligante-proteína* podem elucidar diversas características da formação de tais complexos, como:
+
+1. Quanto de proteína/ligante estão presentes ?
+2. Quanto do complexo é formado ?
+3. Quão rápido o complexo associa/dissocia ?
+4. Quais os mecanismos envolvidos ?
+
+|       De modo geral, pode-se representar a interação ligante-proteína como segue:
+
+$$
+P+L \begin{array}{c}
+_{k_{on}}\\
+ \rightleftharpoons\\
+^{k_{off}} \end{array} PL 
+$$ {#eq-diagPL}
+
+
+Onde *P* representa o teor de proteína livre, *L* o ligante livre, e *PL* o complexo formado. As taxas de reação são definidas para a formação (*k$_{on}$*; M$^{-1}$s$^{-1}$) e dissociação (*k$_{off}$*; s$^{-1}$) do complexo. 
+
+|       Dessa forma deduz-se a equação para a *isoterma de interação* do ligante com a proteína como segue:
+
+
+$$
+Kd=\frac{[P]*[L]}{[P]+[L]}
+$$ {#eq-eqPL}
+
+
+Onde *Kd* representa a *constante de equilíbrio de dissociação* para o complexo *PL* formado, tal como condicionado ao equilíbrio de formação/dissociação do complexo (*v$_{assoc}$ = v$_{dissoc}$*), e também definido como: 
+
+$$
+Kd=\frac{k_{off}}{k_{on}}
+$$ {#eq-eqKd}
+
+
+|       A partir da @eq-eqPL pode-se facilmente deduzir a expressão final para a interação de um ligante a um conjunto de sítios de mesma afinidade na proteína:
+
+$$
+\nu=\frac{n * [L]}{Kd + [L]}
+$$ {#eq-eqNu}
+
+## Modelos de Interação e Representações Lineares
+|       Observe que a @eq-eqNu praticamente repete o formalismo já visto com a formação do complexo ativado de enzima-substrato do capítulo de *Enzimas*, bem como sua representação resultante como uma hipérbole quadrática. De fato, ocorre essencialmente a substituição do parâmetro cinético *v* da reação pelo parâmetro termodinâmico $\nu$ ("nu", do Grego) para a isoterma de ligação. As demais quantidades envolvidas mantém-se análogas (*P* no lugar de *E*; *L* no lugar de *S*;*Kd* no lugar de *Km*; e *n* no lugar de *Vmax*). 
+|       Mantida essa similaridade com o formalismo da *equação de Michaelis-Menten*, da mesma maneira decorrem as linearizações para a @eq-eqNu), bem como ajustes não lineares à mesma, na busca de uma *solução analítica* para os parâmetros termodinâmicos *Kd* e *n*. Exemplificando um trecho de código para as linearizações mais comuns no tratamento de dados de interação ligante-proteína:
+
+```{r, echo=TRUE, figLinBind, warning=FALSE, fig.cap="Principais linearizações da isoterma de ligação ligante-proteína."}
+
+# Linearizações em interação bimolecular
+
+L <- c(0.1, 0.2, 0.5, 1, 5, 10, 20) * 1e-6
+Kd <- 1e-6
+n <- 1
+v <- n * L / (Kd + L)
+par(mfrow = c(2, 3)) # estabelece área de plot pra 6 gráficos
+plot(L, v, type = "o", main = "Direto")
+plot(log(L), v, type = "o", main = "Langmuir")
+plot(1 / L, 1 / v, type = "o", main = "Klotz")
+plot(v, v / L, type = "o", main = "Scatchard")
+plot(L, L / v, type = "o", main = "Woolf")
+plot(log10(L), log10(v / (n - v)), type = "o", main = "Hill")
+par(mfrow = c(1, 1)) # volta à janela gráfica normal
+```
+
+|       Desvios da linearidade, por outro lado, são frequentemente utilizados como diagnósticos para modelos que distintos do de *homogeneidade de sítios de ligação* como acima (*heterogeneidade de sítios*, *criação de sítio*, *cooperatividade*. As equações abaixo descrevem esses modelos, e consideram *K*, *constante de equilíbrio de associação ligante-proteína*, como o reverso de *Kd*, a fim de tornar as expressões mais legíveis:
+
+$$
+K = \frac{1}{Kd}
+$$ {#eq-eqKdK}
+
+|       O *modelo de heterogeneidade de sítios* de ligação pressupõe que haja na proteína mais um sítio com afinidades distintas para o ligante [@dahlquist197813]. Formalmente esse modelo pode ser exemplificado para 2 conjuntos de sítios de ligação, como segue:
+
+$$
+\nu=\frac{K1*[L]}{1+K1*[L]} + \frac{K2*[L]}{1+K2*[L]}
+$$ {#eq-eqHeterSit}
+
+
+|       O trecho de código abaixo exemplifica o modelo no `R`, bem como suas principais linearizações diagnósticas.
+
+```{r,figHeterSit, fig.cap="Modelo e linearizações para  heterogeneidade de 2 conjuntos de sítios de ligação"}
+
+# Heterogeneidade de sítios de ligação
+
+L <- c(0.1, 0.2, 0.5, 1, 5, 10, 20) * 1e-6
+Kd1 <- 2e-6
+n1 <- 1
+Kd2 <- 2e-8
+n2 <- 1
+v <- (n1 * L / (Kd1 + L)) + (n2 * L / (Kd2 + L))
+
+par(mfrow = c(2, 3)) # estabelece área de plot pra 6 gráficos
+plot(L, v, type = "o", main = "Direto")
+plot(log(L), v, type = "o", main = "Langmuir")
+plot(1 / L, 1 / v, type = "o", main = "Klotz")
+plot(v, v / L, type = "o", main = "Scatchard")
+plot(L, L / v, type = "o", main = "Woolf")
+plot(log10(L), log10(v / (n1 + n2 - v)), type = "o", main = "Hill") 
+# n1+n2=ntot no Hill
+par(mfrow = c(1, 1)) # volta à janela gráfica normal
+```
+
+|       O *modelo de criação de novo sítio* - "one-site creator"; [@parsons1978theoretical] estabelece uma cooperatividade positiva resultante da produção de novos sítios para o ligante na proteína. Segue o modelo exemplificado e suas linearizações resultantes.  
+
+```{r,figOneSitCreat, fig.cap="Modelo e linearizações para  criação de novo sítio: *1-site creator*."}
+
+# Criação de novo sítio sob interação com ligante
+
+L <- c(0.1, 0.2, 0.5, 1, 5, 10, 20) * 1e-6
+Kd1 <- 2e-6
+n1 <- 1
+Kd2 <- 2e-5
+n2 <- 1
+nH <- 0.5
+v <- (n1 * L * 1 / Kd1) / (1 + 1 / Kd1 * L) + 
+  ((n2 * 1 / Kd1 * 1 / Kd2 * L^2) / (1 + 1 / Kd1 * L) * (1 + 1 / Kd2 * L))
+par(mfrow = c(2, 3)) # estabelece área de plot pra 6 gráficos
+plot(L, v, type = "o", main = "Direto")
+plot(log(L), v, type = "o", main = "Langmuir")
+plot(1 / L, 1 / v, type = "o", main = "Klotz")
+plot(v, v / L, type = "o", main = "Scatchard")
+plot(L, L / v, type = "o", main = "Woolf")
+plot(log10(L), log10(v / (n - v)), type = "o", main = "Hill") 
+# n1+n2=ntot no Hill
+par(mfrow = c(1, 1)) # volta à janela gráfica normal
+```
+
+|       Os *modelos de cooperatividade (negativa e positiva)* seguem um formalismo similar descrito para a ligação de oxigênio à hemoglobina no capítulos de *Proteínas*. Na *cooperatividade negativa* uma segunda molécula de ligante interage com a proteína com menor afinidade: 
+
+```{r,figCoopNeg, fig.cap="Modelo e linearizações para  cooperatividade negativa de sítios de ligação."}
+
+# Cooperatividade negativa em ligand-binding
+
+L <- c(0.1, 0.2, 0.5, 1, 5, 10, 20) * 1e-6
+Kd <- 2e-6
+n <- 1
+nH <- 0.5
+v <- (n * L^nH / (Kd + L^nH))
+par(mfrow = c(2, 3)) # estabelece área de plot pra 6 gráficos
+plot(L, v, type = "o", main = "Direto")
+plot(log(L), v, type = "o", main = "Langmuir")
+plot(1 / L, 1 / v, type = "o", main = "Klotz")
+plot(v, v / L, type = "o", main = "Scatchard")
+plot(L, L / v, type = "o", main = "Woolf")
+plot(log10(L), log10(v / (n - v)), type = "o", main = "Hill") 
+# n1+n2=ntot no Hill
+par(mfrow = c(1, 1)) # volta à janela gráfica normal
+```
+
+|       Já na *cooperatividade positiva*, uma segunda molécula de ligante interage com a proteína com maior afinidade que a primeira molécula [@parsons1978theoretical]:
+
+```{r,figCoopPos, fig.cap="Modelo e linearizações para  cooperatividade positiva de sítios de ligação."}
+
+# Cooperatividade positiva em ligand binding
+
+L <- c(0.1, 0.2, 0.5, 1, 5, 10, 20) * 1e-6
+Kd <- 2e-6
+n <- 1
+nH <- 1.5
+v <- (n * L^nH / (Kd + L^nH))
+par(mfrow = c(2, 3)) # estabelece área de plot pra 6 gráficos
+plot(L, v, type = "o", main = "Direto")
+plot(log(L), v, type = "o", main = "Langmuir")
+plot(1 / L, 1 / v, type = "o", main = "Klotz")
+plot(v, v / L, type = "o", main = "Scatchard")
+plot(L, L / v, type = "o", main = "Woolf")
+plot(log10(L), log10(v / (n - v)), type = "o", main = "Hill") 
+# n1+n2=ntot no Hill
+par(mfrow = c(1, 1)) # volta à janela gráfica normal
+```
+
+|       Observe que a inclinação do gráfico de *Hill* é inferior à unidade para a *cooperatividade negativa*, e superior a essa, para a *cooperatividade positiva*, e representa o mesmo parâmetro *nH* visto no capítulo de *Proteinas*. 
+|       Ainda que sujeito à crítica por sua inconsistência estatística (variável dependente em ambos os eixos), a representação de Scatchard tem sido privilegiada ao longo de décadas como diagnóstico de modelos de interação ligante-proteína. Entre suas vantagens, aloca-se a possibilidade de facilmente distinguir-se o modelo de cooperatividade positiva (aclive) do de heterogeneidade de sítios de ligação (declive abrupto) ou de cooperatividade negativa (declive suave).
+
+## Ajuste Não-Linear Em Interação Ligante-Proteína
+
+|       Ajustes diretos da equação não linear dos modelos de interação também podem ser efetuados como fora realizado para a equação de Michaelis-Menten no capítulo de *Enzimas*. Exemplificando, pode-se simular a obtenção de dados experimentais de *binding* pelo trecho a seguir, utilizando-se o comando 'runif' (*random uniform*) para geração de sequência aleatória (como fora realizado no capítulo de *Enzimas*). Para ilustrar, segue a @fig-1SitBindSimul.
+
+```{r, label= "fig-1SitBindSimul"}
+# Isoterma de Interação Ligante-Proteína
+n <- 1
+Kd <- 10
+L <- 120
+i <- 3
+L <- seq(0, L, i)
+v <- (L * n) / (Kd + L) + rnorm(40, 0, 0.1)
+plot(L, v)
+```
+
+|       Observe que o comando 'rnorm' adiciona um erro de distribuição normal aos dados. Outra forma para simulação desses é dada abaixo, introduzindo-se o comando 'runif' de geração de números aleatórios.
+
+```{r, 1sitBindSimul2, echo=TRUE, fig.cap = "Dados simulados para isoterma de interação bimolecular."}
+# Simulação de dados de interação bimolecular (1 sítio)
+
+# Simulação de dados
+set.seed(20160227) # estabelece semente para geração de números aleatórios
+L <- seq(0, 50, 1)
+PL <- ((runif(1, 10, 20) * L) / (runif(1, 0, 10) + L)) + rnorm(51, 0, 1)
+# 1. runif(n,min,max); quando sem atributos, considera-se min=0  e max=1
+# 2. rnorm(no. pontos,media,desvio) - erro aleatório de distribuição normal
+plot(L, PL, xlab = "L", ylab = "PL")
+```
+
+
+|       Agora precisamos utilizar o comando 'nls' para o ajuste não linear, sobreposição da curva teórica, e tabela estatística de resultados:
+
+```{r, nlsBind}
+# Ajuste não linear em ligand binding
+m <- nls(PL ~ n * L / (Kd + L), start = list(n = 1, Kd = 1))
+
+# Coef. de correlação
+cor(PL, predict(m)) # Coeficiente de correlação de Pearson
+
+# Gráfico de dados e simulação
+plot(L, PL)
+lines(L, predict(m), lty = 2, col = "red", lwd = 3)
+summary(m)
+```
+
+
+## Sistemas Gráficos no R
+
+|       A última curva de simulação obtida o foi junto à biblioteca padrão para manipulação de gráficos da instalação do 'R', **Graphics**. Trata-se um conjunto de funções amplo também utilizado por vários outros pacotes do ambiente. Contudo, existem no 'R' diversas outras bibliotecas para elaboração de gráficos, dentre os quais vale destacar o *Lattice*, também incluido na instalação padrão, e o *ggplot2*. Ambos os sistemas geram resultados com melhor estética e flexibilidade gráfica que a biblioteca *Graphics* padrão, e possuem empregos e semânticas distintas entre si. 
+|       O sistema *Lattice* [@sarkar2008lattice] é baseado no sistema *Trellis* para representação gráfica de dados multivariados. Sua força está na representação de dados em paineis contendo subgrupos e, embora tenha sintaxe menos intuitiva e por vezes mais elaborada que o pacote *Graphics*, produz um grafismo superior a esse com poucos cliques de teclado. De modo geral, o *Lattice* produz o gráfico dentro do próprio algoritmo, de modo diferente aos sistemas *Graphics* (pode-se acumular linhas sucessivas de modificação do gráfico) ou *ggplot2*.
+|      Por outro lado a biblioteca *ggplot2* é baseada na gramática de gráficos [@wickham2011ggplot2], e produz o gráfico utilizando uma única linha de comando que combina camadas sobrepostas, de modo similar à aplicativos de manipulação de imagens (ex: *Inkscape*, *Gimp*, *Corel Draw*, *Photoshop*). Dessa forma é possível alterar cada ítem do gráfico em suas camadas específicas (tema, coordenadas, facets, estatísticas, geometria, estética, dados). Exemplificando o resultado gráfico da curva de simulação acima de *binding* para *Lattice* e *ggplot2*:
+
+```{r, 1sitBindSimulLattice}
+# Os sistemas lattice e ggplot2
+
+# Simulação de dados
+
+set.seed(20160227) # estabelece semente para geração de números aleatórios
+L <- seq(0, 50, 1)
+PL <- ((runif(1, 10, 20) * L) / (runif(1, 0, 10) + L)) + rnorm(51, 0, 1)
+# 1. runif(n,min,max); quando sem atributos, considera-se min=0  e max=1
+# 2. rnorm(no. pontos,media,desvio) - erro aleatório de distribuição normal
+
+# Produção do gráfico com sistema Lattice
+library(lattice)
+xyplot(PL ~ L)
+
+# Produção do gráfico com sistema ggplot2
+library(ggplot2)
+qplot(L, PL)
+```
+
+|       Como a percepção de peculiaridades dos sistemas gráficos se revela melhor com dados mais elaborados, as ilustrações a seguir utilizarão o conjunto de dados 'Puromycin', que integra a biblioteca 'datasets' do 'R'. Os dados apresentam a velocidade de reação enzimática sobre um substrato em células tratadas e não tratadas com puromicina. 
+
+
+
+
+|       O código abaixo retorna a plotagem, ajuste não linear e resultados obtidos com a biblioteca *Graphics* padrão, e foi extraído do própria documentação do *dataset*.
+
+```{r, puromycGraphics, fig.cap="Plotagem e análise com `graphics`." }
+library(datasets)
+
+# O sistema base `graphics`
+
+plot(rate ~ conc,
+  data = Puromycin, las = 1,
+  xlab = "[S], mM",
+  ylab = "v (contagem/min/min)",
+  pch = as.integer(Puromycin$state),
+  col = as.integer(Puromycin$state),
+  main = "Ilustração de Ajuste Com Graphics"
+)
+
+## Ajuste da equação de Michaelis-Mentem
+fm1 <- nls(rate ~ Vm * conc / (K + conc),
+  data = Puromycin,
+  subset = state == "treated",
+  start = c(Vm = 200, K = 0.05)
+)
+fm2 <- nls(rate ~ Vm * conc / (K + conc),
+  data = Puromycin,
+  subset = state == "untreated",
+  start = c(Vm = 160, K = 0.05)
+)
+summary(fm1)
+summary(fm2)
+
+## Adição de linhas de ajuste ao plot
+conc <- seq(0, 1.2, length.out = 101)
+lines(conc, predict(fm1, list(conc = conc)), lty = 1, col = 1)
+lines(conc, predict(fm2, list(conc = conc)), lty = 2, col = 2)
+legend(0.8, 120, levels(Puromycin$state),
+  col = 1:2, lty = 1:2, pch = 1:2
+)
+```
+
+|       O sistema *ggplot2*, por sua vez, exige que os comandos sejam elencados em camadas justapostas intercaladas com o sinal "+", como segue:
+
+```{r, puromycGgplot2, fig.cap="Plotagem e análise com ggplot2."}
+
+# Gráfico e análise com ggplot2
+library(datasets)
+p <- ggplot(data = Puromycin, aes(conc, rate, color = state)) +
+  geom_point() +
+  geom_smooth(
+    method       = "nls",
+    formula      = y ~ Vm * x / (Km + x),
+    method.args  = list(start = list(Vm = 200, Km = 0.1)),
+    se           = FALSE
+  ) # expressão que define o plot
+p # variável que apresenta o plot
+```
+
+|       Perceba o menor número de instruções do *script* para a produção do gráfico. Além disso, e diferente do *Graphics*, *ggplot2* permite adicionar camadas à linha de comandos principais, e apresentar os dados multivariados em paineis (funções 'facet_grid' e 'facet_wrap'), sem a necessidade de se utilizar o comando 'mfrow' ou 'mfcol' visto no capítulo, como segue:
+
+```{r, puromycGgplot2Facet, fig.cap="Plotagem e análise com ggplot2 - paineis (faceting)."}
+p + facet_grid(rows = vars(state))
+```
+
+
+|       *Lattice* também possui uma economia de instruções em relação à *Graphics*. Não considerando o ajuste estatístico, os grupos podem ser apresentados simplesmente utilizando-se a fórmula:
+
+
+$$
+xyplot(y \sim x~|~ groups = z)
+$$ {#eq-eqTrellis}
+
+
+```{r eval=TRUE, include=TRUE}
+library(lattice)
+xyplot(rate ~ conc, data = Puromycin, groups = state)
+```
+
+|       E para a representação dos ajustes não lineares:
+
+
+```{r, eval=FALSE, include=TRUE, puromicLattice}
+
+# Um gráfico com dataset para lattice
+
+library(nlme)
+n1 <- nlsList(rate ~ Vmax * conc / (Km + conc) | state, 
+              data = Puromycin, start = list(Vmax = 200, Km = 0.1))
+summary(n1)
+xyplot(rate ~ conc,
+  groups = state, data =
+    Puromycin
+) +
+  layer(panel.curve(Vmax[1] * x / (Km[1] + x), col = 1),
+    data = as.list(coef(n1))
+  ) +
+  layer(panel.curve(Vmax[2] * x / (Km[2] + x), col = 2),
+    data = as.list(coef(n1))
+  )
+```
+
+
+|       A biblioteca *Lattice* também permite a apresentação em paineis; diferente de *ggplot2*, contudo, o gráfico é gerado algoritmicamente, sem a sobreposição de comandos:
+
+
+```{r, puromicLatticePan, fig.cap= "Plotagem e análise com Lattice - ajuste externo e paineis."}
+
+# Gráfico e análise não linear com lattice 
+
+library(nlme) # pacote quer permite regressão não linear com subgrupos
+nonlinLatt <- nlsList(rate ~ Vmax * conc / 
+                        (Km + conc) | state, 
+                      start = list(Vmax = 200, Km = 0.1), data = Puromycin)
+summary(nonlinLatt)
+xyplot(rate + fitted(nonlinLatt) ~ conc | state,
+  data = Puromycin,
+  type = c("p", "l"), distribute.type = TRUE, col.line = "red",
+  ylab = "rate"
+)
+```
+
+|       Das muitas diferenças que os pacotes *ggplot2* e *Lattice* apresentam, há uma que vale a pena ressaltar. Como visto acima, o *ggplot2* realiza o ajuste não linear dentro da linha de comandos de geração do gráfico, ao passo que o *Lattice* permite fazê-lo fora da linha. Isso é inerente do *ggplot2*, uma biblioteca desenhada para a produção de gráficos, e não para análises computacionais. Dessa forma o algoritmo que permite o ajuste não linear pelo *ggplot2*, ainda que seja o mesmo 'nls' já trabalhado, não expressa seus resultados explicitamente (embora haja formas de "pescá-los" utilizando-se outros pacotes).
+|       De certa forma, ainda que o *Lattice* exija uma curva de aprendizado menos intutiva, ele permite que se utilize os resultados estatísticos obtidos anteriormente para inclusão no algoritmo de plotagem. Isso é vantajoso quando se deseja outros algoritmos estatísticos para ajuste, como acima, ou mesmo sua flexibilização, além do 'nls' incluido em *ggplot2*. Não obstante, o *Lattice* também permite que se inclua a linha de ajuste dentro do próprio algoritmo, como abaixo:
+
+```{r,  warning=FALSE, puromicLatticePanInterno, fig.cap= "Plotagem e análise com Lattice - ajuste interno e paineis." }
+
+# Ajuste não linear em paineis (Lattice)
+
+xyplot(rate ~ conc | state,
+  data = Puromycin,
+  panel = function(x, y, ...) {
+    panel.xyplot(x, y, ...)
+    n3 <- nls(y ~ Vmax * x / (Km + x), data = Puromycin, 
+              start = list(Vmax = 200, Km = 0.1))
+    panel.lines(seq(0.02, 1.1, 0.02), 
+                predict(n3, newdata = data.frame(x = seq(0.02, 1.1, 0.02))),
+                col.line = 2)
+  },
+  xlab = "conc", ylab = "rate"
+)
+```
+
+
+## Solução Numérica Para o Equilíbrio de Complexos Ligante-Proteína
+
+|       Como visto no capítulo de *Aminoácidos*, por vezes uma *solução numérica* pode ser empregada quando a *solução analítica* não converge, ou quando estamos diante de uma equação mais complexa. Nesse sentido a formação de complexos de que trata este subtítulo pode também ser tratada por uma solução numérica.
+|       Usualmente o tratamento dado para a solução numérica envolve encontrar as raízes de uma equação ou sistema de equações, ou seja:
+
+$$
+F(x) = 0
+$$ {#eq-eqFx}
+
+
+$$
+P+L \rightleftarrows PL
+\\
+Kd = \frac{[P][L]}{[PL]}
+\\
+Então,\ [PL]=\frac{[P][L]}{Kd}
+$$ {#eq-solNumEq}
+
+
+$$
+\begin{cases}
+[Pt] = [P]+[PL] = [P]+\frac{[P][L]}{Kd}\\
+[Lt] = [L]+[PL] = [L]+\frac{[P][L]}{Kd}
+\end{cases}\
+$$ {#eq-solNumEq2}
+
+|       Assim, tem-se um sistema de equações lineares nos parâmetros (*[P]* livre, *[L]* livre, e complexo *[PL]*) que pode ser solucionado pelo `R` por diversas maneiras, uma das quais pela função de minimização `rootSolve`:
+
+
+```{r}
+# Cálculo de L, P, e PL em interação biomolecular para 1 conjunto de sítios
+# de mesma afinidade
+library(rootSolve)
+Pt <- 1
+Lt <- 10
+Kd <- 4
+
+# Modelo
+model <- function(x) c(x[1] + (x[1] * x[2]) / Kd - Pt, x[2] + 
+                         (x[1] * x[2]) / Kd - Lt, Pt - x[1] - x[3])
+# o modelo acima deve conter uma lista de equações cuja igualdade é zero, 
+# ou seja, f(x)=0
+(ss <- multiroot(model, c(1, 1, 1))) # comando de execução do 
+# rootSolve (sementes pro algoritmo)
+```
+
+|       Dessa forma os valores resultantes (*f.root*) quando *[Lt]* = 10 são apresentados como *[P]* = 0,3, *[L]* = 9,3 e *[PL]* = 0,7.
+
+|       Outras soluções numéricas permitem um maior controle sobre o algoritmo empregado, tais como a função `optim` do `R` (limites de busca da solução, emprego de vetores, por ex). Para isso será exemplificado a mesma situação acima, embora apresentando uma variação do formalismo que relaciona *P*, *L* e *PL* :
+
+
+$$
+\begin{cases}
+[PL] = [Pt]-[L]\\
+[PL] = [Lt]-[L]\\
+[P]*[L]=Kd*[PL]
+\end{cases}\
+$$ {#eq-solNumEq3}
+
+|       Dessa forma pode-se contruir uma relação quadrática envolvendo as três incógnitas:
+
+$$
+([Pt]-[L]-[PL])^2 + ([Lt]-[L]-[PL])^2 + ([P]*[L]-Kd*[PL])^2
+$$ {#eq-solNumEq4}
+
+
+|       Aplicando-se o algoritmo de minimização `optim` do `R`:
+
+```{r}
+# Cálculo de L, P, PL em interação para 1 sítio
+
+model2 <- function(x, Pt, Lt, K) {
+  L <- x[1]
+  P <- x[2]
+  PL <- x[3]
+  (Pt - P - PL)^2 + (Lt - L - PL)^2 + (P * L - Kd * PL)^2
+} # declaração da função
+Pt <- 1
+Lt <- 10
+Kd <- 4 # parâmetros da função
+sol2num <- optim(c(0.5, 1, .5), model2, method = "L-BFGS-B", 
+                 lower = c(0, 0, 0), upper = c(Lt, Pt, Pt), Pt = Pt, Lt = Lt)
+# método BFGS permite bounds (lower, upper)
+sol2num$par # LF, PF, PL calculados
+```
+
+|       Perceba que são os mesmos resultados anteriores, embora com maior controle da solução. Agora pode-se utilizar essa minimização para criar um vetor de soluções para as três quantidades, como segue: 
+
+```{r}
+# Declaração da função
+bind1 <- function(x, Pt, Lt, Kd) {
+  L <- x[1]
+  P <- x[2]
+  PL <- x[3]
+  (Pt - P - PL)^2 + (Lt - L - PL)^2 + (P * L - Kd * PL)^2
+}
+
+# Parâmetros da função
+Pt <- 1
+Lt <- c(5, 10, 20)
+Kd <- 4
+
+# Minimização (parâmetros para que a função acima dê zero)
+y <- function(i) {
+  optim(c(1, 1, 1), bind1,
+    method =
+      "L-BFGS-B", lower = c(0, 0, 0), upper = c(
+      Lt[i], Pt,
+      Pt
+    ), Lt = Lt[i], Pt = Pt, Kd = Kd
+  )
+}
+
+# Resultados em matriz
+ypar <- function(i) y(i)$par
+yp <- matrix(
+  nrow = length(Lt), ncol = 2 + length(Kd),
+  byrow = T
+)
+for (i in 1:length(Lt)) yp[i, ] <- y(i)$par
+colnames(yp) <- c("L", "P", "PL")
+rownames(yp) <- c("5", "10", "20")
+yp
+```
+
+
+##  Cinética de Interação Ligante-Proteína e Solução Numérica
+
+|       Sob o mesmo princípio da solução numérica apresentada no ítem anterior para o equilíbrio da interação ligante-proteína, o `R` permite solução de mesma natureza para a cinética da formação dos complexos, ou seja, os teores de *P*, *L* e *PL* observados no tempo. Nesse caso pode-se desenvolver outras relações a partir da @eq-diagPL. Tomando-se por base que no equilíbrio as taxas cinéticas de *k$_{on}$* e *k$_{off}$* se igualam (*steady-state*), pode-se relacionar algumas equações diferenciais para a *associação*, bem como para a *dissociação* dos complexos:
+
+
+$$
+Para \, a\, associação:
+\begin{cases}
+\frac{d[PL]}{dt} = k_{on}*[L]*[P]\\
+\frac{d[L]}{dt} = -k_{on}*[L]*[P]\\
+\frac{d[P]}{dt} = -k_{on}*[L]*[P]
+\end{cases}
+$$ {#eq-solNumKin}
+
+
+$$
+Para \, a\, dissociação:
+\begin{cases}
+\frac{d[PL]}{dt} = -k_{off}*[PL]\\
+\frac{d[L]}{dt} = k_{off}*[PL]\\
+\frac{d[P]}{dt} = k_{off}*[PL]
+\end{cases}
+$$ {#eq-solNumKin2}
+
+|        Assim, as taxas globais resultantes para cada quantidade (taxa líquida) envolverá a soma das taxas de associação e dissociação de cada:
+
+$$
+Taxas \, líquidas:
+\begin{cases}
+\frac{d[PL]}{dt} = k_{on}*[L]*[P]-k_{off}*[PL]\\
+\frac{d[L]}{dt} = -k_{on}*[L]*[P]+k_{off}*[PL]\\
+\frac{d[P]}{dt} = -k_{on}*[L]*[P]+k_{off}*[PL]
+\end{cases}
+$$ {#eq-solNumKin3}
+
+
+|       A solução para esse sistema final de equações diferenciais (taxas líquidas) envolve resolver a variação de cada quantidade (*$\Delta$x*) num determinado intervalo de tempo (*$\Delta$t*), tal que:
+
+
+$$
+\Delta x=f(x)*\Delta t
+$$ {#eq-eqDiff}
+
+|       Para isso é necessário utilizar uma biblioteca do `R` que permita a solução de um sistema de equações diferenciais. Entre as muitas soluções (`odeintr`, `pracma`, `rODE`), o emprego da biblioteca `deSolve`, que utiliza uma função para integração do sistema por algoritmo de *Runge-Kutta de 4a. ordem*:
+
+```{r,fig.cap="Teores de ligante e proteína livres (L e P), bem como do complexo PL  apresentados ao longo do tempo de acordo com o método Runge-Kutta de 4a. ordem para solução de equações diferenciais."}
+# Cinética de interação ligante-protéina para 1 conjunto de sítios
+library(deSolve)
+
+# Condições experimentais
+tempo <- seq(0, 100) # intervalo de tempo
+parms <- c(kon = 0.02, koff = 0.001) # parâmetros do estado estacionário 
+# da interação (uM^-1*s^-1 e s^-1, respectivamente)
+val.inic <- c(L = 0.8, P = 1, PL = 0) # valores iniciais, uM
+
+# Integração do sistema por Runge-Kutta de 4a. ordem
+solNumKin <- function(t, x, parms) {
+  # definição da lista de parâmetros
+  L <- x[1] # ligante
+  P <- x[2] # proteína
+  PL <- x[3] # complexo
+
+  with(as.list(parms), {
+    # definição da lista de equações diferenciais
+    dL <- -kon * L * P + koff * PL
+    dP <- -kon * L * P + koff * PL
+    dPL <- kon * L * P - koff * PL
+    res <- c(dL, dP, dPL)
+    list(res)
+  })
+}
+
+sol.rk4 <- as.data.frame(rk4(
+  val.inic, tempo, solNumKin,
+  parms
+)) # rotina para Runge-Kutta 4a. ordem
+
+# Gráfico
+plot(sol.rk4$time, sol.rk4$L, type = "l", xlab = "tempo", 
+     ylab = "[composto], uM")
+legend("topright", c("L", "P", "PL"), 
+       text.col = c("black", "red", "blue"), bty = "n", lty = c(1, 2, 3))
+lines(sol.rk4$time, sol.rk4$P, type = "l", lty = 2, col = 2, lwd = 1.5)
+lines(sol.rk4$time, sol.rk4$PL, type = "l", lty = 3, col = 3, lwd = 1.5)
+```
+
