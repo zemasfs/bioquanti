@@ -8,9 +8,9 @@ lang: pt
 ---
 
 
-|   Para ilustrar o potencial de uso do *JSPlotly* para o ensino fundamental e médio, seguem alguns exemplos de simulações e cujos gráficos são frequentemente encontrados em livros-texto e conteúdos afins. Para um melhor aproveitamento de cada tema, experimente seguir as sugestões para *manipulação paramétrica* em cada tema. 
+|   Para ilustrar o potencial de uso do *JSPlotly* para o ensino fundamental e médio, seguem alguns exemplos para gráficos, mapas, animações, simulações e outros objetos. Para um melhor aproveitamento de cada tema, experimente seguir as sugestões para *manipulação paramétrica* dos códigos.
 
-|   Se preferir um aprendizado mais direcionado, experimente acessar um material em construção inicial, [Livros Vivos](livrosVivos/index.html){target="_blank"}.
+<!-- |   Se preferir um aprendizado mais direcionado, experimente acessar um material em construção inicial, [Livros Vivos](livrosVivos/index.html){target="_blank"}. -->
 \
 
 ## Instruções {.unnumbered}
@@ -27,19 +27,146 @@ Lembrete: o editor usa desfazer/refazer infinitos no código (Ctrl+Z / Shift+Ctr
 ```
 \
 
-## Gráficoo
+## Gráficos
 
-## Mapa
+## Mapas
 
-## Animação
+## Animações
 
-## Inclusão
+## Simulações
 
-## Jogo
+## Acessibilidade e Inclusão
 
-## Game
+|   Por meio de toques de teclado, ajuste de tamanho de fontes, vibração em telas capacitivas, é possível imaginar o uso de *JavaScript* com *Plotly.js* para atender a um público com necessidades específicas de acessibilidade.  
 
-## Aplicativo
+|   Ilustrando essa possibilidade, e em função do uso de recursos de áudio por bibliotecas *JavaScript*, é possível conceber objetos do *JSPlotly* destinados a um estudante que se apresente cego. 
+
+
+
+###  Gráfico sonoro acessível por teclado
+
+#### BNCC: EF69LP27, EF69AR09, EM13MAT406, EM13LGG604, EM13LGG701 {.unnumbered}
+
+|   Este objeto é simples. Basta o estudante portador da deficiência utilizar as setas esquerda e direita de um teclado simples para que ouça sons correlatos a uma função matemática escolhida por um supervisor. Assim, se a função cresce, o som terá timbres progressivamente mais agudos e, quando decresce, mais graves. 
+
+|   Além disso, é possível alterar a frequência na barra deslizante, o que permite a percepção sonora para frequências mais baixa ou mais altas.
+
+|   Uma vez exportado pelo botão HTML do próprio objeto (*e não do editor de códigos*), esse pode ser compartilhadoa com manutenção da interatividade e sonoridade da função.
+\
+
+
+[![](Eq/acessib.png)](Eq/acessib.html){target="_blank"}
+\
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+
+1. Pode-se editar o código para uma função específica. Para isso, basta mudar a linha "var f = function(x){ ... }". Exemplos:
+  a. return Math.sin(x*Math.PI/180); (graus);
+  b. return Math.sin(x); (radianos);
+  c. return Math.exp(-0.01*x)*Math.cos(0.2*x);
+2. Pode-se alterar a velocidade de deslocamento da função pela função abaixo, e cujo valor é dado em milisegundos:
+  "var PLAY_INTERVAL_MS = 100; "
+
+```
+\
+
+## Jogos
+
+## Games
+
+|   Apesar de quase uma tradução, *jogos* referem-se a uma variedade ampla, incluindo cartas e tabuleiro, enquanto que *games* refletem mais os jogos eletrônicos e digitais. Seguem dois *games* ilustrativos do potencial do *JSPlotly* para essa finalidade, *Arco e flecha*, que utiliza animação apenas, e *Pong*, um clássico videogame esportivo dos anos 1972. Diferente do primeiro, o *Pong* combina interatividade, animação, e sonorização.
+
+
+###  Jogo de Arco e Flecha
+
+#### BNCC: EF09CI09, EF09MA18, EM13MAT302, EM13CNT104, EM13LGG701 {.unnumbered}
+\
+
+
+[![](Eq/arcoFlecha.png)](Eq/arcoFlecha.html){target="_blank"}
+\
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Altere o ângulo ("let theta_edit = 45") e/ou a velocidade inicial do disparo ("let v0_edit    = 20") para ajustar a parábola ao alvo;
+2. Perceba que a pontuação é flexível: 5 pontos para proximidade do alvo, e 10 pontos quando o acerta.
+```
+\
+
+###  Game Pong
+
+#### BNCC: EF69AR09, EF06MA20, EM13LGG604, EM13LGG701 {.unnumbered}
+
+
+|   Para a reprodução deste game clássico utilizou-se a biblioteca adicional *p5.js*, voltada para arte interativa, animações e visualizações de dados na web.
+
+[![](Eq/pong.png)](Eq/pong.html){target="_blank"}
+\
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Se achar que o jogo está lento, mesmo na velocidade 'warp' máxima, é possível alterar seu valor em "var base = Math.pow(1.5, warp);";
+2. Se achar que o jogo tá difícil ou fácil demais, é possível alterar o tamanho da raquete em "paddle = { w: 80, h: 10,...";
+3. Se desejar aumentar a área do jogo, modifique na linha abaixo (largura, altura):
+  "var cv = sk.createCanvas(400, 300).parent('jogoArea');"
+```
+\
+
+## Interface experimental
+
+### Aquisição de dados por sensores de celular (acelerômetro)
+
+|   *JSPlotly* foi inicialmente concebido para a construção de *objetos virtuais de aprendizagem* interativos. Contudo, é possível integrá-lo a diferentes interfaces para aquisição de dados do mundo real.  O exemplo que segue ilustra como alvo a resposta para sensor de posicionamento de um dispositivo móvel (acelerômetro).
+
+[![](Eq/celular.png)](Eq/celular_JSPlotly.html){target="_blank"}
+\
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Como o aplicativo é para o posicionamento "x, y e z" de um dispositivo móvel, experimente alterar a posição de seu celular/tablet no espaço.
+```
+\
+
+### Aquisição de dados de sensores para Arduino (condutivimetria)
+
+#### BNCC: EM13CNT201, EM13CNT308, M13CNT301, M13CNT302 {.unnumbered}
+
+
+|   O exemplo abaixo ilustra uma aplicação para aquisição/controle em tempo real por navegador para uso de placa *Arduino* ou *ESP32*, elevando exponencialmente a aplicação do *JSPlotly* para experimentação real e *projetos STEAM experimentais*. 
+
+|   O *setup* apresenta uma leitura de dados de condutividade em solução aquosa contendo teores crescentes de NaCl (0 a 5% p/v). Foi utilizado uma placa Arduino Uno R3 com conexão *Web Serial* por USB a notebook rodando um aplicativo autônomo para *JSPlotly*. A condutividade foi obtida por um sensor TDS comercial (*sólidos dissolvidos totais*) com excitação por potencial alternado de onda quadrada (PWM) para minimizar efeitos de polarização, e *script* adaptado do fabricante. O sensor TDS opera em faixa de 3,3 a 5,0 V (input) com saída de 0 a 2,3 V, e corrente de 3 a 6 mA.
+\
+
+[![](Eq/arduino.png)](Eq/condutiv_JSPlotly.html){target="_blank"}
+*Exemplo de aplicação de JSPlotly para interfaceamente com Arduino. O gráfico apresenta medidas de condutividade em meio aquoso com medidor TDS para teores crescentes de NaCl (sonda no canto esquerdo). Clique na imagem para obter o aplicativo JSPlotly autônomo para condutividade.*
+\
+
+**Instruções:**
+
+1. Para conexão *Web Serial* é necessário instalação de *Python* ao computador (Windows ou Linux), e *setup* de servidor local. Para Windows baixe e instale o arquivo oficial para [Python](https://www.python.org/downloads/windows/), lembrando-se de clicar em *Add Python to PATH*, e digite os comandos no CMD dentro da pasta do aplicativo autônomo. Segue a orientação para Linux:
+
+- 1. Conecte o Arduino e componentes (sonda TDS, recipiente com água e sal);
+- 2. Copie, cole e rode o *script* do fabricante para TDS na IDE do Arduino conectado;
+- 3. Feche a IDE do Arduíno;
+- 4. Abra um Terminal na pasta do aplicativo autônomo do *JSPlotly* para Arduino (*condutiv_JSPlotly.html*);
+- 5. Digite: *python3 -m http.server*
+- 6. Abra o html autônomo do circuito no Chrome (nunca no Firefox);
+
+|   A leitura deverá iniciar em instantes. Caso não ocorra, verifique se a taxa de transferência para a IDE do Arduino confere com a do aplicativo (115200 bauds).
+\
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Como o aplicativo é escrito no JSPlotly, é possível personalizá-lo para diversas situações, como taxa de tranferência de dados, traços (tipo, cores, espessura), tipo de gráfico, entre outros. 
+```
+\
 
 
 ## Matemática
@@ -1340,135 +1467,5 @@ Obs: o botão funcional para reprodução do quadro é o que está na própria l
 4. Também como parte do JSPlotly, é possível compartilhar o piano com os códigos para alteração junto ao botão "clone";
 
 ```
-\
-
-## Acessibilidade e inclusão
-
-|   Por meio de toques de teclado, ajuste de tamanho de fontes, vibração em telas capacitivas, é possível imaginar o uso de *JavaScript* com *Plotly.js* para atender a um público com necessidades específicas de acessibilidade.  
-
-|   Ilustrando essa possibilidade, e em função do uso de recursos de áudio por bibliotecas *JavaScript*, é possível conceber objetos do *JSPlotly* destinados a um estudante que se apresente cego. 
 
 
-
-###  Gráfico sonoro acessível por teclado
-
-#### BNCC: EF69LP27, EF69AR09, EM13MAT406, EM13LGG604, EM13LGG701 {.unnumbered}
-
-|   Este objeto é simples. Basta o estudante portador da deficiência utilizar as setas esquerda e direita de um teclado simples para que ouça sons correlatos a uma função matemática escolhida por um supervisor. Assim, se a função cresce, o som terá timbres progressivamente mais agudos e, quando decresce, mais graves. 
-
-|   Além disso, é possível alterar a frequência na barra deslizante, o que permite a percepção sonora para frequências mais baixa ou mais altas.
-
-|   Uma vez exportado pelo botão HTML do próprio objeto (*e não do editor de códigos*), esse pode ser compartilhadoa com manutenção da interatividade e sonoridade da função.
-\
-
-
-[![](Eq/acessib.png)](Eq/acessib.html){target="_blank"}
-\
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-
-1. Pode-se editar o código para uma função específica. Para isso, basta mudar a linha "var f = function(x){ ... }". Exemplos:
-  a. return Math.sin(x*Math.PI/180); (graus);
-  b. return Math.sin(x); (radianos);
-  c. return Math.exp(-0.01*x)*Math.cos(0.2*x);
-2. Pode-se alterar a velocidade de deslocamento da função pela função abaixo, e cujo valor é dado em milisegundos:
-  "var PLAY_INTERVAL_MS = 100; "
-
-```
-\
-
-## Games
-
-|   Apesar de quase uma tradução, *jogos* referem-se a uma variedade ampla, incluindo cartas e tabuleiro, enquanto que *games* refletem mais os jogos eletrônicos e digitais. Seguem dois *games* ilustrativos do potencial do *JSPlotly* para essa finalidade, *Arco e flecha*, que utiliza animação apenas, e *Pong*, um clássico videogame esportivo dos anos 1972. Diferente do primeiro, o *Pong* combina interatividade, animação, e sonorização.
-
-
-###  Jogo de Arco e Flecha
-
-#### BNCC: EF09CI09, EF09MA18, EM13MAT302, EM13CNT104, EM13LGG701 {.unnumbered}
-\
-
-
-[![](Eq/arcoFlecha.png)](Eq/arcoFlecha.html){target="_blank"}
-\
-
-#### Sugestão {.unnumbered}
-
-```{r, eval=FALSE}
-1. Altere o ângulo ("let theta_edit = 45") e/ou a velocidade inicial do disparo ("let v0_edit    = 20") para ajustar a parábola ao alvo;
-2. Perceba que a pontuação é flexível: 5 pontos para proximidade do alvo, e 10 pontos quando o acerta.
-```
-\
-
-###  Game Pong
-
-#### BNCC: EF69AR09, EF06MA20, EM13LGG604, EM13LGG701 {.unnumbered}
-
-
-|   Para a reprodução deste game clássico utilizou-se a biblioteca adicional *p5.js*, voltada para arte interativa, animações e visualizações de dados na web.
-
-[![](Eq/pong.png)](Eq/pong.html){target="_blank"}
-\
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Se achar que o jogo está lento, mesmo na velocidade 'warp' máxima, é possível alterar seu valor em "var base = Math.pow(1.5, warp);";
-2. Se achar que o jogo tá difícil ou fácil demais, é possível alterar o tamanho da raquete em "paddle = { w: 80, h: 10,...";
-3. Se desejar aumentar a área do jogo, modifique na linha abaixo (largura, altura):
-  "var cv = sk.createCanvas(400, 300).parent('jogoArea');"
-```
-\
-
-##  Interface Experimental
-
-### Aquisição de dados por sensores de celular (acelerômetro)
-
-|   *JSPlotly* foi inicialmente concebido para a construção de *objetos virtuais de aprendizagem* interativos. Contudo, é possível integrá-lo a diferentes interfaces para aquisição de dados do mundo real.  O exemplo que segue ilustra como alvo a resposta para sensor de posicionamento de um dispositivo móvel (acelerômetro).
-
-[![](Eq/celular.png)](Eq/celular_JSPlotly.html){target="_blank"}
-\
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Como o aplicativo é para o posicionamento "x, y e z" de um dispositivo móvel, experimente alterar a posição de seu celular/tablet no espaço.
-```
-
-
-### Aquisição de dados de sensores para Arduino (condutivimetria)
-
-#### BNCC: EM13CNT201, EM13CNT308, M13CNT301, M13CNT302 {.unnumbered}
-
-
-|   O exemplo abaixo ilustra uma aplicação para aquisição/controle em tempo real por navegador para uso de placa *Arduino* ou *ESP32*, elevando exponencialmente a aplicação do *JSPlotly* para experimentação real e *projetos STEAM experimentais*. 
-
-|   O *setup* apresenta uma leitura de dados de condutividade em solução aquosa contendo teores crescentes de NaCl (0 a 5% p/v). Foi utilizado uma placa Arduino Uno R3 com conexão *Web Serial* por USB a notebook rodando um aplicativo autônomo para *JSPlotly*. A condutividade foi obtida por um sensor TDS comercial (*sólidos dissolvidos totais*) com excitação por potencial alternado de onda quadrada (PWM) para minimizar efeitos de polarização, e *script* adaptado do fabricante. O sensor TDS opera em faixa de 3,3 a 5,0 V (input) com saída de 0 a 2,3 V, e corrente de 3 a 6 mA.
-\
-
-[![](Eq/arduino.png)](Eq/condutiv_JSPlotly.html){target="_blank"}
-*Exemplo de aplicação de JSPlotly para interfaceamente com Arduino. O gráfico apresenta medidas de condutividade em meio aquoso com medidor TDS para teores crescentes de NaCl (sonda no canto esquerdo). Clique na imagem para obter o aplicativo JSPlotly autônomo para condutividade.*
-\
-
-**Instruções:**
-
-1. Para conexão *Web Serial* é necessário instalação de *Python* ao computador (Windows ou Linux), e *setup* de servidor local. Para Windows baixe e instale o arquivo oficial para [Python](https://www.python.org/downloads/windows/), lembrando-se de clicar em *Add Python to PATH*, e digite os comandos no CMD dentro da pasta do aplicativo autônomo. Segue a orientação para Linux:
-
-- 1. Conecte o Arduino e componentes (sonda TDS, recipiente com água e sal);
-- 2. Copie, cole e rode o *script* do fabricante para TDS na IDE do Arduino conectado;
-- 3. Feche a IDE do Arduíno;
-- 4. Abra um Terminal na pasta do aplicativo autônomo do *JSPlotly* para Arduino (*condutiv_JSPlotly.html*);
-- 5. Digite: *python3 -m http.server*
-- 6. Abra o html autônomo do circuito no Chrome (nunca no Firefox);
-
-|   A leitura deverá iniciar em instantes. Caso não ocorra, verifique se a taxa de transferência para a IDE do Arduino confere com a do aplicativo (115200 bauds).
-\
-
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Como o aplicativo é escrito no JSPlotly, é possível personalizá-lo para diversas situações, como taxa de tranferência de dados, traços (tipo, cores, espessura), tipo de gráfico, entre outros. 
-```
-\
