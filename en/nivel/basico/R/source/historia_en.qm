@@ -1,0 +1,448 @@
+---
+title: "History"
+number-sections: true
+toc: true
+lang: en
+class: fundo-basico
+---
+
+<!-- ############# SOME CONFLICTS - MAP ################# --->
+
+<div class="hist-fundo"> <!--modifies for each area-->
+
+## Some notable conflicts in recent history (EM13CHS302, EM13CHS303, EM13CHS101)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+
+library(plotly)
+
+# Fictitious conflict data
+conflicts <- data.frame(
+country = c("Afghanistan", "Ukraine", "Syria", "Yemen", "Ethiopia"),
+latitude = c(33.93911, 48.3794, 34.8021, 15.5527, 9.145),
+longitude = c(67.70995, 31.1656, 38.9968, 48.5164, 40.489673),
+description = c(
+"Ongoing conflict with Taliban.",
+"Ongoing war since 2022.",
+"Civil war since 2011.",
+"Humanitarian crisis and civil war.",
+"Conflict between regional groups."
+)
+)
+
+# Create the interactive map
+mapa_conflitos <- plot_ly(
+data = conflicts,
+type = 'scattergeo',
+mode = 'markers',
+lat = ~latitude,
+lon = ~longitude,
+text = ~paste(country, "<br>", description),
+hoverinfo = "text",
+marker = list(
+size = 10,
+color = "red",
+line = list(width = 1, color = "black")
+)
+) %>%
+layout(
+title = "World Conflict Map",
+geo = list(
+showframe = FALSE,
+showcoastlines = TRUE,
+projection = list(type = "natural earth")
+)
+)
+
+# Show the map
+mapa_conflitos
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Fictitious conflict data
+conflicts <- data.frame(
+country = c("Afghanistan", "Ukraine", "Syria", "Yemen", "Ethiopia"),
+latitude = c(33.93911, 48.3794, 34.8021, 15.5527, 9.145),
+longitude = c(67.70995, 31.1656, 38.9968, 48.5164, 40.489673),
+description = c(
+"Ongoing conflict with Taliban.",
+"Ongoing war since 2022.",
+"Civil war since 2011.",
+"Humanitarian crisis and civil war.",
+"Conflict between regional groups."
+)
+)
+
+# Create interactive map
+conflict_map <- plot_ly(
+data = conflicts,
+type = 'scattergeo',
+mode = 'markers',
+lat = ~latitude,
+lon = ~longitude,
+text = ~paste(country, "<br>", description),
+hoverinfo = "text",
+marker = list(
+size = 10,
+color = "red",
+line = list(width = 1, color = "black")
+)
+) %>%
+layout(
+title = "World Conflict Map",
+geo = list(
+showframe = FALSE,
+showcoastlines = TRUE,
+projection = list(type = "natural earth")
+)
+)
+
+# Show the map
+mapa_conflitos
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="hist-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing the commands below in the code snippet:
+
+```{r, eval = FALSE}
+marker = list(
+size = 15, # Changed from 10 to 15 to increase the markers
+color = "red",
+line = list(width = 1, color = "black")
+)
+
+```
+
+</div>
+
+\
+<!-- ############# POPULATION GROWTH - MAP ################ --->
+
+<div class="hist-fundo"> <!--modify for each area-->
+
+## Population growth in New York, Tokyo, São Paulo and Mumbai (1960-2020) (EM13CHS201, EM13CHS202)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Dados fictícios de população ao longo do tempo
+dados_populacao <- data.frame(
+  cidade = rep(c("Nova York", "Tóquio", "São Paulo", "Mumbai"), each = 5),
+  latitude = c(40.7128, 40.7128, 40.7128, 40.7128, 40.7128,
+               35.6895, 35.6895, 35.6895, 35.6895, 35.6895,
+               -23.5505, -23.5505, -23.5505, -23.5505, -23.5505,
+               19.076, 19.076, 19.076, 19.076, 19.076),
+  longitude = c(-74.0060, -74.0060, -74.0060, -74.0060, -74.0060,
+                139.6917, 139.6917, 139.6917, 139.6917, 139.6917,
+                -46.6333, -46.6333, -46.6333, -46.6333, -46.6333,
+                72.8777, 72.8777, 72.8777, 72.8777, 72.8777),
+  ano = rep(seq(1960, 2020, by = 15), 4),
+  populacao = c(8, 12, 16, 20, 25,    # Nova York
+                10, 15, 20, 25, 30,   # Tóquio
+                7, 12, 18, 24, 30,    # São Paulo
+                6, 10, 16, 22, 28)    # Mumbai (em milhões)
+)
+
+# Criando o mapa interativo com slider no tempo
+mapa_populacao <- plot_ly(
+  data = dados_populacao,
+  type = 'scattergeo',
+  mode = 'markers',
+  lat = ~latitude,
+  lon = ~longitude,
+  frame = ~ano,  # Adiciona a animação por ano
+  text = ~paste(cidade, "<br>População:", populacao, "milhões"),
+  hoverinfo = "text",
+  marker = list(
+    size = ~populacao * 0.5,  # Ajusta o tamanho com base na população
+    color = "blue",
+    opacity = 0.7
+  )
+) %>%
+  layout(
+    title = "Evolução Populacional por Cidade (1960-2020)",
+    geo = list(
+      showframe = FALSE,
+      showcoastlines = TRUE,
+      projection = list(type = "natural earth")
+    )
+  )
+
+# Exibir o mapa
+mapa_populacao
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Dados fictícios de população ao longo do tempo
+dados_populacao <- data.frame(
+  cidade = rep(c("Nova York", "Tóquio", "São Paulo", "Mumbai"), each = 5),
+  latitude = c(40.7128, 40.7128, 40.7128, 40.7128, 40.7128,
+               35.6895, 35.6895, 35.6895, 35.6895, 35.6895,
+               -23.5505, -23.5505, -23.5505, -23.5505, -23.5505,
+               19.076, 19.076, 19.076, 19.076, 19.076),
+  longitude = c(-74.0060, -74.0060, -74.0060, -74.0060, -74.0060,
+                139.6917, 139.6917, 139.6917, 139.6917, 139.6917,
+                -46.6333, -46.6333, -46.6333, -46.6333, -46.6333,
+                72.8777, 72.8777, 72.8777, 72.8777, 72.8777),
+  ano = rep(seq(1960, 2020, by = 15), 4),
+  populacao = c(8, 12, 16, 20, 25,    # Nova York
+                10, 15, 20, 25, 30,   # Tóquio
+                7, 12, 18, 24, 30,    # São Paulo
+                6, 10, 16, 22, 28)    # Mumbai (em milhões)
+)
+
+# Criando o mapa interativo com slider no tempo
+mapa_populacao <- plot_ly(
+  data = dados_populacao,
+  type = 'scattergeo',
+  mode = 'markers',
+  lat = ~latitude,
+  lon = ~longitude,
+  frame = ~ano,  # Adiciona a animação por ano
+  text = ~paste(cidade, "<br>População:", populacao, "milhões"),
+  hoverinfo = "text",
+  marker = list(
+    size = ~populacao * 0.5,  # Ajusta o tamanho com base na população
+    color = "blue",
+    opacity = 0.7
+  )
+) %>%
+  layout(
+    title = "Evolução Populacional por Cidade (1960-2020)",
+    geo = list(
+      showframe = FALSE,
+      showcoastlines = TRUE,
+      projection = list(type = "natural earth")
+    )
+  )
+
+# Exibir o mapa
+mapa_populacao
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="hist-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing the commands below in the code snippet:
+
+```{r, eval = FALSE}
+# After the line lon = ~longitude
+frame = ~year, # Add the animation by year
+
+```
+
+</div>
+
+\
+<!-- ############# GEOLOGICAL ERAS - MAP ################ --->
+
+<div class="hist-fundo"> <!--modifies for each area-->
+
+## Some information about Geological Eras (EF06CI11, EF05HI02, EM13CHS301)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+# Dados sobre as eras geológicas e seus períodos
+dados_geologicos <- data.frame(
+  Regiao = c("América do Norte", "América do Sul", "Europa", "África", "Ásia", "Oceania"),
+  Era = c("Paleozoica", "Mesozoica", "Cenozoica", "Pré-Cambriana", "Mesozoica", "Cenozoica"),
+  Periodo = c("Devoniano (416-359 mi anos)", 
+              "Jurássico (199-145 mi anos)", 
+              "Quaternário (2,58 mi anos até presente)", 
+              "Proterozoico (2,5 bi a 541 mi anos)", 
+              "Triássico (251-199 mi anos)", 
+              "Holoceno (11,7 mil anos até presente)"),
+  Latitude = c(45, -15, 50, 0, 30, -25),
+  Longitude = c(-100, -60, 10, 20, 100, 135)
+)
+
+# Criar o mapa interativo
+fig <- plot_ly(
+  data = dados_geologicos,
+  type = "scattergeo",
+  mode = "markers",
+  lat = ~Latitude,
+  lon = ~Longitude,
+  text = ~paste(
+    "<b>Região:</b>", Regiao, "<br>",
+    "<b>Era:</b>", Era, "<br>",
+    "<b>Período:</b>", Periodo
+  ),
+  marker = list(size = 15, color = c("blue", "green", "red", "purple", "orange", "brown"))
+)
+
+# Layout do mapa com títulos
+fig <- fig %>%
+  layout(
+    title = "Eras e Períodos Geológicos - Distribuição Mundial",
+    geo = list(
+      showland = TRUE,
+      landcolor = "rgb(240, 240, 240)",
+      showcountries = TRUE,
+      countrycolor = "rgb(200, 200, 200)",
+      projection = list(type = "natural earth")
+    )
+  )
+
+# Exibir o mapa
+fig
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# Dados sobre as eras geológicas e seus períodos
+dados_geologicos <- data.frame(
+  Regiao = c("América do Norte", "América do Sul", "Europa", "África", "Ásia", "Oceania"),
+  Era = c("Paleozoica", "Mesozoica", "Cenozoica", "Pré-Cambriana", "Mesozoica", "Cenozoica"),
+  Periodo = c("Devoniano (416-359 mi anos)", 
+              "Jurássico (199-145 mi anos)", 
+              "Quaternário (2,58 mi anos até presente)", 
+              "Proterozoico (2,5 bi a 541 mi anos)", 
+              "Triássico (251-199 mi anos)", 
+              "Holoceno (11,7 mil anos até presente)"),
+  Latitude = c(45, -15, 50, 0, 30, -25),
+  Longitude = c(-100, -60, 10, 20, 100, 135)
+)
+
+# Criar o mapa interativo
+fig <- plot_ly(
+  data = dados_geologicos,
+  type = "scattergeo",
+  mode = "markers",
+  lat = ~Latitude,
+  lon = ~Longitude,
+  text = ~paste(
+    "<b>Região:</b>", Regiao, "<br>",
+    "<b>Era:</b>", Era, "<br>",
+    "<b>Período:</b>", Periodo
+  ),
+  marker = list(size = 15, color = c("blue", "green", "red", "purple", "orange", "brown"))
+)
+
+# Layout do mapa com títulos
+fig <- fig %>%
+  layout(
+    title = "Eras e Períodos Geológicos - Distribuição Mundial",
+    geo = list(
+      showland = TRUE,
+      landcolor = "rgb(240, 240, 240)",
+      showcountries = TRUE,
+      countrycolor = "rgb(200, 200, 200)",
+      projection = list(type = "natural earth")
+    )
+  )
+
+# Exibir o mapa
+fig
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# Data about geological eras and their periods
+geological_data <- data.frame(
+Region = c("North America", "South America", "Europe", "Africa", "Asia", "Oceania"),
+Era = c("Paleozoic", "Mesozoic", "Cenozoic", "Precambrian", "Mesozoic", "Cenozoic"),
+Period = c("Devonian (416-359 million years)",
+"Jurassic (199-145 million years)",
+"Quaternary (2.58 million years to present)",
+"Proterozoic (2.5 billion to 541 million years)",
+"Triassic (251-199 million years)",
+"Holocene (11.7 million years to present)"),
+Latitude = c(45, -15, 50, 0, 30, -25),
+Longitude = c(-100, -60, 10, 20, 100, 135)
+)
+# Create interactive map
+fig <- plot_ly(
+data = dados_geologicos,
+type = "scattergeo",
+mode = "markers",
+lat = ~Latitude,
+lon = ~Longitude,
+text = ~paste(
+"<b>Region:</b>", Region, "<br>",
+"<b>Era:</b>", Era, "<br>",
+"<b>Period:</b>", Period
+),
+marker = list(size = 15, color = c("blue", "green", "red", "purple", "orange", "brown"))
+)
+
+# Map layout with titles
+fig <- fig %>%
+layout(
+title = "Geological Eras and Periods - Worldwide Distribution",
+geo = list(
+showland = TRUE,
+landcolor = "rgb(240, 240, 240)",
+showcountries = TRUE,
+countrycolor = "rgb(200, 200, 200)",
+projection = list(type = "natural earth")
+)
+)
+
+# Show map
+fig
+```
+
+<!-- ::: -->
+
+</div>
+
+<div class="hist-fundo2"> <!--modifies to each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing alternatively the commands below in the code snippet:
+
+```{r, eval = FALSE}
+marker = list(
+size = 10, # Marker size
+color = "blue", # Uniform color for simplicity
+opacity = 0.7 # Transparency to highlight on the map
+)
+
+```
+
+</div>
+
+\

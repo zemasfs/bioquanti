@@ -1,0 +1,270 @@
+---
+title: "Enzymes"
+---
+
+<!-- Google tag (gtag.js) -->
+
+```{=html}
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+```
+```{=html}
+<script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+
+ gtag('config', 'G-S1L73VGCG5');
+</script>
+```
+
+
+## Active site
+
+| Load the [1hew](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1hew&script=Console){target="_blank"}
+model of lysozyme and visualize its structure without solvent:
+
+```{r, eval=FALSE}
+delete water; cartoon only; color structure
+```
+
+| Identify and highlight the residues of the *active site*\index{active site}:
+
+```{r, eval=FALSE}
+select all; color grey; select (asp52,glu35); wireframe 100;color cpk
+```
+
+| Now click on the two *catalytic residues* to identify them. See which ligand (inhibitor, for example) is present in the structure. To do this:
+
+```{r, eval=FALSE}
+select hetero;show groups
+```
+
+| Based on the list of groups, identify the inhibitor\index{inhibitor} that is complexed to the active site:
+
+```{r, eval=FALSE}
+select nag;wireframe 100;color green
+```
+
+| This is the inhibitor *NAG, N-acetyl-glucosamine*. Based on this observation, would you say that the interaction with the inhibitor occurs on the surface of the protein or in its *core* (center)? Try it:
+
+```{r, eval=FALSE}
+select protein;color grey;spacefill only; spacefill 500; select glu35;color blue;select asp52;color magenta
+```
+
+| Rotate the molecule and observe how the trisaccharide interacts in the cleft of the enzyme's active site.
+
+## Coevolution and active site
+
+| Enzymes can act in a similar way functionally, suggesting the conservation of their active site. To illustrate this, *load simultaneously two PDB files*, referring to human acetylcholinesterase (*PDB 1b41*) and the electric fish *Torpedo californica* (*PDB 1acj*):
+
+```{r, eval=FALSE}
+load files "1acj.pdb" "1b41.pdb" # Important: the files need to be in the main Jmol directory (usually the root directory, if not hover command to change it).
+```
+
+| Now visualize both structures:
+
+```{r, eval=FALSE}
+frame*
+```
+
+| Define the active sites present in both models:
+
+```{r, eval=FALSE}
+define fish 200,440,357/1.1
+define human 203,334,447/2.1
+```
+
+| Now restrict the visualization to only the active sites of the enzymes:
+
+```{r, eval=FALSE}
+restrict fish,human; wireframe 100; select fish; color blue; select human; color green
+```
+
+| Finally, overlay both sites using a *Jmol* algorithm for **structural homology**\index{structural homology}, and zoom in on one of the sites:
+
+```{r, eval=FALSE}
+compare {2.1} {1.1} rotate translate 5.0; zoom {human} 0
+```
+
+| Rotate the molecules and observe the precise topological overlap of some residues in the active site of human and fish acetylcholinesterase.
+
+## Induced fit
+
+| Substrates can fit into the active site of enzymes by the *key-lock*\index{key-lock model} or *symmetry*\index{symmetry model} model of Monod, Wyman and Changeaux (MWC), as well as by the *induced fit*\index{induced fit model} model of Koshland, Nemethy and Filmer (KNM).
+
+| The latter can be visualized by downloading two files related to *hexokinase*, with and without the substrate present in the structure, and superimposing them for interpretation:
+
+```{r, eval=FALSE}
+load files "2yhx.pdb" "1hkg.pdb"; frame*;cartoon only
+select 2.1;color green;select otg;wireframe 150;color cpk
+select 1.1;color grey
+compare {2.1} {1.1} rotate translate 2
+```
+
+| Remember that the molecule *OTG* can be previously visualized for *2yhx* by *"show groups"*. In the PDB file it represents *O-toluylglucosamine*, an inhibitor that competes with glucose for the enzyme's active site.
+
+| Rotate the structure and notice that the enzyme in green (with OTG) is more closed than the gray one (without OTG). This is interpreted as an *induced fit*, with the closing of the hinge between the two domains of the enzyme occurring only in the presence of the OTG molecule and, by deduction, of the hexokinase substrate (glucose).
+
+## Enzyme activation
+
+| As molecules, enzymes do not differentiate between dietary and endogenous substrates. Thus, proteolytic enzymes do not distinguish whether a protein to be degraded came from the diet or from the endothelium of the blood vessel. Thus, evolution provided enzyme activation events for inactive precursors, or zymogens\index{zymogen}, outside their producing tissue, in order to minimize the risks of autodigestion of intracellular proteins.
+
+| An example of *zymogen activation* can be observed from chymotrypsinogen. To do this, load the file [2cga](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=2cga&script=Console){target="_blank"}, and represent it in ribbons with a single color:
+
+```{r, eval=FALSE}
+show trace;color grey
+```
+
+| Rotate the structure and notice that the crystal is represented by two molecules, giving rise to a quaternary structure. In fact, chymotrypsinogen has only one polypeptide chain (*tertiary structure*), although it was deposited in the PDB as a crystal containing two molecules, probably due to some technical limitation.
+
+| During the activation of the zymogen to its active form, chymotrypsin, four peptide bonds are hydrolyzed, releasing two peptides. Illustrating:
+
+```{r, eval=FALSE}
+cartoon only;color lightblue;select (13,14,15,16,146,147,148,149);color red
+```
+
+| The resulting amino-terminal residue, *Ile16*, folds toward the protein core interacting with *Asp194*, promoting a local conformational change:
+
+```{r, eval=FALSE}
+select ile16; wireframe 0.5;color yellow
+select asp194;wireframe 0.5;color green
+```
+
+| This transformation produces a hydrophobic pocket for substrate binding, close to the *catalytic triad* of the enzyme (Asp102, His57, and Ser195). Illustrating this conformational transition:
+
+```{r, eval=FALSE}
+select(asp102,his57,ser195);wireframe only; wireframe 0.5;color cpk
+```
+
+## Allosteric enzymes
+
+| By definition, the term refers to enzymes that usually have multiple subunits and that have regulatory sites that are distinct from the active site. In these so-called *regulatory sites*\index{regulatory site}, the binding of an effector molecule can increase or decrease the activity of the enzyme, a predicate that is absent in chemical catalysts.
+
+| An illustrative example of an allosteric enzyme is *phosphofructokinase-1* or *PFK1*, which participates in the anaerobic metabolism of energy production from the oxidation of carbohydrates. So, load it by [1pfk](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1pfk&script=Console){target="_blank"}
+".pdb", represent it as usual, and identify its active site:
+
+```{r, eval=FALSE}
+cartoon only;color grey;select (asp127,arg171);wireframe 150;color pink
+```
+
+| Now identify the non-protein molecules in the model:
+
+```{r, eval=FALSE}
+select all;show groups
+```
+
+| Note the presence of the molecules *FBP (fructose biphosphate)* and *ADP (adenosine diphosphate)*. Identify them in the structure:
+
+```{r, eval=FALSE}
+select (fbp,adp);wireframe 150;color cpk
+```
+
+| Note that 6 molecules adsorbed to the enzyme crystal appeared. To better understand this quantity, colorize the protein by its chains:
+
+```{r, eval=FALSE}
+select protein;color chain
+```
+
+| Rotate the structure and notice that it is a dimer, with each subunit containing 2 ADP molecules and one FBP molecule. In fact, PFK1 is a tetramer, although its crystallographic structure deposited in the PDB shows only two chains. Zoom in on the structure and see these details.
+
+| Identify the allosteric effector by:
+
+```{r, eval=FALSE}
+select adp326:*.c8;label "ADP effector";color label black
+```
+
+| If you think the text is poorly positioned for reading, try adding at the end:
+
+```{r, eval=FALSE}
+set labelfront
+```
+
+| In a nutshell, PFK1 converts a fructose-6P molecule into fructose 1,6-biP (FBP), a reaction catalyzed in the presence of ATP. Thus, ADP acts as a positive regulator of its activity, or allosteric activator (see: excess ADP signals the cell a need for ATP synthesis).
+
+| An allosteric effector promotes conformational changes in the interaction with its site, which propagate along the protein structure reaching the active site. Note that in the generated structure, the allosteric site of PFK1 is intercalated between the dimer chains, and is considerably distant from the active site:
+
+```{r, eval=FALSE}
+select(asp127,arg171)
+wireframe only;wireframe 0.3
+color pink
+```
+
+| To calculate this distance, double-click on the ADP effector and move the mouse pointer close to the enzyme's active site. For comparison, distances between 3 and 6 nm are commonly found for lipid bilayers.
+
+| Since these compounds adsorb on the enzyme in sites distinct from the active site, they are called *allosteric effectors*\index{allosteric effector}, and their adsorption sites, *allosteric sites*\*index{allosteric site}}. The interaction of an effector at an allosteric site locally alters the conformation of the protein, reaching its active site and resulting in the modulation of its biological activity. Thus, depending on the effector, the subunit equilibrates between the **inactive form T and the active form R**. Two models are proposed for this equilibrium: the **sequential model**, in which each effector sequentially alters the conformation of the following chain, and the **repair model**, in which an effector can simultaneously alter more than one polypeptide chain.
+
+## Catalysis Mechanisms
+
+| Enzymes catalyze chemical reactions in basically three distinct ways: *acid-base, covalent and metallic catalysis*. However, acid-base and covalent catalysis covers the vast majority of processes, due to the ionization of amino acid residues in the active site of enzymes. Regardless of the mode of action, these mechanisms involve:
+
+1) reduction of degrees of freedom and consequent reduction of entropy for the reaction;
+
+2) the *proximity effect*\index{proximity effect} of the substrate and its correct positioning in the enzyme's active site;
+
+3) weak bonds between the substrate and the enzyme;
+
+4) the possibility of induced adjustments of the reagent on the enzyme.
+
+| Among the weak interactions, the ionic pairs that can be formed with the side chains of Asp, Glu, His, Lys, Arg, His residues stand out, as well as group transfers involving Ser, Cys and Tyr residues.
+
+### Acid-base catalysis.
+
+| How does lysozyme catalyze [1hew](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1hew&script=Console){target="_blank"}
+its substrate? Briefly, a six-residue portion of a cell wall polysaccharide binds to the enzyme's cleft. Cleavage then occurs between the 4th and 5th residues of the hexasaccharide unit, and involves an acid catalysis mechanism to break the glycosidic bond. In this, *Glu35*-COOH is found in a nonpolar cleft that contributes to its unusual pKa of 6.5 (the normal would be below 4.5). *Asp20*-COOH, in turn, is found in a more polar environment, having a pKa value of 3.5. The enzyme as a whole develops its optimal activity at pH 5.0, midway between the two pKa values ​​of the active site residues.
+
+| During catalysis, the Glu35-COOH residue is protonated at neutral pH, acting as an acid and donating a proton to the oxygen involved in the glycosidic bond between the 4th and 5th residues of the hexasaccharide, and whose bond is "twisted" inside the enzyme, facilitating its rupture. Asp52-COO$^{-}$, in turn, being deprotonated at neutral pH, acts by forming an ionic pair with the unstable intermediate. The nucleophilic attack results in the formation of an intermediate covalent complex, an *oxocarbocation*\index{oxocarbocation}.
+
+| In the next phase, Glu35 acts as a base, accepting a proton from a water molecule (nucleophile) resulting from the substitution of an alcohol formed in the first reaction (released group), with consequent addition of the hydroxide ion to the carbocation. There are other weak interactions that stabilize the binding of the inhibitor (and therefore of the substrate) to the active site of the enzyme. For example, H-bonds between -NH$_{2}$, -CO and -COOH groups of nearby residues, such as Asn, Ala and Trp, to the -OH groups of the trisaccharide.
+
+| You can identify them by restricting the visualization of lysozyme:
+
+```{r, eval=FALSE}
+restrict (asn59,ala107,trp63,trp62,nag);wireframe only; wireframe 100;color structure
+```
+
+| And you can visualize each residue involved by:
+
+```{r, eval=FALSE}
+select (asn59,ala107,trp63,trp62) and *.ca; label "\%n \%R"
+```
+
+| You can also define this set of residues for future analysis, or focused magnification:
+
+```{r, eval=FALSE}
+select (asn59,ala107,trp63,trp62)
+define estab selected
+select estab
+zoom {estab} 0
+```
+
+| The visual effect is greater when starting from the global view of the enzyme. One of these interactions can be seen by the hydrogen bonds present:
+
+```{r, eval=FALSE}
+calculate hbonds
+```
+
+| A more agile option is to look at the ligand interactions directly from the PDB site, [RSCB-PDB](https://www.rcsb.org/){target="_blank"}. To do this, type "1hew" in the search field to get lysozyme, scroll down to *Small Molecules* and click on the *2D Diagram \& Interactions* image.
+
+## Covalent catalysis
+
+| Another type of enzymatic mechanism involves a covalent binding of the substrate to a key residue in the enzyme's active site, with formation of an intermediate product that is released before the end of the reaction. The following example describes the mechanism of covalent catalysis of chymotrypsin, [5cha.pdb](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=5cha&script=Console){target="_blank"}, a proteolytic enzyme that harbors the *catalytic triad Ser195, His57, and Asp102*.
+
+| Briefly, the interaction of the peptide substrate compresses the distance of two specific residues in the enzyme active site, forming an *H-bond* between His57 (electrophile, with anomalous pKa of 11 in the enzyme) and Ser195, promoting an abstraction of a proton from this, making it a potent nucleophile. Subsequently, Ser195 promotes an electrophilic attack on a carbonyl of the substrate (peptide bond), resulting in a covalent tetrahedral acyl-enzyme intermediate (*acylation phase*). Thus, Asp102 stabilizes His57 with a very low energy barrier H-bond, close to that of a covalent bond, and allowing the flow of electrons to the second nitrogen of the imidazole ring of His57, increasing its alkalinity, and promoting its capacity for deprotonation of Ser195.
+
+| A double C-O bond of the substrate is converted to a single bond in the formation of the **tetrahedral intermediate**, consequently producing an *oxyanion*\index{oxyanion} (negatively charged oxygen) which occupies a vacant position (*oxyanionic cleft*\index{oxyanionic cleft}) and interacts with the polypeptide chain of the enzyme, specifically the -NH$_{2}$ groups of Gly193 and Ser195.
+
+In the subsequent *deacylation phase*, the steps are reversed, with a nucleophilic attack promoted by a water molecule interacting with His57 at the acyl carbon of the substrate. In this way, His57 acts as an acid, donating a proton to the nitrogen of the group belonging to the peptide bond to be cleaved. In the final phase, the peptide is released from the cleavage of the bond between Ser195 and the carbonyl carbon (-C=O) of the substrate.
+
+| Thus, the proposed mechanism for chymotrypsin includes a covalent catalysis (by nucleophilic oxygen), together with an acid-base catalysis (group proton donation
+
+| To visualize the actors involved in this catalysis, load chymotrypsin again by [5cha](https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=5cha&script=Console){target="_blank"} and visualize the proximity of its catalytic triad:
+
+```{r, eval=FALSE}
+trace only
+color grey
+select (Ser195,His57,Asp102) and *.ca
+label "\%n \%R"
+color label orange
+set labelfront
+```
+

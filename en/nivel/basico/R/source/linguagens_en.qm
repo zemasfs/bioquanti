@@ -1,0 +1,155 @@
+---
+title: "Languages"
+number-sections: true
+toc: true
+lang: en
+class: fundo-basico
+---
+
+<div class="ling-fundo">
+
+**Frequency of words identified in text (EM13LGG703, EM13LGG704, EM13LGG705)**
+
+::: {.grid}
+
+::: {.g-col-6}
+
+```{r, echo=FALSE}
+# Install the required packages (if they are not already installed)
+if (!requireNamespace("plotly", quietly = TRUE)) install.packages("plotly")
+if (!requireNamespace("tm", quietly = TRUE)) install.packages("tm")
+if (!requireNamespace("wordcloud", quietly = TRUE)) install.packages("wordcloud")
+
+# Load packages
+library(plotly)
+library(tm)
+
+# Example text (can be replaced by another text or set of texts)
+text <- c(
+"Reading is essential for understanding the world.",
+"Reading broadens horizons and awakens creativity.",
+"Language and creativity connect us and transform knowledge into something accessible."
+)
+# Create a corpus
+corpus <- Corpus(VectorSource(text))
+
+# Text preprocessing
+corpus <- tm_map(corpus, content_transformer(tolower)) # Transform to lowercase letters
+corpus <- tm_map(corpus, removePunctuation) # Remove punctuation
+corpus <- tm_map(corpus, removeNumbers) # Remove numbers
+corpus <- tm_map(corpus, removeWords, stopwords("pt")) # Remove stopwords in Portuguese
+
+# Create a term-document matrix
+tdm <- TermDocumentMatrix(corpus)
+matrix <- as.matrix(tdm)
+
+# Add the word frequencies
+frequencies <- sort(rowSums(matrix), decreasing = TRUE)
+frequency_data <- data.frame(
+Word = names(frequencies),
+Frequency = frequencies
+)
+
+# Create interactive graph with Plotly
+graph <- plot_ly(
+frequency_data,
+x = ~Word,
+y = ~Frequency,
+type = "bar",
+text = ~paste("Frequency:", Frequency),
+hoverinfo = "text"
+) %>%
+layout(
+title = "Frequency of Words in Text",
+xaxis = list(title = "Words"),
+yaxis = list(title = "Frequency"),
+showlegend = FALSE
+)
+
+# Display the interactive graph
+graph
+```
+:::
+
+::: {.g-col-6}
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# Install the required packages (if they are not already installed)
+if (!requireNamespace("plotly", quietly = TRUE)) install.packages("plotly")
+if (!requireNamespace("tm", quietly = TRUE)) install.packages("tm")
+if (!requireNamespace("wordcloud", quietly = TRUE)) install.packages("wordcloud")
+
+# Load packages
+library(plotly)
+library(tm)
+
+# Example text (can be replaced by another text or set of texts)
+text <- c(
+"Reading is essential for understanding the world.",
+"Reading broadens horizons and awakens creativity.",
+"Language and creativity connect us and transform knowledge into something accessible."
+)
+
+# Create a corpus
+corpus <- Corpus(VectorSource(text))
+
+# Text preprocessing
+corpus <- tm_map(corpus, content_transformer(tolower)) # Convert to lowercase letters
+corpus <- tm_map(corpus, removePunctuation) # Remove punctuation
+corpus <- tm_map(corpus, removeNumbers) # Remove numbers
+corpus <- tm_map(corpus, removeWords, stopwords("pt")) # Remove stopwords in Portuguese
+
+# Create a term-document matrix
+tdm <- TermDocumentMatrix(corpus)
+matrix <- as.matrix(tdm)
+
+# Sum the word frequencies
+frequencies <- sort(rowSums(matrix), decreasing = TRUE)
+frequency_data <- data.frame(
+Word = names(frequencies),
+Frequency = frequencies
+)
+
+# Create an interactive graph with Plotly
+graph <- plot_ly(
+data_frequencies,
+x = ~Word,
+y = ~Frequency,
+type = "bar",
+text = ~paste("Frequency:", Frequency),
+hoverinfo = "text"
+) %>%
+layout(
+title = "Frequency of Words in Text",
+xaxis = list(title = "Words"),
+yaxis = list(title = "Frequency"),
+showlegend = FALSE
+)
+
+# Display the interactive graph
+graph
+```
+
+:::
+
+:::
+
+</div>
+
+<div class="ling-fundo2"> <!--modify for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing the commands below in the code snippet:
+
+```{r, eval = FALSE}
+# Addition right after hoverinfo, changes the colors
+
+marker = list(color = ~Frequency, colorscale = "Blues") # Color scale "Blues"
+
+```
+
+</div>
+
+\
+

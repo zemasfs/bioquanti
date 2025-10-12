@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSPlotly</title>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.20.0/plotly.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.1/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-statistics@7.8.3/dist/simple-statistics.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ml-regression@6.0.0/dist/ml-regression.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/ml-levenberg-marquardt@3.3.0/dist/ml-levenberg-marquardt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.min.js"></script>
+
+ 
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { display: flex; justify-content: space-between; align-items: flex-start; }
+        #grafico { width: 55%; height: 500px; }
+        #editor-container { width: 40%; }
+        #editor { width: 100%; height: 350px; border: 1px solid #ccc; }
+
+.header-bar {
+    width: 100%;
+    height: 30px; 
+    background: linear-gradient(to right, #F5F5DC, #EDEAE0); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #5a4a42; /
+    letter-spacing: 2px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 40px;  
+}
+
+
+
+.license-info {
+    position: fixed;
+    bottom: 10px;
+    right: 500px;
+    font-size: 12px;
+    color: gray;
+    font-family: Arial, sans-serif;
+    opacity: 0.8;
+}
+
+
+.dev-info {
+    position: absolute;
+    top: 3px; 
+    left: 10px; 
+    font-size: 13px !important; 
+    color: #999; 
+    font-family: Arial, sans-serif;
+}
+
+.dev-info a {
+    text-decoration: none;
+    color: #888; 
+    font-weight: bold;
+}
+.dev-info a:hover {
+    text-decoration: underline;
+    color: #666; /
+}
+
+       
+.button-container { 
+    display: flex; 
+    gap: 10px; 
+    margin-top: 10px; 
+}
+
+button { 
+    padding: 10px; 
+    cursor: pointer; 
+    border: none; 
+    font-size: 14px; 
+    border-radius: 5px; 
+    transition: background 0.3s ease-in-out; 
+}
+
+
+.add-btn { 
+    background: linear-gradient(to bottom, #e6f2e6, #d0e6d0); 
+    color: #2d6a2d; 
+}
+
+
+.reset-btn { 
+    background: linear-gradient(to bottom, #fae3e3, #f4cccc); 
+    color: #a83232; 
+}
+
+
+.save-btn { 
+    background: linear-gradient(to bottom, #fff4e6, #ffe0b2); 
+    color: #8a5a00; 
+}
+
+
+.save-html-btn { 
+    background: linear-gradient(to bottom, #f5f5f5, #e0e0e0); 
+    color: #444; 
+}
+
+.clear-btn {
+    background-color: #6c757d; 
+    color: white;
+}
+
+
+.remove-btn {
+    background-color: #faf482;
+    color: #85802a;
+}
+
+.clear-btn {
+    background-color: #dc3545; 
+    color: white;
+    padding: 10px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+.clear-btn:hover {
+    background-color: #a71d2a;
+}
+
+
+.author-info { position: absolute; top: 60px; right: 20px; font-size: 14px; color: gray; }
+.logo { position: fixed; bottom: 10px; right: 20px; width: 100px; z-index: 10;} 
+.ascii-logo {
+ position: fixed;
+ bottom: 10px;
+ right: 20px;
+ font-family: monospace;
+ font-size: 2px;
+ white-space: pre;
+ text-align: right;
+ z-index: 10; 
+ }
+
+</style>
+
+
+<style>
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #grafico {
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+    #editor-container {
+      width: 100% !important;
+    }
+
+    #editor {
+      height: 300px !important;
+    }
+
+    .button-container {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    button {
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .header-bar {
+      font-size: 16px;
+    }
+
+    .popup {
+      width: 90%;
+    }
+
+    .external-link {
+      position: relative;
+      top: auto;
+      right: auto;
+      margin-top: 10px;
+      text-align: right;
+    }
+  }
+</style>
+
+
+<style>
+  body.dark-mode {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+
+  body.dark-mode .header-bar {
+    background: linear-gradient(to right, #2e2e2e, #1a1a1a);
+    color: #f0f0f0;
+  }
+
+  body.dark-mode .button-container button {
+    background: #333 !important;
+    color: #ddd !important;
+  }
+
+  body.dark-mode .clear-btn {
+    background-color: #a71d2a !important;
+    color: white !important;
+  }
+
+  body.dark-mode #editor {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+
+  body.dark-mode .popup {
+    background-color: #2b2b2b;
+    color: #eee;
+  }
+</style>
+
+
+</head>
+
+
+<body>
+    <div class="header-bar">JSPlotly - Interactive Graphics </div>
+
+<button id="toggleTheme" onclick="alternarTema()" style="position: fixed; top: 10px; left: 10px; z-index: 999; background: none; border: none; font-size: 22px; cursor: pointer;">
+  🌙
+</button>
+
+<div class="external-link">
+  <a href="https://bioquanti.netlify.app/" target="_blank">🔗 Bioquanti</a>  <!--- link para o site --->
+</div>
+
+
+<div class="dev-info">
+    Developed with 
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JavaScript</a> 
+    and 
+    <a href="https://plotly.com/javascript/" target="_blank">Plotly.js</a>
+</div>
+
+<div class="container">
+
+ <div id="grafico"></div>
+
+<div id="popup" class="popup">
+    <p>Save as:</p>
+    <button onclick="salvarImagem('png')">PNG</button>
+    <button onclick="salvarImagem('svg')">SVG</button>
+    <button onclick="fecharPopup()">Cancelar</button>
+</div>
+
+<style>
+.popup {
+    display: none;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+.popup button {
+    margin: 5px;
+    padding: 8px;
+}
+
+.external-link {  
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+}
+
+.external-link a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.external-link a:hover {
+  text-decoration: underline;
+  color: #0077cc;
+}
+
+</style>
+
+  <div id="editor-container">
+
+<div style="display: flex; align-items: center; gap10px; margin-bottom: 5px;">
+  <input type="file" id="fileInput" accept=".js" onchange="carregarEquacaoAuto(event)">
+  <span style="font-size: 13px; font-family: Arial, sans-serif; color: #2e7d57;">
+    For easy code construction, try the custom GPT
+    <a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly" 
+       target="_blank" 
+       style="color: #2e7d57 !important; font-weight: bold; text-decoration: underline;">
+      GSPlotly
+    </a>
+  </span>
+</div>
+
+
+
+       <div id="editor"></div>
+       <div class="button-container">
+       <button class="add-btn" onclick="adicionarCurva()">add plot</button>
+       <button class="remove-btn" onclick="removerUltimaCurva()">remove last</button>
+       <button class="reset-btn" onclick="resetarGrafico()">clean plot</button>
+       <button class="save-html-btn" onclick="salvarHTML()">save html</button>
+       <button class="save-btn" onclick="salvarEquacao()">save script</button>                
+       <button class="clear-btn" onclick="limparEditor()">clean script</button> 
+  </div>
+</div>
+    </div>
+    
+    
+<script>
+ var curvas = [];
+ var cores = ["red", "blue", "green", "purple", "orange", "brown", "pink", "gray"];
+ var corIndex = 0;
+ var editor = ace.edit("editor");
+ editor.setTheme("ace/theme/github");
+ editor.session.setMode("ace/mode/javascript");
+ editor.session.setUseWrapMode(true);
+ editor.setOptions({
+  fontSize: "14px",
+  wrap: true,
+  showPrintMargin: false
+});
+
+
+
+var customSaveButton = {
+    name: 'PNG or SVG',
+    icon: Plotly.Icons.disk,
+    click: function(gd) {
+        abrirPopup();
+    }
+};
+
+
+var config = {
+  modeBarButtonsToAdd: [
+    'toggleSpikelines',
+    'hoverCompareCartesian',
+    customSaveButton,
+    {
+      name: 'change color',
+      icon: Plotly.Icons.camera,
+      click: function(gd) {
+        const ultima = curvas.length - 1;
+        const novaCor = cores[Math.floor(Math.random() * cores.length)];
+        Plotly.restyle(gd, { 'line.color': novaCor }, [ultima]);
+        curvas[ultima].line.color = novaCor;
+      }
+    }
+  ],
+  showEditInChartStudio: true,
+  plotlyServerURL: "https://chart-studio.plotly.com",
+  displaylogo: false,
+  displayModeBar: true,
+  responsive: true,
+  scrollZoom: true,
+  editable: true,
+  modeBarButtonsToRemove: [
+    'select2d',
+    'lasso2d',
+    'resetScale2d',
+    'zoomOut2d',
+    'zoomIn2d',
+    'toImage'
+  ]
+};
+ 
+
+function executarCodigo() {
+    try {
+        var codigoUsuario = editor.getValue().trim();
+        Plotly.purge('grafico'); 
+        eval(codigoUsuario);
+    } 
+
+catch (error) {
+           
+    }
+}
+
+function limparGrafico() {
+    Plotly.purge('grafico');
+}
+
+function carregarEquacaoAuto(event) {
+ const file = event.target.files[0];
+ if (file) {
+   const reader = new FileReader();
+         reader.onload = function(e) {
+         editor.setValue(e.target.result, -1);
+                 };
+         reader.readAsText(file);
+                 }
+           }
+
+function adicionarCurva() {
+    try {
+        var codigoUsuario = editor.getValue().trim();
+        var func = new Function(codigoUsuario + "; return { trace, layout, x_values, y_values };");
+        var resultado = func();
+
+let novaCor = cores[Math.floor(Math.random() * cores.length)];
+let novaCurva;
+
+if (resultado.trace) {
+    novaCurva = resultado.trace;
+
+    if (!novaCurva.line) {
+        novaCurva.line = {};
+    }
+    if (!novaCurva.line.color) {
+        novaCurva.line.color = novaCor;
+    }
+} else if (resultado.x_values && resultado.y_values) {
+    novaCurva = {
+        x: resultado.x_values,
+        y: resultado.y_values,
+        type: 'scatter',
+        mode: 'lines',
+        line: { color: novaCor }
+    };
+} else {
+    alert("O código precisa retornar 'trace' ou 'x_values' e 'y_values'.");
+    return;
+}
+
+
+        curvas.push(novaCurva);
+        Plotly.newPlot("grafico", curvas, resultado.layout, config);
+    } catch (error) {
+        alert("Erro ao adicionar curva: " + error.message);
+        console.error(error);
+    }
+}
+
+
+function resetarGrafico() {
+            curvas = [];
+            corIndex = 0;
+            Plotly.newPlot('grafico', [], {xaxis: { title: 'X' }, yaxis: { title: 'Y' } });
+        }
+
+function salvarEquacao() {
+    var blob = new Blob([editor.getValue()], { type: "text/javascript" });
+    var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "equacao_salva.js";
+        document.body.appendChild(a);
+        a.click();
+            document.body.removeChild(a);
+       }
+
+        
+
+function salvarHTML() {
+    var plotlyData = JSON.parse(JSON.stringify(curvas));
+    var plotlyLayout = document.getElementById('grafico').layout;
+    var htmlContent = '<!DOCTYPE html>\n' +
+                '<html>\n' +
+                '<head>\n' +
+                '    <meta charset="UTF-8">\n' +
+                '    <title>Gráfico Salvo</title>\n' +
+                '    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.20.0/plotly.min.js"><\/script>\n' +
+                '</head>\n' +////
+                '<body>\n' +
+                '    <div id="grafico" style="width: 100%; height: 600px;"></div>\n' +
+                '    <script>\n' +
+                '        var data = ' + JSON.stringify(plotlyData) + ';\n' +
+                '        var layout = ' + JSON.stringify(plotlyLayout) + ';\n' +
+                '        Plotly.newPlot("grafico", data, layout);\n' +
+                '    <\/script>\n' +
+                '</body>\n' +
+                '</html>';
+
+var blob = new Blob([htmlContent], { type: 'text/html' });
+var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'grafico_interativo.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+        }
+
+function limparEditor() {
+    editor.setValue("", -1); 
+    }
+
+function removerUltimaCurva() {
+    if (curvas.length > 0) {
+    curvas.pop(); 
+    atualizarGrafico(); 
+        } else {
+        alert("Não há curvas para remover!");
+      }
+    }
+
+
+function atualizarGrafico() {
+    Plotly.newPlot('grafico', curvas, {
+        title: 'Gráfico Interativo',
+        xaxis: { title: 'X' },
+        yaxis: { title: 'Y' },
+        showlegend: true
+    });
+}
+
+function abrirPopup() {
+    document.getElementById('popup').style.display = 'block';
+}
+
+function fecharPopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+
+function salvarImagem(formato) {
+    Plotly.downloadImage('grafico', {format: formato, filename: 'grafico_interativo'});
+    fecharPopup();
+}
+
+
+function limparTudo() {
+   editor.setValue("", -1);
+     let graficoDiv = document.getElementById("grafico");
+     if (graficoDiv) {
+            Plotly.newPlot("grafico", [], {
+            xaxis: { title: "Eixo X" },
+            yaxis: { title: "Eixo Y" }
+        });
+        graficoDiv.data = [];
+    }
+}
+
+
+// Definir a equação quadrática padrão
+var codigoPadrao = `
+
+// Compostos do ciclo
+const compostos = [
+  'Acetil‑CoA', 'Citrato', 'Isocitrato', 'α‑Cetoglutarato',
+  'Succinil‑CoA', 'Succcinato', 'Fumarato', 'Malato'
+];
+
+const enzimas = [
+  'Citrato Sintase', 'Aconitase', 'Isocitrato DH', 'α‑cetoglutarato DH',
+  'Succinil-CoA Sintetase', 'Succcinato DH', 'Fumarase', 'Malato DH'
+];
+
+const saidas = [
+  '', '', 'CO₂ + NADH', 'CO₂ + NADH',
+  'GTP', 'FADH₂', '', 'NADH'
+];
+
+// Coordenadas circulares
+const n = compostos.length;
+const raio = 1.5;
+const ang = 2 * Math.PI / n;
+const x = [], y = [];
+
+for (let i = 0; i < n; i++) {
+  const theta = i * ang - Math.PI/2;
+  x.push(raio * Math.cos(theta));
+  y.push(raio * Math.sin(theta));
+}
+
+// Trace principal (ciclo)
+const trace = {
+  x: [...x, x[0]],
+  y: [...y, y[0]],
+  mode: 'lines+markers+text',
+  type: 'scatter',
+  text: compostos,
+  textposition: 'bottom center',
+  marker: { size: 10, color: 'orange' },
+  line: { shape: 'spline', color: '#888' }
+};
+
+// Anotações para enzimas (vermelho) e saídas (verde)
+const annotations = [];
+for (let i = 0; i < n; i++) {
+  annotations.push({
+    x: x[i] * 1.2,
+    y: y[i] * 1.2,
+    text: enzimas[i],
+    showarrow: false,
+    font: { size: 10, color: 'red' }  // ← COR VERMELHA PARA ENZIMAS
+  });
+
+  if (saidas[i]) {
+    annotations.push({
+      x: x[i] * 1.4,
+      y: y[i] * 1.4,
+      text: saidas[i],
+      showarrow: false,
+      font: { size: 9, color: 'green' }
+    });
+  }
+}
+
+// Layout circular
+const layout = {
+  title: 'Ciclo de Krebs',
+  xaxis: { visible: false, range: [-2.5, 2.5] },
+  yaxis: { visible: false, range: [-2.5, 2.5] },
+  annotations,
+  showlegend: false
+};
+
+return { trace, layout };
+
+
+`;
+
+
+window.onload = function() {
+    editor.setValue(codigoPadrao, -1);
+};  resetarGrafico();
+   
+</script>
+
+<div class="license-info">
+    <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" style="color: gray; text-decoration: none;">
+
+<div class="license-info">
+  <p>
+    Licence under 
+    <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" style="color: gray; text-decoration: none;">
+      CC BY-NC-SA 4.0
+    </a>
+    © 2025 José Maurício Schneedorf FS
+  </p>
+</div>
+
+
+</div>
+
+<script>
+  function alternarTema() {
+  document.body.classList.toggle("dark-mode");
+
+  const isDark = document.body.classList.contains("dark-mode");
+  const botao = document.getElementById("toggleTheme");
+  botao.textContent = isDark ? "☀️" : "🌙";
+  editor.setTheme(isDark ? "ace/theme/monokai" : "ace/theme/github");
+  const layoutEscuro = {
+    plot_bgcolor: "#1e1e1e",
+    paper_bgcolor: "#1e1e1e",
+    font: { color: "#e0e0e0" },
+    xaxis: { color: "#e0e0e0", gridcolor: "#444" },
+    yaxis: { color: "#e0e0e0", gridcolor: "#444" }
+  };
+
+  const layoutClaro = {
+    plot_bgcolor: "#ffffff",
+    paper_bgcolor: "#ffffff",
+    font: { color: "#000000" },
+    xaxis: { color: "#000", gridcolor: "#ccc" },
+    yaxis: { color: "#000", gridcolor: "#ccc" }
+  };
+
+  const layoutNovo = isDark ? layoutEscuro : layoutClaro;
+
+  Plotly.relayout("grafico", layoutNovo);
+}
+
+</script>
+
+
+</body>
+</html>
+

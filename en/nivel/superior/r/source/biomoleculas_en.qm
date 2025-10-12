@@ -1,0 +1,68 @@
+---
+title: "Biomolecules"
+---
+
+## Dimensions {#sec-biomol}
+
+| Quantities can be converted with the help of R, as long as the units involved are defined. For example, we can convert and calculate the elapsed time of an event in different units, as follows:
+
+```{r label='conversions'}
+# Some time unit conversions
+sec <- 1
+min <- 60 * sec
+hr <- 60 * min
+day <- 24 * hr
+years <- 365 * day
+# What is the value in seconds for a whole day?
+day / sec
+# What is the value in minutes for a whole year?
+years / min
+
+# And what is the age of the Earth in seconds (4.5e9 years)?
+4.5e9 * years / sec
+```
+
+| It is also possible to convert units between each other, as in the quantities below:
+
+```{r molar conversion}
+# Molar quantity conversions
+mmol <- 1 # quantity definitions
+umol <- 1e-3 * mmol # micromol
+nmol <- 1e-3 * umol # nanomol
+pmol <- 1e-3 * nmol # picomol
+
+# How many picomoles are there in 6.25 mmol?
+
+6.25 * mmol / pmol
+```
+
+## Structural versatility in biopolymers
+
+| Biopolymers, or biomacromolecules, can be considered polymers with monomeric units composed of biomolecules. Thus, proteins, nucleic acids or glycans (polysaccharides) are respectively formed by amino acids (20 types that can be encoded in proteins, from 64 codons of the genetic code), nitrogenous bases (4 types with cytosine in DNA replaced by uracil in RNA) and monosaccharides (fewer than 6 types).
+| From the point of view of structural variability, taking only the combination of monomers as a basis, it is possible to predict the number of distinct structures by the simple relation [@otaki2005availability]:
+
+$$
+no. biopolymers = {monomers}^{sequence}
+$$ {#eq-variab}
+
+| In 'R' the operation is very simple, as in the example below:
+
+```{r}
+
+# Calculation of possible peptide structures in a
+# sequence of 8 elements (e.g. angiotensin II)
+
+20^8
+```
+
+| Of course, this simulated variability does not materialize in Nature, since the calculation assumes the repetition of any monomer along the sequence, or of sets or alterations of these. In other words, peptides with only one or two types of amino acids, for example, are not physiologically viable. This becomes concrete when we observe that there are around 35 thousand proteins expressed by the human genome, and whose average size is around 476 amino acid residues. If we apply the equation \eqref{eq-variab} above to this situation, we would find...
+
+```{r}
+# Calculation of possible human protein structures in an average sequence of
+# 476 amino acid residues.
+
+20^476
+```
+
+| In other words, not even `R` is capable of calculating, since the size of the sequence is computationally limited in the program to 237 residues (20$^{237}$ = 1.1x10$^{307}$). Although it may seem like a limitation, it results in a value far above Avogadro's number (6.02x10$^{23}$), and even above the computational limit for some mathematical programs, such as those found in internet algorithms (`Google`) and mathematical programs (e.g. `Gnu Octave`). Even so, `Maxima`, a freely distributed mathematical program, reports that 20$^{476}$ represents a value with 570 digits (something like 10$^{569}$).
+| On the other hand, these simple calculations also do not take into account that biomolecules can present different types of *isomerism*, such as optical (D/L), positional, geometric (cis/trans), configurational (syn/anti), or conformational (boat/chair), which considerably increases the number of possible structures in Nature.

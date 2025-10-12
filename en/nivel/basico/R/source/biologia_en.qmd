@@ -1,0 +1,203 @@
+---
+title: "Biology"
+number-sections: true
+toc: true
+lang: en
+class: fundo-basico
+---
+
+<div class="biol-fundo"> <!--modifies for each area-->
+
+## Deaths from COVID-19 in Brazil and total cases by state - 2023 update (EM13MAT406, EM13CNT303, EM13CHS101)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(magrittr)
+library(plotly)
+url <- "https://raw.githubusercontent.com/wcota/covid19br/refs/heads/master/cases-brazil-cities.csv" # defines the link to the data
+data <- read.csv(url) # reads the data file
+
+p <- plot_ly(
+data,
+x = ~totalCases,
+y = ~deaths,
+color = ~state,
+frame = ~state, # Frame for animation by year
+text = ~city,
+hoverinfo = "text",
+type = 'scatter',
+mode = 'markers',
+marker = list(sizemode = 'diameter', opacity = 0.7)
+) %>%
+layout(
+title = "COVID-19 deaths in Brazil (2023 update)",
+xaxis = list(title = "total cases", type = "log"),
+yaxis = list(title = "Deaths", type = "log"),
+showlegend = FALSE
+) %>%
+animation_opts(
+frame = 500, # Animation speed
+transition = 0,
+redraw = FALSE
+)
+p
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+url <- "https://raw.githubusercontent.com/wcota/covid19br/refs/heads/master/cases-brazil-cities.csv" # defines the link to the data
+data <- read.csv(url) # read the data file
+library(magrittr)
+
+p <- plot_ly(
+data,
+x = ~totalCases,
+y = ~deaths,
+color = ~state,
+frame = ~state, # Frame for the animation by year
+text = ~city,
+hoverinfo = "text",
+type = 'scatter',
+mode = 'markers',
+marker = list(sizemode = 'diameter', opacity = 0.7)
+) %>%
+layout(
+title = "COVID-19 deaths in Brazil (2023 update)",
+xaxis = list(title = "total cases", type = "log"),
+yaxis = list(title = "Deaths", type = "log"),
+showlegend = FALSE
+) %>%
+animation_opts(
+frame = 500, # Animation speed
+transition = 0,
+redraw = FALSE
+)
+p
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="biol-fundo2"> <!--modifies for each area-->
+
+**Suggestions:**
+
+| Try modifying the graph, using/replacing the commands below in the code snippet:
+
+```{r, eval = FALSE}
+xaxis = list(title = "Total Cases", type = "log", range = c(0, 7)), # Change in the scale of the X axis
+yaxis = list(title = "Deaths", type = "log", range = c(0, 6)), # Change in the scale of the Y axis
+
+```
+
+</div>
+
+\
+<!-- ####### PHOTOSYNTHESIS RATE WITH LIGHT INTENSITY (regular and double-reciprocal) -->
+
+<div class="biol-fundo"> <!--modifies for each area-->
+
+## Photosynthesis rate with variation in light intensity (EM13CNT101, EM13CNT102)
+
+| These parameters define a hyperbolic relationship, which can be linearized (double-reciprocal graph). Click in one data point to show its position in the other graph.
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+library(crosstalk)
+library(magrittr)
+
+# Create some sample data
+
+x = 1:20 # Light intensity (x) ranging from 0 to 20
+y = 10*x/(0.5+x) # photosynthesis rate (y) using the function y = a * x / (b + x)
+
+# Building the dataset
+data <- data.frame(x,y,
+group = sample(c("A", "B")))
+
+# Creating a crosstalk between graphs (crosstalk shared data frame)
+shared_data <- SharedData$new(data)
+
+# Creating the first graph
+p1 <- plot_ly(shared_data, x = ~x, y = ~y, color = ~group, type = "scatter", size=5, mode = "markers") %>%
+layout(title = "Graph 1") %>%
+highlight()
+
+# Creating the second graph
+p2 <- plot_ly(shared_data, x = ~1/x, y = ~1/y, color = "orange", type = "scatter", size= 5, mode = "markers") %>%
+layout(title = "Photosynthesis rate with light intensity - regular and double-reciprocal graphs") %>%
+highlight()
+
+# Arranging the graphs side by side
+subplot(p1, p2)
+
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+library(crosstalk)
+library(magrittr)
+
+# Create some sample data
+
+x = 1:20 # Light intensity (x) ranging from 0 to 20
+y = 10*x/(0.5+x) # photosynthesis rate (y) using the function y = a * x / (b + x)
+
+# Building the dataset
+data <- data.frame(x,y,
+group = sample(c("A", "B")))
+
+# Creating a crosstalk between graphs (crosstalk shared data frame)
+shared_data <- SharedData$new(data)
+
+# Creating the first graph
+p1 <- plot_ly(shared_data, x = ~x, y = ~y, color = ~group, type = "scatter", size=5, mode = "markers") %>%
+layout(title = "Graph 1") %>%
+highlight()
+
+# Creating the second graph
+p2 <- plot_ly(shared_data, x = ~1/x, y = ~1/y, color = "orange", type = "scatter", size= 5, mode = "markers") %>%
+layout(title = "Photosynthesis rate with light intensity - regular and double-reciprocal graphs") %>%
+highlight()
+
+# Arranging the graphs side by side
+subplot(p1, p2)
+library(magrittr)
+
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="biol-fundo2"> <!--modify for each area-->
+
+**Suggestions:**
+
+| Try it out to modify the graph, using/replacing alternatively the commands below in the code snippet:
+
+```{r, eval = FALSE}
+1. The use of the `crosstalk` library allows communication between the graphs presented. To illustrate, try clicking on a point on the regular graph, and observe its position on the double-reciprocal graph.
+```
+
+</div>
+
+\
+

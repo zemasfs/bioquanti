@@ -1,0 +1,197 @@
+---
+title: "Cellular Metabolism"
+bibliography: referencias.bib
+---
+
+## Metabolic Pathways & Reaction Balancing
+
+<!-- - allosteric enzyme -->
+
+<!-- - deltaG variation, perhaps -->
+
+<!-- - data analysis 2 (treatment statistics2) -->
+
+<!-- balancing electrochemical reactions -->
+
+<!-- differential equations and biochemical reaction networks -->
+
+<!-- balancing metabolic cells -->
+
+| Metabolism is an intricate network of chemical reactions catalyzed (or not) by various enzymes, resulting in a balanced and dynamic network of autocatalytic processes. Sometimes this web of reactions can be observed in the countless so-called *metabolic maps* available, printed or on the internet. However, metabolic pathways are classified for better understanding into subsets of reactions relevant to a certain group of nutrients or biological compounds, such as carbohydrates, lipids and nucleic acids, for example.
+| And in a broader view of these subsets, a further classification results in several sequential and interdependent biochemical reactions, the so-called *metabolic pathways or routes*. These metabolic pathways summarize *catabolic* or *anabolic* processes involving substrates, products, enzymes, cofactors and coenzymes, as illustrated in *glycolysis, gluconeogenesis, glycogenolysis, citric acid cycle, respiratory chain, pentose pathway, *fatty acid beta-oxidation, among others.
+| Thus, a metabolic pathway can be considered as a *linear combination of enzymatically catalyzed reactions* (e.g. anaerobic glycolysis). In addition, one can also consider *biochemical reactions as biochemical equations*, and therefore as a *linear system of biochemical equations* with resolution by *linear algebra*. Thus, one can use *matrix relations* to solve the stoichiometric balance (mass and charge), obtaining the final net reaction from a set of known reactions. In short, *biochemical equations* as *matrix equations* [@alberty1991chemical].
+
+## Matrix operation
+
+| By applying linear algebra, it is possible to obtain the final balance of sequential reactions by the following relation, also seen in the *Biothermodynamics* chapter:
+
+$$
+A =
+\begin{pmatrix}
+a_{11} & a_{12} & a_{13} & ... & a_{1n} \\
+a_{21} & a_{22} & a_{23} & ... & a_{2n} \\
+a_{31} & a_{32} & a_{33} & ... & a_{3n} \\
+... & ... & ... & ... & a_{jn}\\
+\end{pmatrix} ,\
+b =
+\begin{pmatrix}
+b_1 \\
+b_2 \\
+b_3 \\
+... \\
+b_n \\
+\end{pmatrix} ,\
+y =
+\begin{pmatrix}
+y_1 \\
+y_2 \\
+y_3 \\
+... \\
+y_n \\
+\end{pmatrix}
+$$ {#eq-mtrxGlic}
+
+| In this case, *A* represents the *stoichiometric matrix of reactions* and compounds, *b* the *metabolic pathway vector*, and *y* the balanced *net reaction vector*. The pathway vector indicates the number of times each reaction must occur to produce the final net reaction. Matrix *A* is arranged in such a way as to present each reaction in each column and each reactant in each row, filling it with the *stoichiometric coefficients* of reactants and products. For these, it is necessary to present a positive sign for products (they are formed) and a negative sign for reactants (they are consumed).
+| The matrix operation to obtain the net reaction involves only a cross product, such as:
+
+$$
+A * b = y
+$$ {#eq-eqMtrxDot}
+
+### Obtaining the metabolic pathway vector for aerobic glycolysis:
+
+| Assuming that we know the summarized net reaction for a set of metabolic reactions, such as aerobic glycolysis (in turn including anaerobic glycolysis, the citric acid cycle, and oxidative phosphorylation), we can easily obtain the pathway vector. From this calculated pathway vector, we can obtain the final net reaction of the more detailed set of reactions. In practice, this detailing involves the participation of oxidation-reduction coenzymes, ADP, ATP, and Pi.
+
+| For example, consider the reactions below, related to a glycolysis synthesis [@alberty1996calculation]:
+
+$$
+glucose \rightleftarrows 2\,pyruvate \\
+pyruvate + CoA \rightleftarrows acetyl \, CoA + CO_2
+acetyl \, CoA + 3 H_2O
+\rightleftarrows 2 CO_2+CoA
+\frac{1}{2} O_2 \rightleftarrows H_2O
+$$ {#eq-eqGlicoSimp}
+
+$$
+acetyl \, CoA + 3 H_2O
+\rightleftarrows 2 CO_2+CoA
+\frac{1}{2} O_2 \rightleftarrows H_2O \\
+$$
+
+| The sequential reactions above have as a net resulting reaction:
+
+$$
+glucose + 6O_2 \rightleftarrows 6 CO_2 + 6 H_2O
+
+$$ {#eq-eqGlicoSimpFin}
+
+| To obtain the route vector, it is necessary to elaborate the matrix relation, such that:
+
+$$
+A =
+\begin{pmatrix}
+-1 & 0 & 0 & 0 \\
+2 & -1 & 0 & 0 \\
+0 & 0 & -3 & 1 \\
+0 & -1 & 1 & 0 \\
+0 & 1 & -1 & 0 \\
+0 & 1 & 2 & 0 \\
+0 & 0 & 0 & -1/2 \\
+\end{pmatrix}
+$$ {#eq-mtrxGlicSimp}
+
+$$
+y =
+\begin{pmatrix}
+-1 \\
+0 \\
+6 \\
+0 \\
+0 \\
+6 \\
+-6 \\
+\end{pmatrix}
+$$ {#eq-mtrxGlicSimp2}
+
+| Thus, the solution for the route vector is:
+
+$$
+b = A^{-1} * y
+$$ {#eq-eqMtrxGlicSimp}
+
+| It turns out that the linear system for the set of equations of the glycolytic pathway is overestimated (there are more equations than unknowns), not allowing the solution by the `solve` function directly, as illustrated in the *Biothermodynamics* chapter. In this case, the vector *b* can be obtained by least squares solution:
+
+$$
+b = (A^{T}*A)^{-1}*A^T * y
+$$ {#eq-eqMtrxGlicMinQuad}
+
+| Solving the vector of pathways in `R`:
+
+```{r}
+
+# Matrix solution for the vector of metabolic pathways
+
+A <- matrix(c(-1, 0, 0, 0, 2, -1, 0, 0, 0, 0, -3, 1, 0, -1, 1, 0, 0, 1,
+-1, 0, 0, 1, 2, 0, 0, 0, 0, -1 / 2), nrow = 7,
+byrow = TRUE) # matrix A of reaction stoichiometry
+rownames(A) <- list("glucose", "pyruvate", "H2O", "CoA", "acetyl CoA"
+, "CO2", "O2") # reactant labels
+A # matrix A of reactions
+y <- c(-1, 0, 6, 0, 0, 6, -6) # vector y of routes
+
+solve(t(A) %*% A) %*% t(A) %*% y
+```
+
+### Obtaining the balance of ATP, ADP, Pi and redox coenzymes in glycolysis
+
+| With the obtained route vector (*{1,2,2,12}*), it is now possible to apply it to a more extensive set of glycolysis equations, to this time solve the balancing of reactions involving oxidation-reduction coenzymes, ATP, ADP, and Pi:
+
+$$
+glucose+2Pi+2ADP+2NAD^+ \rightleftarrows 2 \,pyruvate+2ATP+2NADH+2H_2O \, , \\
+glycolysis \, anaerobic,
+$$
+$$
+pyruvate+CoA+NAD^+ \rightleftarrows acetyl-CoA+CO_2+NADH \\
+$$
+
+$$
+acetyl-CoA + 4NAD^++ADP+Pi+2H_2O \rightleftarrows2CO_2+4NADH+ATP+CoA, \,
+\\
+\, pyruvate \, dehydrogenase
+$$
+$$
+NADH+ \frac{1}{2}O_2+3Pi+3ADP \rightleftarrows NAD^++4H_2O+3ATP \, ,\\
+oxidation \, phosphorylative
+$$ {#eq-eqGlicoPlus}
+
+| It is worth mentioning a simplification by replacing GTP and GDP with ATP and ADP (Krebs cycle), since they are interconvertible in metabolism. For simplification, the interconversion of FAD and NAD in the net reaction is also assumed [@alberty1996calculation] :
+
+$$
+FADH + NAD^+ \rightleftarrows FAD + NADH
+$$ {#eq-eqNadFad}
+
+| With the reactions present in @eq-eqGlicoPlus and the route vector obtained previously, the new stoichiometric matrix can be constructed and the least squares solution (@eq-eqMtrxGlicMinQuad) can be applied to obtain the net reaction of glycolysis. And to do this, simply apply the @eq-eqMtrxDot) cross product:
+
+```{r}
+A <- matrix(c(-1, 0, 0, 0, -2, 0, -1, -3, -2, 0, -1, -3, -2, -1,
+-4, 1, 2, -1, 0, 0, 2, 0, 1, 3, 2, 1, 4, -1, 2, 0,
+-2, 4, 0, -1, 1, 0, 0, 1, -1, 0, 0, 1, 2, 0, 0, 0,
+0, -1 / 2), nrow = 12, byrow = TRUE)
+# matrix A of reaction stoichiometry
+rownames(A) <- list("glucose", "Pi", "ADP", "NAD", "pyruvate", "ATP",
+"NADH", "H2O", "CoA", "acetyl CoA", "CO2", "O2")
+# reagent labels
+A # reaction matrix A
+y <- c(1, 2, 2, 12) # vector y of routes
+
+A %*% y
+# solve(t(A)%*%A)%*%t(A)%*%y
+```
+
+| From this result, the final net reaction of the glycolytic pathway can be assembled as:
+
+$$
+glucose + 6O_2 + 40 ADP + 40 Pi \rightleftarrows 6CO_2+ 40ATP
+$$ {#eq-eqBalGlico}
+
+| The example above illustrates the use of matrix algebra to solve problems of balancing biochemical reactions. By its nature, it is a comprehensive and algorithmic method (therefore, programmable), although it is not the only one. Other proposed solutions for balancing and conservation of mass and charge include *direct inspection* by screening and error based on mnemonic rules, balancing by *half-equation method*, and the *oxidation number method*, not discussed here.
