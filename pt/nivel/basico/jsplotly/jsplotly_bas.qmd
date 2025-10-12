@@ -306,6 +306,364 @@ $$
 ```
 \
 
+###  Gráfico 3D para bandas de absorção em função de concentração (Química)
+
+#### BNCC: EF09CI04, EF09MA17, EM13CNT103, EM13MAT305  {.unnumbered}
+
+[![](Eq/3d_bandas.png)](Eq/jsp_3d_bandas.html){target="_blank"}
+\
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente alterar o padrão do gráfico e suas cores. Respectivamente: type: 'surface', colorscale: 'Viridis');
+2. Altere a faixa de comprimento de onda, separando os picos; para isso, mude as variáveis min/max de lambda: const lambdaMin = 450, lambdaMax = 600;
+```
+\
+
+###  Capacidade Calorífica (Física)
+
+#### BNCC: EF09CI06, EM13CNT104, EM13CNT203  {.unnumbered}
+
+|   A simulação que segue visa observar a relação entre o calor trocado (*Q*), a massa (*m*), a capacidade calorífica (*c*) e a variação de temperatura (*$\Delta$T*).
+
+#### Equação: {.unnumbered}
+
+
+$$
+Q = c \cdot m \cdot \Delta T
+$$
+\
+
+[![](Eq/cp.png)](Eq/jsp_cp2.html){target="_blank"}
+
+#### Sugestão: {.unnumbered}
+
+```{r,eval=FALSE}
+
+1. Experimente variar inicialmente a temperatura, sobrepondo alguns gráficos;
+2. Varie também a massa no editor de códigos, para comparação.
+```
+\
+
+
+
+###  Gráfico 3D para mistura de substâncias em reação exotérmica (Química)
+
+#### BNCC: EF09CI02, EM13CNT103, EM13CNT103  {.unnumbered}
+
+|   Simulações podem ser realizadas sem necessariamente envolver uma relação matemática, como na observação experimental de duas variáveis, como tempo e concentração, simulando uma reação química exotérmica. Segue um exemplo interativo em 3D.
+
+|   Nesse caso, a equação utilizada no editor envolve uma variação suave de temperatura ao longo do tempo, empregando-se a função seno e uma temperatura inicial (vide o código).
+\
+
+[![](Eq/quim2.png)](Eq/jsp_quim2.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+
+```{r,eval=FALSE}
+
+1. Experimente variar a equação que define a saída de temperatura ("const temperatura = 25 + 5 * Math.sin((tempo / 10) * Math.PI) * (proporcao / 100)");
+2. Mude um pouco do layout do gráfico, como cor e opacidade.
+```
+\
+
+
+###  Painel interativo (*dashboard*) para medidas ambientais (dados simulados)
+
+#### BNCC: EF07MA21, EF09MA21, EM13MAT406, EM13LGG604  {.unnumbered}
+
+|   Atualmente é frequente a apresentação de dados em um painel contendo diferentes informações interativas ou dados que se complementam em gráficos e tabelas, por exemplo. Esses paineis permitem um visão panorâmica do tema abordado, bem como ajustes em parâmetros nele contidos. Segue um exemplo de painel com dados simulados para medidas de condutividade e temperatura em meio aquoso, e com parâmetros ajustáveis por um *slider* (pouco prático, na verdade, mas ilustrativo do potencial do aplicativo).
+\
+
+
+[![](Eq/painel.png)](Eq/painel.html){target="_blank"}
+\
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Ainda que seja um objeto que apenas simula a aquisição de dados, pode-se obter um resultado diferente interferindo-se no código, como:
+  a. Alteração dos sliders: "slider.min = "0";slider.max = "24"; slider.step = "1" " ;
+  b. Alteração nas equações que definem o comportamento dos mostradores:
+    "const tempo = Array.from({ length: 25 }, (_, i) => i); // 0 a 24h
+     const temperatura = tempo.map(t => 20 + 5 * Math.sin((t - 6) / 3)); // pico 12h
+     const condutividade = tempo.map(t => 100 + 30 * Math.cos(t / 5)); "
+```
+\
+
+###  Área de biomas brasileiros (Biologia)
+
+#### BNCC: EF05GE05, EF08GE08, EM13CNT301, EM13CNT304  {.unnumbered}
+
+[![](Eq/biomas.png)](Eq/biomas.html){target="_blank"}
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Os dados apresentados são apenas para efeito de simulação. Desejando dados mais robustos, recomenda-se fontes seguras (ex: MapBiomas Brasil - https://brasil.mapbiomas.org/)
+2. Este é um gráfico de barras, apenas isso. Se você alterar as informações presentes nas constantes dos 3 primeiros vetores ("const X = [...]"), poderá converter a representação para um tema distinto.
+```
+\
+
+
+###  Diagrama de ciclo da água (Biologia)
+
+#### BNCC: EF06CI03, EF06CI04, EM13CNT103, EM13CNT202  {.unnumbered} 
+
+|   O aplicativo também permite a criação de outros objetos didáticos interativos, sem a necessidade de inserção de equações, como diagramas e fluxogramas. Seguem exemplos.
+
+[![](Eq/fluxogramaEB.png)](Eq/jsp_fluxogramaEB2.html){target="_blank"}
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Como para diagramas acima, experimente alterar no código as propriedades das setas e dos termos e campos envolvidos no fluxograma;
+2. Substitua termos para a formação de outro fluxograma;
+3. Reposicione os objetos na área gráfica (campos, termos, setas) com auxílio do mouse.
+
+```
+\
+
+
+###  Diagrama da fotossíntese (Biologia)
+
+#### BNCC: EM13CNT101, EM13CNT103, EM13CNT201, EM13MAT405  {.unnumbered}
+
+[![](Eq/diagramaEB.png)](Eq/jsp_diagramaEB2.html){target="_blank"}
+
+
+#### Sugestão {.unnumbered}
+
+
+```{r, eval=FALSE}
+
+1. Experimente reposicionar as entradas e saídas (ex: Luz, Glicose) por simples arraste de mouse;
+2. Substitua os termos dentro dos quadros, ou mude outros aspectos do diagrama (cor, preenchimento, por ex).
+
+```
+\
+
+
+###  Modelo de Crescimento Populacional com Fase Lag (Biologia)
+
+#### BNCC: EM13CNT102, EF06MA17, EF08CI06, EM13MAT301, EM13CNT201  {.unnumbered}  
+
+|   Este modelo apresenta uma função logística que simula o crescimento populacional (microorganismos, células, por ex), acompanhado por um componente de retardo. Variando-se os parâmetros no editor, é possível estimar diversos perfis de crescimento populacional.
+
+### Equação: {.unnumbered}
+
+$$
+N(t) = \frac{K}{1 + \left(\frac{K - N_0}{N_0}\right) \cdot e^{-r \cdot A(t) \cdot t}}, \quad \text{com } A(t) = \frac{1}{1 + e^{-k(t - t_0)}}
+$$
+
+*Onde:*
+
+- K = capacidade de suporte ambiental;
+- N0 = população inicial;
+- r = taxa intrínseca de crescimento;
+- A(t) = fator de ativação do crescimento com atraso (fase lag);
+- t0 = ponto médio de transição entre fase lag e fase log;
+- k = constante de suavidade do retardo (fixado como 0.5 no código)
+
+[![](Eq/crescim.png)](Eq/jsp_crescim2.html){target="_blank"}
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente variar os parâmetros da equação, combinando alguns, e comparando seus efeitos sobre os gráficos:
+  a. Capacidade de suporte;
+  b. População inicial;
+  c. Taxa de crescimento;
+  d. Retardo (fase lag);
+```
+\
+
+###  Eficiência energética e cadeia alimentar (Biologia)
+
+#### BNCC: EF06CI02, EM13CNT202, EM13CNT203
+
+|       Segue um exemplo para retratar a transferëncia de energia entre diferentes níveis tróficos de uma cadeia alimentar. Embora não haja propriamente uma função matemática que a descreva, pode-se aplicar a [lei dos 10%](https://en.wikipedia.org/wiki/Ecological_efficiency?) de eficiência ecológica entre os níveis da cadeia, o que resulta numa relação logaritmica de transferência.
+
+
+[![](Eq/bio2.png)](Eq/jsp_bio2.html){target="_blank"}
+
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. A regra de Lindeman, esboçada na referência acima, estabelece uma variação para 5-20% de eficiência energética no ecossistema. Assim, experimente sobrepor as curvas com tais taxas;
+2. Se quiser observar a relação logarítmica da transferência de energia, acrescente o comando "type: 'log'," , logo abaixo de "title: 'Energia disponível (unidades)',".
+```
+\
+
+
+###  Distribuição de escravizados nas Américas no período de 1500–1888 (dados simulados - História) 
+
+#### BNCC: EF08HI06, EM13CHS104, EM13CHS503  {.unnumbered}
+
+|    Esta simulação apresenta um *gráfico de barras* interativo para seleção de período por *menu suspenso*, e tangente à quantidade estimada de africanos escravizados desembarcados nas principais regiões da América. Os dados são estimativas aproximadas para ilustrar o potencial de visualização do aplicativo, embora servindo como ponto de partida para discussões educacionais mais precisas. Fontes passíveis de consulta incluem [Slave Voyages](https://www.slavevoyages.org/past/database/african-origins).
+\
+
+[![](Eq/escravos.png)](Eq/jsp_escravos2.html){target="_blank"}
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente alterar entre os períodos no menu suspenso, comparando as estimativas de tráfico escravo;
+2. Selecione um período, crie o gráfico, selecione outro período, e adicione outro gráfico. Isso permite comparar o quantitativo de escravos aportados pelas barras duplas formadas, e passagem do mouse sobre cada barra.
+
+```
+\
+
+###  Linha do tempo para eventos da Idade Média (História)
+
+#### BNCC: EM13CHS101, EM13CHS102  {.unnumbered}
+
+
+[![](Eq/hist2.png)](Eq/jsp_hist2.html){target="_blank"}
+
+Fonte: [Encyclopedia.com](https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/timeline-events-middle-ages?)
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Experimente alterar no código eventos e períodos, e destinados a outro período da História humana.
+```
+\
+
+###  Gírias faladas no Brasil de 1980-2020 (Linguagens)
+
+#### BNCC: EF89LP19, EM13LGG102  {.unnumbered} 
+
+|   Esta simulação é direcionada para uma estimativa do uso de gírias faladas no Brasil durante os últimos 40 anos. A representação dá-se num gráfico de pizza, e a seleção por década num menu suspenso.
+\
+
+[![](Eq/linguag_pizza.png)](Eq/jsp_linguag_pizza.html){target="_blank"}
+
+```{r, eval=FALSE}
+1. Pode-se usar a passagem de mouse para observar o "tip" (dica) apresentada para cada dado no gráfico.
+```
+\
+
+
+###  Frequência de palavras em texto (Linguagens)
+
+#### BNCC: EM13LGG101, EM13LGG302, EM13LGG303  {.unnumbered} 
+
+[![](Eq/linguag2.png)](Eq/jsp_linguag2.html){target="_blank"}
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+
+1. Experimente substituir o texto do código por outro;
+2. Experimente variar o quantitativo de termos mais frequentes na variável "const entradas" (opcionalmente, varie também no título do gráfico, para fazer sentido);
+3. Compare um texto em português com sua tradução para inglês ou outra língua.
+
+```
+\
+
+###  Obras literárias e movimentos estéticos (Linguagens)
+
+#### BNCC: EF89LP47, EM13LP01, EM13LP02, EM13LGG201
+
+|   O exemplo que segue ilustra o uso de recursos interativos, *botão* e *seletor*, para um conjunto de obras da literatura nacional. 
+
+[![](Eq/menu_literat.png)](Eq/menu_literat.html){target="_blank"}
+
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Arraste os marcadores extremos para ampliar o foco em um período específico da lieratura;
+2. Altere o script acrescentando outras obras-chave em "const obras =" e "const periodos ="
+```
+\
+
+###  Criação de objetos 3D (Arte)
+
+#### BNCC: EF09MA16, EF15AR06, EM13MAT405, EM13LGG604  {.unnumbered}
+
+|   Objetos tridimensionais podem ser gerados por funções matemáticas no espaço tridimensional, tal como ilustrado abaixo.
+
+
+[![](Eq/melancia.png)](Eq/melancia.html){target="_blank"}
+\
+
+```{r, eval=FALSE}
+1. Experimente alterar alguns valores no script, testando o resultado. Por exemplo, crie uma tapete (ou melancia achatada) alterando o código em: "const zVal = L * (t - 0.5)"...para "const zVal = L * (t - 20.5);"
+```
+\
+
+
+###  Editor de notação musical (Arte)
+
+#### BNCC: EF15AR06, EF69AR22, EM13ARH402  {.unnumbered}
+
+|       O exemplo a seguir ilustra os conceitos de altura (tonalidade) e duração para notas musicais em escala diatônica. As legendas representam os valores de duração, e as tonalidades são apresentadas em seus valores de frequência
+
+[![](Eq/musica2.png)](Eq/jsp_musica2.html){target="_blank"}
+
+```{r, eval=FALSE}
+1. Experimente alterar a sequência melódica do código no vetor correspondente;
+2. Experimente alterar as figuras de duração no vetor correspondente
+
+```
+\
+
+
+
+###  Diagrama interativo sobre encíclicas papais(Ensino Religioso)
+
+#### BNCC: EF05ER01, EF09ER02, EM13ER04  {.unnumbered}
+
+[![](Eq/fluxogr_papas.png)](Eq/fluxogr_papas.html){target="_blank"}
+
+
+#### Sugestão {.unnumbered}
+
+```{r, eval=FALSE}
+1. Para perceber o dinamismo da representação, experimente arrastar qualquer parte do fluxograma, e observe a acomodação das demais;
+2. Como dantes, pode-se alterar a informação constante no fluxograma, mantendo suas características gráficas e dinâmicas, bastando-se alterar as constantes utilizadas para gerar o objeto ("const = ").
+```
+\
+
+
+###  Vaso de torno de olaria (STEAM)
+
+#### BNCC: EM13MAT101, EM13MAT403, EM13CNT204, EM13AR01, EM13AR02  {.unnumbered}
+
+|       A plataforma também permite criações para a integração em Ciência, Tecnologia, Engenharia, Artes, e Matemática (*STEAM*). Segue um exemplo de simulação para torneamento cerâmico e moldagem manual de argila, e que permite experimentar formas simétricas e arredondadas, como vasos, tigelas e potes, por ajuste em alguns parâmetros e nas funções trigonométricas do código.
+
+[![](Eq/steam.png)](Eq/jsp_steam2.html){target="_blank"}
+
+```{r, eval=FALSE}
+1. Altere a altura do vaso, seu formato, e suas cores, editando o código nos campos específicos.
+```
+
+
+###  Mini CAD (*Computer-Aided Design* - STEAM)
+
+#### BNCC: EM13MAT301, EM13MAT503, EM13MAT402  {.unnumbered}
+
+|       Segue um exemplo de código para manipulação de formas geométricas em 3D (curvas ou retas) na elaboração de um mini CAD (*Computer-Aided Design*).
+
+
+[![](Eq/miniCAD)](Eq/jsp_miniCAD2.html){target="_blank"}
+
+```{r, eval=FALSE}
+1. Experimente alterar os parâmetros base, altura e curvatura do código, variando também o sinal dos valores (positivo, negativo);
+2. Altere alguma função trigonométrica (linhaX ou linhaY, seno para tangente, por exemplo), e sobreponha ao plot;
+3. Sobreponha figuras geométricas com paleta de cores distintas.
+4. Crie figuras simétricas sobrepondo uma curva com parâmetro positivo a uma com mesmo parâmetro negativo.
+```
+\
+
+
 ## Mapas
 
 ### Mapa do Brasil e Capitais
@@ -499,7 +857,6 @@ $$
 ```
 \
 
-## Simulações
 
 ## Acessibilidade e Inclusão
 
@@ -540,6 +897,46 @@ $$
 
 
 ## Jogos
+
+|   Em função do *JSPlotly* envolver uma linguagem de programação, *JavaScript*, é plausível que consiga oferecer um conjunto de operações tangíveis a essa, independentemente da construção de gráficos (como em diagramas e fluxogramas acima).  
+
+|   Em paralelo à riqueza que acompanha a *gameficação* como metodologia ativa, a *criação de um jogo* pode estimular o aprendiz a um outro nível, posto que a estratégia por vezes já faz parte de seu cotidiano. Jogar é uma coisa...criar um jogo pode ter impacto mais proeminente e recursivo ao pensamento e lógica computacionais, bem como ao aprendizado da própria linguagem de programação !
+
+###  Jogo de Memória
+
+#### BNCC: EF06MA19, EF06MA16, EF07MA26, EF09MA19, EM13MAT401, EM13MAT102, EM13MAT403, EM13LGG701 {.unnumbered}
+
+|   A imagem clicável abaixo direciona para um clássico *Jogo de Memória Numérica*. O objetivo é acertar um par de valores após memorização de um quadro numérico. Para jogar, siga as instruções que seguem:
+\
+
+**Instruções para o Jogo de Memória Numérica:**
+
+- 1. No campo superior existem duas constantes booleanas true/false, uma para jogar (*jogue*) e outra para verificar o acerto (*verificar*), bem como uma *semente* que fixa um determinado quadro numérico aleatório;
+- 2. Inicie o jogo (*jogue/false*, *verificar/false*);
+- 3. Clique no botão *add* e será exibido um quadro de pares numéricos para memorização;
+- 4. Troque para *jogue/true*, clique em *clean plot*, e depois em *add*. O quadro será exibido agora apenas com um valor (demais células mostratrão *"?"*);
+- 6. Escolha *verificar/true*, clique em *clean plot*, e depois em *add*. Será apresentado um campo para se digitar as coordenadas em que se acredita estar o outro par numérico (Ex: A2);
+- 7. Clique em *OK*, e será apresentado um par formado pelo valor inicial e o valor escolhido, para verificação do acerto.
+
+
+|   Para reiniciar o jogo, *clean plot*, e opções booleanas *false*.
+
+|   Divirta-se !!
+\
+
+
+[![](Eq/game.png)](Eq/jsp_game2.html){target="_blank"}
+
+
+
+
+```{r, eval= FALSE}
+1. Para jogar novamente alterando os valores do quadro, basta modificar a constante *semente* para um número qualquer;
+2. Para variar entre níveis de dificuldade do jogo, basta alterar o número de linhas e de colunas nas constantes respectivas do código. 
+```
+\
+
+
 
 ## Musicalização
 
@@ -629,6 +1026,100 @@ $$
 2. Se achar que o jogo tá difícil ou fácil demais, é possível alterar o tamanho da raquete em "paddle = { w: 80, h: 10,...";
 3. Se desejar aumentar a área do jogo, modifique na linha abaixo (largura, altura):
   "var cv = sk.createCanvas(400, 300).parent('jogoArea');"
+```
+\
+
+
+## Aplicativos 
+
+### Gizz - Lousa Digital 
+
+
+|   A natureza do objeto abaixo dispensa apresentações. Trata-se mais um entre os muitos aplicativos para simular uma lousa, ou quadro de giz/caneta digital. Diferente de seus concorrentes, contudo:
+
+1. Pode ser exportada como arquivo autossuficiente HTML em botão da própria lousa, e permitindo compartilhamento da imagem gerada, bem como continuidade de sua edição;
+2. Faculta a personalização do código que o produz, permitindo inserir/alterar canetas, espessuras, e ações distintas não previstas no código-fonte.
+\
+
+[![](Eq/lousa.png)](Eq/lousa.html){target="_blank"}
+\
+
+
+|   Tangente à suas facilidades, a lousa digital permite:
+
+- Escrever com 7 cores e 3 espessuras distintas;
+- Acessar 4 planos de fundo de coloração diferente;
+- Sobrepor o plano com um *grid*;
+- Utilizar um apagador (*erase*);
+- Utilizar um *apontador de laser* para localização do que se pretende assinalar;
+- Salvar a imagem como PNG, indicando data e hora;
+- Salvar a imagem como HTML autossuficiente (obs: botão *html* do quadro; o do editor não funciona neste objeto);
+- Comando de desfazer (*undo*) e de limpeza (*clean*) do quadro;
+- Possui atalhos de teclado: E=borracha; L=laser; Z desfaz, X limpa, H salva HTML
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Pode-se alterar a espessura das canetas em "var baseWidth = 1;" ;
+2. Os botões 1x, 2x, 4x são multiplicadores; edite as linhas de criação dos botões pra trocar rótulo/multiplicador (ex.: "addSize('3x', 3, true)").
+
+Obs: o botão funcional para reprodução do quadro é o que está na própria lousa, "html". O botão do editor de códigos não opera para o aplicativo.
+```
+\
+
+###  Prancha de desenho
+
+#### BNCC: EF15AR06, EF09AR07, EM13LGG604, EM13LGG606  {.unnumbered}
+
+|   Não só de matemática, gráficos e mapas *"vive"* o *JSPlotly*. O exemplo que segue pretende oferecer uma prancha para desenhos, com variação de cores e espessura da caneta, e formas geométricas.
+\
+
+[![](Eq/desenho.png)](Eq/desenho.html){target="_blank"}
+\
+
+#### Sugestão {.unnumbered}
+
+
+```{r, eval=FALSE}
+1. Explore o script. Apesar de simples, ele permite selecionar cores distintas, espessuras de canetas, e formas geométricas;
+2. Como os demais objetos elaborados no JSPlotly, o desenho da prancha pode ser armazendo conservando sua interatividade pelo botão "html", e mesmo modificado no próprio arquivo salvo ("play.html");
+3. Se desejar alterar cores, espessuras, ou quiser acrescentar outras funcionalidades, verifique as variáveis do script;
+4. Experimente o botão "clone", que permite clonar a prancha juntamente com seu código. 
+```
+\
+
+### MenMapa - Editor de Mapa Mental e Diagramas
+
+|   Na mesma linha de se personalizar o *JSPlotly* como feito acima para a lousa digital, o programa também permite a construção de um diagrama ou mapa mental elaborado por *cliques de mouse*, e como um aplicativo independente.
+
+|   O *Editor de Mapa Mental* ilustrado na figura abaixo permite a construção de estruturas diversas, e fundamentalmente pela combinação de termos e setas. Há diversas funcionalidades para a criação facilitada de um mapa ou diagrama, incluindo um banner de ajuda no canto superior esquerdo para várias das ações. 
+\
+
+**Instruções para o Editor de Mapa Mental**
+\
+
+* *Criação de termos*. Clique com o botão esquerdo do mouse e digite um termo; clique em Esc para sair;
+* *Deleção de termos*. Clique Ctrl+botão direito do mouse;
+* *Moldura nos termos*. Clique numa moldura da barra (quadrado, losango, oval);
+* *Ligação de termos por seta*. Clique com o botão direito do mouse no 1o. termo, seguido do botão direito no 2o. termo;
+* *Seta curva*. Clique em *curve on*. Depois, clique com o botão direito do mouse no 1o. termo, seguido de clique com botão esquerdo em um ponto entre os dois termos, e finalize com o botão direito no 2o. termo. Para acertar a curvatura da seta, clique na bolinha e arraste-a para encostar num termo ou numa seta;
+* *Arraste de termos e setas*. Basta clicar e arrastar. 
+* *Arraste de um grupo de termos/setas*. Clique em Shift e desenhe a área que se deseja abarcar o grupo com o botão esquerdo do mouse;
+* *Cores para termos e setas*. Selecione uma das 7 cores disponíveis na barra superior, e clique num termo já existente, ou novo. Obs: a cor da seta acompanha a dos termos;
+* *Grid* para posicionamento mais preciso. Basta clicar em *grid on* (não fica salvo do diagrama final);
+* *Salvamento do mapa (save html)*. Diferente do botão *html* usual, o armazenamento do mapa interativo é realizado por um *botão html próprio*, na barra de ícones;
+* *Importação de mapas (import)*. O aplicativo permite importar um mapa já pronto em formato *json* para continuar sua edição;
+* *Exportação de mapas (export)*. O aplicativo também permite exportar o mapa no formato *json* para estudo futuro ou simples guarda.
+\
+
+[![](Eq/mapa_mental)](Eq/mapaMental.html){target="_blank"}
+\
+
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. O editor permite criar mapas mentais, diagramas, fluxogramas, e outras representações...então agora a sugestão é vossa !!
 ```
 \
 
@@ -934,541 +1425,7 @@ $$
 ```
 \
 
-## Química
 
-###  Bandas de absorção em função de concentração (representação 3D)
 
-#### BNCC: EF09CI04, EF09MA17, EM13CNT103, EM13MAT305  {.unnumbered}
-
-[![](Eq/3d_bandas.png)](Eq/jsp_3d_bandas.html){target="_blank"}
-\
-
-#### Sugestão {.unnumbered}
-
-```{r, eval=FALSE}
-1. Experimente alterar o padrão do gráfico e suas cores. Respectivamente: type: 'surface', colorscale: 'Viridis');
-2. Altere a faixa de comprimento de onda, separando os picos; para isso, mude as variáveis min/max de lambda: const lambdaMin = 450, lambdaMax = 600;
-```
-\
-
-###  Capacidade Calorífica
-
-#### BNCC: EF09CI06, EM13CNT104, EM13CNT203  {.unnumbered}
-
-|   A simulação que segue visa observar a relação entre o calor trocado (*Q*), a massa (*m*), a capacidade calorífica (*c*) e a variação de temperatura (*$\Delta$T*).
-
-### Equação: {.unnumbered}
-
-
-$$
-Q = c \cdot m \cdot \Delta T
-$$
-\
-
-[![](Eq/cp.png)](Eq/jsp_cp2.html){target="_blank"}
-
-#### Sugestão: {.unnumbered}
-
-```{r,eval=FALSE}
-
-1. Experimente variar inicialmente a temperatura, sobrepondo alguns gráficos;
-2. Varie também a massa no editor de códigos, para comparação.
-```
-\
-
-
-
-###  Mistura de substâncias em reação exotérmica (gráfico 3D)
-
-#### BNCC: EF09CI02, EM13CNT103, EM13CNT103  {.unnumbered}
-
-|   Simulações podem ser realizadas sem necessariamente envolver uma relação matemática, como na observação experimental de duas variáveis, como tempo e concentração, simulando uma reação química exotérmica. Segue um exemplo interativo em 3D.
-
-|   Nesse caso, a equação utilizada no editor envolve uma variação suave de temperatura ao longo do tempo, empregando-se a função seno e uma temperatura inicial (vide o código).
-\
-
-[![](Eq/quim2.png)](Eq/jsp_quim2.html){target="_blank"}
-
-
-#### Sugestão: {.unnumbered}
-
-
-```{r,eval=FALSE}
-
-1. Experimente variar a equação que define a saída de temperatura ("const temperatura = 25 + 5 * Math.sin((tempo / 10) * Math.PI) * (proporcao / 100)");
-2. Mude um pouco do layout do gráfico, como cor e opacidade.
-```
-\
-
-
-###  Painel interativo (*dashboard*) para medidas ambientais (dados simulados)
-
-#### BNCC: EF07MA21, EF09MA21, EM13MAT406, EM13LGG604  {.unnumbered}
-
-|   Atualmente é frequente a apresentação de dados em um painel contendo diferentes informações interativas ou dados que se complementam em gráficos e tabelas, por exemplo. Esses paineis permitem um visão panorâmica do tema abordado, bem como ajustes em parâmetros nele contidos. Segue um exemplo de painel com dados simulados para medidas de condutividade e temperatura em meio aquoso, e com parâmetros ajustáveis por um *slider* (pouco prático, na verdade, mas ilustrativo do potencial do aplicativo).
-\
-
-
-[![](Eq/painel.png)](Eq/painel.html){target="_blank"}
-\
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Ainda que seja um objeto que apenas simula a aquisição de dados, pode-se obter um resultado diferente interferindo-se no código, como:
-  a. Alteração dos sliders: "slider.min = "0";slider.max = "24"; slider.step = "1" " ;
-  b. Alteração nas equações que definem o comportamento dos mostradores:
-    "const tempo = Array.from({ length: 25 }, (_, i) => i); // 0 a 24h
-     const temperatura = tempo.map(t => 20 + 5 * Math.sin((t - 6) / 3)); // pico 12h
-     const condutividade = tempo.map(t => 100 + 30 * Math.cos(t / 5)); "
-```
-\
-
-## Biologia
-
-###  Área de biomas brasileiros (gráfico de barras)
-
-#### BNCC: EF05GE05, EF08GE08, EM13CNT301, EM13CNT304  {.unnumbered}
-
-[![](Eq/biomas.png)](Eq/biomas.html){target="_blank"}
-
-#### Sugestão {.unnumbered}
-
-```{r, eval=FALSE}
-1. Os dados apresentados são apenas para efeito de simulação. Desejando dados mais robustos, recomenda-se fontes seguras (ex: MapBiomas Brasil - https://brasil.mapbiomas.org/)
-2. Este é um gráfico de barras, apenas isso. Se você alterar as informações presentes nas constantes dos 3 primeiros vetores ("const X = [...]"), poderá converter a representação para um tema distinto.
-```
-\
-
-
-###  Ciclo da água (diagrama)
-
-#### BNCC: EF06CI03, EF06CI04, EM13CNT103, EM13CNT202  {.unnumbered} 
-
-|   O aplicativo também permite a criação de outros objetos didáticos interativos, sem a necessidade de inserção de equações, como diagramas e fluxogramas. Seguem exemplos.
-
-[![](Eq/fluxogramaEB.png)](Eq/jsp_fluxogramaEB2.html){target="_blank"}
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Como para diagramas acima, experimente alterar no código as propriedades das setas e dos termos e campos envolvidos no fluxograma;
-2. Substitua termos para a formação de outro fluxograma;
-3. Reposicione os objetos na área gráfica (campos, termos, setas) com auxílio do mouse.
-
-```
-\
-
-
-###  Ciclo claro e escuro da fotossíntese (diagrama)
-
-#### BNCC: EM13CNT101, EM13CNT103, EM13CNT201, EM13MAT405  {.unnumbered}
-
-[![](Eq/diagramaEB.png)](Eq/jsp_diagramaEB2.html){target="_blank"}
-
-
-#### Sugestão {.unnumbered}
-
-
-```{r, eval=FALSE}
-
-1. Experimente reposicionar as entradas e saídas (ex: Luz, Glicose) por simples arraste de mouse;
-2. Substitua os termos dentro dos quadros, ou mude outros aspectos do diagrama (cor, preenchimento, por ex).
-
-```
-\
-
-
-###  Modelo de Crescimento Populacional com Fase Lag
-
-#### BNCC: EM13CNT102, EF06MA17, EF08CI06, EM13MAT301, EM13CNT201  {.unnumbered}  
-
-|   Este modelo apresenta uma função logística que simula o crescimento populacional (microorganismos, células, por ex), acompanhado por um componente de retardo. Variando-se os parâmetros no editor, é possível estimar diversos perfis de crescimento populacional.
-
-### Equação: {.unnumbered}
-
-$$
-N(t) = \frac{K}{1 + \left(\frac{K - N_0}{N_0}\right) \cdot e^{-r \cdot A(t) \cdot t}}, \quad \text{com } A(t) = \frac{1}{1 + e^{-k(t - t_0)}}
-$$
-
-*Onde:*
-
-- K = capacidade de suporte ambiental;
-- N0 = população inicial;
-- r = taxa intrínseca de crescimento;
-- A(t) = fator de ativação do crescimento com atraso (fase lag);
-- t0 = ponto médio de transição entre fase lag e fase log;
-- k = constante de suavidade do retardo (fixado como 0.5 no código)
-
-[![](Eq/crescim.png)](Eq/jsp_crescim2.html){target="_blank"}
-
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Experimente variar os parâmetros da equação, combinando alguns, e comparando seus efeitos sobre os gráficos:
-  a. Capacidade de suporte;
-  b. População inicial;
-  c. Taxa de crescimento;
-  d. Retardo (fase lag);
-```
-\
-
-###  Eficiência energética e cadeia alimentar
-
-#### BNCC: EF06CI02, EM13CNT202, EM13CNT203
-
-|       Segue um exemplo para retratar a transferëncia de energia entre diferentes níveis tróficos de uma cadeia alimentar. Embora não haja propriamente uma função matemática que a descreva, pode-se aplicar a [lei dos 10%](https://en.wikipedia.org/wiki/Ecological_efficiency?) de eficiência ecológica entre os níveis da cadeia, o que resulta numa relação logaritmica de transferência.
-
-
-[![](Eq/bio2.png)](Eq/jsp_bio2.html){target="_blank"}
-
-
-#### Sugestão {.unnumbered}
-
-```{r, eval=FALSE}
-1. A regra de Lindeman, esboçada na referência acima, estabelece uma variação para 5-20% de eficiência energética no ecossistema. Assim, experimente sobrepor as curvas com tais taxas;
-2. Se quiser observar a relação logarítmica da transferência de energia, acrescente o comando "type: 'log'," , logo abaixo de "title: 'Energia disponível (unidades)',".
-```
-\
-
-
-
-
-
-## História
-
-###  Distribuição de escravizados nas Américas no período de 1500–1888 (dados simulados) 
-
-#### BNCC: EF08HI06, EM13CHS104, EM13CHS503  {.unnumbered}
-
-|    Esta simulação apresenta um *gráfico de barras* interativo para seleção de período por *menu suspenso*, e tangente à quantidade estimada de africanos escravizados desembarcados nas principais regiões da América. Os dados são estimativas aproximadas para ilustrar o potencial de visualização do aplicativo, embora servindo como ponto de partida para discussões educacionais mais precisas. Fontes passíveis de consulta incluem [Slave Voyages](https://www.slavevoyages.org/past/database/african-origins).
-\
-
-[![](Eq/escravos.png)](Eq/jsp_escravos2.html){target="_blank"}
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Experimente alterar entre os períodos no menu suspenso, comparando as estimativas de tráfico escravo;
-2. Selecione um período, crie o gráfico, selecione outro período, e adicione outro gráfico. Isso permite comparar o quantitativo de escravos aportados pelas barras duplas formadas, e passagem do mouse sobre cada barra.
-
-```
-\
-
-###  Linha do tempo para eventos da Idade Média
-
-#### BNCC: EM13CHS101, EM13CHS102  {.unnumbered}
-
-
-[![](Eq/hist2.png)](Eq/jsp_hist2.html){target="_blank"}
-
-Fonte: [Encyclopedia.com](https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/timeline-events-middle-ages?)
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Experimente alterar no código eventos e períodos, e destinados a outro período da História humana.
-```
-\
-
-
-
-
-###  Linha do tempo de eventos da Idade Média
-
-#### BNCC: EM13CHS101, EM13CHS102  {.unnumbered} 
-
-
-[![](Eq/hist2.png)](Eq/jsp_hist2.html){target="_blank"}
-
-Fonte: [Encyclopedia.com](https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/timeline-events-middle-ages?)
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Experimente alterar no código eventos e períodos, e destinados a outro período da História humana.
-```
-\
-
-
-## Linguagens
-
-###  Gírias faladas no Brasil de 1980-2020
-
-#### BNCC: EF89LP19, EM13LGG102  {.unnumbered} 
-
-|   Esta simulação é direcionada para uma estimativa do uso de gírias faladas no Brasil durante os últimos 40 anos. A representação dá-se num gráfico de pizza, e a seleção por década num menu suspenso.
-\
-
-[![](Eq/linguag_pizza.png)](Eq/jsp_linguag_pizza.html){target="_blank"}
-
-```{r, eval=FALSE}
-1. Pode-se usar a passagem de mouse para observar o "tip" (dica) apresentada para cada dado no gráfico.
-```
-\
-
-
-###  Frequência de palavras em texto
-
-#### BNCC: EM13LGG101, EM13LGG302, EM13LGG303  {.unnumbered} 
-
-[![](Eq/linguag2.png)](Eq/jsp_linguag2.html){target="_blank"}
-
-#### Sugestão {.unnumbered}
-
-```{r, eval=FALSE}
-
-1. Experimente substituir o texto do código por outro;
-2. Experimente variar o quantitativo de termos mais frequentes na variável "const entradas" (opcionalmente, varie também no título do gráfico, para fazer sentido);
-3. Compare um texto em português com sua tradução para inglês ou outra língua.
-
-```
-\
-
-###  Obras literárias e movimentos estéticos
-
-#### BNCC: EF89LP47, EM13LP01, EM13LP02, EM13LGG201
-
-|   O exemplo que segue ilustra o uso de recursos interativos, *botão* e *seletor*, para um conjunto de obras da literatura nacional. 
-
-[![](Eq/menu_literat.png)](Eq/menu_literat.html){target="_blank"}
-
-
-#### Sugestão {.unnumbered}
-
-```{r, eval=FALSE}
-1. Arraste os marcadores extremos para ampliar o foco em um período específico da lieratura;
-2. Altere o script acrescentando outras obras-chave em "const obras =" e "const periodos ="
-```
-
-
-
-## Arte
-
-
-###  Criação de objetos 3D 
-
-#### BNCC: EF09MA16, EF15AR06, EM13MAT405, EM13LGG604  {.unnumbered}
-
-|   Objetos tridimensionais podem ser gerados por funções matemáticas no espaço tridimensional, tal como ilustrado abaixo.
-
-
-[![](Eq/melancia.png)](Eq/melancia.html){target="_blank"}
-\
-
-```{r, eval=FALSE}
-1. Experimente alterar alguns valores no script, testando o resultado. Por exemplo, crie uma tapete (ou melancia achatada) alterando o código em: "const zVal = L * (t - 0.5)"...para "const zVal = L * (t - 20.5);"
-```
-\
-
-
-
-
-###  Editor de notação musical
-
-#### BNCC: EF15AR06, EF69AR22, EM13ARH402  {.unnumbered}
-
-|       O exemplo a seguir ilustra os conceitos de altura (tonalidade) e duração para notas musicais em escala diatônica. As legendas representam os valores de duração, e as tonalidades são apresentadas em seus valores de frequência
-
-[![](Eq/musica2.png)](Eq/jsp_musica2.html){target="_blank"}
-
-```{r, eval=FALSE}
-1. Experimente alterar a sequência melódica do código no vetor correspondente;
-2. Experimente alterar as figuras de duração no vetor correspondente
-
-```
-\
-
-
-
-
-###  *Aplicativo*: prancha de desenho
-
-#### BNCC: EF15AR06, EF09AR07, EM13LGG604, EM13LGG606  {.unnumbered}
-
-|   Não só de matemática, gráficos e mapas *"vive"* o *JSPlotly*. O exemplo que segue pretende oferecer uma prancha para desenhos, com variação de cores e espessura da caneta, e formas geométricas.
-\
-
-[![](Eq/desenho.png)](Eq/desenho.html){target="_blank"}
-\
-
-#### Sugestão {.unnumbered}
-
-
-```{r, eval=FALSE}
-1. Explore o script. Apesar de simples, ele permite selecionar cores distintas, espessuras de canetas, e formas geométricas;
-2. Como os demais objetos elaborados no JSPlotly, o desenho da prancha pode ser armazendo conservando sua interatividade pelo botão "html", e mesmo modificado no próprio arquivo salvo ("play.html");
-3. Se desejar alterar cores, espessuras, ou quiser acrescentar outras funcionalidades, verifique as variáveis do script;
-4. Experimente o botão "clone", que permite clonar a prancha juntamente com seu código. 
-```
-\
-
-
-
-## Ensino Religioso 
-
-###  Diagrama interativo sobre encíclicas papais
-
-#### BNCC: EF05ER01, EF09ER02, EM13ER04  {.unnumbered}
-
-[![](Eq/fluxogr_papas.png)](Eq/fluxogr_papas.html){target="_blank"}
-
-
-#### Sugestão {.unnumbered}
-
-```{r, eval=FALSE}
-1. Para perceber o dinamismo da representação, experimente arrastar qualquer parte do fluxograma, e observe a acomodação das demais;
-2. Como dantes, pode-se alterar a informação constante no fluxograma, mantendo suas características gráficas e dinâmicas, bastando-se alterar as constantes utilizadas para gerar o objeto ("const = ").
-```
-\
-
-
-
-## STEAM
-
-###  Vaso de torno de olaria
-
-#### BNCC: EM13MAT101, EM13MAT403, EM13CNT204, EM13AR01, EM13AR02  {.unnumbered}
-
-|       A plataforma também permite criações para a integração em Ciência, Tecnologia, Engenharia, Artes, e Matemática (*STEAM*). Segue um exemplo de simulação para torneamento cerâmico e moldagem manual de argila, e que permite experimentar formas simétricas e arredondadas, como vasos, tigelas e potes, por ajuste em alguns parâmetros e nas funções trigonométricas do código.
-
-[![](Eq/steam.png)](Eq/jsp_steam2.html){target="_blank"}
-
-```{r, eval=FALSE}
-1. Altere a altura do vaso, seu formato, e suas cores, editando o código nos campos específicos.
-```
-
-
-###  Mini CAD (*Computer-Aided Design*)
-
-#### BNCC: EM13MAT301, EM13MAT503, EM13MAT402  {.unnumbered}
-
-|       Segue um exemplo de código para manipulação de formas geométricas em 3D (curvas ou retas) na elaboração de um mini CAD (*Computer-Aided Design*).
-
-
-[![](Eq/miniCAD)](Eq/jsp_miniCAD2.html){target="_blank"}
-
-```{r, eval=FALSE}
-1. Experimente alterar os parâmetros base, altura e curvatura do código, variando também o sinal dos valores (positivo, negativo);
-2. Altere alguma função trigonométrica (linhaX ou linhaY, seno para tangente, por exemplo), e sobreponha ao plot;
-3. Sobreponha figuras geométricas com paleta de cores distintas.
-4. Crie figuras simétricas sobrepondo uma curva com parâmetro positivo a uma com mesmo parâmetro negativo.
-```
-
-
-
-
-## Jogos
-
-|   Em função do *JSPlotly* envolver uma linguagem de programação, *JavaScript*, é plausível que consiga oferecer um conjunto de operações tangíveis a essa, independentemente da construção de gráficos (como em diagramas e fluxogramas acima).  
-
-|   Em paralelo à riqueza que acompanha a *gameficação* como metodologia ativa, a *criação de um jogo* pode estimular o aprendiz a um outro nível, posto que a estratégia por vezes já faz parte de seu cotidiano. Jogar é uma coisa...criar um jogo pode ter impacto mais proeminente e recursivo ao pensamento e lógica computacionais, bem como ao aprendizado da própria linguagem de programação !
-
-###  Jogo de Memória
-
-#### BNCC: EF06MA19, EF06MA16, EF07MA26, EF09MA19, EM13MAT401, EM13MAT102, EM13MAT403, EM13LGG701 {.unnumbered}
-
-|   A imagem clicável abaixo direciona para um clássico *Jogo de Memória Numérica*. O objetivo é acertar um par de valores após memorização de um quadro numérico. Para jogar, siga as instruções que seguem:
-\
-
-**Instruções para o Jogo de Memória Numérica:**
-
-- 1. No campo superior existem duas constantes booleanas true/false, uma para jogar (*jogue*) e outra para verificar o acerto (*verificar*), bem como uma *semente* que fixa um determinado quadro numérico aleatório;
-- 2. Inicie o jogo (*jogue/false*, *verificar/false*);
-- 3. Clique no botão *add* e será exibido um quadro de pares numéricos para memorização;
-- 4. Troque para *jogue/true*, clique em *clean plot*, e depois em *add*. O quadro será exibido agora apenas com um valor (demais células mostratrão *"?"*);
-- 6. Escolha *verificar/true*, clique em *clean plot*, e depois em *add*. Será apresentado um campo para se digitar as coordenadas em que se acredita estar o outro par numérico (Ex: A2);
-- 7. Clique em *OK*, e será apresentado um par formado pelo valor inicial e o valor escolhido, para verificação do acerto.
-
-
-|   Para reiniciar o jogo, *clean plot*, e opções booleanas *false*.
-
-|   Divirta-se !!
-\
-
-
-[![](Eq/game.png)](Eq/jsp_game2.html){target="_blank"}
-
-
-
-
-```{r, eval= FALSE}
-1. Para jogar novamente alterando os valores do quadro, basta modificar a constante *semente* para um número qualquer;
-2. Para variar entre níveis de dificuldade do jogo, basta alterar o número de linhas e de colunas nas constantes respectivas do código. 
-```
-
-
-<!-- [Workshop - Funcionalidades diversas & Exemplos Adicionais: JSPlotly](workshop2.html) -->
-
-## *Aplicativo* - Lousa Digital 
-
-
-|   A natureza do objeto abaixo dispensa apresentações. Trata-se mais um entre os muitos aplicativos para simular uma lousa, ou quadro de giz/caneta digital. Diferente de seus concorrentes, contudo:
-
-1. Pode ser exportada como arquivo autossuficiente HTML em botão da própria lousa, e permitindo compartilhamento da imagem gerada, bem como continuidade de sua edição;
-2. Faculta a personalização do código que o produz, permitindo inserir/alterar canetas, espessuras, e ações distintas não previstas no código-fonte.
-\
-
-[![](Eq/lousa.png)](Eq/lousa.html){target="_blank"}
-\
-
-
-|   Tangente à suas facilidades, a lousa digital permite:
-
-- Escrever com 7 cores e 3 espessuras distintas;
-- Acessar 4 planos de fundo de coloração diferente;
-- Sobrepor o plano com um *grid*;
-- Utilizar um apagador (*erase*);
-- Utilizar um *apontador de laser* para localização do que se pretende assinalar;
-- Salvar a imagem como PNG, indicando data e hora;
-- Salvar a imagem como HTML autossuficiente (obs: botão *html* do quadro; o do editor não funciona neste objeto);
-- Comando de desfazer (*undo*) e de limpeza (*clean*) do quadro;
-- Possui atalhos de teclado: E=borracha; L=laser; Z desfaz, X limpa, H salva HTML
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. Pode-se alterar a espessura das canetas em "var baseWidth = 1;" ;
-2. Os botões 1x, 2x, 4x são multiplicadores; edite as linhas de criação dos botões pra trocar rótulo/multiplicador (ex.: "addSize('3x', 3, true)").
-
-Obs: o botão funcional para reprodução do quadro é o que está na própria lousa, "html". O botão do editor de códigos não opera para o aplicativo.
-```
-
-
-## Aplicativo - Editor de Mapa Mental e Diagramas
-
-|   Na mesma linha de se personalizar o *JSPlotly* como feito acima para a lousa digital, o programa também permite a construção de um diagrama ou mapa mental elaborado por *cliques de mouse*, e como um aplicativo independente.
-
-|   O *Editor de Mapa Mental* ilustrado na figura abaixo permite a construção de estruturas diversas, e fundamentalmente pela combinação de termos e setas. Há diversas funcionalidades para a criação facilitada de um mapa ou diagrama, incluindo um banner de ajuda no canto superior esquerdo para várias das ações. 
-\
-
-**Instruções para o Editor de Mapa Mental**
-\
-
-* *Criação de termos*. Clique com o botão esquerdo do mouse e digite um termo; clique em Esc para sair;
-* *Deleção de termos*. Clique Ctrl+botão direito do mouse;
-* *Moldura nos termos*. Clique numa moldura da barra (quadrado, losango, oval);
-* *Ligação de termos por seta*. Clique com o botão direito do mouse no 1o. termo, seguido do botão direito no 2o. termo;
-* *Seta curva*. Clique em *curve on*. Depois, clique com o botão direito do mouse no 1o. termo, seguido de clique com botão esquerdo em um ponto entre os dois termos, e finalize com o botão direito no 2o. termo. Para acertar a curvatura da seta, clique na bolinha e arraste-a para encostar num termo ou numa seta;
-* *Arraste de termos e setas*. Basta clicar e arrastar. 
-* *Arraste de um grupo de termos/setas*. Clique em Shift e desenhe a área que se deseja abarcar o grupo com o botão esquerdo do mouse;
-* *Cores para termos e setas*. Selecione uma das 7 cores disponíveis na barra superior, e clique num termo já existente, ou novo. Obs: a cor da seta acompanha a dos termos;
-* *Grid* para posicionamento mais preciso. Basta clicar em *grid on* (não fica salvo do diagrama final);
-* *Salvamento do mapa (save html)*. Diferente do botão *html* usual, o armazenamento do mapa interativo é realizado por um *botão html próprio*, na barra de ícones;
-* *Importação de mapas (import)*. O aplicativo permite importar um mapa já pronto em formato *json* para continuar sua edição;
-* *Exportação de mapas (export)*. O aplicativo também permite exportar o mapa no formato *json* para estudo futuro ou simples guarda.
-\
-
-[![](Eq/mapa_mental)](Eq/mapaMental.html){target="_blank"}
-\
-
-
-#### Sugestão: {.unnumbered}
-
-```{r, eval=FALSE}
-1. O editor permite criar mapas mentais, diagramas, fluxogramas, e outras representações...então agora a sugestão é vossa !!
-```
-\
 
 
