@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>JSPlotly at School</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../nivel/superior/jmol/index_jmol_en.html" rel="next">
+<link href="../../../nivel/superior/jsplotly/jsptl_bioq_en.html" rel="prev">
+<link href="../../../avatar.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-4b957b30fffc5edb70387ff4d75203a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo-unifal.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../erre_en.html"> 
+<span class="menu-text">Reproducible Teaching</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cheatsheets" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Cheatsheets</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-cheatsheets">    
+        <li>
+    <a class="dropdown-item" href="../../../cheatsheet/plotly.pdf">
+ <span class="dropdown-text">Plotly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../cheatsheet/jmol_cheat.pt.pdf">
+ <span class="dropdown-text">Jmol</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../cheatsheet/r_cheat.pt.pdf">
+ <span class="dropdown-text">R</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../producao_en.html"> 
+<span class="menu-text">Works</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contato_en.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../pt/index.html"> 
+<span class="menu-text">PT</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-true"></i></a>
+    <a href="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-true"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../nivel/superior/jsplotly/jsplotly_geral_en.html">JSPlotly: Interactive objects &amp; AI</a></li><li class="breadcrumb-item"><a href="../../../nivel/basico/jsplotly/jsplotly_bas_en.html">School</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">JSPlotly: Interactive objects &amp; AI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/jsplotly/jsplotly_geral_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">JSPlotly</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/jsplotly/jsptl_bioq_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biophysical chemistry</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/jsplotly/jsplotly_bas_en.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">School</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Jmol - 3D molecules</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/jmol/index_jmol_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biochemistry</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/Curso/index_jmol_bas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">School</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/Jardim/index_Jardim_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Molecule Garden</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">R - Maths and charts</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/r/_book/index_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biophysical chemistry</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/ScriptRplot/scriptrplot_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">scriptRplot: elegant graphics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/Curso/index_r_bas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">School</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/R/index_OIER_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactivity at School</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Sisma - dynamic flows</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/superior/sisma/index_sisma_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biochemistry</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../nivel/basico/sisma/index_sisma_bas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">School</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#instructions" id="toc-instructions" class="nav-link active" data-scroll-target="#instructions">Instructions</a></li>
+  <li><a href="#mathematics" id="toc-mathematics" class="nav-link" data-scroll-target="#mathematics"><span class="header-section-number">1</span> Mathematics</a></li>
+  <li><a href="#financial-mathematics" id="toc-financial-mathematics" class="nav-link" data-scroll-target="#financial-mathematics"><span class="header-section-number">2</span> Financial Mathematics</a></li>
+  <li><a href="#statistics" id="toc-statistics" class="nav-link" data-scroll-target="#statistics"><span class="header-section-number">3</span> Statistics</a></li>
+  <li><a href="#computer-science" id="toc-computer-science" class="nav-link" data-scroll-target="#computer-science"><span class="header-section-number">4</span> Computer Science</a></li>
+  <li><a href="#chemistry" id="toc-chemistry" class="nav-link" data-scroll-target="#chemistry"><span class="header-section-number">5</span> Chemistry</a></li>
+  <li><a href="#biology" id="toc-biology" class="nav-link" data-scroll-target="#biology"><span class="header-section-number">6</span> Biology</a></li>
+  <li><a href="#geography" id="toc-geography" class="nav-link" data-scroll-target="#geography"><span class="header-section-number">7</span> Geography</a></li>
+  <li><a href="#history" id="toc-history" class="nav-link" data-scroll-target="#history"><span class="header-section-number">8</span> History</a></li>
+  <li><a href="#languages" id="toc-languages" class="nav-link" data-scroll-target="#languages"><span class="header-section-number">9</span> Languages</a></li>
+  <li><a href="#art" id="toc-art" class="nav-link" data-scroll-target="#art"><span class="header-section-number">10</span> Art</a></li>
+  <li><a href="#religious-education" id="toc-religious-education" class="nav-link" data-scroll-target="#religious-education"><span class="header-section-number">11</span> Religious Education</a></li>
+  <li><a href="#steam" id="toc-steam" class="nav-link" data-scroll-target="#steam"><span class="header-section-number">12</span> STEAM</a></li>
+  <li><a href="#games" id="toc-games" class="nav-link" data-scroll-target="#games"><span class="header-section-number">13</span> Games</a></li>
+  <li><a href="#application---digital-whiteboard" id="toc-application---digital-whiteboard" class="nav-link" data-scroll-target="#application---digital-whiteboard"><span class="header-section-number">14</span> Application - Digital Whiteboard</a></li>
+  <li><a href="#musicalization" id="toc-musicalization" class="nav-link" data-scroll-target="#musicalization"><span class="header-section-number">15</span> Musicalization</a></li>
+  <li><a href="#accessibility-and-inclusion" id="toc-accessibility-and-inclusion" class="nav-link" data-scroll-target="#accessibility-and-inclusion"><span class="header-section-number">16</span> Accessibility and inclusion</a></li>
+  <li><a href="#computer-games" id="toc-computer-games" class="nav-link" data-scroll-target="#computer-games"><span class="header-section-number">17</span> Computer Games</a></li>
+  <li><a href="#experimental-interface" id="toc-experimental-interface" class="nav-link" data-scroll-target="#experimental-interface"><span class="header-section-number">18</span> Experimental Interface</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../nivel/superior/jsplotly/jsplotly_geral_en.html">JSPlotly: Interactive objects &amp; AI</a></li><li class="breadcrumb-item"><a href="../../../nivel/basico/jsplotly/jsplotly_bas_en.html">School</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">JSPlotly at School</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="line-block">To illustrate the potential use of <em>JSPlotly</em> for elementary and high school education, here are some examples of simulations and graphs that are often found in textbooks and related content. To get the most out of each topic, try following the suggestions for <em>parametric manipulation</em> in each topic.</div>
+<p><br>
+</p>
+<section id="instructions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="instructions">Instructions</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Choose a topic;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Click on the corresponding graph;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Click on <span class="st">"Add Plot"</span>;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Use the mouse <span class="cf">for</span> interactivity and<span class="sc">/</span>or edit the code. </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Reminder<span class="sc">:</span> the editor uses infinite undo<span class="sc">/</span>redo <span class="cf">in</span> the <span class="fu">code</span> (Ctrl<span class="sc">+</span>Z <span class="sc">/</span> Shift<span class="sc">+</span>Ctrl<span class="sc">+</span>Z)<span class="sc">!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="mathematics" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="mathematics"><span class="header-section-number">1</span> Mathematics</h2>
+<section id="trigonometry-em13mat306-em13mat308-em13mat307" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="trigonometry-em13mat306-em13mat308-em13mat307"><span class="header-section-number">1.1</span> Trigonometry (EM13MAT306, EM13MAT308, EM13MAT307)</h3>
+<div class="line-block">The following simulation aims to facilitate the visualization of some concepts in trigonometry, <em>sine, cosine, and tangent</em>. The code allows you to use a <em>drop-down menu</em> for each trigonometric function, as well as a <em>slider</em> to change the frequency in radians.</div>
+</section>
+<section id="equation" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation">Equation:</h3>
+<p><strong>1. Sine function:</strong></p>
+<p><span class="math display">\[
+y = \sin(\omega x)
+\]</span></p>
+<p><strong>2. Cosine function:</strong></p>
+<p><span class="math display">\[
+y = \cos(\omega x)
+\]</span></p>
+<p><strong>3. Tangent function:</strong></p>
+<p><span class="math display">\[
+y = \tan(\omega x)
+\]</span><br>
+</p>
+<p><a href="Eq/jsp_trigonom2.html" target="_blank"><img src="Eq/trigonom.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Select the sine, cosine, and tangent functions alternately using the <span class="st">"drop-down menu"</span>;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Try changing the frequency of the <span class="cf">function</span> using the slider;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Overlay a sine graph and a cosine graph to observe their differences;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Repeat the same <span class="cf">for</span> the tangent graph.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="use-of-selector-and-buttons-in-data-fluctuation-ef07ma21-ef07ge04-em13mat301-em13chs104-em13cnt103" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="use-of-selector-and-buttons-in-data-fluctuation-ef07ma21-ef07ge04-em13mat301-em13chs104-em13cnt103"><span class="header-section-number">1.2</span> Use of selector and buttons in data fluctuation (EF07MA21, EF07GE04, EM13MAT301, EM13CHS104, EM13CNT103)</h3>
+<div class="line-block">A button accesses a specific situation, while a selector allows you to enlarge a specific area of values, highlighting graphical information for a function or significant fluctuations. Both are illustrated below in a simulation for temporal fluctuation of values (expressed as a sine wave modified by random increments).</div>
+<p><a href="Eq/mat_seletor.html" target="_blank"><img src="Eq/mat_seletor.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-1">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Drag the end markers of the graph to view a more restricted limit;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Click on the buttons with different periods;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> You can change the random noise around the mathematical equation that defines the fluctuation above by simply modifying the line of code <span class="cf">in</span><span class="sc">:</span> <span class="st">"const values = days.map((_, i) =&gt; 50 + 10 * Math.sin(i / 10) + Math.random() * 50);"</span> <span class="sc">-</span> change ‘<span class="dv">50</span>’ to <span class="st">"5"</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="simulated-animation-for-a-function-ef07ma20-ef09ma20-em13mat302-em13mat304" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="simulated-animation-for-a-function-ef07ma20-ef09ma20-em13mat302-em13mat304"><span class="header-section-number">1.3</span> Simulated animation for a function (EF07MA20, EF09MA20, EM13MAT302, EM13MAT304)</h3>
+<div class="line-block">With the application, it is possible to simulate a frame-by-frame animation to improve learning of a topic by inserting a manual slider. The following example shows a <em>simulator for manual animation</em> for mathematical functions. To use it, simply slide the <em>slider</em> progressively to see a graphical representation of the result as the predictor variable changes.</div>
+<p><strong>Note: </strong> This educational object has a trick…actually, two! After clicking <em>add</em>, you must first slide the <em>slider</em> to view the graph. And to view an animation for another equation, you must refresh the page, as instructed at the bottom of the graphic screen.</p>
+<p><a href="Eq/jsp_anima2.html" target="_blank"><img src="Eq/anima.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-2">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Slide the control to highlight the manual animation;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Try replacing the model equation with another one, and drag the slider to observe the effect;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Change some parameters <span class="cf">for</span> the animation, <span class="cf">for</span> example, increasing the <span class="st">"frames"</span> <span class="fu">levels</span> (<span class="at">slider.max =</span> <span class="st">"50"</span>; <span class="at">slider.value =</span> <span class="dv">1</span>);</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Reload the page and change the mathematical <span class="cf">function</span>; e.g., <span class="st">"let f = x =&gt; Math.sin(x);"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="simulated-animation-with-multiple-sliders" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="simulated-animation-with-multiple-sliders"><span class="header-section-number">1.4</span> Simulated animation with multiple sliders</h3>
+<div class="line-block">Simpler and more immediate than code changes, sliders can contribute more immediately to the understanding of a problem, as follows for the example of the parameters of a parabola.</div>
+<p><a href="Eq/mat_slider_parab.html"><img src="Eq/mat_slider_parab.png" class="img-fluid"></a>{target= “_blank”}</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Drag any slider and observe the trend presented, as well as the change <span class="cf">in</span> the equation parameters at the top;</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> As <span class="cf">in</span> the previous example, it is possible to change the mathematical <span class="cf">function</span> <span class="cf">in</span> the code, as well as the parameters <span class="cf">for</span> a new slider. Test this by changing the <span class="cf">function</span> <span class="st">" y_values = x_values.map(x =&gt; a * x * x + b * x + c);</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">"</span> to <span class="st">" y_values = x_values.map(x =&gt; Math.sin(a * x * x + b * x + c));"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fractal-composition-em13mat301-em13mat305-em13mat401-em13arm502-ef09ma10" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="fractal-composition-em13mat301-em13mat305-em13mat401-em13arm502-ef09ma10"><span class="header-section-number">1.5</span> Fractal composition (EM13MAT301, EM13MAT305, EM13MAT401, EM13ARM502, EF09MA10)</h3>
+<div class="line-block">Fractals are geometric objects with scale symmetry, forming patterns that repeat in smaller parts of the original object. The most common mathematical representations are Mandelbrot fractals and Julia fractals, which combine art and mathematics in geometric figures with fractional dimensions that express the degree of complexity and space occupation. Originally conceived at IBM in the 1980s, fractals are now seen everywhere from the cartographic outline of certain regions to the distribution of living cells in culture.</div>
+</section>
+<section id="equation-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation-1">Equation</h3>
+<div class="line-block">Julia fractals are formed in a complex Cartesian plane by the sum of the real and imaginary components. The basic formula for the Julia set is given by:</div>
+<p><span class="math display">\[
+z_{n+1}=z_{n}^{2}+c
+\]</span></p>
+<p><em>Where:</em></p>
+<ul>
+<li><p>z ∈ C: usually initialized as the point on the complex plane;</p></li>
+<li><p>c ∈ C: fixed for each Julia set.</p></li>
+</ul>
+<p><a href="Eq/jsp_julia2.html" target="_blank"><img src="Eq/julia.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-3">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing the Real and Imaginary components of the formula to obtain different artistic patterns. Here are some suggestions<span class="sc">:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="dv">0</span> <span class="sc">+</span> <span class="dv">0</span>i</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="sc">-</span><span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.6</span>i</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fl">0.285</span> <span class="sc">+</span> <span class="dv">0</span>i</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="sc">-</span><span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.156</span>i</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fl">0.45</span> <span class="sc">+</span> <span class="fl">0.1428</span>i</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="mandelbrot-fractal" class="level3" data-number="1.6">
+<h3 data-number="1.6" class="anchored" data-anchor-id="mandelbrot-fractal"><span class="header-section-number">1.6</span> Mandelbrot Fractal</h3>
+<div class="line-block">Another interesting structure involves Mandelbrot fractals, represented by a different set of equations. The following example adds this fractal with a selection menu.</div>
+<p><a href="Eq/fractal_mandel.html" target="_blank"><img src="Eq/fractal_mandel.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-4" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-4">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Select different colors and magnification <span class="fu">levels</span> (<span class="st">"zoom"</span>) <span class="cf">in</span> the two menus <span class="cf">for</span> different views;</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Check where the equations that define the Mandelbrot profile are located <span class="cf">in</span> the code, and make small changes to check different results.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="financial-mathematics" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="financial-mathematics"><span class="header-section-number">2</span> Financial Mathematics</h2>
+<section id="compound-interest-em13mat402" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="compound-interest-em13mat402"><span class="header-section-number">2.1</span> Compound Interest (EM13MAT402):</h3>
+<div class="line-block">Also known by the maxim <em>“interest on interest,”</em> compound interest adds value to capital over time, resulting in growth of the final amount.</div>
+</section>
+<section id="equation-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation-2">Equation:</h3>
+<p><span class="math display">\[
+M = C \cdot (1 + i)^t
+\]</span></p>
+<p><em>Where,</em></p>
+<ul>
+<li>M: final amount</li>
+<li>C: initial capital</li>
+<li>i: interest rate per period (in decimal)</li>
+<li>t: number of periods (e.g., months)</li>
+</ul>
+<p><a href="Eq/jsp_juros2.html" target="_blank"><img src="Eq/juros.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-5" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-5">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Vary the contract period, monthly interest rate, or initial amount.</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Try combining the parameters <span class="cf">in</span> the variation.</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Evaluate the visual difference between an investment and a loan, entering a positive initial capital value <span class="cf">for</span> the former and a negative value <span class="cf">for</span> the latter.</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Observe the downward curve <span class="cf">for</span> a simulated loan with negative initial capital. The remaining values refer to the outstanding debt to pay off the loan.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="statistics" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="statistics"><span class="header-section-number">3</span> Statistics</h2>
+<section id="normal-distribution-curve-em13mat316-em13mat407-em13mat312" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="normal-distribution-curve-em13mat316-em13mat407-em13mat312"><span class="header-section-number">3.1</span> Normal distribution curve (EM13MAT316, EM13MAT407, EM13MAT312)</h3>
+<div class="line-block">Sampling and population are common topics for data observation in analytical procedures. The statistical distribution curves for this involve the <em>t-Student</em>, <em>F-Snedecor</em>, <em>Chi-square</em>, and <em>normal distribution</em>. The normal distribution curve reflects the statistical behavior for natural phenomena in a given data population.</div>
+<div class="line-block">The example aims to illustrate the use of the z-transformation, the calculation of critical values, and the interpretation of the area under the curve in the study of normal distribution and statistical inference.</div>
+</section>
+<section id="equation-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation-3">Equation</h3>
+<div class="line-block">The density function of the normal (or Gaussian) distribution is given below?</div>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sigma \sqrt{2\pi}} \, e^{ -\frac{(x - \mu)^2}{2\sigma^2} }
+\]</span></p>
+<p><em>Where:</em></p>
+<ul>
+<li><span class="math inline">\(\mu\)</span> = 0 (mean of the distribution);</li>
+<li><span class="math inline">\(\sigma\)</span> = 1 (standard deviation);</li>
+<li><em>x</em> = continuous random variable; <em>f</em> = density function of the normal distribution</li>
+</ul>
+<div class="line-block">From the above equation, we can extract <em>z</em>, the value of the standardized random variable for zero mean and unit standard deviation, representing the value on the x-axis:</div>
+<p><span class="math display">\[
+z = \frac{x - \mu}{\sigma}
+\]</span></p>
+<p><a href="Eq/jsp_estat2.html" target="_blank"><img src="Eq/estat.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-6" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-6">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing the value of <span class="st">"p"</span> and run the graph. This value represents the probability of observing, under the null hypothesis, a value as extreme or more extreme than the observed value — that is, it measures the evidence against the null hypothesis. In the graph, it represents the area under the normal curve <span class="cf">in</span> the critical regions, indicating the chance of the observed result occurring by pure chance.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="animation-of-a-histogram-ef09ma21-em13mat406-em13mat407" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="animation-of-a-histogram-ef09ma21-em13mat406-em13mat407"><span class="header-section-number">3.2</span> Animation of a histogram (EF09MA21, EM13MAT406, EM13MAT407)</h3>
+<div class="line-block">Statistical information is sometimes represented graphically, such as the distribution of values in box-and-whisker plots or histograms. The example below illustrates the potential for understanding a histogram added to an animation feature.</div>
+<p><br>
+</p>
+<p><a href="Eq/anim_histogr.html" target="_blank">! [](Eq/anim_histogr.png)</a><br>
+</p>
+</section>
+<section id="suggestion-7" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-7">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Note the various constants at the top of the script that can be changed <span class="cf">for</span> a different animation, and try changing them one by one to understand both the action of the object and the statistical content to which it refers<span class="sc">:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>const mu <span class="ot">=</span> <span class="dv">0</span> (mean);</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>const sigma <span class="ot">=</span> <span class="dv">1</span> (standard deviation);</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>const n_frames <span class="ot">=</span> <span class="dv">50</span> (no. of frames);</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>const sample_per_frame <span class="ot">=</span> <span class="dv">20</span> (sample rate<span class="sc">/</span>frame);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="computer-science" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="computer-science"><span class="header-section-number">4</span> Computer Science</h2>
+<section id="javascript-training-ef09lp27-ef06ma20-em13mat503-em13lgg701" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="javascript-training-ef09lp27-ef06ma20-em13mat503-em13lgg701"><span class="header-section-number">4.1</span> JavaScript Training (EF09LP27, EF06MA20, EM13MAT503, EM13LGG701)</h3>
+<div class="line-block">With a special focus on <em>computational thinking</em> and <em>programming logic</em>, the following example illustrates a metalanguage for * JSPlotly*, which is an application in a specific programming language that produces a script for learning the language itself.</div>
+<p><br>
+</p>
+<p><a href="Eq/treinamentoJS.html" target="_blank"><img src="Eq/treinamentoJS.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-8" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-8">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Here, the sky<span class="st">'s the limit! There are countless possibilities for commands and functions in JavaScript, as well as for joint output of data, calculations, and graphs.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>
+## Physics
+
+###  Pitch, harmony, and timbre of sounds (EF15AR06, EM13ARH402)
+
+| The following example illustrates the concepts of pitch (frequency), harmony, and timbre (pure waves and harmonics) for a graph of musical tones (diatonic scale).</code></pre>
+<p><a href="Eq/jsp_musica.html"><img src="Eq/musica.png" class="img-fluid"></a> {target=“_blank”}</p>
+</section>
+<section id="suggestion-9" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-9">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Test other <span class="fu">tones</span> (C, G, D, etc.), observing how the pure wave appears by superimposing the graphs;</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Evaluate the difference between a pure wave and one produced with musical instruments, involving natural harmonics. To do this, replace the Boolean option from <span class="st">"false"</span> to ‘true’ <span class="cf">in</span> the variable <span class="st">"const ondaComposta"</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="elastic-potential-energy-em13cnt102-em13cnt202-em13mat402" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="elastic-potential-energy-em13cnt102-em13cnt202-em13mat402"><span class="header-section-number">4.2</span> Elastic potential energy (EM13CNT102, EM13CNT202, EM13MAT402)</h3>
+<div class="line-block">The deformation of an elastic material is directly proportional to the force exerted on it and limited to the properties of the material.</div>
+</section>
+<section id="equation-4" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation-4">Equation</h3>
+<div class="line-block">The behavior of an ideal spring is described by Hooke’s Law below:</div>
+<p><span class="math display">\[
+F = -k*x
+\]</span></p>
+<p><em>Where:</em></p>
+<ul>
+<li>F = restoring force of the spring (N);</li>
+<li>k = elastic constant of the spring (N/m);</li>
+<li>x = deformation (m).</li>
+</ul>
+<div class="line-block">On the other hand, the <em>elastic potential energy</em> involved is described by the following quadratic relationship:</div>
+<p><span class="math display">\[
+E = \frac{1}{2}*k*x^2
+\]</span></p>
+<p><em>Where:</em></p>
+<ul>
+<li>E = elastic potential energy (J).</li>
+</ul>
+<p><a href="Eq/jsp_fisica2.html" target="_blank"><img src="Eq/fisica2.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-10" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-10">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing the value of the spring<span class="st">'s elastic constant to highlight its effect, relating it to stiffer or less stiff springs;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">2. Change the spring deformation limits in the code'</span>s <span class="st">"control structure"</span> (e.g., <span class="st">"for (let x = -0.7)"</span>), and observe the effect on the maximum potential energy;</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Note that, due to the quadratic operation on the deformation value, the potential energy is always positive.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="motion-of-bodies-em13cnt102" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="motion-of-bodies-em13cnt102"><span class="header-section-number">4.3</span> Motion of bodies (EM13CNT102):</h3>
+<div class="line-block">The following code illustrates the trajectory of an oblique launch with an angle adjustable by a slider, useful for exploring the concepts of kinematics.</div>
+</section>
+<section id="equation-5" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation-5">Equation:</h3>
+<p><strong>1. General equation</strong></p>
+<p><span class="math display">\[
+y(x) = x \cdot \tan(\theta) - \frac{g}{2 v_0^2 \cos^2(\theta)} \cdot x^2
+\]</span></p>
+<p><em>Where:</em></p>
+<ul>
+<li>y(x): height as a function of horizontal distance;</li>
+<li>x: horizontal position (m);</li>
+<li><span class="math inline">\(\theta\)</span>: angle of launch relative to the horizontal (radians or degrees);</li>
+<li>v0: initial velocity of the projectile (m/s);</li>
+<li>g: acceleration due to gravity (9.8 m/s²<span class="math inline">\(^{2}\)</span>)</li>
+</ul>
+<p><strong>2. Total flight time:</strong></p>
+<p><span class="math display">\[
+t_{\text{total}} = \frac{2 v_0 \sin(\theta)} {g}
+\]</span></p>
+<p><strong>3. Horizontal position over time</strong></p>
+<p><span class="math display">\[
+x(t) = v_0 \cos(\theta) \cdot t
+\]</span></p>
+<p><a href="Eq/jsp_fis_pedra2.html" target="_blank"><img src="Eq/fis_pedra.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-11" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-11">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Note that there is a slider bar <span class="cf">for</span> initial angles <span class="cf">in</span> the simulation. Drag the bar to another angle and add the graph, comparing the effect of this modification.</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Change the initial velocity <span class="cf">in</span> the code and observe the effect on the graph.</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Simulate a <span class="st">" lunar condition"</span> <span class="cf">for</span> the trajectory, whose gravity is around <span class="dv">1</span><span class="sc">/</span><span class="dv">6</span> that of <span class="fu">Earth</span> (<span class="sc">~</span><span class="fl">1.6</span> m<span class="sc">/</span>s²).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="animation-for-oblique-launch-ef09ci09-ef09ma20-em13cnt103-em13mat304" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="animation-for-oblique-launch-ef09ci09-ef09ma20-em13cnt103-em13mat304"><span class="header-section-number">4.4</span> Animation for oblique launch (EF09CI09, EF09MA20, EM13CNT103, EM13MAT304)</h3>
+<div class="line-block">Like simulations, animations can aid in understanding a specific topic (<em>simulation- or animation-based learning</em>). <em>JSPlotly</em> can work directly with animations using the <em>Plotly.js</em> library (insertion of <em>frames</em>, <em>buttons</em>, <em>transitions</em>, for example).</div>
+<div class="line-block">Below is an animation for the parabolic launch of a projectile, described by the equations in the previous topic. Unlike that one, however, the insertion of an animation adds value to the understanding of the phenomenon by offering the possibility of <em>parametric manipulation</em> of the code associated with the animation itself.</div>
+<p><br>
+</p>
+<p><a href="Eq/lancamento.html" target="_blank"><img src="Eq/lancamento.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-12" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-12">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> As <span class="cf">in</span> the previous topic, try changing the parameters of the equation, such as the initial velocity and the angle of attack, and observe the effect of these changes.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="animation-for-translational-motion-in-the-solar-system---approximate-data-ef05ci08-ef07ci01-em13cnt104-em13cnt103" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="animation-for-translational-motion-in-the-solar-system---approximate-data-ef05ci08-ef07ci01-em13cnt104-em13cnt103"><span class="header-section-number">4.5</span> Animation for translational motion in the solar system - approximate data (EF05CI08, EF07CI01, EM13CNT104, EM13CNT103)</h3>
+<div class="line-block">Dynamic representations of complex phenomena can aid in understanding them, regardless of the field of knowledge. In addition, simulations with approximate data from reality can also insert another image into the learner’s cognitive perception. The example below illustrates an animation for the translational motion of the planets in our solar system based on approximate data.</div>
+<p><br>
+</p>
+<p><a href="Eq/miniSistSol.html" target="_blank"><img src="Eq/miniSistSol.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-13" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-13">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Note that there is a slider bar at the top of the object; drag it to observe different speeds <span class="cf">for</span> the animation;</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Note that the image was made possible by <span class="st">"zoom"</span> on the graphic screen, to improve the visualization of the planets. In this sense, try using this feature during the animation; </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Note that there are <span class="dv">8</span> planets <span class="cf">in</span> the animation, not including the dwarf planet Pluto. This is not because it has been overlooked, but because you can observe how slow the planets move as they distance themselves from the <span class="fu">Sun</span> (see Neptune, which is practically static). In this sense, we can see the potential of an animation with approximate data, providing additional information that is not noticeable <span class="cf">in</span> textbooks on the subject.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="animation-for-simple-harmonic-motion-ef09ci09-ef09ma18-em13cnt104-em13cnt203" class="level3" data-number="4.6">
+<h3 data-number="4.6" class="anchored" data-anchor-id="animation-for-simple-harmonic-motion-ef09ci09-ef09ma18-em13cnt104-em13cnt203"><span class="header-section-number">4.6</span> Animation for simple harmonic motion (EF09CI09, EF09MA18, EM13CNT104, EM13CNT203)</h3>
+<div class="line-block">Among various situations for analyzing the physical properties of materials and systems, the linear relationship between applied mass and spring deformation is of significant importance. The equation representing the position of the mass as a function of time is given below.</div>
+</section>
+<section id="equation-6" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation-6">Equation</h3>
+<p><span class="math display">\[
+x(t)=Acos(ωt+ϕ)
+\]</span><br>
+</p>
+<p><em>Where:</em></p>
+<ul>
+<li><em>x(t)</em> = The position of the mass at time t;</li>
+<li><em>A</em> = amplitude of motion, which is the maximum distance of the mass from the equilibrium position (in this case, x=0);</li>
+<li><span class="math inline">\(\omega\)</span> = angular frequency, which defines the rate of oscillation. It is calculated by 2<span class="math inline">\(\pi\)</span>/T, where T is the period (the time for a complete cycle);</li>
+<li><span class="math inline">\(\phi\)</span> = initial phase or phase constant, which defines the position of the mass at t=0<br>
+</li>
+</ul>
+<p><a href="Eq/massa_mola.html" target="_blank"><img src="Eq/massa_mola.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-14" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-14">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing some parameters of the equation of motion, such as amplitude A and angular frequency;</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Increase the angular frequency of the animation by reducing the denominator <span class="cf">in</span> <span class="st">"const w"</span>;</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Try the <span class="st">"html"</span> button and note that the animation is preserved when exporting the file;</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Try the <span class="st">"clone"</span> button and note that it is possible to share the object <span class="cf">in</span> the frozen configuration along with the modified code</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="animation-for-pendulum-motion-ef09ci09-ef09ma18-em13cnt104-em13cnt203" class="level3" data-number="4.7">
+<h3 data-number="4.7" class="anchored" data-anchor-id="animation-for-pendulum-motion-ef09ci09-ef09ma18-em13cnt104-em13cnt203"><span class="header-section-number">4.7</span> Animation for pendulum motion (EF09CI09, EF09MA18, EM13CNT104, EM13CNT203)</h3>
+<div class="line-block">Similar to the previous object, here we have an animation for the mechanical phenomenon of periodic pendulum motion. The equations describing the position of a simple pendulum as a function of time, using the small oscillations approximation, are given below.</div>
+<p><br>
+</p>
+</section>
+<section id="equation-7" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation-7">Equation</h3>
+<p><span class="math display">\[
+θ(t)=θ_0​cos(ωt)
+\]</span></p>
+<p><span class="math display">\[
+x(t)=L​sin(θ)
+\]</span></p>
+<p><span class="math display">\[
+y(t)=−L​cos(θ)
+\]</span></p>
+<p><span class="math display">\[
+ω=\sqrt{\frac{L}{g}}
+\]</span></p>
+<p><em>Where:</em>,</p>
+<ul>
+<li>θ(t) = angular position;</li>
+<li>x(t) = <em>x</em> coordinate;</li>
+<li>y(t) = <em>y</em> coordinate;</li>
+<li>ω = angular frequency</li>
+</ul>
+<p><a href="Eq/pendulo.html" target="_blank"><img src="Eq/pendulo.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-15" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-15">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> As suggested <span class="cf">for</span> other objects, try <span class="st">"parametric exploration"</span> of the equation involved <span class="cf">in</span> the code, changing its parameters;</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Note an advantageous feature of simulations over real experiments<span class="sc">:</span> the realization of conditions that are impossible <span class="cf">in</span> practice. To do this, try the simulation as <span class="cf">if</span> you were on the Moon, changing the value of gravitational acceleration to <span class="fl">1.62</span> m<span class="sc">/</span>s<span class="sc">^</span><span class="dv">2</span> (but with <span class="st">". "</span>, not <span class="st">","</span> <span class="sc">-</span> because it is programming syntax.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="chemistry" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="chemistry"><span class="header-section-number">5</span> Chemistry</h2>
+<section id="absorption-bands-as-a-function-of-concentration---3d-representation-ef09ci04-ef09ma17-em13cnt103-em13mat305" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="absorption-bands-as-a-function-of-concentration---3d-representation-ef09ci04-ef09ma17-em13cnt103-em13mat305"><span class="header-section-number">5.1</span> Absorption bands as a function of concentration - 3D representation (EF09CI04, EF09MA17, EM13CNT103, EM13MAT305)</h3>
+<p><a href="Eq/jsp_3d_bandas.html" target="_blank"><img src="Eq/3d_bandas.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-16" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-16">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing the graph pattern and colors. Respectively<span class="sc">:</span> type<span class="sc">:</span> ‘surface’, colorscale<span class="sc">:</span> ‘Viridis’<span class="er">)</span>;</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Change the wavelength range, separating the peaks; to do this, change the min<span class="sc">/</span>max variables of lambda<span class="sc">:</span> const lambdaMin <span class="ot">=</span> <span class="dv">450</span>, lambdaMax <span class="ot">=</span> <span class="dv">600</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="heat-capacity-ef09ci06-em13cnt104-em13cnt203" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="heat-capacity-ef09ci06-em13cnt104-em13cnt203"><span class="header-section-number">5.2</span> Heat Capacity (EF09CI06, EM13CNT104, EM13CNT203)</h3>
+<div class="line-block">The following simulation aims to observe the relationship between heat exchanged (<em>Q</em>), mass (<em>m</em>), heat capacity (<em>c</em>), and temperature variation (<em><span class="math inline">\(\Delta\)</span>T</em>).</div>
+</section>
+<section id="equation-8" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation-8">Equation:</h3>
+<p><span class="math display">\[
+Q = c \cdot m \cdot \Delta T
+\]</span><br>
+</p>
+<p><a href="Eq/jsp_cp2.html" target="_blank"><img src="Eq/cp.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-17" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-17">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try varying the temperature initially, superimposing some graphs;</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Also vary the mass <span class="cf">in</span> the code editor <span class="cf">for</span> comparison.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="mixture-of-substances-in-an-exothermic-reaction---3d-graph-ef09ci02-em13cnt103-em13cnt103" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="mixture-of-substances-in-an-exothermic-reaction---3d-graph-ef09ci02-em13cnt103-em13cnt103"><span class="header-section-number">5.3</span> Mixture of substances in an exothermic reaction - 3D graph (EF09CI02, EM13CNT103, EM13CNT103)</h3>
+<div class="line-block">Simulations can be performed without necessarily involving a mathematical relationship, as in the experimental observation of two variables, such as time and concentration, simulating an exothermic chemical reaction. Here is an interactive 3D example.</div>
+<div class="line-block">In this case, the equation used in the editor involves a smooth variation of temperature over time, using the sine function and an initial temperature (see the code).</div>
+<p><br>
+</p>
+<p><a href="Eq/jsp_quim2.html" target="_blank"><img src="Eq/quim2.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-18" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-18">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try varying the temperature initially, overlaying some graphs;</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Also vary the mass <span class="cf">in</span> the code editor <span class="cf">for</span> comparison.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="animation-and-reaction-kinetics" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="animation-and-reaction-kinetics"><span class="header-section-number">5.4</span> Animation and reaction kinetics</h3>
+<div class="line-block">A topic that students find difficult to grasp is the abstraction required to uncover the mathematical relationships that arise in chemical reaction kinetics. When dealing with the conversion of reactants into products, for example, there is an inherent barrier to learning about reaction rates, inhibition, and activation. To reduce the impact of this abstraction, here is an example of an animation for reaction kinetics, in which the object changes depending on the reaction rate and modulator options.</div>
+<p><br>
+</p>
+</section>
+<section id="equation-9" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation-9">Equation:</h3>
+<p><span class="math display">\[
+R(t)=\frac {R_0}{1+k_{effective}​t}
+\]</span></p>
+<p><span class="math display">\[
+P(t)=R_0​−R(t)
+\]</span></p>
+<p><em>Where</em>,</p>
+<ul>
+<li><span class="math inline">\(R(t)\)</span> = amount of reactant R at time <span class="math inline">\(t\)</span> (arbitrary units);</li>
+<li><span class="math inline">\(P(t)\)</span> = amount of product P at time <span class="math inline">\(t\)</span> (arbitrary units);</li>
+<li><span class="math inline">\(R_{0}\)</span> = initial amount of reactant at time <span class="math inline">\(t=0\)</span>;</li>
+<li><span class="math inline">\(t\)</span> = time (in seconds);</li>
+<li><span class="math inline">\(k_{\text{kinetic}}\)</span> = base rate constant (in <span class="math inline">\(s^{-1}\)</span>);</li>
+<li><span class="math inline">\(k_{\text{effective}}\)</span> = effective constant after considering catalyst and/or inhibitor:</li>
+</ul>
+<p><span class="math display">\[
+k_{\text{effective}} \;=\;
+k_{\text{kinetic}} \times
+\begin{cases}
+f_{\text{cat}}, &amp; \text{if catalyst is on}\\[6pt]
+1, &amp; \text{if catalyst is not bound}
+\end{cases}
+\times
+\begin{cases}
+\dfrac{1}{f_{\text{inhib}}}, &amp; \text{if inhibitor is bound}\\[6pt]
+1, &amp; \text{if inhibitor is not bound}
+\end{cases}
+\]</span></p>
+<p><a href="Eq/cineticaRP.html" target="_blank"><img src="Eq/cineticaRP.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-19" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-19">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing the <span class="st">"k_cinetica"</span> constant at the top of the <span class="fu">code</span> (e.g., <span class="fl">0.008</span>, <span class="fl">0.017</span>, <span class="fl">0.05</span>) and use Play<span class="sc">/</span>Reset to compare;</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Try adding<span class="sc">/</span>removing inhibitor and catalyst;</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Try changing the potential of the modulators above by editing their constants<span class="sc">:</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>a. const catalyzer_factor <span class="ot">=</span> <span class="fl">2.0</span>;</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>b. const inhibition_factor <span class="ot">=</span> <span class="fl">3.0</span>; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="interactive-dashboard-for-environmental-measurements---simulated-data-ef07ma21-ef09ma21-em13mat406-em13lgg604" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="interactive-dashboard-for-environmental-measurements---simulated-data-ef07ma21-ef09ma21-em13mat406-em13lgg604"><span class="header-section-number">5.5</span> Interactive dashboard for environmental measurements - simulated data (EF07MA21, EF09MA21, EM13MAT406, EM13LGG604)</h3>
+<div class="line-block">Currently, it is common to present data in a panel containing different interactive information or data that complement each other in graphs and tables, for example. These panels provide an overview of the topic addressed, as well as adjustments to the parameters contained therein. Below is an example of a panel with simulated data for conductivity and temperature measurements in an aqueous medium, with parameters adjustable by a slider (not very practical, in fact, but illustrative of the application’s potential).</div>
+<p><br>
+</p>
+<p><a href="Eq/painel.html" target="_blank"><img src="Eq/painel.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-20" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-20">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Although it is an object that only simulates data acquisition, you can obtain a different result by interfering with the code, such as<span class="sc">:</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>a. Changing the sliders<span class="sc">:</span> <span class="st">"slider.min = "</span><span class="dv">0</span><span class="st">";slider.max = "</span><span class="dv">24</span><span class="st">"; slider.step = ‘1’ "</span> ;</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>b. Changing the equations that define the behavior of the displays<span class="sc">:</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="st">"const time = Array.from ({ length: 25 }, (_, i) =&gt; i); // 0 to 24h</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="st">const temperature = time.map(t =&gt; 20 + 5 * Math.sin((t - 6) / 3)); // peak 12h</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="st">const conductivity = time.map(t =&gt; 100 + 30 * Math.cos(t / 5)); "</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="biology" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="biology"><span class="header-section-number">6</span> Biology</h2>
+<section id="area-of-brazilian-biomes-ef05ge05-ef08ge08-em13cnt301-em13cnt304" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="area-of-brazilian-biomes-ef05ge05-ef08ge08-em13cnt301-em13cnt304"><span class="header-section-number">6.1</span> Area of Brazilian biomes (EF05GE05, EF08GE08, EM13CNT301, EM13CNT304)</h3>
+<p><a href="Eq/biomas.html" target="_blank"><img src="Eq/biomas.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-21" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-21">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> The data presented is <span class="cf">for</span> simulation purposes only. For more robust data, reliable sources are <span class="fu">recommended</span> (e.g., MapBiomas Brasil <span class="sc">-</span> https<span class="sc">:</span><span class="er">//</span>brasil.mapbiomas.org<span class="sc">/</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> This is a bar chart, nothing more. If you change the information <span class="cf">in</span> the constants of the first three <span class="fu">vectors</span> (<span class="st">"const X = [...]"</span>), you can convert the representation to a different theme.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="water-cycle-diagram-ef06ci03-ef06ci04-em13cnt103-em13cnt202" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="water-cycle-diagram-ef06ci03-ef06ci04-em13cnt103-em13cnt202"><span class="header-section-number">6.2</span> Water cycle diagram (EF06CI03, EF06CI04, EM13CNT103, EM13CNT202)</h3>
+<div class="line-block">The application also allows the creation of other interactive educational objects, without the need to insert equations, such as diagrams and flowcharts. Here are some examples.</div>
+<p><a href="Eq/jsp_fluxogramaEB2.html" target="_blank"><img src="Eq/fluxogramaEB.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-22" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-22">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> As with the diagrams above, try changing the properties of the arrows and the terms and fields involved <span class="cf">in</span> the flowchart <span class="cf">in</span> the code;</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Replace terms to form another flowchart;</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Reposition the objects <span class="cf">in</span> the graphic <span class="fu">area</span> (fields, terms, arrows) with the help of the mouse.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="diagram-of-the-light-and-dark-cycles-of-photosynthesis-em13cnt101-em13cnt103-em13cnt201-em13mat405" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="diagram-of-the-light-and-dark-cycles-of-photosynthesis-em13cnt101-em13cnt103-em13cnt201-em13mat405"><span class="header-section-number">6.3</span> Diagram of the light and dark cycles of photosynthesis (EM13CNT101, EM13CNT103, EM13CNT201, EM13MAT405)</h3>
+<p><a href="Eq/jsp_diagramaEB2.html" target="_blank"><img src="Eq/diagramaEB.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-23" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-23">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try repositioning the inputs and <span class="fu">outputs</span> (e.g., Light, Glucose) by simply dragging them with the mouse;</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Replace the terms within the boxes, or change other aspects of the <span class="fu">diagram</span> (color, fill, <span class="cf">for</span> example).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="population-growth-model-with-lag-phase-em13cnt102-ef06ma17-ef08ci06-em13mat301-em13cnt201" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="population-growth-model-with-lag-phase-em13cnt102-ef06ma17-ef08ci06-em13mat301-em13cnt201"><span class="header-section-number">6.4</span> Population Growth Model with Lag Phase (EM13CNT102, EF06MA17, EF08CI06, EM13MAT301, EM13CNT201)</h3>
+<div class="line-block">This model presents a logistic function that simulates population growth (e.g., microorganisms, cells), accompanied by a delay component. By varying the parameters in the editor, it is possible to estimate different population growth profiles.</div>
+</section>
+<section id="equation-10" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equation-10">Equation:</h3>
+<p><span class="math display">\[
+N(t) = \frac{K}{1 + \left(\frac{K - N_0}{N_0}\right) \cdot e^{-r \cdot A(t) \cdot t}}, \quad \text{with } A(t) = \frac{1}{1 + e^{-k(t - t_0)}}
+\]</span></p>
+<p><em>Where:</em></p>
+<ul>
+<li>K = environmental carrying capacity;</li>
+<li>N0 = initial population;</li>
+<li>r = intrinsic growth rate;</li>
+<li>A(t) = growth activation factor with delay (lag phase);</li>
+<li>t0 = midpoint of transition between lag phase and log phase;</li>
+<li>k = delay smoothing constant (set to 0.5 in the code)</li>
+</ul>
+<p><a href="Eq/jsp_crescim2.html" target="_blank"><img src="Eq/crescim.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-24" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-24">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try varying the parameters of the equation, combining some of them and comparing their effects on the graphs<span class="sc">:</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>a. Carrying capacity;</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>b. Initial population;</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>c. Growth rate;</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>d. <span class="fu">Delay</span> (lag phase);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="energy-efficiency-and-food-chain-ef06ci02-em13cnt202-em13cnt203" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="energy-efficiency-and-food-chain-ef06ci02-em13cnt202-em13cnt203"><span class="header-section-number">6.5</span> Energy efficiency and food chain (EF06CI02, EM13CNT202, EM13CNT203)</h3>
+<div class="line-block">Here is an example to illustrate the transfer of energy between different trophic levels of a food chain. Although there is no mathematical function that describes it, the <a href="https://en.wikipedia.org/wiki/Ecological_efficiency?">10% rule</a> of ecological efficiency between the levels of the chain, which results in a logarithmic transfer relationship.</div>
+<p><a href="Eq/jsp_bio2.html" target="_blank"><img src="Eq/bio2.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-25" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-25">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Lindeman<span class="st">'s rule, outlined in the reference above, establishes a variation of 5-20% energy efficiency in the ecosystem. So, try superimposing the curves with these rates;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="st">2. If you want to observe the logarithmic relationship of energy transfer, add the command "type: ‘log’," just below "title: ‘Available energy (units)’,".</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="animation-for-neuron-action-potential-ef08ci08-ef09ci01-em13cnt202-em13cnt302" class="level3" data-number="6.6">
+<h3 data-number="6.6" class="anchored" data-anchor-id="animation-for-neuron-action-potential-ef08ci08-ef09ci01-em13cnt202-em13cnt302"><span class="header-section-number">6.6</span> Animation for neuron action potential (EF08CI08, EF09CI01, EM13CNT202, EM13CNT302)</h3>
+<div class="line-block">Some natural phenomena are observed over time, although their didactic representation in books and the like is offered in a static manner. In the following example, an animation for neuron potential facilitates learning about depolarization/hyperpolarization/repolarization events that accompany nerve transmission.</div>
+<p><br>
+</p>
+<p><a href="Eq/anim_neuronio.html" target="_blank"><img src="Eq/anim_neuronio.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-26" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-26">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing the default values <span class="cf">for</span> the potentials presented <span class="cf">in</span> <span class="st">"function potential(i)"</span> <span class="cf">in</span> the code;</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Altered values are present <span class="cf">in</span> some neurological conditions, such as epilepsy and multiple sclerosis.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="animation-of-map-of-areas-burned-by-biome-in-brazil---fictitious-data-from-1955-to-2024-ef07ci08-ef08ge08-em13chs101-em13cnt201" class="level3" data-number="6.7">
+<h3 data-number="6.7" class="anchored" data-anchor-id="animation-of-map-of-areas-burned-by-biome-in-brazil---fictitious-data-from-1955-to-2024-ef07ci08-ef08ge08-em13chs101-em13cnt201"><span class="header-section-number">6.7</span> Animation of map of areas burned by biome in Brazil - fictitious data from 1955 to 2024 (EF07CI08, EF08GE08, EM13CHS101, EM13CNT201)</h3>
+<div class="line-block">The use of maps in Natural Sciences and Human Sciences finds common ground for environmental and socio-economic problems, as illustrated by the following animation. In it, the area in square kilometers burned in each Brazilian biome is shown in the animation with the period and area next to the title of the interactive object, and with a time slider below.</div>
+<p><br>
+</p>
+<p><a href="Eq/anim_queimad.html" target="_blank"><img src="Eq/anim_queimad.png" class="img-fluid"></a><br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> It is advisable to seek more accurate sources of information on the topics covered, since GSPlotly, as an AI assistant, does not guarantee the nature of the information. In the example, we suggest the <span class="st">"Queimadas Program - INPE - Terrabrasilis"</span> (https<span class="sc">:</span><span class="er">//</span>terrabrasilis.dpi.inpe.br<span class="sc">/</span>queimadas<span class="sc">/</span>situacao<span class="sc">-</span>atual<span class="sc">/</span>situacao_atual<span class="sc">/</span>);</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> More accurate data can be entered <span class="cf">in</span> the script itself, <span class="cf">in</span> the field <span class="st">"const usar_dados_ficticios = true; // change to false and fill in areaBiomaAno_real()"</span>;</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> The theme of the animated map can be changed to any other by simply altering the data <span class="cf">in</span> the <span class="st">"General Control"</span> constants of the script. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="conways-game-of-life-ef06ma20-ef09ma24-em13mat503-em13cnt201" class="level3" data-number="6.8">
+<h3 data-number="6.8" class="anchored" data-anchor-id="conways-game-of-life-ef06ma20-ef09ma24-em13mat503-em13cnt201"><span class="header-section-number">6.8</span> Conway’s Game of Life (EF06MA20, EF09MA24, EM13MAT503, EM13CNT201)</h3>
+<div class="line-block">This object illustrates a version of a cellular automaton conceived in 1970 by J.H. Conway, which simulates biological events such as birth, growth, reproduction, and death through the iterative and partially chaotic distribution of pixels on a screen. The Game provides a mathematical and visual approach to simple rules applied to complex phenomena.</div>
+<div class="line-block">The Game allows for four distinct patterns (<em>Glider, Blinker, Toad, Random</em>), each distributing events of birth, survival, and death according to mathematical relationships. You can pause to observe details of the evolution.</div>
+<p><br>
+</p>
+<p><a href="Eq/lifesgame.html" target="_blank">! [](Eq/lifesgame.png)</a><br>
+</p>
+</section>
+<section id="suggestion-27" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-27">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> See at the top of the code that it is possible to change the grid size, time steps, and the probability of a cell being alive <span class="cf">in</span> <span class="st">"Random"</span> mode.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="geography" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="geography"><span class="header-section-number">7</span> Geography</h2>
+<section id="map-of-brazil-and-capitals-em13chs101-em13chs202-em13chs301" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="map-of-brazil-and-capitals-em13chs101-em13chs202-em13chs301"><span class="header-section-number">7.1</span> Map of Brazil and Capitals (EM13CHS101, EM13CHS202, EM13CHS301)</h3>
+<div class="line-block"><em>JSPlotly</em> is not just about equations! With the <em>Plotly.js</em> library that composes it, it is also possible to produce interactive maps, such as the one in the simulation below.</div>
+<p><a href="Eq/jsp_geogr3.html" target="_blank"><img src="Eq/geogr.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-28" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-28">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try using the mouse scroll wheel and the <span class="st">"pan"</span> icon on the top bar to interact with the map.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="world-map-and-some-large-cities-ef06ge05-ef07ge06-em13chs101-em13mat502" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="world-map-and-some-large-cities-ef06ge05-ef07ge06-em13chs101-em13mat502"><span class="header-section-number">7.2</span> World map and some large cities (EF06GE05, EF07GE06, EM13CHS101, EM13MAT502)</h3>
+<p><a href="Eq/mapa.cidades.html" target="_blank"><img src="Eq/mapa.cidades.png" class="img-fluid"></a><br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing the script by inserting other cities with their respective geographic coordinates <span class="cf">in</span> <span class="st">"const data"</span> (text, long <span class="sc">-</span> longitude, lat <span class="sc">-</span> latitude)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="map-and-gdp-of-the-middle-east-ef09ge03-ef08ge06-em13chs104-em13chs201" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="map-and-gdp-of-the-middle-east-ef09ge03-ef08ge06-em13chs104-em13chs201"><span class="header-section-number">7.3</span> Map and GDP of the Middle East (EF09GE03, EF08GE06, EM13CHS104, EM13CHS201)</h3>
+<p><a href="Eq/jsp_geogr2.html" width="50%" target="_blank"><img src="Eq/geogr2.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-29" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-29">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try using the mouse scroll wheel;</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Click on a country to identify its name and approximate gross domestic product;</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Modify the code to update some data or to change the <span class="fu">information</span> (e.g., replacing GDP with other data).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="history" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="history"><span class="header-section-number">8</span> History</h2>
+<section id="distribution-of-enslaved-people-in-the-americas-from-1500-to-1888-ef08hi06-em13chs104-em13chs503" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="distribution-of-enslaved-people-in-the-americas-from-1500-to-1888-ef08hi06-em13chs104-em13chs503"><span class="header-section-number">8.1</span> Distribution of enslaved people in the Americas from 1500 to 1888 (EF08HI06, EM13CHS104, EM13CHS503):</h3>
+<div class="line-block">This simulation presents an interactive <em>bar chart</em> for selecting the period from a <em>drop-down menu</em>, and tangent to the estimated number of enslaved Africans landed in the main regions of the Americas. The data are rough estimates to illustrate the visualization potential of the application, while serving as a starting point for more accurate educational discussions. Sources that can be consulted include <a href="https://www.slavevoyages.org/past/database/african-origins">Slave Voyages</a>.</div>
+<p><br>
+</p>
+<p><a href="Eq/jsp_escravos2.html" target="_blank"><img src="Eq/escravos.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-30" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-30">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try switching between periods <span class="cf">in</span> the drop<span class="sc">-</span>down menu, comparing slave trade estimates;</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Select a period, create the graph, select another period, and add another graph. This allows you to compare the number of slaves brought <span class="cf">in</span> by the double bars formed, and hover your mouse over each bar.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="timeline-of-events-in-the-middle-ages-em13chs101-em13chs102" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="timeline-of-events-in-the-middle-ages-em13chs101-em13chs102"><span class="header-section-number">8.2</span> Timeline of events in the Middle Ages (EM13CHS101, EM13CHS102)</h3>
+<p><a href="Eq/jsp_hist2.html" target="_blank"><img src="Eq/hist2.png" class="img-fluid"></a></p>
+<p>Source: <a href="https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/timeline-events-middle-ages?">Encyclopedia.com</a></p>
+</section>
+<section id="suggestion-31" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-31">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing events and periods <span class="cf">in</span> the code to refer to another period <span class="cf">in</span> human history.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="cartographic-changes-perceived-over-time-ef08ge09-ef07ge05-em13chs102-em13chs104" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="cartographic-changes-perceived-over-time-ef08ge09-ef07ge05-em13chs102-em13chs104"><span class="header-section-number">8.3</span> Cartographic changes perceived over time (EF08GE09, EF07GE05, EM13CHS102, EM13CHS104)</h3>
+<div class="line-block">It may be interesting to convey geographical and/or historical information over time in the representation of a map. Here is an example.</div>
+<p><a href="Eq/mapaAnim.html" target="_blank"><img src="Eq/mapaAnim.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-32" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-32">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> You can change the map formatting <span class="cf">in</span> the code <span class="cf">for</span> <span class="fu">colors</span> (<span class="st">"lakecolor"</span>), menu <span class="fu">position</span> (<span class="st">"updatemenus"</span>), transition duration between <span class="fu">frames</span> (‘transition’), among others;</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> This example is generic; change the constants <span class="cf">in</span> <span class="st">"countries,"</span> <span class="st">"years,"</span> and <span class="st">"values,"</span> and get a new map <span class="cf">for</span> a specific theme.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="timeline-of-events-in-the-middle-ages-em13chs101-em13chs102-1" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="timeline-of-events-in-the-middle-ages-em13chs101-em13chs102-1"><span class="header-section-number">8.4</span> Timeline of events in the Middle Ages (EM13CHS101, EM13CHS102)</h3>
+<p><a href="Eq/jsp_hist2.html" target="_blank"><img src="Eq/hist2.png" class="img-fluid"></a></p>
+<p>Source: <a href="https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/timeline-events-middle-ages?">Encyclopedia.com</a></p>
+</section>
+<section id="suggestion-33" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-33">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing the events and periods <span class="cf">in</span> the code to another period <span class="cf">in</span> human history.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="languages" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="languages"><span class="header-section-number">9</span> Languages</h2>
+<section id="slang-spoken-in-brazil-from-1980-to-2020-ef89lp19-em13lgg102" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="slang-spoken-in-brazil-from-1980-to-2020-ef89lp19-em13lgg102"><span class="header-section-number">9.1</span> Slang spoken in Brazil from 1980 to 2020 (EF89LP19, EM13LGG102)</h3>
+<div class="line-block">This simulation is intended to estimate the use of slang spoken in Brazil over the last 40 years. The representation is in a pie chart, and the selection by decade is in a drop-down menu.</div>
+<p><a href="Eq/jsp_linguag_pizza.html" target="_blank"><img src="Eq/linguag_pizza.png" class="img-fluid"></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> You can use the mouse pointer to view the <span class="st">"tip"</span> displayed <span class="cf">for</span> each data point <span class="cf">in</span> the chart.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="frequency-of-words-in-text-em13lgg101-em13lgg302-em13lgg303" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="frequency-of-words-in-text-em13lgg101-em13lgg302-em13lgg303"><span class="header-section-number">9.2</span> Frequency of words in text (EM13LGG101, EM13LGG302, EM13LGG303)</h3>
+<p><a href="Eq/jsp_linguag2.html" target="_blank"><img src="Eq/linguag2.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-34" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-34">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try replacing the code text with another;</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Try varying the number of most frequent terms <span class="cf">in</span> the <span class="st">"const entries"</span> <span class="fu">variable</span> (optionally, also vary the graph title to make sense);</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Compare a text <span class="cf">in</span> Portuguese with its translation into English or another language.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="literary-works-and-aesthetic-movements-ef89lp47-em13lp01-em13lp02-em13lgg201" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="literary-works-and-aesthetic-movements-ef89lp47-em13lp01-em13lp02-em13lgg201"><span class="header-section-number">9.3</span> Literary works and aesthetic movements (EF89LP47, EM13LP01, EM13LP02, EM13LGG201)</h3>
+<div class="line-block">The following example illustrates the use of interactive features, <em>button</em> and <em>selector</em>, for a set of works of national literature.</div>
+<p><a href="Eq/menu_literat.html" target="_blank"><img src="Eq/menu_literat.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-35" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-35">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Drag the extreme markers to zoom <span class="cf">in</span> on a specific period of literature;</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Change the script by adding other key works <span class="cf">in</span> <span class="st">"const obras ="</span> and <span class="st">"const periodos ="</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="art" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="art"><span class="header-section-number">10</span> Art</h2>
+<section id="creation-of-3d-objects-ef09ma16-ef15ar06-em13mat405-em13lgg604" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="creation-of-3d-objects-ef09ma16-ef15ar06-em13mat405-em13lgg604"><span class="header-section-number">10.1</span> Creation of 3D objects (EF09MA16, EF15AR06, EM13MAT405, EM13LGG604)</h3>
+<div class="line-block">Three-dimensional objects can be generated by mathematical functions in three-dimensional space, as illustrated below.</div>
+<p><a href="Eq/melancia.html" target="_blank"><img src="Eq/melancia.png" class="img-fluid"></a><br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing some values <span class="cf">in</span> the script and testing the result. For example, create a flat watermelon by changing the code from <span class="st">"const zVal = L * (t - 0.5)"</span> to <span class="st">"const zVal = L * (t - 20.5);"</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="music-notation-editor-ef15ar06-ef69ar22-em13arh402" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="music-notation-editor-ef15ar06-ef69ar22-em13arh402"><span class="header-section-number">10.2</span> Music notation editor (EF15AR06, EF69AR22, EM13ARH402)</h3>
+<div class="line-block">The following example illustrates the concepts of pitch (tonality) and duration for musical notes in the diatonic scale. The captions represent the duration values, and the tonalities are presented in their frequency values</div>
+<p><a href="Eq/jsp_musica2.html" target="_blank"><img src="Eq/musica2.png" class="img-fluid"></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing the melodic sequence of the code <span class="cf">in</span> the corresponding vector;</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Try changing the duration figures <span class="cf">in</span> the corresponding vector</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="animated-spirograph-ef07ma18-ef09ma20-em13mat406-em13lgg701s" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="animated-spirograph-ef07ma18-ef09ma20-em13mat406-em13lgg701s"><span class="header-section-number">10.3</span> Animated spirograph (EF07MA18, EF09MA20, EM13MAT406, EM13LGG701s)</h3>
+<div class="line-block">A spirograph is a playful tool consisting of toothed rulers and curves for drawing, aimed at creating complex geometric figures (trochoids). Below is an example of an animated spirograph, combining Art and Mathematics to create figures of this type.</div>
+<p><br>
+</p>
+<p><a href="Eq/espirografo.html" target="_blank"><img src="Eq/espirografo.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-36" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-36">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> The object allows you to change the type of hypo<span class="sc">-</span> or hypertrochoid via a menu, as well as pause the animation using a button;</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> It is possible to change the trochoid pattern of the figures by modifying a mathematical relationship. For example, search the code <span class="cf">for</span> the line <span class="st">"Math.cos(t) + d*Math.cos(k1*t);"</span> and change the second term to <span class="st">"Math.sin."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="application-drawing-board-ef15ar06-ef09ar07-em13lgg604-em13lgg606" class="level3" data-number="10.4">
+<h3 data-number="10.4" class="anchored" data-anchor-id="application-drawing-board-ef15ar06-ef09ar07-em13lgg604-em13lgg606"><span class="header-section-number">10.4</span> <em>Application</em>: drawing board (EF15AR06, EF09AR07, EM13LGG604, EM13LGG606)</h3>
+<div class="line-block">JSPlotly is not limited to mathematics, graphs, and maps. The following example provides a drawing board with varying colors and pen thicknesses, as well as geometric shapes.</div>
+<p><br>
+</p>
+<p><a href="Eq/desenho.html" target="_blank"><img src="Eq/desenho.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-37" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-37">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Explore the script. Although simple, it allows you to select different colors, pen thicknesses, and geometric shapes;</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Like other objects created <span class="cf">in</span> JSPlotly, the drawing can be saved <span class="cf">while</span> retaining its interactivity using the <span class="st">"html"</span> button, and even modified <span class="cf">in</span> the saved file <span class="fu">itself</span> (<span class="st">"play.html"</span>);</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> If you want to change colors, thicknesses, or add other features, check the script variables;</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Try the <span class="st">"clone"</span> button, which allows you to clone the board along with its code. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="religious-education" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="religious-education"><span class="header-section-number">11</span> Religious Education</h2>
+<section id="interactive-diagram-on-the-last-10-papal-encyclicals-ef05er01-ef09er02-em13er04" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="interactive-diagram-on-the-last-10-papal-encyclicals-ef05er01-ef09er02-em13er04"><span class="header-section-number">11.1</span> Interactive diagram on the last 10 papal encyclicals (EF05ER01, EF09ER02, EM13ER04)</h3>
+<p><a href="Eq/fluxogr_papas.html" target="_blank"><img src="Eq/fluxogr_papas.png" class="img-fluid"></a></p>
+</section>
+<section id="suggestion-38" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-38">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> To appreciate the dynamism of the representation, try dragging any part of the flowchart and observe how the others adjust;</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> As before, you can change the information <span class="cf">in</span> the flowchart <span class="cf">while</span> maintaining its graphic and dynamic characteristics by simply changing the constants used to generate the <span class="fu">object</span> (<span class="st">"const = "</span>).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="steam" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="steam"><span class="header-section-number">12</span> STEAM</h2>
+<section id="pottery-vase-em13mat101-em13mat403-em13cnt204-em13ar01-em13ar02" class="level3" data-number="12.1">
+<h3 data-number="12.1" class="anchored" data-anchor-id="pottery-vase-em13mat101-em13mat403-em13cnt204-em13ar01-em13ar02"><span class="header-section-number">12.1</span> Pottery vase (EM13MAT101, EM13MAT403, EM13CNT204, EM13AR01, EM13AR02)</h3>
+<div class="line-block">The platform also allows creations for integration in Science, Technology, Engineering, Arts, and Mathematics (<em>STEAM</em>). Here is an example of a simulation for ceramic turning and manual clay molding, which allows you to experiment with symmetrical and rounded shapes, such as vases, bowls, and pots, by adjusting some parameters and trigonometric functions in the code.</div>
+<p><a href="Eq/jsp_steam2.html" target="_blank"><img src="Eq/steam.png" class="img-fluid"></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Change the height of the vase, its shape, and its colors by editing the code <span class="cf">in</span> the specific fields.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="mini-cad-em13mat301-em13mat503-em13mat402" class="level3" data-number="12.2">
+<h3 data-number="12.2" class="anchored" data-anchor-id="mini-cad-em13mat301-em13mat503-em13mat402"><span class="header-section-number">12.2</span> Mini CAD (EM13MAT301, EM13MAT503, EM13MAT402)</h3>
+<div class="line-block">Here is an example of code for manipulating 3D geometric shapes (curves or straight lines) in the development of a mini CAD (<em>Computer-Aided Design</em>).</div>
+<p><a href="Eq/jsp_miniCAD2.html" target="_blank"><img src="Eq/miniCAD.png" class="img-fluid"></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Try changing the base, height, and curvature parameters of the code, also varying the sign of the <span class="fu">values</span> (positive, negative);</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Change some trigonometric <span class="cf">function</span> (lineX or lineY, sine to tangent, <span class="cf">for</span> example), and overlay it on the plot;</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Overlay geometric figures with different color palettes.</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Create symmetrical figures by superimposing a curve with a positive parameter on one with the same negative parameter.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="games" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="games"><span class="header-section-number">13</span> Games</h2>
+<div class="line-block">Since <em>JSPlotly</em> involves a programming language, <em>JavaScript</em>, it is plausible that it can offer a set of tangible operations to it, regardless of the construction of graphs (as in the diagrams and flowcharts above).</div>
+<div class="line-block">In parallel with the richness that accompanies <em>gamification</em> as an active methodology, <em>creating a game</em> can stimulate the learner to another level, since strategy is sometimes already part of their daily life. Playing is one thing… creating a game can have a more prominent and recursive impact on computational thinking and logic, as well as on learning the programming language itself!</div>
+<section id="memory-game-ef06ma19-ef06ma16-ef07ma26-ef09ma19-em13mat401-em13mat102-em13mat403-em13lgg701" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="memory-game-ef06ma19-ef06ma16-ef07ma26-ef09ma19-em13mat401-em13mat102-em13mat403-em13lgg701">Memory Game (EF06MA19, EF06MA16, EF07MA26, EF09MA19, EM13MAT401, EM13MAT102, EM13MAT403, EM13LGG701)</h3>
+<div class="line-block">The clickable image below leads to a classic <em>Numerical Memory Game</em>. The goal is to match a pair of values after memorizing a numerical table. To play, follow the instructions below:</div>
+<p><br>
+</p>
+<p><strong>Instructions for the Numerical Memory Game:</strong></p>
+<ul>
+<li><ol type="1">
+<li>In the upper field, there are two Boolean constants, true/false, one for playing (<em>play</em>) and another for checking the answer (<em>check</em>), as well as a <em>seed</em> that sets a specific random number grid;</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Start the game (<em>play/false</em>, <em>check/false</em>);</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>Click on the <em>add</em> button and a table of numerical pairs will be displayed for memorization;</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>Switch to <em>play/true</em>, click on <em>clean plot</em>, and then on <em>add</em>. The table will now be displayed with only one value (the other cells will show <em>“?”</em>);</li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>Select <em>verify/true</em>, click <em>clean plot</em>, and then <em>add</em>. A field will appear for you to enter the coordinates where you believe the other number pair is located (e.g., A2);</li>
+</ol></li>
+<li><ol start="7" type="1">
+<li>Click <em>OK</em>, and a pair consisting of the initial value and the chosen value will be displayed for verification.</li>
+</ol></li>
+</ul>
+<div class="line-block">To restart the game, <em>clean plot</em>, and Boolean options <em>false</em>.</div>
+<div class="line-block">Have fun!!</div>
+<p><br>
+</p>
+<p><a href="Eq/jsp_game2.html" target="_blank"><img src="Eq/game.png" class="img-fluid"></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> To play again by changing the values <span class="cf">in</span> the table, simply modify the <span class="sc">*</span>seed<span class="sc">*</span> constant to any number;</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> To vary between game difficulty levels, simply change the number of rows and columns <span class="cf">in</span> the respective constants <span class="cf">in</span> the code. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!-- [Workshop - Various Features & Additional Examples: JSPlotly](workshop2.html) -->
+</section>
+</section>
+<section id="application---digital-whiteboard" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="application---digital-whiteboard"><span class="header-section-number">14</span> Application - Digital Whiteboard</h2>
+<div class="line-block">The nature of the object below needs no introduction. It is yet another of the many applications for simulating a whiteboard or digital chalk/penboard. However, it differs from its competitors in the following ways:</div>
+<ol type="1">
+<li>It can be exported as a self-sufficient HTML file using a button on the whiteboard itself, allowing the generated image to be shared and edited further.</li>
+<li>It allows the code that produces it to be customized, enabling the insertion/alteration of pens, thicknesses, and different actions not provided for in the source code.<br>
+</li>
+</ol>
+<p><a href="Eq/lousa.html" target="_blank"><img src="Eq/lousa.png" class="img-fluid"></a><br>
+</p>
+<div class="line-block">In addition to its features, the digital whiteboard allows you to:</div>
+<ul>
+<li>Write with 7 colors and 3 different thicknesses;</li>
+<li>Access 4 different colored backgrounds;</li>
+<li>Overlay the background with a <em>grid</em>;</li>
+<li>Use an eraser (<em>erase</em>);</li>
+<li>Use a <em>laser pointer</em> to locate what you want to highlight;</li>
+<li>Save the image as a PNG, indicating the date and time;</li>
+<li>Save the image as self-sufficient HTML (note: use the HTML button on the board; the one in the editor does not work on this object);</li>
+<li>Undo and clean commands for the board;</li>
+<li>Keyboard shortcuts: E=eraser; L=laser; Z undo, X clean, H save HTML</li>
+</ul>
+<section id="suggestion-39" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-39">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> You can change the thickness of the pens <span class="cf">in</span> <span class="st">"var baseWidth = 1;"</span> ;</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> The <span class="dv">1</span>x, <span class="dv">2</span>x, <span class="dv">4</span>x buttons are multipliers; edit the button creation lines to change the label<span class="sc">/</span><span class="fu">multiplier</span> (e.g., <span class="st">"addSize(‘3x’, 3, true)"</span>).</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>Note<span class="sc">:</span> the functional button <span class="cf">for</span> reproducing the frame is the one on the blackboard itself, <span class="st">"html"</span>. The code editor button does not work <span class="cf">for</span> the application.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="musicalization" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="musicalization"><span class="header-section-number">15</span> Musicalization</h2>
+<div class="line-block">The following objects introduce another potential for <em>JSPlotly</em>, namely the possibility of working with audio. Among the possible libraries, the examples below illustrate the use of <em>tone.js</em>, both for a monophonic instrument (<em>recorder</em>) and for a polyphonic instrument (<em>piano</em>).</div>
+<div class="line-block">In parallel with the possibility of editing the code to improve and customize the object, both are easy to use as standalone digital musical instruments, since they can be exported using the “html” button, preserving their interactivity via mouse or touch on capacitive screens of mobile devices.</div>
+<section id="recorder-ef15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701" class="level3" data-number="15.1">
+<h3 data-number="15.1" class="anchored" data-anchor-id="recorder-ef15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701"><span class="header-section-number">15.1</span> Recorder (EF15AR05, EF69AR09, EM13LGG601, EM13LGG604, EM13LGG701)</h3>
+<p><br>
+</p>
+<p><a href="Eq/flauta.html" target="_blank"><img src="Eq/flauta.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-40" class="level3" data-number="15.2">
+<h3 data-number="15.2" class="anchored" data-anchor-id="suggestion-40"><span class="header-section-number">15.2</span> Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> The flute was designed <span class="cf">for</span> <span class="fu">tones</span> (circle) and <span class="fu">semitones</span> (semicircles). You can <span class="st">"play"</span> the flute by clicking with the left mouse button on a hole or using your finger on a smartphone;</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> You can add or omit any hole <span class="cf">in</span> the flute by simply changing the two lines of the variables <span class="st">"var naturais"</span> and <span class="st">"var sustenidos"</span>;</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> You can transform your flute into a <span class="st">"pífano,"</span> which is generally higher pitched than the recorder and quite common <span class="cf">in</span> the northeastern Brazilian tradition. To do this, simply replace the lines of the variables <span class="st">"var naturais"</span> and <span class="st">"var sustenidos,"</span> changing the value from <span class="st">"5"</span> to <span class="st">"6,"</span> as <span class="fu">follows</span> (add <span class="st">"add"</span> <span class="cf">next</span> <span class="sc">-</span> or ‘clean’<span class="sc">/</span><span class="st">"add"</span>)<span class="sc">:</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>var naturais <span class="ot">=</span> [<span class="st">"C6"</span>,<span class="st">"D6"</span>,<span class="st">"E6"</span>,<span class="st">"F6"</span>,<span class="st">"G6"</span>,<span class="st">"A6"</span>,<span class="st">"B6"</span>];</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>var sharps <span class="ot">=</span> [<span class="st">"C#6"</span>,<span class="st">"D#6"</span>,‘F6’,<span class="st">"F#6"</span>,<span class="st">"G#6"</span>,<span class="st">"A#6"</span>,<span class="st">"B6"</span>];</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Following the above line of reasoning, it is also possible to change the pattern <span class="cf">for</span> recorders, bass flutes, and double basses. For example, a German <span class="fu">flute</span> (larger hole, soprano, used <span class="cf">in</span> schools and represented <span class="cf">in</span> the script) or a baroque <span class="fu">flute</span> (smaller hole, lower tones).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="piano---with-sustain-pedal-ef15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701" class="level3" data-number="15.3">
+<h3 data-number="15.3" class="anchored" data-anchor-id="piano---with-sustain-pedal-ef15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701"><span class="header-section-number">15.3</span> Piano - with sustain pedal (EF15AR05, EF69AR09, EM13LGG601, EM13LGG604, EM13LGG701)</h3>
+<p><br>
+</p>
+<p><a href="Eq/piano.html" target="_blank"><img src="Eq/piano.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-41" class="level3" data-number="15.4">
+<h3 data-number="15.4" class="anchored" data-anchor-id="suggestion-41"><span class="header-section-number">15.4</span> Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> It is a small piano, but it is a <span class="fu">piano</span> (<span class="dv">2</span> octaves)<span class="sc">!!</span> And as such, you can express your musical aptitude with the polyphonic instrument;</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> To prolong the sound of the keys, raise the <span class="st">"sustain"</span> bar;</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> As part of JSPlotly, the piano can be shared without the code, only as an instrument <span class="cf">for</span> musicalization or training, since it is exported by the <span class="st">"html"</span> button, preserving its interactivity and sound by mouse or finger touch on a mobile device;</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Also as part of JSPlotly, it is possible to share the piano with the codes <span class="cf">for</span> alteration using the <span class="st">"clone"</span> button;</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> PIANO AS AN ORGAN <span class="sc">!!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="accessibility-and-inclusion" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="accessibility-and-inclusion"><span class="header-section-number">16</span> Accessibility and inclusion</h2>
+<div class="line-block">Through keyboard touches, font size adjustment, and vibration on capacitive screens, it is possible to imagine the use of <em>JavaScript</em> with <em>Plotly.js</em> to serve an audience with specific accessibility needs.</div>
+<div class="line-block">Illustrating this possibility, and based on the use of audio resources by <em>JavaScript</em> libraries, it is possible to design <em>JSPlotly</em> objects intended for a student who is blind.</div>
+<section id="keyboard-accessible-sound-graph-ef69lp27-ef69ar09-em13mat406-em13lgg604-em13lgg701" class="level3" data-number="16.1">
+<h3 data-number="16.1" class="anchored" data-anchor-id="keyboard-accessible-sound-graph-ef69lp27-ef69ar09-em13mat406-em13lgg604-em13lgg701"><span class="header-section-number">16.1</span> Keyboard-accessible sound graph (EF69LP27, EF69AR09, EM13MAT406, EM13LGG604, EM13LGG701)</h3>
+<div class="line-block">This object is simple. Students with disabilities need only use the left and right arrows on a standard keyboard to hear sounds related to a mathematical function chosen by a supervisor. Thus, if the function increases, the sound will have progressively higher pitches, and when it decreases, lower pitches.</div>
+<div class="line-block">In addition, it is possible to change the frequency using the slider bar, which allows for sound perception at lower or higher frequencies.</div>
+<div class="line-block">Once exported using the HTML button on the object itself (<em>and not the code editor</em>), it can be shared while maintaining the interactivity and sound of the function.</div>
+<p><br>
+</p>
+<p><a href="Eq/acessib.html" target="_blank"><img src="Eq/acessib.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-42" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-42">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> You can edit the code <span class="cf">for</span> a specific function. To do this, simply change the line <span class="st">"var f = function(x){ ... }"</span>. Examples<span class="sc">:</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>a. return <span class="fu">Math.sin</span>(x<span class="sc">*</span>Math.PI<span class="sc">/</span><span class="dv">180</span>); (degrees);</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>b. return <span class="fu">Math.sin</span>(x); (radians);</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>c. return <span class="fu">Math.exp</span>(<span class="sc">-</span><span class="fl">0.01</span><span class="sc">*</span>x)<span class="sc">*</span><span class="fu">Math.cos</span>(<span class="fl">0.2</span><span class="sc">*</span>x);</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> You can change the speed of the <span class="cf">function</span> using the <span class="cf">function</span> below, whose value is given <span class="cf">in</span> milliseconds<span class="sc">:</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="st">"var PLAY_INTERVAL_MS = 100; "</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="computer-games" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="computer-games"><span class="header-section-number">17</span> Computer Games</h2>
+<div class="line-block">Although almost a translation, <em>jogos</em> refers to a wide variety, including card and board games, while <em>games</em> reflects more electronic and digital games. Here are two <em>games</em> that illustrate the potential of <em>JSPlotly</em> for this purpose: <em>Archery</em>, which uses animation only, and <em>Pong</em>, a classic sports video game from 1972. Unlike the first, <em>Pong</em> combines interactivity, animation, and sound.</div>
+<section id="archery-game-ef09ci09-ef09ma18-em13mat302-em13cnt104-em13lgg701" class="level3" data-number="17.1">
+<h3 data-number="17.1" class="anchored" data-anchor-id="archery-game-ef09ci09-ef09ma18-em13mat302-em13cnt104-em13lgg701"><span class="header-section-number">17.1</span> Archery Game (EF09CI09, EF09MA18, EM13MAT302, EM13CNT104, EM13LGG701)</h3>
+<p><br>
+</p>
+<p><a href="Eq/arcoFlecha.html" target="_blank"><img src="Eq/arcoFlecha.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-43" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-43">Suggestion</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Change the <span class="fu">angle</span> (<span class="st">"let theta_edit = 45"</span>) and<span class="sc">/</span>or the initial speed of the <span class="fu">shot</span> (<span class="st">"let v0_edit = 20"</span>) to adjust the parabola to the target;</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Note that the scoring is flexible<span class="sc">:</span> <span class="dv">5</span> points <span class="cf">for</span> proximity to the target, and <span class="dv">10</span> points when you hit it.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="game-pong-ef69ar09-ef06ma20-em13lgg604-em13lgg701" class="level3" data-number="17.2">
+<h3 data-number="17.2" class="anchored" data-anchor-id="game-pong-ef69ar09-ef06ma20-em13lgg604-em13lgg701"><span class="header-section-number">17.2</span> Game Pong (EF69AR09, EF06MA20, EM13LGG604, EM13LGG701)</h3>
+<p><br>
+</p>
+<div class="line-block">To reproduce this classic game, we used the additional library <em>p5.js</em>, designed for interactive art, animations, and data visualizations on the web.</div>
+<p><a href="Eq/pong.html" target="_blank"><img src="Eq/pong.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="suggestion-44" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-44">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> If you find that the game is slow, even at maximum ‘warp’ speed, you can change its value <span class="cf">in</span> <span class="st">"var base = Math.pow(1.5, warp);"</span>;</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> If you find that the game is too difficult or too easy, you can change the size of the paddle <span class="cf">in</span> <span class="st">"paddle = { w: 80, h: 10,..."</span>;</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> If you want to increase the game area, modify the line <span class="fu">below</span> (width, height)<span class="sc">:</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="st">"var cv = sk.createCanvas(400, 300).parent(‘gameArea’);"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+</section>
+</section>
+<section id="experimental-interface" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="experimental-interface"><span class="header-section-number">18</span> Experimental Interface</h2>
+<section id="jsplotly-for-arduino-and-conductivity-data-acquisition-em13cnt201-em13cnt308-m13cnt301-m13cnt302" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="jsplotly-for-arduino-and-conductivity-data-acquisition-em13cnt201-em13cnt308-m13cnt301-m13cnt302">JSPlotly for Arduino and conductivity data acquisition (EM13CNT201, EM13CNT308, M13CNT301, M13CNT302)</h3>
+<div class="line-block"><em>JSPlotly</em> was initially designed for the construction of interactive <em>virtual learning objects</em>. However, it can be integrated into an interface for microcontroller boards (e.g., Arduino, ESP32, Raspberry Pi), exponentially increasing its application for real experimentation and <em>experimental STEAM projects</em>.</div>
+<div class="line-block">The example below illustrates an application for real-time acquisition/control via a browser. The setup presents a conductivity data reading in an aqueous solution containing increasing levels of NaCl (0 to 5% w/v). An Arduino Uno R3 board with a Web Serial connection via USB to a notebook running a standalone application for JSPlotly was used. Conductivity was obtained by a commercial TDS (total dissolved solids) sensor with square wave alternating potential (PWM) excitation to minimize polarization effects, and a script adapted from the manufacturer. The TDS sensor operates in the range of 3.3 to 5.0 V (input) with an output of 0 to 2.3 V and a current of 3 to 6 mA.</div>
+<p><br>
+</p>
+<p><a href="Eq/condutiv_JSPlotly.html" target="“_blank”"><img src="Eq/arduino.png" class="img-fluid"></a> <em>Example of JSPlotly application for interfacing with Arduino. The graph shows conductivity measurements in aqueous medium with a TDS meter for increasing NaCl contents (probe in the left corner). Click on the image to get the standalone JSPlotly application for conductivity.</em><br>
+</p>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>For <em>Web Serial</em> connection, you need to install <em>Python</em> on your computer (Windows or Linux) and set up a local server. For Windows, download and install the official file for <a href="https://www.python.org/downloads/windows/">Python</a>, remembering to click on <em>Add Python to PATH</em>, and type the commands in CMD inside the standalone application folder. Here are the instructions for Linux:</li>
+</ol>
+<ul>
+<li><ol type="1">
+<li>Connect the Arduino and components (TDS probe, container with water and salt);</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Copy, paste, and run the manufacturer’s <em>script</em> for TDS in the connected Arduino IDE;</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>Close the Arduino IDE;</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>Open a Terminal in the standalone application folder of <em>JSPlotly</em> for Arduino (<em>condutiv_JSPlotly.html</em>);</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>Type: <em>python3 -m http.server</em></li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>Open the standalone html of the circuit in Chrome (never in Firefox);</li>
+</ol></li>
+</ul>
+<div class="line-block">The reading should start in a few moments. If it does not, check that the transfer rate to the Arduino IDE matches that of the application (115200 bauds).</div>
+<p><br>
+</p>
+</section>
+<section id="suggestion-45" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="suggestion-45">Suggestion:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Since the application is written <span class="cf">in</span> JSPlotly, it can be customized <span class="cf">for</span> various situations, such as data transfer rate, <span class="fu">lines</span> (type, colors, thickness), chart type, among others. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../nivel/superior/jsplotly/jsptl_bioq_en.html" class="pagination-link" aria-label="Biophysical chemistry">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Biophysical chemistry</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../../nivel/superior/jmol/index_jmol_en.html" class="pagination-link" aria-label="Biochemistry">
+        <span class="nav-page-text">Biochemistry</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

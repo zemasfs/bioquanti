@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8&nbsp; Enzimas – Visualização de moléculas com Jmol</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./carboidrato.html" rel="next">
+<link href="./proteina.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-52d6303cf82ad8c9aaf9f2c6806b06de.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./enzima.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Enzimas</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Visualização de moléculas com Jmol</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">index.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./carac.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Algumas características do Jmol como visualizador molecular:</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./comandos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Comandos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./agua.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Água</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aminoacidos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aminoácidos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./peptidio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Peptídios</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proteina.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Proteínas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./enzima.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Enzimas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./carboidrato.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Carboidratos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lipidio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lipídios</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acnucleico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ácidos Nucleicos</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#sítio-ativo" id="toc-sítio-ativo" class="nav-link active" data-scroll-target="#sítio-ativo"><span class="header-section-number">8.1</span> Sítio ativo</a></li>
+  <li><a href="#coevolução-e-sítio-ativo" id="toc-coevolução-e-sítio-ativo" class="nav-link" data-scroll-target="#coevolução-e-sítio-ativo"><span class="header-section-number">8.2</span> Coevolução e sítio ativo</a></li>
+  <li><a href="#ajuste-induzido" id="toc-ajuste-induzido" class="nav-link" data-scroll-target="#ajuste-induzido"><span class="header-section-number">8.3</span> Ajuste induzido</a></li>
+  <li><a href="#ativação-de-enzimas" id="toc-ativação-de-enzimas" class="nav-link" data-scroll-target="#ativação-de-enzimas"><span class="header-section-number">8.4</span> Ativação de enzimas</a></li>
+  <li><a href="#enzimas-alostéricas" id="toc-enzimas-alostéricas" class="nav-link" data-scroll-target="#enzimas-alostéricas"><span class="header-section-number">8.5</span> Enzimas alostéricas</a></li>
+  <li><a href="#mecanismos-de-catálise" id="toc-mecanismos-de-catálise" class="nav-link" data-scroll-target="#mecanismos-de-catálise"><span class="header-section-number">8.6</span> Mecanismos de Catálise</a>
+  <ul>
+  <li><a href="#catálise-ácido-básica." id="toc-catálise-ácido-básica." class="nav-link" data-scroll-target="#catálise-ácido-básica."><span class="header-section-number">8.6.1</span> Catálise ácido-básica.</a></li>
+  </ul></li>
+  <li><a href="#catálise-covalente" id="toc-catálise-covalente" class="nav-link" data-scroll-target="#catálise-covalente"><span class="header-section-number">8.7</span> Catálise covalente</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Enzimas</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Google tag (gtag.js)-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+<section id="sítio-ativo" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="sítio-ativo"><span class="header-section-number">8.1</span> Sítio ativo</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Carregue o modelo <a href="https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1hew&amp;script=Console" target="_blank">1hew</a></div>
+<p>referente à lisozima e visualize sua estrutura desprovida do solvente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>delete water; cartoon only; color structure</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identifique e destaque os resíduos do <em>sítio ativo</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a> select all; color grey; <span class="fu">select</span> (asp52,glu35); wireframe <span class="dv">100</span>;color cpk</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agora clique nos dois <em>resíduos catalíticos</em> para identificá-los. Veja qual ligante (inibidor, por ex) está presente na estrutura. Para isto:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>select hetero;show groups</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Com base na listagem dos grupos, identifique o inibidor que está complexado ao sítio ativo:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>select nag;wireframe <span class="dv">100</span>;color green</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Trata-se do inibidor <em>NAG, N-acetil-glicosamina</em>. Por esta observação, você diria que a interação com o inibidor ocorre na superfície da proteína ou em seu <em>cerne</em> (centro) ? Experimente:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>select protein;color grey;spacefill only; spacefill <span class="dv">500</span>; select glu35;color blue;select asp52;color magenta</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gire a molécula e observe como o trisacarídio interage na fenda do sítio ativo da enzima.</div>
+</section>
+<section id="coevolução-e-sítio-ativo" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="coevolução-e-sítio-ativo"><span class="header-section-number">8.2</span> Coevolução e sítio ativo</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enzimas podem atuar de modo similar funcionalmente, sugerindo a conservação de seu sítio ativo. Para ilustrar isso, <em>carregue simultaneamente dois arquivos PDB</em>, referentes à acetilcolinesterase humana (<em>PDB 1b41</em>) e do peixe elétrico <em>Torpedo californica</em> (<em>PDB 1acj</em>):</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>load files <span class="st">"1acj.pdb"</span> <span class="st">"1b41.pdb"</span> <span class="co"># Importante: os arquivos precisam estar no diretório principal do Jmol (normalmente o diretório raiz, se não hover comando para sua alteração).</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agora visualize ambas as estruturas:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>frame<span class="sc">*</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Defina os sítios ativos presentes em ambas os modelos:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>define peixe <span class="dv">200</span>,<span class="dv">440</span>,<span class="dv">357</span><span class="sc">/</span><span class="fl">1.1</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>define humana <span class="dv">203</span>,<span class="dv">334</span>,<span class="dv">447</span><span class="sc">/</span><span class="fl">2.1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agora restrinja a visualização apenas aos sítios ativos das enzimas:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>restrict peixe,humana; wireframe <span class="dv">100</span>; select peixe; color blue; select human; color green</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por fim, sobreponha ambos os sítios por um algoritmo do <em>Jmol</em> para <strong>homologia estrutural</strong>, e amplie o resultado focando num dos sítios:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>compare {<span class="fl">2.1</span>} {<span class="fl">1.1</span>} rotate translate <span class="fl">5.0</span>; zoom {humana} <span class="dv">0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gire as moléculas e observe a sobreposição topológica precisa de alguns resíduos do sítio ativo da acetilcolinesterase humana e de peixe.</div>
+</section>
+<section id="ajuste-induzido" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="ajuste-induzido"><span class="header-section-number">8.3</span> Ajuste induzido</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Substratos podem encaixar-se no sítio ativo de enzimas pelo <em>modelo chave-fechadura</em> ou de <em>simetria</em> de Monod, Wyman e Changeaux (MWC), bem como pelo <em>modelo de ajuste induzido</em> de Koshland, Nemethy e Filmer (KNM).</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Esse último pode ser visualizado baixando-se dois arquivos referentes à <em>hexoquinase</em>, com e sem o substrato presente na estrutura, e sobrepondo-as para interpretação:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>load files <span class="st">"2yhx.pdb"</span> <span class="st">"1hkg.pdb"</span>;</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>frame<span class="sc">*</span>;cartoon only</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>select <span class="fl">2.1</span>;color green;select otg;wireframe <span class="dv">150</span>;color cpk</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>select <span class="fl">1.1</span>;color grey</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>compare {<span class="fl">2.1</span>} {<span class="fl">1.1</span>} rotate translate <span class="dv">2</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lembre-se de que a molécula <em>OTG</em> pode ser visualizada previamente para <em>2yhx</em> por <em>“show groups”</em>. No arquivo PDB ela representa <em>O-toluilglicosamina</em>, um inibidor que compete pela glicose pelo sítio ativo da enzima.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rotacione a estrutura e perceba que a enzima em verde (com OTG) está mais fechada do que a cinza (sem OTG). Isso é interpretado como um <em>ajuste induzido</em>, com o fechamento da dobradiça entre os dois domínios da enzima ocorrendo somente na presença da molécula de OTG e, por dedução, do substrato da hexoquinase (glicose).</div>
+</section>
+<section id="ativação-de-enzimas" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="ativação-de-enzimas"><span class="header-section-number">8.4</span> Ativação de enzimas</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como moléculas, enzimas não diferenciam substratos alimentares de endógenos. Assim, enzimas proteolíticas não distinguem se uma proteína a ser degradada veio da dieta ou do endotélio do vaso sanguíneo. Dessa forma, a evolução propiciou eventos de ativação enzimática para precursores inativos, ou zimogênios, fora de seu tecido produtor, de modo a minimizar os riscos de autodigestão de proteínas intracelulares.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Um exemplo de <em>ativação de zimogênios</em> pode ser observado a partir do quimotripsinogênio. Para isso carregue o arquivo <a href="https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=2cga&amp;script=Console" target="_blank">2cga</a>, e represente-o em fitas com uma cor única:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>show trace;color grey</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rode a estrutura e perceba que o cristal está representado por duas moléculas, suscitando uma estrutura quaternária. Na verdade, o quimotripsinogênio possui apenas uma cadeia polipeptídica (<em>estrutura terciária</em>), embora tenha sido depositado no PDB como um cristal contendo duas moléculas, provavelmente por alguma limitação técnica.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Durante a ativação do zimógeno para sua forma ativa, quimotripsina, quatro ligações peptídicas são hidrolisadas, liberando dois peptídios. Ilustrando:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cartoon only;color lightblue;<span class="fu">select</span> (<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">146</span>,<span class="dv">147</span>,<span class="dv">148</span>,<span class="dv">149</span>);color red</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O resíduo amino terminal resultante, <em>Ile16</em>, dobra-se para o cerne proteico interagindo com <em>Asp194 </em>, promovendo uma alteração conformacional local:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>select ile16; wireframe <span class="fl">0.5</span>;color yellow</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>select asp194;wireframe <span class="fl">0.5</span>;color green</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Essa transconformação produz um bolso hidrofóbico para ligação do substrato, próximo à <em>tríade catalítica</em> da enzima (Asp102, His57, e Ser195). Ilustrando essa transição conformacional:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(asp102,his57,ser195);wireframe only; wireframe <span class="fl">0.5</span>;color cpk</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="enzimas-alostéricas" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="enzimas-alostéricas"><span class="header-section-number">8.5</span> Enzimas alostéricas</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por definição, o termo refere-se a enzimas usualmente dotadas por múltiplas subunidades, e que apresentam sítios de regulação distintos do sítio ativo. Nesses assim chamados <em>sítios regulatórios</em>, a ligação de uma molécula efetora pode elevar ou reduzir a atividade da enzima, um predicado ausente em catalizadores químicos.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Um exemplo ilustrativo de uma enzima alostérica constitui a <em>fosfofrutoquinase-1</em> ou <em>PFK1</em>, a qual participa do metabolismo anaeróbio de produção de energia a partir da oxidação de carboidratos Assim, carregue-a por <a href="https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1pfk&amp;script=Console" target="_blank">1pfk</a></div>
+<p>“.pdb”, represente-a como de praxe, e identifique seu sítio ativo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cartoon only;color grey;<span class="fu">select</span> (asp127,arg171);wireframe <span class="dv">150</span>;color pink</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agora identifique as moléculas não proteicas no modelo:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>select all;show groups</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Observe a presença das moléculas <em>FBP (frutose bifosfato)</em>, e <em>ADP (adenosina difosfato)</em>. Identifique-as na estrutura:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span> (fbp,adp);wireframe <span class="dv">150</span>;color cpk</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Veja que surgiram 6 moléculas adsorvidas ao cristal da enzima. Para melhor compreensão desse quantitativo, colorize a proteína por suas cadeias:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>select protein;color chain</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rode a estrutura e perceba tratar-se de um dímero, com cada subunidade contendo 2 moléculas de ADP e uma molécula de FBP. Na verdade, a PFK1 é um tetrâmero, embora sua estrutura cristalografada e depositada no PDB apresente apenas duas cadeias. Amplie a estrutura e veja esses detalhes.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identifique o efetor alostérico por:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>select adp326<span class="sc">:</span><span class="er">*</span>.c8;label <span class="st">"ADP efetor"</span>;color label black</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Se achar que o texto está mal posicionado pra leitura, tente acrescentar ao final:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>set labelfront</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Em poucas palavras, a PFK1 converte uma molécula de frutose-6P em frutose 1,6-biP (FBP), reação catalizada na presença de ATP. Assim, o ADP atua como um regulador positivo de sua atividade, ou ativador alostérico (veja: excesso de ADP sinaliza à célula uma necessidade para síntese de ATP).</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Um efetor alostérico promove mudanças conformacionais na interação com seu sítio, as quais se propagam ao longo da estrutura proteica atingindo o sítio ativo. Perceba que na estrutura gerada, o sítio alostérico da PFK1 intercala-se entre as cadeias do dímero, e distancia-se consideravelmente do sítio ativo:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(asp127,arg171)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>wireframe only;wireframe <span class="fl">0.3</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>color pink</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para calcular essa distância, dê um duplo clique no ADP efetor e aproxime o ponteiro do mouse ao sítio ativo da enzima. A título de comparação, distâncias entre 3 e 6 nm são comumente encontradas para bicamadas lipídicas.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como esses compostos adsorvem na enzima em sítios distintos do sítio ativo, são denominados <em>efetores alostéricos</em>, e seus sítios de adsorção, <em>sítios alostéricos</em>*index{sítio alostérico}}. A interação de um efetor num sítio alostérico altera localmente a conformação da proteína atingindo seu sítio ativo e resultando na modulação de sua atividade biológica. Assim, dependendo do efetor, a subunidade equilibra-se entre a <strong>forma inativa T e a forma ativa R</strong>. A esse equilíbrio propõe-se <em>dois modelos</em>, o <strong>modelo sequencial</strong> onde cada efetor altera sequencialmente a conformação da cadeia seguinte, e o <strong>modelo em conserto</strong>, em que um efetor pode alterar simultaneamente mais de uma cadeia polipeptídica.</div>
+</section>
+<section id="mecanismos-de-catálise" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="mecanismos-de-catálise"><span class="header-section-number">8.6</span> Mecanismos de Catálise</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enzimas catalisam reações químicas por basicamente três modos distintos: <em>catálise ácido-básica, covalente e metálica</em>. No entanto, a catálise ácido-básica e a catálise covalente cobrem a imensa maioria dos processos, devido à ionização de resíduos de aminoácidos do centro ativo das enzimas. Independente do modo de ação, esses mecanismos envolvem:</div>
+<ol type="1">
+<li>a redução dos graus de liberdade e consequente redução da entropia para a reação;</li>
+<li>o <em>efeito de proximidade</em> do substrato e o posicionamento correto desse no sítio ativo da enzima;</li>
+<li>ligações fracas entre o substrato e a enzima;</li>
+<li>a possibilidade de ajustes induzidos do reagente sobre a enzima.</li>
+</ol>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entre as interações fracas, destacam-se os pares iônicos que podem ser formados com as cadeias laterais de resíduos de Asp, Glu, His, Lys, Arg, His, bem como transferências de grupos envolvendo resíduos de Ser, Cys e Tyr.</div>
+<section id="catálise-ácido-básica." class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="catálise-ácido-básica."><span class="header-section-number">8.6.1</span> Catálise ácido-básica.</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como se dá a catálise da lisozima <a href="https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=1hew&amp;script=Console" target="_blank">1hew</a> sobre seu substrato ? Resumidamente, uma porção de seis resíduos de um polissacarídio da parede celular liga-se na fenda da enzima. A clivagem ocorre então entre o 4o. e o 5o. resíduo da unidade do hexassacarídio, e envolve um mecanismo de catálise ácida para o rompimento da ligação glicosídica. Nessa, <em>Glu35</em>-COOH encontra-se em uma fenda apolar que contribui para seu pKa incomum de 6,5 (o normal seria abaixo de 4,5). <em>Asp20</em>-COOH, por sua vez, encontra-se em um ambiente mais polar, possuindo valor de pKa de 3,5. A enzima como um todo desenvolve sua atividade ótima em pH 5,0, meio-termo entre os dois valores de pKa dos resíduos do sítio ativo.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Durante a catálise o resíduo de Glu35-COOH encontra-se protonado em pH neutro, atuando como um ácido e doando um próton ao oxigênio envolvido na ligação glicosídica entre o 4o. e 5o. resíduo do hexassacarídio, e cuja ligação encontra-se ‘’torcida’’ no interior da enzima, facilitando seu rompimento. Asp52-COO<span class="math inline">\(^{-}\)</span>, por sua vez, encontrando-se desprotonado no pH neutro, atua formando um par iônico com o intermediário instável. O ataque nucleofílico resulta na formação de um complexo covalente intermediário, um <em>oxocarbocátion</em>.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Na fase seguinte, Glu35 atua como uma base, aceitando um próton de uma molécula de água (nucleófilo) resultante da substituição de um álcool formado na primeira reação (grupo liberado), com consequente adição do íon hidróxido ao carbocátion. Existem outras interações fracas que estabilizam a ligação do inibidor (e portanto do substrato) ao sítio ativo da enzima. Exemplificando, ligações de H entre grupos -NH<span class="math inline">\(_{2}\)</span>, -CO e -COOH de resíduos próximos, tais como Asn, Ala e Trp, aos grupos -OH do trissacarídio.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Você pode identificá-los restringindo a visualização da lisozima:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">restrict</span> (asn59,ala107,trp63,trp62,nag);wireframe only; wireframe <span class="dv">100</span>;color structure</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E pode visualizar cada resíduo envolvido por:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span> (asn59,ala107,trp63,trp62) and <span class="sc">*</span>.ca; label <span class="st">"\%n \%R"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pode-se também definir esse conjunto de resíduos para uma análise futura, ou ampliação focada:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span> (asn59,ala107,trp63,trp62)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>define estab selected</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>select estab</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>zoom {estab} <span class="dv">0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O efeito visual é maior quando se parte da visualização global da enzima. Uma dessas interações pode ser vista pela ligações de hidrogênio presentes:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>calculate hbonds</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uma opção mais ágil consiste em observar as interações do ligante diretamento do sítio do PDB, <a href="https://www.rcsb.org/" target="_blank">RSCB-PDB</a>. Para isso, digite “1hew” no campo de busca para obter a lisozima, desça até <em>Small Molecules</em> e clique na imagem de <em>2D Diagram &amp; Interactions</em>.</div>
+</section>
+</section>
+<section id="catálise-covalente" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="catálise-covalente"><span class="header-section-number">8.7</span> Catálise covalente</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outro tipo de mecanismo enzimático envolve uma ligação covalente do substrato num resíduo-chave do sítio ativo da enzima, com formação de um produto intermediário que é liberado antes do final da reação. O exemplo a seguir descreve o mecanismo de catálise covalente da quimotripsina, <a href="https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=5cha&amp;script=Console" target="_blank">5cha.pdb</a>, enzima proteolítica que abriga a <em>tríade catalítica Ser195, His57 e Asp102</em>.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resumidamente, a interação do substrato peptídico comprime a distância de dois resíduos específicos no sítio ativo da enzima, formando uma <em>ligação de H</em> entre His57 (eletrófilo, com pKa anômalo de 11 na enzima) e Ser195, promovendo uma abstração de um próton dessa tornando-a um potente nucleófilo. Na sequência, Ser195 promove um ataque eletrofílico a uma carbonila do substrato (ligação peptídica), resultando num intermediário tetraédrico covalente acil-enzima (<em>fase de acilação</em>). Dessa forma, Asp102 estabiliza His57 com uma ligação de H de barreira energética muito baixa, próxima da de uma ligação covalente, e permitindo o escoamento de elétrons ao segundo nitrogênio do anel imidazólico de His57, elevando sua alcalinidade, e promovendo sua capacidade de desprotonação de Ser195.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uma ligação C-O dupla do substrato é convertida a simples na formação do <strong>intermediário tetraédrico</strong>, produzindo por consequência um <em>oxiânion</em> (oxigênio carregado negativamente) o qual ocupa uma posição vacante (<em>fenda oxianiônica</em>) e interage com a cadeia polipeptídica da enzima, especificamente aos grupos -NH<span class="math inline">\(_{2}\)</span> de Gly193 e Ser195.</div>
+<p>Na <em>fase de deacilação</em> subsequente, os passos são invertidos, com um ataque nucleofílico promovido por uma molécula de água interagindo com His57 ao carbono acila do substrato. Dessa forma, His57 atua como um ácido, doando um próton ao nitrogênio do grupo pertencente à ligação peptídica a ser clivada. Na fase final o peptídio é liberado a partir da clivagem da ligação entre Ser195 e o carbono da carbonila (-C=O) do substrato.</p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o mecanismo proposto para a quimotripsina inclui uma catálise covalente (pelo oxigênio nucleofílico), junto a uma catálise ácido-básica (doação de próton de grupo</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para visualizar os atores envolvidos nessa catálise, carregue a quimotripsina novamente por <a href="https://chemapps.stolaf.edu/jmol/jmol.php?pdbid=5cha&amp;script=Console" target="_blank">5cha</a> e visualize a proximidade de sua tríade catalítica:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>trace only</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>color grey</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span> (Ser195,His57,Asp102) and <span class="sc">*</span>.ca</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>label <span class="st">"\%n \%R"</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>color label orange</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>set labelfront</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./proteina.html" class="pagination-link" aria-label="Proteínas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Proteínas</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./carboidrato.html" class="pagination-link" aria-label="Carboidratos">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Carboidratos</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
