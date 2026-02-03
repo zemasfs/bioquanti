@@ -433,7 +433,7 @@ window.Quarto = {
   <li><a href="#gh-toolkit" id="toc-gh-toolkit" class="nav-link" data-scroll-target="#gh-toolkit"><span class="header-section-number">4.4</span> GH-Toolkit</a></li>
   <li><a href="#mtherm-toolkit" id="toc-mtherm-toolkit" class="nav-link" data-scroll-target="#mtherm-toolkit"><span class="header-section-number">4.5</span> mTherm-Toolkit</a></li>
   <li><a href="#thermstab---toolkit" id="toc-thermstab---toolkit" class="nav-link" data-scroll-target="#thermstab---toolkit"><span class="header-section-number">4.6</span> ThermStab - Toolkit</a></li>
-  <li><a href="#mfc-toolkit" id="toc-mfc-toolkit" class="nav-link" data-scroll-target="#mfc-toolkit"><span class="header-section-number">4.7</span> MFC-Toolkit</a></li>
+  <li><a href="#biocel-toolkit" id="toc-biocel-toolkit" class="nav-link" data-scroll-target="#biocel-toolkit"><span class="header-section-number">4.7</span> Biocel-Toolkit</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1632,12 +1632,10 @@ SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
 <li><strong>GH-Toolkit</strong> - estabilidade termodinâmica de biopolímeros;</li>
 <li><strong>mTherm-Toolkit</strong> - estabilidade sob condições perturbantes;</li>
 <li><strong>ThermStab-Toolkit</strong> - termoestabilidade enzimática;</li>
-<li><strong>MFC-Toolkit</strong> - performance de biocélula a combustível</li>
+<li><strong>Biocel-Toolkit</strong> - performance de biocélula a combustível</li>
 </ol>
 <section id="ek-toolkit" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="ek-toolkit"><span class="header-section-number">4.1</span> EK-Toolkit</h3>
-<p><br>
-</p>
 <p><strong>Instruções gerais</strong></p>
 <div class="line-block">&nbsp;&nbsp;O <em>EK-Toolkit</em> é uma caixa de ferramentas para simulação de cinética e inibição enzimáticas com uso de gráficos diagnósticos. O kit gera três gráficos lado a lado:</div>
 <ol type="1">
@@ -1695,12 +1693,27 @@ SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
 </li>
 <li><em>b (slope):</em> inclinação da reta LB = \(K_m/V_{max}\).<br>
 </li>
-<li><em>K_i:</em> constante de inibição (Dixon: \(x = -K_i\)).<br>
-</li>
-<li><em>WLS(1/y²):</em> ponderação usada em LB; <em>OLS</em> em Dixon.</li>
+<li><em>K_i:</em> constante de inibição (Dixon: \(x = -K_i\)).</li>
 </ul>
-<!-- #### Sugestões {.unnumbered} -->
-<!-- #### Referências {.unnumbered} -->
+</section>
+<section id="sugestões" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestões">Sugestões</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente comparar o modelo não competitivo puro ao misto; para isso basta igualar ou não, respectivamente, as constantes de inibição;</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente um modelo introduzido por usuário (<span class="st">"user"</span>). Para isso, basta selecionar Modelos <span class="sc">-</span><span class="ot">-&gt;</span> User, informar a equação, os parâmetros e seus valores. Segue um <span class="fu">exemplo</span> (ativação parcial incompetitiva)<span class="sc">:</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  Equação<span class="sc">:</span> (alfa<span class="sc">*</span>Vmax<span class="sc">*</span>S)<span class="sc">/</span>(Km<span class="sc">+</span>S<span class="sc">*</span>(<span class="dv">1</span><span class="sc">+</span>I<span class="sc">/</span>Ki))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  Parâmetros<span class="sc">:</span> alfa;Km;Vmax;Ki</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  Valores<span class="sc">:</span> <span class="fl">1.7</span>;<span class="dv">2</span>;<span class="dv">10</span>;<span class="dv">5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Modelos → User, informe Equação (JS), Parâmetros (nomes;) e Valores (;).</p>
+<ol type="1">
+<li>Marangoni, Alejandro G. Enzyme kinetics: a modern approach. John Wiley &amp; Sons, 2003.</li>
+<li>Purich, Daniel L. Enzyme kinetics: catalysis and control: a reference of theory and best-practice methods. Elsevier, 2010.</li>
+<li>Leone, Francisco A. Fundamentos de cinética enzimática. Editora Appris, 2021.</li>
+<li>Segel, Irwin H. Enzyme kinetics: behavior and analysis of rapid equilibrium and steady state enzyme systems. Vol. 115. New York: Wiley, 1975.<br>
+</li>
+</ol>
 </section>
 </section>
 <section id="leadhunt" class="level3" data-number="4.2">
@@ -1793,18 +1806,18 @@ BEI=\frac{pIC_{50}}{MW}
 <section id="sugestão-32" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="sugestão-32">Sugestão</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Compare os tipos de inibição enzimática por inspeção visual dos gráficos de Michaelis<span class="sc">-</span>Mentem e de Lineweaver<span class="sc">-</span>Burk, dando ênfase às variações ou não de <span class="st">"Km"</span> e <span class="st">"Vmax"</span> entre esses;</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Calcule o valor de <span class="st">"Ki"</span> por métodos distintos utilizando<span class="sc">-</span>se o campo de preenchimento para <span class="st">"replot"</span> por nível de <span class="fu">inibidor</span> (tabela de <span class="st">"Parâmetros aparentes"</span>)<span class="sc">:</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    a<span class="er">)</span> obtendo<span class="sc">-</span>se o valor de <span class="st">"1/Ki"</span> para plot de I <span class="fu">x</span> (alfa<span class="dv">-1</span>) do botão <span class="st">"alfa-replot"</span> (inclinação da reta);</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  b<span class="er">)</span> por intercepto <span class="st">"-Ki"</span> a partir de plots de I x Vm_app, Km_app, ou Km<span class="sc">/</span><span class="fu">Vm_app</span> (dependendo do modelo de inibição);</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  c<span class="er">)</span> por <span class="st">"inclinação"</span> ou <span class="st">"intercepto"</span> de replots de Lineweaver<span class="sc">-</span>Burk contra I</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Experimente o modo <span class="st">"parâmetros"</span> com valor de <span class="st">"nH"</span> diferente de <span class="dv">1</span> (ex<span class="sc">:</span> <span class="dv">2</span>,<span class="dv">8</span>), para avaliar o comportamento da curva dose<span class="sc">-</span>reposta sob efeitos de cooperatividade;</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Experimente o modo <span class="st">"parâmetros"</span> com valor para capacidade calorífica diferente de <span class="fu">zero</span> (ex<span class="sc">:</span> <span class="sc">-</span><span class="dv">2000</span>), para avaliar a possibilidade de efeitos secundários na ligação em função da temperatura, como transição conformacional da enzima;</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Teste a curvatura do plot de Van´t Hoff para variação de capacidade calorífica da interação, fornecendo valores <span class="fu">positivos</span> (ex<span class="sc">:</span> <span class="dv">2000</span>) e <span class="fu">negativos</span> (ex<span class="sc">:</span> <span class="sc">-</span><span class="dv">2000</span>)<span class="sc">:</span> se concavidade para cima, valor negativo da variação de capacidade calorífica; se concavidade para baixo, valor positivo.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Compare os tipos de inibição enzimática por inspeção visual dos gráficos de Michaelis<span class="sc">-</span>Mentem e de Lineweaver<span class="sc">-</span>Burk, dando ênfase às variações ou não de <span class="st">"Km"</span> e <span class="st">"Vmax"</span> entre esses;</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Calcule o valor de <span class="st">"Ki"</span> por métodos distintos utilizando<span class="sc">-</span>se o campo de preenchimento para <span class="st">"replot"</span> por nível de <span class="fu">inibidor</span> (tabela de <span class="st">"Parâmetros aparentes"</span>)<span class="sc">:</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    a<span class="er">)</span> obtendo<span class="sc">-</span>se o valor de <span class="st">"1/Ki"</span> para plot de I <span class="fu">x</span> (alfa<span class="dv">-1</span>) do botão <span class="st">"alfa-replot"</span> (inclinação da reta);</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  b<span class="er">)</span> por intercepto <span class="st">"-Ki"</span> a partir de plots de I x Vm_app, Km_app, ou Km<span class="sc">/</span><span class="fu">Vm_app</span> (dependendo do modelo de inibição);</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  c<span class="er">)</span> por <span class="st">"inclinação"</span> ou <span class="st">"intercepto"</span> de replots de Lineweaver<span class="sc">-</span>Burk contra I</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Experimente o modo <span class="st">"parâmetros"</span> com valor de <span class="st">"nH"</span> diferente de <span class="dv">1</span> (ex<span class="sc">:</span> <span class="dv">2</span>,<span class="dv">8</span>), para avaliar o comportamento da curva dose<span class="sc">-</span>reposta sob efeitos de cooperatividade;</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Experimente o modo <span class="st">"parâmetros"</span> com valor para capacidade calorífica diferente de <span class="fu">zero</span> (ex<span class="sc">:</span> <span class="sc">-</span><span class="dv">2000</span>), para avaliar a possibilidade de efeitos secundários na ligação em função da temperatura, como transição conformacional da enzima;</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Teste a curvatura do plot de Van´t Hoff para variação de capacidade calorífica da interação, fornecendo valores <span class="fu">positivos</span> (ex<span class="sc">:</span> <span class="dv">2000</span>) e <span class="fu">negativos</span> (ex<span class="sc">:</span> <span class="sc">-</span><span class="dv">2000</span>)<span class="sc">:</span> se concavidade para cima, valor negativo da variação de capacidade calorífica; se concavidade para baixo, valor positivo.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="referências" class="level4 unnumbered">
@@ -1821,66 +1834,481 @@ BEI=\frac{pIC_{50}}{MW}
 <section id="lb-toolkit" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="lb-toolkit"><span class="header-section-number">4.3</span> LB-Toolkit</h3>
 <p><strong>Instruções gerais</strong></p>
-<section id="parâmetros-1" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="parâmetros-1">Parâmetros</h4>
+<p>O <strong>LB-Toolkit</strong> é um painel interativo para análise de ensaios de ligação ligante–receptor (proteína, enzima, ácido nucleico, glicano). Permite visualizar e ajustar curvas clássicas de ligação (Binding, Scatchard, Benesi–Hildebrand e Hill), e acompanha exportação HTML interativa de dados e gráficos.</p>
+<p><a href="Eq/toolkit/lb-toolkit.js" download="lb-toolkit.js"><img src="Eq/toolkit/lb-toolkit.png" class="img-fluid"></a></p>
+<p><strong>Funcionalidades</strong></p>
+<div class="line-block">&nbsp;&nbsp;O <em>LB-Toolkit</em> permite estudo e visualização gráfica de um painel 2 x 2 representativo dos modelos clássicos de interação bimolecular de Langmuir, Hill (cooperatividade positiva e negativa), heterogeneidade de sítios (<em>two-site</em>), e de transição conformacional (R/T). A exportação HTML é autossuficiente, e a importação/exportação para arquivos CSV dá-se por vetores <code>L,v</code>.</div>
+<div class="line-block">&nbsp;&nbsp;As funções principais da barra superior são: RESET (restaura valores padrão), HTML (exporta viewer autônomo), DIAGNOSTICO (mostra um resumo do modelo), PARAMETROS (abre painel de controle), EQUACOES (exibe fórmulas dos modelos), e CSV/LOAD (exporta ou importa dados em formato <code>L,v</code>.</div>
+<section id="parâmetros-ajustáveis" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="parâmetros-ajustáveis">Parâmetros ajustáveis</h4>
+<ul>
+<li><code>n</code>, <code>Kd</code>, <code>nH</code>, <code>erro sigma</code>, <code>points</code>, <code>Lmin</code>, <code>Lmax</code></li>
+<li>Two-site: <code>n1</code>, <code>n2</code>, <code>Kd1</code>, <code>Kd2</code></li>
+<li>Conformational (R/T): <code>Kt</code>, <code>KdR</code>, <code>KdT</code></li>
+<li><em>Toggles</em>: <em>draw model only</em>, <em>results below</em>, <em>Hill 10–90%</em>, <em>zoom sliders</em>, <em>autoplot</em></li>
+</ul>
 </section>
-<section id="sugestões" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestões">Sugestões</h4>
+<section id="modelos-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="modelos-1">Modelos</h4>
+<p><strong>Langmuir</strong></p>
+<p><span class="math display">\[
+v = n\,\frac{[L]}{K_d + [L]}
+\]</span><br>
+</p>
+<p><strong>Hill</strong></p>
+<p><span class="math display">\[
+v = n\,\frac{[L]^{n_H}}{K_d^{n_H} + [L]^{n_H}}
+\]</span></p>
+<p><em>Linearização:</em></p>
+<p><span class="math display">\[
+\log\!\left(\frac{v}{n - v}\right) = n_H \log[L] - n_H \log K_d
+\]</span><br>
+</p>
+<p><strong>Two-site (heterogeneidade de sítios)</strong></p>
+<p><span class="math display">\[
+v = n_1\,\frac{[L]}{K_{d1} + [L]} + n_2\,\frac{[L]}{K_{d2} + [L]}
+\]</span><br>
+</p>
+<p><strong>Conformational (R/T)</strong></p>
+<p><span class="math display">\[
+v = n\,\frac{L/K_{dR} + K_t L/K_{dT}}{1 + L/K_{dR} + K_t(1 + L/K_{dT})}
+\]</span><br>
+</p>
+<section id="linearizações-clássicas" class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="linearizações-clássicas">Linearizações clássicas</h5>
+<p><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;Os ajustes são exibidos como <strong>linhas spline suaves</strong>, pois os parâmetros de uma regressão polinomial não têm significado físico direto.</div>
+<p><strong>Scatchard</strong></p>
+<p><span class="math display">\[
+\frac{v}{[L]} = \frac{n}{K_d} - \frac{1}{K_d} v
+\]</span><br>
+</p>
+<p><strong>Benesi–Hildebrand</strong></p>
+<p><span class="math display">\[
+\frac{1}{v} = a\,\frac{1}{[L]} + b
+\]</span></p>
+</section>
+</section>
+<section id="ajustes-e-estimativas" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="ajustes-e-estimativas">Ajustes e estimativas</h4>
+<ul>
+<li><em>Binding (n,Kd)</em>: ajuste não linear (Gauss–Newton).<br>
+</li>
+<li><em>Scatchard e Benesi:</em> interpolação spline visual.<br>
+</li>
+<li><em>Hill:</em> regressão linear 10–90 %.</li>
+</ul>
+<section id="gráficos" class="level5" data-number="4.3.0.1">
+<h5 data-number="4.3.0.1" class="anchored" data-anchor-id="gráficos"><span class="header-section-number">4.3.0.1</span> Gráficos</h5>
+<ol type="1">
+<li><em>Binding: v vs [L]</em> – curva teórica + pontos experimentais.<br>
+</li>
+<li><em>Scatchard: v/L vs v</em> – linha spline ajustada aos dados.<br>
+</li>
+<li><em>Benesi–Hildebrand: 1/[L] vs 1/v</em> – spline ilustrativo.<br>
+</li>
+<li><em>Hill: log(v/(n–v)) vs log[L]</em> – regressão linear com exibição de nH e Kd.</li>
+</ol>
+</section>
+</section>
+<section id="sugestões-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestões-1">Sugestões</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Utilize o <span class="st">"slider"</span> (barra de deslizamento) para ampliação<span class="sc">/</span>redução dos gráficos;</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente personalizar as represetações gráficas. Ilustrando, clique no botão <span class="st">"Parâmetros"</span> e altere o modelo para cooperatividade negativa com dois sítios, atribuindo valores distintos a <span class="fu">esses</span> (opcional).</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="referências-1" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="referências-1">Referências</h4>
+<ol type="1">
+<li>Carey, Jannette. Ligand-Binding Basics: Evaluating Intermolecular Affinity, Specificity, Stoichiometry, and Cooperativity. John Wiley &amp; Sons, 2025.</li>
+<li>Roque, Ana Cecília A. “Ligand-Macromolecular interactions in drug discovery.” Clifton, NJ 2010; p 572 (2010).</li>
+<li>Mannhold, Raimund, Hugo Kubinyi, and Gerd Folkers. Protein-ligand interactions: from molecular recognition to drug design. John Wiley &amp; Sons, 2006.</li>
+<li>Klotz, Irving. Introduction to biomolecular energetics: including ligand–receptor interactions. Elsevier, 2012.</li>
+</ol>
 </section>
 </section>
 <section id="gh-toolkit" class="level3" data-number="4.4">
 <h3 data-number="4.4" class="anchored" data-anchor-id="gh-toolkit"><span class="header-section-number">4.4</span> GH-Toolkit</h3>
 <p><strong>Instruções gerais</strong></p>
-<section id="parâmetros-2" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="parâmetros-2">Parâmetros</h4>
+<div class="line-block">&nbsp;&nbsp;Este <em>toolkit</em> apresenta algumas relações de Gibbs–Helmholtz e de Van’t Hoff observadas no estudo de termodinâmica de proteínas e interações macromoleculares envolvendo <em>folding</em>, <em>unfolding</em> e <em>ligand-binding</em> com <em>ΔCₚ constante</em> (e uma variante simples com ΔΔCₚ). Inclui formas úteis para simulação a partir de parâmetros em <em>T₀</em> ou em <em>Tₘ</em>, além de <em>linearizações diagnósticas</em> para leitura direta de parâmetros.</div>
+<div class="line-block">&nbsp;&nbsp;O simulador permite trabalhar-se com equações fundamentais (formas em <span class="math inline">\(T_0\)</span> e centrada em <span class="math inline">\(T_m\)</span>) com <span class="math inline">\(ΔC_p\)</span> <em>constante</em> e variante linear. A interpretação dos <em>ajustes (regressões)</em> é apresentada graficamente, a partir dos <em>Parâmetros</em> selecionados. São também incluidos alguns <em>Cenários</em> para comportamento (mesófilo, psicrófilo, termófilo), bem como <em>Presets</em> para quantidades termodinâmicas. O app permite simular valores de <em>ΔG(T)</em> diretamente a partir de <span class="math inline">\((T_m,\,ΔH_m,\,ΔC_p)\)</span>, e exporta gráficos e dados (CSV/HTML) em unidades selecionáveis (kJ/mol ↔︎ kcal/mol; J/mol/K ↔︎ cal/mol/K).</div>
+<p><br>
+</p>
+<p><a href="Eq/toolkit/gh-toolkit.js" download="gh-toolkit.js"><img src="Eq/toolkit/gh-toolkit.png" class="img-fluid"></a></p>
+<section id="parâmetros-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="parâmetros-1">Parâmetros</h4>
+<p><strong>1. Forma com referência em <span class="math inline">\(T_0\)</span></strong> (integrais com <span class="math inline">\(ΔC_p\)</span> constante)</p>
+<p><em>Entalpia</em> <span class="math display">\[
+ΔH(T)=ΔH^\circ + ΔC_p\,(T-T_0)
+\]</span></p>
+<p><em>Entropia</em> <span class="math display">\[
+ΔS(T)=ΔS^\circ + ΔC_p\ln\!\left(\frac{T}{T_0}\right)
+\]</span></p>
+<p><em>Energia de Gibbs (Gibbs–Helmholtz integrada)</em> <span class="math display">\[
+ΔG(T)=ΔH^\circ - T\,ΔS^\circ + ΔC_p\Big[(T-T_0)-T\ln\!\left(\frac{T}{T_0}\right)\Big]
+\]</span></p>
+<p><em>Constante de equilíbrio</em> <span class="math display">\[
+\ln K(T)= -\frac{ΔG(T)}{R\,T}
+\]</span></p>
+<p><strong>2. Forma centrada em <span class="math inline">\(T_m\)</span></strong> (curva de estabilidade por <span class="math inline">\(ΔH_m\)</span> e <span class="math inline">\(ΔC_p\)</span>)</p>
+<p>Esta forma é conveniente quando se conhece a temperatura de equilíbrio <span class="math inline">\(T_m\)</span> (onde <span class="math inline">\(ΔG=0\)</span>), a variação de entalpia em <span class="math inline">\(T_m\)</span> (<span class="math inline">\(ΔH_m\)</span>) e <span class="math inline">\(ΔC_p\)</span>:</p>
+<p><span class="math display">\[
+ΔG(T)=ΔH_m\!\left(1-\frac{T}{T_m}\right) + ΔC_p\Big[(T-T_m)-T\ln\!\left(\frac{T}{T_m}\right)\Big].
+\]</span></p>
+<div class="line-block">&nbsp;&nbsp;A partir desta expressão é possível obter-se retroativamente parâmetros em <span class="math inline">\(T_0\)</span> coerentes com a curva:</div>
+<span class="math display">\[\begin{aligned}
+ΔH^\circ(T_0) &amp;= ΔH_m + ΔC_p\,(T_0-T_m),\\[4pt]
+ΔS^\circ(T_0) &amp;= \frac{ΔH_m}{T_m} + ΔC_p\ln\!\left(\frac{T_0}{T_m}\right).
+\end{aligned}\]</span>
+<p>No app, o botão <em>“gerar por Eq. <span class="math inline">\(T_m\)</span>”</em> aplica estas relações.</p>
+<p><strong>3. Capacidade calorífica com variação linear</strong> (termo <span class="math inline">\(ΔΔC_p\)</span>)</p>
+<div class="line-block">&nbsp;&nbsp;Para explorar pequenas variações lineares de capacidade calorífica em torno de uma referência <span class="math inline">\(T_r\)</span>:</div>
+<p><span class="math display">\[
+C_p(T)=C_{p,r}+ΔΔC_p\,(T-T_r).
+\]</span></p>
+<p>No app, marcar <strong>“Comparar duas proteínas (usar <span class="math inline">\(ΔΔC_p\)</span>)”</strong> plota a proteína B com <span class="math inline">\(ΔC_{p,B}=ΔC_{p,A}+ΔΔC_p\)</span> e mostra a consequência na curvatura de <span class="math inline">\(ΔG(T)\)</span> e no deslocamento de <span class="math inline">\(T_m\)</span>.</p>
 </section>
-<section id="sugestões-1" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestões-1">Sugestões</h4>
+<section id="cenários" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="cenários">Cenários</h4>
+<div class="line-block">&nbsp;&nbsp;O <em>Cenário</em> escolhe a natureza do processo modelado e inicializa sinais e ordens de grandeza coerentes:</div>
+<ul>
+<li><em>Folding exotérmico</em>: <span class="math inline">\(ΔH^\circ&lt;0\)</span>; estabilização entálpica dominante a <span class="math inline">\(T_0\)</span>.</li>
+<li><em>Folding endotérmico</em>: <span class="math inline">\(ΔH^\circ&gt;0\)</span> e <span class="math inline">\(ΔS^\circ&gt;0\)</span> (ganho entrópico compensa).</li>
+<li><em>Unfolding</em>: inverte os sinais de folding.</li>
+<li><em>Binding exotérmico / endotérmico</em>: ajustes típicos para interação ligante–receptor.</li>
+</ul>
+</section>
+<section id="sugestões-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestões-2">Sugestões</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Orientação<span class="sc">:</span> T_m ocorre quando ΔG<span class="ot">=</span><span class="fl">0.</span> Nesse caso, é mostrada uma linha vertical tracejada no gráfico ΔG x T;</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Selecione um <span class="st">"Preset"</span> didático e compare o efeito nas curvas de estabilidade<span class="sc">:</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> Nenhum<span class="sc">:</span> sorteio coerente.</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> termo ↑ΔG global<span class="sc">:</span> torna ΔS mais <span class="fu">negativo</span> (eleva ΔG globalmente).</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> termo ↓ΔC_p<span class="sc">:</span> achata a curvatura em Δ<span class="fu">G</span>(T).</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> psicro ↑ΔC_p<span class="sc">:</span> acentua a curvatura.</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> binder ΔC_p<span class="sc">&lt;</span><span class="dv">0</span><span class="sc">:</span> usa ΔC_p <span class="fu">negativo</span> (casos de ligação hidrofóbica reduzida etc.).</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> A curvatura de Δ<span class="fu">G</span>(T) cresce com <span class="sc">|</span>ΔC_p<span class="sc">|</span>; assim, compare A vs B, e veja a diferença no perfil gráfico (<span class="st">"shape"</span>) e no deslocamento de T_m;</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Observe que<span class="sc">:</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> a representação de Van’t Hoff recupera ΔH e Δ<span class="fu">S</span> (quando Δ<span class="at">C_p =</span> <span class="dv">0</span>).rve que </span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> slopes<span class="sc">/</span>interceptos<span class="sc">:</span> servem de checagem de consistência entre gráficos</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> de ΔH x T<span class="sc">:</span> slope permite ΔC_p.</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> De ΔS x ln T<span class="sc">:</span> slope permite ΔC_p, e intercepto compatível com ΔS e T_0.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="referências-2" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="referências-2">Referências</h4>
+<ol type="1">
+<li>Atkins, Peter William, et al.&nbsp;Physical chemistry for the life sciences. Oxford University Press, 2023.</li>
+<li>Hammes, Gordon G. Thermodynamics and kinetics for the biological sciences. John Wiley &amp; Sons, 2000.</li>
+<li>Cooper, Alan. Biophysical chemistry. No.&nbsp;24. Royal Society of Chemistry, 2011.</li>
+<li>Creighton, T. The Biophysical Chemistry of Nucleic Acids &amp; Proteins. Helvetian Press, 2010.</li>
+</ol>
 </section>
 </section>
 <section id="mtherm-toolkit" class="level3" data-number="4.5">
 <h3 data-number="4.5" class="anchored" data-anchor-id="mtherm-toolkit"><span class="header-section-number">4.5</span> mTherm-Toolkit</h3>
 <p><strong>Instruções gerais</strong></p>
-<section id="parâmetros-3" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="parâmetros-3">Parâmetros</h4>
+<div class="line-block">&nbsp;&nbsp;O <em>toolkit</em> constitui um app educacional para simular os perfis gráficos de desnaturação de proteínas (ex.: ureia, GdnHCl), e com suporte a proteínas multiméricas e um termo empírico para uso de osmólitos. Os dados são plotados em função de um sinal experimental (absorvância/fluorescência), seguindo-se o cálculo de frações conformacionais e energia de Gibs efetiva em função do desnaturante. O simulador também permite comparação entre proteínas ou condições experimentais (A/B).</div>
+<div class="line-block">&nbsp;&nbsp;O app trabalha com <em>modelo de dois estados</em> entre um conjunto “nativo” (F) e outro “desnaturado” (U). O efeito do desnaturante é linear sobre a energia padrão do monômero (LEA – Linear Extrapolation Assumption). Para simulação de um osmólito (estabilizante ou não) utiliza-se um termo empírico multiplicativo na inclinação (m).</div>
+<p><br>
+</p>
+<p><a href="Eq/toolkit/mtherm-toolkit.js" download="mtherm-toolkit.js"><img src="Eq/toolkit/mtherm-toolkit.png" class="img-fluid"></a></p>
+<p><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;Complementarmente, o simulador permite a exportação de figuras interativas e de seu diagnóstico (HTML), exportação CSV para dados de desnaturante, sinal e variação de energia juntamente ao diagnóstico, bem como <em>presets</em> de interface JSON para cenários (salvar/carregar).</div>
+<section id="parâmetros-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="parâmetros-2">Parâmetros</h4>
+<p><strong>Energia padrão vs.&nbsp;([D])</strong> — monômero (LEA)</p>
+<p><span class="math display">\[
+\Delta G^\circ(D)=\Delta G^\circ(\mathrm{H_2O})-m\,D
+\tag{2.1}
+\]</span></p>
+<p><strong>Multímero (F_n nU)</strong> — lei de massa (resolver (f_U))</p>
+<p><span class="math display">\[
+\Delta G^\circ + RT\ln\!\left(\frac{n\,f_U^{\,n}}{P_t^{\,n-1}(1-f_U)}\right)=0
+\tag{2.2}
+\]</span><br>
+</p>
+<ul>
+<li>(n): número de monômeros em (F_n);</li>
+<li>(P_t): concentração de <em>monômero equivalente</em> (em M);</li>
+<li>A Eq. (2.2) é resolvida numericamente (bissecção) para (0&lt;f_U&lt;1) em cada (D);</li>
+</ul>
+<p><strong>Energia livre efetiva</strong></p>
+<p><span class="math display">\[
+\Delta G_{\mathrm{eff}}(D)=-RT\ln\!\left(\frac{f_U}{1-f_U}\right)
+\tag{2.3}
+\]</span></p>
+<p><strong>Inclinação efetiva (m_{}) (dependente de (D))</strong></p>
+<p><span class="math display">\[
+m_{\mathrm{eff}}(D) = \frac{m}{\,n + (1-n)\, f_U(D)\,}\quad
+\left(\approx \frac{m}{n}\ \text{no lado nativo; } \approx m \text{ no lado desnaturado}\right)
+\tag{2.4}
+\]</span></p>
+<p><strong>Intercepto nativo efetivo em água</strong> (aproximação para multímeros)</p>
+<p><span class="math display">\[
+\Delta G_{\mathrm{eff}}(\mathrm{H_2O})
+\approx \frac{\Delta G^\circ(\mathrm{H_2O})}{n}
++ \frac{RT}{n}\ln n
+- RT\!\left(1-\frac1n\right)\!\ln P_t
+\tag{2.5}
+\]</span><br>
+</p>
+<p><strong>Osmólitos</strong></p>
+<div class="line-block">&nbsp;&nbsp;Osmólitos tendem a aumentar a estabilidade frente ao desafio de desenaturantes. O simulador permite observar o efeito de osmólitos compatíveis (ex.: glicina, sorbitol, sacarose, betaína) nos gráficos resultantes. No app é modelado um efeito empírico e simples como uma escala na inclinação:</div>
+<p><span class="math display">\[
+m_{\mathrm{eff}} = m \,\bigl(1 + k_{\mathrm{osm}}\,[\mathrm{osm}]\bigr)
+\tag{6.1}
+\]</span></p>
+<p>onde (k_{}) é um parâmetro de força ajustável (típicamente 0.05–0.2 M<span class="math inline">\(^{-1}\)</span>). Esse termo desloca a curva sem impor um mecanismo específico, permitindo exploração didática.</p>
 </section>
-<section id="sugestões-2" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestões-2">Sugestões</h4>
+<section id="ajustes-e-parâmetros" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="ajustes-e-parâmetros">Ajustes e Parâmetros</h4>
+<ul>
+<li><em>Temperatura (T)</em> (K) e <em>(P_t)</em> (µM, equivalente de monômero);</li>
+<li><em>Energia em água</em> (<span class="math inline">\(\Delta\)</span>G<span class="math inline">\(^{H_2O}\)</span>) e <em>inclinação (m)</em>;</li>
+<li><em>Multiplicidade (n)</em>: (1 n ) para A e, independentemente, para B;</li>
+<li><em>Sinais de base (S_F, S_U) e ruído</em>;</li>
+<li><em>Comparação A/B</em>: segunda proteína pode ter (n), (m), <span class="math inline">\(\Delta\)</span>G<span class="math inline">\(^{o}\)</span>, e osmólito diferentes.</li>
+</ul>
+</section>
+<section id="sugestões-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestões-3">Sugestões</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Obseve a curvatura do gráfico em ΔG x [D]. Valores de n<span class="sc">&gt;</span><span class="dv">1</span> sugerem um estado multimérico para o biopolímeros;</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Veja que o <span class="st">"ponto médio*"</span> de C_m, onde f_U é aproximadamente <span class="dv">0</span>,<span class="dv">5</span>, é marcado no diagnóstico para referência;</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Compare o efeito de osmólito comparando<span class="sc">-</span>se proteínas ou condições A e B, alterando<span class="sc">-</span>se a concentração do osmólito e sua constante empírica <span class="st">"k_osm"</span>.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="referências-3" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="referências-3">Referências</h4>
+<ol type="1">
+<li>Park, Chiwook, and Susan Marqusee. “Analysis of the stability of multimeric proteins by effective ΔG and effective m‐values.” Protein science 13.9 (2004): 2553-2558.</li>
+<li>Holthauzen, Luis Marcelo F., et al.&nbsp;“Protein stability in the presence of cosolutes.” Methods in Enzymology. Vol. 492. Academic Press, 2011. 61-125.</li>
+<li>Scholtz, J. Martin, Gerald R. Grimsley, and C. Nick Pace. “Solvent denaturation of proteins and interpretations of the m value.” Methods in enzymology. Vol. 466. Academic Press, 2009. 549-565.</li>
+</ol>
 </section>
 </section>
 <section id="thermstab---toolkit" class="level3" data-number="4.6">
 <h3 data-number="4.6" class="anchored" data-anchor-id="thermstab---toolkit"><span class="header-section-number">4.6</span> ThermStab - Toolkit</h3>
 <p><strong>Instruções gerais</strong></p>
-<section id="parâmetros-4" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="parâmetros-4">Parâmetros</h4>
-</section>
-<section id="sugestões-3" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestões-3">Sugestões</h4>
-</section>
-<section id="referências-4" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="referências-4">Referências</h4>
-</section>
-</section>
-<section id="mfc-toolkit" class="level3" data-number="4.7">
-<h3 data-number="4.7" class="anchored" data-anchor-id="mfc-toolkit"><span class="header-section-number">4.7</span> MFC-Toolkit</h3>
-<p><strong>Instruções gerais</strong></p>
-<section id="parâmetros-5" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="parâmetros-5">Parâmetros</h4>
+<div class="line-block">&nbsp;&nbsp;O <em>toolkit</em> é apresentado como um painel didático e interativo em para se explorar parâmetros termo-cinéticos de estabilidade correlatos à atividade enzimático. Aborda algumas relações de Michaelis–Menten (MM), Eyring, Arrhenius e curvas de meia-vida (t<span class="math inline">\(_{1/2}\)</span>). Como outros kits apresentados, suporta duas proteínas (A/B), exporta HTML com os gráficos e CSV do estado. Também permite a estimação de valores de Km e k<span class="math inline">\(_{cat}\)</span> por ajuste não-linear.</div>
+<p><br>
+</p>
+<p><a href="Eq/toolkit/ts-toolkit.js" download="ts-toolkit.js"><img src="Eq/toolkit/ts-toolkit.png" class="img-fluid"></a></p>
+<section id="parâmetros-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="parâmetros-3">Parâmetros</h4>
+<p><strong>Michaelis–Menten (MM)</strong></p>
+<p><span class="math display">\[
+v = \frac{V_{\max}[S]}{K_m + [S]}
+\]</span><br>
+<span class="math display">\[
+V_{\max} = k_{\text{cat}} \cdot E_0 \qquad (E_0 = 1.0\ \mu\text{M})
+\]</span><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;Relações termodinâmicas associadas:</div>
+<p><span class="math display">\[
+\Delta G^{\ddagger}_{ES} = -RT \ln!\left(\frac{1}{K_m}\right)
+\]</span><br>
+<span class="math display">\[
+\Delta G^{\ddagger}*{ET} = -RT \ln!\left(\frac{k*{\text{cat}}}{K_m}\right)
+\]</span></p>
+<p><strong>Equação de Eyring</strong></p>
+<p><span class="math display">\[
+\ln!\left(\frac{k h}{k_B T}\right) = -\frac{\Delta H^{\ddagger}}{RT} + \frac{\Delta S^{\ddagger}}{R}
+\]</span><br>
+<span class="math display">\[
+\Delta G^{\ddagger} = \Delta H^{\ddagger} - T\Delta S^{\ddagger}
+\]</span><br>
+</p>
+<p><strong>Equação de Arrhenius</strong></p>
+<p><span class="math display">\[
+\ln k = -\frac{E_a}{RT} + \ln A
+\]</span><br>
+</p>
+<p><strong>Meia-vida Enzimática</strong></p>
+<p><span class="math display">\[
+t_{1/2} = \frac{\ln 2}{k_d}
+\]</span><br>
+</p>
+<p><strong>Equilíbrio de ligação</strong></p>
+<p><span class="math display">\[
+K_d = \frac{[E][S]}{[ES]}
+\]</span><br>
+</p>
+<p><span class="math display">\[
+\ln K_d(T) = -\frac{\Delta H^\circ}{RT} + \frac{\Delta S^\circ}{R}
+\]</span></p>
+<p><strong>Relações cinéticas</strong></p>
+<p><span class="math display">\[
+K_m \approx \frac{k_{-1} + k_{\text{cat}}}{k_1}
+\]</span><br>
+</p>
+<p><span class="math display">\[
+K_d \approx \frac{k_{-1}}{k_1}
+\]</span><br>
+</p>
+<p><span class="math display">\[
+k_{-1}(T) \approx k_1,K_d(T)
+\]</span><br>
+</p>
+<p><strong>Relação entre estabilidade e catálise</strong></p>
+<p><span class="math display">\[
+k_d(T) \approx k_1 K_d(T) - k_{\text{cat}}(T)
+\]</span><br>
+</p>
+<p><span class="math display">\[
+t_{1/2}(T) = \frac{\ln 2}{k_d(T)}
+\]</span><br>
+</p>
+<p><strong>Aproximação didática</strong></p>
+<p><span class="math display">\[
+\ln t_{1/2} \approx \frac{\Delta H^\circ}{R}\left(\frac{1}{T}\right)* \frac{\Delta S^\circ}{R} + \text{constante}
+\]</span><br>
+</p>
 </section>
 <section id="sugestões-4" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="sugestões-4">Sugestões</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Utilize o botão RESET e discuta a forma da curva MM e a influência de Km e kcat;</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Explore as relações de Eyring e de Arrhenius para se obter ΔH‡, ΔS‡, ΔG‡ e Ea, a partir de slopes e interceptos dos gráficos;</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Explore o efeito da temperatura e compare com modo <span class="fu">livre</span> (t₁<span class="sc">/</span>₂)m aula.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="referências-4" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="referências-4">Referências</h4>
+<ol type="1">
+<li>Bhatti, Haq Nawaz, et al.&nbsp;“Effect of aniline coupling on kinetic and thermodynamic properties of Fusarium solani glucoamylase.” Applied microbiology and biotechnology 73.6 (2007): 1290-1298.</li>
+<li>Lonhienne, Thierry, Charles Gerday, and Georges Feller. “Psychrophilic enzymes: revisiting the thermodynamic parameters of activation may explain local flexibility.” Biochimica et Biophysica Acta (BBA)-Protein Structure and Molecular Enzymology 1543.1 (2000): 1-10.</li>
+</ol>
+</section>
+</section>
+<section id="biocel-toolkit" class="level3" data-number="4.7">
+<h3 data-number="4.7" class="anchored" data-anchor-id="biocel-toolkit"><span class="header-section-number">4.7</span> Biocel-Toolkit</h3>
+<p><strong>Instruções gerais</strong></p>
+<div class="line-block">&nbsp;&nbsp;O <em>toolkit</em> aborda um simulador que permite visualizar a operação de uma célula a combustível microbiana (MFC — <em>Microbial Fuel Cell</em>) sob o modelo simplificado de <em>Thevenin</em>. Seu objetivo é auxiliar na compreensão física e termodinâmica da performance de uma célula a combustível (MFC, ou bateria simples), a partir das relações entre <em>tensão</em>, <em>corrente</em>, <em>potência</em> e <em>resistência interna</em> da célula.</div>
+<div class="line-block">&nbsp;&nbsp;O simulador também inclui o impacto de modificadores bioquímicos e variações experimentais como a maturação do biofilme, a depleção de substrato, e <em>overshooting</em> observados em condições reais de operação.</div>
+<p><br>
+</p>
+<p><a href="Eq/toolkit/biocel-toolkit.js" download="biocel-toolkit.js"><img src="Eq/toolkit/biocel-toolkit.png" class="img-fluid"></a></p>
+<div class="line-block">&nbsp;&nbsp;Como para os <em>tookits</em> anteriores, parte a interatividade cedida pelo simulador permite exportar e reimportar dados experimentais (CSV/JSON), e gerar um arquivo autossuficiente com gráficos interativos e diagnósticos (Salvar HTML), e reinicializar para uma nova configuração (Reset),</div>
+<p><br>
+</p>
+<section id="parâmetros-4" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="parâmetros-4">Parâmetros</h4>
+<p><strong>Modelo de Thevenin</strong></p>
+<div class="line-block">&nbsp;&nbsp;O circuito equivalente da célula microbiana é modelado como uma fonte de tensão <span class="math inline">\(E_{OCV}\)</span> (tensão de circuito aberto) associada a uma resistência interna <span class="math inline">\(R_{int}\)</span> e a uma resistência externa <span class="math inline">\(R_{ext}\)</span>, conforme o teorema de Thevenin.</div>
+<p>A corrente <span class="math inline">\(I\)</span> e a tensão no resistor de carga <span class="math inline">\(V\)</span> são dadas por:</p>
+<p><span class="math display">\[
+I = \frac{E_{OCV}}{R_{int} + R_{ext}}, \qquad
+V = I \, R_{ext}
+\]</span><br>
+</p>
+<p><strong>Potência Elétrica e Condição de Máximo</strong></p>
+<div class="line-block">&nbsp;&nbsp;A potência instantânea dissipada na carga é dada por:</div>
+<p><span class="math display">\[
+P = E_{OCV} \, I - R_{int} I^2
+\]</span><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;Substituindo a expressão de <span class="math inline">\(I\)</span> pelo modelo de Thevenin:</div>
+<p><span class="math display">\[
+P = \frac{E_{OCV}^2 \, R_{ext}}{(R_{int} + R_{ext})^2}
+\]</span><br>
+</p>
+<p>O <em>ponto de máxima potência</em> ocorre quando <span class="math inline">\(R_{ext} = R_{int}\)</span>, conhecido como <em>condição de Jacobi</em>, e resulta em uma potência máxima de:</p>
+<p><span class="math display">\[
+P_{\text{máx}} = \frac{E_{OCV}^2}{4 R_{int}}
+\]</span><br>
+</p>
+<p><strong>Sobretensões de Ativação e Concentração</strong></p>
+<div class="line-block">&nbsp;&nbsp;Para representar os fenômenos eletroquímicos de ativação e difusão de massa, o potencial observado (<span class="math inline">\(V_{pol}\)</span>) é reduzido por dois termos de perda:</div>
+<p><span class="math display">\[
+V_{pol} = V_{lin} - \eta_{act} - \eta_{conc}
+\]</span><br>
+onde:</p>
+<p><span class="math display">\[
+\eta_{act} = A \ln\!\big(1 + \frac{I}{I_0}\big), \qquad
+\eta_{conc} = C \, \frac{(I/I_{lim})^2}{1 - I/I_{lim}}
+\]</span><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;Essas relações simulam as quedas de potencial associadas à cinética eletroquímica e à limitação de transporte de íons e substratos.</div>
+<p><strong>Dinâmica Temporal</strong></p>
+<div class="line-block">&nbsp;&nbsp;Durante a operação, a célula apresenta uma variação de potencial e resistência interna em função do tempo, representadas por:</div>
+<p><span class="math display">\[
+E_{OCV}(t) = E_{\max}\big(1 - e^{-k_{act}t}\big) s(f)
+\]</span><br>
+</p>
+<p><span class="math display">\[
+R_{int}(t) = R_0 \big(1 + \beta (1 - f)\big)
+\]</span><br>
+</p>
+<p><em>Onde:</em></p>
+<p><span class="math display">\[
+s(f) = 0.40 + 0.60f, \quad f = \frac{Q}{Q_{teor}}
+\]</span></p>
+<div class="line-block">&nbsp;&nbsp;Essas funções descrevem a ativação progressiva do biofilme e a modulação resistiva devido à depleção de substrato.</div>
+<p><br>
+</p>
+<p><strong>Cargas e Eficiências</strong></p>
+<div class="line-block">&nbsp;&nbsp;A carga teórica disponível na biocélula é dada por:</div>
+<p><span class="math display">\[
+Q_{teor} = n_{\text{gluc}} \, n_e \, F
+\]</span><br>
+</p>
+<p><em>Onde:</em> <span class="math inline">\(F\)</span> é a constante de Faraday e <span class="math inline">\(n_e = 24\)</span> o número de elétrons por mol de glicose.</p>
+<div class="line-block">&nbsp;&nbsp;A eficiência de carga (<span class="math inline">\(\eta_Q\)</span>) e a eficiência energética (<span class="math inline">\(\eta_E\)</span>) são calculadas por:</div>
+<p><span class="math display">\[
+\eta_Q = 100 \times \frac{\int I\,dt}{Q_{teor}} \quad [\%]
+\]</span></p>
+<p><span class="math display">\[
+\eta_E = 100 \times \frac{\int IV\,dt}{Q_{teor} E_{\max}} \quad [\%]
+\]</span></p>
+</section>
+<section id="interface-e-funcionalidades" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="interface-e-funcionalidades">Interface e Funcionalidades</h4>
+<p>A interface do BioFuelCell é dividida em três painéis gráficos e uma seção de parâmetros:</p>
+<ol type="1">
+<li><em>Tempo × Potencial (t × V)</em> — mostra a evolução do potencial de saída ao longo do tempo para cada resistor externo;</li>
+<li><em>Curva de Polarização (V × I)</em> — apresenta o decaimento de tensão em função da corrente, com ou sem sobretensões;</li>
+<li><em>Curva de Potência (I × P)</em> — calcula a potência dissipada na carga e destaca o ponto de máxima potência.</li>
+</ol>
+<div class="line-block">&nbsp;&nbsp;Abaixo dos gráficos, são exibidos parâmetros calculados automaticamente:</div>
+<ul>
+<li><span class="math inline">\(R_{int,lin}\)</span> — resistência interna pelo ajuste linear da curva real;</li>
+<li><span class="math inline">\(R_{int,ideal}\)</span> — resistência interna teórica (modelo de Thevenin);</li>
+<li><span class="math inline">\(P_{\max}\)</span> e <span class="math inline">\(R_{P\max}\)</span> — potência máxima e resistência correspondente;</li>
+<li><span class="math inline">\(\eta_Q\)</span> e <span class="math inline">\(\eta_E\)</span> — eficiências de carga e energia.</li>
+</ul>
+</section>
+<section id="parâmetros-e-modificadores" class="level4" data-number="4.7.1">
+<h4 data-number="4.7.1" class="anchored" data-anchor-id="parâmetros-e-modificadores"><span class="header-section-number">4.7.1</span> Parâmetros e Modificadores</h4>
+<div class="line-block">&nbsp;&nbsp;O usuário pode ajustar:</div>
+<ul>
+<li><em>Faixa de resistores</em> — mínimo e máximo de <span class="math inline">\(R_{ext}\)</span> (em Ω), distribuídos logaritmicamente;</li>
+<li><em>Intensidade dos modificadores</em> — de 0 % a 300 %;</li>
+<li><em>Escala logarítmica da potência</em> — alterna o eixo de corrente em escala log;</li>
+<li><em>Presets experimentais</em> — condições simuladas pré-definidas.</li>
+</ul>
+</section>
+<section id="sugestões-5" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestões-5">Sugestões</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Observe o ponto de interseção entre a curva de polarização e a parábola ideal. Esse ponto indica o equilíbrio entre fornecimento e consumo de elétrons;</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Note a inclinação inicial da curva V×I, e que representa o valor da resistência <span class="fu">interna</span> (R_int) da biocélula;</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Verifique a eficiência interna do sistema, por observação da posição do pico no gráfico de potência;</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Experimente o perfil das curvas com alguns dos <span class="st">"Presets"</span> <span class="fu">experimentais</span> (biofilme maduro, excesso de substrato, etc), e avalie o efeito das condições no desempenho eletroquímico apresentado nos gráficos e resultados.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="referências-5" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="referências-5">Referências</h4>
+<ol type="1">
+<li>Logan, B. E. Microbial Fuel Cells. John Wiley &amp; Sons, 2008.</li>
+<li>Bard, A. J., &amp; Faulkner, L. R. Electrochemical Methods: Fundamentals and Applications. Wiley, 2022;</li>
+<li>Silveira, G., &amp; Schneedorf, J. M. “Evaluation of kefir as a new anodic biocatalyst consortium for microbial fuel cell.” Applied Biochemistry and Biotechnology, 185(4), 1118–1131 (2018).</li>
+</ol>
 <!-- ## Prática Biocélula {.unnumbered} -->
 <!-- ###  MFC -->
 <!-- [script18.js](Eq/script18.js){download="script18.js"} -->

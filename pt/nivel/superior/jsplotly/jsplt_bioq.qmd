@@ -1372,11 +1372,11 @@ Individualmente, os toolkits contemplam:
 4. **GH-Toolkit** - estabilidade termodinâmica de biopolímeros;
 5. **mTherm-Toolkit** - estabilidade sob condições perturbantes;
 6. **ThermStab-Toolkit** - termoestabilidade enzimática;
-7. **MFC-Toolkit** - performance de biocélula a combustível
+7. **Biocel-Toolkit** - performance de biocélula a combustível
 
 
 ### EK-Toolkit
-\
+
 
 **Instruções gerais**
 
@@ -1449,13 +1449,25 @@ $$ v = \dfrac{V_{max}\left(1 + \dfrac{A}{K_{aA}}\right) S}{K_m + S} $$
 - *a (intercept):* valor de 1/v quando 1/[S] = 0.  
 - *b (slope):* inclinação da reta LB = \\(K_m/V_{max}\\).  
 - *K_i:* constante de inibição (Dixon: \\(x = -K_i\\)).  
-- *WLS(1/y²):* ponderação usada em LB; *OLS* em Dixon.
 
-<!-- #### Sugestões {.unnumbered} -->
+#### Sugestões {.unnumbered}
 
-<!-- #### Referências {.unnumbered} -->
+```{r, eval=FALSE}
+1. Experimente comparar o modelo não competitivo puro ao misto; para isso basta igualar ou não, respectivamente, as constantes de inibição;
+2. Experimente um modelo introduzido por usuário ("user"). Para isso, basta selecionar Modelos --> User, informar a equação, os parâmetros e seus valores. Segue um exemplo (ativação parcial incompetitiva):
+  
+  Equação: (alfa*Vmax*S)/(Km+S*(1+I/Ki))
+  Parâmetros: alfa;Km;Vmax;Ki
+  Valores: 1.7;2;10;5
+```
 
+Modelos → User, informe Equação (JS), Parâmetros (nomes;) e Valores (;).
 
+1. Marangoni, Alejandro G. Enzyme kinetics: a modern approach. John Wiley & Sons, 2003.
+2. Purich, Daniel L. Enzyme kinetics: catalysis and control: a reference of theory and best-practice methods. Elsevier, 2010.
+3. Leone, Francisco A. Fundamentos de cinética enzimática. Editora Appris, 2021.
+4. Segel, Irwin H. Enzyme kinetics: behavior and analysis of rapid equilibrium and steady state enzyme systems. Vol. 115. New York: Wiley, 1975.
+\
 
 
 ### LeadHunt 
@@ -1591,51 +1603,610 @@ $$
 
 **Instruções gerais**
 
-#### Parâmetros {.unnumbered}
+O **LB-Toolkit** é um painel interativo para análise de ensaios de ligação ligante–receptor (proteína, enzima, ácido nucleico, glicano).  Permite visualizar e ajustar curvas clássicas de ligação (Binding, Scatchard, Benesi–Hildebrand e Hill), e acompanha exportação HTML interativa de dados e gráficos.  
+
+[![](Eq/toolkit/lb-toolkit.png)](Eq/toolkit/lb-toolkit.js){download="lb-toolkit.js"}
+
+
+
+
+**Funcionalidades**
+
+|   O *LB-Toolkit* permite estudo e visualização gráfica de um painel 2 x 2 representativo dos modelos clássicos de interação bimolecular de Langmuir, Hill (cooperatividade positiva e negativa), heterogeneidade de sítios (*two-site*), e de transição conformacional (R/T).  A exportação HTML é autossuficiente, e a importação/exportação para arquivos CSV dá-se por vetores `L,v`.  
+
+|   As funções principais da barra superior são: RESET (restaura valores padrão), HTML (exporta viewer autônomo), DIAGNOSTICO (mostra um resumo do modelo), PARAMETROS (abre painel de controle), EQUACOES (exibe fórmulas dos modelos), e CSV/LOAD (exporta ou importa dados em formato `L,v`.
+
+#### Parâmetros ajustáveis {.unnumbered}
+
+- `n`, `Kd`, `nH`, `erro sigma`, `points`, `Lmin`, `Lmax`
+- Two-site: `n1`, `n2`, `Kd1`, `Kd2`
+- Conformational (R/T): `Kt`, `KdR`, `KdT`
+- *Toggles*: *draw model only*, *results below*, *Hill 10–90%*, *zoom sliders*, *autoplot*
+
+#### Modelos {.unnumbered}
+
+**Langmuir**
+
+$$
+v = n\,\frac{[L]}{K_d + [L]}
+$$
+\
+
+**Hill**
+
+$$
+v = n\,\frac{[L]^{n_H}}{K_d^{n_H} + [L]^{n_H}}
+$$
+
+*Linearização:*
+
+$$
+\log\!\left(\frac{v}{n - v}\right) = n_H \log[L] - n_H \log K_d
+$$
+\
+
+**Two-site (heterogeneidade de sítios)**
+
+$$
+v = n_1\,\frac{[L]}{K_{d1} + [L]} + n_2\,\frac{[L]}{K_{d2} + [L]}
+$$
+\
+
+**Conformational (R/T)**
+
+
+$$
+v = n\,\frac{L/K_{dR} + K_t L/K_{dT}}{1 + L/K_{dR} + K_t(1 + L/K_{dT})}
+$$
+\
+
+##### Linearizações clássicas {.unnumbered}
+\
+
+|   Os ajustes são exibidos como **linhas spline suaves**, pois os parâmetros de uma regressão polinomial não têm significado físico direto.
+
+**Scatchard**
+
+$$
+\frac{v}{[L]} = \frac{n}{K_d} - \frac{1}{K_d} v
+$$
+\
+
+**Benesi–Hildebrand**
+
+$$
+\frac{1}{v} = a\,\frac{1}{[L]} + b
+$$
+
+
+#### Ajustes e estimativas {.unnumbered}
+
+- *Binding (n,Kd)*: ajuste não linear (Gauss–Newton).  
+- *Scatchard e Benesi:* interpolação spline visual.  
+- *Hill:* regressão linear 10–90 %.  
+
+##### Gráficos
+
+1. *Binding: v vs [L]* – curva teórica + pontos experimentais.  
+2. *Scatchard: v/L vs v* – linha spline ajustada aos dados.  
+3. *Benesi–Hildebrand: 1/[L] vs 1/v* – spline ilustrativo.  
+4. *Hill: log(v/(n–v)) vs log[L]* – regressão linear com exibição de nH e Kd.
+
 
 #### Sugestões {.unnumbered}
 
+```{r, eval=FALSE}
+1. Utilize o "slider" (barra de deslizamento) para ampliação/redução dos gráficos;
+2. Experimente personalizar as represetações gráficas. Ilustrando, clique no botão "Parâmetros" e altere o modelo para cooperatividade negativa com dois sítios, atribuindo valores distintos a esses (opcional).
+```
+
+
 #### Referências {.unnumbered}
+
+1. Carey, Jannette. Ligand-Binding Basics: Evaluating Intermolecular Affinity, Specificity, Stoichiometry, and Cooperativity. John Wiley & Sons, 2025.
+2. Roque, Ana Cecília A. "Ligand-Macromolecular interactions in drug discovery." Clifton, NJ 2010; p 572 (2010).
+3. Mannhold, Raimund, Hugo Kubinyi, and Gerd Folkers. Protein-ligand interactions: from molecular recognition to drug design. John Wiley & Sons, 2006.
+4. Klotz, Irving. Introduction to biomolecular energetics: including ligand–receptor interactions. Elsevier, 2012.
+
 
 ### GH-Toolkit
 
 **Instruções gerais**
 
+|   Este *toolkit* apresenta algumas relações de Gibbs–Helmholtz e de Van’t Hoff observadas no estudo de termodinâmica de proteínas e interações macromoleculares envolvendo *folding*, *unfolding* e *ligand-binding* com *ΔCₚ constante* (e uma variante simples com ΔΔCₚ). Inclui formas úteis para simulação a partir de parâmetros em *T₀* ou em *Tₘ*, além de *linearizações diagnósticas* para leitura direta de parâmetros.
+
+|   O simulador permite trabalhar-se com equações fundamentais (formas em $T_0$ e centrada em $T_m$) com $ΔC_p$ *constante* e variante linear. A interpretação dos *ajustes (regressões)* é apresentada graficamente, a partir dos *Parâmetros* selecionados. São também incluidos alguns *Cenários* para comportamento (mesófilo, psicrófilo, termófilo), bem como *Presets* para quantidades termodinâmicas. O app permite simular valores de *ΔG(T)* diretamente a partir de $(T_m,\,ΔH_m,\,ΔC_p)$, e exporta gráficos e dados (CSV/HTML) em unidades selecionáveis (kJ/mol ↔ kcal/mol; J/mol/K ↔ cal/mol/K).
+\
+
+
+[![](Eq/toolkit/gh-toolkit.png)](Eq/toolkit/gh-toolkit.js){download="gh-toolkit.js"}
+
+
 #### Parâmetros {.unnumbered}
+
+
+**1. Forma com referência em $T_0$** (integrais com $ΔC_p$ constante)
+
+*Entalpia*
+$$
+ΔH(T)=ΔH^\circ + ΔC_p\,(T-T_0)
+$$
+
+*Entropia*
+$$
+ΔS(T)=ΔS^\circ + ΔC_p\ln\!\left(\frac{T}{T_0}\right)
+$$
+
+*Energia de Gibbs (Gibbs–Helmholtz integrada)*
+$$
+ΔG(T)=ΔH^\circ - T\,ΔS^\circ + ΔC_p\Big[(T-T_0)-T\ln\!\left(\frac{T}{T_0}\right)\Big]
+$$
+
+*Constante de equilíbrio*
+$$
+\ln K(T)= -\frac{ΔG(T)}{R\,T}
+$$
+
+**2. Forma centrada em $T_m$** (curva de estabilidade por $ΔH_m$ e $ΔC_p$)
+
+Esta forma é conveniente quando se conhece a temperatura de equilíbrio $T_m$ (onde $ΔG=0$), a variação de entalpia em $T_m$ ($ΔH_m$) e $ΔC_p$:
+
+$$
+ΔG(T)=ΔH_m\!\left(1-\frac{T}{T_m}\right) + ΔC_p\Big[(T-T_m)-T\ln\!\left(\frac{T}{T_m}\right)\Big].
+$$
+
+
+|   A partir desta expressão é possível obter-se retroativamente parâmetros em $T_0$ coerentes com a curva:
+\begin{aligned}
+ΔH^\circ(T_0) &= ΔH_m + ΔC_p\,(T_0-T_m),\\[4pt]
+ΔS^\circ(T_0) &= \frac{ΔH_m}{T_m} + ΔC_p\ln\!\left(\frac{T_0}{T_m}\right).
+\end{aligned}
+
+No app, o botão *“gerar por Eq. $T_m$”* aplica estas relações.
+
+
+**3. Capacidade calorífica com variação linear** (termo $ΔΔC_p$)
+
+|   Para explorar pequenas variações lineares de capacidade calorífica em torno de uma referência $T_r$:
+
+$$
+C_p(T)=C_{p,r}+ΔΔC_p\,(T-T_r).
+$$
+
+No app, marcar **“Comparar duas proteínas (usar $ΔΔC_p$)”** plota a proteína B com $ΔC_{p,B}=ΔC_{p,A}+ΔΔC_p$ e mostra a consequência na curvatura de $ΔG(T)$ e no deslocamento de $T_m$.
+
+
+#### Cenários {.unnumbered}
+
+|   O *Cenário* escolhe a natureza do processo modelado e inicializa sinais e ordens de grandeza coerentes:
+- *Folding exotérmico*: $ΔH^\circ<0$; estabilização entálpica dominante a $T_0$.
+- *Folding endotérmico*: $ΔH^\circ>0$ e $ΔS^\circ>0$ (ganho entrópico compensa).
+- *Unfolding*: inverte os sinais de folding.
+- *Binding exotérmico / endotérmico*: ajustes típicos para interação ligante–receptor.
 
 #### Sugestões {.unnumbered}
 
+```{r, eval=FALSE}
+1. Orientação: T_m ocorre quando ΔG=0. Nesse caso, é mostrada uma linha vertical tracejada no gráfico ΔG x T;
+2. Selecione um "Preset" didático e compare o efeito nas curvas de estabilidade:
+  - Nenhum: sorteio coerente.
+  - termo ↑ΔG global: torna ΔS mais negativo (eleva ΔG globalmente).
+  - termo ↓ΔC_p: achata a curvatura em ΔG(T).
+  - psicro ↑ΔC_p: acentua a curvatura.
+  - binder ΔC_p<0: usa ΔC_p negativo (casos de ligação hidrofóbica reduzida etc.).
+3. A curvatura de ΔG(T) cresce com |ΔC_p|; assim, compare A vs B, e veja a diferença no perfil gráfico ("shape") e no deslocamento de T_m;
+4. Observe que:
+  - a representação de Van’t Hoff recupera ΔH e ΔS (quando ΔC_p = 0).rve que 
+  - slopes/interceptos: servem de checagem de consistência entre gráficos
+  - de ΔH x T: slope permite ΔC_p.
+  - De ΔS x ln T: slope permite ΔC_p, e intercepto compatível com ΔS e T_0.
+
+```
+
+
 #### Referências {.unnumbered}
+
+1. Atkins, Peter William, et al. Physical chemistry for the life sciences. Oxford University Press, 2023.
+2. Hammes, Gordon G. Thermodynamics and kinetics for the biological sciences. John Wiley & Sons, 2000.
+3. Cooper, Alan. Biophysical chemistry. No. 24. Royal Society of Chemistry, 2011.
+4. Creighton, T. The Biophysical Chemistry of Nucleic Acids & Proteins. Helvetian Press, 2010.
 
 ### mTherm-Toolkit
 
+
 **Instruções gerais**
+
+|   O *toolkit* constitui um app educacional para simular os perfis gráficos de desnaturação de proteínas (ex.: ureia, GdnHCl), e com suporte a proteínas multiméricas e um termo empírico para uso de osmólitos. Os dados são plotados em função de um sinal experimental (absorvância/fluorescência), seguindo-se o cálculo de frações conformacionais e energia de Gibs efetiva em função do desnaturante. O simulador também permite comparação entre proteínas ou condições experimentais (A/B).
+
+|   O app trabalha com *modelo de dois estados* entre um conjunto “nativo” \(F\) e outro “desnaturado” \(U\). O efeito do desnaturante é linear sobre a energia padrão do monômero (LEA – Linear Extrapolation Assumption). Para simulação de um osmólito (estabilizante ou não) utiliza-se um termo empírico multiplicativo na inclinação \(m\).
+\
+
+
+[![](Eq/toolkit/mtherm-toolkit.png)](Eq/toolkit/mtherm-toolkit.js){download="mtherm-toolkit.js"}
+
+\
+
+|   Complementarmente, o simulador permite a exportação de figuras interativas e de seu diagnóstico (HTML), exportação CSV para dados de desnaturante, sinal e variação de energia juntamente ao diagnóstico, bem como *presets* de interface JSON para cenários (salvar/carregar).
+
 
 #### Parâmetros {.unnumbered}
 
+**Energia padrão vs. \([D]\)** — monômero (LEA)
+
+$$
+\Delta G^\circ(D)=\Delta G^\circ(\mathrm{H_2O})-m\,D
+\tag{2.1}
+$$
+
+**Multímero \(F_n \rightleftharpoons nU\)** — lei de massa (resolver \(f_U\))
+
+$$
+\Delta G^\circ + RT\ln\!\left(\frac{n\,f_U^{\,n}}{P_t^{\,n-1}(1-f_U)}\right)=0
+\tag{2.2}
+$$
+\
+
+- \(n\): número de monômeros em \(F_n\);
+- \(P_t\): concentração de *monômero equivalente* (em M);
+- A Eq. (2.2) é resolvida numericamente (bissecção) para \(0<f_U<1\) em cada \(D\);
+
+
+**Energia livre efetiva**
+
+$$
+\Delta G_{\mathrm{eff}}(D)=-RT\ln\!\left(\frac{f_U}{1-f_U}\right)
+\tag{2.3}
+$$
+
+
+**Inclinação efetiva \(m_{\mathrm{eff}}\) (dependente de \(D\))**
+
+$$
+m_{\mathrm{eff}}(D) = \frac{m}{\,n + (1-n)\, f_U(D)\,}\quad
+\left(\approx \frac{m}{n}\ \text{no lado nativo; } \approx m \text{ no lado desnaturado}\right)
+\tag{2.4}
+$$
+
+
+**Intercepto nativo efetivo em água** (aproximação para multímeros)
+
+$$
+\Delta G_{\mathrm{eff}}(\mathrm{H_2O})
+\approx \frac{\Delta G^\circ(\mathrm{H_2O})}{n}
++ \frac{RT}{n}\ln n
+- RT\!\left(1-\frac1n\right)\!\ln P_t
+\tag{2.5}
+$$
+\
+
+**Osmólitos**
+
+|   Osmólitos tendem a aumentar a estabilidade frente ao desafio de desenaturantes. O simulador permite observar o efeito de osmólitos compatíveis (ex.: glicina, sorbitol, sacarose, betaína) nos gráficos resultantes.  No app é modelado um efeito empírico e simples como uma escala na inclinação:
+
+$$
+m_{\mathrm{eff}} = m \,\bigl(1 + k_{\mathrm{osm}}\,[\mathrm{osm}]\bigr)
+\tag{6.1}
+$$
+
+onde \(k_{\mathrm{osm}}\) é um parâmetro de força ajustável (típicamente 0.05–0.2 M$^{-1}$).
+Esse termo desloca a curva sem impor um mecanismo específico, permitindo exploração didática.
+
+#### Ajustes e Parâmetros {.unnumbered}
+
+- *Temperatura \(T\)* (K) e *\(P_t\)* (µM, equivalente de monômero); 
+- *Energia em água* ($\Delta$G$^{H_2O}$) e *inclinação \(m\)*;
+- *Multiplicidade \(n\)*: \(1 \le n \le 6\) para A e, independentemente, para B;
+- *Sinais de base \(S_F, S_U\) e ruído*;
+- *Comparação A/B*: segunda proteína pode ter \(n\), \(m\), $\Delta$G$^{o}$, e osmólito diferentes.
+
+
 #### Sugestões {.unnumbered}
 
+```{r, eval=FALSE}
+1. Obseve a curvatura do gráfico em ΔG x [D]. Valores de n>1 sugerem um estado multimérico para o biopolímeros;
+2. Veja que o "ponto médio*" de C_m, onde f_U é aproximadamente 0,5, é marcado no diagnóstico para referência;
+3. Compare o efeito de osmólito comparando-se proteínas ou condições A e B, alterando-se a concentração do osmólito e sua constante empírica "k_osm".
+```
+
+
 #### Referências {.unnumbered}
+
+1. Park, Chiwook, and Susan Marqusee. "Analysis of the stability of multimeric proteins by effective ΔG and effective m‐values." Protein science 13.9 (2004): 2553-2558.
+2. Holthauzen, Luis Marcelo F., et al. "Protein stability in the presence of cosolutes." Methods in Enzymology. Vol. 492. Academic Press, 2011. 61-125.
+3. Scholtz, J. Martin, Gerald R. Grimsley, and C. Nick Pace. "Solvent denaturation of proteins and interpretations of the m value." Methods in enzymology. Vol. 466. Academic Press, 2009. 549-565.
+
 
 ### ThermStab - Toolkit
 
 **Instruções gerais**
 
+|   O *toolkit* é apresentado como um painel didático e interativo em para se explorar parâmetros termo-cinéticos de estabilidade correlatos à atividade enzimático. Aborda algumas relações de Michaelis–Menten (MM), Eyring, Arrhenius e curvas de meia-vida (t$_{1/2}$). Como outros kits apresentados, suporta duas proteínas (A/B), exporta HTML com os gráficos e CSV do estado. Também permite a estimação de valores de Km e k$_{cat}$ por ajuste não-linear.
+\
+
+[![](Eq/toolkit/ts-toolkit.png)](Eq/toolkit/ts-toolkit.js){download="ts-toolkit.js"}
+
+
 #### Parâmetros {.unnumbered}
+
+**Michaelis–Menten (MM)**
+
+$$
+v = \frac{V_{\max}[S]}{K_m + [S]}
+$$
+\
+$$
+V_{\max} = k_{\text{cat}} \cdot E_0 \qquad (E_0 = 1.0\ \mu\text{M})
+$$
+\
+
+|   Relações termodinâmicas associadas:
+
+$$
+\Delta G^{\ddagger}_{ES} = -RT \ln!\left(\frac{1}{K_m}\right)
+$$
+\
+$$
+\Delta G^{\ddagger}*{ET} = -RT \ln!\left(\frac{k*{\text{cat}}}{K_m}\right)
+$$
+
+
+**Equação de Eyring**
+
+$$
+\ln!\left(\frac{k h}{k_B T}\right) = -\frac{\Delta H^{\ddagger}}{RT} + \frac{\Delta S^{\ddagger}}{R}
+$$
+\
+$$
+\Delta G^{\ddagger} = \Delta H^{\ddagger} - T\Delta S^{\ddagger}
+$$
+\
+
+**Equação de Arrhenius**
+
+$$
+\ln k = -\frac{E_a}{RT} + \ln A
+$$
+\
+
+
+**Meia-vida Enzimática**
+
+$$
+t_{1/2} = \frac{\ln 2}{k_d}
+$$
+\
+
+
+
+**Equilíbrio de ligação**
+
+$$
+K_d = \frac{[E][S]}{[ES]}
+$$
+\
+
+$$
+\ln K_d(T) = -\frac{\Delta H^\circ}{RT} + \frac{\Delta S^\circ}{R}
+$$
+
+
+
+**Relações cinéticas**
+
+$$
+K_m \approx \frac{k_{-1} + k_{\text{cat}}}{k_1}
+$$
+\
+
+$$
+K_d \approx \frac{k_{-1}}{k_1}
+$$
+\
+
+$$
+k_{-1}(T) \approx k_1,K_d(T)
+$$
+\
+
+
+**Relação entre estabilidade e catálise**
+
+$$
+k_d(T) \approx k_1 K_d(T) - k_{\text{cat}}(T)
+$$
+\
+
+$$
+t_{1/2}(T) = \frac{\ln 2}{k_d(T)}
+$$
+\
+
+**Aproximação didática**
+
+$$
+\ln t_{1/2} \approx \frac{\Delta H^\circ}{R}\left(\frac{1}{T}\right)* \frac{\Delta S^\circ}{R} + \text{constante}
+$$
+\
 
 #### Sugestões {.unnumbered}
 
+
+```{r, eval=FALSE}
+1. Utilize o botão RESET e discuta a forma da curva MM e a influência de Km e kcat;
+2. Explore as relações de Eyring e de Arrhenius para se obter ΔH‡, ΔS‡, ΔG‡ e Ea, a partir de slopes e interceptos dos gráficos;
+3. Explore o efeito da temperatura e compare com modo livre (t₁/₂)m aula.
+```
+
+
 #### Referências {.unnumbered}
 
-### MFC-Toolkit
+1. Bhatti, Haq Nawaz, et al. "Effect of aniline coupling on kinetic and thermodynamic properties of Fusarium solani glucoamylase." Applied microbiology and biotechnology 73.6 (2007): 1290-1298.
+2. Lonhienne, Thierry, Charles Gerday, and Georges Feller. "Psychrophilic enzymes: revisiting the thermodynamic parameters of activation may explain local flexibility." Biochimica et Biophysica Acta (BBA)-Protein Structure and Molecular Enzymology 1543.1 (2000): 1-10.
+
+
+### Biocel-Toolkit
 
 **Instruções gerais**
 
+|   O *toolkit* aborda um simulador que permite visualizar a operação de uma célula a combustível microbiana (MFC — *Microbial Fuel Cell*) sob o modelo simplificado de *Thevenin*.  Seu objetivo é auxiliar na compreensão física e termodinâmica da performance de uma célula a combustível (MFC, ou bateria simples), a partir das relações entre *tensão*, *corrente*, *potência* e *resistência interna* da célula. 
+
+|   O simulador também inclui o impacto de modificadores bioquímicos e variações experimentais como a maturação do biofilme, a depleção de substrato, e *overshooting* observados em condições reais de operação.
+\
+
+[![](Eq/toolkit/biocel-toolkit.png)](Eq/toolkit/biocel-toolkit.js){download="biocel-toolkit.js"}
+
+|   Como para os *tookits* anteriores, parte a interatividade cedida pelo simulador permite exportar e reimportar dados experimentais (CSV/JSON), e gerar um arquivo autossuficiente com gráficos interativos e diagnósticos (Salvar HTML), e reinicializar para uma nova configuração (Reset), 
+\
+
 #### Parâmetros {.unnumbered}
+
+**Modelo de Thevenin**
+
+|   O circuito equivalente da célula microbiana é modelado como uma fonte de tensão $E_{OCV}$ (tensão de circuito aberto) associada a uma resistência interna $R_{int}$ e a uma resistência externa $R_{ext}$, conforme o teorema de Thevenin.  
+
+A corrente $I$ e a tensão no resistor de carga $V$ são dadas por:
+
+$$
+I = \frac{E_{OCV}}{R_{int} + R_{ext}}, \qquad
+V = I \, R_{ext}
+$$
+\
+
+
+**Potência Elétrica e Condição de Máximo**
+
+|   A potência instantânea dissipada na carga é dada por:
+
+$$
+P = E_{OCV} \, I - R_{int} I^2
+$$
+\
+
+|   Substituindo a expressão de $I$ pelo modelo de Thevenin:
+
+$$
+P = \frac{E_{OCV}^2 \, R_{ext}}{(R_{int} + R_{ext})^2}
+$$
+\
+
+O *ponto de máxima potência* ocorre quando $R_{ext} = R_{int}$, conhecido como *condição de Jacobi*, e resulta em uma potência máxima de:
+
+
+$$
+P_{\text{máx}} = \frac{E_{OCV}^2}{4 R_{int}}
+$$
+\
+
+**Sobretensões de Ativação e Concentração**
+
+|   Para representar os fenômenos eletroquímicos de ativação e difusão de massa, o potencial observado ($V_{pol}$) é reduzido por dois termos de perda:
+
+
+$$
+V_{pol} = V_{lin} - \eta_{act} - \eta_{conc}
+$$
+\
+onde:
+
+$$
+\eta_{act} = A \ln\!\big(1 + \frac{I}{I_0}\big), \qquad
+\eta_{conc} = C \, \frac{(I/I_{lim})^2}{1 - I/I_{lim}}
+$$
+\
+
+|   Essas relações simulam as quedas de potencial associadas à cinética eletroquímica e à limitação de transporte de íons e substratos.
+
+
+**Dinâmica Temporal**
+
+|   Durante a operação, a célula apresenta uma variação de potencial e resistência interna em função do tempo, representadas por:
+
+$$
+E_{OCV}(t) = E_{\max}\big(1 - e^{-k_{act}t}\big) s(f)
+$$
+\
+
+$$
+R_{int}(t) = R_0 \big(1 + \beta (1 - f)\big)
+$$
+\
+
+*Onde:*
+
+$$
+s(f) = 0.40 + 0.60f, \quad f = \frac{Q}{Q_{teor}}
+$$
+
+|   Essas funções descrevem a ativação progressiva do biofilme e a modulação resistiva devido à depleção de substrato.
+\
+
+**Cargas e Eficiências**
+
+|   A carga teórica disponível na biocélula é dada por:
+
+$$
+Q_{teor} = n_{\text{gluc}} \, n_e \, F
+$$
+\
+
+*Onde:* $F$ é a constante de Faraday e $n_e = 24$ o número de elétrons por mol de glicose.
+
+|   A eficiência de carga ($\eta_Q$) e a eficiência energética ($\eta_E$) são calculadas por:
+
+$$
+\eta_Q = 100 \times \frac{\int I\,dt}{Q_{teor}} \quad [\%]
+$$
+
+$$
+\eta_E = 100 \times \frac{\int IV\,dt}{Q_{teor} E_{\max}} \quad [\%]
+$$
+
+
+#### Interface e Funcionalidades {.unnumbered}
+
+A interface do BioFuelCell é dividida em três painéis gráficos e uma seção de parâmetros:
+
+1. *Tempo × Potencial (t × V)* — mostra a evolução do potencial de saída ao longo do tempo para cada resistor externo;
+2. *Curva de Polarização (V × I)* — apresenta o decaimento de tensão em função da corrente, com ou sem sobretensões;
+3. *Curva de Potência (I × P)* — calcula a potência dissipada na carga e destaca o ponto de máxima potência.
+
+|   Abaixo dos gráficos, são exibidos parâmetros calculados automaticamente:
+
+- $R_{int,lin}$ — resistência interna pelo ajuste linear da curva real;
+- $R_{int,ideal}$ — resistência interna teórica (modelo de Thevenin);
+- $P_{\max}$ e $R_{P\max}$ — potência máxima e resistência correspondente;
+- $\eta_Q$ e $\eta_E$ — eficiências de carga e energia.
+
+
+#### Parâmetros e Modificadores
+
+|   O usuário pode ajustar:
+
+- *Faixa de resistores* — mínimo e máximo de $R_{ext}$ (em Ω), distribuídos logaritmicamente;
+- *Intensidade dos modificadores* — de 0 % a 300 %;
+- *Escala logarítmica da potência* — alterna o eixo de corrente em escala log;
+- *Presets experimentais* — condições simuladas pré-definidas.
+
+
+
 
 #### Sugestões {.unnumbered}
 
+```{r, eval=FALSE}
+1. Observe o ponto de interseção entre a curva de polarização e a parábola ideal. Esse ponto indica o equilíbrio entre fornecimento e consumo de elétrons;
+2. Note a inclinação inicial da curva V×I, e que representa o valor da resistência interna (R_int) da biocélula;
+3. Verifique a eficiência interna do sistema, por observação da posição do pico no gráfico de potência;
+4. Experimente o perfil das curvas com alguns dos "Presets" experimentais (biofilme maduro, excesso de substrato, etc), e avalie o efeito das condições no desempenho eletroquímico apresentado nos gráficos e resultados.
+
+```
+
+
 #### Referências {.unnumbered}
+
+1. Logan, B. E. Microbial Fuel Cells. John Wiley & Sons, 2008. 
+2. Bard, A. J., & Faulkner, L. R. Electrochemical Methods: Fundamentals and Applications. Wiley, 2022;
+3. Silveira, G., & Schneedorf, J. M. “Evaluation of kefir as a new anodic biocatalyst consortium for microbial fuel cell.” Applied Biochemistry and Biotechnology, 185(4), 1118–1131 (2018).  
+  
 
 
 
