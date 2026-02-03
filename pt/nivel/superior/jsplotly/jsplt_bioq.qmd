@@ -1355,24 +1355,115 @@ $$
 
 ## Toolkits
 
-|   Essa seção visa oferecer alguns *"kits de ferramentas"* para *simulações e experimentos simulados* em Biofísico-química para *cinética, interação, e estabilidade para alvos proteicos*. Cada *toolkit* permite uma apreciação entre métodos utilizados, aplicações, modelagem, e interpretação de parâmetros. Como um todo, os *toolkits* facultam um estudo integrado de cinética e termodinâmica para  aplicação em biotecnologia, biocatálise e descoberta de fármacos. Individualmente, os toolkits contemplam:
+|   O *JSPlotly* pode operar como um aplicativo completo para simulação em situações variadas. As *"caixas de ferramentas"* que seguem ilustram paineis interativos (*dahsboards*) para *experimentação e análise simulada* em Biofísico-química em temas de *cinética, interação, e estabilidade para alvos proteicos*. Cada *toolkit* permite uma apreciação entre métodos utilizados, aplicações, modelagem, e interpretação de parâmetros. Como um todo, os *toolkits* facultam um estudo integrado de cinética e termodinâmica para  aplicação em biotecnologia, biocatálise e descoberta de fármacos.
 
-1. EK-Toolkit - modelagem em cinética e inibição enzimática;
-2. LeadHunt - seleção de composto líder por inibição enzimática;
-3. LB-Toolkit - análise de interação ligante-proteína;
-4. GH-Toolkit - estabilidade termodinâmica de biopolímeros;
-5. mTherm-Toolkit - estabilidade sob condições perturbantes;
-6. ThermStab-Toolkit -termoestabilidade enzimática;
-7. MFC-Toolkit - biocélula a combustível
+**Observações importantes**: 
 
-### LeadHunt - Prospecção para composto líder como inibidor enzimático
+1. Os *Toolkits* possuem códigos internos para estilos e montagens dos paineis, e que interferem no *bootstratp* do criador de páginas web utilizado para o *Bioquanti* (pacote *Quarto* para *R*). Nesse sentido, as imagens clicáveis para cada painel remetem aos *scripts* individuais para carregamento de cada *Toolkit* no *JSPlotly*.
 
-
-|   O *JSPlotly* pode operar como um aplicativo completo de simulação em situações variadas. O exemplo que se apresenta refere-se a seu uso como um painel (*dashboard*) para simular o potencial de uma molécula fictícia em triagem visando a seleção de composto líder (*lead compound*) como inibidor a um alvo enzimático.
+2. Cada painel é apresentado abaixo do ecrã gráfico do *JSPlotly*. Isso é necessário para maximizar a área para apresentação dos paineis.
 \
 
-*Observação*: o *LeadHunt* possui códigos internos para estilos e montagens do painel, e que interferem no *bootstratp* do criador de páginas web utilizado para o *Bioquanti* (pacote *Quarto* para *R*). Nesse sentido, clique na imagem abaixo para baixá-lo, e depois abrar-o num navegador. 
+Individualmente, os toolkits contemplam:
+
+1. **EK-Toolkit** - modelagem em cinética e inibição enzimática;
+2. **LeadHunt** - prospecção de composto líder por inibição enzimática;
+3. **LB-Toolkit** - análise de interação ligante-proteína;
+4. **GH-Toolkit** - estabilidade termodinâmica de biopolímeros;
+5. **mTherm-Toolkit** - estabilidade sob condições perturbantes;
+6. **ThermStab-Toolkit** - termoestabilidade enzimática;
+7. **MFC-Toolkit** - performance de biocélula a combustível
+
+
+### EK-Toolkit
 \
+
+**Instruções gerais**
+
+|   O *EK-Toolkit* é uma caixa de ferramentas para simulação de cinética e inibição enzimáticas com uso de gráficos diagnósticos. O kit gera três gráficos lado a lado:
+
+1. Michaelis-Mentem: v × [S];
+2. Lineweaver–Burk (LB) — 1/v vs 1/[S];
+3. Replot - *slope* ou *intercept* de LB, ou ordenada de Dixon (1/v)
+
+|   Recursos adicionais incluem exportação *HTML*, exportação e carregamento de *CSV*, anotações editáveis, janelas arrastáveis e comparação de modelos (*A/B*).
+\
+
+[![](Eq/toolkit/ek-toolkit.png)](Eq/toolkit/ek-toolkit.js){download="ek-toolkit.js"}
+
+
+**Funcionalidades**
+
+- *Modelos:* Michaelis-Menten; Excesso de Substrato; Inibição Irreversível; Inibição Competitiva; Inibição Não-competitiva (pura); Inibição Mista; Inibição Incompetitiva; Bi-substrato (Random Sequential, Ordered Sequential, Ping-Pong); Hill (cooperatividade); Ativação enzimática (Vmax-up); *Usuário* (equação livre);
+- *Gráficos sincronizados:* v×[S], LB (1/v vs 1/[S]) e Replot (slope, intercept ou Dixon 1/v vs modificador);
+- *Comparação A/B* com paletas de cores consistentes entre os gráficos;
+- *Painéis:* modelos, equações, parâmetros (faixa de [S], número de pontos simulados, erro, modificadores, parâmetros;
+- *Replot* configurável com *rótulo do eixo X* editável.
+- *Ajustes:* ajuste linear ponderado em LB e replots - WLS(*weighted least squares*, peso: 1/y²); OLS (*ordinary least squares*) em Dixon.
+- *Estimativa de Ki em Dixon*; marcador vertical em \\(x = -K_i\\).
+- *Exportação HTML* com gráficos interativos e equações; *CSV PT-BR* (separador ‘;’, decimal ‘,’).
+- *Load de CSV* para reconstruir gráficos e diagnóstico; *‘Limpar CSV’* para voltar à simulação.
+- *Modais arrastáveis*; anotações clicáveis/editáveis; *legenda global ON/OFF*.
+\
+
+#### Modelos {.unnumbered}
+
+**Michaelis–Menten**  
+$$ v = \dfrac{V_{max} S}{K_m + S} $$
+
+**Excesso de Substrato**  
+$$ v = \dfrac{V_{max} S}{K_m + S + \dfrac{S^2}{K_{is}}} $$
+
+**Inibição Irreversível**  
+$$ v = \dfrac{V_{max}(1-f) S}{K_m + S} $$
+
+**Competitiva**  
+$$ v = \dfrac{V_{max} S}{K_m \left(1 + \dfrac{I}{K_i}\right) + S} $$
+
+**Não-competitiva (pura)**  
+$$ v = \dfrac{V_{max}}{1 + \dfrac{I}{K_i}} \cdot \dfrac{S}{K_m + S} $$
+
+**Mista**  
+$$ v = \dfrac{V_{max}}{1 + \dfrac{I}{K_{i2}}} \cdot \dfrac{S}{K_m \left(1 + \dfrac{I}{K_{i1}}\right) + S} $$
+
+**Incompetitiva**  
+$$ v = \dfrac{V_{max} S}{K_m + S\left(1 + \dfrac{I}{K_i}\right)} $$
+
+**BiBi Random Sequential**  
+$$ v = \dfrac{V_{max} A B}{K_a K_b + K_a B + K_b A + A B} $$
+
+**BiBi Ordered Sequential**  
+$$ v = \dfrac{V_{max} A B}{K_a K_b + K_b A + A B} $$
+
+**BiBi Ping-Pong**  
+$$ v = \dfrac{V_{max} A B}{K_b A + K_a B + A B} $$
+
+**Hill (cooperatividade)**  
+$$ v = \dfrac{V_{max} S^n}{K^n + S^n} $$
+
+**Ativador (Vmax-up)**  
+$$ v = \dfrac{V_{max}\left(1 + \dfrac{A}{K_{aA}}\right) S}{K_m + S} $$
+
+*Obs:*
+
+- *a (intercept):* valor de 1/v quando 1/[S] = 0.  
+- *b (slope):* inclinação da reta LB = \\(K_m/V_{max}\\).  
+- *K_i:* constante de inibição (Dixon: \\(x = -K_i\\)).  
+- *WLS(1/y²):* ponderação usada em LB; *OLS* em Dixon.
+
+<!-- #### Sugestões {.unnumbered} -->
+
+<!-- #### Referências {.unnumbered} -->
+
+
+
+
+### LeadHunt 
+
+
+|   O exemplo que se apresenta refere-se ao uso do *JSPlotly* como um painel (*dashboard*) para prospecção simulada do potencial de uma molécula fictícia em triagem, visando a seleção de composto líder (*lead compound*) como inibidor a um alvo enzimático.
+\
+
 
 [![](Eq/leadCompound.png)](Eq/cindroga24.html){download="cindroga24.html"}
 
@@ -1496,17 +1587,55 @@ $$
 \
 
 
-### EK-Toolkit
-
 ### LB-Toolkit
+
+**Instruções gerais**
+
+#### Parâmetros {.unnumbered}
+
+#### Sugestões {.unnumbered}
+
+#### Referências {.unnumbered}
 
 ### GH-Toolkit
 
+**Instruções gerais**
+
+#### Parâmetros {.unnumbered}
+
+#### Sugestões {.unnumbered}
+
+#### Referências {.unnumbered}
+
 ### mTherm-Toolkit
+
+**Instruções gerais**
+
+#### Parâmetros {.unnumbered}
+
+#### Sugestões {.unnumbered}
+
+#### Referências {.unnumbered}
 
 ### ThermStab - Toolkit
 
+**Instruções gerais**
+
+#### Parâmetros {.unnumbered}
+
+#### Sugestões {.unnumbered}
+
+#### Referências {.unnumbered}
+
 ### MFC-Toolkit
+
+**Instruções gerais**
+
+#### Parâmetros {.unnumbered}
+
+#### Sugestões {.unnumbered}
+
+#### Referências {.unnumbered}
 
 
 
