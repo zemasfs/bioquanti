@@ -443,6 +443,7 @@ window.Quarto = {
   <li><a href="#animação-para-mapa-de-áreas-queimadas-por-biomas-no-brasil-dados-fictícios-de-1955-a-2024" id="toc-animação-para-mapa-de-áreas-queimadas-por-biomas-no-brasil-dados-fictícios-de-1955-a-2024" class="nav-link" data-scroll-target="#animação-para-mapa-de-áreas-queimadas-por-biomas-no-brasil-dados-fictícios-de-1955-a-2024"><span class="header-section-number">4.10</span> Animação para mapa de áreas queimadas por biomas no Brasil (dados fictícios de 1955 a 2024)</a></li>
   <li><a href="#jogo-da-vida-de-conway-animação-com-menu" id="toc-jogo-da-vida-de-conway-animação-com-menu" class="nav-link" data-scroll-target="#jogo-da-vida-de-conway-animação-com-menu"><span class="header-section-number">4.11</span> Jogo da Vida de Conway (animação com menu)</a></li>
   <li><a href="#segunda-lei-de-kepler-física" id="toc-segunda-lei-de-kepler-física" class="nav-link" data-scroll-target="#segunda-lei-de-kepler-física"><span class="header-section-number">4.12</span> Segunda Lei de Kepler (Física)</a></li>
+  <li><a href="#modelo-presa-predador-biologia" id="toc-modelo-presa-predador-biologia" class="nav-link" data-scroll-target="#modelo-presa-predador-biologia"><span class="header-section-number">4.13</span> Modelo Presa-Predador (Biologia)</a></li>
   </ul></li>
   <li><a href="#simulações" id="toc-simulações" class="nav-link" data-scroll-target="#simulações"><span class="header-section-number">5</span> Simulações</a>
   <ul class="collapse">
@@ -1504,6 +1505,46 @@ c=\sqrt{a^2+b^2}
 </div>
 </section>
 </section>
+<section id="modelo-presa-predador-biologia" class="level3" data-number="4.13">
+<h3 data-number="4.13" class="anchored" data-anchor-id="modelo-presa-predador-biologia"><span class="header-section-number">4.13</span> Modelo Presa-Predador (Biologia)</h3>
+<section id="bncc-em13cnt101-em13cnt201-em13cnt204" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="bncc-em13cnt101-em13cnt201-em13cnt204">BNCC: EM13CNT101, EM13CNT201, EM13CNT204</h4>
+</section>
+<section id="contexto-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="contexto-1">Contexto:</h4>
+<div class="line-block">&nbsp;&nbsp;Esta simulação reporta a um modelo de <em>ecologia de populações</em>, o modelo <em>presa–predador de Lotka–Volterra</em>. Trata-se de um sistema dinâmico que descreve oscilações populacionais causadas pela interação ecológica entre duas espécies: presas - <em>x(t)</em> e predadores - <em>y(t)</em>. O modelo considera crescimento exponencial das presas na ausência de predadores, redução das presas por encontros de predação e crescimento dos predadores proporcional à disponibilidade de presas, com mortalidade natural dos predadores.</div>
+<div class="line-block">&nbsp;&nbsp;A simulação começa com populações iniciais (x_0) e (y_0), e evolui no tempo em passos discretos de tamanho (dt), por (N) iterações.</div>
+<div class="line-block">&nbsp;&nbsp;Do ponto de vista computacional, o código resolve numericamente o sistema por um esquema explícito simples (método de <em>Euler</em>), atualizando (x) e (y) a cada passo com base nas derivadas (<em>dx/dt</em>) e (<em>dy/dt</em>). A animação mostra os valores de presas e predadores ao longo do tempo como pontos em um gráfico, permitindo observar padrões típicos do modelo, como <em>ciclos populacionais</em>, defasagem temporal entre máximos de presas e predadores e sensibilidade a parâmetros e condições iniciais.</div>
+</section>
+<section id="equação-11" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="equação-11">Equação:</h4>
+<p><span class="math display">\[
+\frac{dx}{dt} = \alpha x - \beta x y
+\]</span><br>
+<span class="math display">\[
+\frac{dy}{dt} = \delta x y - \gamma y
+\]</span><br>
+</p>
+<p><em>Onde:</em></p>
+<ul>
+<li><span class="math inline">\(\alpha\)</span> = taxa de crescimento das presas;</li>
+<li><span class="math inline">\(\beta\)</span> = taxa de predação por encontro presa–predador;</li>
+<li><span class="math inline">\(\delta\)</span> = eficiência de conversão/produção de predadores a partir da predação;</li>
+<li><span class="math inline">\(\gamma\)</span> = taxa de mortalidade dos predadores.</li>
+</ul>
+<p><a href="Eq/jsp_presaPredador.html" target="_blank"><img src="Eq/presaPredador.png" class="img-fluid"></a><br>
+</p>
+</section>
+<section id="sugestão-37" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-37">Sugestão:</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Altere alguns parâmetros do script isoladamente, e observe os efeitos na animação<span class="sc">:</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  a. N<span class="sc">:</span> no. de <span class="fu">pontos</span> (tempo da simulação)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  b. Populações iniciais de presas e <span class="fu">predadores</span> (x e y);</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente alterar a taxa de predadores para um valor extremo<span class="sc">:</span> <span class="st">"const delta = 0.1"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
 </section>
 <section id="simulações" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="simulações"><span class="header-section-number">5</span> Simulações</h2>
@@ -1522,8 +1563,8 @@ c=\sqrt{a^2+b^2}
 <li>A <em>frequência audível</em> conecta o modelo físico à percepção sonora.</li>
 </ul>
 </section>
-<section id="equação-11" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="equação-11">Equação:</h4>
+<section id="equação-12" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="equação-12">Equação:</h4>
 <section id="velocidade-da-onda-na-corda" class="level5 unnumbered">
 <h5 class="unnumbered anchored" data-anchor-id="velocidade-da-onda-na-corda">Velocidade da onda na corda</h5>
 <div class="line-block">&nbsp;&nbsp;A velocidade de propagação de uma onda transversal em uma corda tensionada é dada por:</div>
@@ -1591,12 +1632,12 @@ f_n = \frac{v}{\lambda_n}
 \]</span></p>
 <p><a href="Eq/jsp_sons.Lagrange.html" target="_blank"><img src="Eq/sons.Lagrange.png" class="img-fluid"></a></p>
 </section>
-<section id="sugestão-37" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-37">Sugestão:</h4>
+<section id="sugestão-38" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-38">Sugestão:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Observe a variação de comprimento da corda em <span class="st">"L"</span> no gráfico quando se arrasta algum slide;</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente clicar no checkbox <span class="st">"som automático"</span>, e arraste algum slider;</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Observe o efeito quando se altera alguns dos parâmetros nos sliders, como <span class="st">"F"</span>, <span class="st">"rho"</span>, e <span class="st">"harmonico"</span>;</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Observe a variação de comprimento da corda em <span class="st">"L"</span> no gráfico quando se arrasta algum slide;</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente clicar no checkbox <span class="st">"som automático"</span>, e arraste algum slider;</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Observe o efeito quando se altera alguns dos parâmetros nos sliders, como <span class="st">"F"</span>, <span class="st">"rho"</span>, e <span class="st">"harmonico"</span>;</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -1608,8 +1649,8 @@ f_n = \frac{v}{\lambda_n}
 <p><br>
 </p>
 </section>
-<section id="equação-12" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="equação-12">Equação:</h4>
+<section id="equação-13" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="equação-13">Equação:</h4>
 <p><span class="math display">\[
 R(t)=\frac{R_0}{1+k_{efetiva}​t}
 \]</span></p>
@@ -1641,14 +1682,14 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <p><a href="Eq/cineticaRP.html" target="_blank"><img src="Eq/cineticaRP.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-38" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-38">Sugestão</h4>
+<section id="sugestão-39" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-39">Sugestão</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente alterar a constante <span class="st">"k_cinetica"</span> no topo do código (ex.<span class="sc">:</span> <span class="fl">0.008</span>, <span class="fl">0.017</span>, <span class="fl">0.05</span>) e use Play<span class="sc">/</span>Reset para comparar;</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente incluir<span class="sc">/</span>retirar inibidor e catalisador;</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Experimente alterar o potencial dos moduladores acima editando suas constantes<span class="sc">:</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  a. const fator_catalise  <span class="ot">=</span> <span class="fl">2.0</span>; </span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  b. const fator_inibicao  <span class="ot">=</span> <span class="fl">3.0</span>; </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente alterar a constante <span class="st">"k_cinetica"</span> no topo do código (ex.<span class="sc">:</span> <span class="fl">0.008</span>, <span class="fl">0.017</span>, <span class="fl">0.05</span>) e use Play<span class="sc">/</span>Reset para comparar;</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente incluir<span class="sc">/</span>retirar inibidor e catalisador;</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Experimente alterar o potencial dos moduladores acima editando suas constantes<span class="sc">:</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  a. const fator_catalise  <span class="ot">=</span> <span class="fl">2.0</span>; </span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  b. const fator_inibicao  <span class="ot">=</span> <span class="fl">3.0</span>; </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
@@ -1667,13 +1708,13 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <p><a href="Eq/desenho.html" target="_blank"><img src="Eq/desenho.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-39" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-39">Sugestão</h4>
+<section id="sugestão-40" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-40">Sugestão</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Explore o script. Apesar de simples, ele permite selecionar cores distintas, espessuras de canetas, e formas geométricas;</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Como os demais objetos elaborados no JSPlotly, o desenho da prancha pode ser armazendo conservando sua interatividade pelo botão <span class="st">"html"</span>, e mesmo modificado no próprio arquivo <span class="fu">salvo</span> (<span class="st">"play.html"</span>);</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Se desejar alterar cores, espessuras, ou quiser acrescentar outras funcionalidades, verifique as variáveis do script;</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Experimente o botão <span class="st">"clone"</span>, que permite clonar a prancha juntamente com seu código. </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Explore o script. Apesar de simples, ele permite selecionar cores distintas, espessuras de canetas, e formas geométricas;</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Como os demais objetos elaborados no JSPlotly, o desenho da prancha pode ser armazendo conservando sua interatividade pelo botão <span class="st">"html"</span>, e mesmo modificado no próprio arquivo <span class="fu">salvo</span> (<span class="st">"play.html"</span>);</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Se desejar alterar cores, espessuras, ou quiser acrescentar outras funcionalidades, verifique as variáveis do script;</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Experimente o botão <span class="st">"clone"</span>, que permite clonar a prancha juntamente com seu código. </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
@@ -1701,13 +1742,13 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <li>Comando de desfazer (<em>undo</em>) e de limpeza (<em>clean</em>) do quadro;</li>
 <li>Possui atalhos de teclado: E=borracha; L=laser; Z desfaz, X limpa, H salva HTML</li>
 </ul>
-<section id="sugestão-40" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-40">Sugestão:</h4>
+<section id="sugestão-41" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-41">Sugestão:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Pode<span class="sc">-</span>se alterar a espessura das canetas em <span class="st">"var baseWidth = 1;"</span> ;</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Os botões <span class="dv">1</span>x, <span class="dv">2</span>x, <span class="dv">4</span>x são multiplicadores; edite as linhas de criação dos botões pra trocar rótulo<span class="sc">/</span><span class="fu">multiplicador</span> (ex.<span class="sc">:</span> <span class="st">"addSize('3x', 3, true)"</span>).</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>Obs<span class="sc">:</span> o botão funcional para reprodução do quadro é o que está na própria lousa, <span class="st">"html"</span>. O botão do editor de códigos não opera para o aplicativo.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Pode<span class="sc">-</span>se alterar a espessura das canetas em <span class="st">"var baseWidth = 1;"</span> ;</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Os botões <span class="dv">1</span>x, <span class="dv">2</span>x, <span class="dv">4</span>x são multiplicadores; edite as linhas de criação dos botões pra trocar rótulo<span class="sc">/</span><span class="fu">multiplicador</span> (ex.<span class="sc">:</span> <span class="st">"addSize('3x', 3, true)"</span>).</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>Obs<span class="sc">:</span> o botão funcional para reprodução do quadro é o que está na própria lousa, <span class="st">"html"</span>. O botão do editor de códigos não opera para o aplicativo.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -1736,10 +1777,10 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 </ul>
 <p><a href="Eq/mapaMental.html" target="_blank"><img src="Eq/mapa_mental.png" class="img-fluid"></a><br>
 </p>
-<section id="sugestão-41" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-41">Sugestão:</h4>
+<section id="sugestão-42" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-42">Sugestão:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> O editor permite criar mapas mentais, diagramas, fluxogramas, e outras representações...então agora a sugestão é vossa <span class="sc">!!</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> O editor permite criar mapas mentais, diagramas, fluxogramas, e outras representações...então agora a sugestão é vossa <span class="sc">!!</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
@@ -1784,8 +1825,8 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 </p>
 <p><a href="Eq/jsp_game2.html" target="_blank"><img src="Eq/game.png" class="img-fluid"></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Para jogar novamente alterando os valores do quadro, basta modificar a constante <span class="sc">*</span>semente<span class="sc">*</span> para um número qualquer;</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Para variar entre níveis de dificuldade do jogo, basta alterar o número de linhas e de colunas nas constantes respectivas do código. </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Para jogar novamente alterando os valores do quadro, basta modificar a constante <span class="sc">*</span>semente<span class="sc">*</span> para um número qualquer;</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Para variar entre níveis de dificuldade do jogo, basta alterar o número de linhas e de colunas nas constantes respectivas do código. </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
@@ -1808,15 +1849,15 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <p><a href="Eq/acessib.html" target="_blank"><img src="Eq/acessib.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-42" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-42">Sugestão:</h4>
+<section id="sugestão-43" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-43">Sugestão:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Pode<span class="sc">-</span>se editar o código para uma função específica. Para isso, basta mudar a linha <span class="st">"var f = function(x){ ... }"</span>. Exemplos<span class="sc">:</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  a. return <span class="fu">Math.sin</span>(x<span class="sc">*</span>Math.PI<span class="sc">/</span><span class="dv">180</span>); (graus);</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  b. return <span class="fu">Math.sin</span>(x); (radianos);</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  c. return <span class="fu">Math.exp</span>(<span class="sc">-</span><span class="fl">0.01</span><span class="sc">*</span>x)<span class="sc">*</span><span class="fu">Math.cos</span>(<span class="fl">0.2</span><span class="sc">*</span>x);</span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Pode<span class="sc">-</span>se alterar a velocidade de deslocamento da função pela função abaixo, e cujo valor é dado em milisegundos<span class="sc">:</span></span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"var PLAY_INTERVAL_MS = 100; "</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Pode<span class="sc">-</span>se editar o código para uma função específica. Para isso, basta mudar a linha <span class="st">"var f = function(x){ ... }"</span>. Exemplos<span class="sc">:</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  a. return <span class="fu">Math.sin</span>(x<span class="sc">*</span>Math.PI<span class="sc">/</span><span class="dv">180</span>); (graus);</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  b. return <span class="fu">Math.sin</span>(x); (radianos);</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  c. return <span class="fu">Math.exp</span>(<span class="sc">-</span><span class="fl">0.01</span><span class="sc">*</span>x)<span class="sc">*</span><span class="fu">Math.cos</span>(<span class="fl">0.2</span><span class="sc">*</span>x);</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Pode<span class="sc">-</span>se alterar a velocidade de deslocamento da função pela função abaixo, e cujo valor é dado em milisegundos<span class="sc">:</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"var PLAY_INTERVAL_MS = 100; "</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
@@ -1836,15 +1877,15 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <p><a href="Eq/flauta.html" target="_blank"><img src="Eq/flauta.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-43" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-43">Sugestão</h4>
+<section id="sugestão-44" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-44">Sugestão</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> A flauta foi concebida para <span class="fu">tons</span> (círculo) e <span class="fu">semitons</span> (semicírculos). Você pode <span class="st">"tocar"</span> a flauta clicando com o botão esquerdo do mouse sobre um orifício ou utilizando o dedo em um smartphone;</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Você pode acrescentar ou omitir algum orifício na flauta, bastando alterar as duas linhas das variáveis <span class="st">"var naturais"</span> e <span class="st">"var sustenidos"</span>;</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Você pode transformar sua flauta num <span class="st">"pífano"</span>, geralmente mais agudo que a flauta doce, e bastante comum da tradição nordestina. Para isso, basta substituir as linhas das variáveis <span class="st">"var naturais"</span> e <span class="st">"var sustenidos"</span>, mudando o valor de <span class="st">"5"</span> para <span class="st">"6"</span>, como <span class="fu">segue</span> (adicione <span class="st">"add"</span> em seguida <span class="sc">-</span> ou <span class="st">"clean"</span><span class="sc">/</span><span class="st">"add"</span>)<span class="sc">:</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    var naturais   <span class="ot">=</span> [<span class="st">"C6"</span>,<span class="st">"D6"</span>,<span class="st">"E6"</span>,<span class="st">"F6"</span>,<span class="st">"G6"</span>,<span class="st">"A6"</span>,<span class="st">"B6"</span>];</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    var sustenidos <span class="ot">=</span> [<span class="st">"C#6"</span>,<span class="st">"D#6"</span>,<span class="st">"F6"</span>,<span class="st">"F#6"</span>,<span class="st">"G#6"</span>,<span class="st">"A#6"</span>,<span class="st">"B6"</span>];</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Na linha de raciocício acima, também é possível mudar o padrão da flauta doce, flautas baixas e contra<span class="sc">-</span>baixo. Exemplificando, uma flauta germânica (orifício maior, soprano, utilizada nas Escolas e representada no script) ou <span class="fu">barroca</span> (orifício menor, tons mais graves).</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> A flauta foi concebida para <span class="fu">tons</span> (círculo) e <span class="fu">semitons</span> (semicírculos). Você pode <span class="st">"tocar"</span> a flauta clicando com o botão esquerdo do mouse sobre um orifício ou utilizando o dedo em um smartphone;</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Você pode acrescentar ou omitir algum orifício na flauta, bastando alterar as duas linhas das variáveis <span class="st">"var naturais"</span> e <span class="st">"var sustenidos"</span>;</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Você pode transformar sua flauta num <span class="st">"pífano"</span>, geralmente mais agudo que a flauta doce, e bastante comum da tradição nordestina. Para isso, basta substituir as linhas das variáveis <span class="st">"var naturais"</span> e <span class="st">"var sustenidos"</span>, mudando o valor de <span class="st">"5"</span> para <span class="st">"6"</span>, como <span class="fu">segue</span> (adicione <span class="st">"add"</span> em seguida <span class="sc">-</span> ou <span class="st">"clean"</span><span class="sc">/</span><span class="st">"add"</span>)<span class="sc">:</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    var naturais   <span class="ot">=</span> [<span class="st">"C6"</span>,<span class="st">"D6"</span>,<span class="st">"E6"</span>,<span class="st">"F6"</span>,<span class="st">"G6"</span>,<span class="st">"A6"</span>,<span class="st">"B6"</span>];</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    var sustenidos <span class="ot">=</span> [<span class="st">"C#6"</span>,<span class="st">"D#6"</span>,<span class="st">"F6"</span>,<span class="st">"F#6"</span>,<span class="st">"G#6"</span>,<span class="st">"A#6"</span>,<span class="st">"B6"</span>];</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Na linha de raciocício acima, também é possível mudar o padrão da flauta doce, flautas baixas e contra<span class="sc">-</span>baixo. Exemplificando, uma flauta germânica (orifício maior, soprano, utilizada nas Escolas e representada no script) ou <span class="fu">barroca</span> (orifício menor, tons mais graves).</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
@@ -1859,13 +1900,13 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <p><a href="Eq/piano.html" target="_blank"><img src="Eq/piano.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-44" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-44">Sugestão</h4>
+<section id="sugestão-45" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-45">Sugestão</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> É um piano pequeno, mas é um <span class="fu">piano</span> (<span class="dv">2</span> oitavas) <span class="sc">!!</span> E como tal, você pode expressar sua aptidão musical com o instrumento polifônico;</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Para prolongar o som das teclas eleve a barra de <span class="st">"sustentação"</span>;</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Como parte do JSPlotly, o piano pode ser compartilhado sem o código, somente como instrumento para musicalização ou treino, já que é exportado pelo botão <span class="st">"html"</span>, preservando sua interatividade e sonorização por mouse ou toque de dedos num dispostivo móvel;</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Também como parte do JSPlotly, é possível compartilhar o piano com os códigos para alteração junto ao botão <span class="st">"clone"</span>;</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> É um piano pequeno, mas é um <span class="fu">piano</span> (<span class="dv">2</span> oitavas) <span class="sc">!!</span> E como tal, você pode expressar sua aptidão musical com o instrumento polifônico;</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Para prolongar o som das teclas eleve a barra de <span class="st">"sustentação"</span>;</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Como parte do JSPlotly, o piano pode ser compartilhado sem o código, somente como instrumento para musicalização ou treino, já que é exportado pelo botão <span class="st">"html"</span>, preservando sua interatividade e sonorização por mouse ou toque de dedos num dispostivo móvel;</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Também como parte do JSPlotly, é possível compartilhar o piano com os códigos para alteração junto ao botão <span class="st">"clone"</span>;</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
@@ -1884,11 +1925,11 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <p><a href="Eq/arcoFlecha.html" target="_blank"><img src="Eq/arcoFlecha.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-45" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-45">Sugestão</h4>
+<section id="sugestão-46" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-46">Sugestão</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Altere o â<span class="fu">ngulo</span> (<span class="st">"let theta_edit = 45"</span>) e<span class="sc">/</span>ou a velocidade inicial do <span class="fu">disparo</span> (<span class="st">"let v0_edit    = 20"</span>) para ajustar a parábola ao alvo;</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Perceba que a pontuação é flexível<span class="sc">:</span> <span class="dv">5</span> pontos para proximidade do alvo, e <span class="dv">10</span> pontos quando o acerta.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Altere o â<span class="fu">ngulo</span> (<span class="st">"let theta_edit = 45"</span>) e<span class="sc">/</span>ou a velocidade inicial do <span class="fu">disparo</span> (<span class="st">"let v0_edit    = 20"</span>) para ajustar a parábola ao alvo;</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Perceba que a pontuação é flexível<span class="sc">:</span> <span class="dv">5</span> pontos para proximidade do alvo, e <span class="dv">10</span> pontos quando o acerta.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
@@ -1902,13 +1943,13 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <p><a href="Eq/pong.html" target="_blank"><img src="Eq/pong.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-46" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-46">Sugestão:</h4>
+<section id="sugestão-47" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-47">Sugestão:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Se achar que o jogo está lento, mesmo na velocidade <span class="st">'warp'</span> máxima, é possível alterar seu valor em <span class="st">"var base = Math.pow(1.5, warp);"</span>;</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Se achar que o jogo tá difícil ou fácil demais, é possível alterar o tamanho da raquete em <span class="st">"paddle = { w: 80, h: 10,..."</span>;</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Se desejar aumentar a área do jogo, modifique na linha <span class="fu">abaixo</span> (largura, altura)<span class="sc">:</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"var cv = sk.createCanvas(400, 300).parent('jogoArea');"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Se achar que o jogo está lento, mesmo na velocidade <span class="st">'warp'</span> máxima, é possível alterar seu valor em <span class="st">"var base = Math.pow(1.5, warp);"</span>;</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Se achar que o jogo tá difícil ou fácil demais, é possível alterar o tamanho da raquete em <span class="st">"paddle = { w: 80, h: 10,..."</span>;</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Se desejar aumentar a área do jogo, modifique na linha <span class="fu">abaixo</span> (largura, altura)<span class="sc">:</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"var cv = sk.createCanvas(400, 300).parent('jogoArea');"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
@@ -1922,10 +1963,10 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <div class="line-block">&nbsp;&nbsp;<em>JSPlotly</em> foi inicialmente concebido para a construção de <em>objetos virtuais de aprendizagem</em> interativos. Contudo, é possível integrá-lo a diferentes interfaces para aquisição de dados do mundo real. O exemplo que segue ilustra como alvo a resposta para um <em>acelerômetro</em>, sensor de posicionamento de um dispositivo móvel (acelerômetro).</div>
 <p><a href="Eq/celular_JSPlotly.html" target="_blank"><img src="Eq/celular.png" class="img-fluid"></a><br>
 </p>
-<section id="sugestão-47" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-47">Sugestão:</h4>
+<section id="sugestão-48" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-48">Sugestão:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Como o aplicativo é para o posicionamento <span class="st">"x, y e z"</span> de um dispositivo móvel, experimente alterar a posição de seu celular<span class="sc">/</span>tablet no espaço.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Como o aplicativo é para o posicionamento <span class="st">"x, y e z"</span> de um dispositivo móvel, experimente alterar a posição de seu celular<span class="sc">/</span>tablet no espaço.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -1967,10 +2008,10 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <p><br>
 </p>
 </section>
-<section id="sugestão-48" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-48">Sugestão:</h4>
+<section id="sugestão-49" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="sugestão-49">Sugestão:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Como o aplicativo é escrito no JSPlotly, é possível personalizá<span class="sc">-</span>lo para diversas situações, como taxa de tranferência de dados, traços (tipo, cores, espessura), tipo de gráfico, entre outros. </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Como o aplicativo é escrito no JSPlotly, é possível personalizá<span class="sc">-</span>lo para diversas situações, como taxa de tranferência de dados, traços (tipo, cores, espessura), tipo de gráfico, entre outros. </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
