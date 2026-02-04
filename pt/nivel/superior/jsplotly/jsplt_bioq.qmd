@@ -7,7 +7,7 @@ number-sections: true
 lang: pt
 ---
 
-|   Para ilustrar o potencial de uso do *JSPlotly* para Bioquímica e áreas correlatas, seguem alguns exemplos para gráficos, simulações, análise de dados, e aplicativos, e cujos conteúdos são frequentemente encontrados em livros-texto e fontes técnico-científicas. Para um melhor aproveitamento de cada tema, experimente seguir as sugestões dos códigos para cada objeto. 
+|   Para ilustrar o potencial de uso do *JSPlotly* para Bioquímica e áreas correlatas, seguem alguns exemplos para gráficos, simulações, análise de dados, e aplicativos, e cujos conteúdos são frequentemente encontrados em livros-texto e fontes técnico-científicas. Para um melhor aproveitamento de cada tema, experimente seguir as Sugestão dos códigos para cada objeto. 
 \
 
 ## Menu {.unnumbered}
@@ -535,6 +535,31 @@ $$
 2. Teste o comportamento da curva de Gibbs em uma temperatura de referência elevada (simulação para organismo extremófilo);
 3. Simule a situação onde a variação da capacidade calorífica é nula
 ```
+
+
+### Consumo de Oxigênio por mitocôndria
+
+#### Contexto: {.unnumbered}
+
+|   *Oxígrafos* são equipamentos que monitoram o teor de oxigênio dissolvido em solução. Diferente de *oxímetros*, baseados na medição de oxigenação de hemoglobina por *clip* direto na ponta de um dedo, oxígrafos são largamente utilizados em estudos de células vivas e suspensão de mitocôndrias.
+
+|   O exemplo que segue ilustra uma *animação* para o teor de $O_{2}$ medido em oxígrafo para uma suspensão de mitocôndrias, e cujas taxas de consumo são variadas pelo uso de metabólitos modificadores (ex: piruvato, ADP, azida).
+\
+
+[![](Eq/O2_mitocondria.png)](Eq/jsp_O2_mitocondria.html){target="_blank"}
+\
+
+#### Sugestão: {.unnumbered}
+
+```{r, eval=FALSE}
+1. Observe que o surgimento de metabólitos e as taxas de consumo de oxigênio decorrentes são definidas pela função "oxigenio". Experimente alterá-las e observe o efeito na animação;
+2. Perceba que os metabólitos e sua atuação, bem como o sinal medido, teor de O2, são facilmente adaptados para qualquer outra medição metabólica no código. Experimente, por exemplo, como ficaria o gráfico numa simulação para a via glicolítica;
+3. Esse código foi desenhado para uma animação. Vá até a seção de "Aplicativos" abaixo, e experimente o "FlowForces" para uma finalidade semelhante, embora com plena adaptação interativa.
+```
+
+
+
+
 
 ### Espectroscopia de impedância eletroquímica (EIS)
 
@@ -1259,7 +1284,7 @@ $$
 3. Observe a polaridade dos resíduos proteicos no "checkbox" homônimo;
 4. Experimente ampliar/reduzir ou deslocá-lo na tela com auxílio do mouse, ou fazê-lo num smartphone conforme a instrução dada acima; 
 5. Mostre ou esconda alternativamente cada cadeia ou todas, ligantes e íons, clicando-se nos termos respectivos da legenda;
-6. Selecione resíduos de interesse do modelo, como sítio catalítico, de ligação a coenzimas, ou de regulação da atividade. Para isso, digite no campo correlato e clique em "destacar". Algumas sugestões:
+6. Selecione resíduos de interesse do modelo, como sítio catalítico, de ligação a coenzimas, ou de regulação da atividade. Para isso, digite no campo correlato e clique em "destacar". Algumas Sugestão:
   a. Individuais: Arg15, ASP117, 15, A:15, A:ARG15; 
   b. Faixas: 15-30, A:15-30, Arg15-Asp30; 
   c. Múltiplos separados por vírgula: "Arg15, Asp117";
@@ -1335,7 +1360,21 @@ $$
 [![](Eq/flowforces.png)](Eq/jsp_flowforces.html){target="_blank"}
 \
 
+#### Sugestão: {.unnumbered}
+
+
+```{r, eval=FALSE}
+
+1. Experimente alterar um ou mais compostos com embasamento bioquímico, como para uma via metabólica, por exemplo;
+2. Teste variações de "delay" para o aparecimento do efeito do modificador clicando-se no checkbox "Avancado";
+3. Experimente variar o ruído em "const noise", elevando-o 100x:
+    "const noise = noiseOn ? (Math.random()-0.5)*20"
+```
+
+
 ### Gizz - Lousa Digital 
+
+#### Contexto: {.unnumbered}
 
 |   A natureza do objeto abaixo dispensa apresentações. Trata-se mais um entre os muitos aplicativos para simular uma lousa, ou quadro de giz/caneta digital. Diferente de seus concorrentes, contudo:
 
@@ -1463,7 +1502,7 @@ $$ v = \dfrac{V_{max}\left(1 + \dfrac{A}{K_{aA}}\right) S}{K_m + S} $$
 - *b (slope):* inclinação da reta LB = \\(K_m/V_{max}\\).  
 - *K_i:* constante de inibição (Dixon: \\(x = -K_i\\)).  
 
-#### Sugestões {.unnumbered}
+#### Sugestão {.unnumbered}
 
 ```{r, eval=FALSE}
 1. Experimente comparar o modelo não competitivo puro ao misto; para isso basta igualar ou não, respectivamente, as constantes de inibição;
@@ -1705,7 +1744,7 @@ $$
 4. *Hill: log(v/(n–v)) vs log[L]* – regressão linear com exibição de nH e Kd.
 
 
-#### Sugestões {.unnumbered}
+#### Sugestão {.unnumbered}
 
 ```{r, eval=FALSE}
 1. Utilize o "slider" (barra de deslizamento) para ampliação/redução dos gráficos;
@@ -1796,7 +1835,7 @@ No app, marcar **“Comparar duas proteínas (usar $ΔΔC_p$)”** plota a prote
 - *Unfolding*: inverte os sinais de folding.
 - *Binding exotérmico / endotérmico*: ajustes típicos para interação ligante–receptor.
 
-#### Sugestões {.unnumbered}
+#### Sugestão {.unnumbered}
 
 ```{r, eval=FALSE}
 1. Orientação: T_m ocorre quando ΔG=0. Nesse caso, é mostrada uma linha vertical tracejada no gráfico ΔG x T;
@@ -1912,7 +1951,7 @@ Esse termo desloca a curva sem impor um mecanismo específico, permitindo explor
 - *Comparação A/B*: segunda proteína pode ter \(n\), \(m\), $\Delta$G$^{o}$, e osmólito diferentes.
 
 
-#### Sugestões {.unnumbered}
+#### Sugestão {.unnumbered}
 
 ```{r, eval=FALSE}
 1. Obseve a curvatura do gráfico em ΔG x [D]. Valores de n>1 sugerem um estado multimérico para o biopolímeros;
@@ -2040,7 +2079,7 @@ $$
 $$
 \
 
-#### Sugestões {.unnumbered}
+#### Sugestão {.unnumbered}
 
 
 ```{r, eval=FALSE}
@@ -2202,7 +2241,7 @@ A interface do BioFuelCell é dividida em três painéis gráficos e uma seção
 
 
 
-#### Sugestões {.unnumbered}
+#### Sugestão {.unnumbered}
 
 ```{r, eval=FALSE}
 1. Observe o ponto de interseção entre a curva de polarização e a parábola ideal. Esse ponto indica o equilíbrio entre fornecimento e consumo de elétrons;
