@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Molecules &amp; Jmol</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../../avatar.png" rel="icon" type="image/png">
+<script src="../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap-4b957b30fffc5edb70387ff4d75203a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../logo-unifal.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../index.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../erre_en.html"> 
+<span class="menu-text">Reproducible Teaching</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cheatsheets" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Cheatsheets</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-cheatsheets">    
+        <li>
+    <a class="dropdown-item" href="../../../../cheatsheet/plotly.pdf">
+ <span class="dropdown-text">Plotly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../cheatsheet/jmol_cheat.pt.pdf">
+ <span class="dropdown-text">Jmol</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../cheatsheet/r_cheat.pt.pdf">
+ <span class="dropdown-text">R</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../hp50_en.html"> 
+<span class="menu-text">HP50G</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../producao_en.html"> 
+<span class="menu-text">Works</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../contato_en.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../pt/index.html"> 
+<span class="menu-text">PT</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-true"></i></a>
+    <a href="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-true"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Molecules &amp; Jmol</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">JSPlotly: Interactive objects &amp; AI</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/superior/jsplotly/jsplotly_geral_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">JSPlotly</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/superior/jsplotly/jsptl_bioq_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biophysical chemistry</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/basico/jsplotly/jsplotly_bas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">School</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Jmol - 3D molecules</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/superior/jmol/index_jmol_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biochemistry</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/basico/Curso/index_jmol_bas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">School</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/basico/Jardim/index_Jardim_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Molecule Garden</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">R - Maths and charts</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/superior/r/_book/index_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biophysical chemistry</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/superior/ScriptRplot/scriptrplot_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">scriptRplot: elegant graphics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/basico/Curso/index_r_bas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">School</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/basico/R/index_OIER_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactivity at School</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Sisma - dynamic flows</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/superior/sisma/index_sisma_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biochemistry</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../nivel/basico/sisma/index_sisma_bas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">School</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Molecules &amp; Jmol</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="using-jmol-to-observe-molecules-in-3d" class="level2">
+<h2 class="anchored" data-anchor-id="using-jmol-to-observe-molecules-in-3d">1 - Using Jmol to observe molecules in 3D</h2>
+<div class="reminder-objetivos">
+<p>Objectives:<br>
+1. Access the online version of Jmol<br>
+2. Load a molecule into Jmol<br>
+</p>
+</div>
+<p><br>
+</p>
+</section>
+<section id="where-to-start" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-start">Where to start?</h2>
+<div class="line-block">You can start using <em>Jmol</em> in several ways. If you are going to use it on your computer or notebook, or even from a removable media (<em>pendrive</em>), you can access it by downloading, decompressing and running the <code>Jmol.jar</code> file present in the main folder on the <a href="https://jmol.sourceforge.net/">Jmol website</a>.</div>
+<div class="line-block">Now, if you don’t want to install anything, you can also access it <em>online</em> from several sites. In this <em>Course</em> we will use a very famous one, adapted from one of the program’s own developers. Just click on this <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=water"><em>link</em></a>, in a new tab.</div>
+<div class="line-block">Alternatively, and throughout this Course, you can copy the code of any example by clicking on the <em>“folder”</em> icon to the right of each shaded area. That’s it! The code is copied to the clipboard. Now just paste it somewhere (notepad, or Jmol)**. In the case of <em>Jmol</em>, copy the <em>link</em> below and paste it in a new tab of your browser, pressing <em>Enter</em> afterwards.</div>
+<p><br> <!-- new line; also to use only " \ " --></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>chemapps.stolaf.edu<span class="sc">/</span>jmol<span class="sc">/</span>jmol.php?model<span class="ot">=</span>water</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Now, click on the molecule with the left mouse button or with the touchpad (for notebooks), and make random movements. Or, turn the middle mouse button, or perform two-finger zoom-in and zoom-out gestures on the touchpad. The <a href="#fig-telaInicio" class="quarto-xref">Figure&nbsp;1</a> below illustrates the result.</div>
+<p><br></p>
+<div id="fig-telaInicio" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-telaInicio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=water"><img src="telaInicio.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-telaInicio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Screenshot (clickable) referring to the water molecule model rendered in a browser by the St.&nbsp;Olaff College website.
+</figcaption>
+</figure>
+</div>
+<div class="line-block">This is the main essence when we refer to an idea of … <strong>flying molecules</strong> for this <em>Course</em>.</div>
+<!-- NOTE: The applet works with Jmol commands even when you are OFFLINE !! -->
+</section>
+<section id="how-to-load-a-molecule-online" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-load-a-molecule-online">How to load a molecule <em>online</em>?</h2>
+<div class="line-block">To <em>play</em> a little with another molecule, try changing the model on the web page itself, at the end of the line. And now following the <em>MAPA (Pedagogical support material for learning)</em>.</div>
+<p><img src="vitC_mapa.png" class="img-fluid" alt="Some representations of molecules. Source: MAPA: high school - 1st Bim. 3rd Year, p.51. Natural sciences and their technologies."><br>
+</p>
+<div class="line-block">Let’s illustrate this with the structure of <em>vitamin C (ascorbic acid)</em>.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>chemapps.stolaf.edu<span class="sc">/</span>jmol<span class="sc">/</span>jmol.php?model<span class="ot">=</span>ascorbic acid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">You can try this with other molecules, typing their name <em>in English</em>, since it is a foreign <em>site</em>. But of course the database for this search is not unlimited, and sometimes the system will not find the desired molecule.</div>
+<div class="line-block">But there are alternatives. One of them is to search for the name of the molecule on a <em>site</em> used as a database, <a href="https://pubchem.ncbi.nlm.nih.gov/">PubChem</a>. For example, for <em>vitamin C (ascorbic acid)</em>:</div>
+<p><br>
+</p>
+<div class="reminder-markdown">
+<p><strong>Now it’s up to you</strong>:</p>
+<ol type="1">
+<li>Go to the <a href="https://pubchem.ncbi.nlm.nih.gov/">PubChem</a> website; 2. Search for <code>tylenol</code>;</li>
+<li>If it exists, type this same term at the end of the <em>JSmol online</em> line, as follows, and see if it worked:<br>
+<code>https://chemapps.stolaf.edu/jmol/jmol.php?model=tylenol</code></li>
+</ol>
+<p></p>
+</div>
+</section>
+<section id="how-to-load-a-molecule-online-but-in-2d" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-load-a-molecule-online-but-in-2d">How to load a molecule <em>online</em>, but in 2D</h2>
+<div class="line-block">Sometimes it can be interesting to have a static and two-dimensional visualization of a molecular model. To do this, simply add <em>“image2d”</em> to the line of code, as follows:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>chemapps.stolaf.edu<span class="sc">/</span>jmol<span class="sc">/</span>jmol.php?model<span class="ot">=</span>tylenol<span class="sc">&amp;</span>image2d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="mouse-clicks-versus-command-text" class="level2">
+<h2 class="anchored" data-anchor-id="mouse-clicks-versus-command-text">2 - Mouse clicks <em>versus</em> command text</h2>
+<div class="reminder-objectives">
+<p>Objectives:<br>
+1. Observe that there are 2 ways to perform actions in some programs: by <em>mouse</em> or by text commands<br>
+2. Observe the characteristics of the use of each<br>
+3. Know some principles for “Reproducible Teaching” and the advantages of using command lines instead of mouse movements<br>
+</p>
+</div>
+</section>
+<section id="mouse-clicks" class="level2">
+<h2 class="anchored" data-anchor-id="mouse-clicks">Mouse clicks</h2>
+<div class="line-block">Any computer program you have ever used, or even on mobile devices, has its <em>usability</em> centered on the ease of using clicks and drags with <em>mouse</em>, <em>touchpad</em>, and even your fingers (capacitive screens). This makes it much easier to perform quick actions. For example, for text editors, it is common to click on a formatting icon (italics, bold, for example) or even type its shortcut, to complete what you want in the text.</div>
+<div class="line-block">Simple, practical, and fast. In the same way, you can use <em>Jmol</em>, both in the version downloaded to the computer, and in the <em>online</em> version. For the downloaded version, just look at the range of menu items and submenus. As for the browser version, notice that there is no menu!</div>
+<div class="line-block">However, the <em>online</em> version allows you to view the same information, although with a different format, by simply clicking <em>with the right mouse button</em> on any area of ​​the screen (a fancy name for a screen containing some information, the molecule, in this case).</div>
+</section>
+<section id="sec-linhasComando" class="level2">
+<h2 class="anchored" data-anchor-id="sec-linhasComando">Command lines</h2>
+<div class="line-block">As with mouse clicks, it is also possible to access a text field to type <em>Jmol</em> commands, both in the downloaded version (<em>standalone</em>) and in the browser version (<em>JSmol</em> applet). For the first, click on <em>File–&gt;Console</em>, and a window will appear for entering text. In the <em>online</em> version, right-click <em>anywhere on the screen and choose </em>Console*.</div>
+</section>
+<section id="mouse-clicks-versus-command-lines" class="level2">
+<h2 class="anchored" data-anchor-id="mouse-clicks-versus-command-lines">Mouse clicks <em>versus</em> command lines</h2>
+<div class="line-block">Although it is possible to use <em>Jmol</em> both by mouse clicks and by text commands, <em>which is better?</em></div>
+<div class="line-block">To help answer this question, let’s use an example of a spreadsheet, such as <em>Excel</em> from the MS-Office package, or <em>Calc</em> from the <em>Libreoffice</em> package, or <em>Sheets</em> from the Google suite. Suppose you want to make a simple graph, taking two columns, each for a variable (independent or <em>x</em>, and dependent, or <em>y</em>). The usual thing to do would be to click on a menu item for graphs, select the desired columns in specific fields in the window that opens, select the graph type, click on <em>next</em> or some similar term, select other characteristics (labels or names on the <em>x</em> and <em>y</em> axes, for example), and finally click on <em>finish</em> (or <em>OK</em>, or a term with a similar meaning). Simple, quick, and practical.</div>
+<div class="line-block">But (there’s always a “but”)…what if, in addition to building the graph, you needed to perform additional actions, such as obtaining the linear fit of the data, displaying the resulting line with a specific color and style, inserting the equation of the line at a specific point on the graph, adding a title, and changing the symbol of the points, both the type, size and color. Phew!!!</div>
+<div class="line-block">No problem, either…as long as you have a good tutorial at your side, of course! Or that you are already familiar with the spreadsheet program, menus and actions related to the various mouse clicks that will be necessary to obtain a beautiful linear regression graph at the end.</div>
+<div class="line-block">Now…one more small variable to add to the example given: suppose that it is not you who builds the graph, but a student in your discipline, and that they have not been trained in the use of the spreadsheet, nor in the intended calculations!</div>
+<div class="line-block">Note that now there will be some discomfort, since:</div>
+<ol type="1">
+<li>The student has no prior knowledge in using the spreadsheet; 2. The student has no prior knowledge of the intended calculations;</li>
+<li>You will have to train the student, or offer him/her a related training <em>guide</em>;</li>
+<li>If the training has already taken place, but you do not have the <em>guide</em> at hand, both you and the student will depend on the <em>memory retention capacity</em> to successfully complete the task.</li>
+</ol>
+<div class="line-block">Now, what if the instructions for executing the final product were not in a <em>guide</em> for repeating <em>mouse</em> clicks, but in a short text containing both the commands in sequence and the explanatory comments for each individual action, and that when inserted into the program generated the graph already formatted, colored, and with the linear adjustment and the result parameters?</div>
+</section>
+<section id="advantages-of-using-command-lines-over-using-mouse-clicks" class="level2">
+<h2 class="anchored" data-anchor-id="advantages-of-using-command-lines-over-using-mouse-clicks">Advantages of using command lines over using <em>mouse</em> clicks</h2>
+<div class="line-block">From the hypothetical example above, note that a short text containing the command lines in sequence and the comments related to them allows:</div>
+<ul>
+<li><p>the final product to be <strong>reproducible</strong> and error-free;</p></li>
+<li><p>the final product to be created without the student’s prior knowledge; it is enough to execute the code in the program;</p></li>
+<li><p>the final product to be created independently of the memory of those involved (sequence of clicks, for example);</p></li>
+<li><p>a virtually infinite number of sequential actions, without the need to memorize the order of the <em>mouse</em> clicks;</p></li>
+<li><p>the learning of each command used in human language, since there are comments from the author for each line;</p></li>
+<li><p>the product can be modified to generate a different object at the end (color change, axis labels, another title, for example);</p></li>
+<li><p>the same graph can be <strong>reproduced</strong>, but with another set of data (<em>x</em> and <em>y</em>);</p></li>
+<li><p>the learner can try out other commands to add different formatting and/or calculations to the product;</p></li>
+<li><p>that you or the student can <strong>reproduce</strong> the product without resorting to memory and even for centuries afterwards, if the predictions of mass extinction do not come true;</p></li>
+<li><p>that anyone can <em>reproduce</em> the object, regardless of their level of technical instruction or program operability;</p></li>
+<li><p>finally, that it is possible to teach certain content in a reproducible way… or… <strong>Reproducible Teaching</strong>.</p></li>
+</ul>
+<div class="line-block">Thus, this course intends to use only <em>command lines</em>, so that the advantages described above, related to an active methodology, albeit incipient, focused on <em>Reproducible Teaching</em>, and both for the <em>Jmol</em> tool and for the <em>R &amp; RStudio</em> tool.</div>
+<div class="line-block">In relation to <em>Jmol</em>, therefore, the sequential actions for three-dimensional visualization of molecular models will be performed by the <em>Console</em> accessible according to the item <a href="#sec-linhasComando" class="quarto-xref">Section&nbsp;7</a> above.</div>
+</section>
+<section id="scripts" class="level2">
+<h2 class="anchored" data-anchor-id="scripts"><em>Scripts</em></h2>
+<div class="line-block">Put in the above way, when you have any set of sequential command lines, allowing you to act on an object such as a molecular model, and for an infinity of things, you then have a <em>script</em>. Technically speaking, a <em>script</em> constitutes a block of sequential instructions in text for compilation into a program.</div>
+<div class="line-block"><em>Scripts</em> can be created in <em>Jmol</em> in <em>browser</em> in two ways:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Separating the commands by <span class="st">";"</span> <span class="sc">-</span> ex<span class="sc">:</span> <span class="st">"cpk only; color blue"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Separating the commands by lines <span class="sc">-</span> ex<span class="sc">:</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">"cpk only</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">color blue"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">If you want the model to perform a few commands, the best option is to separate them with a semicolon (“;”). But if you want something more “sophisticated”, it is suggested to separate them with lines. And more… lines commented and written in a notepad or any text editor!</div>
+<section id="advantages-of-using-a-notepad-or-text-editor-for-serial-commands" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-of-using-a-notepad-or-text-editor-for-serial-commands">Advantages of using a notepad or text editor for serial commands</h3>
+<div class="line-block">Imagining a more significant transformation to the original loaded molecule, such as magnification, coloring, and representation and movement effects, it is easy to see that a set of commented lines arranged in sequence makes it easier to observe what is intended with the model, as well as to identify errors and adjustments.</div>
+<div class="line-block">This is also inherited from the concepts of <em>Reproducible Teaching</em>, since it facilitates the visualization of the code (<em>human readable format</em>) and its debugging (<em>code debug</em>). See the example below, reflect on your interpretation, copy it to a <em>notepad</em>, and test it in the <em>Jmol</em> <em>Console</em>.</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="nicotina_mapa.png" class="img-fluid figure-img"></p>
+<figcaption>Structure of nicotine. Source: MAPA: high school - 2nd Bim. 3rd Year, p.61. Natural sciences and their technologies.</figcaption>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>nicotine</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>background black <span class="co"># black background color</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>spin <span class="dv">80</span> <span class="co"># rotate the molecule</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>delay <span class="dv">3</span> <span class="co"># wait 1 second</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>spin off <span class="co"># stop the rotation</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>cpk <span class="co"># render as a fill model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="reminder-markdown">
+<p><strong>Now it’s up to you</strong>:</p>
+<ol type="1">
+<li><p>Copy the code snippet above to a notepad.</p></li>
+<li><p>Change the lines of code randomly, copy and run again in the Console. 1. Suggestions for changes (one or the other… or all!):<br>
+spin 300<br>
+delay 1<br>
+background magenta</p></li>
+</ol>
+</div>
+</section>
+</section>
+<section id="some-commands-to-explore-flying-molecules" class="level2">
+<h2 class="anchored" data-anchor-id="some-commands-to-explore-flying-molecules">3 - Some commands to explore flying molecules</h2>
+<div class="reminder-objetivos">
+<p>Objectives:<br>
+1. Load a molecule in Jmol in an alternative way<br>
+2. Use the Console for some commands<br>
+</p>
+</div>
+</section>
+<section id="how-to-load-a-molecule-in-jsmol" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-load-a-molecule-in-jsmol">How to load a molecule in JSmol</h2>
+<div class="line-block"><em>JSmol</em> is nothing more than <em>Jmol</em> itself, but developed to be used in an internet browser, and which uses <em>JavaScript</em> among its languages ​​(hence the <em>S</em> in <em>JSmol</em>).</div>
+<div class="line-block">Assuming that you have already opened the <em>JSmol</em> applet window in your browser but, contrary to what was done before (molecule name at the end of the <a href="https://pubchem.ncbi.nlm.nih.gov/">PubChem</a> website, you want to:</div>
+<ul>
+<li><p>load a molecule from another database;</p></li>
+<li><p>load a molecule whose file is already on your computer</p></li>
+</ul>
+<div class="line-block"><br>
+Well, in this case you can use the <em>mouse</em> or a <em>command line</em>, whichever you prefer.</div>
+<p><br>
+</p>
+<section id="loading-the-molecule-with-the-mouse" class="level3">
+<h3 class="anchored" data-anchor-id="loading-the-molecule-with-the-mouse">Loading the molecule with the <em>mouse</em></h3>
+<div class="line-block">To do this, simply right-click on the screen, as before, and select <em>File–&gt;Load</em>. The options that appear are:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Open local file <span class="co"># opens a window to search for the model file on the computer;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Open URL <span class="co"># opens a window to search for the internet address that contains the file</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Get PDB file <span class="co"># opens a window to insert a code macromolecule from the homonymous website (proteins, nucleic acids, mainly)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Get MOL file <span class="co"># opens a window to search for a *.mol file</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Open script <span class="co"># opens a window to search for a code snippet on the computer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">The first option is self-explanatory (<code>Open local file</code>), the second option (<code>Open URL</code>) depends on the correct address for a given molecular model, the third (<code>Get PDB file</code>) refers to the <a href="https://www.rcsb.org">Protein Data Brookhaven</a> database for biopolymers, the fourth (<code>Get MOL file</code>) involves searching <em>online</em> in a specific database for small molecules, and the last (<code>Open script</code>), the search for a file containing lines of <em>Jmol</em> code for a set of actions.</div>
+<div class="line-block">As textbooks cover small molecular structures, typically associated with the functional groups of <em>Inorganic and Organic Chemistry</em>, as well as specific examples in areas such as <em>Health, Biotechnology and Industry</em>, also including <em>some models of macromolecules</em>, it is concluded that you will most likely use remote search for small molecules (<em>Get MOL file</em>), molecules on your computer (<em>Open local file</em>), and/or biomacromolecules (<em>Get PDB file</em>).</div>
+<div class="line-block">Loading small molecules is <em>identical</em> to what was experienced by adding the model name to the end of the <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=water">JSmol</a> address. Remote loading for protein, enzyme and nucleic acid models involves knowing the <em>PDB code</em> of these, or searching for keywords on the <a href="https://www.rcsb.org">Protein Data Brookhaven</a> website.</div>
+<div class="line-block">Loading molecules stored on the PC involves a few steps, namely:</div>
+<ol type="1">
+<li><p>Obtain the molecule model from the Internet, or build it;</p></li>
+<li><p>Download the file corresponding to the model (usually with a *.mol, *.cif, *.cml, *.sdf attribute, among more than 60 formats);</p></li>
+<li><p>Load the <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=water">JSmol</a> page using two alternative methods:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> By clicking the mouse<span class="sc">:</span> File <span class="sc">-</span><span class="ot">-&gt;</span> Load <span class="sc">-</span><span class="ot">-&gt;</span> Open local file ;</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> By dragging the file from the folder where it is located to the JSmol tab <span class="cf">in</span> the browser.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!---insert some links to download molecules...there are several--->
+<div class="line-block">For example, let’s say you want to view the structure of <em>aspirin</em> downloaded to your computer.</div>
+<div class="reminder-markdown">
+<p><strong>Now it’s up to you:</strong></p>
+<ol type="1">
+<li>Access the Pubchem website: https://pubchem.ncbi.nlm.nih.gov/</li>
+<li>Type <code>aspirin</code> in the field and click on the 3D image that appears; 1. Download the model by clicking on <code>Download Coordinates</code>, and then clicking on the <code>SDF</code> option;</li>
+<li>Click on the 1st link to open the aspirin information Download the aspirin structural model from PubChem;</li>
+<li>Open the JSmol Console in the browser (right-click on the screen and select “Console”);</li>
+<li>Alternatively:</li>
+</ol>
+<ol type="a">
+<li>Locate the file on your PC by “File–&gt;Load–&gt;Open local file”, then clicking on “Load” to load it;</li>
+<li>Click on the downloaded file (“aspirin.sdf”, for example) and drag it directly to the JSmol window.</li>
+</ol>
+</div>
+<p><br>
+</p>
+<p><img src="aspirin.png" class="img-fluid" alt="Example of the aspirin model for downloading from PubChem."><br>
+### Loading the molecule via command line</p>
+<div class="line-block">Loading a particular model via the command line is limited to searching for it on the Internet, in a database or on <em>web</em> pages. To do this, open the <em>Console</em> as explained above. The top part is used to display the results of the commands, and the bottom part is used to type them. In this case, click on the bottom frame of the <em>Console</em> and type the loading command, exemplified here for an <em>alkane</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>alkane</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">The <em>Jmol</em> <em>Console</em>, although it is its own programming language for commands, has an interesting advantage over other programming languages: <em>it is possible to execute the command via the Console with both upper and lower case letters, and in both the singular and plural.</em></div>
+<div class="line-block">You can try with other molecules, such as <em>aspirin</em>, <em>cholesterol</em>, <em>phenol</em> etc (names in English, because of the database). To retrieve a command line that was written previously, simply <em>navigate between the commands that were used with the up and down arrows on the keyboard (command history)</em>.</div>
+<p>Molecular models are loaded from the <a href="https://cactus.nci.nih.gov/chemical/structure">Cactus - CADD Group Chemoinformatics Tools and User Services</a> database.</p>
+</section>
+<section id="loading-biopolymers-proteins-enzymes-nucleic-acids-via-the-command-line" class="level3">
+<h3 class="anchored" data-anchor-id="loading-biopolymers-proteins-enzymes-nucleic-acids-via-the-command-line">Loading biopolymers (proteins, enzymes, nucleic acids) via the command line</h3>
+<div class="line-block">As mentioned above, loading biological macromolecules occurs by identifying an alphanumeric code for the same in front of the <a href="https://www.rcsb.org/">PDB-Protein Data Bank</a> database. After obtaining this code, you can load the biopolymer via the <em>online link</em> or via the <em>Console</em>. But know that they are different instructions (and don’t ask me why?!):</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>By Console<span class="sc">:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>load<span class="ot">=</span>XXXX <span class="co"># where XXXX is the code of the macromolecule</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Note that the "$" sign is replaced by "=" for the PDB</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>By online link<span class="sc">:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>pdbid<span class="ot">=</span>XXXX</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Since the link is more "tricky", here is a complete example for bungarotoxin, a protein venom of snakes:</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># https://chemapps.stolaf.edu/jmol/jmol.php?&amp;pdbid=1ik8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">This can be illustrated by remotely loading the spike protein of the Sars-Cov-2 virus, as follows:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Access the PDB<span class="sc">-</span>Protein Data Bank website <span class="sc">-</span> https<span class="sc">:</span><span class="er">//</span>www.rcsb.org<span class="sc">/</span> ; <span class="fl">2.</span> In the search field, type <span class="st">"spike sars-cov-2"</span>;</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Select the <span class="dv">1</span>st <span class="fu">option</span> (the site will direct you to several structures of the spike protein);</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Memorize the code of the <span class="dv">1</span>st <span class="fu">option</span> (although any one will do), that is, <span class="st">"7FCD"</span>;</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Type the line to load the protein<span class="sc">:</span> <span class="st">"load=7FCD"</span> (it doesn<span class="st">'t matter if it'</span>s upper or lower case)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">The default representation for proteins in <em>Jmol</em> is wireframe. To visualize the virus protein in a more “friendly” way, and similar to what appears in texts or on the internet, type the commands below, your <strong>first sequence in programming language</strong>.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cartoon only <span class="co"># exclusive representation of the drawing of the structure of biopolymers</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>color chain <span class="co"># coloring by "chains" of the protein</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="spike.png" class="img-fluid figure-img"></p>
+<figcaption>Representation of the <em>spike</em> protein of the Sars-Cov-2 virus (coloring by number of chains).</figcaption>
+</figure>
+</div>
+<div class="line-block">Proteins, enzymes, nucleic acids, and macromolecular associations are more relevant to the study of structural <em>Biochemistry</em>. In this sense, I invite you to visit a part of the authorial <em>website</em> that has detailed descriptions and representations of biochemical structures with the help of <em>Jmol</em>, the <a href="https://bioquanti.netlify.app/">Bioquanti</a> website</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://bioquanti.netlify.app/"><img src="bioquanti.png" class="img-fluid figure-img"></a></p>
+<figcaption>Bioquanti, an authorial website for quantitative studies in Biochemistry, and which includes several molecular models for Jmol.</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="now-that-the-molecule-is-on-the-browser-page-what-can-i-do-with-it" class="level2">
+<h2 class="anchored" data-anchor-id="now-that-the-molecule-is-on-the-browser-page-what-can-i-do-with-it">Now that the molecule is on the browser page, what can I do with it?</h2>
+<div class="line-block">Sooooo many things!!!</div>
+<div class="line-block"><em>Jmol</em> has a <em>menu</em> with several operations, and hundreds of commands, and maybe another hundred tutorials on the internet. For more direct and immediate structural observations, however, the operations can be summarized as:</div>
+<ul>
+<li>Mouse movements (rotation, translation, <em>zoom</em>)</li>
+<li>Model representations (ball and sticks, filled space, wire)</li>
+<li>Colors (model and background)</li>
+<li>Measurements (distances and angles)</li>
+<li>Molecular characteristics (H-bonds, van der Waals cloud, partial and effective charge)</li>
+<li>Surfaces (molecular, electrostatic)</li>
+<li>Atom selection and visualization (water, hydrogen)</li>
+<li>Animations (zoom, automatic rotation), cuts</li>
+</ul>
+</section>
+<section id="saving-the-model-to-the-computer-or-mobile-device" class="level2">
+<h2 class="anchored" data-anchor-id="saving-the-model-to-the-computer-or-mobile-device">Saving the model to the computer or mobile device</h2>
+<div class="line-block">All actions performed with the molecule produce a new model that can be downloaded to the computer. And this is really cool because the modified molecule (with changes in colors, representations, animations, for example) can be uploaded to <em>Jmol</em> or <em>JSmol</em> (internet) as already mentioned. To do this, you can use mouse clicks or command lines, as follows:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Right<span class="sc">-</span>click on the screen <span class="ot">-&gt;</span> File <span class="ot">-&gt;</span> Save <span class="ot">-&gt;</span> Save as PNG<span class="sc">/</span>JMOL <span class="co"># by mouse</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>or...</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> write molecule_name.pngj <span class="co"># by command line in the Console</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block"><strong>One of the impressive features of Jmol is that by saving the molecule as PNG/JMOL, you can open the file as a static image with a double click, to just show the molecule, or drag the file to the Jmol window in the browser, where the three-dimensional and interactive structure of the model will be loaded!!! </strong></div>
+<p><br>
+</p>
+<div class="reminder-markdown">
+<p><strong>Now it’s up to you:</strong></p>
+<ol type="1">
+<li>Load a model for “phenol” by typing in the Console: <code>load $phenol</code></li>
+<li>Save the model by typing in the Console: `write fenol.pngj</li>
+<li>Change the orientation of the model randomly with the mouse (just move it around a little);</li>
+<li>Locate the file <code>phenol.pngj</code> on your computer;</li>
+<li>Open it as a normal figure, just to test;</li>
+<li>Now drag the file to the Jmol online window, and see if the model replaces the previous one (just check the orientation)</li>
+</ol>
+</div>
+<p><br>
+### Some movements in Jmol</p>
+<div class="line-block">To exemplify some actions, we will initially use the <em>vitamin C</em> model, loading it with the command below in the <em>Console</em>.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>ascorbate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="mouse-movements" class="level2">
+<h2 class="anchored" data-anchor-id="mouse-movements">Mouse movements</h2>
+<div class="line-block">For <em>rotation and translation of the model, as well as magnification</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>zoom <span class="sc">-</span> middle mouse button; <span class="cf">if</span> there is no button, Shift<span class="sc">+</span>left mouse button;</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>rotation <span class="sc">-</span> left mouse button</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>translation <span class="sc">-</span> Ctrl<span class="sc">+</span>right mouse button</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>rotation on the axis <span class="sc">-</span> Shift<span class="sc">+</span>right mouse button</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="model-representations" class="level2">
+<h2 class="anchored" data-anchor-id="model-representations">Model representations</h2>
+<div class="line-block">Representations refer to the visual aspect of the model (rendering), or its <em>style</em>. Thus, <em>Jmol</em> can render the model as <em>rod, wireframe, space-filled, ball and stick, trace, and cartoon</em> (all in English, of course - <em>cpk, wireframe, trace, cartoon</em>).</div>
+<div class="line-block">Try these styles, including the <code>only</code> option. This option allows the action not to be superimposed on the previous ones (in this case, the superimposition of the representations). To do this, copy, paste, and execute <strong>on each separate line</strong> the following code snippet in the <em>Jmol</em> <em>Console</em>, whose rendering illustrates the fluoxetine molecule.</div>
+<p><br>
+</p>
+<p><img src="fluoxetine_mapa.png" class="img-fluid" alt="Structure of fluoxetine. Source: MAPA: high school - 3rd Bim. 2nd Year, p.79. Natural sciences and their technologies."><br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>fluoxetine <span class="co"># load the molecule</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>wireframe only <span class="co"># wireframe style</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>cpk only <span class="co"># filled space</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>cpk <span class="dv">20</span> only, bond <span class="dv">1</span> <span class="co"># balls and sticks</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>cartoon only <span class="co"># cartoon representation, but that does not occur with small molecules, only with biomacromolecules (proteins, nucleic acids, for example)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Also note that the <code>cartoon</code> representation does not result in a rendering for the fluoxetine model. This is because <em>cartoon representation is restricted to biopolymers only, e.g., proteins and nucleic acids, and some supramolecular associations.</em></div>
+<div class="line-block">However, if you want to try the <code>cartoon</code>, you will need to know the alphanumeric code of a protein or nucleic acid. For example, for myoglobin, an oxygen transport protein in mammals (code: <em>1mcy</em>)</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>load<span class="ot">=</span><span class="dv">1</span>mcy <span class="co"># loading myoglobin</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: note that the command line for biopolymers is slightly different from the one used for small molecules</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Note that the default rendering for large molecules is <em>balls and sticks</em>, which is not very didactic for the learner. In this case, it can be represented as an exclusive drawing by typing:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cartoon only <span class="co"># rendering in drawing</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">To obtain this and other protein and nucleic acid codes, you must access the <a href="https://www.rcsb.org/">PDB - Protein Data Bank, RCSB</a> database and type the name in the search field (in this case, <code>myoglobin</code>). The system returns several structural models and their codes, and you just need to transcribe one of these codes to the <em>JSmol</em> <em>Console</em>.</div>
+<div class="line-block">If you would like to learn a little more about biomolecules and the use of <em>Jmol</em>, I invite you to visit our <a href="https://bioquanti.netlify.app/">Quantitative Biochemistry</a> portal. There you will also find other applications for <em>Jmol</em>, <em>R and RStudio</em>, as well as a program that simulates transformations of elements present in schemes (diagrams, flowcharts, pedigrees, networks and webs) by differences in luminance between the element and its predecessor/successor (<a href="https://bioquanti.netlify.app/uploads/sismabook/">SISMA - Autocatalytic Map System</a>).</div>
+</section>
+<section id="colors" class="level2">
+<h2 class="anchored" data-anchor-id="colors">Colors</h2>
+<div class="line-block">There is great flexibility of <a href="https://jmol.sourceforge.net/jscolors/">colors</a> for <em>Jmol</em> (and, consequently, for <em>JSmol</em>), both for the entire model, parts of the model (specific atoms or a set), and background. The default color display follows the <a href="https://en.wikipedia.org/wiki/CPK_coloring">CPK (Corey–Pauling–Koltun)</a> convention. Using the previous vitamin C model (<code>load $ascorbate</code>), try the following variation separately:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>color pink</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>color blue</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>color ligthgreen</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>background yellow <span class="co"># background color</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">The last command in the list above allows you to vary the background color.</div>
+<div class="line-block">Additionally, it is also possible to color the bonds between atoms, as follows:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>color bonds LightSeaGreen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">For a wide range of colors, you can consult the <a href="https://jmol.sourceforge.net/jscolors/">Jmol Colors</a> reference, or a more “chewed” <em>link</em>, authored by us when learning the program in higher education, the <a href="https://bioquanti.netlify.app/">Bioquanti</a> portal and, more specifically, the <a href="https://bioquanti.netlify.app/uploads/jmolbook/jmolquarto/comandos#cores-espec%C3%ADficas">colors topic for Jmol</a>.</div>
+</section>
+<section id="measurements" class="level2">
+<h2 class="anchored" data-anchor-id="measurements">Measurements</h2>
+<div class="line-block"><em>Jmol</em> allows you to calculate distances and angles in a molecular model. To exemplify this, it might be interesting to load a <em>water model</em> (<code>load $water</code>), and whose distances and angles are present in some Chemistry books.</div>
+<section id="for-distances" class="level3">
+<h3 class="anchored" data-anchor-id="for-distances">For distances</h3>
+<div class="line-block">In the example of the water molecule, to determine the distance of an O-H bond, for example, execute:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Double<span class="sc">-</span>click the mouse on the <span class="dv">1</span>st atom;</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Drag the mouse to the <span class="dv">2</span>nd atom;</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Click the mouse on the <span class="dv">2</span>nd atom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Experimenting with the distance of the O-H bond, the program returns the value of 0.097 nm, or 0.97 Angstroms, the conventional value for this type of covalent bond.</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="waterDist.png" class="img-fluid figure-img"></p>
+<figcaption>Measuring distance within the molecule.</figcaption>
+</figure>
+</div>
+</section>
+<section id="for-angles" class="level3">
+<h3 class="anchored" data-anchor-id="for-angles">For angles</h3>
+<div class="line-block">For the same water molecule, try to determine the bond angle:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Double<span class="sc">-</span>click the <span class="dv">1</span>st <span class="fu">atom</span> (e.g. H);</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Drag to the <span class="dv">2</span>nd <span class="fu">atom</span> (e.g. O); <span class="fl">3.</span> Click on the <span class="dv">2</span>nd atom;</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Drag to the <span class="dv">3</span>rd <span class="fu">atom</span> (e.g. the other H);</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Click on the <span class="dv">3</span>rd atom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Notice that the system returns the value of 114<span class="math inline">\(^{o}\)</span>, a value close to that predicted for the molecule (109.5<span class="math inline">\(^{o}\)</span>), or measured (104.5<span class="math inline">\(^{o}\)</span>). This approximation is a result of the construction of the water model.</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="waterAng.png" class="img-fluid figure-img"></p>
+<figcaption>Measuring angle inside the molecule.</figcaption>
+</figure>
+</div>
+<div class="line-block">To clear the measurements, use the command:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>measure off</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="molecular-characteristics" class="level2">
+<h2 class="anchored" data-anchor-id="molecular-characteristics">Molecular characteristics</h2>
+<div class="line-block">There are several tangible pieces of information for a molecular model in <em>Jmol</em>. For example, the most basic ones for the molecule of a component of <em>shoyo</em> sauce, glutamate:</div>
+<section id="charges" class="level3">
+<h3 class="anchored" data-anchor-id="charges">Charges</h3>
+<div class="line-block">Sometimes it may be interesting to present the polarity of molecules as a function of their charge distribution. In <em>Jmol</em> there are two types of charges, <em>effective charge (<code>formaCharge</code>) and partial charge (<code>partialcharge</code>)</em>. We can illustrate the charge distribution in a surfactant molecule, such as hexadecanoate.</div>
+<p><img src="hexadecanoate_mapa.png" class="img-fluid" alt="Example of a 16-carbon surfactant, hexadecaenoic acid. Source: MAPA: high school - 3rd Bim. 3rd Year, p.63. Natural sciences and their technologies.">.</p>
+<div class="line-block">To do this, type the following commands in the <em>Console</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>hexadecanoate</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>calculate partialCharge <span class="co"># calculation of partial charges of the model</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>label %P <span class="co"># presentation of charges (labeling)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">A feature of <em>Jmol</em> that makes it more efficient in executing its actions is the sequential arrangement of commands. This way, it is not necessary to press <em>Enter</em> for each command, simply separate the commands with a semicolon (<em>;</em>) as illustrated below, to calculate the partial charges of the glutamate molecule:</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="glu.png" class="img-fluid figure-img"></p>
+<figcaption>Display of partial charges in the glutamate model, a component of Shoyo sauce, also illustrating a sequence of actions in Jmol.</figcaption>
+</figure>
+</div>
+<div class="line-block">In the same way, it is possible to illustrate the obtaining of <em>formal charges</em> in the model. In this case, transparent coloring was added to better visualize the negative unitary charge of the carboxylic acid:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>calculate formalcharges <span class="co"># calculation of partial charges of the model</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>label %C <span class="co"># presentation of charges (labeling)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="gluFormal.png" class="img-fluid figure-img"></p>
+<figcaption>Illustration of the commands in sequence to visualize formal charges in the glutamate molecule.</figcaption>
+</figure>
+</div>
+<div class="line-block">Note that the commands in the figure mix upper and lower case letters, unlike the command line that precedes it. This is a <strong>really cool feature of <em>Jmol</em>, which doesn’t care about the capitalization or not of the font</strong>. In other words, it doesn’t matter if it’s lower case, upper case or a combination of both; <em>Jmol</em> executes the action in the same way.</div>
+<section id="scripts-reproducible-teaching" class="level4">
+<h4 class="anchored" data-anchor-id="scripts-reproducible-teaching">Scripts &amp; Reproducible Teaching</h4>
+<div class="line-block">The example above shows a simple way to concatenate commands, facilitating the automatic and sequential execution of a set of these. However, the visualization of the command line is somewhat impaired by the separation by <em>“;”</em>, which can cause visual pollution when there are several commands.</div>
+<div class="line-block">The workaround involves the arrangement of the commands in the format of a <em>script</em>. This is nothing more than a code snippet containing one command per line, which improves the visualization of the code as a whole. In addition, the <em>script</em> has the additional advantage of inserting comments between the command lines, also allowing for better appropriation of the code and its learning.</div>
+<div class="line-block">These characteristics of a <em>command per line with explanatory comments</em> give <em>Jmol</em> its aspect for <em>programming</em> sequential actions, and consequently establishes one of the basic premises for <em>Reproducible Teaching</em>: writing code snippets in unitary commands per line, written as in a notepad, and with comments about the program’s actions on each line.</div>
+<p>As an example for a <em>script</em> involving the actions for glutamate above, just copy the snippet below and paste it into the <em>JSmol</em> <em>Console</em>, and run it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>glu <span class="co"># micromolecule loading</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>wireframe only <span class="co"># exclusive rendering of rods</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>calculate partialCharge <span class="co"># partial charge</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>label %P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Another aspect inherent to the <em>Reproducible Teaching</em> initiative lies in the <em>possibility of evaluating the code with some changes</em>, aiming for a slightly modified final product. Try repeating the snippet above, but for effective charges, that is:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>glu <span class="co"># micromolecule loading</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>cpk only <span class="co"># exclusive rendering by filled space</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>calculate formalCharge <span class="co"># effective charge</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>label %C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Additionally, it is possible to act by changing more code commands, in order to create a result completely different from the original. This defines another characteristic of <em>Reproducible Teaching</em>, namely, the <em>creation of a code snippet</em>. As an illustration, here is a snippet based on the previous one, but for energy minimization and restructuring of the molecule’s orbitals.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>glu <span class="co"># micromolecule loading</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>cpk only <span class="co"># exclusive rendering by filled space</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>minimize <span class="co"># command for minimizing the structure's energy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="molecular-characteristics-1" class="level2">
+<h2 class="anchored" data-anchor-id="molecular-characteristics-1">Molecular characteristics</h2>
+<div class="line-block">Sometimes it is also interesting to introduce the class to the concept of <em>weak forces</em> that permeate molecular interactions, as illustrated below.</div>
+<p>![<a href="interacao_mapa.png">Some weak forces in molecular interaction. Source: MAPA: high school - 2nd Bim. 1st Year, p.75. Natural sciences and their technologies.</a></p>
+<div class="line-block">In addition to structural prediction for <em>partial charge and formal charge</em>, <em>Jmol</em> also allows highlighting <em>weak forces</em> in the model, such as <em>van der Waals cloud</em> and <em>hydrogen bonds</em>, as follows.</div>
+<section id="van-der-waals-cloud" class="level3">
+<h3 class="anchored" data-anchor-id="van-der-waals-cloud">Van der Waals cloud</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dots on <span class="co"># van der Waals cloud on the atoms of the model (removed with "dots off")</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>calculate hbonds <span class="co"># identifies hydrogen bonds in the model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">To illustrate, copy and paste the following excerpt into the <em>Console</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>water</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>dots on <span class="co"># van der Waals cloud in the water structure</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>dots ionic <span class="co"># ionic cloud on the model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="vanderwaals.png" class="img-fluid figure-img"></p>
+<figcaption>Exemplifying the superposition of van der Waals clouds on the atoms of the water molecule.</figcaption>
+</figure>
+</div>
+<p><img src="ionic.png" class="img-fluid" alt="Illustrating the ionic cloud representation for the water model."><br>
+### Hydrogen bonds<br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>load<span class="ot">=</span><span class="dv">1</span>djf <span class="co"># load a peptide model</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>calculate hbonds <span class="co"># show the H bonds present in the structure</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<img src="ligacoesH.png" class="img-fluid" alt="Exemplifying hydrogen bonds in a peptide model."></p>
+</section>
+</section>
+<section id="surfaces" class="level2">
+<h2 class="anchored" data-anchor-id="surfaces">Surfaces</h2>
+<div class="line-block">In addition to the van der Walls surface (<em>dots on</em>) seen above, <em>Jmol</em> is capable of representing some surfaces for molecular models. The larger the molecule, the greater the internal calculation to generate the surface, which can make it difficult to visualize. Thus, illustrating a simple command for the surface of a water molecule:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>isosurface molecular <span class="co"># molecular surface that includes the solvent</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="isosurfMolec.png" class="img-fluid figure-img"></p>
+<figcaption>Molecular surface for the water model.</figcaption>
+</figure>
+</div>
+</section>
+<section id="some-animations-with-jmol" class="level2">
+<h2 class="anchored" data-anchor-id="some-animations-with-jmol">4 - Some animations with Jmol</h2>
+<div class="reminder-objetivos">
+<p>Objectives:<br>
+1. Understand a molecule animation as a script<br>
+2. Use the Console to animate molecules<br>
+</p>
+</div>
+</section>
+<section id="animate-the-molecules." class="level2">
+<h2 class="anchored" data-anchor-id="animate-the-molecules.">Animate the molecules.</h2>
+<div class="line-block">And we come to this last part of the <em>Course</em> with <em>Jmol</em>, to present a very interesting didactic-pedagogical effect of the program: <em>molecule animation</em>.</div>
+<div class="line-block">You may want to show a molecule with different styles during a certain period, or make a slow transition between colors in specific atoms, or even controlled enlargement, reduction, or rotation effects. And many others that imagination and technical rigor allow for study.</div>
+<div class="line-block">In these cases, it is interesting to know and apply a few animation commands explained below. The examples were selected in order to simplify each command. But do not be fooled about the capacity of <em>Jmol</em>, because for each command there are always several complementary options. And if you want to know something about any <em>Jmol</em> command, visit the <a href="https://chemapps.stolaf.edu/jmol/docs/"><em>reference</em> site</a>.</div>
+<section id="spin" class="level3">
+<h3 class="anchored" data-anchor-id="spin">Spin</h3>
+<div class="line-block">Simple command for rotating the molecule.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>glucose; spin <span class="dv">30</span> <span class="co"># the value refers to the rotation speed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="zoomto-resizing-the-size" class="level3">
+<h3 class="anchored" data-anchor-id="zoomto-resizing-the-size">ZoomTo (resizing the size)</h3>
+<div class="line-block">This command is impressive, because it allows a controlled enlargement or reduction in time. Its syntax is:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span>zoomTo<span class="sc">*</span> <span class="er">:</span> <span class="fu">time</span> (optional expression) size</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Examples:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Zoom <span class="cf">in</span> <span class="dv">3</span>x, half a second at a time<span class="sc">:</span> zoomto <span class="fl">0.5</span> <span class="sc">*</span><span class="dv">3</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>Zoom <span class="cf">in</span> <span class="dv">4</span>x, half a second at a time<span class="sc">:</span> zoomto <span class="fl">0.5</span> <span class="dv">400</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>Focus on a biopolymer ligand at <span class="dv">2</span>x magnification<span class="sc">:</span> zoomto <span class="dv">2</span>(ligand) <span class="dv">0</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>Focus on a biopolymer ligand at <span class="dv">4</span>x magnification, half a second at a time<span class="sc">:</span> zoomto <span class="fl">0.5</span>(ligand)<span class="sc">*</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="delay" class="level3">
+<h3 class="anchored" data-anchor-id="delay">Delay</h3>
+<div class="line-block">This is a <strong>key command</strong> for any animation, as it allows the image of the molecule in <em>Jmol</em> to pause (in seconds) before the next action. It is normally used in the sequence of commands by the <em>Console</em>, throughout a <em>script</em>.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>delay <span class="dv">3</span> <span class="co"># wait 3 seconds before the next action</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">We can try an animation with the commands above together with the cyclohexanol model.</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ciclohexanol_mapa.png" class="img-fluid figure-img"></p>
+<figcaption>Structure of cyclohexanol. Source: MAPA: high school - 2nd Bim. 3rd Year, p.57. Natural sciences and their technologies.</figcaption>
+</figure>
+</div>
+<div class="line-block">Here is a code snippet for you to try animations with <em>Jmol</em>. Just copy and paste it into the <em>Console</em> and run it. If you prefer any modifications, it is better to copy it to a notepad, modify and test the <em>script</em> in the <em>Console</em>.</div>
+<div class="reminder-markdown">
+<p><strong>Now it’s your turn:</strong></p>
+<p>load $cyclohexanol<br>
+delay 2<br>
+spin Y 70<br>
+delay 2<br>
+spin off<br>
+zoomTo 2 *2<br>
+cpk<br>
+delay 2<br>
+color transparent<br>
+zoomTo 2 *0.5<br>
+spin 50</p>
+</div>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

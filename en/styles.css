@@ -1,215 +1,211 @@
+/* =========================================================
+   BIOQUANTI • styles.css (TEMA INOX CLEAN)
+   Baseado no seu CSS antigo, porém:
+   - remove arco-íris de navbar/sidebar
+   - mantém efeitos e estrutura
+   - aplica visual inox (clean)
+   ========================================================= */
 
-/* HIPERLINKS */
 
-/* estilo para links normais */
-a {
-  color: #0055aa;             /* cor padrão do link */
-  font-family: "Roboto", sans-serif;  /* ou qualquer fonte desejada */
-  text-decoration: underline; /* ou 'none', 'dotted', etc. */
+/* =========================
+   VARIÁVEIS (paleta inox)
+   ========================= */
+:root{
+  --bg: #eef1f4;
+  --surface: rgba(255,255,255,.72);
+  --surface-strong: rgba(255,255,255,.88);
+  --text: #1f2937;
+  --muted: #6b7280;
+
+  --accent: #2f6f91;     /* azul-acinzentado */
+  --accent-2: #1e4f6b;
+
+  --border: rgba(17,24,39,.12);
+  --border-2: rgba(17,24,39,.08);
+
+  --shadow-sm: 0 4px 14px rgba(17,24,39,.08);
+  --shadow: 0 10px 26px rgba(17,24,39,.10);
 }
 
-/* estilo para links ao passar o mouse (hover) */
-a:hover {
-  color: #ff6600;
-  text-decoration: underline dotted;    /* incluindo os de menu da navbar */
+
+/* =========================
+   FUNDO “INOX / BRUSHED”
+   ========================= */
+body{
+  color: var(--text);
+  background:
+    radial-gradient(1200px 650px at 20% 0%,
+      rgba(255,255,255,.92) 0%,
+      rgba(255,255,255,.58) 42%,
+      rgba(255,255,255,0) 72%),
+    linear-gradient(135deg, #f2f5f8 0%, #dde3ea 45%, #f6f8fb 100%),
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,.06) 0px,
+      rgba(255,255,255,.06) 1px,
+      rgba(0,0,0,.02) 2px,
+      rgba(0,0,0,.02) 3px);
+  background-attachment: fixed;
 }
 
 
-/* Cores de Fontes */
-
-.fonte-verde {
-  color: seagreen;
+/* =========================
+   HIPERLINKS (mais sóbrio)
+   ========================= */
+a{
+  color: var(--accent);
+  font-family: "Roboto", sans-serif;
+  text-decoration: underline;
+  text-decoration-color: rgba(47,111,145,.35);
+  text-underline-offset: 3px;
+  transition: color .15s ease, text-decoration-color .15s ease;
 }
 
-.fonte-azul {
-  color: royalblue;
+a:hover{
+  color: var(--accent-2);
+  text-decoration: underline dotted;
+  text-decoration-color: rgba(30,79,107,.65);
 }
 
-.fonte-vermelha {
-  color: firebrick;
-}
 
-.fonte-destaque {
-  color: darkorange;
-  font-weight: bold;
-}
+/* =========================
+   CLASSES DE FONTE (mantidas)
+   ========================= */
+.fonte-verde { color: seagreen; }
+.fonte-azul { color: royalblue; }
+.fonte-vermelha { color: firebrick; }
+.fonte-destaque { color: darkorange; font-weight: bold; }
+.fonte-branca { color: white; }
 
-.fonte-branca {
-  color: white;
-}
 
-/* ############ RODAPÉ DE REFERÊNCIAS ############### */
-
-.quarto-footnotes {
+/* =========================
+   RODAPÉ DE REFERÊNCIAS
+   ========================= */
+.quarto-footnotes{
   background-color: transparent !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(17,24,39,.12) !important;
   padding-top: 1rem;
   font-size: 0.9em;
-  color: inherit;
+  color: var(--muted);
 }
 
 
-/* ##################### LOGO DO SITE #######
-
-/* Aumenta o tamanho do logo da navbar */
-.navbar-brand {
-  height: 32px !important;  /* ou 40px, 48px, etc. */
+/* =========================
+   LOGO DO SITE (mantido)
+   ========================= */
+.navbar-brand{
+  height: 32px !important;
   margin-right: 0px;
-  margin-left: 0px !important;    /* Remove espaço à esquerda */
-  margin-right: 0.5rem !important;  /* Pequeno respiro à direita, opcional */
+  margin-left: 0px !important;
+  margin-right: 0.5rem !important;
   padding-left: 0 !important;
 }
 
 
-/* ################ NAVBAR (menu de navegação) ##################*/
+/* =========================
+   NAVBAR (inox + clean)
+   ========================= */
 
-/* ################ Separação de ítens ############*/
+/* background + borda + blur */
+.navbar{
+  background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(245,248,251,.76)) !important;
+  border-bottom: 1px solid var(--border) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
-.navbar-nav .dropdown-menu li:not(:last-child) {
-  border-bottom: 1px solid #379CD4;
-}
-
-/* ############## Cores de separação ########*/
-
-
-/* Aplica uma cor diferente aos itens da navbar, por ordem */
-.navbar-nav > li:nth-child(1) > a {
-  background-color: #379CD4; /* azul escuro - Ensino Superior */
-  color: white !important;
-}
-
-.navbar-nav > li:nth-child(2) > a {
-  background-color: #379CD4; /* azul escuro - Ensino Superior */
-  color: white !important;
-}
-
-.navbar-nav > li:nth-child(3) > a {
-  background-color: #379CD4 ; /* azul escuro - Ensino Superior */
-  color: white !important;
-}
-
-.navbar-nav > li:nth-child(4) > a {
-  background-color: #379CD4 ; /* azul escuro - Ensino Superior */
-  color: white !important;
-}
-
-.navbar-nav > li:nth-child(5) > a {
-  background-color: #379CD4; /* laranja - Ensino Básico */
-  color: white !important;
-}
-
-
-
-/* Bordas entre seções */
-.navbar-nav > li:nth-child(5) {
-  border-left: 2px solid white;
-}
-
-/* ###############################################################*/
-/* Se quiser mudar apenas os links da navbar */
-.navbar a {
-  color: lightgrey !important;    /* Rótulos dos menus (navbar) */
-  text-decoration: bold;
-}
-
-/* Ao passar o mouse */
-.navbar a:hover {
-  color: #E57145 !important;
- /* text-decoration: underline; */
-}
-
-/* DESLOCAMENTO DA NAVBAR */
-
-/* Desloca os menus da navbar para a direita em 100px */
-.navbar-collapse {
-  margin-left: 2rem;
-
-}
-
-
-
-/* ########## HOVER mais destacado na navbar ##########
-
-/* Navbar - Estilo base */
-.navbar-nav > li > a {
-  font-weight: bold;
-  padding: 10px 16px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease-in-out;
-}
-
-
-/* Itens laranja - hover mais escuro */
-.navbar-nav > li:nth-of-type(1):hover > a,
-.navbar-nav > li:nth-of-type(2):hover > a,
-.navbar-nav > li:nth-of-type(3):hover > a,
-.navbar-nav > li:nth-of-type(4):hover > a,
-.navbar-nav > li:nth-of-type(5):hover > a {
-  background-color: #cc4d1f !important; /* laranja escuro */
-  color: white !important;
-}
-
-
-/* ## Menu suspenso (dropdown) da NAVBAR  #####
-
-/* Itens do menu suspenso da navbar */
-.navbar .dropdown-menu a {
-  color: #E57145 !important;       /* cinza escuro */
-  font-weight: 500;
-  background-color: #E3E3E3;   /* cor de fundo do dropdown */
-}
-
-/* Efeito hover */
-.navbar .dropdown-menu a:hover {
-  color: #E57145 !important;       /* preto */
-  background-color: #2c3e50 !important;
-}
-
-/* ############### Background da navbar ############
-
-/* Cor de fundo da barra de navegação (navbar) */
-.navbar {
-  background-color: #2c3e50 !important; /* exemplo: azul petróleo escuro */
-}
-
-/* Se quiser mudar a cor da borda inferior */
-/* .navbar, .navbar.navbar-expand-lg {
-/*  border-bottom: 2px solid #ffcc00; /* linha amarela opcional */
-/*} 
-
-/* Espessura da barra de navegação */
-
-.navbar {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  height: 64px !important;     /* ou 72px, 80px, etc. */
-  min-height: 40px; /* Altura mínima */
+  height: 64px !important;
+  min-height: 40px;
 }
 
-/* ############## LOGO DO SITE ################# */
-
+/* fonte/tamanho do logo + links */
 .navbar-brand,
-.navbar-nav .nav-link {
+.navbar-nav .nav-link{
   padding-top: 0.1rem;
   padding-bottom: 0.1rem;
-  font-size: 1.1rem; /* tamanho de fonte */
-}
-/* 1rem	padrão (16px)
-1.1rem	~17.6px
-1.2rem	~19.2px
-1.3rem	~20.8px */
-
-/* ############ DISTÂNCIA DE ÍCONES DA NAVBAR - DIREITA ###### */
-
-.navbar .navbar-collapse .navbar-nav:last-child {
-  margin-right: 1rem;  /* ou 20px, 32px, etc. */
+  font-size: 1.1rem;
 }
 
+/* deslocamento da navbar */
+.navbar-collapse{
+  margin-left: 2rem;
+}
 
-/* ########### TAMANHO DA PÁGINA (para ajuste do sidebar) #################
+/* distância do último grupo à direita */
+.navbar .navbar-collapse .navbar-nav:last-child{
+  margin-right: 1rem;
+}
 
-/* Força o container principal a usar largura total da janela */
-.body-container {
+/* links da navbar (uniformes, sem arco-íris) */
+.navbar a{
+  color: var(--text) !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* itens base */
+.navbar-nav > li > a{
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent !important;
+  transition: background-color .15s ease, border-color .15s ease, transform .05s ease;
+}
+
+/* hover */
+.navbar-nav > li > a:hover,
+.navbar-nav > li > a:focus{
+  background: rgba(47,111,145,.10) !important;
+  border-color: rgba(47,111,145,.25) !important;
+  color: var(--accent-2) !important;
+}
+
+/* click */
+.navbar-nav > li > a:active{
+  transform: translateY(1px);
+}
+
+/* separação entre seções (mantém sua ideia, só que discreto) */
+.navbar-nav > li:nth-child(6){
+  border-left: 1px solid rgba(17,24,39,.12);
+  padding-left: 8px;
+}
+
+/* dropdown (menu suspenso) */
+.navbar .dropdown-menu{
+  background: rgba(255,255,255,.92) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-sm);
+  border-radius: 10px;
+  padding: 6px;
+}
+
+/* separador entre itens do dropdown */
+.navbar-nav .dropdown-menu li:not(:last-child){
+  border-bottom: 1px solid rgba(47,111,145,.18);
+}
+
+/* links do dropdown */
+.navbar .dropdown-menu a{
+  color: var(--text) !important;
+  font-weight: 600;
+  background-color: transparent !important;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+/* hover dropdown */
+.navbar .dropdown-menu a:hover{
+  background: rgba(47,111,145,.12) !important;
+  color: var(--accent-2) !important;
+}
+
+
+/* =========================
+   LARGURA / CONTAINER (mantido)
+   ========================= */
+.body-container{
   max-width: 100% !important;
   width: 100% !important;
   margin: 0 auto !important;
@@ -219,284 +215,88 @@ a:hover {
 }
 
 
+/* =========================
+   SIDEBAR (inox clean)
+   ========================= */
 
-/* ######################  SIDEBAR (menu lateral)  ##################### */
-
-/*  Cores de blocos e plano de fundo individuais
-
-/*  BLOCO 1: JSPLOTLY */
-/* Fundo laranja com links azuis e hover laranja escuro */
-.sidebar-item-section:nth-of-type(1) {
-  background-color: #E57145 !important; /* laranja */
-  color: white;
-  border-radius: 4px;
-  padding: 2px;
-  margin-bottom: 4px;
-}
-
-.sidebar-item-section:nth-of-type(1) .sidebar-section-title {
-  background-color: #2a6fb3 !important;  /* azul escuro no título apenas */
-  color: white !important;
-  font-weight: bold;
-  padding: 6px 10px;
-  border-radius: 4px;
-}
-
-.sidebar-item-section:nth-of-type(1) a {
-  background-color: #379CD4 !important;  /* azul */
-  color: white !important;
-  display: block;
-  padding: 6px 10px;
-  margin-bottom: 4px;
-  border-radius: 4px;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.sidebar-item-section:nth-of-type(1) a:hover {
-  background-color: #cc4d1f !important;  /* laranja escuro */
-  color: white !important;
-}
-
-
-
-/* BLOCO 2: JMOL */
-.sidebar-item-section:nth-of-type(2) {
-  background-color: #379CD4 !important;
-  border-radius: 10px;
-  padding: 2px; /* mesmo padding do bloco 1 */
-  margin-bottom: 4px;
-}
-
-.sidebar-item-section:nth-of-type(2) .sidebar-section-title {
-  background-color: #c6541d !important;
-  color: white !important;
-  font-weight: bold;
-  padding: 6px 10px;
-  border-radius: 6px;
-}
-
-.sidebar-item-section:nth-of-type(2) a {
-  background-color: #E57145 !important;
-  color: white !important;
-  display: block;
-  padding: 6px 10px;          /* igual ao bloco 1 */
-  margin-bottom: 4px;         /* igual ao bloco 1 */
-  border-radius: 4px;         /* igual ao bloco 1 */
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.sidebar-item-section:nth-of-type(2) a:hover {
-  background-color: #1e4e79 !important;
-  color: white !important;
-}
-
-
-/* BLOCO3:  R & RSTUDIO */
-
-/* Fundo laranja com links azuis e hover laranja escuro */
-.sidebar-item-section:nth-of-type(3) {
-  background-color: #E57145 !important; /* laranja */
-  color: white;
-  border-radius: 4px;
-  padding: 2px;
-  margin-bottom: 4px;
-}
-
-.sidebar-item-section:nth-of-type(3) .sidebar-section-title {
-  background-color: #2a6fb3 !important;  /* azul escuro no título apenas */
-  color: white !important;
-  font-weight: bold;
-  padding: 6px 10px;
-  border-radius: 4px;
-}
-
-.sidebar-item-section:nth-of-type(3) a {
-  background-color: #379CD4 !important;  /* azul */
-  color: white !important;
-  display: block;
-  padding: 6px 10px;
-  margin-bottom: 4px;
-  border-radius: 4px;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.sidebar-item-section:nth-of-type(3) a:hover {
-  background-color: #cc4d1f !important;  /* laranja escuro */
-  color: white !important;
-}
-
-
-/* BLOCO 4: SISMA */
-
-
-.sidebar-item-section:nth-of-type(4) {
-  background-color: #379CD4 !important;
-  border-radius: 10px;
-  padding: 2px; /* mesmo padding do bloco 1 */
-  margin-bottom: 4px;
-}
-
-.sidebar-item-section:nth-of-type(4) .sidebar-section-title {
-  background-color: #c6541d !important;
-  color: white !important;
-  font-weight: bold;
-  padding: 6px 10px;
-  border-radius: 6px;
-}
-
-.sidebar-item-section:nth-of-type(4) a {
-  background-color: #E57145 !important;
-  color: white !important;
-  display: block;
-  padding: 6px 10px;          /* igual ao bloco 1 */
-  margin-bottom: 4px;         /* igual ao bloco 1 */
-  border-radius: 4px;         /* igual ao bloco 1 */
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.sidebar-item-section:nth-of-type(4) a:hover {
-  background-color: #1e4e79 !important;
-  color: white !important;
-}
-
-
-/*  BLOCO 5: SCRIPTRPLOT */
-
-/* Fundo laranja com links azuis e hover laranja escuro */
-.sidebar-item-section:nth-of-type(5) {
-  background-color: #E57145 !important; /* laranja */
-  color: white;
-  border-radius: 4px;
-  padding: 2px;
-  margin-bottom: 4px;
-}
-
-.sidebar-item-section:nth-of-type(5) .sidebar-section-title {
-  background-color: #2a6fb3 !important;  /* azul escuro no título apenas */
-  color: white !important;
-  font-weight: bold;
-  padding: 6px 10px;
-  border-radius: 4px;
-}
-
-.sidebar-item-section:nth-of-type(5) a {
-  background-color: #379CD4 !important;  /* azul */
-  color: white !important;
-  display: block;
-  padding: 6px 10px;
-  margin-bottom: 4px;
-  border-radius: 4px;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.sidebar-item-section:nth-of-type(5) a:hover {
-  background-color: #cc4d1f !important;  /* laranja escuro */
-  color: white !important;
-}
-
-
-
-/* Acomodação ################## */
-
-/* Garante que o container principal use flexbox horizontal */
-.body-container {
-  display: flex;
-  flex-direction: row;
-}
-
-/* Sidebar na esquerda */
-.sidebar {
+/* garante sidebar à esquerda */
+.sidebar{
   order: -1;
   min-width: 250px;
   max-width: 300px;
-  margin-right: 1.5rem;  /* espaço entre sidebar e conteúdo */
+  margin-right: 1.5rem;
+  border-right: 1px solid rgba(17,24,39,.10);
+  border-left: none;
+  background-color: transparent !important;
+  box-shadow: none !important;
 }
 
-/* Ajustar o conteúdo para ocupar o restante */
-main.content {
+/* conteúdo ocupa o resto */
+main.content{
   flex: 1;
-  padding-left: 0;  /* remove qualquer recuo adicional */
+  padding-left: 0;
+  margin-left: 10px !important;
+  max-width: none;
 }
 
-/* Ajuste estéticos
-
-.sidebar .quarto-title-block {
-  display: none; /* oculta título duplicado */
-}
-
-.sidebar .sidebar-item-container {
-  background-color: #f26930;
-  border-radius: 12px;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  color: #379CD4;
-}
-
-.sidebar a {
-  color: white;
-  text-decoration: none;   /* cor da fonte do side bar */
-  font-weight: none;
-}
-
-.sidebar a:hover {
-  color: #E3E3E3;
-  text-decoration: underline;
-}
-
-
-/*#############################################################
-
-/* Plano de Fundo pro Sidebar */
-.sidebar-item {
-  background-color:  #E57145 ;
-  color:#E3E3E3;                   /* fundo laranja e hover cinza */
-  border-radius: 10px;
-  padding: 0px;
-}
-
-/* Altera a cor de fundo da coluna lateral esquerda */
-.sidebar, .quarto-sidebar, .nav-sidebar, .card, .menu-section {
-  background-color: #E3E3E3 !important; /* cor de fundo ao redor da sidebar */
+/* “área ao redor” da sidebar (antes cinza fixo): agora neutro */
+.sidebar, .quarto-sidebar, .nav-sidebar, .card, .menu-section{
+  background-color: transparent !important;
   border: none;
 }
 
-
-/* #########  Deslocamento ########################*/ 
-/* Mover a sidebar para a esquerda */
-.sidebar {
-  order: -1;
-  border-right: 1px solid #ccc;
-  border-left: none;
+/* bloco padrão (sem nth-of-type colorido) */
+.sidebar-item-section{
+  background: var(--surface) !important;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
 }
 
-/* Ajustes adicionais para que o conteúdo se comporte bem */
-.body-container {
-  display: flex;
-  flex-direction: row;
+/* título de cada seção */
+.sidebar-item-section .sidebar-section-title{
+  background: rgba(255,255,255,.65) !important;
+  color: var(--text) !important;
+  font-weight: 800;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-2);
+}
+
+/* links dentro */
+.sidebar-item-section a{
+  background: transparent !important;
+  color: var(--accent-2) !important;
+  display: block;
+  padding: 7px 10px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+/* hover links sidebar */
+.sidebar-item-section a:hover{
+  background: rgba(47,111,145,.10) !important;
+  border-color: rgba(47,111,145,.20) !important;
 }
 
 
-/* ########## PLANO DE FUNDO TRANSPARENTE PARA AS PÁGINAS ##########
-
-/* ########## PLANO DE FUNDO TRANSPARENTE PARA AS PÁGINAS PRINCIPAIS ##########
-
-/* Aplica a imagem de fundo só no lado esquerdo (área da sidebar) */
-.page-columns {
-  position: relative; /* importante para o ::before funcionar corretamente */
+/* =========================
+   FUNDO COM IMAGEM (opcional)
+   Mantive sua imagem, mas mais “inox”
+   ========================= */
+.page-columns{
+  position: relative;
   z-index: 0;
 }
 
-/* ########################## */
-/* PLANO DE FUNDO VISÍVEL E NÍTIDO */
-/* Substitui o antigo bloco que expandia verticalmente a imagem */
-/* ########################## */
-
-.page-columns::before {
+.page-columns::before{
   content: "";
   position: absolute;
   top: 0;
@@ -504,311 +304,180 @@ main.content {
   width: 100%;
   height: 100%;
 
-  /* Imagem original */
   background-image: url("static/img/fundo-geral.png");
-
-  /* Evita repetição */
   background-repeat: no-repeat;
-
-  /* Mantém proporção e mostra toda a imagem */
   background-size: contain;
-
-  /* Alinhamento da imagem */
   background-position: top left;
 
-  /* Ajuste de transparência (0 = invisível, 1 = opaco) */
-  opacity: 0.2;
-
-  /* Garante que fique atrás do conteúdo */
+  opacity: 0.10;         /* ↓ mais discreto que 0.2 */
+  filter: grayscale(1);  /* “inox” */
   z-index: -1;
 }
 
 
-/* #### atrás do sidebar
-
-/* Remove o fundo cinza da área lateral */
-.sidebar {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-
-/* ##################################
-
-/* ############ LARGURA DA BARRA LATERAL ############### */
-
-
-/* Garante que o conteúdo principal se desloque corretamente */
-main.content {
-  margin-left: 10px !important; /* DISTÂNCIA DA BORDA PARA O TEXTO DA PÁGINA PRINCIPAL */
-  max-width: none;
-}
-
-
-/* ###############  RODAPÉ  #################### */
-
-/* Altera o fundo e a cor do texto no rodapé */
-.footer, .page-footer, .quarto-page-footer {
-  background-color: #1e2d3d; /* cor de fundo: cinza escuro, por exemplo */
-  color: #f0f0f0 !important; /* cor do texto: quase branco */
+/* =========================
+   RODAPÉ (mantido, mais neutro)
+   ========================= */
+.footer, .page-footer, .quarto-page-footer{
+  background-color: #1e2d3d;
+  color: #f0f0f0 !important;
   padding: 1rem 2rem;
 }
 
 
+/* =========================
+   QUADROS / CAIXAS DO ERRE
+   (mantidos, só desaturados)
+   ========================= */
 
-/*##############################################################################*/
-
-/* ESTILOS DE PLANO DE FUNDO E QUADROS DO SITE ERRE  /*
-
-
-/* Quadro de atividades*/
-
-.reminder-markdown {
-    background-color: #ffeb99; /* Fundo amarelo claro */
-    padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #f0ad4e; /* Barra lateral laranja */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 20px;       /* Espaçamento inferior */
+/* Quadro de atividades */
+.reminder-markdown{
+  background-color: #f6e8b2;
+  padding: 15px;
+  border-left: 5px solid rgba(240,173,78,.85);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
 }
 
-/*Quadro de objetivos*/
-
-.reminder-objetivos {
-    background-color: #b4e7ae; /* Fundo  */
-    padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #b4e7ae  /* Barra lateral */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 20px;       /* Espaçamento inferior */
-}
-
-/* Plano de Fundo 
-body {
-  background: linear-gradient(-45deg, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-}
-
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-*/
-
-
-
-/* Plano de fundo de áreas e ODR*/
-
-.mat-fundo {
-  background-color: #A9D0F5; /* Azul Claro Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #2f58d0 /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-.fis-fundo {
-  background-color: #D0E1F5; /* Cinza Azulado Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #44bbae; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-.quim-fundo {
-   background-color: #D0F5A9; /* Fundo*/
-    padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #00FF7F; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
+/* Quadro de objetivos */
+.reminder-objetivos{
+  background-color: #d7f0d4;
+  padding: 15px;
+  border-left: 5px solid rgba(77,162,95,.65);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
 }
 
 
-.biol-fundo {
-  background-color: #A9F5D0; /* Verde Menta Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #00ff98; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
+/* =========================
+   FUNDOS POR ÁREA (mantidos)
+   (cores suavizadas; continuam úteis)
+   ========================= */
+.mat-fundo, .mat-fundo2,
+.fis-fundo, .fis-fundo2,
+.quim-fundo, .quim-fundo2,
+.biol-fundo, .biol-fundo2,
+.hum-fundo, .hum-fundo2,
+.ling-fundo, .ling-fundo2,
+.hist-fundo, .hist-fundo2,
+.geo-fundo, .geo-fundo2,
+.jsplotly_sup-fundo, .jsplotly_sup-fundo2{
+  padding: 15px;
+  border-radius: 10px;
+  width: 100%;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-2);
 }
 
-.hum-fundo {
-  background-color: #F5E3C8; /* Bege Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #e2d2d8; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
+/* Matemática */
+.mat-fundo{  background-color: #dbe7f6; border-left: 5px solid rgba(47,88,208,.55); margin-bottom: 0px; }
+.mat-fundo2{ background-color: #eef5ff; border-left: 5px solid rgba(47,88,208,.45); margin-bottom: 20px; }
+
+/* Física */
+.fis-fundo{  background-color: #e6eef6; border-left: 5px solid rgba(68,187,174,.55); margin-bottom: 0px; }
+.fis-fundo2{ background-color: #f3f8fc; border-left: 5px solid rgba(68,187,174,.45); margin-bottom: 20px; }
+
+/* Química */
+.quim-fundo{  background-color: #e7f3d6; border-left: 5px solid rgba(0,255,127,.35); margin-bottom: 0px; }
+.quim-fundo2{ background-color: #f3fae8; border-left: 5px solid rgba(0,255,127,.28); margin-bottom: 20px; }
+
+/* Biologia */
+.biol-fundo{  background-color: #d9f3e7; border-left: 5px solid rgba(0,255,152,.32); margin-bottom: 0px; }
+.biol-fundo2{ background-color: #eefcf6; border-left: 5px solid rgba(0,255,152,.25); margin-bottom: 20px; }
+
+/* Humanas */
+.hum-fundo{  background-color: #f1e7db; border-left: 5px solid rgba(226,210,216,.80); margin-bottom: 0px; }
+.hum-fundo2{ background-color: #fbf5ed; border-left: 5px solid rgba(226,210,216,.65); margin-bottom: 20px; }
+
+/* Linguagens */
+.ling-fundo{  background-color: #efe4f6; border-left: 5px solid rgba(191,156,169,.70); margin-bottom: 0px; }
+.ling-fundo2{ background-color: #f7effe; border-left: 5px solid rgba(191,156,169,.55); margin-bottom: 20px; }
+
+/* História */
+.hist-fundo{  background-color: #e9d7b0; border-left: 5px solid rgba(218,165,96,.65); margin-bottom: 0px; }
+.hist-fundo2{ background-color: #f1e2c6; border-left: 5px solid rgba(218,165,32,.55); margin-bottom: 20px; }
+
+/* Geografia */
+.geo-fundo{  background-color: #dbe6f3; border-left: 5px solid rgba(70,130,180,.60); margin-bottom: 0px; }
+.geo-fundo2{ background-color: #eaf2fb; border-left: 5px solid rgba(70,130,244,.45); margin-bottom: 0px; }
+
+/* JSPlotly (Superior) */
+.jsplotly_sup-fundo{
+  background-color: #e7e9fb;
+  border-left: 5px solid rgba(203,206,238,.85);
+  margin-bottom: 0px;
 }
-
-.ling-fundo {
-  background-color: #E3D0F5; /* Lilás Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #bf9ca9; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-
-.hist-fundo {
-  background-color: #DAA520; /* Lilás Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #DAA560; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-.geo-fundo {
-  background-color: #4682F4; /* Lilás Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #4682B4; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-
-
-/* Cor de fundo para os quadros de sugestões para áreas e ODR*/
-
-.mat-fundo2 {
-  background-color: #E4F0FC; /* Azul Claro Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #2f58d0 /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 20px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-.fis-fundo2 {
-  background-color: #F0F7FC; /* Cinza Azulado Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #44bbae; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 20px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-.quim-fundo2 {
-   background-color: #F1FCE4 ; /* Fundo*/
-    padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #00FF7F; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 20px;       /* Espaçamento inferior */
-    width: 100%;
+.jsplotly_sup-fundo2{
+  background-color: #dde0f5;
+  border-left: 5px solid rgba(216,219,249,.85);
+  margin-bottom: 0px;
 }
 
 
-.biol-fundo2 {
-  background-color: #E8FCF2; /* Verde Menta Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #00ff98; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 20px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-.hum-fundo2 {
-  background-color: #FBF5ED; /* Bege Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #e2d2d8; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 20px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-.ling-fundo2 {
-  background-color: #F7EFFE; /* Lilás Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #bf9ca9; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 20px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-.hist-fundo2 {
-  background-color: #DAA560; /* Azul Claro Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #DAA520 /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 20px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-
-.geo-fundo2 {
-  background-color: #4682B4; /* Lilás Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #4682F4; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-/* ######################################### */
-
-/* COR E QUADRO DE FUNDO PARA O JSPLOTLY - Superior*/
-
-/* Quadro do gráfico clicável */
-
-.jsplotly_sup-fundo {
-  background-color: #d8dbf9; /* Lilás Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #cbceee; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-/* Quadro de sugestões */
-
-.jsplotly_sup-fundo2 { 
-  background-color: #cbceee; /* Lilás Suave */
-  padding: 15px;             /* Espaçamento interno */
-    border-left: 5px solid #d8dbf9; /* Barra lateral  */
-    border-radius: 5px;        /* Bordas arredondadas */
-    margin-bottom: 0px;       /* Espaçamento inferior */
-    width: 100%;
-}
-
-/* ################################################### */
-
-/* Imagem de fundo pra Introdução do Jardim 
-
-.planta-background {
-  background-image: url('Portfolio/Jardim/plantinhas.jpg'); /* Substitua pelo caminho da imagem */
-  background-size: cover; /* Cobre toda a área */
-  background-repeat: no-repeat; /* Evita repetição da imagem */
-  background-position: center center; /* Centraliza a imagem */
-  opacity: 0.7; /* Define a transparência para ser discreto */
-  padding: 20px; /* Adiciona espaço ao redor do conteúdo */
-  border-radius: 10px; /* Bordas arredondadas, opcional */
-  
-/*#######################  COR DE CHUNKS DE R ######################### */
-
-/* Fundo e borda para chunks de código (R, Python, etc.) */
-pre.sourceCode {
-  background-color:  #e8f0ff !important;  /* ou #e8f0ff para tom azulado */
-  border: 1px solid #ccc;
-  border-radius: 6px;
+/* =========================
+   CHUNKS DE CÓDIGO (mantido, mais clean)
+   ========================= */
+pre.sourceCode{
+  background-color: rgba(255,255,255,.78) !important;
+  border: 1px solid var(--border);
+  border-radius: 10px;
   padding: 1rem;
   overflow-x: auto;
+  box-shadow: var(--shadow-sm);
 }
 
-/* Para destacar blocos de output também */
-div.sourceCode {
-  background-color: #e8f0ff !important;
-  border-radius: 6px;
+div.sourceCode{
+  background-color: rgba(255,255,255,.70) !important;
+  border-radius: 10px;
   padding: 0.5rem 1rem;
 }
 
-/* Opcional: mudar fonte para monoespaçada elegante */
-code, pre, kbd, samp {
+code, pre, kbd, samp{
   font-family: 'Fira Code', monospace;
+}
+
+/* =========================================================
+   INOX ++ na SIDEBAR (mais prateado + contraste)
+   Cole no FINAL do styles.css
+   ========================================================= */
+
+/* “trilho” da sidebar (área geral) */
+.sidebar{
+  background: linear-gradient(180deg,
+    rgba(245,248,251,.70),
+    rgba(233,238,244,.55)) !important;
+  border-right: 1px solid rgba(17,24,39,.14) !important;
+}
+
+/* cartões/seções dentro da sidebar: mais inox */
+.sidebar-item-section{
+  background: linear-gradient(135deg,
+    rgba(248,250,252,.86),
+    rgba(226,232,240,.74),
+    rgba(248,250,252,.66)) !important;
+
+  background-image:
+    linear-gradient(135deg,
+      rgba(248,250,252,.86),
+      rgba(226,232,240,.74),
+      rgba(248,250,252,.66)),
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,.08) 0px,
+      rgba(255,255,255,.08) 1px,
+      rgba(0,0,0,.03) 2px,
+      rgba(0,0,0,.03) 3px) !important;
+
+  border: 1px solid rgba(17,24,39,.18) !important;
+  box-shadow: 0 12px 30px rgba(17,24,39,.12) !important;
+}
+
+
+/* título da seção (uma “barra” inox discreta) */
+.sidebar-item-section .sidebar-section-title{
+  background: linear-gradient(180deg,
+    rgba(255,255,255,.88),
+    rgba(230,236,242,.72)) !important;
+  border: 1px solid rgba(17,24,39,.14) !important;
 }
