@@ -1,0 +1,91 @@
+---
+title: "nlFIT - Nonlinear fitting"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: en
+---
+
+| This program allows you to perform nonlinear fitting using the Gauss-Newton method for an equation entered by the user. The program was adapted from the DATFIT program code (Coffin, 1995) and is available at [hpcalc.org](https://www.hpcalc.org/search.php?query=nlFIT). It has the following features and advantages:
+\
+
+```{r, eval=FALSE}
+# Program logic:
+
+1. Direct data entry into the stack as lists, without the need for a form
+   (INFORM);
+2. Number of iterations requested in the initial input;
+3. There is only one data input, not two as in the original code;
+4. The index for each iteration is displayed in the upper left corner of the graphic screen
+   ;
+5. Provides as output:
+     a. covariance matrix;
+     b. calculated parameter values;
+     c. standard deviation values of the parameters;
+     d. Chi-square of the regression;
+     e. list of xi values;
+     f. list of y_calc values
+     g. graphic screen with experimental points;
+     f. nonlinear fit curve superimposed on the points.
+6. Uses the FDER and PGALL subroutines from the same book to calculate the symbolic derivative of the 
+     function and to eliminate previously stored variables, respectively.
+     (the original program requires 3 subprograms to run);
+7. Plots the experimental data with a routine that does not use ΣDAT (PIXON)
+```
+\
+
+## Files
+
+1. [nlFIT program and example in enzyme kinetics](/hp50g/nlFIT/nlFIT.zip)
+2. [Code](/hp50g/nlFIT/nlFIT.pdf)
+\
+
+|   To use the program, the following data must be entered in the stack sequence:
+\
+
+```{r, eval=FALSE}
+
+# Data entry
+
+1. list of xi values: {x1 x2...xn};
+2. list of yi values: {y1 y2 y3, ...yn};
+3. list of weights: {w1, w2, w3, ...wn}. Note: if there are no weights, enter a
+     unit list - {1 1 1...};
+4. adjustment function (e.g., Vm*x/(Km+x); equation for Michelis-Mentem enzyme kinetics).
+ Note: independent variable as “x”;
+5. list of parameters: {p1 p2}. Note: in the example, p1 = Vm and p2 = Km;
+6. number of desired iterations. Ex: 3
+```
+\
+
+| Along with the compressed file is an example in enzyme kinetics to illustrate its use:
+
+its use.
+\
+```{r, eval = FALSE}
+# Using the program
+
+1. Click EVAL in the example file to release the necessary input lists;
+2. Click “nlFIT” to run the program;
+
+NOTE: For user data, simply replace the lists.
+```
+
+
+## Results
+
+::: {#fig-nlFIT layout-ncol=2}
+
+![Results](results.png){#fig-result}
+
+![Scatter plot and nonlinear fit](plot.png){#fig-plot}
+
+HP50G screens showing the text and graph results of *nlFIT*.
+
+:::
+
+
+## Reference {.unnumbered}
+
+Coffin, Dan. Calculus on the HP 48G/GX. Grapevine Publications, 1995.
