@@ -113,6 +113,35 @@ gtag('js', new Date());
 gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -322,7 +351,7 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
   <ul>
   <li><a href="#arquivos" id="toc-arquivos" class="nav-link active" data-scroll-target="#arquivos"><span class="header-section-number">1</span> Arquivos</a></li>
   <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados"><span class="header-section-number">2</span> Resultados</a></li>
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -348,7 +377,7 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;Este programa permite efetuar um ajuste não linear por método de Gauss-Newton para uma equação introduzida pelo usuário. O programa foi adaptado do código do programa DATFIT (Coffin, 1995), e encontra-se depositado junto ao portal <a href="https://www.hpcalc.org">hpcalc.org</a> neste <a href="https://www.hpcalc.org/search.php?query=nlFIT">link</a>. Possui a seguinte logística e diferenciais:</div>
+<div class="line-block">&nbsp;&nbsp;Este programa permite efetuar um ajuste não linear por método de Gauss-Newton para uma equação introduzida pelo usuário e dados em listas. O programa foi adaptado do código do programa DATFIT (Coffin, 1995), e encontra-se depositado junto ao portal <a href="https://www.hpcalc.org">hpcalc.org</a> neste <a href="https://www.hpcalc.org/search.php?query=nlFIT">link</a>. Possui a seguinte logística e diferenciais:</div>
 <p><br>
 </p>
 <div class="cell">
@@ -400,8 +429,8 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
 </div>
 <p><br>
 </p>
-<div class="line-block">&nbsp;&nbsp;Junto ao arquivo comprimido segue um exemplo em cinética enzimática para ilustrar seu uso:</div>
-<p>o uso.<br>
+<div class="line-block">&nbsp;&nbsp;Junto ao arquivo comprimido segue um exemplo em cinética enzimática para ilustrar seu uso. Os dados referem-se ao dataset <em>L.minor</em> de captação de nitrogênio por macrófitas, tal como apresentado no pacote <code>nlstools</code> do programa de computação estatística <a href="https://cran.r-project.org/">R</a>.</div>
+<p><br>
 </p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso do programa</span></span>
@@ -449,9 +478,41 @@ Figura&nbsp;1: Telas da HP50G apresentando os resultados de texto e gráfico do 
 </figcaption>
 </figure>
 </div>
+<div class="line-block">&nbsp;&nbsp;Os resultados do ajuste não linear obtidos com o programa <em>nlFIT</em> são quase idênticos aos obtidos pelo software estatístico <code>R</code>, conforme tabela abaixo. Não obstante, <em>nlFIT</em> requereu apenas 3 iterações, contra 7 do <em>R</em>.</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parâmetro</th>
+<th>nlFIT</th>
+<th>R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Km</td>
+<td>17.089 ± 0.469</td>
+<td>17.079 ± 2.953</td>
+</tr>
+<tr class="even">
+<td>Vm</td>
+<td>126.055 ± 1.146</td>
+<td>126.033 ± 7.173</td>
+</tr>
+<tr class="odd">
+<td>Iterações</td>
+<td>3</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\chi\)</span><span class="math inline">\(^{2}\)</span></td>
+<td>234.350</td>
+<td>234.375</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="reference" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="reference">Reference</h2>
+<section id="referências" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
 <p>Coffin, Dan. Calculus on the HP 48G/GX. Grapevine Publications, 1995.</p>
 
 
