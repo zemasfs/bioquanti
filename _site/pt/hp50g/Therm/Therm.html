@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>AIC - Critério de Informação de Akaike</title>
+<title>Therm - Quantidades termodinâmicas por sistema linear para 2 temperaturas</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -205,7 +205,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">AIC - Critério de Informação de Akaike</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Therm - Quantidades termodinâmicas por sistema linear para 2 temperaturas</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -362,7 +362,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">AIC - Critério de Informação de Akaike</h1>
+<h1 class="title">Therm - Quantidades termodinâmicas por sistema linear para 2 temperaturas</h1>
 </div>
 
 
@@ -379,35 +379,31 @@ window.Quarto = {
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;O programa permite calcular parâmetros do <em>Critério de Informação de Akaike</em> (Akaike, 2003) para a distinção estatística entre modelos não lineares.</div>
+<div class="line-block">&nbsp;&nbsp;O programa é bem simples, mas permite calcular por álgebra linear os valores de <span class="math inline">\(\Delta\)</span>S e <span class="math inline">\(\Delta\)</span>H simultaneamente para um par de reações ocorridas em temperaturas distintas e valores conhecidos de <span class="math inline">\(\Delta\)</span>G (<em>sistema linear de equações</em>). Foi desenvolvido com o <em>firmware</em> <a href="https://sourceforge.net/projects/newrpl/">newRPL</a>, embora facilmente adaptável à versão original da HP50G.</div>
 <p><br>
 </p>
 <section id="equação" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="equação"><span class="header-section-number">1</span> Equação:</h2>
 <p><span class="math display">\[
-AIC=n*ln(\frac{SSE}{n})+2k+[\frac{2k(k+1)}{n-k-1}]
-\]</span> <em>Onde:</em></p>
-<ul>
-<li><em>k</em> = p + 1 (com <em>p</em> sendo o número de parâmetros);</li>
-<li><em>SSE</em> = soma dos quadrados dos resíduos do ajuste<br>
-</li>
-</ul>
+\Delta G^{T1}=\Delta H-T1*\Delta S
+\]</span></p>
 <p><span class="math display">\[
-probab.B = \frac{e^{-0.5* \Delta AIC}}{1+e^{-0.5* \Delta AIC}}
+\Delta G^{T2}=\Delta H-T2*\Delta S
 \]</span><br>
 </p>
-<p><em>Onde:</em></p>
-<ul>
-<li><em>probab. B</em> = probabilidade do modelo B ser melhor que o modelo A (0 a 1);</li>
-<li><em><span class="math inline">\(\Delta\)</span>AIC</em> = diferença de AIC<span class="math inline">\(_B\)</span>-AIC<span class="math inline">\(_A\)</span><br>
-</li>
-</ul>
+<div class="line-block">&nbsp;&nbsp;A solução acima dá-se por solução matricial:</div>
+<p><span class="math display">\[
+A*x=b
+\]</span> <em>Onde:</em></p>
+<p><em>A</em> = matriz coluna de valores de temperatura com 1a coluna unitária;</p>
+<p><em>b</em> = matriz coluna de valores de <span class="math inline">\(\Delta\)</span>G;</p>
+<p><em>x</em> = matriz resultante com os parâmetros <span class="math inline">\(\Delta\)</span>S e <span class="math inline">\(\Delta\)</span>H</p>
 </section>
 <section id="arquivos" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">2</span> Arquivos:</h2>
 <ol type="1">
-<li><a href="../../hp50g/AIC/AIC.zip">Programa AIC</a></li>
-<li><a href="../../hp50g/AIC/AIC.pdf">Código</a><br>
+<li><a href="../../hp50g/Therm/Therm.zip">Programa Therm</a></li>
+<li><a href="../../hp50g/Therm/Therm.pdf">Código</a><br>
 </li>
 </ol>
 </section>
@@ -419,137 +415,55 @@ probab.B = \frac{e^{-0.5* \Delta AIC}}{1+e^{-0.5* \Delta AIC}}
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Entrada de dados</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Ao clicar em <span class="st">"AIC"</span>, o programa pedirá os seguintes <span class="fu">valores</span> (INPUT)<span class="sc">:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  n, kA, kB, ssA, ssB</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Após ENTER, o programa calculará os valores de<span class="sc">:</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AIC_A, AIC_B, delta, prob.B"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> DeltaG_1, T1, DeltaG_2, T2;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Após clicar em <span class="st">"Therm"</span>, o programa calculará os valores para DeltaS e DeltaH.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exemplo" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="exemplo"><span class="header-section-number">4</span> Exemplo</h2>
-<div class="line-block">&nbsp;&nbsp;A tabela as figuras abaixo referem-se, respectivamente, aos dados de inibição enzimática obtidos por Bezerra e cols (2013), bem como à inserção dos dados e resultados para um par de modelos.</div>
+<div class="line-block">&nbsp;&nbsp;A figura abaixo ilustra a HP50G com entrada de dados e os resultados da mantissa para a reação explicitada em Cooper (2011), bem como o <em>layout</em> do <em>firmware newRPL</em>.</div>
 <p><br>
 </p>
-<p><em>Tabela 1 - Dados experimentais de inibição enzimática (n=105). Fonte: Bezerra et al., 2013.</em></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 12%">
-<col style="width: 16%">
-<col style="width: 23%">
-<col style="width: 24%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Tipo</th>
-<th>Controle</th>
-<th>Competitivo</th>
-<th>Não compet. puro</th>
-<th>Não compet. misto</th>
-<th>Incompet.</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>SSE</td>
-<td>1540.1</td>
-<td>613.1</td>
-<td>1122.7</td>
-<td>613.2</td>
-<td>1436.4</td>
-</tr>
-<tr class="even">
-<td>p</td>
-<td>2</td>
-<td>3</td>
-<td>3</td>
-<td>4</td>
-<td>3</td>
-</tr>
-</tbody>
-</table>
-<p><br>
-</p>
-<div id="fig-AIC" class="quarto-layout-panel">
+<div id="fig-Therm" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-AIC-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-Therm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-AIC" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-Therm" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-dados" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-dados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="dados.png" class="img-fluid figure-img" style="width:90.0%" data-ref-parent="fig-AIC">
+<img src="dados.jpeg" class="img-fluid figure-img" data-ref-parent="fig-Therm">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Inserção de valores para comparação dos modelos controle e competitivo
+(a) Inserção de valores de DeltaG e T1, e DeltaG e T2 para o programa.
 </figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-AIC" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-Therm" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="result.png" class="img-fluid figure-img" data-ref-parent="fig-AIC">
+<img src="result.jpeg" class="img-fluid figure-img" data-ref-parent="fig-Therm">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Resultados obtidos da comparação.
+(b) Resultados obtidos do programa.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AIC-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Execução do programa para comparação entre os modelos controle e competitivo de inibição enzimática.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Therm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Execução do programa <em>Therm</em> para obtenção de <span class="math inline">\(\Delta\)</span>S e <span class="math inline">\(\Delta\)</span>H para reação química em duas temperaturas. Os resultados batem com os obtidos pelo autor (Cooper, 2011).
 </figcaption>
 </figure>
 </div>
-<div class="line-block">&nbsp;&nbsp;Procedendo-se a execução de <em>AIC</em>, foram obtidos os seguintes resultados de comparação para alguns pares de modelos:</div>
-<p><br>
-<em>Tabela 2 — Resultados da comparação de modelos pelo critério AIC.</em></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Modelo A / B</th>
-<th>AIC<span class="math inline">\(_A\)</span></th>
-<th>AIC<span class="math inline">\(_B\)</span></th>
-<th><span class="math inline">\(\Delta\)</span></th>
-<th>Probab. B</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Controle / Competitivo</td>
-<td>288.2</td>
-<td>193.7</td>
-<td>-94.6</td>
-<td>1.0</td>
-</tr>
-<tr class="even">
-<td>Controle / NComp. misto</td>
-<td>288.2</td>
-<td>195.9</td>
-<td>-92.3</td>
-<td>1.0</td>
-</tr>
-<tr class="odd">
-<td>Compet. / NComp. misto</td>
-<td>193.7</td>
-<td>195.9</td>
-<td>2.2</td>
-<td>0.25</td>
-</tr>
-</tbody>
-</table>
-<div class="line-block">&nbsp;&nbsp;Pelos dados da tabela, a probabilidade do modelo B estar correto sugere a seleção do modelo competitivo de inibição enzimática (75% de chances sobre o modelo não competitivo misto), em acordo com o trabalho dos autores.</div>
 </section>
 <section id="referências" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
 <ol type="1">
-<li><p>Akaike, Hirotugu. “A new look at the statistical model identification.” IEEE transactions on automatic control 19.6 (2003): 716-723.</p></li>
-<li><p>Bezerra, Rui MF, Irene Fraga, and Albino A. Dias. “Utilization of integrated Michaelis–Menten equations for enzyme inhibition diagnosis and determination of kinetic constants using Solver supplement of Microsoft Office Excel.” Computer methods and programs in biomedicine 109.1 (2013): 26-31.</p></li>
+<li>Cooper, Alan. Biophysical chemistry. No.&nbsp;24. Royal Society of Chemistry, p.&nbsp;113, 2011.</li>
 </ol>
 
 
