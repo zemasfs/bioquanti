@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nlFIT - Ajuste não-linear</title>
+<title>AIC - Critério d Informação de Akaike</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -205,7 +205,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">nlFIT - Ajuste não-linear</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">AIC - Critério d Informação de Akaike</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -349,8 +349,10 @@ window.Quarto = {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#arquivos" id="toc-arquivos" class="nav-link active" data-scroll-target="#arquivos"><span class="header-section-number">1</span> Arquivos</a></li>
-  <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados"><span class="header-section-number">2</span> Resultados</a></li>
+  <li><a href="#equação" id="toc-equação" class="nav-link active" data-scroll-target="#equação"><span class="header-section-number">1</span> Equação:</a></li>
+  <li><a href="#arquivos" id="toc-arquivos" class="nav-link" data-scroll-target="#arquivos"><span class="header-section-number">2</span> Arquivos:</a></li>
+  <li><a href="#uso" id="toc-uso" class="nav-link" data-scroll-target="#uso"><span class="header-section-number">3</span> Uso:</a></li>
+  <li><a href="#exemplo" id="toc-exemplo" class="nav-link" data-scroll-target="#exemplo"><span class="header-section-number">4</span> Exemplo</a></li>
   <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
 </nav>
@@ -360,7 +362,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">nlFIT - Ajuste não-linear</h1>
+<h1 class="title">AIC - Critério d Informação de Akaike</h1>
 </div>
 
 
@@ -377,141 +379,140 @@ window.Quarto = {
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;Este programa permite efetuar um ajuste não linear por método de Gauss-Newton para uma equação introduzida pelo usuário e dados em listas. O programa foi adaptado do código do programa DATFIT (Coffin, 1995), e encontra-se depositado junto ao portal <a href="https://www.hpcalc.org">hpcalc.org</a> neste <a href="https://www.hpcalc.org/search.php?query=nlFIT">link</a>. Possui a seguinte logística e diferenciais:</div>
-<p><br>
-</p>
+<div class="line-block">&nbsp;&nbsp;O programa permite calcular parâmetros do <em>Critério de Informação de Akaike</em> para a distinção estatística de modelos não lineares.</div>
+<section id="equação" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="equação"><span class="header-section-number">1</span> Equação:</h2>
+<p><span class="math display">\[
+AIC=n*ln(\frac{SSE}{n})+2k+[\frac{2k(k+1)}{n-k-1}]
+\]</span> <em>Onde:</em></p>
+<ul>
+<li><em>k</em> = p + 1 (com <em>p</em> sendo o número de parâmetros);</li>
+<li><em>SSE</em> = soma dos quadrados dos resíduos do ajuste</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lógica do programa:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Entrada de dados direta na pilha como listas, sem necessidade de formulário</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   (INFORM);</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Número de iterações solicitado no input inicial;</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Só há um input de dados e não dois como no código original;</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> O index para cada iteração é exibido no canto superior esquerdo da tela</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   gráfica;</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Fornece como saída<span class="sc">:</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>     a. matriz de covariância;</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>     b. valores de parâmetros calculados;</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>     c. valores de desvio<span class="sc">-</span>padrão dos parâmetros;</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>     d. Chi<span class="sc">-</span>quadrado da regressão;</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>     e. lista de valores de xi;</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>     f. lista de valores de y_calc</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>     g. tela gráfica com pontos experimentais;</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>     f. curva de ajuste não linear sobreposta aos pontos.</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fl">6.</span> Utiliza as subrotinas FDER e PGALL do mesmo livro para cálculo da derivada simbólica da função, bem como para para eliminar variáveis previamente armazenadas, <span class="fu">respectivamente</span> (o programa original necessita de <span class="dv">3</span> subprogramas para rodar);</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fl">7.</span> Plota os dados experimentais com rotina sem necessidade de Σ<span class="fu">DAT</span> (PIXON).</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
-<section id="arquivos" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">1</span> Arquivos</h2>
+<p><span class="math display">\[
+probab.B = \frac{e^{-0.5* \Delta AIC}}{1+e^{-0.5* \Delta AIC}}
+\]</span><br>
+</p>
+<p><em>Onde:</em></p>
+<ul>
+<li><em>probab. B</em> = probabilidade do modelo B ser melhor que o modelo A (0 a 1);</li>
+<li><em><span class="math inline">\(\Delta\)</span>AIC</em> = diferença de AIC<span class="math inline">\(_B\)</span>-AIC<span class="math inline">\(_A\)</span></li>
+</ul>
+</section>
+<section id="arquivos" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">2</span> Arquivos:</h2>
 <ol type="1">
-<li><a href="../../hp50g/nlFIT/nlFIT.zip">Programa nlFIT e exemplo em cinética enzimática</a></li>
-<li><a href="../../hp50g/nlFIT/nlFIT.pdf">Código</a><br>
+<li><a href="../../AIC.zip">Programa AIC</a></li>
+<li><a href="../../AIC.pdf">Código</a><br>
 </li>
 </ol>
+</section>
+<section id="uso" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="uso"><span class="header-section-number">3</span> Uso:</h2>
 <div class="line-block">&nbsp;&nbsp;Para seu uso, o programa requer a entrada dos seguintes dados na sequência da pilha:</div>
 <p><br>
 </p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Entrada de dados</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> lista de valores de xi<span class="sc">:</span> {x1 x2...xn};</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> lista de valores de yi<span class="sc">:</span> {y1 y2 y3, ...yn};</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> lista de pesos<span class="sc">:</span> {w1, w2, w3, ...wn}. Obs<span class="sc">:</span> não havendo pesos, introduz<span class="sc">-</span>se uma</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>     lista unitária <span class="sc">-</span> {<span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span>...};</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> função para <span class="fu">ajuste</span> (ex<span class="sc">:</span> Vm<span class="sc">*</span>x<span class="sc">/</span>(Km<span class="sc">+</span>x); equação para cinética enzimática de </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>     Michelis<span class="sc">-</span>Mentem). Obs<span class="sc">:</span> variável independente como <span class="st">"x"</span>;</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> lista de parâmetros<span class="sc">:</span> {p1 p2}. Obs<span class="sc">:</span> no exemplo, p1 <span class="ot">=</span> Vm e p2 <span class="ot">=</span> Km;</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fl">6.</span> no. de iterações desejadas. Ex<span class="sc">:</span> <span class="dv">3</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> n, k<span class="sc">$</span>_A<span class="sc">$</span>, k<span class="sc">$</span>_B<span class="sc">$</span>, SSE<span class="sc">$</span>_A<span class="sc">$</span>, SSE<span class="sc">$</span>_B<span class="sc">$</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
-<div class="line-block">&nbsp;&nbsp;Junto ao arquivo comprimido segue um exemplo em cinética enzimática para ilustrar seu uso. Os dados referem-se ao dataset <em>L.minor</em> de captação de nitrogênio por macrófitas, tal como apresentado no pacote <code>nlstools</code> do programa de computação estatística <a href="https://cran.r-project.org/">R</a>.</div>
-<p><br>
-</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso do programa</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Clique em EVAL no arquivo de exemplo para liberar as listas necessárias de input;</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Clique em <span class="st">"nlFIT"</span> para executar o programa;</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>OBS<span class="sc">:</span> Para dados de usuário, basta substituir as listas.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
-<section id="resultados" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="resultados"><span class="header-section-number">2</span> Resultados</h2>
-<div id="fig-nlFIT" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-nlFIT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-nlFIT" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="results.png" class="img-fluid figure-img" data-ref-parent="fig-nlFIT">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Resultados
-</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-nlFIT" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="plot.png" class="img-fluid figure-img" data-ref-parent="fig-nlFIT">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Gráfico de pontos e ajuste não linear
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nlFIT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Telas da HP50G apresentando os resultados de texto e gráfico do <em>nlFIT</em>.
-</figcaption>
-</figure>
-</div>
-<div class="line-block">&nbsp;&nbsp;Os resultados do ajuste não linear obtidos com o programa <em>nlFIT</em> são quase idênticos aos obtidos pelo software estatístico <code>R</code>, conforme tabela abaixo. Não obstante, <em>nlFIT</em> requereu apenas 3 iterações, contra 7 do <em>R</em>.</div>
+<section id="exemplo" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="exemplo"><span class="header-section-number">4</span> Exemplo</h2>
+<div class="line-block">&nbsp;&nbsp;A tabela abaixo refere-se aos dados obtidos por Bezerra e cols (2013).</div>
+<p><em>Tabela 1 — Dados de inibição enzimática obtidos por Bezerra e cols (2013).</em></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 23%">
+<col style="width: 24%">
+<col style="width: 14%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Parâmetro</th>
-<th>nlFIT</th>
-<th>R</th>
+<th>Tipo</th>
+<th>Controle</th>
+<th>Competitivo</th>
+<th>Não compet. puro</th>
+<th>Não compet. misto</th>
+<th>Incompet.</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Km</td>
-<td>17.089 ± 0.469</td>
-<td>17.079 ± 2.953</td>
+<td>SSE</td>
+<td>1540.1</td>
+<td>613.1</td>
+<td>1122.7</td>
+<td>613.2</td>
+<td>1436.4</td>
 </tr>
 <tr class="even">
-<td>Vm</td>
-<td>126.055 ± 1.146</td>
-<td>126.033 ± 7.173</td>
-</tr>
-<tr class="odd">
-<td>Iterações</td>
+<td>p</td>
+<td>2</td>
 <td>3</td>
-<td>7</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\chi\)</span><span class="math inline">\(^{2}\)</span></td>
-<td>234.350</td>
-<td>234.375</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
 </tr>
 </tbody>
 </table>
+<div class="line-block">&nbsp;&nbsp;Procedendo-se a execução de <em>AIC</em>, foram obtidos os seguintes resultados de comparação para alguns pares de modelos:</div>
+<p><em>Tabela 2 — Resultados da comparação de modelos pelo critério AIC</em></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Modelo A / B</th>
+<th>AIC<span class="math inline">\(_A\)</span></th>
+<th>AIC<span class="math inline">\(_B\)</span></th>
+<th><span class="math inline">\(\Delta\)</span></th>
+<th>Probab. B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Controle / Competitivo</td>
+<td>288.2</td>
+<td>193.7</td>
+<td>-94.6</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>Controle / NComp. misto</td>
+<td>288.2</td>
+<td>195.9</td>
+<td>-92.3</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>Compet. / NComp. misto</td>
+<td>193.7</td>
+<td>195.9</td>
+<td>2.2</td>
+<td>0.25</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">&nbsp;&nbsp;Pelos dados da tabela, a probabilidade do modelo B estar correto sugere a seleção do modelo competitivo de inibição enzimática (75% de chances sobre o modelo não competitivo misto).</div>
 </section>
 <section id="referências" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
-<p>Coffin, Dan. Calculus on the HP 48G/GX. Grapevine Publications, 1995.</p>
+<ol type="1">
+<li><p>Akaike, Hirotugu. “A new look at the statistical model identification.” IEEE transactions on automatic control 19.6 (2003): 716-723.</p></li>
+<li><p>Bezerra, Rui MF, Irene Fraga, and Albino A. Dias. “Utilization of integrated Michaelis–Menten equations for enzyme inhibition diagnosis and determination of kinetic constants using Solver supplement of Microsoft Office Excel.” Computer methods and programs in biomedicine 109.1 (2013): 26-31.</p></li>
+</ol>
 
 
 </section>
