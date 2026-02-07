@@ -1,0 +1,84 @@
+---
+title: "Ajuste Linear Ponderado e modelo de Lineweaver-Burk"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   Ajuste ou regressão linear é onipresente nas Ciências. Entre outros, pela simplicidade estatística da modelagem de mínimos quadrados envolvida (basta variações em somatórias de x, y, e x*y), ausência de iteração e algoritmo, e por possibilitar a compreensão de modelos não lineares por estratégias de linearização. Não obstante, essas transformações lineares também agregam erros estatísticos, passíveis de correção por inserção de pesos nos ajustes.   
+
+|   Assim, uma regressão linear ponderada é útil em situações de dispersão de erros decorrentes de linearização, bem como heterocedasticidade. O programa *linFIT* emprega álgebra linear para determinar os coeficientes *a* e *b* de um ajuste linear ponderado,juntamente a outros parâmetros estatísticos, como erro padrão dos parâmetros, covariância, soma dos quadrados dos erros-SSE, por ex. 
+\
+
+## Equação:
+
+$$
+y = a + b*x
+$$
+$$
+\beta=(X^T*w*X)^{-1}*X^T*w*y
+$$
+
+\
+*Onde:*
+
+$\beta$* = matriz de coeficientes *a* e *b*;
+
+*X* = matriz de valores *x* com 1a. coluna unitária;
+
+X$^T$ = matriz transposta de *X*;
+
+*y* = matriz de valores de *y*;
+
+
+## Arquivos:
+
+1. [Programa linFIT e exemplo](linFIT.zip)
+2. [Código](linFIT.pdf)
+\
+
+## Exemplo de uso:
+
+|   O arquivo contém o programa e um exemplo de linearização por Lineweaver-Burk em inibição enzimática (Cornish-Bowden, 2014) com dados de Wilkinson (1961). O arquivo "*exLin*" contém os dados necessários para o programa como uma lista. A lista é composta da variável *x* e variável *y*, bem como do peso *w* unitário (vide figura abaixo).
+\
+
+```{r, eval=FALSE}
+
+1. Coloque o arquivo "exLin" na mantissa seguido por EVAL, resultando em 3 listas (x, y, e w);
+  
+2. Se não necessitar de inserção de pesos, apenas clique em "linFIT" para obtenção dos parâmetros, na sequência: covXY (covariação), s2x (variância em x), s2y (variância em y),
+   s2 (variância do ajuste), F (valor de distribuição F de Snedecor), intcp (intercepto), se (erro padrão do intercepto), slope (inclinação), se (erro padrão da inclinação), ChiSQ (valor de chi-quadrado), e pval (p-valor do ajuste).
+
+# Uso de pesos no ajuste
+
+1. Coloque "exLin" no diplay seguido de EVAL;
+2. Apague a lista de pesos unitários;
+3. Obtenha um peso de 1/v^2:
+  a. ENTER para duplicar a lista y;
+  b. x^2 para elevar a lista ao quadrado;
+  c. 1/x para obter o recíproco dos valores quadráticos de y;
+4. "linFIT".
+```
+
+
+
+::: {#fig-x2tst layout-ncol=2}
+
+![Listas do exemplo, abertas pelo comando EVAL](dados.jpeg){#fig-dados}
+
+![Resultados obtidos do ajuste com pesos de 1/v².](result.jpeg){#fig-result}
+
+Programa *linFIT* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)) apresentando a inserção de dados e os resultados do ajuste linear ponderado.
+
+:::
+\
+
+|   Os valores encontrados para inclinação (Km/Vm; 0.80+/-0.07 ) e intercepto (1/Vm; 1.54+/-0.15) estão em consonância aos reportados em Wilkinson (1961), utilizando-se o peso de 1/v$^2$.
+
+
+## Referências {.unnumbered}
+
+1. Cornish-Bowden, A. "Analysis and interpretation of enzyme kinetic data." Perspectives in Science 1.1-6 (2014): 121-125.
+2. Wilkinson, G. N. "Statistical estimations in enzyme kinetics." Biochemical Journal 80.2 (1961): 324.
