@@ -1,0 +1,578 @@
+---
+number-sections: true
+toc: true
+lang: pt
+class: fundo-basico
+---
+
+# Matemática {.unnumbered}
+
+<!-- #########  EXPONENCIAL versus LOGARITMO ########## -->
+
+<div class="mat-fundo">  
+
+## Curvas para função exponencial *versus* logaritmo (EM13MAT401, EM13MAT402)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+x_values <- seq(1, 10, length.out = 10)
+y_exp <- exp(x_values)  # Função exponencial
+y_log <- log(x_values)  # Função logarítmica
+
+exp_plot <- plot_ly(x = x_values, y = y_exp, type = 'scatter', mode = 'markers+lines', name = 'Exponencial') %>%
+  layout(title = "Função Exponencial", xaxis = list(title = 'X'), yaxis = list(title = 'Y Exp'))
+
+log_plot <- plot_ly(x = x_values, y = y_log, type = 'scatter', mode = 'markers+lines', name = 'Logarítmica') %>%
+  layout(title = "Função Logarítmica", xaxis = list(title = 'X'), yaxis = list(title = 'Y Log'))
+
+# Combinar os gráficos
+subplot(exp_plot, log_plot, nrows = 1) %>%
+  layout(title = "Exponencial vs Logarítmica", clickmode = 'event+select')
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+x_values <- seq(1, 10, length.out = 10)
+y_exp <- exp(x_values)  # Função exponencial
+y_log <- log(x_values)  # Função logarítmica
+
+exp_plot <- plot_ly(x = x_values, y = y_exp, type = 'scatter', mode = 'markers+lines', name = 'Exponencial') %>%
+  layout(title = "Função Exponencial", xaxis = list(title = 'X'), yaxis = list(title = 'Y Exp'))
+
+log_plot <- plot_ly(x = x_values, y = y_log, type = 'scatter', mode = 'markers+lines', name = 'Logarítmica') %>%
+  layout(title = "Função Logarítmica", xaxis = list(title = 'X'), yaxis = list(title = 'Y Log'))
+
+# Combinar os gráficos
+subplot(exp_plot, log_plot, nrows = 1) %>%
+  layout(title = "Exponencial vs Logarítmica", clickmode = 'event+select')
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="mat-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+# Alterar as cores dos gráficos:
+
+  exp_plot <- plot_ly(x = x_values, y = y_exp, type = 'scatter', mode = 'markers+lines', name = 'Exponencial', marker = list(color = 'blue'), line = list(color = 'blue')) %>% layout(title = "Função Exponencial", xaxis = list(title = 'X'), yaxis = list(title = 'Y Exp'))
+
+```
+
+</div>
+
+\
+
+<!-- #########  FUNÇÕES DE 1o, 2o, e 3o. GRAUS ########## -->
+
+<div class="mat-fundo">  <!--modifica para cada área-->
+
+## Funções de 1o, 2o., e 3o. grau (EM13MAT301, EM13MAT302)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Função para gerar polinômios de 1º, 2º e 3º grau
+generate_data <- function(degree) {
+  x <- seq(-5, 5, length.out = 100)
+  y <- if (degree == 1) 2 * x + 1 else if (degree == 2) x^2 - 3 * x + 2 else x^3 - 2 * x^2 + x - 1
+  list(x = x, y = y)
+}
+
+plot_ly() %>%
+  add_trace(x = generate_data(1)$x, y = generate_data(1)$y, mode = 'lines') %>%
+  layout(
+    title = 'Polinômio de 1º a 3º Grau',
+    sliders = list(list(
+      steps = lapply(1:3, function(degree) {
+        list(label = degree, method = "restyle",
+             args = list(list(y = list(generate_data(degree)$y))))
+      })
+    ))
+  )
+
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Função para gerar polinômios de 1º, 2º e 3º grau
+generate_data <- function(degree) {
+  x <- seq(-5, 5, length.out = 100)
+  y <- if (degree == 1) 2 * x + 1 else if (degree == 2) x^2 - 3 * x + 2 else x^3 - 2 * x^2 + x - 1
+  list(x = x, y = y)
+}
+
+plot_ly() %>%
+  add_trace(x = generate_data(1)$x, y = generate_data(1)$y, mode = 'lines') %>%
+  layout(
+    title = 'Polinômio de 1º a 3º Grau',
+    sliders = list(list(
+      steps = lapply(1:3, function(degree) {
+        list(label = degree, method = "restyle",
+             args = list(list(y = list(generate_data(degree)$y))))
+      })
+    ))
+  )
+
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="mat-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente, os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+# Adicionar cores e labels para melhorar a visualização 
+
+plot_ly() %>% add_trace(x = generate_data(1)$x, y = generate_data(1)$y, mode = 'lines', name = '1º Grau', line = list(color = 'blue')) %>% add_trace(x = generate_data(2)$x, y = generate_data(2)$y, mode = 'lines', name = '2º Grau', line = list(color = 'green')) %>% add_trace(x = generate_data(3)$x, y = generate_data(3)$y, mode = 'lines', name = '3º Grau', line = list(color = 'red')) %>%
+
+```
+
+</div>
+
+\
+
+<!-- #########  SENO E COSSENO ########## -->
+
+<div class="mat-fundo">  <!--modifica para cada área-->
+
+## Seno e Cosseno (EM13MAT409, EM13CIF301)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Valores de x
+x <- seq(0, 2 * pi, length.out = 100)
+
+plot_ly() %>%
+  add_trace(x = x, y = sin(x), mode = 'lines', name = 'Seno') %>%
+  add_trace(x = x, y = cos(x), mode = 'lines', name = 'Cosseno') %>%
+  layout(
+    title = 'Comparação: Seno e Cosseno',
+    xaxis = list(title = 'Ângulo (radianos)'), 
+    yaxis = list(title = 'Valor'),
+    showlegend = TRUE
+  )
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Valores de x
+x <- seq(0, 2 * pi, length.out = 100)
+
+plot_ly() %>%
+  add_trace(x = x, y = sin(x), mode = 'lines', name = 'Seno') %>%
+  add_trace(x = x, y = cos(x), mode = 'lines', name = 'Cosseno') %>%
+  layout(
+    title = 'Comparação: Seno e Cosseno',
+    xaxis = list(title = 'Ângulo (radianos)'), 
+    yaxis = list(title = 'Valor'),
+    showlegend = TRUE
+  )
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="mat-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+# Aumentar os valores das funções seno e cosseno 
+
+amplificacao <- 2 y_sin <- amplificacao * sin(x) y_cos <- amplificacao * cos(x)
+```
+
+</div>
+
+\
+
+<!-- #########  TENDÊNCIA CENTRAL E HISTOGRAMA ########## -->
+
+<div class="mat-fundo">  <!--modifica para cada área-->
+
+## Tendência central: média e mediana (EM13MAT306, EM13MAT305)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+# Dados de exemplo
+set.seed(123)
+dados <- rnorm(100, mean = 50, sd = 10)
+
+# Estatísticas
+media_val <- mean(dados)
+mediana_val <- median(dados)
+
+plot_ly() %>%
+  add_trace(x = dados, type = 'histogram', name = 'Distribuição', opacity = 0.6) %>%
+  add_trace(x = c(media_val, media_val), y = c(0, 15), mode = 'lines', name = 'Média', line = list(color = 'red')) %>%
+  add_trace(x = c(mediana_val, mediana_val), y = c(0, 15), mode = 'lines', name = 'Mediana', line = list(color = 'blue')) %>%
+  layout(title = 'Tendência Central',
+         xaxis = list(title = 'Valores'),
+         yaxis = list(title = 'Frequência'),
+         showlegend = TRUE)
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+# Dados de exemplo
+set.seed(123)
+dados <- rnorm(100, mean = 50, sd = 10)
+
+# Estatísticas
+media_val <- mean(dados)
+mediana_val <- median(dados)
+
+plot_ly() %>%
+  add_trace(x = dados, type = 'histogram', name = 'Distribuição', opacity = 0.6) %>%
+  add_trace(x = c(media_val, media_val), y = c(0, 15), mode = 'lines', name = 'Média', line = list(color = 'red')) %>%
+  add_trace(x = c(mediana_val, mediana_val), y = c(0, 15), mode = 'lines', name = 'Mediana', line = list(color = 'blue')) %>%
+  layout(title = 'Tendência Central',
+         xaxis = list(title = 'Valores'),
+         yaxis = list(title = 'Frequência'),
+         showlegend = TRUE)
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="mat-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+# Dados de exemplo (aumentando o número de dados)
+
+set.seed(123)
+dados <- rnorm(1000, mean = 50, sd = 10)  # Aumentado de 100 para 1000
+```
+
+</div>
+
+\
+
+
+<!--  ############ SUPERFÍCIE E VOLUME DE ESFERA #############-->
+
+<div class="mat-fundo">
+
+## Comparação de área superficial e volume de uma esfera (EM13MT05)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE, eval=TRUE}
+library(plotly)
+
+plot_ly() %>%
+  add_trace(x = 1:10, y = 4 * pi * (1:10)^2, mode = 'lines+markers', name = 'Superfície') %>%
+  add_trace(x = 1:10, y = (4/3) * pi * (1:10)^3, mode = 'lines+markers', name = 'Volume') %>%
+  layout(
+    title = 'Superfície e Volume de uma Esfera',
+    xaxis = list(title = 'Raio'), 
+    yaxis = list(title = 'Valor')
+  )
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+plot_ly() %>%
+  add_trace(x = 1:10, y = 4 * pi * (1:10)^2, mode = 'lines+markers', name = 'Superfície') %>%
+  add_trace(x = 1:10, y = (4/3) * pi * (1:10)^3, mode = 'lines+markers', name = 'Volume') %>%
+  layout(
+    title = 'Superfície e Volume de uma Esfera',
+    xaxis = list(title = 'Raio'), 
+    yaxis = list(title = 'Valor')
+  )
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="mat-fundo2">
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+
+x = 1:100
+y = 1:100 # aumenta o no. de pontos em 10 vezes
+```
+
+</div>
+
+\
+
+<!--  ############ CURVA AJUSTÁVEL DE SENO #############-->
+
+<div class="mat-fundo">  <!--modifica para cada área-->
+
+## Função Seno e ajuste de parâmetros (EM13MAT403, EM13MAT406, EM13MAT408)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+# Instalar os pacotes necessários
+# install.packages("plotly")
+
+library(plotly)
+
+# Geração de dados
+x <- seq(0, 2 * pi, length.out = 500)
+
+# Função para gerar y com base no parâmetro a
+func <- function(a, x) {
+  return(a * sin(x))
+}
+
+# Valores do parâmetro 'a' que irão variar
+a_values <- seq(0.5, 3, length.out = 30)
+
+# Criando um data frame com todos os valores de a e x para plotar
+data <- data.frame(
+  x = rep(x, times = length(a_values)),
+  y = unlist(lapply(a_values, function(a) func(a, x))),
+  a = rep(a_values, each = length(x))
+)
+
+# Criando o gráfico interativo com animação
+plot_ly(data, 
+        x = ~x, 
+        y = ~y, 
+        frame = ~a, 
+        type = 'scatter', 
+        mode = 'lines') %>%
+  layout(
+    title = "Variação da função y = a * sin(x) com diferentes valores de a",
+    xaxis = list(title = "x"),
+    yaxis = list(title = "y", range = c(-3, 3))
+  )
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# Instalar os pacotes necessários
+# install.packages("plotly")
+
+library(plotly)
+
+# Geração de dados
+x <- seq(0, 2 * pi, length.out = 500)
+
+# Função para gerar y com base no parâmetro a
+func <- function(a, x) {
+  return(a * sin(x))
+}
+
+# Valores do parâmetro 'a' que irão variar
+a_values <- seq(0.5, 3, length.out = 30)
+
+# Criando um data frame com todos os valores de a e x para plotar
+data <- data.frame(
+  x = rep(x, times = length(a_values)),
+  y = unlist(lapply(a_values, function(a) func(a, x))),
+  a = rep(a_values, each = length(x))
+)
+
+# Criando o gráfico interativo com animação
+plot_ly(data, 
+        x = ~x, 
+        y = ~y, 
+        frame = ~a, 
+        type = 'scatter', 
+        mode = 'lines') %>%
+  layout(
+    title = "Variação da função y = a * sin(x) com diferentes valores de a",
+    xaxis = list(title = "x"),
+    yaxis = list(title = "y", range = c(-3, 3))
+  )
+
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+<div class="mat-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+# Geração de dados
+
+x <- seq(0, 2 * pi, length.out = 1000)  # Aumentado de 500 para 1000 para maior suavidade"
+
+```
+
+</div>
+
+\
+
+<!--  ############ REGRESSÃO LINEAR #############-->
+
+<div class="mat-fundo">
+
+## Regressão linear (EM13MT10)
+
+<!-- ::: {.grid} -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, echo=FALSE}
+library(plotly)
+
+dados <- function(ruido_func) {
+  set.seed(123)
+  x <- seq(0, 5, length.out = 50)
+  desvio <- 2 * x + 5 + rnorm(50, 0, ruido_func)
+  y_esperado <- predict(lm(desvio ~ x), data.frame(x = x))
+  list(x = x, desvio = desvio, y_esperado = y_esperado)
+}
+
+plot_ly() %>%
+  add_trace(x = dados(1)$x, y = dados(1)$desvio, mode = 'markers', type = "scatter", name = "Dados") %>%
+  add_trace(x = dados(1)$x, y = dados(1)$y_esperado, mode = 'lines', type = "scatter", name = "Linha de Regressão") %>%
+  layout(
+    title = 'Regressão Linear',
+    xaxis = list(title = 'X'), yaxis = list(title = 'Y'),
+    sliders = list(list(
+      currentvalue = list(prefix = "Desvio: "),
+      steps = lapply(seq(0, 5, 1), function(sd_value) {
+        list(label = as.character(sd_value),
+             args = list(list(y = list(dados(sd_value)$desvio, dados(sd_value)$y_esperado))))
+      })
+    ))
+  )
+```
+<!-- ::: -->
+
+<!-- ::: {.g-col-6} -->
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+
+dados <- function(ruido_func) {
+  set.seed(123)
+  x <- seq(0, 5, length.out = 50)
+  desvio <- 2 * x + 5 + rnorm(50, 0, ruido_func)
+  y_esperado <- predict(lm(desvio ~ x), data.frame(x = x))
+  list(x = x, desvio = desvio, y_esperado = y_esperado)
+}
+
+plot_ly() %>%
+  add_trace(x = dados(1)$x, y = dados(1)$desvio, mode = 'markers', type = "scatter", name = "Dados") %>%
+  add_trace(x = dados(1)$x, y = dados(1)$y_esperado, mode = 'lines', type = "scatter", name = "Linha de Regressão") %>%
+  layout(
+    title = 'Regressão Linear',
+    xaxis = list(title = 'X'), yaxis = list(title = 'Y'),
+    sliders = list(list(
+      currentvalue = list(prefix = "Desvio: "),
+      steps = lapply(seq(0, 5, 1), function(sd_value) {
+        list(label = as.character(sd_value),
+             args = list(list(y = list(dados(sd_value)$desvio, dados(sd_value)$y_esperado))))
+      })
+    ))
+  )
+```
+
+<!-- ::: -->
+
+<!-- ::: -->
+
+</div>
+
+
+<div class="mat-fundo2">
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+
+lenght.out = 50 # aumenta o no. de pontos pra visualizar melhor o espalhamento
+
+lapply(seq(0, 50, 1) # aumenta o no. de desvios-padrão, para se visualizar o valor de sua influência no espalhamento dos pontos (veja que acima de 3 desvios-padrão o espalhamento fica muito grande, e com pouca alteração).
+
+lapply(seq(0, 3, 0.1) # altera o controle deslizante, pra se visualizar o espalhamento de forma mais suave até o valor de 3 desvios-padrão
+```
+
+</div>
+

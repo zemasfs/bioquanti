@@ -1,0 +1,126 @@
+---
+title: "Mais interatividade !"
+format: html
+toc: true
+number-sections: true
+lang: pt
+---
+
+<div class = "reminder-objetivos">
+Objetivos:\
+  1. Observar a capacidade extensiva de interação com o pacote "plotly"\
+  2. Elaborar um gráfico com controle deslizante\
+  3. Elaborar um gráfico com menu suspenso 
+</div>
+
+
+|       Até o momento só *"arranhamos"* o potencial de interatividade gráfica do pacote `plotly`. Como já mencionado, essa biblioteca permite um grande conjunto de ações de usuário, como deslizadores (*sliders*), menu de escolha, e botões, entre muitos.
+\
+
+# Adicionando um controle deslizante por intervalo
+
+|       Um *slider* dessa natureza permite que se escolha uma janela de dados para um estudo mais detalhista naquela região. Nesse caso é possível agregar a um gráfico simples um *controle deslizante de intervalo* (*rangeslider*).
+
+
+|       Podemos ilustrar seu emprego pela observação de gases de efeito estufa, e em especial, da *emissão de dióxido de carbono no Brasil* a partir de uma base de dados da internet. Para isso, você aprenderá a *obter um arquivo a partir  de base de dados da internet, filtrar para um subconjunto desejado, e elaborar o gráfico resultante, com um controle deslizante adicional*.
+
+
+## Emissão de CO$_{2}$ e o efeito estufa
+
+
+|       As emissões de CO$_{2}$ e outros gases pela queima de combustíveis fósseis tem grande responsabilidade sobre o efeito de estufa, incidindo diretamente sobre as alterações climáticas. Para reduzir essas emissões é necessário transformar a matriz energética atual, indústria e sistemas alimentares.  
+\
+
+|       Para compreender a emissão de CO$_{2}$ observada no Brasil no período de 1890 a 2022, execute o trecho de código que segue em um *script* do `R (ou seja, copie, cole, e execute), a partir da fonte [Our World in Data](https://github.com/owid). 
+\
+
+![Referência do MAPA para gases de efeito estufa. Fonte: MAPA: ensino médio - Ciências humanas e suas tecnologias. 1º Bim. 2º Ano, p.19.](co2_mapa.png)
+\
+
+```{r}
+library(readr) # biblioteca de importação de dados
+library(dplyr) # biblioteca para uso do operador pipe "%>%"
+library(plotly)
+
+# Carregamento dos dados da internet
+url <- "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
+co2_data <- read.csv(url)
+
+# Filtragem dos dados para o Brasil usando subset()
+co2_brasil <- subset(co2_data, country == "Brazil")
+
+# Criação do gráfico interativo com plot_ly
+co2_plot <- plot_ly(data = co2_brasil, x = ~year, y = ~co2, type = 'scatter', mode = 'lines+markers') %>%
+  layout(title = "Emissões de CO2 no Brasil ao longo dos anos",
+         xaxis = list(title = "Ano"),
+         yaxis = list(title = "Emissão de CO2 (milhões de toneladas)"))
+
+```
+
+
+|       Agora, a cereja do bolo. A inserção de um controle deslizante, para a seleção de faixas para um estudo mais focado. 
+
+```{r}
+co2_plot %>%
+  rangeslider()
+```
+\
+
+|       Você pode copiar e colar os *scripts* na sequência para sua execução, ou apenas adicionar o comando `rangeslider()` com o operador *pipe* %>% ao final.
+
+|       Experimente agora posicionar o *mouse* num dos dois marcadores laterais do gráfico inferior, arrastando-o em seguida, e observe o resultado. O controle deslizante pode ser útil quando se deseja focar em determinada região do gráfico. Por exemplo, ajustar a emissão de CO$_{2}$ para os últimos anos.
+
+
+
+
+### Adicionando um menu suspenso
+
+|       Menus suspensos (*dropdown menu*) permitem observar um gráfico diferente a cada opção selecionada. Para exemplificar esse recurso interativos, vamos primeiramente elaborar um conjunto de dados (*dataframe*) que possua a resposta linear, quadrática, e cúbica a uma variável independente, tal como segue:
+
+```{r}
+x = 1:10 # vetor da variável independente "x"
+yLin = x
+yQuad = x^2 # criação da variável dependente quadrática 
+yCub = x^3 # criação da variável dependente cúbica 
+
+datLQC <-data.frame(x,yLin,yQuad,yCub) # criação da planilha de dados
+```
+
+
+|       Agora podemos inserir o *menu suspenso* para opção das tendências matemáticas:
+
+```{r}
+plot_ly(datLQC, x = ~x, y = ~yLin, type = "scatter", mode = "line", name = "Linear") %>%
+  add_trace(x = ~x, y = ~yQuad, mode = "line", name = "Quadratic") %>%
+  add_trace(x = ~x, y = ~yCub, mode = "line", name = "Cubic") %>%
+  layout(
+    title = "Power Graphs",
+    xaxis = list(title = "x"),
+    yaxis = list(title = "x^n"),
+    updatemenus = list(
+      list(
+        buttons = list(
+          list(label = "yLin", method = "update", args = list(list(visible = c(TRUE, FALSE, FALSE)))),
+          list(label = "yQuad", method = "update", args = list(list(visible = c(FALSE, TRUE, FALSE)))),
+          list(label = "yCub", method = "update", args = list(list(visible = c(FALSE, FALSE, TRUE))))
+        )
+      )
+    )
+  )
+
+```
+
+
+|       Ainda que você possa achar meio complicado o trecho de código acima, apenas copie-o, cole-o num *script*, e execute-o. Isso exemplifica a *essência inerente ao Ensino Reprodutível, desde a simples reprodução do código, até sua alteração e mesmo a criação de novos*. Sentindo curiosidade, você pode alterar alguns termos do código acima, como as etiquetas (*label*, substitua um nome, por ex) que surgem no menu suspenso, o tipo de gráfico pretendido (substitua *scatter* por *bar*, por exemplo), ou o título do gráfico (*title*).
+\
+
+|       Em relação à interatividade produzida, adiciona-se às que já estavam presentes pelo comando `plot_ly`, a seleção do tipo de potência a representar pelo menu suspenso.
+\
+
+
+|       Assim como para vários pacotes do `R`, existe um número significativo de comandos e *widgets interativos* com o `plotly`, e que, nesse caso específico, daria "pano pra manga" pra uma obra literária isolada. Mas você pode consultar inúmeros *sites* sobre o `plotly` para um aprendizado mais abrangente, os *links* abaixo, e mesmo um [livro online](https://plotly-r.com/) gratuito, com códigos e gráficos correlatos. Para observar a imensa riqueza de gráficos interativos, dê uma olhada no [website do `plotly`](https://plotly.com/r/) para o `R`.
+\
+
+*   [Geral](https://cran.r-project.org/web/packages/plotly/index.html)
+*   [Manual](https://cran.r-project.org/web/packages/plotly/plotly.pdf)
+*   [Tutorial](https://plotly.com/r/)
