@@ -1,0 +1,36 @@
+✅ Solução correta (sem rebase): **merge do remoto no seu local, depois push.**
+
+Roda exatamente assim:
+
+```bash
+git pull --no-rebase origin main
+git push origin main
+```
+
+Isso vai criar um **merge commit** (a menos que o Git consiga fazer fast-forward, o que aqui não dá porque divergiu).
+
+### Se der conflito (às vezes acontece)
+
+```bash
+git status
+# abra e resolva os arquivos marcados
+git add -A
+git commit
+git push origin main
+```
+
+### E pra você nunca mais cair nessa na UNIFAL (no-rebase por padrão)
+
+Dentro desse repo:
+
+```bash
+git config pull.rebase false
+```
+
+(opcional global, se quiser em todo lugar)
+
+```bash
+git config --global pull.rebase false
+```
+
+

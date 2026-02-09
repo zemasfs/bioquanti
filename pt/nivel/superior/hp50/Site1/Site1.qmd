@@ -1,0 +1,111 @@
+---
+title: "Solução Numérica para Equilíbrio de Interação"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   Há  normalmente dois caminhos para a resolução de problemas matemáticos em Ciências naturais: solução analítica e solução numérica. A *solução analítica* (modelo teórico) depende de uma função contendo variável(is) independente(s), uma variável dependente, e um ou mais parâmetros da função matemática que se deseja determinar, e que descreve(m) a situação-problema. Por outro lado, a *solução numérica* não depende de uma equação descritiva, e sim de aproximações iterativas para minimizar uma função geral (*F(x)=0*). Emprega-se solução numérica quando o modelo teórico é complexo, a solução não é desejada, ou é até mesmo inexistente.
+\
+
+## Equação: 
+
+|   O programa *site1* busca resolver numericamente as quantidades envolvidas num equilíbrio de interação bimolecular:
+
+
+```{=tex}
+\begin{equation}
+L+R \begin{array}{c}
+_{k_{on}}\\
+ \rightleftharpoons\\
+^{k_{off}} \end{array} LR 
+\end{equation}
+```
+\
+
+*Onde:*
+
+*R* = receptor livre (proteína, ácido nucleico, etc);
+
+*RL* = complexo formado;
+
+*k$_{on}$* = taxa de associação do complexo;
+
+*k$_{off}$* = taxa de dissociação do complexo;
+
+|       A equação para a formação do complexo é:
+
+```{=tex}
+\begin{equation}
+Kd=\frac{[RL]}{[R]+[L]}=\frac{k_{off}}{k_{on}}
+\end{equation}
+```
+
+
+|   Onde *Kd* representa a *constante de equilíbrio de dissociação* para o complexo. Então:
+
+$$
+LR=\frac{L*R}{Kd}
+$$
+
+
+
+|   Assim, para a solução numérica para o modelo teórico descrito, a função de minimização será:
+
+
+$$
+F(x)=0: R_0= R+LR  \rightarrow R +\frac{L*R}{Kd}-R_0 =0
+$$
+
+
+$$
+F(x)=0: L_0=L+LR \rightarrow \frac{L*R}{Kd}-L_0 =0
+$$
+
+## site1
+
+|   O programa faz uso do comando *MSLV*  (*Multiple Equation Solver*) para solução simultânea de equações múltiplas e da biblioteca [MSLV2](https://www.hpcalc.org/hp49/math/numeric/mslv2v100.zip) que o otimiza. A biblioteca também pode ser alocada na calculadora a partir de seu código-fonte fornecido pelo desenvolvedor.
+\
+
+|   As entradas e saídas do programa são:
+
+```{r, eval=FALSE}
+# Entradas: 
+  L0, R0 e Kd
+
+# Saídas:
+  Gráfico de L x R;
+  Matriz de valores de L e LR na pilha;
+  Variáveis (L, R, RL, valores iniciais, e sementes)
+```
+
+
+## Arquivos:
+
+1. [Programa Site1](Site1.zip)
+2. [Código do programa](Site1.pdf)
+\
+
+## Exemplo de uso:
+
+```{r, eval=FALSE}
+1. Colocar na pilhas:
+  a. L_0=10;
+  b. R_0=5;
+  c. Kd=10
+
+2. Rodar "Site1"
+```
+
+
+*Obs:*
+
+1. Apesar de funcional, o programa é bastante lento quando comparado com softwares para desktop. O exemplo acima levou 16s para conclusão gráfica e saída de variáveis, ao passo que o programa [Octave](https://octave.org/) levou apenas 1s.
+
+
+
+## Referências {.unnumbered}
+
+1.Olson, John S. "[39] Numerical analysis of kinetic ligand binding data." Methods in Enzymology. Vol. 76. Academic Press, 1981. 652-667.
