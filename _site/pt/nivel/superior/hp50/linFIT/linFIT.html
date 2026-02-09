@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.22">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,15 +68,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../../avatar.png" rel="icon" type="image/png">
 <script src="../../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../site_libs/bootstrap/bootstrap-c12ad2fd307735207f49864bf87e7ec6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../site_libs/bootstrap/bootstrap-4b957b30fffc5edb70387ff4d75203a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -128,7 +127,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -155,8 +154,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../../logo-unifal.png" alt="" class="navbar-logo light-content">
-    <img src="../../../../logo-unifal.png" alt="" class="navbar-logo dark-content">
+    <img src="../../../../logo-unifal.png" alt="" class="navbar-logo">
     </a>
   </div>
             <div id="quarto-search" class="" title="Procurar"></div>
@@ -351,9 +349,10 @@ window.Quarto = {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#equação" id="toc-equação" class="nav-link active" data-scroll-target="#equação"><span class="header-section-number">1</span> Equação:</a></li>
-  <li><a href="#arquivos" id="toc-arquivos" class="nav-link" data-scroll-target="#arquivos"><span class="header-section-number">2</span> Arquivos:</a></li>
-  <li><a href="#exemplo-de-uso" id="toc-exemplo-de-uso" class="nav-link" data-scroll-target="#exemplo-de-uso"><span class="header-section-number">3</span> Exemplo de uso:</a></li>
+  <li><a href="#linfit" id="toc-linfit" class="nav-link active" data-scroll-target="#linfit"><span class="header-section-number">1</span> LinFIT</a></li>
+  <li><a href="#equação" id="toc-equação" class="nav-link" data-scroll-target="#equação"><span class="header-section-number">2</span> Equação:</a></li>
+  <li><a href="#arquivos" id="toc-arquivos" class="nav-link" data-scroll-target="#arquivos"><span class="header-section-number">3</span> Arquivos:</a></li>
+  <li><a href="#exemplo-de-uso" id="toc-exemplo-de-uso" class="nav-link" data-scroll-target="#exemplo-de-uso"><span class="header-section-number">4</span> Exemplo de uso:</a></li>
   <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
 </nav>
@@ -381,11 +380,21 @@ window.Quarto = {
 
 
 <div class="line-block">&nbsp;&nbsp;Ajuste ou regressão linear é onipresente nas Ciências. Entre outros, pela simplicidade estatística da modelagem de mínimos quadrados envolvida (basta variações em somatórias de x, y, e x*y), ausência de iteração e algoritmo, e por possibilitar a compreensão de modelos não lineares por estratégias de linearização. Não obstante, essas transformações lineares também agregam erros estatísticos, passíveis de correção por inserção de pesos nos ajustes.</div>
-<div class="line-block">&nbsp;&nbsp;Assim, uma regressão linear ponderada é útil em situações de dispersão de erros decorrentes de linearização, bem como heterocedasticidade. O programa <em>linFIT</em> emprega álgebra linear para determinar os coeficientes <em>a</em> e <em>b</em> de um ajuste linear ponderado,juntamente a outros parâmetros estatísticos, como erro padrão dos parâmetros, covariância, soma dos quadrados dos erros-SSE, por ex.</div>
+<div class="line-block">&nbsp;&nbsp;Assim, uma regressão linear ponderada é útil em situações de dispersão de erros decorrentes de linearização, bem como heterocedasticidade. A seguir são apresentados 3 programas para HP50 visando ajuste linear ponderado e gráficos, além de um exemplo para teste:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> linFIT <span class="sc">-</span> ajuste linear ponderado;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Plt <span class="sc">-</span> gráfico do ajuste com linha de regressão;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> PlAdd <span class="sc">-</span> sobreposição de gráfico no ecrã;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> exLin <span class="sc">-</span> exemplo em inibição enzimática</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="linfit" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="linfit"><span class="header-section-number">1</span> LinFIT</h2>
+<div class="line-block">&nbsp;&nbsp;O programa <em>linFIT</em> emprega álgebra linear para determinar os coeficientes <em>a</em> e <em>b</em> de um ajuste linear ponderado,juntamente a outros parâmetros estatísticos, como erro padrão dos parâmetros, covariância, soma dos quadrados dos erros-SSE, por ex.</div>
 <p><br>
 </p>
-<section id="equação" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="equação"><span class="header-section-number">1</span> Equação:</h2>
+</section>
+<section id="equação" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="equação"><span class="header-section-number">2</span> Equação:</h2>
 <p><span class="math display">\[
 y = a + b*x
 \]</span> <span class="math display">\[
@@ -393,61 +402,67 @@ y = a + b*x
 \]</span></p>
 <p><br>
 <em>Onde:</em></p>
-<p><span class="math inline">\(\beta\)</span>* = matriz de coeficientes <em>a</em> e <em>b</em>;</p>
+<p><span class="math inline">\(\beta\)</span> = matriz de coeficientes <em>a</em> e <em>b</em>;</p>
 <p><em>X</em> = matriz de valores <em>x</em> com 1a. coluna unitária;</p>
 <p>X<span class="math inline">\(^T\)</span> = matriz transposta de <em>X</em>;</p>
 <p><em>y</em> = matriz de valores de <em>y</em>;</p>
+<p><em>w</em> = matriz de pesos</p>
 </section>
-<section id="arquivos" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">2</span> Arquivos:</h2>
+<section id="arquivos" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">3</span> Arquivos:</h2>
 <ol type="1">
-<li><a href="linFIT.zip">Programa linFIT e exemplo</a></li>
-<li><a href="linFIT.pdf">Código</a><br>
+<li><a href="linFIT.zip">Programas de ajuste (linFIT, Plt, PlAdd, e exemplo</a></li>
+<li><a href="linFIT.pdf">Códigos dos programas</a><br>
 </li>
 </ol>
+<div class="line-block">&nbsp;&nbsp;Para utilizar o programa de ajustes de gráficos, basta descompactar oo arquivo e colocar os programas num diretório da calculadora, como HOME.</div>
 </section>
-<section id="exemplo-de-uso" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="exemplo-de-uso"><span class="header-section-number">3</span> Exemplo de uso:</h2>
-<div class="line-block">&nbsp;&nbsp;O arquivo contém o programa e um exemplo de linearização por Lineweaver-Burk em inibição enzimática (Cornish-Bowden, 2014) com dados de Wilkinson (1961). O arquivo “<em>exLin</em>” contém os dados necessários para o programa como uma lista. A lista é composta da variável <em>x</em> e variável <em>y</em>, bem como do peso <em>w</em> unitário (vide figura abaixo).</div>
+<section id="exemplo-de-uso" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="exemplo-de-uso"><span class="header-section-number">4</span> Exemplo de uso:</h2>
+<div class="line-block">&nbsp;&nbsp;O arquivo contém os programas e um exemplo de linearização por Lineweaver-Burk em inibição enzimática (Cornish-Bowden, 2014) com dados de Wilkinson (1961). O arquivo “<em>exLin</em>” contém os dados necessários para o programa como uma lista. A lista é composta da variável <em>x</em> e variável <em>y</em>, bem como do peso <em>w</em> unitário (vide figura abaixo).</div>
+<div class="line-block">&nbsp;&nbsp;Listas são excelentes para a HP50, pois ao se trabalhar em RPN e pilhas, uma lista é passível de rápida transformação de dados por operações aritméticas, e sem necessidade de comandos usualmente empregados com outros tipos de conjuntos, como vetores ou matrizes, como segue.</div>
 <p><br>
 </p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Coloque o arquivo <span class="st">"exLin"</span> na mantissa seguido por EVAL, resultando em <span class="dv">3</span> <span class="fu">listas</span> (x, y, e w);</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Se não necessitar de inserção de pesos, apenas clique em <span class="st">"linFIT"</span> para obtenção dos parâmetros, na sequência<span class="sc">:</span> <span class="fu">covXY</span> (covariação), <span class="fu">s2x</span> (variância em x), <span class="fu">s2y</span> (variância em y),</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">s2</span> (variância do ajuste), <span class="fu">F</span> (valor de distribuição F de Snedecor), <span class="fu">intcp</span> (intercepto), <span class="fu">se</span> (erro padrão do intercepto), <span class="fu">slope</span> (inclinação), <span class="fu">se</span> (erro padrão da inclinação), <span class="fu">ChiSQ</span> (valor de chi<span class="sc">-</span>quadrado), e <span class="fu">pval</span> (p<span class="sc">-</span>valor do ajuste).</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso de pesos no ajuste</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Coloque <span class="st">"exLin"</span> no diplay seguido de EVAL;</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Apague a lista de pesos unitários;</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Obtenha um peso de <span class="dv">1</span><span class="sc">/</span>v<span class="sc">^</span><span class="dv">2</span><span class="sc">:</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  a. ENTER para duplicar a lista y;</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  b. x<span class="sc">^</span><span class="dv">2</span> para elevar a lista ao quadrado;</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  c. <span class="dv">1</span><span class="sc">/</span>x para obter o recíproco dos valores quadráticos de y;</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> <span class="st">"linFIT"</span>.</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Coloque o arquivo <span class="st">"exLin"</span> na mantissa seguido por EVAL, resultando em <span class="dv">3</span> <span class="fu">listas</span> (x, y, e w);</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Se não necessitar de inserção de pesos, apenas clique em <span class="st">"linFIT"</span> para obtenção dos parâmetros, na sequência<span class="sc">:</span> <span class="fu">covXY</span> (covariação), <span class="fu">s2x</span> (variância em x), <span class="fu">s2y</span> (variância em y),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">s2</span> (variância do ajuste), <span class="fu">F</span> (valor de distribuição F de Snedecor), <span class="fu">intcp</span> (intercepto), <span class="fu">se</span> (erro padrão do intercepto), <span class="fu">slope</span> (inclinação), <span class="fu">se</span> (erro padrão da inclinação), <span class="fu">ChiSQ</span> (valor de chi<span class="sc">-</span>quadrado), e <span class="fu">pval</span> (p<span class="sc">-</span>valor do ajuste);</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Clique em <span class="st">"Plt"</span> para visualizar o gráfico;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Na área gráfica, clique em STATL para visualizar a linha de regressão.</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso de pesos no ajuste</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Coloque <span class="st">"exLin"</span> no diplay seguido de EVAL;</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Apague a lista de pesos unitários (DROP ou seta <span class="ot">&lt;-</span><span class="sc">-</span>);</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Obtenha um peso de <span class="dv">1</span><span class="sc">/</span>v<span class="sc">^</span><span class="dv">2</span><span class="sc">:</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  a. ENTER para duplicar a lista y;</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  b. x<span class="sc">^</span><span class="dv">2</span> para elevar a lista ao quadrado;</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  c. <span class="dv">1</span><span class="sc">/</span>x para obter o recíproco dos valores quadráticos de y;</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> <span class="st">"linFIT"</span>;</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="fig-x2tst" class="quarto-layout-panel">
+<div id="fig-linFIT" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-x2tst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-linFIT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-x2tst" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-linFIT" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div id="fig-dados" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-dados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="dados.jpeg" class="img-fluid figure-img" data-ref-parent="fig-x2tst">
+<img src="dados.jpeg" class="img-fluid figure-img" data-ref-parent="fig-linFIT">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Listas do exemplo, abertas pelo comando EVAL
+(a) Listas do exemplo, abertas pelo comando EVAL sobre o exemplo.
 </figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-x2tst" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-linFIT" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="result.jpeg" class="img-fluid figure-img" data-ref-parent="fig-x2tst">
+<img src="result.jpeg" class="img-fluid figure-img" data-ref-parent="fig-linFIT">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Resultados obtidos do ajuste com pesos de 1/v².
@@ -455,16 +470,28 @@ y = a + b*x
 </figure>
 </div>
 </div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-linFIT" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="plot.jpeg" class="img-fluid figure-img" data-ref-parent="fig-linFIT">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Gráfico do ajuste linear com opção para linha de regressão em STATL.
+</figcaption>
+</figure>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-x2tst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Programa <em>linFIT</em> pela versão Android de HP50G (<a href="https://sites.google.com/site/olivier2smet2/home/go49gp">Go49gp</a>) apresentando a inserção de dados e os resultados do ajuste linear ponderado.
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linFIT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Programa <em>linFIT</em> pela versão Android de HP50G (<a href="https://sites.google.com/site/olivier2smet2/home/go49gp">Go49gp</a>). Da esquerda para direita, inserção de dados, resultados do ajuste linear ponderado, e gráfico resultante.
 </figcaption>
 </figure>
 </div>
 <p><br>
 </p>
-<div class="line-block">&nbsp;&nbsp;Os valores encontrados para inclinação (Km/Vm; 0.80+/-0.07 ) e intercepto (1/Vm; 1.54+/-0.15) estão em consonância aos reportados em Wilkinson (1961), utilizando-se o peso de 1/v<span class="math inline">\(^2\)</span>.</div>
+<div class="line-block">&nbsp;&nbsp;Para comparação de ajustes com pesos distintos, basta clicar em “PlAdd” do programa adicional (para o exemplo fornecido as diferenças são mínimas). Os valores encontrados para inclinação (Km/Vm; 0.80+/-0.07 ) e intercepto (1/Vm; 1.54+/-0.15) estão em consonância aos reportados em Wilkinson (1961), utilizando-se o peso de 1/v<span class="math inline">\(^2\)</span>.</div>
 </section>
 <section id="referências" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
@@ -528,14 +555,13 @@ Figura&nbsp;1: Programa <em>linFIT</em> pela versão Android de HP50G (<a href="
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
