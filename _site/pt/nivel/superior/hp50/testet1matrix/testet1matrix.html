@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Therm - Quantidades termodinâmicas por sistema linear para 2 temperaturas</title>
+<title>Teste t de Student para amostras independentes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -205,7 +205,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Therm - Quantidades termodinâmicas por sistema linear para 2 temperaturas</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Teste t de Student para amostras independentes</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -351,9 +351,8 @@ window.Quarto = {
   <ul>
   <li><a href="#equação" id="toc-equação" class="nav-link active" data-scroll-target="#equação"><span class="header-section-number">1</span> Equação:</a></li>
   <li><a href="#arquivos" id="toc-arquivos" class="nav-link" data-scroll-target="#arquivos"><span class="header-section-number">2</span> Arquivos:</a></li>
-  <li><a href="#uso" id="toc-uso" class="nav-link" data-scroll-target="#uso"><span class="header-section-number">3</span> Uso:</a></li>
-  <li><a href="#exemplo" id="toc-exemplo" class="nav-link" data-scroll-target="#exemplo"><span class="header-section-number">4</span> Exemplo</a></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  <li><a href="#uso-e-exemplo" id="toc-uso-e-exemplo" class="nav-link" data-scroll-target="#uso-e-exemplo"><span class="header-section-number">3</span> Uso e exemplo</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">4</span> Referências:</a></li>
   </ul>
 </nav>
     </div>
@@ -362,7 +361,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Therm - Quantidades termodinâmicas por sistema linear para 2 temperaturas</h1>
+<h1 class="title">Teste t de Student para amostras independentes</h1>
 </div>
 
 
@@ -379,91 +378,129 @@ window.Quarto = {
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;O programa é bem simples, mas permite calcular por álgebra linear os valores de <span class="math inline">\(\Delta\)</span>S e <span class="math inline">\(\Delta\)</span>H simultaneamente para um par de reações ocorridas em temperaturas distintas e valores conhecidos de <span class="math inline">\(\Delta\)</span>G (<em>sistema linear de equações</em>). Foi desenvolvido com o <em>firmware</em> <a href="https://sourceforge.net/projects/newrpl/">newRPL</a>, embora facilmente adaptável à versão original da HP50G.</div>
+<div class="line-block">&nbsp;&nbsp;O <em>teste t</em> de Student verifica se duas amostras independentes são estatisticamente diferentes.</div>
 <p><br>
 </p>
 <section id="equação" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="equação"><span class="header-section-number">1</span> Equação:</h2>
 <p><span class="math display">\[
-\Delta G^{T1}=\Delta H-T1*\Delta S
-\]</span></p>
-<p><span class="math display">\[
-\Delta G^{T2}=\Delta H-T2*\Delta S
+t=\frac{y1-y2}{\sqrt{(\frac{1}{n1}+\frac{1}{n2})s^2}}
 \]</span><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;A solução acima dá-se por álgebra matricial:</div>
+<em>Onde</em></p>
+<p><em>y1</em> = média dos valores do 1o. conjunto de dados;</p>
+<p><em>y2</em> = média dos valores do 2o. conjunto de dados;</p>
+<p>s<span class="math inline">\(^2\)</span> = variância agrupada</p>
+<div class="line-block">&nbsp;&nbsp;A variância agrupada é dada por:</div>
 <p><span class="math display">\[
-A*x=b
-\]</span> <em>Onde:</em></p>
-<p><em>A</em> = matriz coluna com valores de temperatura e 1a coluna unitária;</p>
-<p><em>b</em> = matriz coluna com valores de <span class="math inline">\(\Delta\)</span>G;</p>
-<p><em>x</em> = matriz resultante com os parâmetros <span class="math inline">\(\Delta\)</span>S e <span class="math inline">\(\Delta\)</span>H</p>
+s^2=\frac{(n1-1)s_1^2+(n2-1)s_2^2}{n1+n2-2}
+\]</span></p>
 </section>
 <section id="arquivos" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">2</span> Arquivos:</h2>
 <ol type="1">
-<li><a href="Therm.zip">Programa Therm</a></li>
-<li><a href="Therm.pdf">Código</a><br>
+<li><a href="1ANAVA1matrix.zip">Programa 1ANAVA1matrix</a></li>
+<li><a href="1ANAVA1matrix.pdf">Código do programa</a><br>
 </li>
 </ol>
 </section>
-<section id="uso" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="uso"><span class="header-section-number">3</span> Uso:</h2>
-<div class="line-block">&nbsp;&nbsp;Para seu uso, o programa requer a entrada dos seguintes dados na sequência da pilha:</div>
-<p><br>
-</p>
+<section id="uso-e-exemplo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="uso-e-exemplo"><span class="header-section-number">3</span> Uso e exemplo</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Entrada de dados</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> DeltaG_1, T1, DeltaG_2, T2;</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Após clicar em <span class="st">"Therm"</span>, o programa calculará os valores para DeltaS e DeltaH.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Entrar com matrix contendo os dois conjuntos de dados;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> <span class="st">"testet1matrix"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Saída:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">"tval"</span> <span class="sc">-</span> valor da distribuição t;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> <span class="st">"tcr5%"</span> <span class="sc">-</span> valor <span class="fu">tabulado</span> (t<span class="sc">-</span>crítico);</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> <span class="st">"pval"</span> <span class="sc">-</span> p<span class="sc">-</span>valor do teste</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="exemplo" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="exemplo"><span class="header-section-number">4</span> Exemplo</h2>
-<div class="line-block">&nbsp;&nbsp;A figura abaixo ilustra a HP50G com entrada de dados e os resultados da mantissa para a reação explicitada em Cooper (2011), bem como o <em>layout</em> do <em>firmware newRPL</em>.</div>
 <p><br>
 </p>
-<div id="fig-Therm" class="quarto-layout-panel">
+<p><em>Tabela — Valores observados para os grupos A e B (Vieira, 2000)</em></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Grupo</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>6</td>
+<td>5</td>
+<td>7</td>
+<td>3</td>
+<td>5</td>
+<td>2</td>
+<td>4</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>7</td>
+<td>9</td>
+<td>6</td>
+<td>7</td>
+<td>6</td>
+<td>6</td>
+<td>9</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+</p>
+<div id="fig-SimPlot" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-Therm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-SimPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-Therm" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SimPlot" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-dados" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-dados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="dados.jpeg" class="img-fluid figure-img" data-ref-parent="fig-Therm">
+<img src="dados.jpeg" class="img-fluid figure-img" data-ref-parent="fig-SimPlot">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Inserção de valores de DeltaG e T1, e DeltaG e T2 para o programa.
+(a) Inserção de matrix de dados.
 </figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-Therm" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SimPlot" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="result.jpeg" class="img-fluid figure-img" data-ref-parent="fig-Therm">
+<img src="result.jpeg" class="img-fluid figure-img" data-ref-parent="fig-SimPlot">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Resultados obtidos do programa.
+(b) Resultados obtidos do teste <em>t</em>.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Therm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Execução do programa <em>Therm</em> para obtenção de <span class="math inline">\(\Delta\)</span>S e <span class="math inline">\(\Delta\)</span>H para reação química em duas temperaturas (firmware <em>newRPL</em>). Os resultados batem com os obtidos pelo autor (Cooper, 2011).
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-SimPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Programa <em>testet1matrix</em> pela versão Android de HP50G (<a href="https://sites.google.com/site/olivier2smet2/home/go49gp">Go49gp</a>), exibindo entrada de dados e resultados do exemplo.
 </figcaption>
 </figure>
 </div>
+<p><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;Os resultados coadunam com os obtidos por Sonia (2000), cujos valores foram <em>tval</em>= -2.366 e <em>pval</em>= 0.036.</div>
 </section>
-<section id="referências" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
+<section id="referências" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="referências"><span class="header-section-number">4</span> Referências:</h2>
 <ol type="1">
-<li>Cooper, Alan. Biophysical chemistry. No.&nbsp;24. Royal Society of Chemistry, p.&nbsp;113, 2011.</li>
+<li>Vieira, Sônia. Análise de variância: ANOVA. Editora Atlas SA, 2000.</li>
 </ol>
 
 
