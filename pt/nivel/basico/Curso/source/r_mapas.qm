@@ -1,0 +1,116 @@
+---
+title: "7 - Mapas interativos com `plotly`"
+format: html
+toc: true
+number-sections: true
+lang: pt
+---
+
+<div class = "reminder-objetivos">
+Objetivos:\
+  1. Conhecer o potencial do "plotly" para criação de mapas interativos\
+  2. Elaborar um mapa interativo com dados inseridos\
+  3. Elaborar um mapa interativo com dados importados \
+</div>
+
+
+|       Por fim, deixamos esta última parte de nosso curso para lhe apresentar outro potencial *"pra lá de bacana"* do `plotly` para ensino e aprendizagem: a construção de mapas interativos. 
+
+|       Mapas interativos permitem que se observe informações por *mouse hover* (passagem do *mouse* sobre os dados) ou por clique de *mouse* sobre um mapa contendo esses dados. Por se tratar de um mapa, as informações são obtidas em coordenadas geográficas específicas. Essa característica torna indispensável, portanto, as *coordenadas de longitude e de latitude* relacionadas aos pontos geográficos que se deseja apresentar.
+
+|       Segue um exemplo simples, localizando os três municípios do Sul de Minas Gerais onde ficam os campi da Universidade Federal de Alfenas (UNIFAL-MG).
+
+```{r}
+library(plotly)
+
+# Criar dados de exemplo com coordenadas de algumas cidades
+cities <- data.frame(
+  name = c("Alfenas", "Varginha", "Poços de Caldas"),
+  lat = c(-21.42943530, -21.539957, -21.783731),  # Latitude
+  lon = c(-45.95948212, -45.433960, -46.564178)   # Longitude
+)
+
+# Criar o mapa interativo
+plot_ly(
+  data = cities,
+  lat = ~lat,
+  lon = ~lon,
+  type = 'scattergeo',
+  mode = 'markers+text',
+  text = ~name,
+  marker = list(size = 10, color = 'blue', opacity = 0.7),
+  textposition = "top center"
+) %>%
+  layout(
+    title = "Municípios dos campi da UNIFAL-MG",
+    geo = list(
+      scope = 'south america',
+      showland = TRUE
+    )
+  )
+```
+
+
+|       Para observar os municípios, vá ampliando a imagem com o *mouse*. Veja que o mapa inicia na América do Sul, uma condição inserida no código para facilitar a busca das cidades. Experimente colocar um comentário (*#*) à esquerda do trecho "*scope = ..."*, e a informação partirá do mapa *mundi.* Observe agora que ao passar o *mouse* sobre os municípios é identificada as coordenadas geográficas propostas.
+\
+
+<div class="reminder-markdown">
+
+**Agora é com voce:**
+
+1. Localize as coordenadas geográficas (longitude e latitude) de sua cidade Natal, ou da de um ente querido. Pra isso, dê uma busca na internet; 
+2. Copie o código acima, e cole-o num novo script;  
+3. Substitua os atributos *"name"*, *"lat"*, e *"lon"* no `data.frame` do código  pelos que você buscou.
+4. Rode o script e observe no mapa interativo o município escolhido. 
+Dica: se você selecionou uma cidade fora da América do Sul, colocar um *"#"* antes da linha de "*scope = ..."*.
+
+</div>
+
+
+## Produção mundial de óleos
+
+
+|       Agora imagine que você possa, ao invés de colocar os dados um a um, *importar os dados de algum repositório da internet* para a construção do mapa, como fora conduzido na etapa anterior. Para ilustrar isso vamos importar uma planilha referente à produção de óleo no planeta. Essa categoria inclui petróleo bruto, óleo de xisto, areias betuminosas, condensados, e líquidos de gás natural (etano, GLP e nafta separados da produção de gás natural).
+
+|       Ao mesmo tempo, vamos filtrar os dados importados para o ano de 2014, tal como encontrado no banco de dados do [Our World In Data](https://github.com/owid/owid-datasets/tree/master/datasets). 
+
+
+![Produção mundial de petróleo. Fonte: MAPA: ensino médio - Ciências humanas e suas tecnologias. 3º Bim. 2º Ano, p.81.](petroleo_mapa.png)
+
+
+```{r}
+library(plotly)
+
+# Exemplo de dataframe com valores fictícios
+df <- read.csv("https://raw.githubusercontent.com/owid/owid-datasets/refs/heads/master/datasets/Oil%20production%20-%20Etemad%20%26%20Luciana/Oil%20production%20-%20Etemad%20%26%20Luciana.csv")
+
+# Renomeando as colunas para facilitar interpretação e plotagem
+
+names(df) <- c("País", "Ano", "Produção.TeraWatt")
+
+# Filtrando os dados para o último ano (2014)
+df <- subset(df, Ano == "2014")
+
+head(df)
+
+
+# Criando o mapa choropleth com a escala de cores ajustada
+library(plotly)
+plot_ly(
+  data = df,
+  locations = ~País,
+  locationmode = "country names",
+  z = ~Produção.TeraWatt, # Variável que determina as cores
+  type = "choropleth",
+  colorscale = "RdBu") # outras escalas: # outras escalas: Viridis, Inferno, Blues, Cividis, Greens, ...
+```
+
+
+|       Seguindo a mesma lógica do mapa anterior, se você passar o *mouse* sobre os países verá o consumo identificado em cada um. Observe que há uma barrinha lateral apresentando a legenda sobre o quantitativo de produção, em  Observe também que o "*type"* do gráfico agora é `choroplet` (e não `scattergeo`). Na sua versão mais simples, ele só precisa dos nomes padronizados dos países. Mas também pode ser realizado com um banco de dados que possua apenas as coordenadas geográficas de latitude e longitude.
+
+|       Para auxiliar nessa direção, seguem dois *links* práticos para arquivos de coordenadas geográficas, e acessíveis pelo `R`:
+
+* [Coordenadas de municípios brasileiros](https://raw.githubusercontent.com/kelvins/municipios-brasileiros/refs/heads/main/csv/municipios.csv)
+* [Coordenadas de capitais mundiais](https://raw.githubusercontent.com/bahar/WorldCityLocations/refs/heads/master/World_Cities_Location_table.csv)
+
+|       E nesse caso, qualquer banco de dados nesse quesito será bem-vindo. O que significa na prática poder exemplificar qualquer informação de conteúdo didático de forma interativa em um mapa (ex: produção/exportação de insumos, observações clínicas, marcos históricos, etc).

@@ -1,0 +1,159 @@
+---
+title: "Linguagens"
+number-sections: true
+toc: true
+lang: pt
+class: fundo-basico
+---
+
+<div class="ling-fundo">
+
+**Frequência de palavras identificadas em texto (EM13LGG703, EM13LGG704, EM13LGG705)**
+
+::: {.grid}
+
+::: {.g-col-6}
+
+```{r, echo=FALSE}
+# Instale os pacotes necessários (caso ainda não estejam instalados)
+if (!requireNamespace("plotly", quietly = TRUE)) install.packages("plotly")
+if (!requireNamespace("tm", quietly = TRUE)) install.packages("tm")
+if (!requireNamespace("wordcloud", quietly = TRUE)) install.packages("wordcloud")
+
+# Carregar pacotes
+library(plotly)
+library(tm)
+
+# Texto de exemplo (pode ser substituído por outro texto ou conjunto de textos)
+texto <- c(
+  "A leitura é essencial para a compreensão do mundo.",
+  "Leitura amplia horizontes e desperta a criatividade.",
+  "A linguagem e a criatividade nos conecta e transforma o conhecimento em algo acessível."
+)
+
+# Criar um corpus
+corpus <- Corpus(VectorSource(texto))
+
+# Pré-processamento do texto
+corpus <- tm_map(corpus, content_transformer(tolower)) # Transformar para letras minúsculas
+corpus <- tm_map(corpus, removePunctuation)           # Remover pontuação
+corpus <- tm_map(corpus, removeNumbers)               # Remover números
+corpus <- tm_map(corpus, removeWords, stopwords("pt")) # Remover stopwords em português
+
+# Criar uma matriz termo-documento
+tdm <- TermDocumentMatrix(corpus)
+matriz <- as.matrix(tdm)
+
+# Somar as frequências de palavras
+frequencias <- sort(rowSums(matriz), decreasing = TRUE)
+dados_frequencias <- data.frame(
+  Palavra = names(frequencias),
+  Frequencia = frequencias
+)
+
+# Criar gráfico interativo com Plotly
+grafico <- plot_ly(
+  dados_frequencias,
+  x = ~Palavra,
+  y = ~Frequencia,
+  type = "bar",
+  text = ~paste("Frequência:", Frequencia),
+  hoverinfo = "text"
+) %>%
+  layout(
+    title = "Frequência de Palavras no Texto",
+    xaxis = list(title = "Palavras"),
+    yaxis = list(title = "Frequência"),
+    showlegend = FALSE
+  )
+
+# Exibir o gráfico interativo
+grafico
+```
+:::
+
+::: {.g-col-6}
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# Instale os pacotes necessários (caso ainda não estejam instalados)
+if (!requireNamespace("plotly", quietly = TRUE)) install.packages("plotly")
+if (!requireNamespace("tm", quietly = TRUE)) install.packages("tm")
+if (!requireNamespace("wordcloud", quietly = TRUE)) install.packages("wordcloud")
+
+# Carregar pacotes
+library(plotly)
+library(tm)
+
+# Texto de exemplo (pode ser substituído por outro texto ou conjunto de textos)
+texto <- c(
+  "A leitura é essencial para a compreensão do mundo.",
+  "Leitura amplia horizontes e desperta a criatividade.",
+  "A linguagem e a criatividade nos conecta e transforma o conhecimento em algo acessível."
+)
+
+# Criar um corpus
+corpus <- Corpus(VectorSource(texto))
+
+# Pré-processamento do texto
+corpus <- tm_map(corpus, content_transformer(tolower)) # Transformar para letras minúsculas
+corpus <- tm_map(corpus, removePunctuation)           # Remover pontuação
+corpus <- tm_map(corpus, removeNumbers)               # Remover números
+corpus <- tm_map(corpus, removeWords, stopwords("pt")) # Remover stopwords em português
+
+# Criar uma matriz termo-documento
+tdm <- TermDocumentMatrix(corpus)
+matriz <- as.matrix(tdm)
+
+# Somar as frequências de palavras
+frequencias <- sort(rowSums(matriz), decreasing = TRUE)
+dados_frequencias <- data.frame(
+  Palavra = names(frequencias),
+  Frequencia = frequencias
+)
+
+# Criar gráfico interativo com Plotly
+grafico <- plot_ly(
+  dados_frequencias,
+  x = ~Palavra,
+  y = ~Frequencia,
+  type = "bar",
+  text = ~paste("Frequência:", Frequencia),
+  hoverinfo = "text"
+) %>%
+  layout(
+    title = "Frequência de Palavras no Texto",
+    xaxis = list(title = "Palavras"),
+    yaxis = list(title = "Frequência"),
+    showlegend = FALSE
+  )
+
+# Exibir o gráfico interativo
+grafico
+```
+
+:::
+
+:::
+
+</div>
+
+<div class="ling-fundo2"> <!--modifica para cada área-->
+
+**Sugestões:**
+
+|       Experimente modificar o gráfico, usando/substituindo alternativamente os comandos abaixo no trecho de código:
+
+```{r, eval =FALSE}
+# Adição logo após hoverinfo, muda as cores
+
+marker = list(color = ~Frequencia, colorscale = "Blues")  # Escala de cores "Blues"
+
+```
+
+</div>
+
+\
+
+
+
+
