@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Ajuste Linear Ponderado e modelo de Lineweaver-Burk</title>
+<title>Teste de homogeneidade de variâncias de Bartlett</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -205,7 +205,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Ajuste Linear Ponderado e modelo de Lineweaver-Burk</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Teste de homogeneidade de variâncias de Bartlett</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -349,11 +349,11 @@ window.Quarto = {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#linfit" id="toc-linfit" class="nav-link active" data-scroll-target="#linfit"><span class="header-section-number">1</span> LinFIT</a></li>
-  <li><a href="#equação" id="toc-equação" class="nav-link" data-scroll-target="#equação"><span class="header-section-number">2</span> Equação:</a></li>
-  <li><a href="#arquivos" id="toc-arquivos" class="nav-link" data-scroll-target="#arquivos"><span class="header-section-number">3</span> Arquivos:</a></li>
-  <li><a href="#exemplo-de-uso" id="toc-exemplo-de-uso" class="nav-link" data-scroll-target="#exemplo-de-uso"><span class="header-section-number">4</span> Exemplo de uso:</a></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  <li><a href="#equação" id="toc-equação" class="nav-link active" data-scroll-target="#equação"><span class="header-section-number">1</span> Equação:</a></li>
+  <li><a href="#arquivos" id="toc-arquivos" class="nav-link" data-scroll-target="#arquivos"><span class="header-section-number">2</span> Arquivos:</a></li>
+  <li><a href="#bart1matrix" id="toc-bart1matrix" class="nav-link" data-scroll-target="#bart1matrix"><span class="header-section-number">3</span> Bart1matrix</a></li>
+  <li><a href="#uso-e-exemplo" id="toc-uso-e-exemplo" class="nav-link" data-scroll-target="#uso-e-exemplo"><span class="header-section-number">4</span> Uso e exemplo</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">5</span> Referências:</a></li>
   </ul>
 </nav>
     </div>
@@ -362,7 +362,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Ajuste Linear Ponderado e modelo de Lineweaver-Burk</h1>
+<h1 class="title">Teste de homogeneidade de variâncias de Bartlett</h1>
 </div>
 
 
@@ -379,125 +379,88 @@ window.Quarto = {
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;Ajuste ou regressão linear é onipresente nas Ciências. Entre outros, pela simplicidade estatística da modelagem de mínimos quadrados envolvida (basta variações em somatórias de x, y, e x*y), ausência de iteração e algoritmo, e por possibilitar a compreensão de modelos não lineares por estratégias de linearização. Não obstante, essas transformações lineares também agregam erros estatísticos, passíveis de correção por inserção de pesos nos ajustes.</div>
-<div class="line-block">&nbsp;&nbsp;Assim, uma regressão linear ponderada é útil em situações de dispersão de erros decorrentes de linearização, bem como heterocedasticidade. A seguir são apresentados 3 programas para HP50 visando ajuste linear ponderado e gráficos, além de um exemplo para teste:</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> linFIT <span class="sc">-</span> ajuste linear ponderado;</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Plt <span class="sc">-</span> gráfico do ajuste com linha de regressão;</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> PlAdd <span class="sc">-</span> sobreposição de gráfico no ecrã;</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> exLin <span class="sc">-</span> exemplo em inibição enzimática</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="linfit" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="linfit"><span class="header-section-number">1</span> LinFIT</h2>
-<div class="line-block">&nbsp;&nbsp;O programa <em>linFIT</em> emprega álgebra linear para determinar os coeficientes <em>a</em> e <em>b</em> de um ajuste linear ponderado,juntamente a outros parâmetros estatísticos, como erro padrão dos parâmetros, covariância, soma dos quadrados dos erros-SSE, por ex.</div>
+<div class="line-block">&nbsp;&nbsp;O teste de Bartlett avalia se um conjunto de dados com <em>k</em> grupos possui variância homogênea entre seus elementos. A lógica do teste envolve o cálculo da estatística <em>T</em> e comparação com valor predito em teste de <span class="math inline">\(\chi\)</span><span class="math inline">\(^2\)</span>.</div>
 <p><br>
 </p>
-</section>
-<section id="equação" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="equação"><span class="header-section-number">2</span> Equação:</h2>
+<section id="equação" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="equação"><span class="header-section-number">1</span> Equação:</h2>
 <p><span class="math display">\[
-y = a + b*x
-\]</span> <span class="math display">\[
-\beta=(X^T*w*X)^{-1}*X^T*w*y
-\]</span></p>
-<p><br>
-<em>Onde:</em></p>
-<p><span class="math inline">\(\beta\)</span> = matriz de coeficientes <em>a</em> e <em>b</em>;</p>
-<p><em>X</em> = matriz de valores <em>x</em> com 1a. coluna unitária;</p>
-<p>X<span class="math inline">\(^T\)</span> = matriz transposta de <em>X</em>;</p>
-<p><em>y</em> = matriz de valores de <em>y</em>;</p>
-<p><em>w</em> = matriz de pesos</p>
+T = \frac{(N-k)*ln(s^2p)-\Sigma_{i=1}^k(N_i-1)*ln(si^2)}{1+\frac{1}{3(k-1)}(\Sigma_{i=1}^k\frac{1}{N_i-1})-\frac{1}{N-k}}
+\]</span> | Com: <span class="math display">\[
+s^2p=\Sigma_{i=1}^k(Ni-1)\frac{Si^2}{N-k}
+\]</span><br>
+</p>
+<p><em>Onde:</em></p>
+<p>Si² = variância do grupo;</p>
+<p>Ni = tamanho do grupo <em>ki</em>;</p>
+<p>N = total da amostra;</p>
+<p><em>k</em> = número de grupos;</p>
+<p>s²p = variância agrupada</p>
 </section>
-<section id="arquivos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">3</span> Arquivos:</h2>
+<section id="arquivos" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">2</span> Arquivos:</h2>
 <ol type="1">
-<li><a href="linFIT_all.zip">Programas de ajuste (linFIT, Plt, PlAdd, e exemplo)</a></li>
-<li><a href="linFIT.pdf">Códigos dos programas</a><br>
+<li><a href="Bart1matrix.zip">Programa Bart1matrix e exemplo</a></li>
+<li><a href="Bart1matrix.pdf">Código do programa</a><br>
 </li>
 </ol>
-<div class="line-block">&nbsp;&nbsp;Para utilizar o programa de ajustes de gráficos, basta descompactar oo arquivo e colocar os programas num diretório da calculadora, como HOME.</div>
 </section>
-<section id="exemplo-de-uso" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="exemplo-de-uso"><span class="header-section-number">4</span> Exemplo de uso:</h2>
-<div class="line-block">&nbsp;&nbsp;O arquivo contém os programas e um exemplo de linearização por Lineweaver-Burk em inibição enzimática (Cornish-Bowden, 2014) com dados de Wilkinson (1961). O arquivo “<em>exLin</em>” contém os dados necessários para o programa como uma lista. A lista é composta da variável <em>x</em> e variável <em>y</em>, bem como do peso <em>w</em> unitário (vide figura abaixo).</div>
-<div class="line-block">&nbsp;&nbsp;Listas são excelentes para a HP50, pois ao se trabalhar em RPN e pilhas, uma lista é passível de rápida transformação de dados por operações aritméticas, e sem necessidade de comandos usualmente empregados com outros tipos de conjuntos, como vetores ou matrizes, como segue.</div>
+<section id="bart1matrix" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="bart1matrix"><span class="header-section-number">3</span> Bart1matrix</h2>
+<div class="line-block">&nbsp;&nbsp;O programa permite, a partir de uma simples matriz contendo os dados (vetores coluna), a saída de <span class="math inline">\(\chi\)</span><span class="math inline">\(^2\)</span> crítico a 5% (<span class="math inline">\(\alpha\)</span>=0.05), valor de <em>T</em>, e <em>p-valor</em>.</div>
+</section>
+<section id="uso-e-exemplo" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="uso-e-exemplo"><span class="header-section-number">4</span> Uso e exemplo</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Entrar com matrix de <span class="fu">dados</span> (vetor coluna);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> <span class="st">"Bart1matrix"</span>.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 </p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Coloque o arquivo <span class="st">"exLin"</span> na mantissa seguido por EVAL, resultando em <span class="dv">3</span> <span class="fu">listas</span> (x, y, e w);</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Se não necessitar de inserção de pesos, apenas clique em <span class="st">"linFIT"</span> para obtenção dos parâmetros, na sequência<span class="sc">:</span> <span class="fu">covXY</span> (covariação), <span class="fu">s2x</span> (variância em x), <span class="fu">s2y</span> (variância em y),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">s2</span> (variância do ajuste), <span class="fu">F</span> (valor de distribuição F de Snedecor), <span class="fu">intcp</span> (intercepto), <span class="fu">se</span> (erro padrão do intercepto), <span class="fu">slope</span> (inclinação), <span class="fu">se</span> (erro padrão da inclinação), <span class="fu">ChiSQ</span> (valor de chi<span class="sc">-</span>quadrado), e <span class="fu">pval</span> (p<span class="sc">-</span>valor do ajuste);</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Clique em <span class="st">"Plt"</span> para visualizar o gráfico;</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Na área gráfica, clique em STATL para visualizar a linha de regressão.</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso de pesos no ajuste</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Coloque <span class="st">"exLin"</span> no diplay seguido de EVAL;</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Apague a lista de pesos unitários (DROP ou seta <span class="ot">&lt;-</span><span class="sc">-</span>);</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Obtenha um peso de <span class="dv">1</span><span class="sc">/</span>v<span class="sc">^</span><span class="dv">2</span><span class="sc">:</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  a. ENTER para duplicar a lista y;</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  b. x<span class="sc">^</span><span class="dv">2</span> para elevar a lista ao quadrado;</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  c. <span class="dv">1</span><span class="sc">/</span>x para obter o recíproco dos valores quadráticos de y;</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> <span class="st">"linFIT"</span>;</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="fig-linFIT" class="quarto-layout-panel">
+<div class="line-block">&nbsp;&nbsp;O arquivo comprimido acompanha um exemplo que compara o peso seco de grupos de plantas controle juntamente a dois tratamentos. Os dados foram obtidos pela biblioteca <code>datasets</code> do programa de estatística computacional <a href="https://cran.r-project.org/">R</a> - <em>PlantGrowth</em>. As figuras na sequência ilustram o programa executado com o exemplo.</div>
+<div id="fig-SimPlot" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-linFIT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-SimPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-linFIT" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SimPlot" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-dados" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-dados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="dados.jpeg" class="img-fluid figure-img" data-ref-parent="fig-linFIT">
+<img src="dados.jpeg" class="img-fluid figure-img" data-ref-parent="fig-SimPlot">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Listas do exemplo, abertas pelo comando EVAL sobre o exemplo.
+(a) Inserção de matrix de dados.
 </figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-linFIT" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-SimPlot" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="result.jpeg" class="img-fluid figure-img" data-ref-parent="fig-linFIT">
+<img src="result.jpeg" class="img-fluid figure-img" data-ref-parent="fig-SimPlot">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Resultados obtidos do ajuste com pesos de 1/v².
-</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-linFIT" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div id="fig-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="plot.jpeg" class="img-fluid figure-img" data-ref-parent="fig-linFIT">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(c) Gráfico do ajuste linear com opção para linha de regressão em STATL.
+(b) Resultados obtidos do teste de Bartlett.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linFIT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Programa <em>linFIT</em> pela versão Android de HP50G (<a href="https://sites.google.com/site/olivier2smet2/home/go49gp">Go49gp</a>). Da esquerda para direita, inserção de dados, resultados do ajuste linear ponderado, e gráfico resultante.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-SimPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Programa <em>Bart1magtrix</em> pela versão Android de HP50G (<a href="https://sites.google.com/site/olivier2smet2/home/go49gp">Go49gp</a>), exibindo entrada de dados e resultados com <em>dataset</em>-exemplo.
 </figcaption>
 </figure>
 </div>
 <p><br>
 </p>
-<div class="line-block">&nbsp;&nbsp;Para comparação de ajustes com pesos distintos, basta clicar em “PlAdd” do programa adicional (para o exemplo fornecido as diferenças são mínimas). Os valores encontrados para inclinação (Km/Vm; 0.80+/-0.07 ) e intercepto (1/Vm; 1.54+/-0.15) estão em consonância aos reportados em Wilkinson (1961), utilizando-se o peso de 1/v<span class="math inline">\(^2\)</span>.</div>
+<div class="line-block">&nbsp;&nbsp;Comparando-se os dados obtidos com <em>R</em>, o <em>p-valor</em> foi de 0.2371 (<em>k-square</em>=2.966).</div>
 </section>
-<section id="referências" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
+<section id="referências" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="referências"><span class="header-section-number">5</span> Referências:</h2>
 <ol type="1">
-<li>Cornish-Bowden, A. “Analysis and interpretation of enzyme kinetic data.” Perspectives in Science 1.1-6 (2014): 121-125.</li>
-<li>Wilkinson, G. N. “Statistical estimations in enzyme kinetics.” Biochemical Journal 80.2 (1961): 324.</li>
+<li>NIST. <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda357.htm">Engineering Statistics Handbook</a>. Bartlett’s Test. Acesso em 9/fev/26.</li>
 </ol>
 
 
