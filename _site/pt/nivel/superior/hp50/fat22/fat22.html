@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Solução Numérica para Equilíbrio de Interação</title>
+<title>Planejamento Fatorial 2x2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -205,7 +205,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Solução Numérica para Equilíbrio de Interação</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Planejamento Fatorial 2x2</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -350,10 +350,9 @@ window.Quarto = {
    
   <ul>
   <li><a href="#equação" id="toc-equação" class="nav-link active" data-scroll-target="#equação"><span class="header-section-number">1</span> Equação:</a></li>
-  <li><a href="#site1" id="toc-site1" class="nav-link" data-scroll-target="#site1"><span class="header-section-number">2</span> site1</a></li>
-  <li><a href="#arquivos" id="toc-arquivos" class="nav-link" data-scroll-target="#arquivos"><span class="header-section-number">3</span> Arquivos:</a></li>
-  <li><a href="#exemplo-de-uso" id="toc-exemplo-de-uso" class="nav-link" data-scroll-target="#exemplo-de-uso"><span class="header-section-number">4</span> Exemplo de uso:</a></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  <li><a href="#arquivos" id="toc-arquivos" class="nav-link" data-scroll-target="#arquivos"><span class="header-section-number">2</span> Arquivos:</a></li>
+  <li><a href="#uso-e-exemplo" id="toc-uso-e-exemplo" class="nav-link" data-scroll-target="#uso-e-exemplo"><span class="header-section-number">3</span> Uso e exemplo</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">4</span> Referências:</a></li>
   </ul>
 </nav>
     </div>
@@ -362,7 +361,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Solução Numérica para Equilíbrio de Interação</h1>
+<h1 class="title">Planejamento Fatorial 2x2</h1>
 </div>
 
 
@@ -379,83 +378,92 @@ window.Quarto = {
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;Há normalmente dois caminhos para a resolução de problemas matemáticos em Ciências naturais: solução analítica e solução numérica. A <em>solução analítica</em> (modelo teórico) depende de uma função contendo variável(is) independente(s), uma variável dependente, e um ou mais parâmetros da função matemática que se deseja determinar, e que descreve(m) a situação-problema. Por outro lado, a <em>solução numérica</em> não depende de uma equação descritiva, e sim de aproximações para minimizar uma função geral (<em>F(x)=0</em>). Emprega-se solução numérica quando o modelo teórico é complexo, a solução não é desejada, ou é até mesmo inexistente.</div>
-<p><br>
-</p>
+<div class="line-block">&nbsp;&nbsp;Planejamento fatorial é um delineamento estatístico experimental para se verificar a significância de fatores de um experimento (ex: pH, teor, temperatura, tipo), embora sem a necessidade de ensaios completos com todas as amostras. Planejamentos mais comuns envolvem 2, 3 ou 4 fatores. O programa <em>fat2x1matrix</em> foi elaborado para se testar dois fatores.</div>
 <section id="equação" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="equação"><span class="header-section-number">1</span> Equação:</h2>
-<div class="line-block">&nbsp;&nbsp;O programa <em>site1</em> busca resolver numericamente as quantidades envolvidas num equilíbrio de interação bimolecular:</div>
-<span class="math display">\[\begin{equation}
-L+R \begin{array}{c}
-_{k_{on}}\\
-\rightleftharpoons\\
-^{k_{off}} \end{array} LR
-\end{equation}\]</span>
-<p><br>
-</p>
-<p><em>Onde:</em></p>
-<p><em>R</em> = receptor livre (proteína, ácido nucleico, etc);</p>
-<p><em>RL</em> = complexo formado;</p>
-<p><em>k<span class="math inline">\(_{on}\)</span></em> = taxa de associação do complexo;</p>
-<p><em>k<span class="math inline">\(_{off}\)</span></em> = taxa de dissociação do complexo;</p>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A equação para a formação do complexo é:</div>
-<span class="math display">\[\begin{equation}
-Kd=\frac{[RL]}{[R]+[L]}=\frac{k_{off}}{k_{on}}
-\end{equation}\]</span>
-<div class="line-block">&nbsp;&nbsp;Onde <em>Kd</em> representa a <em>constante de equilíbrio de dissociação</em> para o complexo. Então:</div>
 <p><span class="math display">\[
-LR=\frac{L*R}{Kd}
-\]</span></p>
-<div class="line-block">&nbsp;&nbsp;Assim, para a solução numérica para o modelo teórico descrito, a função de minimização será:</div>
-<p><span class="math display">\[
-F(x)=0: R_0= R+LR  \rightarrow R +\frac{L*R}{Kd}-R_0 =0
-\]</span></p>
-<p><span class="math display">\[
-F(x)=0: L_0=L+LR \rightarrow \frac{L*R}{Kd}-L_0 =0
-\]</span></p>
-</section>
-<section id="site1" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="site1"><span class="header-section-number">2</span> site1</h2>
-<div class="line-block">&nbsp;&nbsp;O programa faz uso do comando <em>MSLV</em> (<em>Multiple Equation Solver</em>) para solução simultânea de equações múltiplas e da biblioteca <a href="https://www.hpcalc.org/hp49/math/numeric/mslv2v100.zip">MSLV2</a> que o otimiza. A biblioteca também pode ser alocada na calculadora a partir de seu código-fonte fornecido pelo desenvolvedor.</div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;As entradas e saídas do programa são:</div>
+X^T*y=\beta
+\]</span><br>
+<em>Onde</em></p>
+<p>X<span class="math inline">\(^{T}\)</span> = matriz de coeficientes de constrastes;</p>
+<p><em>y</em> = matriz de resultados do experimento;</p>
+<p><span class="math inline">\(\beta\)</span> = matriz de coeficientes resultantes</p>
+<div class="line-block">&nbsp;&nbsp;A operação matemática envolvida no planejamento fatorial envolve um ajuste linear múltiplo entre as variáveis, embora com uma <em>matriz de coeficientes de contrastes</em> traduzida dos valores do experimento (Neto, 1996).</div>
+<div class="line-block">&nbsp;&nbsp;A matriz <span class="math inline">\(\beta\)</span> resultante compreende:</div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Entradas: </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  L0, R0 e Kd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Saídas:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  Gráfico de L x R;</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  Matriz de valores de L e LR na pilha;</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  Variáveis (L, R, RL, valores iniciais, e sementes)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="st">"matriz beta:"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>M <span class="sc">-</span> média global;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>A <span class="sc">-</span> efeito do fator A;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>B <span class="sc">-</span> efeito do fator B;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>AB <span class="sc">-</span> efeito da interação</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="arquivos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">3</span> Arquivos:</h2>
+<section id="arquivos" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">2</span> Arquivos:</h2>
 <ol type="1">
-<li><a href="Site1.zip">Programa Site1</a></li>
-<li><a href="Site1.pdf">Código do programa</a><br>
+<li><a href="fat1matrix.zip">Programa fat1matrix e exemplo (dados e matriz de contraste)</a></li>
+<li><a href="fat1matrix.pdf">Código do programa</a><br>
 </li>
 </ol>
 </section>
-<section id="exemplo-de-uso" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="exemplo-de-uso"><span class="header-section-number">4</span> Exemplo de uso:</h2>
+<section id="uso-e-exemplo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="uso-e-exemplo"><span class="header-section-number">3</span> Uso e exemplo</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Colocar na pilha<span class="sc">:</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  a. L_0<span class="ot">=</span><span class="dv">10</span>;</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  b. R_0<span class="ot">=</span><span class="dv">5</span>;</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  c. Kd<span class="ot">=</span><span class="dv">10</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Rodar <span class="st">"Site1"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Entrada:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Entrar com a matriz contendo o conjunto de dados;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Rodar o programa <span class="st">"fat1matrix"</span>.</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Saída:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Valores de M, A, B e AB.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><em>Obs:</em></p>
-<ol type="1">
-<li>Apesar de funcional, o programa é bastante lento quando comparado com softwares para desktop. O exemplo acima levou 16s para conclusão gráfica e saída de variáveis, ao passo que o programa <a href="https://octave.org/">Octave</a> levou apenas 1s.</li>
-</ol>
+<p><br>
+</p>
+<p><em>Observação:</em> O arquivo <em>c22</em> contido em <em>fat1matrix.zip</em> refere-se à matriz de constrastes do exemplo, somente. Para dados introduzidos pelo usuário é necessário a elaboração de nova matriz e armazenamento na variável <em>c22</em> (Neto et al., 1995).</p>
+<div id="fig-fat22" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fat22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-fat22" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-dados" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-dados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="dados.jpeg" class="img-fluid figure-img" data-ref-parent="fig-fat22">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dados-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Inserção de matriz de dados.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-fat22" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="result.jpeg" class="img-fluid figure-img" data-ref-parent="fig-fat22">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Resultados obtidos do planejamento 2x2.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fat22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Programa <em>fat1matrix</em> pela versão Android de HP50G (<a href="https://sites.google.com/site/olivier2smet2/home/go49gp">Go49gp</a>), apresentando a inserção de matriz de dados, e os resultados de média, efeitos de A, B, e interação AB.
+</figcaption>
+</figure>
+</div>
+<p><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;Os resultados são idênticos aos da fonte consultada (Neto et al., 1995).</div>
 </section>
-<section id="referências" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
-<p>1.Olson, John S. “[39] Numerical analysis of kinetic ligand binding data.” Methods in Enzymology. Vol. 76. Academic Press, 1981. 652-667.</p>
+<section id="referências" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="referências"><span class="header-section-number">4</span> Referências:</h2>
+<ol type="1">
+<li>Neto, B.B., Scarmino, I.S., Bruns, R.E. Planejamento e otimização de experimentos. 2a.ed. Ed. Unicamp, 1995.</li>
+</ol>
 
 
 </section>

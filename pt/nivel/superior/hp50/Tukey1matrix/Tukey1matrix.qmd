@@ -1,0 +1,85 @@
+---
+title: "Comparações Múltiplas por teste de Tukey-HSD "
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   O teste de Tukey-HSD (*Honestly Significant Difference*) é um teste *pos-hoc* dos mais empregados quando se deseja identificar se há ou não grupos(s) distinto(s) numa amostra, comparando-os par a par. Assim como demais testes *pos-hoc*, Tukey-HSD é realizado após a condução de uma ANAVA. 
+
+|   Trata-se de um teste conservador, e que utiliza uma *tabela q* de *amplitude studentizada*, e aplicado em amostras com número igual de parcelas nos grupos. Para parcelas distintas emprega-se sua variação, o teste de *Tukey-Kramer*. 
+
+## Equação:
+
+$$
+HSD=q_{(gl,k)}\frac{qmr}{r}
+$$
+\
+*Onde*
+
+*gl* = graus de liberdade da amostra (n-k);
+
+*k* = número de grupos;
+
+*qmr* = quadrado médio dos resíduos;
+
+*q* = valor studentizado de distribuição (q-crítico).
+\
+
+
+## Arquivos:
+
+1. [Programa Tukey1matrix, tabela de q-crítico, e 1ANAVA1matrix](Tukey1matrix.zip)
+2. [Código do programa](Tukey1matrix.pdf)
+3. [Tabela de valores de q-crítico](tab-qcrit.pdf)
+\
+
+## Uso e exemplo
+
+
+```{r, eval=FALSE}
+# Entrada:
+1. Entrar com matriz contendo o conjunto de dados;
+2. Rodar o programa "1ANAVA1matrix" da página principal ("hp50");
+3. Rodar o programa "Tukey1matrix".
+
+# Saída:
+1. "qcrit5%" - valor da distribuição q;
+2. "HSD" - valor de diferença mínima significativa;
+3. Matriz contendo valores de comparação para cada par de grupos.
+```
+\
+
+|   São considerados significativamente distintos os pares que apresentarem:
+
+$$
+\Delta AB > HSD
+$$
+
+
+
+::: {#fig-Tukey layout-ncol=4}
+
+![Inserção de matriz de dados.](dados.jpeg){#fig-dados}
+
+
+![Resultados obtidos da ANAVA.](anava.jpeg){#fig-anava}
+
+![Resultados do teste de Tukey-HSD.](result.jpeg){#fig-result}
+
+
+![Matriz de comparação pareada. O número de cada grupo *A* e *B* é apresentado à esquerda (não visível na imagem).](compara.jpeg){#fig-compara}
+
+
+Programa *Tukey1matrix* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), exibindo entrada de dados, ANAVA, resultados, e planilha de comparação par a par. A planilha (matriz) contém colunas *A*, *B*, valores de $\Delta$AB e de $\Delta$HSD.
+
+:::
+\
+
+|   Os resultados são idênticos aos da fonte consultada (Vieira, 2000). 
+
+## Referências:
+
+1. Vieira, Sônia. Análise de variância: ANOVA. Editora Atlas SA, 2000.
