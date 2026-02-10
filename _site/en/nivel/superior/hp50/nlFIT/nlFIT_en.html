@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.22">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nlFIT - Nonlinear fitting</title>
+<title>nlFIT – Nonlinear Regression and Enzyme Kinetics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,15 +68,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../../avatar.png" rel="icon" type="image/png">
 <script src="../../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../site_libs/bootstrap/bootstrap-c12ad2fd307735207f49864bf87e7ec6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../site_libs/bootstrap/bootstrap-4b957b30fffc5edb70387ff4d75203a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -114,6 +113,35 @@ gtag('js', new Date());
 gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
@@ -126,8 +154,7 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../../logo-unifal.png" alt="" class="navbar-logo light-content">
-    <img src="../../../../logo-unifal.png" alt="" class="navbar-logo dark-content">
+    <img src="../../../../logo-unifal.png" alt="" class="navbar-logo">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -180,7 +207,7 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">nlFIT - Nonlinear fitting</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">nlFIT – Nonlinear Regression and Enzyme Kinetics</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -320,7 +347,7 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
   <ul>
   <li><a href="#files" id="toc-files" class="nav-link active" data-scroll-target="#files"><span class="header-section-number">1</span> Files</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">2</span> Results</a></li>
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -329,7 +356,7 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">nlFIT - Nonlinear fitting</h1>
+<h1 class="title">nlFIT – Nonlinear Regression and Enzyme Kinetics</h1>
 </div>
 
 
@@ -346,67 +373,72 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
 </header>
 
 
-<p>The program was adapted from the DATFIT program code (Coffin, 1995) and is available on the <a href="https://www.hpcalc.org">hpcalc.org</a> portal at this <a href="https://www.hpcalc.org/search.php?query=nlFIT">link</a>. It has the following features and advantages:<br>
+<div class="line-block">&nbsp;&nbsp;This program allows nonlinear fitting using the Gauss–Newton method for a user-defined equation and data provided as lists. The program was adapted from the DATFIT code (Coffin, 1995) and is archived at the <a href="https://www.hpcalc.org">hpcalc.org</a> portal at this <a href="https://www.hpcalc.org/search.php?query=nlFIT">link</a>. Its main workflow and distinctive features are summarized below:</div>
+<p><br>
 </p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Program logic:</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Program logic:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Direct data entry into the stack as lists, without the need <span class="cf">for</span> a form</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Direct data input on the stack as lists, without the need <span class="cf">for</span> forms</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   (INFORM);</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Number of iterations requested <span class="cf">in</span> the initial input;</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> There is only one data input, not two as <span class="cf">in</span> the original code;</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> The index <span class="cf">for</span> each iteration is displayed <span class="cf">in</span> the upper left corner of the graphic screen</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   ;</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Provides as output<span class="sc">:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> The number of iterations is requested at the initial input;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Only a single data input is required, unlike the original code;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> The iteration index is displayed <span class="cf">in</span> the upper<span class="sc">-</span>left corner of the</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   graphics screen;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> The program outputs<span class="sc">:</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>     a. covariance matrix;</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>     b. calculated parameter values;</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>     c. standard deviation values of the parameters;</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>     d. Chi<span class="sc">-</span>square of the regression;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>     b. estimated parameter values;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>     c. standard deviations of the parameters;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>     d. chi<span class="sc">-</span>square value of the regression;</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>     e. list of xi values;</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>     f. list of y_calc values</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>     g. graphic screen with experimental points;</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>     f. nonlinear fit curve superimposed on the points.</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fl">6.</span> Uses the FDER and PGALL subroutines from the same book to calculate the symbolic derivative of the </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>     <span class="cf">function</span> and to eliminate previously stored variables, respectively.</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>     (the original program requires <span class="dv">3</span> subprograms to run);</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fl">7.</span> Plots the experimental data with a routine that does not use Σ<span class="fu">DAT</span> (PIXON)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>     f. list of y_calc values;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>     g. graphics screen with experimental data points;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>     h. nonlinear fitted curve superimposed on the data points;</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fl">6.</span> Uses the FDER and PGALL <span class="fu">subroutines</span> (Coffin, <span class="dv">1995</span>) <span class="cf">for</span> symbolic</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>   differentiation of the fitting <span class="cf">function</span> and <span class="cf">for</span> clearing previously</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>   stored variables, <span class="fu">respectively</span> (the original program requires three</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>   subprograms);</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fl">7.</span> Plots experimental data using a routine that does not require ΣDAT</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>   (PIXON).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
 <section id="files" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="files"><span class="header-section-number">1</span> Files</h2>
 <ol type="1">
-<li><a href="../../../../hp50g/nlFIT/nlFIT.zip">nlFIT program and example in enzyme kinetics</a></li>
-<li><a href="../../../../hp50g/nlFIT/nlFIT.pdf">Code</a><br>
+<li><a href="nlFIT.zip">nlFIT program and example</a></li>
+<li><a href="nlFIT.pdf">Source code</a><br>
 </li>
 </ol>
-<div class="line-block">&nbsp;&nbsp;To use the program, the following data must be entered in the stack sequence:</div>
+<div class="line-block">&nbsp;&nbsp;To run the program, the following data must be entered sequentially on the stack:</div>
 <p><br>
 </p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data entry</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data input</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> list of xi values<span class="sc">:</span> {x1 x2...xn};</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> list of yi values<span class="sc">:</span> {y1 y2 y3, ...yn};</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> list of weights<span class="sc">:</span> {w1, w2, w3, ...wn}. Note<span class="sc">:</span> <span class="cf">if</span> there are no weights, enter a</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>     unit list <span class="sc">-</span> {<span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span>...};</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> adjustment <span class="cf">function</span> (e.g., Vm<span class="sc">*</span>x<span class="sc">/</span>(Km<span class="sc">+</span>x); equation <span class="cf">for</span> Michelis<span class="sc">-</span>Mentem enzyme kinetics).</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a> Note<span class="sc">:</span> independent variable as “x”;</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> list of parameters<span class="sc">:</span> {p1 p2}. Note<span class="sc">:</span> <span class="cf">in</span> the example, p1 <span class="ot">=</span> Vm and p2 <span class="ot">=</span> Km;</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fl">6.</span> number of desired iterations. Ex<span class="sc">:</span> <span class="dv">3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> list of xi values<span class="sc">:</span> {x1 x2 ... xn};</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> list of yi values<span class="sc">:</span> {y1 y2 y3 ... yn};</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> list of weights<span class="sc">:</span> {w1 w2 w3 ... wn};</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>   Note<span class="sc">:</span> <span class="cf">if</span> no weighting is required, enter a unitary list {<span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> ...};</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> fitting <span class="cf">function</span> (e.g., Vm<span class="sc">*</span>x<span class="sc">/</span>(Km<span class="sc">+</span>x); Michaelis–Menten equation <span class="cf">for</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   enzyme kinetics);</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   Note<span class="sc">:</span> the independent variable must be named <span class="st">"x"</span>;</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> list of parameters<span class="sc">:</span> {p1 p2};</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>   Note<span class="sc">:</span> <span class="cf">in</span> the example, p1 <span class="ot">=</span> Vm and p2 <span class="ot">=</span> Km;</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fl">6.</span> desired number of <span class="fu">iterations</span> (e.g., <span class="dv">3</span>).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 </p>
-<div class="line-block">Along with the compressed file is an example in enzyme kinetics to illustrate its use:</div>
-<p>its use.<br>
+<div class="line-block">&nbsp;&nbsp;The compressed file also includes an enzyme kinetics example to illustrate usage. The data correspond to the <em>L. minor</em> nitrogen uptake dataset, as presented in the <code>nlstools</code> package of the statistical computing environment <a href="https://cran.r-project.org/">R</a>.</div>
+<p><br>
 </p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using the program</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Program usage</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Click EVAL <span class="cf">in</span> the example file to release the necessary input lists;</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Click “nlFIT” to run the program;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Select EVAL on the example file to load the required input lists;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Run <span class="st">"nlFIT"</span> to execute the program;</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>NOTE<span class="sc">:</span> For user data, simply replace the lists.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Note<span class="sc">:</span> <span class="cf">for</span> user<span class="sc">-</span>provided data, simply replace the lists.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="results" class="level2" data-number="2">
@@ -422,7 +454,7 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
 <img src="results.png" class="img-fluid figure-img" data-ref-parent="fig-nlFIT">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Results
+(a) Results.
 </figcaption>
 </figure>
 </div>
@@ -434,7 +466,7 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
 <img src="plot.png" class="img-fluid figure-img" data-ref-parent="fig-nlFIT">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Scatter plot and nonlinear fit
+(b) Scatter plot and nonlinear fit.
 </figcaption>
 </figure>
 </div>
@@ -442,14 +474,48 @@ gtag('config', 'G-S1L73VGCG5', { 'anonymize_ip': true});
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nlFIT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: HP50G screens showing the text and graph results of <em>nlFIT</em>.
+Figure&nbsp;1: HP50G screens showing the textual and graphical results produced by <em>nlFIT</em> in HP50G.
 </figcaption>
 </figure>
 </div>
+<p><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;The nonlinear fitting results obtained with the <em>nlFIT</em> program are nearly identical to those obtained using the statistical software <code>R</code>, as shown in the table below. Notably, <em>nlFIT</em> required only 3 iterations, compared to 7 iterations in <code>R</code>.</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>nlFIT</th>
+<th>R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Km</td>
+<td>17.089 ± 0.469</td>
+<td>17.079 ± 2.953</td>
+</tr>
+<tr class="even">
+<td>Vm</td>
+<td>126.055 ± 1.146</td>
+<td>126.033 ± 7.173</td>
+</tr>
+<tr class="odd">
+<td>Iterations</td>
+<td>3</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\chi\)</span><span class="math inline">\(^{2}\)</span></td>
+<td>234.350</td>
+<td>234.375</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="reference" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="reference">Reference</h2>
-<p>Coffin, Dan. Calculus on the HP 48G/GX. Grapevine Publications, 1995.</p>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<p>Coffin, Dan. <em>Calculus on the HP 48G/GX</em>. Grapevine Publications, 1995.</p>
 
 
 </section>
@@ -506,14 +572,13 @@ Figure&nbsp;1: HP50G screens showing the text and graph results of <em>nlFIT</em
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

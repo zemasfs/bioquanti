@@ -1,0 +1,73 @@
+---
+title: "Bartlett’s Test for Homogeneity of Variances"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: en
+---
+
+
+|   Bartlett’s test evaluates whether a dataset composed of *k* groups exhibits homogeneous variance among its elements. The logic of the test involves computing the *T* statistic and comparing it with the predicted value from the $\chi^2$ distribution.
+\
+
+## Equation:
+
+$$
+T = \frac{(N-k)\ln(s_p^2) - \sum_{i=1}^k (N_i-1)\ln(s_i^2)}
+{1 + \frac{1}{3(k-1)}\left(\sum_{i=1}^k \frac{1}{N_i-1}\right) - \frac{1}{N-k}}
+$$
+
+|   With:
+$$
+s_p^2 = \sum_{i=1}^k (N_i-1)\frac{s_i^2}{N-k}
+$$
+\
+
+*Where:*
+
+* $s_i^2$ = variance of group *i*;
+* $N_i$ = size of group *i*;
+* $N$ = total sample size;
+* *k* = number of groups;
+* $s_p^2$ = pooled variance.
+
+## Files:
+
+1. [Bart1matrix program and example](Bart1matrix.zip)
+2. [Program source code](Bart1matrix.pdf)
+   \
+
+## Bart1matrix
+
+|   Based on a simple data matrix (column vectors), the program outputs the critical $\chi^2$ value at 5% significance level ($\alpha$ = 0.05), the *T* statistic, and the associated *p-value*.
+
+## Usage and example
+
+```{r, eval=FALSE}
+1. Enter the data matrix (column vectors);
+2. Run "Bart1matrix".
+```
+
+\
+
+|   The compressed file includes an example comparing the dry weight of control plant groups with two treatment groups. The data were obtained from the `datasets` library of the statistical computing environment [R](https://cran.r-project.org/) — *PlantGrowth*. The figures below illustrate the execution of the program using this example dataset.
+
+::: {#fig-SimPlot layout-ncol=2}
+
+![Insertion of data matrix.](dados.jpeg){#fig-dados}
+
+![Results obtained from Bartlett’s test.](result.jpeg){#fig-result}
+
+*Bart1matrix* program running on the Android version of the HP50G calculator ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), showing data input and results using the example dataset.
+
+:::
+\
+
+|   When compared with results obtained using *R*, the *p-value* was 0.2371 ($\chi^2$ = 2.966).
+
+## References:
+
+1. NIST. *Engineering Statistics Handbook*. Bartlett’s Test. Available at: [https://www.itl.nist.gov/div898/handbook/eda/section3/eda357.htm](https://www.itl.nist.gov/div898/handbook/eda/section3/eda357.htm). Accessed on Feb 9, 2026.
+
+

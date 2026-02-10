@@ -1,5 +1,5 @@
 ---
-title: "nlFIT - Nonlinear fitting"
+title: "nlFIT – Nonlinear Regression and Enzyme Kinetics"
 format: html
 toc: true
 toc-depth: 3
@@ -7,85 +7,102 @@ number-sections: true
 lang: en
 ---
 
- The program was adapted from the DATFIT program code (Coffin, 1995) and is available on the [hpcalc.org](https://www.hpcalc.org) portal at this [link](https://www.hpcalc.org/search.php?query=nlFIT). It has the following features and advantages:
+
+|   This program allows nonlinear fitting using the Gauss–Newton method for a user-defined equation and data provided as lists. The program was adapted from the DATFIT code (Coffin, 1995) and is archived at the [hpcalc.org](https://www.hpcalc.org) portal at this [link](https://www.hpcalc.org/search.php?query=nlFIT). Its main workflow and distinctive features are summarized below:
 \
 
 ```{r, eval=FALSE}
 # Program logic:
 
-1. Direct data entry into the stack as lists, without the need for a form
+1. Direct data input on the stack as lists, without the need for forms
    (INFORM);
-2. Number of iterations requested in the initial input;
-3. There is only one data input, not two as in the original code;
-4. The index for each iteration is displayed in the upper left corner of the graphic screen
-   ;
-5. Provides as output:
+2. The number of iterations is requested at the initial input;
+3. Only a single data input is required, unlike the original code;
+4. The iteration index is displayed in the upper-left corner of the
+   graphics screen;
+5. The program outputs:
      a. covariance matrix;
-     b. calculated parameter values;
-     c. standard deviation values of the parameters;
-     d. Chi-square of the regression;
+     b. estimated parameter values;
+     c. standard deviations of the parameters;
+     d. chi-square value of the regression;
      e. list of xi values;
-     f. list of y_calc values
-     g. graphic screen with experimental points;
-     f. nonlinear fit curve superimposed on the points.
-6. Uses the FDER and PGALL subroutines from the same book to calculate the symbolic derivative of the 
-     function and to eliminate previously stored variables, respectively.
-     (the original program requires 3 subprograms to run);
-7. Plots the experimental data with a routine that does not use ΣDAT (PIXON)
+     f. list of y_calc values;
+     g. graphics screen with experimental data points;
+     h. nonlinear fitted curve superimposed on the data points;
+6. Uses the FDER and PGALL subroutines (Coffin, 1995) for symbolic
+   differentiation of the fitting function and for clearing previously
+   stored variables, respectively (the original program requires three
+   subprograms);
+7. Plots experimental data using a routine that does not require ΣDAT
+   (PIXON).
 ```
+
 \
 
 ## Files
 
-1. [nlFIT program and example in enzyme kinetics](/hp50g/nlFIT/nlFIT.zip)
-2. [Code](/hp50g/nlFIT/nlFIT.pdf)
-\
+1. [nlFIT program and example](nlFIT.zip)
+2. [Source code](nlFIT.pdf)
+   \
 
-|   To use the program, the following data must be entered in the stack sequence:
+|   To run the program, the following data must be entered sequentially on the stack:
 \
 
 ```{r, eval=FALSE}
 
-# Data entry
+# Data input
 
-1. list of xi values: {x1 x2...xn};
-2. list of yi values: {y1 y2 y3, ...yn};
-3. list of weights: {w1, w2, w3, ...wn}. Note: if there are no weights, enter a
-     unit list - {1 1 1...};
-4. adjustment function (e.g., Vm*x/(Km+x); equation for Michelis-Mentem enzyme kinetics).
- Note: independent variable as “x”;
-5. list of parameters: {p1 p2}. Note: in the example, p1 = Vm and p2 = Km;
-6. number of desired iterations. Ex: 3
+1. list of xi values: {x1 x2 ... xn};
+2. list of yi values: {y1 y2 y3 ... yn};
+3. list of weights: {w1 w2 w3 ... wn};
+   Note: if no weighting is required, enter a unitary list {1 1 1 ...};
+4. fitting function (e.g., Vm*x/(Km+x); Michaelis–Menten equation for
+   enzyme kinetics);
+   Note: the independent variable must be named "x";
+5. list of parameters: {p1 p2};
+   Note: in the example, p1 = Vm and p2 = Km;
+6. desired number of iterations (e.g., 3).
 ```
+
 \
 
-| Along with the compressed file is an example in enzyme kinetics to illustrate its use:
-
-its use.
+|   The compressed file also includes an enzyme kinetics example to illustrate usage. The data correspond to the *L. minor* nitrogen uptake dataset, as presented in the `nlstools` package of the statistical computing environment [R](https://cran.r-project.org/).
 \
+
 ```{r, eval = FALSE}
-# Using the program
+# Program usage
 
-1. Click EVAL in the example file to release the necessary input lists;
-2. Click “nlFIT” to run the program;
+1. Select EVAL on the example file to load the required input lists;
+2. Run "nlFIT" to execute the program;
 
-NOTE: For user data, simply replace the lists.
+Note: for user-provided data, simply replace the lists.
 ```
-
 
 ## Results
 
 ::: {#fig-nlFIT layout-ncol=2}
 
-![Results](results.png){#fig-result}
+![Results.](results.png){#fig-result}
 
-![Scatter plot and nonlinear fit](plot.png){#fig-plot}
+![Scatter plot and nonlinear fit.](plot.png){#fig-plot}
 
-HP50G screens showing the text and graph results of *nlFIT*.
+HP50G screens showing the textual and graphical results produced by *nlFIT* in HP50G.
 
 :::
+\
+
+|   The nonlinear fitting results obtained with the *nlFIT* program are nearly identical to those obtained using the statistical software `R`, as shown in the table below. Notably, *nlFIT* required only 3 iterations, compared to 7 iterations in `R`.
+
+| Parameter    | nlFIT           | R               |
+| ------------ | --------------- | --------------- |
+| Km           | 17.089 ± 0.469  | 17.079 ± 2.953  |
+| Vm           | 126.055 ± 1.146 | 126.033 ± 7.173 |
+| Iterations   | 3               | 7               |
+| $\chi$$^{2}$ | 234.350         | 234.375         |
+
+## References {.unnumbered}
+
+Coffin, Dan. *Calculus on the HP 48G/GX*. Grapevine Publications, 1995.
 
 
-## Reference {.unnumbered}
 
-Coffin, Dan. Calculus on the HP 48G/GX. Grapevine Publications, 1995.

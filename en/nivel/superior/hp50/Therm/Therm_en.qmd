@@ -1,0 +1,74 @@
+---
+title: "Therm – Thermodynamic Quantities via a Linear System at Two Temperatures"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: en
+---
+
+
+|   This program is intentionally simple, yet it allows the simultaneous calculation of $\Delta S$ and $\Delta H$ by linear algebra for a pair of reactions occurring at different temperatures, given known values of $\Delta G$ (*linear system of equations*). It was developed using the [newRPL](https://sourceforge.net/projects/newrpl/) *firmware*, although it can be easily adapted to the original HP50G firmware.
+\
+
+## Equation:
+
+$$
+\Delta G^{T_1} = \Delta H - T_1 \cdot \Delta S
+$$
+
+$$
+\Delta G^{T_2} = \Delta H - T_2 \cdot \Delta S
+$$
+\
+
+|   The solution is obtained via matrix algebra:
+
+$$
+A \cdot x = b
+$$
+
+*Where:*
+
+* *A* = matrix containing temperature values and a unitary first column;
+* *b* = column matrix with $\Delta G$ values;
+* *x* = resulting matrix containing the parameters $\Delta S$ and $\Delta H$.
+
+## Files:
+
+1. [Therm program](Therm.zip)
+2. [Program source code](Therm.pdf)
+   \
+
+## Usage:
+
+|   To run the program, the following data must be entered sequentially on the stack:
+\
+
+```{r, eval=FALSE}
+
+# Data input
+
+1. DeltaG_1, T1, DeltaG_2, T2;
+2. After selecting "Therm", the program computes the values of DeltaS and DeltaH.
+```
+
+## Example
+
+|   The figure below illustrates the HP50G with data input and the resulting stack output for the reaction described in Cooper (2011), as well as the *newRPL firmware* layout.
+\
+
+::: {#fig-Therm layout-ncol=2}
+
+![Input of DeltaG and T1, and DeltaG and T2 values.](dados.jpeg){#fig-dados}
+
+![Results obtained from the program.](result.jpeg){#fig-result}
+
+Execution of the *Therm* program to obtain $\Delta S$ and $\Delta H$ for a chemical reaction at two temperatures (*newRPL firmware*). The results are consistent with those reported by the author (Cooper, 2011).
+
+:::
+
+## References {.unnumbered}
+
+1. Cooper, Alan. *Biophysical Chemistry*. Royal Society of Chemistry, No. 24, p. 113, 2011.
+
