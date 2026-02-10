@@ -1,0 +1,79 @@
+---
+title: "Comparações Múltiplas por teste de Dunnet"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   O teste de Dunnet objetiva a comparação de tratamentos com um controle para diferenças significativas. Assim como demais testes *pos-hoc*, o teste de Dunnet é considerado conservador, e requer a condução prévia de uma ANAVA. O teste utiliza uma *tabela t específica* de número de tratamentos.  
+\
+
+## Equação:
+
+$$
+dms=d \sqrt{\frac{2qmr}{r}}
+$$
+\
+*Onde*
+
+*dms* = diferença mínima significante
+
+*qmr* = quadrado médio dos resíduos;
+
+*d* = valor crítico tabelado (5%).
+\
+
+
+## Arquivos:
+
+1. [Programa Dunnet1matrix, tabela de d-crítico, e 1ANAVA1matrix](Dunnet1matrix.zip)
+2. [Código do programa](Dunnet1matrix.pdf)
+3. [Tabela de valores de d-crítico a 5% ](tab-dcrit.pdf)
+\
+
+## Uso e exemplo
+
+
+```{r, eval=FALSE}
+# Entrada:
+1. Entrar com matriz contendo o conjunto de dados;
+   Obs: o grupo controle precisa estar como a 1a. coluna da matriz;
+2. Rodar o programa "1ANAVA1matrix" da página principal ("hp50");
+3. Rodar o programa "Dunnet1matrix".
+
+# Saída:
+1. Quatidades estatísticas: sqtr, sqt, qmtr, qmr;
+2. F-valor;
+3. p-valor;
+4. R², coeficiente de determinação;
+5. Resultados de comparação de cada tratamento com grupo controle (valores positivos indicam diferença significativa);
+5. dcrit5%: valor calculado da distribuição;
+6. dms: diferença mínima significante.
+2. "HSD" - valor de diferença mínima significativa;
+3. Matriz contendo valores de comparação para cada par de grupos.
+```
+\
+
+
+
+::: {#fig-Dunnet layout-ncol=3}
+
+![Inserção de matriz de dados.](dados.jpeg){#fig-dados}
+
+
+![Resultados obtidos da ANAVA.](anava.jpeg){#fig-anava}
+
+![Resultados do teste de Dunnet.](result.jpeg){#fig-result}
+
+
+Programa *Dunnet1matrix* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), exibindo entrada de dados, ANAVA, e resultados.  
+:::
+\
+
+|   O resultado para *dms* é idêntico ao da fonte consultada (Vieira, 2000). 
+
+## Referências:
+
+1. Vieira, Sônia. Análise de variância: ANOVA. Editora Atlas SA, 2000.
