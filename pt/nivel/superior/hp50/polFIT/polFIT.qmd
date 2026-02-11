@@ -1,0 +1,122 @@
+---
+title: "polFIT - Ajuste polinomial e curva de Gibbs-Helmholtz com temperatura"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   Curvas de Gibbs-Helmholtz, ou de estabilidade com variação de temperatura, são importantes em estudos de enovelamento, desnaturação e interação de biopolímeros (Licata e Liu, 2011). Distinto do perfil linear de Van´t Hoff, são indicativas de mudanças na capacidade calorífica do sistema, possuindo um perfil curvilinear passível de ajuste de polinônimos.
+
+|   O programa *polFIT* executa uma regressão polinomial, com dados por listas e grau introduzidos pelo usuário, apresentando parâmetros estatísticos do ajuste, bem como o gráfico de dispersão de pontos e a curva sobreposta. 
+\
+
+## Equação
+
+|   Considerando um polinômio geral de 2o. grau:
+
+$$
+y=a+bx+cx^2
+$$
+
+|       É possível obter aproximações das quantidades termodinâmicas de $\Delta$H (entalpia), $\Delta$S (entropia) e $\Delta$Cp (capacidade calorífica) que modelam o fenômeno em função da temperatura pelas relações que seguem (Waelbroeck e Obberghen, 1979):
+\
+
+$$
+\Delta G = a+bT+cT^2
+$$
+\
+
+$$
+\Delta S = -(\frac{\partial \Delta G}{\partial T})_p = -(b+ 2cT)
+$$
+\
+
+
+$$
+\Delta H = (\frac{\partial (\Delta G/T)}{\partial (1/T)})_p = \Delta G + T \Delta S =  a-cT^2
+$$
+\
+
+
+
+$$
+\Delta Cp = (\frac{\partial \Delta H}{\partial T})_p = -2cT
+$$
+\
+
+|   Dessa forma, resolvendo os coeficientes do polinômio acha-se as quantidades termodinâmicas envolvidas no processo.
+
+## Arquivos
+
+1. [Programa polFIT e exemplo](polFIT.zip)
+2. [Códigos: programa principal e gráficos](polFIT.pdf)
+\
+
+## Uso e exemplo
+
+|   A partir de uma lista de valores de *x*, uma de *y*, e o grau do polinômio, *polFIT* devolve vários parâmetros do ajustes. Dois outros programas, *polPlot* e *polRes*, elaboram, respectivamente, o gráfico de dispersão de pontos com linha de ajuste, e o gráfico de resíduos da regressão. O programa requer a entrada dos seguintes dados na sequência da pilha: 
+\
+
+```{r, eval=FALSE}
+
+# Entrada:
+
+1. Lista de valores de "x";
+2. Lista de valores de "y";
+3. Grau do polinômio.
+```
+
+
+|   Ao rodar o programa *polFit* são apresentados:
+
+```{r, eval=FALSE}
+
+# Saída:
+
+1. coef: coeficientes polinomiais;
+2. se: erro-padrão dos coeficientes;
+3. qmreg: quadrado médio do ajuste;
+4. sqres.sse: soma dos quadrados médios do ajuste (SSE);
+5. qmres.s2: quadrado médio dos resíduos;
+6. sst: soma dos quadrados totais;
+7. r2: coeficiente de determinação do ajuste;
+8. F: valor da distribuição F de Snedecor;
+9. pval: p-valor do ajuste
+```
+
+
+
+|   O ajuste polinomial para os dados do exemplo resultam nas quantidades e perfis gráficos ilustrados na imagem que segue.
+
+
+::: {#fig-Therm layout-ncol=4}
+
+![Inserção de dados do exemplo.](dados.jpeg){#fig-dados}
+
+
+![Parâmetros estatísticos resultantes.](result.jpeg){#fig-result}
+
+![Gráfico de dispersão de pontos com linha de ajuste.](plot.jpeg){#fig-result}
+
+
+![Gráfico de resíduos.](res.jpeg){#fig-result}
+
+
+
+Execução do programa *polFIT* para ajuste polinomial aplicado ao exemplo, ilustrando a entrada de dados, os resultados, o gráfico de ajuste e o de resíduos.
+
+
+
+
+:::
+
+|   Em função do ajuste polinomial de 2o. grau foram encontrados os coeficientes de *a* = -158.24, *b* = 7.99, e *c* = -6.5x10${-2}$ . Aplicando esses valores às equações acima, as quantidades termodinâmicas em 50 K são $\Delta$H = -20.1 kJ/mol, $\Delta$S = 1.5 J/mol/K, e $\Delta$Cp =  6.5 J/mol.
+
+
+## Referências {.unnumbered}
+
+1. LiCata, V. J., & Liu, C. C. (2011). Analysis of free energy versus temperature curves in protein folding and macromolecular interactions. In Methods in enzymology (Vol. 488, pp. 219-238). Academic Press.
+
+2. Waelbroeck, M., Van Obberghen, E., & De Meyts, P. (1979). Thermodynamics of the interaction of insulin with its receptor. Journal of Biological Chemistry, 254(16), 7736-7740.
