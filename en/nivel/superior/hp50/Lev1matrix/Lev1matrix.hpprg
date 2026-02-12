@@ -1,0 +1,72 @@
+
+
+
+«  m
+  « m STO… MEAN AXL  xm
+    « N…  g
+      « m AXL EVAL 1. g
+        FOR j xm - SQ g ROLLD
+        NEXT g sLS TRAN sAnv1
+      »
+    »
+  »
+»
+
+
+@@@@@@@@@@@@@@@@ Programas complementares @@@@@@@@@@@@@
+
+@ 1) Programa sLS
+
+« DUP  n
+  « 1. SWAP
+    FOR j OBJ ARRY
+      IF j n <
+      THEN j 1. + ROLL
+      END
+    NEXT
+    IF n 1. >
+    THEN 1. n 1. -
+      FOR j j 1. + ROLL
+      NEXT
+    END n COL
+  »
+»
+
+@@@@@@@@@@@@@@@@@@
+
+@ 2) Programa sAnv1 - Análise de Variância de 1 Critério
+
+«  mt
+  « mt 'm' STO CLEAR m TRAN AXL DUP  kdat
+    « EVAL DEPTH DUP 'k' STO  nk
+      « kdat EVAL OBJ 'r' STO CLEAR m OBJ œLIST DUP 'n' STO LIST  ly
+        « ly …LIST SQ n /  c
+          « ly SQ …LIST c -  sqt
+            « 0. '…T2' STO kdat EVAL 1. nk
+              FOR j …LIST SQ '…T2' STO+
+              NEXT …T2 r / c -  sqtr
+              « sqt sqtr -  sqr
+                « sqtr nk 1. - /  qmtr
+                  « sqr n nk - / 'qmr' STO qmtr qmr /  f
+                    « nk 1. -  glt
+                      « n nk - DUP  glr
+                        « 'gl' STO glt glr f UTPF  p
+                          « sqtr 'sqtr' TAG sqr 'sqr' TAG sqt 'sqt' TAG qmtr
+'qmtr' TAG qmr 'qmr' TAG f 'F' TAG p 'p' TAG sqtr sqt /  r2
+                            « r2 'r2' TAG { …DAT …T2 gl qmr n r k m } PURGE
+2000. .4 BEEP
+                            »
+                          »
+                        »
+                      »
+                    »
+                  »
+                »
+              »
+            »
+          »
+        »
+      »
+    »
+  »
+»

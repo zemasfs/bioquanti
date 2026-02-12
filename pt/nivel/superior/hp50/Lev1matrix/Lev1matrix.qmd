@@ -1,0 +1,91 @@
+---
+title: "Teste de homogeneidade de variâncias de Levene"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   O teste de Levene avalia se um conjunto de dados com *k* grupos possui variância homogênea entre seus elementos (Vieira, 2000). É por vezes empregado como uma alternativa ao *teste de Bartlett*, que tende a mascarar diferenças que exisetem quando a curtose é negativa, ou achar diferenças que não existem de fato, quando a curtose é positiva. Possui como pressuposto de número igual de elementos por tratamento.
+
+\
+
+## Equação:
+
+$$
+W = \frac{(N - k)}{(k - 1)}
+\frac{\sum_{i=1}^{k} N_i \left( \bar{Z}_{i\cdot} - \bar{Z}_{\cdot\cdot} \right)^2}
+{\sum_{i=1}^{k} \sum_{j=1}^{N_i} \left( Z_{ij} - \bar{Z}_{i\cdot} \right)^2}
+$$
+
+*Onde:*
+
+*  W  = estatística do teste de Levene
+*  N  = número total de observações
+*  k  = número de grupos
+*  N_i  = número de observações no grupo  i 
+*  Z$_{ij}$ = desvio absoluto da observação  j  do grupo  i  em relação à medida central do grupo
+*  $\tilde{Y}_i$  = medida central do grupo  i  média, mediana ou média aparada — dependendo da versão do teste
+*  $\bar{Z}{i\cdot}$  = média dos valores  Z*${ij}$  no grupo  i 
+*  $\bar{Z}{\cdot\cdot}$ = média geral dos valores  Z*${ij}$ 
+
+
+## Arquivos:
+
+1. [Programas Lev1matrix, subrotinas sLS e sAnV1, e exemplo](final/Lev1matrix.zip)
+2. [Código do programa](final/Lev1matrix.pdf)
+\
+
+## Lev1matrix
+
+|   O arquivo comprimido acompanha um programa para ANAVA que precede os cálculos, embora não seja necessária sua execução, posto que insere-se como subrotina do programa principal (*sANV1*). Também acompanha uma subrotina para conversão de listas em matriz, também desnecessária à execução. 
+
+|   O programa *Lev1matrix* permite, a partir de uma matriz contendo os dados (vetores coluna), a saída do valor de *F* crítico a 5% ($\alpha$=0.05) e o  *p-valor* correspondente. 
+\
+
+## Uso e exemplo
+
+
+```{r, eval=FALSE}
+
+# Entrada:
+
+1. Entrar com matrix de dados (vetor coluna);
+2. "Lev1matrix".
+
+# Saída:
+
+1. sqtr: soma dos quadrados dos tratamentos;
+2. sqr: soma dos quadrados dos resíduos;
+3. sqt: soma dos quadrados totais;
+4. qmtr: quadrado médio dos tratamentos;
+5. qmr: quadrado médio dos resíduos;
+6. F: valor da distribuição F de Snedecor;
+7. pval: p-valor do teste
+```
+\
+
+
+|   O arquivo comprimido acompanha um exemplo de Vieira (2000)
+
+::: {#fig-SimPlot layout-ncol=2}
+
+![Inserção de matrix de dados.](dados.jpeg){#fig-dados}
+
+
+![Resultados obtidos do teste de Bartlett.](result.jpeg){#fig-result}
+
+Programa *Lev1magtrix* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), exibindo entrada de dados e resultados com *dataset*-exemplo. 
+
+:::
+\
+
+|   Os resultados obtidos coincidem com o da fonte (Vieira, 2000).
+
+
+## Referências:
+
+1. NIST. [Engineering Statistics Handbook](https://www-itl-nist-gov.translate.goog/div898/handbook/eda/section3/eda35a.htm?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc). Levene's Test. Acesso em 12/fev/26.
+
+2. Vieira, Sônia. Análise de variância: ANOVA. Editora Atlas SA, 2000.
