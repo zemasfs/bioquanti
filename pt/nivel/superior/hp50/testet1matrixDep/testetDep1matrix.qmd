@@ -1,5 +1,5 @@
 ---
-title: "Teste t de Student para amostras independentes"
+title: "Teste t de Student para amostras dependentes"
 format: html
 toc: true
 toc-depth: 3
@@ -7,41 +7,44 @@ number-sections: true
 lang: pt
 ---
 
-|   O *teste t* de Student verifica se duas amostras independentes são estatisticamente diferentes.
+|   Essa versão para *teste t* de Student verifica se duas amostras dependentes são estatisticamente diferentes. Basta a matriz de dados como entrada.
 \
 
 ## Equação:
 
 $$
-t=\frac{y1-y2}{\sqrt{(\frac{1}{n1}+\frac{1}{n2})s^2}}
+t=\frac{d}{\sqrt \frac{s^2}{n}}
 $$
 \
+
 *Onde*
 
-*y1* = média dos valores do 1o. conjunto de dados;
-
-*y2* = média dos valores do 2o. conjunto de dados;
+*d* = diferença entre as médias dos grupos
 
 s$^2$ = variância agrupada
+
+*n* = tamanho da amostra
 
 |   A variância agrupada é dada por:
 
 $$
-s^2=\frac{(n1-1)s_1^2+(n2-1)s_2^2}{n1+n2-2}
+s^2=\frac{\Sigma d^2-\frac{ \Sigma d^2}{n}}{n-1}
 $$
 
 ## Arquivos:
 
-1. [Programa testet1matrix](testet1matrix.zip)
-2. [Código do programa](testet1matrix.pdf)
+1. [Programa testetDep1matrix](testetDep1matrix.zip)
+2. [Código](testetDep1matrix.pdf)
 \
 
 ## Uso e exemplo
 
+|   O programa realiza o teste a um nível de significância de 5%.
+
 
 ```{r, eval=FALSE}
 1. Entrar com matriz contendo os dois conjuntos de dados;
-2. "testet1matrix"
+2. "testetDep1matrix"
 
 # Saída:
 1. "tval" - valor da distribuição t;
@@ -54,8 +57,8 @@ $$
 
 | Grupo |  |  |  |  |  |  |  |  |
 |-------|----|----|----|----|----|----|----|----|
-| A     | 6  | 5  | 7  | 3  | 5  | 2  | 4  | 8  |
-| B     | 7  | 9  | 6  | 7  | 6  | 6  | 9  | 6  |
+| A     | 2  | 3  | 5  | 1  | 4  | 2  | 7  | 6  |
+| B     | 7  | 6  | 8  | 6  | 8  | 7  | 10 | 9  |
 
 \
 
@@ -71,9 +74,6 @@ Programa *testet1matrix* pela versão Android de HP50G ([Go49gp](https://sites.g
 :::
 \
 
-|   Os resultados coadunam com os obtidos por Vieira (2000), cujos valores foram *tval* = -2.366 e *pval* = 0.036. 
+|   Os resultados são os mesmos do teste executado com entrada de dados por formulário e algoritmo interno da HP50G. 
 
 
-## Referências:
-
-1. Vieira, Sônia. Análise de variância: ANOVA. Editora Atlas SA, 2000.
