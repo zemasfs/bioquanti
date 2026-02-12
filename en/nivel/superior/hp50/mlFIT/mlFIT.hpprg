@@ -1,0 +1,38 @@
+@ Programa mlFIT - Ajuste Multilinear
+
+@ José Maurício Schneedorf Ferreira da Silva
+@ Departamento de Bioquímica
+@ Universidade Federal de Alfenas, UNIFAL-MG
+@ email: jose.dasilva@unifal-mg.edu.br
+
+
+«  x y
+  « x SIZE EVAL DROP  n
+    « y x LSQ  cf
+      « x cf *  yp
+        « yp COL DROP AXL y COL DROP AXL - SQ …LIST DUP  sse
+          « n 3. - /  s2
+            « -105. SF s2 x TRAN x * INV * DIAG AXL ƒ  se
+              « y COL DROP AXL SQ …LIST y COL DROP AXL …LIST SQ n / -  sst
+                « cf COL DROP AXL  coef
+                  « sst sse - 2. /  qmreg
+                    « 2. qmreg * sst /  r2
+                      « qmreg s2 /  F
+                        « n n F EVAL UTPF  pv
+                          « coef 'coef' TAG se 'se' TAG qmreg 'qmreg' TAG
+sse 'sqres.sse' TAG s2 'qmres.s2' TAG sst 'sst' TAG r2 'r2' TAG F 'F' TAG
+pv 'pval' TAG 2000. .4 BEEP
+                          »
+                        »
+                      »
+                    »
+                  »
+                »
+              »
+            »
+          »
+        »
+      »
+    »
+  »
+»

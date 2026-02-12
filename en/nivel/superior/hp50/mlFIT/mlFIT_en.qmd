@@ -1,0 +1,84 @@
+---
+title: "Multiple Linear Regression and QSAR (Quantitative Structure–Activity Relationship)"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: en
+---
+
+
+|   Multiple linear regression is a statistical method used to model the effect of more than one independent variable on a response variable. In this case, the fitting procedure determines the influence of individual factors and their combined contribution to the dependent variable. QSAR, in turn, stands for *Quantitative Structure–Activity Relationship*. Essentially, it involves identifying structural features associated with a biological effect mediated by chemical compounds. By combining both approaches, QSAR can be addressed using a multiple linear regression framework.
+\
+
+## Equation
+
+|   The general function for a multiple linear model is:
+
+$$
+\hat{y}*{i} = b*{0} + b_{1}x_{i,1} + b_{2}x_{i,2} + \ldots + b_{k}x_{i,k}
+$$
+
+|   The algebraic solution involves constructing the matrix containing the independent variables (with a unitary first column) and the response variable, followed by the determination of the coefficients $\beta$ as:
+
+$$
+\beta = (X^T X)^{-1} (X^T y)
+$$
+\
+
+|   The *mlFIT* program takes as input the matrices *X* and *y*, and returns the coefficients $\beta$ along with statistical parameters associated with the regression.
+\
+
+## Files
+
+1. [mlFIT program and example](final/mlFIT.zip)
+2. [Program source code](final/mlFIT.pdf)
+   \
+
+## Usage and example
+
+```{r, eval=FALSE}
+
+# Input:
+
+1. Matrix of independent variables "X";
+2. Matrix of response variable "y";
+```
+
+|   The program output includes:
+
+```{r, eval=FALSE}
+
+# Output:
+
+1. coef: regression coefficients;
+2. se: standard errors of the coefficients;
+3. qmreg: mean square of the regression;
+4. sqres.sse: sum of squared errors (SSE);
+5. qmres.s2: mean square of residuals;
+6. sst: total sum of squares;
+7. r2: coefficient of determination;
+8. F: Snedecor’s F value;
+9. pval: p-value of the regression.
+```
+
+|   The program includes an example (*exQSAR*) involving benzodiazepinone (TIBO) derivatives as reverse transcriptase inhibitors of the virus responsible for *AIDS* (Acquired Immunodeficiency Syndrome) (Tong et al., 2018).
+
+|   To run the example, the list must first be unpacked using the EVAL command. The multiple linear regression applied to the example dataset is illustrated below:
+
+::: {#fig-mlFIT layout-ncol=2}
+
+![Input of example data.](dados.jpeg){#fig-dados}
+
+![Resulting statistical parameters.](result.jpeg){#fig-result}
+
+Data input and results of the *mlFIT* program applied to the provided example.
+
+:::
+
+|   The coefficients obtained with *mlFIT* are consistent with those reported by the authors (Tong et al., 2018).
+
+## References {.unnumbered}
+
+1. Tong, Jianbo, et al. "QSAR studies of TIBO derivatives as HIV-1 reverse transcriptase inhibitors using HQSAR, CoMFA and CoMSIA." *Journal of Molecular Structure* 1168 (2018): 56–64.
+
