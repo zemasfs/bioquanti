@@ -1,0 +1,93 @@
+---
+title: "Regressão multilinear e QSAR (Relação Quantitativa Estrutura-Atividade)"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   Regressão multilinear consiste em método estatístico para modelar o efeito de mais de uma variável independente sobre a variável resposta. Nesse caso o ajuste determina a influência dos fatores e de sua interação frente à variável dependente. QSAR, por sua vez, é um acrônimo para Relação Quantitativa Estrutura-Atividade (*Quantitative Structure-Activity Relationship*). Basicamente, trata-se da prospecção de características estruturais associadas a um efeito biológico mediado por compostos químicos. Unindo ambos, a QSAR pode ser abordada com estratégia de regressão multilinear.  
+
+
+\
+
+## Equação
+
+|   A função geral para um modelo linear múltiplo é:
+
+$$
+\hat{y}_{i}=b_{0}+b_{1}x_{i,1}+b_{2}x_{i,2}+\ldots+b_{k}x_{i,k}
+$$
+
+|       A solução algébrica envolve a construção das matriz contendo os dados das variáveis independentes (com o 1o. vetor coluna unitário) e da variável resposta, seguindo-se a determinação dos coeficientes $\beta$ como: 
+
+$$
+\beta=(X^T*X)^{-1}(X^T*y)
+$$
+\
+
+|   O programa *mlFIT* utiliza como entrada as matrizes *X* e *y*, e devolve os coeficientes $\beta$, bem como parâmetros estatísticos associados ao ajuste.
+\
+
+## Arquivos
+
+1. [Programa mlFIT e exemplo](final/mlFIT.zip)
+2. [Código](final/mlFIT.pdf)
+\
+
+## Uso e exemplo
+
+\
+
+```{r, eval=FALSE}
+
+# Entrada:
+
+1. Matriz de variáveis independentes "X";
+2. Matriz de variável resposta "y"
+```
+
+
+|   A saída do programa é:
+
+```{r, eval=FALSE}
+
+# Saída:
+
+1. coef: coeficientes polinomiais;
+2. se: erro-padrão dos coeficientes;
+3. qmreg: quadrado médio do ajuste;
+4. sqres.sse: soma dos quadrados médios do ajuste (SSE);
+5. qmres.s2: quadrado médio dos resíduos;
+6. sst: soma dos quadrados totais;
+7. r2: coeficiente de determinação do ajuste;
+8. F: valor da distribuição F de Snedecor;
+9. pval: p-valor do ajuste
+```
+
+
+
+|   O programa acompanha um exemplo (exQSAR) para derivados de benzodiazepinona (TIBO) como inibidores de transcriptase reversa do vírus envolvido no estabelecimento da *AIDS*, síndrome de imunodeficiência adquirida (Tong et al., 2018). 
+
+|   Para uso do exemplo é necessário desconstruir a lista com o comando EVAL. O ajuste multilinear para os dados do exemplo é ilustrado abaixo:
+
+
+
+::: {#fig-mlFIT layout-ncol=2}
+
+![Inserção de dados do exemplo.](dados.jpeg){#fig-dados}
+
+
+![Parâmetros estatísticos resultantes.](result.jpeg){#fig-result}
+
+Inserção de dados e resultados do programa *mlFIT* sobre o exemplo fornecido. 
+
+:::
+
+|   Os coeficientes obtidos com *mlFIT* são coincidentes com os dos autores (Tong et al., 2018).  
+
+
+## Referências {.unnumbered}
+
+1. Tong, Jianbo, et al. "QSAR studies of TIBO derivatives as HIV-1 reverse transcriptase inhibitors using HQSAR, CoMFA and CoMSIA." Journal of Molecular Structure 1168 (2018): 56-64.
