@@ -1,0 +1,87 @@
+---
+title: "Comparações Múltiplas por teste LSD de Fisher"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   O teste de Fisher-LSD *Least Significant Difference*) consiste num teste *pos-hoc* para comparação múltipla de médias pareadas dos tratamentos, e que segue a distribuição *t* de Student. Aceita-se como significante toda a diferença absoluta entre pares de tratamentos que resultem em valor acima do esperado pelo cálculo de LSD (ou *DMS*, em português).
+\
+
+## Equação:
+
+$$
+DMS=t_{gl,k} \sqrt {\frac{2*qmr}{r}}
+$$
+\
+*Onde*
+
+
+*DMS* = diferença mínima significante 
+
+*gl* = graus de liberdade (k-1);
+
+*r* = número de observações por grupo
+
+*qmr* = quadrado médio dos resíduos;
+
+*t* = valor da distribuição *t* de Student
+\
+
+
+
+## Arquivos:
+
+1. [Programas Fish1matrix e 1ANAVA1matrix](Fish1matrix.zip)
+2. [Código do programa](Fish1matrix.pdf)
+\
+
+## Uso e exemplo
+
+
+```{r, eval=FALSE}
+# Entrada:
+1. Matriz contendo o conjunto de dados;
+2. Rodar o programa "1ANAVA1matrix" da página principal ("hp50");
+3. Rodar o programa "Fish1matrix".
+
+# Saída:
+1. "dms" - valor de diferença mínima significativa;
+2. Matriz contendo valores de comparação para cada par de grupos.
+```
+\
+
+|   A comparação de pares do programa é automatizada. São considerados significativamente distintos os pares que apresentarem:
+
+$$
+\Delta AB > \Delta DMS
+$$
+
+
+
+::: {#fig-SNK layout-ncol=4}
+
+![Inserção de matriz de dados.](dados.jpeg){#fig-dados}
+
+
+![Resultados obtidos da ANAVA.](anava.jpeg){#fig-anava}
+
+![Resultados do teste de Fisher-SNK](result.jpeg){#fig-result}
+
+
+![Matriz de comparação pareada. O número de cada grupo *A* e *B* é apresentado à esquerda (não visível na imagem).](compara.jpeg){#fig-compara}
+
+
+Programa *Fish1matrix* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), exibindo entrada de dados, ANAVA, resultados, e planilha de comparação par a par. A planilha (matriz) contém colunas *A*, *B*, valores de $\Delta$AB e de $\Delta$DMS.
+
+:::
+\
+
+|   Os resultados são idênticos aos da fonte (Vieira, 2016, p.69). 
+
+## Referências:
+
+1. Vieira, Sônia. *Analysis of Variance: ANOVA*. Atlas Publishing, 2000.
+

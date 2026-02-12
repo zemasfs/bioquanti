@@ -1,0 +1,55 @@
+@ Programa 2ANAVA1matrix - Análise de Variância de 2 Critérios
+
+@ José Maurício Schneedorf Ferreira da Silva
+@ Departamento de Bioquímica
+@ Universidade Federal de Alfenas, UNIFAL-MG
+@ email: jose.dasilva@unifal-mg.edu.br
+
+«  mt
+  « mt DUP 'm' STO OBJ EVAL 'k' STO 'r' STO CLEAR m OBJ œLIST DUP 'n' STO
+LIST  ly
+    « ly …LIST SQ n /  c
+      « ly SQ …LIST c -  sqt
+        « m TRAN AXL DUP  kdat
+          « 0. '…T2' STO kdat EVAL 1. k
+            FOR j …LIST SQ '…T2' STO+
+            NEXT …T2 r / c -  sqtr
+            « CLEAR m AXL  kdat2
+              « 0. '…B2' STO kdat2 EVAL 1. r
+                FOR j …LIST SQ '…B2' STO+
+                NEXT …B2 k / c -  sqb
+                « sqt sqtr - sqb -  sqr
+                  « k 1. -  gltr
+                    « r 1. -  glb
+                      « k 1. - r 1. - * DUP  glr
+                        « 'gl' STO n 1. -  glt
+                          « sqtr gltr /  qmtr
+                            « sqb glb /  qmb
+                              « sqr glr / 'qmr' STO qmtr qmr /  ftr
+                                « qmb qmr /  fb
+                                  « gltr glr ftr UTPF  p
+                                    « glb glr fb UTPF  pb
+                                      « sqtr 'sqtr' TAG sqb 'sqb' TAG sqr
+'sqr' TAG sqt 'sqt' TAG qmtr 'qmtr' TAG qmb 'qmb' TAG qmr 'qmr' TAG ftr
+'Ftr' TAG fb 'Fbl' TAG p 'p' TAG pb 'pbl' TAG sqtr sqt / 'R2' TAG { …B2
+…T2 } PURGE
+                                      »
+                                    »
+                                  »
+                                »
+                              »
+                            »
+                          »
+                        »
+                      »
+                    »
+                  »
+                »
+              »
+            »
+          »
+        »
+      »
+    »
+  »
+»

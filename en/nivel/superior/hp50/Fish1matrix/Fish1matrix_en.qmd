@@ -1,0 +1,76 @@
+---
+title: "Multiple Comparisons by Fisher’s LSD Test"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: en
+---
+
+
+|   Fisher’s LSD (*Least Significant Difference*) test is a *post-hoc* procedure for multiple comparisons of paired treatment means based on Student’s *t* distribution. A pairwise absolute difference between treatments is considered significant whenever it exceeds the critical LSD value (called *DMS* in Portuguese).
+\
+
+## Equation:
+
+$$
+LSD = t_{(\alpha,, df)} \sqrt{\frac{2 \cdot qmr}{r}}
+$$
+
+*Where*
+
+* *LSD* = least significant difference (minimum significant difference);
+* *k* = number of groups (with degrees of freedom for treatments (df_{tr} = k - 1));
+* *r* = number of observations per group;
+* *qmr* = residual mean square;
+* *t* = critical value from Student’s *t* distribution.
+  \
+
+## Files:
+
+1. [Fish1matrix and 1ANAVA1matrix programs](Fish1matrix.zip)
+2. [Program source code](Fish1matrix.pdf)
+   \
+
+## Usage and example
+
+```{r, eval=FALSE}
+# Input:
+1. Data matrix containing the dataset;
+2. Run the program "1ANAVA1matrix" from the main page ("hp50");
+3. Run the program "Fish1matrix".
+
+# Output:
+1. "lsd" – least significant difference value;
+2. Matrix containing comparison values for each pair of groups.
+```
+
+\
+
+|   Pairwise comparisons are automated in the program. Pairs are considered significantly different when:
+
+$$
+\Delta AB > LSD
+$$
+
+::: {#fig-SNK layout-ncol=4}
+
+![Insertion of data matrix.](dados.jpeg){#fig-dados}
+
+![ANOVA results.](anava.jpeg){#fig-anava}
+
+![Results of Fisher’s LSD test.](result.jpeg){#fig-result}
+
+![Pairwise comparison matrix. The group identifiers A and B appear on the left (not visible in the image).](compara.jpeg){#fig-compara}
+
+*Fish1matrix* program running on the Android version of the HP50G calculator ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), showing data input, ANOVA output, Fisher’s LSD results, and the pairwise comparison worksheet. The matrix contains columns *A*, *B*, values of $\Delta AB$, and the corresponding LSD thresholds.
+
+:::
+\
+
+|   The results are identical to those reported in the reference source (Vieira, 2000, p. 69).
+
+## References:
+
+1. Vieira, Sônia. *Analysis of Variance: ANOVA*. Atlas Publishing, 2000.
+

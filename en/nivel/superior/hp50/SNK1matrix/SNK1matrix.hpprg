@@ -1,0 +1,37 @@
+@ Programa SNK-1matrix - Teste de Student-Newman-Keuls para Comparações Múltiplas 
+
+@ José Maurício Schneedorf Ferreira da Silva
+@ Departamento de Bioquímica
+@ Universidade Federal de Alfenas, UNIFAL-MG
+@ email: jose.dasilva@unifal-mg.edu.br
+
+« m STO… MEAN AXL SORT  l
+  « l LIST ROLL LASTARG LIST l - ABS  d1
+    « l 2. 1. + OVER SIZE SUB LASTARG DROP 1. - 1. SWAP SUB + l - ABS  d2
+      « d1 d2 +  dl
+        « TkTB5 { gl k } GET  q
+          « qmr r / ƒ q *  dm
+            « dl DUP SIZE 'sdl' STO { sdl } dm CON AXL -  diff
+              « 'X' 'X' 1. k 1. SEQ  l2
+                « l2 LIST ROLL LASTARG LIST  l3a
+                  « l2 2. 1. + OVER SIZE SUB LASTARG DROP 1. - 1. SWAP SUB + 
+l3b
+                    « l2 l2 +  l2m
+                      « l3a l3b +  l3m
+                        « l2m l3m AXL SWAP AXL SWAP 2. COL TRAN dl AXL 1. COL
+TRAN AUGMENT diff AXL 1. COL TRAN AUGMENT TRAN { A B ›AB ›dm } AXL SWAP
+AUGMENT { g sdl …DAT qmr n k r nk m gl } PURGE 2000. .4 BEEP q 'qcrit5%' TAG
+dm 'dms' TAG
+                        »
+                      »
+                    »
+                  »
+                »
+              »
+            »
+          »
+        »
+      »
+    »
+  »
+»
