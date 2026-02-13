@@ -1,0 +1,127 @@
+---
+title: "Planejamento Fatorial 2⁴"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   Planejamento fatorial é um delineamento estatístico experimental para se verificar a significância de fatores (ex: pH, teor, temperatura, tipo) e níveis de um experimento (ex: valor, tipo), embora sem a necessidade de ensaios completos com todas as amostras. Planejamentos mais comuns envolvem 2 níveis para 2, 3 ou 4 fatores. O programa *24fat1matrix* foi elaborado para se testar quatro fatores com dois níveis cada.
+\
+
+## Equação:
+
+|   O modelo estatístico para experimento fatorial 2$^{4}$ é dado por:
+
+$$
+\begin{aligned}
+Y_{ijk\ell m} =\;&
+\mu
++\alpha_i+\beta_j+\gamma_k+\delta_\ell \\
+&+(\alpha\beta)_{ij}
++(\alpha\gamma)_{ik}
++(\alpha\delta)_{i\ell}
++(\beta\gamma)_{jk}
++(\beta\delta)_{j\ell}
++(\gamma\delta)_{k\ell} \\
+&+(\alpha\beta\gamma)_{ijk}
++(\alpha\beta\delta)_{ij\ell}
++(\alpha\gamma\delta)_{ik\ell}
++(\beta\gamma\delta)_{jk\ell} \\
+&+(\alpha\beta\gamma\delta)_{ijk\ell}
++\varepsilon_{ijk\ell m}
+\end{aligned}
+$$
+
+\
+
+|   Em sua forma linear expandida:
+
+$$
+\begin{aligned}
+M(x_1,x_2,x_3,x_4)=\;&
+\beta_0
++\beta_1 x_1+\beta_2 x_2+\beta_3 x_3+\beta_4 x_4\\
+&+\beta_{12} x_1x_2+\beta_{13} x_1x_3+\beta_{14} x_1x_4
++\beta_{23} x_2x_3+\beta_{24} x_2x_4+\beta_{34} x_3x_4\\
+&+\beta_{123} x_1x_2x_3+\beta_{124} x_1x_2x_4+\beta_{134} x_1x_3x_4+\beta_{234} x_2x_3x_4\\
+&+\beta_{1234} x_1x_2x_3x_4+\varepsilon
+\end{aligned}
+$$
+\
+
+|   E como para os modelos 2² e 2³, resolvendo por álgebra matricial:
+
+$$
+X^T*y=\beta
+$$
+\
+*Onde*
+
+X$^{T}$ = matriz transposta de coeficientes de planejamento;
+
+*y* =  matriz de resultados do planejamento;
+
+$\beta$ = matriz de coeficientes resultantes
+
+
+|   A operação matemática envolvida no planejamento fatorial assemelha-se a um ajuste linear múltiplo entre as variáveis, embora com uma *matriz de coeficientes de planejamento* traduzida dos valores do experimento (Neto, 1996).
+\
+
+|   A matriz $\beta$ resultante compreende:
+
+```{r, eval=FALSE}
+"matriz beta:"
+
+M - média global;
+A - efeito do fator A;
+B - efeito do fator B;
+C - efeito do fator C;
+D - efeito do fator D;
+
+Efeitos das interações: AB, AC, AD, BC, BD, CD, ABC, ACD, BCD, e ABCD
+
+```
+
+
+
+## Arquivos:
+
+1. [Programa Fat1matrix e exemplo (dados e matriz de planejamento)](24Fat1matrix.zip)
+2. [Código do programa](24Fat1matrix.pdf)
+\
+
+## Uso e exemplo
+
+
+```{r, eval=FALSE}
+# Entrada:
+1. Entrar com a matriz contendo o conjunto de dados;
+2. Rodar o programa "24Fat1matrix".
+
+# Saída:
+1. Valores de M, A, B, C, D, AB, AC, AD, BC, BD, CD, ABC, ACD, BCD, e ABCD.
+```
+\
+
+*Observação:* O arquivo *exF24* contido em *24fat1matrix.zip* refere-se à matriz de planejamento do exemplo, somente. Para dados introduzidos pelo usuário é necessário a elaboração de nova matriz e armazenamento na variável *c24* (Neto et al., 1996; p. 87).
+
+
+::: {#fig-fat24 layout-ncol=2}
+
+![Inserção de matriz de dados.](dados.jpeg){#fig-dados}
+
+
+![Resultados obtidos do planejamento 2⁴. A pilha apresenta 16 elementos, embora a imagem apresente apenas os últimos.](result.jpeg){#fig-result}
+
+Programa *24Fat1matrix* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), apresentando a inserção de matriz de dados, e os resultados de média e efeitos.
+
+:::
+\
+
+|   O exemplo ilustra um experimento fatorial 2⁴ para uma reação química com variação em temperatura (A), catalisador (B), concentração (C), e pH (D). Os resultados são expressos como rendimento % (n=16) (Neto et al., 1996, p.87). Os resultados apresentados na figura abaixo estão de acordo com a fonte consultada (Neto et al., 1996).
+
+## Referências:
+
+1. Neto, B.B., Scarmino, I.S., Bruns, R.E. Planejamento e otimização de experimentos. 2a.ed. Ed. Unicamp, 1996.

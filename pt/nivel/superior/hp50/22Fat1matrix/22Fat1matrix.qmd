@@ -1,0 +1,111 @@
+---
+title: "Planejamento Fatorial 2²"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   Planejamento fatorial é um delineamento estatístico experimental para se verificar a significância de fatores (ex: pH, teor, temperatura, tipo) e níveis de um experimento (ex: valor, tipo), embora sem a necessidade de ensaios completos com todas as amostras. Planejamentos mais comuns envolvem 2 níveis para 2, 3 ou 4 fatores. O programa *22fat1matrix* foi elaborado para se testar dois fatores com 2 níveis cada.
+\
+
+## Equação:
+
+|   O modelo estatístico para experimento fatorial 2×2 é:
+
+
+$$
+Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk}
+$$
+
+*Onde:*
+
+- $i = 1,2$ (níveis do fator A)
+- $j = 1,2$ (níveis do fator B)
+- $k = 1,2,\dots,r$ (réplicas)
+- $\mu$ é a média geral
+- $\alpha_i$ é o efeito do fator A
+- $\beta_j$ é o efeito do fator B
+- $(\alpha\beta)_{ij}$ é o efeito da interação
+- $\varepsilon_{ijk} \sim N(0,\sigma^2)$ é o erro experimental
+\
+
+|   A equação acima também é espelhada no modelo de *ajuste linear múltiplo*, como segue:
+
+$$
+M_(x1,x2)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_{12}x_1x_2+erro_{(x1,x2)}
+$$
+\
+
+|   Dessa forma, um experimento fatorial 2² é passível de solução algébrica pelo modelo de ajuste multilinear. Nesse caso, resolvendo por relação matricial:
+\
+
+$$
+X^T*y=\beta
+$$
+\
+*Onde*
+
+X$^{T}$ = matriz transposta de coeficientes de constrastes;
+
+*y* =  matriz de resultados do planejamento;
+
+$\beta$ = matriz de coeficientes resultantes
+
+
+|   A operação matemática envolvida no planejamento fatorial assemelha-se a um ajuste linear múltiplo entre as variáveis, embora com uma *matriz de coeficientes de contrastes* traduzida dos valores do experimento (Neto, 1996). 
+\
+
+|   A matriz $\beta$ resultante compreende:
+
+```{r, eval=FALSE}
+"matriz beta:"
+
+M - média global;
+A - efeito do fator A;
+B - efeito do fator B;
+AB - efeito da interação
+```
+
+
+
+## Arquivos:
+
+1. [Programa 22Fat1matrix e exemplo (dados e matriz de planejamento)](22Fat1matrix.zip)
+2. [Código do programa](22Fat1matrix.pdf)
+\
+
+## Uso e exemplo
+
+
+```{r, eval=FALSE}
+# Entrada:
+1. Entrar com a matriz contendo o conjunto de dados;
+2. Rodar o programa "22fat1matrix".
+
+# Saída:
+1. Valores de M, A, B e AB.
+```
+\
+
+*Observação:* O arquivo *ex22fat* contido em *22fat1matrix.zip* refere-se à matriz de planejamento do exemplo, somente. Para dados introduzidos pelo usuário é necessário a elaboração de nova matriz e armazenamento na variável *ex22fat* (Neto et al., 1996).
+
+
+::: {#fig-fat22 layout-ncol=2}
+
+![Inserção de matriz de dados.](dados.jpeg){#fig-dados}
+
+
+![Resultados obtidos do planejamento 2².](result.jpeg){#fig-result}
+
+Programa *22fat1matrix* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), apresentando a inserção de matriz de dados, e os resultados de média, efeitos de A, B, e interação AB.
+
+:::
+\
+
+|   No exemplo (Neto e cols., 1995), o fator *A* corresponde à temperatura de ensaio, equanto o fator *B* o tipo de catalizador usado em uma reação química. Os resultados da matriz de dados (entrada) referem-se ao rendimento da reação. Resumidamente, interpreta-se que o aumento da temperatura foi proporcional ao rendimento (A=22.5), e em especial com o catalizador *A* (*B* reduziu), enquanto que a troca de catalizador prejudicou o rendimento (B=-13.5). Os resultados são idênticos aos da fonte consultada (Neto et al., 1996).
+
+## Referências:
+
+1. Neto, B.B., Scarmino, I.S., Bruns, R.E. Planejamento e otimização de experimentos. 2a.ed. Ed. Unicamp, 1996.

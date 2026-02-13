@@ -1,0 +1,118 @@
+---
+title: "2³ Factorial Design"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: en
+---
+
+
+|   Factorial design is an experimental statistical design used to assess the significance of factors (e.g., pH, concentration, temperature, type) and levels within an experiment (e.g., value, category), without requiring a complete set of trials for all possible conditions. The most common designs involve two levels for two, three, or four factors. The *23fat1matrix* program was developed to test three factors with two levels each.
+\
+
+## Equation:
+
+|   The statistical model for a 2³ factorial experiment is given by:
+
+$$
+Y_{ijkl}=
+\mu
++\alpha_i
++\beta_j
++\gamma_k
++(\alpha\beta)_{ij}
++(\alpha\gamma)_{ik}
++(\beta\gamma)_{jk}
++(\alpha\beta\gamma)_{ijk}
++\varepsilon_{ijkl}
+$$
+
+
+|   As in the 2² factorial design, the linear expanded model can also be described through a multiple linear relationship:
+
+$$
+M(x_1,x_2,x_3)=
+\beta_0
++\beta_1 x_1
++\beta_2 x_2
++\beta_3 x_3
++\beta_{12} x_1x_2
++\beta_{13} x_1x_3
++\beta_{23} x_2x_3
++\beta_{123} x_1x_2x_3
++\varepsilon
+$$
+
+\
+
+|   In this case, solving through a matrix relationship:
+
+$$
+X^T y = \beta
+$$
+
+*Where*
+
+X$^{T}$ = transpose of the planning-coefficient matrix;
+
+*y* = outcome matrix of the design;
+
+$\beta$ = resulting coefficient matrix
+
+|   The mathematical operation involved in factorial design resembles multiple linear fitting, but uses a *contrast-coefficient matrix* derived from the experimental conditions (Neto, 1996).
+\
+
+|   The resulting $\beta$ matrix comprises:
+
+```{r, eval=FALSE}
+"beta matrix:"
+
+M - overall mean;
+A - effect of factor A;
+B - effect of factor B;
+C - effect of factor C;
+AB - interaction effect between A and B;
+AC - interaction effect between A and C;
+BC - interaction effect between B and C;
+ABC - interaction effect between A, B, and C.
+```
+
+## Files:
+
+1. [23Fat1matrix program and example (data and planning matrix)](23Fat1matrix.zip)
+2. [Program source code](23Fat1matrix.pdf)
+   \
+
+## Usage and example
+
+```{r, eval=FALSE}
+# Input:
+1. Enter the data matrix;
+2. Run the program "23fat1matrix".
+
+# Output:
+1. Values of M, A, B, C, AB, AC, BC, and ABC.
+```
+
+\
+
+*Note:* The *exF23* file included in *23fat1matrix.zip* refers only to the example contrast matrix. For user-provided data, a new planning matrix must be created and stored in the variable *c23* (Neto et al., 1996).
+
+::: {#fig-fat23 layout-ncol=2}
+
+![Insertion of data matrix.](dados.jpeg){#fig-dados}
+
+![Results obtained from the factorial design.](result.jpeg){#fig-result}
+
+*23Fat1matrix* program running on the Android version of the HP50G calculator ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), showing data input and outputs for the overall mean and factor/interaction effects.
+
+:::
+\
+
+|   The example refers to a yield factorial experiment for a chemical reaction with variation in temperature, catalyst, and concentration (Neto et al., 1996, p. 80). The results suggest (1) that introducing the concentration factor had a positive effect on the outcome, (2) that there is no evidence of interaction between concentration and the other two factors, and (3) that increasing the reagent level increases the reaction yield by approximately 9%. These results are consistent with the reference source (Neto et al., 1996).
+
+## References:
+
+1. Neto, B. B., Scarmino, I. S., & Bruns, R. E. *Planejamento e otimização de experimentos*. 2nd ed. Ed. Unicamp, 1996.
+

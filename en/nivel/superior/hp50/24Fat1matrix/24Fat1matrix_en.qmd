@@ -1,0 +1,120 @@
+---
+title: "2⁴ Factorial Design"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: en
+---
+
+
+|   Factorial design is an experimental statistical design used to assess the significance of factors (e.g., pH, concentration, temperature, type) and factor levels within an experiment (e.g., value, category), without requiring full trials for all possible combinations. The most common designs involve two levels for two, three, or four factors. The *24Fat1matrix* program was developed to test four factors with two levels each.
+\
+
+## Equation:
+
+|   The statistical model for a (2^{4}) factorial experiment is given by:
+
+|   The statistical model for a \(2^{4}\) factorial experiment is given by:
+
+$$
+\begin{aligned}
+Y_{ijk\ell m} =\;&
+\mu+\alpha_i+\beta_j+\gamma_k+\delta_\ell \\
+&+(\alpha\beta)_{ij}+(\alpha\gamma)_{ik}+(\alpha\delta)_{i\ell}+(\beta\gamma)_{jk}+(\beta\delta)_{j\ell}+(\gamma\delta)_{k\ell} \\
+&+(\alpha\beta\gamma)_{ijk}+(\alpha\beta\delta)_{ij\ell}+(\alpha\gamma\delta)_{ik\ell}+(\beta\gamma\delta)_{jk\ell} \\
+&+(\alpha\beta\gamma\delta)_{ijk\ell}+\varepsilon_{ijk\ell m}
+\end{aligned}
+$$
+
+
+\
+
+|   In its expanded linear form:
+
+$$
+\begin{aligned}
+M(x_1,x_2,x_3,x_4)=\;&
+\beta_0 \\
+&+ \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_4 \\
+&+ \beta_{12} x_1x_2 + \beta_{13} x_1x_3 + \beta_{14} x_1x_4 \\
+&+ \beta_{23} x_2x_3 + \beta_{24} x_2x_4 + \beta_{34} x_3x_4 \\
+&+ \beta_{123} x_1x_2x_3 
+  + \beta_{124} x_1x_2x_4 
+  + \beta_{134} x_1x_3x_4 
+  + \beta_{234} x_2x_3x_4 \\
+&+ \beta_{1234} x_1x_2x_3x_4 
++ \varepsilon
+\end{aligned}
+$$
+
+\
+
+|   And, as for the 2² and 2³ models, solving by matrix algebra:
+
+$$
+X^T*y=\beta
+$$
+
+*Where*
+
+X$^{T}$ = transpose of the design-coefficient matrix;
+
+*y* = outcome matrix of the design;
+
+$\beta$ = resulting coefficient matrix
+
+|   The mathematical operation involved in factorial design resembles multiple linear fitting, but employs a *design-coefficient matrix* derived from the experimental conditions (Neto, 1996).
+\
+
+|   The resulting $\beta$ matrix includes:
+
+```{r, eval=FALSE}
+"beta matrix:"
+
+M - overall mean;
+A - effect of factor A;
+B - effect of factor B;
+C - effect of factor C;
+D - effect of factor D;
+
+Interaction effects: AB, AC, AD, BC, BD, CD, ABC, ACD, BCD, and ABCD
+```
+
+## Files:
+
+1. [24Fat1matrix program and example (data and design matrix)](24Fat1matrix.zip)
+2. [Program source code](24Fat1matrix.pdf)
+   \
+
+## Usage and example
+
+```{r, eval=FALSE}
+# Input:
+1. Enter the matrix containing the dataset;
+2. Run the program "24Fat1matrix".
+
+# Output:
+1. Values of M, A, B, C, D, AB, AC, AD, BC, BD, CD, ABC, ACD, BCD, and ABCD.
+```
+
+\
+
+*Note:* The *exF24* file included in *24fat1matrix.zip* refers only to the example design matrix. For user-provided data, a new design matrix must be created and stored in the variable *c24* (Neto et al., 1996; p. 87).
+
+::: {#fig-fat24 layout-ncol=2}
+
+![Insertion of data matrix.](dados.jpeg){#fig-dados}
+
+![Results obtained from the 2⁴ design. The stack contains 16 elements, although the image shows only the last ones.](result.jpeg){#fig-result}
+
+*24Fat1matrix* program running on the Android version of the HP50G calculator ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), showing data input and the resulting mean and effects.
+
+:::
+\
+
+|   The example illustrates a 2⁴ factorial experiment for a chemical reaction with variation in temperature (A), catalyst (B), concentration (C), and pH (D). Results are expressed as percent yield (n = 16) (Neto et al., 1996, p. 87). The outputs shown above are consistent with the reference source (Neto et al., 1996).
+
+## References:
+
+1. Neto, B. B., Scarmino, I. S., & Bruns, R. E. *Planejamento e otimização de experimentos*. 2nd ed. Ed. Unicamp, 1996.

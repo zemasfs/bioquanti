@@ -1,0 +1,134 @@
+---
+title: "Planejamento Fatorial 2³"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   Planejamento fatorial é um delineamento estatístico experimental para se verificar a significância de fatores (ex: pH, teor, temperatura, tipo) e níveis de um experimento (ex: valor, tipo), embora sem a necessidade de ensaios completos com todas as amostras. Planejamentos mais comuns envolvem 2 níveis para 2, 3 ou 4 fatores. O programa *23fat1matrix* foi elaborado para se testar três fatores com dois níveis cada.
+\
+
+## Equação:
+
+|   O modelo estatístico para experimento fatorial 2×3 é dado por:
+
+$$
+Y_{ijkl}=
+\mu
++\alpha_i
++\beta_j
++\gamma_k
++(\alpha\beta)_{ij}
++(\alpha\gamma)_{ik}
++(\beta\gamma)_{jk}
++(\alpha\beta\gamma)_{ijk}
++\varepsilon_{ijkl}
+$$
+
+
+*Onde:*
+
+- $i = 1,2$ (níveis do fator A)
+- $j = 1,2,3$ (níveis do fator B)
+- $k = 1,2,\dots,r$ (réplicas)
+- $\mu$ é a média geral
+- $\alpha_i$ é o efeito do fator A
+- $\beta_j$ é o efeito do fator B
+- $(\alpha\beta)_{ij}$ é o efeito da interação
+- $\varepsilon_{ijk} \sim N(0,\sigma^2)$ é o erro experimental
+\
+
+|   Como para o *delineamento fatorial 2²* na forma expandida, o modelo também pode ser explicado por uma relação múltipla linear:
+
+
+$$
+M(x_1,x_2,x_3)=
+\beta_0
++\beta_1 x_1
++\beta_2 x_2
++\beta_3 x_3
++\beta_{12} x_1x_2
++\beta_{13} x_1x_3
++\beta_{23} x_2x_3
++\beta_{123} x_1x_2x_3
++\varepsilon
+$$
+
+\
+
+|   Nesse caso, resolvendo por relação matricial:
+
+$$
+X^T*y=\beta
+$$
+\
+*Onde*
+
+X$^{T}$ = matriz transposta de coeficientes de planejamento;
+
+*y* =  matriz de resultados do planejamento;
+
+$\beta$ = matriz de coeficientes resultantes
+
+
+|   A operação matemática envolvida no planejamento fatorial assemelha-se a um ajuste linear múltiplo entre as variáveis, embora com uma *matriz de coeficientes de planejamento* traduzida dos valores do experimento (Neto, 1996).
+\
+
+|   A matriz $\beta$ resultante compreende:
+
+```{r, eval=FALSE}
+"matriz beta:"
+
+M - média global;
+A - efeito do fator A;
+B - efeito do fator B;
+C - efeito do fator C;
+AB - efeito da interação A e B
+AC - efeito da interação A e C
+BC - efeito da interação B e C
+ABC - efeito da interação A, B, e C
+```
+
+
+
+## Arquivos:
+
+1. [Programa Fat1matrix e exemplo (dados e matriz de planejamento)](23fat1matrix.zip)
+2. [Código do programa](23Fat1matrix.pdf)
+\
+
+## Uso e exemplo
+
+
+```{r, eval=FALSE}
+# Entrada:
+1. Entrar com a matriz contendo o conjunto de dados;
+2. Rodar o programa "23fat1matrix".
+
+# Saída:
+1. Valores de M, A, B, C, AB, AC, BC, e ABC.
+```
+\
+
+*Observação:* O arquivo *exF23* contido em *23fat1matrix.zip* refere-se à matriz de constrastes do exemplo, somente. Para dados introduzidos pelo usuário é necessário a elaboração de nova matriz e armazenamento na variável *c23* (Neto et al., 1996).
+
+
+::: {#fig-fat23 layout-ncol=2}
+
+![Inserção de matriz de dados.](dados.jpeg){#fig-dados}
+
+
+![Resultados obtidos do planejamento 2³.](result.jpeg){#fig-result}
+
+Programa *23Fat1matrix* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), apresentando a inserção de matriz de dados, e os resultados de média e efeitos.
+
+:::
+\
+
+|   O exemplo reporta-se a um experimento fatorial de rendimento para uma reação química com variação em temperatura (A), catalisador (B), e concentração (C) (Neto et al., 1996, p.80). Os resultados apresentados na figura abaixo sugerem 1) que a introdução do fator concentração agregou efeito positivo ao experimento, 2) que não há evidência de interação entre concentração e os outros dois fatores, e que 3) quando se aumenta o teor do reagente, a reação aumenta em aproximadamente 9%. Esses resultados estão de acordo com a fonte consultada (Neto et al., 1996).
+
+## Referências:
+
+1. Neto, B.B., Scarmino, I.S., Bruns, R.E. Planejamento e otimização de experimentos. 2a.ed. Ed. Unicamp, 1996.
