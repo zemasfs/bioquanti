@@ -1,18 +1,39 @@
 Instruções para atualização do Bioquanti:
 
-* Clone do remote e descarte do commit local:
+1. Clone do remote e descarte do commit local:
 
 git fetch origin
 git switch main 2>/dev/null || git checkout main
 git reset --hard origin/main
 git clean -fd
 
-* Merge do remoto com o local (incluindo commits)
+Opção B (atualiza ref. do remoto, joga fora diff local, deixa repo igual remoto:
+
+git fetch origin
+git reset --hard origin/main
+
+
+O que isso faz:
+
+* `fetch`: atualiza o que existe no remoto
+* `reset --hard origin/main`: **joga fora** quaisquer commits/alterações locais e deixa **igualzinho ao remoto**
+* `clean -fd`: remove arquivos/pastas não versionados (ex.: restos de build, lixo de render)
+
+2. Merge do remoto com o local (incluindo commits)
 
 git pull --no-rebase origin main
 
-* Compilação pra nuvem:
+....igual a git fetch origin
+            git merge origin/main
+
+
+3. Compilação pra nuvem:
 
 git add -A
 git commit -m " atualização "
 git push
+
+4. Comandos
+
+git status -> status
+git diff --stat -> vericar diferenças de arquivos remoto/local
