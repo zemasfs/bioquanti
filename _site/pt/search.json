@@ -18,7 +18,7 @@
     "href": "hp50.html#solução-numérica",
     "title": "Calculadora Gráfica HP50G",
     "section": "1 Solução numérica",
-    "text": "1 Solução numérica\n\n1.1 Sistema linear e determinação simultânea de \\(\\Delta\\)H e \\(\\Delta\\)S para 2 temperaturas (newRPL)\n  Determinação de quantidades termodinâmicas por sistema linear para reações em temperaturas distintas.\n\n\n1.2 Sistema de equações e equilíbrio de binding\n  Determinação de quantidades em interação bimolecular para um conjunto de sítios de mesma afinidade."
+    "text": "1 Solução numérica\n\n1.1 Sistema linear e determinação simultânea de \\(\\Delta\\)H e \\(\\Delta\\)S para 2 temperaturas (newRPL)\n  Determinação de quantidades termodinâmicas por sistema linear para reações em temperaturas distintas.\n\n\n1.2 Sistema de equações e equilíbrio de binding\n  Determinação de quantidades em interação bimolecular para um conjunto de sítios de mesma afinidade.\n\n\n1.3 Solução numérica de equações diferenciais ordinárias e cinética de binding\n  Método de Runge-Kutta-Fehelberg para ODE e cinética de interação ligante-receptor com gráfico de quantidades no tempo.\n\n\n1.4 Solução numérica de equações diferenciais ordinárias e cinética enzimática\nMétodo de Runge-Kutta-Fehelberg para ODE e cinética enzimática de Michaelis-Mentem com gráfico de quantidades no tempo."
   },
   {
     "objectID": "hp50.html#gráfico",
@@ -2012,5 +2012,54 @@
     "title": "Contato",
     "section": "",
     "text": "Prof. Dr. José Maurício Schneedorf Ferreira da Silva\n\nemail: jose.dasilva@unifal-mg.edu.br\nFone: (35) - 3291-1928\nEndereço: Depto. de Bioquímica, Instituto de Ciências Biomédicas, Universidade Federal de Alfenas, UNIFAL-MG. Prédio E, sala 209. Alfenas, MG. CEP: ‘37.130-001’, Brasil\n\n\n\n\n\n\n\n\n\n Site sob licença Creative Commons CC BY-NC-ND 4.0\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite.html",
+    "href": "nivel/superior/hp50/kinSite/kinSite.html",
+    "title": "Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor",
+    "section": "",
+    "text": "Em paralelo à solução numérica por equações múltiplas (programa Site1), há um extenso conjunto de situações que envolvem taxas de mudanças de certas quantidades em relação a uma ou mais variáveis independentes, empregando-se para isso equações diferenciais. Quando uma única variável independente está envolvida, essas derivadas são denominadas por equações diferenciais ordinárias (ODE). A solução de um problema de valor inicial para uma ODE dá-se por algumas técnicas de aproximação numérica, sendo bem conhecido o método de Runge-Kutta-Fehelberg de 4a. ordem. O programa kinSite utiliza o método interno do hardware para solução de equações para cinética de interação molecular (comando RKF)."
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite.html#equação",
+    "href": "nivel/superior/hp50/kinSite/kinSite.html#equação",
+    "title": "Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor",
+    "section": "1 Equação:",
+    "text": "1 Equação:\n  O programa site1 busca resolver numericamente as quantidades envolvidas num equilíbrio de interação bimolecular:\n\\[\\begin{equation}\nL+R \\begin{array}{c}\n_{k_1}\\\\\n\\rightleftharpoons\\\\\n^{k_2} \\end{array} LR\n\\end{equation}\\]\n\n\nOnde:\nR = receptor livre (proteína, ácido nucleico, etc);\nRL = complexo formado;\nk\\(_{1}\\) = taxa de associação do complexo;\nk\\(_{2}\\) = taxa de dissociação do complexo\n      Nesse caso, a velocidade de associação do complexo é dada pelas seguintes equações diferenciais de 2a. ordem:\n\n\n\\[\n\\frac{d[LR]}{dt}k1[L][R]\n\\] \\[\n\\frac{d[L]}{dt}=-k1[L][R]\n\\]\n\\[\n\\frac{d[R]}{dt}=-k1[L][R]\n\\]\n  Analogamente, as velocidades de dissociação são dadas por:\n\n\n\\[\n\\frac{d[LR]}{dt}=-k2[LR]\n\\] \\[\n\\frac{d[L]}{dt}=k2[LR]\n\\] \\[\n\\frac{d[R]}{dt}=k2[LR]\n\\]\n\n  No equilíbrio, as velocidades globais da reação são expressas como a soma das taxas de associação e de dissociação. Nesse caso, a situação descrita envolve resolver as seguintes equações diferenciais:\n\n\n\\[\n\\frac{d[L]}{dt}=-k1[L][R]+k2[LR]\n\\] \\[\n\\frac{d[R]}{dt}= -k1[L][R]+k2[LR]\n\\] \\[\n\\frac{d[LR]}{dt}=k1[L][R]-k2[LR]\n\\]\n\n  A determinação dos teores de [L], [R], e [LR] em intervalos de tempo dt pode ser numericamente resolvida por um sistema de equações diferenciais a partir dos vetores:\n\\[\n\\Delta x=f(x)*\\Delta t\n\\]"
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite.html#site1",
+    "href": "nivel/superior/hp50/kinSite/kinSite.html#site1",
+    "title": "Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor",
+    "section": "2 site1",
+    "text": "2 site1\n  O programa faz uso do comando MSLV (Multiple Equation Solver) para solução simultânea de equações múltiplas e da biblioteca MSLV2 que o otimiza. A biblioteca também pode ser alocada na calculadora a partir de seu código-fonte fornecido pelo desenvolvedor.\n\n\n  As entradas e saídas do programa são:\n\n# Entradas: \n  L0, R0 e Kd\n\n# Saídas:\n  Gráfico de L x RL;\n  Matriz de valores de L e LR na pilha;\n  Variáveis (L, R, RL, valores iniciais, e sementes)"
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite.html#arquivos",
+    "href": "nivel/superior/hp50/kinSite/kinSite.html#arquivos",
+    "title": "Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor",
+    "section": "3 Arquivos:",
+    "text": "3 Arquivos:\n\nPrograma kinSite\nCódigo do programa\n\n\n  Como para o programa Site1, a execução de kinSite é bastante lenta na calculadora física (~30s), embora seja instantânea em versões virtuais ou suites científicas. Resultados quase idênticos foram obtidos em ~1s com o algoritmo utilizado por Prinz (2011, cap. 6) com o programa Octave (função lsode).\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Subrotina contendo as 3 equações diferenciais para a interação ligante-receptor.\n\n\n\n\n\n\n\n\n\n\n\n(b) Gráfico da cinética de L, R e LR.\n\n\n\n\n\n\n\n\n\n\n\n(c) Matriz com valores de L, R, LR e t.\n\n\n\n\n\n\n\nFigura 1: Programa kinSite pela versão Android de HP50G (Go49gp),apresentando a cinética de interação para um modelo de um sítio junto ao exemplo de kinSite."
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite.html#exemplo-de-uso",
+    "href": "nivel/superior/hp50/kinSite/kinSite.html#exemplo-de-uso",
+    "title": "Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor",
+    "section": "4 Exemplo de uso:",
+    "text": "4 Exemplo de uso:\n\n1. Colocar na pilha:\n  a. L_0=10;\n  b. R_0=5;\n  c. Kd=10\n\n2. Rodar \"Site1\"\n\n  Apesar de funcional, o programa é bastante lento no hardware da HP50G quando comparado com versões virtuais ou softwares científicos para desktop. O exemplo acima leva cerca de 16s para conclusão gráfica e saída das variáveis, ao passo que o programa Octave leva apenas 1s.\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Gráfico de L x RL (isoterma de adsorção).\n\n\n\n\n\n\n\n\n\n\n\n(b) Matriz com dados de L x RL, e variáveis\n\n\n\n\n\n\n\nFigura 1: Programa Site1 pela versão Android de HP50G (Go49gp),apresentando a isoterma de adsorção e quantidades de L e LR resultantes do exemplo de Site1."
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite.html#referências",
+    "href": "nivel/superior/hp50/kinSite/kinSite.html#referências",
+    "title": "Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor",
+    "section": "Referências",
+    "text": "Referências\n\nPrinz, Heino. Numerical Methods for the Life Scientist: Binding and Enzyme Kinetics Calculated with GNU Octave and MATLAB. Springer Science & Business Media, 2011."
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite.html#kinsite",
+    "href": "nivel/superior/hp50/kinSite/kinSite.html#kinsite",
+    "title": "Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor",
+    "section": "2 kinSite",
+    "text": "2 kinSite\n  O program utiliza a função RKF da HP50G para solução numérica de Runge-Kutta-Fehelberg. O algoritmo calcula as quantidades L, R, e LR em intervalos de tempo e plota o gráfico cinético resultante. A entrada de dados requer uma subrotina contendo o sistema de equações diferenciais em sintaxe posfix (RPN) (figura).\n\n\n  Para uso do programa, a entrada exemplificada e a saída são:\n\n\n\n# Entradas \n  k1 = 0.02;\n  k2 = 0.001\n  tol = 1e-5 (tolerância);\n  x = 0 (valor inicial);\n  y = [0.8 1 0] (vetor inicial para L, R e LR)\n  F - subrotina RPN para as 3 equações\n  \n  Clicar em \"kinSite\"\n  \n\n# Saídas:\n  Gráfico de t X L, R e RL;\n  Matriz de valores das quantidades na pilha;"
   }
 ]

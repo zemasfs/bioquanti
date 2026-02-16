@@ -2361,5 +2361,40 @@
     "title": "",
     "section": "7 Customized GPT",
     "text": "7 Customized GPT\n\nSchneedorf, J.M. GSPlotly: interactive script generator for JSPlotly. Customized OpenAI GPT. Available at: https://chat.openai.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly. Accessed on: May 11, 2025."
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite_en.html",
+    "href": "nivel/superior/hp50/kinSite/kinSite_en.html",
+    "title": "Ordinary Differential Equations (ODEs) and Ligand–Receptor Binding Kinetics",
+    "section": "",
+    "text": "In parallel with the numerical solution of multiple equations (program Site1), a broad range of scientific problems involves rates of change of one or more quantities with respect to one or more independent variables—situations naturally described by differential equations. When a single independent variable is involved (typically time), these derivatives are referred to as ordinary differential equations (ODEs). Solving an initial value problem for an ODE is commonly done through numerical approximation schemes, among which the classical fourth-order Runge–Kutta–Fehlberg method is widely known. The kinSite program uses the calculator’s internal ODE solver (RKF) to model the kinetics of molecular interaction."
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite_en.html#equation",
+    "href": "nivel/superior/hp50/kinSite/kinSite_en.html#equation",
+    "title": "Ordinary Differential Equations (ODEs) and Ligand–Receptor Binding Kinetics",
+    "section": "1 Equation",
+    "text": "1 Equation\n  The interaction considered here is a bimolecular ligand–receptor reaction:\n\\[\\begin{equation}\nL+R \\begin{array}{c}\n_{k_1}\\\\\n\\rightleftharpoons\\\\\n^{k_2} \\end{array} LR\n\\end{equation}\\]\n\n\nWhere:\n\nR = free receptor (protein, nucleic acid, etc.);\nLR = complex formed;\nk\\(_1\\) = association rate constant;\nk\\(_2\\) = dissociation rate constant.\n\n  The association rates are described by:\n\\[\n\\frac{d[LR]}{dt}=k_1[L][R]\n\\]\n\\[\n\\frac{d[L]}{dt}=-k_1[L][R]\n\\]\n\\[\n\\frac{d[R]}{dt}=-k_1[L][R]\n\\]\n  Likewise, the dissociation rates are given by:\n\\[\n\\frac{d[LR]}{dt}=-k_2[LR]\n\\]\n\\[\n\\frac{d[L]}{dt}=k_2[LR]\n\\]\n\\[\n\\frac{d[R]}{dt}=k_2[LR]\n\\]\n  At equilibrium (and, more generally, along the full time course), the net reaction rates are the sum of association and dissociation contributions. Therefore, the system to be solved is:\n\\[\n\\frac{d[L]}{dt}=-k_1[L][R]+k_2[LR]\n\\]\n\\[\n\\frac{d[R]}{dt}=-k_1[L][R]+k_2[LR]\n\\]\n\\[\n\\frac{d[LR]}{dt}=k_1[L][R]-k_2[LR]\n\\]\n  Numerically, the evolution of ([L]), ([R]), and ([LR]) over small time steps (t) can be computed from a system of differential equations in vector form:\n\\[\n\\Delta x=f(x),\\Delta t\n\\]"
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite_en.html#kinsite",
+    "href": "nivel/superior/hp50/kinSite/kinSite_en.html#kinsite",
+    "title": "Ordinary Differential Equations (ODEs) and Ligand–Receptor Binding Kinetics",
+    "section": "2 kinSite",
+    "text": "2 kinSite\n  The program uses the HP50G RKF routine (Runge–Kutta–Fehlberg) to solve the ODE system numerically. The algorithm computes ([L]), ([R]), and ([LR]) along time and plots the resulting kinetic curves. Data entry requires a subroutine containing the ODE system written in postfix (RPN) syntax (figure).\n\n\n  Example inputs and outputs are:\n\n# Inputs\n  k1 = 0.02;\n  k2 = 0.001;\n  tol = 1e-5 (tolerance);\n  x = 0 (initial time);\n  y = [0.8 1 0] (initial vector for L, R, and LR);\n  F  (RPN subroutine for the 3 equations)\n\n  Run \"kinSite\"\n\n# Outputs\n  Plot of t vs. L, R, and LR;\n  Matrix of computed values on the stack;"
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite_en.html#files",
+    "href": "nivel/superior/hp50/kinSite/kinSite_en.html#files",
+    "title": "Ordinary Differential Equations (ODEs) and Ligand–Receptor Binding Kinetics",
+    "section": "3 Files",
+    "text": "3 Files\n\nkinSite program\nProgram code\n\n\n\n  As with Site1, kinSite is relatively slow on the physical calculator (~30 s), although it runs essentially instantaneously in virtual versions or scientific suites. Nearly identical results were obtained in ~1 s using the approach described by Prinz (2011, ch. 6) with Octave (function lsode).\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Subroutine containing the three differential equations for ligand–receptor interaction.\n\n\n\n\n\n\n\n\n\n\n\n(b) Kinetic curves for L, R, and LR.\n\n\n\n\n\n\n\n\n\n\n\n(c) Matrix with values of L, R, LR, and t.\n\n\n\n\n\n\n\nFigure 1: kinSite running on the Android HP50G emulator (Go49gp), illustrating ligand–receptor kinetics for a one-site model with the provided example."
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinSite/kinSite_en.html#references",
+    "href": "nivel/superior/hp50/kinSite/kinSite_en.html#references",
+    "title": "Ordinary Differential Equations (ODEs) and Ligand–Receptor Binding Kinetics",
+    "section": "References",
+    "text": "References\n\nPrinz, Heino. Numerical Methods for the Life Scientist: Binding and Enzyme Kinetics Calculated with GNU Octave and MATLAB. Springer Science & Business Media, 2011."
   }
 ]

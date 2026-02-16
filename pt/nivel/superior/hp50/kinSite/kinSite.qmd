@@ -1,0 +1,149 @@
+---
+title: "Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   Em paralelo à solução numérica por equações múltiplas (programa *Site1*), há um extenso conjunto de situações que envolvem taxas de mudanças de certas quantidades em relação a uma ou mais variáveis independentes, empregando-se para isso *equações diferenciais*. Quando uma única variável independente está envolvida, essas derivadas são denominadas por *equações diferenciais ordinárias (ODE)*. A solução de um *problema de valor inicial* para uma ODE dá-se por algumas técnicas de aproximação numérica, sendo bem conhecido o método de *Runge-Kutta-Fehelberg* de 4a. ordem. O programa *kinSite* utiliza o método interno do hardware para solução de equações para cinética de interação molecular (comando RKF).
+
+|   
+\
+
+## Equação: 
+
+|   O programa *kinSite* busca resolver numericamente as quantidades envolvidas num equilíbrio de interação bimolecular:
+
+
+```{=tex}
+\begin{equation}
+L+R \begin{array}{c}
+_{k_1}\\
+ \rightleftharpoons\\
+^{k_2} \end{array} LR 
+\end{equation}
+```
+\
+
+*Onde:*
+
+*R* = receptor livre (proteína, ácido nucleico, etc);
+
+*RL* = complexo formado;
+
+*k$_{1}$* = taxa de associação do complexo;
+
+*k$_{2}$* = taxa de dissociação do complexo
+
+
+|       Nesse caso, a velocidade de associação do complexo é dada pelas seguintes *equações diferenciais de 2a. ordem*:
+\
+
+$$
+\frac{d[LR]}{dt}k1[L][R]
+$$
+$$
+\frac{d[L]}{dt}=-k1[L][R]
+$$
+
+$$
+\frac{d[R]}{dt}=-k1[L][R]
+$$
+
+
+|   Analogamente, as velocidades de dissociação são dadas por:
+\
+
+$$
+\frac{d[LR]}{dt}=-k2[LR]
+$$
+$$
+\frac{d[L]}{dt}=k2[LR]
+$$
+$$
+\frac{d[R]}{dt}=k2[LR]
+$$
+\
+
+
+|   No equilíbrio, as *velocidades globais* da reação são expressas como a soma das taxas de associação e de dissociação. Nesse caso, a situação descrita envolve resolver as seguintes equações diferenciais:
+\
+
+$$
+\frac{d[L]}{dt}=-k1[L][R]+k2[LR]
+$$
+$$
+\frac{d[R]}{dt}= -k1[L][R]+k2[LR]
+$$
+$$
+\frac{d[LR]}{dt}=k1[L][R]-k2[LR]
+$$
+\
+
+|   A determinação dos teores de [L], [R], e [LR] em intervalos de tempo *dt* pode ser numericamente resolvida por um *sistema de equações diferenciais* a partir dos vetores:
+
+$$
+\Delta x=f(x),\Delta t
+$$
+
+
+## kinSite
+
+|   O program utiliza a função RKF da HP50G para solução numérica de Runge-Kutta-Fehelberg. O algoritmo calcula as quantidades L, R, e LR em intervalos de tempo e plota o gráfico cinético resultante. A entrada de dados requer uma subrotina contendo o sistema de equações diferenciais em sintaxe *posfix* (RPN) (figura).
+
+\
+
+|   Para uso do programa, a entrada exemplificada e a saída são:
+\
+
+```{r, eval=FALSE}
+# Entradas 
+  k1 = 0.02;
+  k2 = 0.001
+  tol = 1e-5 (tolerância);
+  x = 0 (valor inicial);
+  y = [0.8 1 0] (vetor inicial para L, R e LR)
+  F - subrotina RPN para as 3 equações
+  
+  Clicar em "kinSite"
+  
+
+# Saídas:
+  Gráfico de t X L, R e RL;
+  Matriz de valores das quantidades na pilha;
+  
+```
+
+
+## Arquivos:
+
+1. [Programa kinSite](kinSite.zip)
+2. [Código do programa](kinSite.pdf)
+\
+
+
+|   Como para o programa *Site1*, a execução de *kinSite* é bastante lenta na calculadora física (~30s), embora seja instantânea em versões virtuais ou suites científicas. Resultados quase idênticos foram obtidos em ~1s com o algoritmo utilizado por Prinz (2011, cap. 6) com o programa [Octave](https://octave.org/)  (função *lsode*).
+\
+
+::: {#fig-kinSite layout-ncol=3}
+
+![Subrotina contendo as 3 equações diferenciais para a interação ligante-receptor.](F.png){#fig-F}
+
+
+
+![Gráfico da cinética de L, R e LR.](plot.png){#fig-plot}
+
+
+![Matriz com valores de L, R, LR e t.](result.png){#fig-result}
+
+
+Programa *kinSite* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)),apresentando a cinética de interação para um modelo de um sítio junto ao exemplo de *kinSite*. 
+
+:::
+\
+
+## Referências {.unnumbered}
+
+1. Prinz, Heino. Numerical Methods for the Life Scientist: Binding and Enzyme Kinetics Calculated with GNU Octave and MATLAB. Springer Science & Business Media, 2011.
