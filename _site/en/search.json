@@ -2396,5 +2396,40 @@
     "title": "Ordinary Differential Equations (ODEs) and Ligand–Receptor Binding Kinetics",
     "section": "References",
     "text": "References\n\nPrinz, Heino. Numerical Methods for the Life Scientist: Binding and Enzyme Kinetics Calculated with GNU Octave and MATLAB. Springer Science & Business Media, 2011."
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinMM/kinMM_en.html",
+    "href": "nivel/superior/hp50/kinMM/kinMM_en.html",
+    "title": "Ordinary Differential Equations (ODE) and Michaelis–Menten Kinetics",
+    "section": "",
+    "text": "As previously applied to binding kinetics in the kinSite program, the fourth-order Runge–Kutta–Fehlberg method can also be employed to solve other ordinary differential equations (ODEs), such as those describing Michaelis–Menten enzyme kinetics.\n  The program kinMM implements the numerical solution of an initial value problem using the RKF command available in the HP50G calculator."
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinMM/kinMM_en.html#equation",
+    "href": "nivel/superior/hp50/kinMM/kinMM_en.html#equation",
+    "title": "Ordinary Differential Equations (ODE) and Michaelis–Menten Kinetics",
+    "section": "1 Equation",
+    "text": "1 Equation\n  The program kinMM solves the time evolution of S (substrate), E (enzyme), ES (enzyme–substrate complex), and P (product) according to the classical catalytic scheme:\n\\[\nE + S\n;\\underset{k_{-1}}{\\stackrel{k_{1}}{\\rightleftharpoons}};\nES\n;\\xrightarrow{k_{2}};\nE + P\n\\]\n\n\nWhere:\n\nS = substrate\nE = free enzyme\nES = enzyme–substrate complex\nP = product\n\\(k_{1}\\) = association rate constant\n\\(k_{-1}\\) = dissociation rate constant\n\\(k_{2}\\) = catalytic rate constant\n\n\n\n  The kinetic behavior of the system is described by the following system of ordinary differential equations:\n\\[\n\\frac{d[S]}{dt} = -k_1 [E][S] + k_{-1}[ES]\n\\]\n\\[\n\\frac{d[ES]}{dt} = k_1 [E][S] - (k_{-1} + k_2)[ES]\n\\]\n\\[\n\\frac{d[P]}{dt} = k_2 [ES]\n\\]\n\n\n  Since enzyme is conserved during catalysis:\n\\[\n[E]_0 = [E] + [ES]\n\\]\n\n\n  As in the kinSite binding model, the numerical solution is obtained by integrating the system:\n\\[\n\\frac{d\\mathbf{x}}{dt} = f(\\mathbf{x})\n\\]\nor, in discrete approximation,\n\\[\n\\Delta \\mathbf{x} = f(\\mathbf{x}),\\Delta t\n\\]"
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinMM/kinMM_en.html#kinmm",
+    "href": "nivel/superior/hp50/kinMM/kinMM_en.html#kinmm",
+    "title": "Ordinary Differential Equations (ODE) and Michaelis–Menten Kinetics",
+    "section": "2 kinMM",
+    "text": "2 kinMM\n  The program uses the RKF function of the HP50G to compute the Runge–Kutta–Fehlberg numerical solution. The algorithm calculates the time evolution of S, ES, and P, and plots the kinetic profile showing substrate depletion and product formation.\n  Data input requires a subroutine written in postfix (RPN) syntax defining the system of differential equations (see figure).\n\n\n  Example of input and output:\n\n# Inputs \n  k1 = 1000;\n  km1 = 0.1;\n  k2 = 0.05;\n  E0 = 0.005;\n  tol = 1e-5 (tolerance);\n  x = 0 (initial time);\n  y = [0.001 0 0] (initial vector for S, ES and P)\n  F - RPN subroutine defining the 3 equations\n  \n  Run \"kinMM\"\n  \n\n# Outputs:\n  Plot of t vs S and P;\n  Matrix containing S, ES, P and t values on the stack;"
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinMM/kinMM_en.html#files",
+    "href": "nivel/superior/hp50/kinMM/kinMM_en.html#files",
+    "title": "Ordinary Differential Equations (ODE) and Michaelis–Menten Kinetics",
+    "section": "3 Files",
+    "text": "3 Files\n\nkinMM program\nProgram source code\n\n\n\n  As with Site1 and kinSite, execution on the physical calculator is relatively slow (~20 s for 9 time points), whereas it is nearly instantaneous in virtual HP50G versions or scientific computing environments (e.g., Octave using custom scripts).\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Subroutine defining the three differential equations for Michaelis–Menten kinetics.\n\n\n\n\n\n\n\n\n\n\n\n(b) Kinetic plot showing substrate decay and product formation.\n\n\n\n\n\n\n\n\n\n\n\n(c) Matrix containing S, ES, P, and time values.\n\n\n\n\n\n\n\nFigure 1: Program kinMM running on the Android HP50G emulator (Go49gp), illustrating enzymatic kinetics simulation."
+  },
+  {
+    "objectID": "nivel/superior/hp50/kinMM/kinMM_en.html#references",
+    "href": "nivel/superior/hp50/kinMM/kinMM_en.html#references",
+    "title": "Ordinary Differential Equations (ODE) and Michaelis–Menten Kinetics",
+    "section": "References",
+    "text": "References\n\nMurray, J. D. Mathematical Biology II: Spatial Models and Biomedical Applications. Springer, 2003."
   }
 ]

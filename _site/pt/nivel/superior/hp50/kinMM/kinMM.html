@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor</title>
+<title>Equações diferenciais ordinárias e cinética de Michaelis-Mentem</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -205,7 +205,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Equações diferenciais ordinárias e cinética de Michaelis-Mentem</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -350,7 +350,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#equação" id="toc-equação" class="nav-link active" data-scroll-target="#equação"><span class="header-section-number">1</span> Equação:</a></li>
-  <li><a href="#kinsite" id="toc-kinsite" class="nav-link" data-scroll-target="#kinsite"><span class="header-section-number">2</span> kinSite</a></li>
+  <li><a href="#kinmm" id="toc-kinmm" class="nav-link" data-scroll-target="#kinmm"><span class="header-section-number">2</span> kinMM</a></li>
   <li><a href="#arquivos" id="toc-arquivos" class="nav-link" data-scroll-target="#arquivos"><span class="header-section-number">3</span> Arquivos:</a></li>
   <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
@@ -361,7 +361,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Equações diferenciais ordinárias (ODE) e cinética de interação ligante-receptor</h1>
+<h1 class="title">Equações diferenciais ordinárias e cinética de Michaelis-Mentem</h1>
 </div>
 
 
@@ -378,67 +378,50 @@ window.Quarto = {
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;Em paralelo à solução numérica por equações múltiplas (programa <em>Site1</em>), há um extenso conjunto de situações que envolvem taxas de mudanças de certas quantidades em relação a uma ou mais variáveis independentes, empregando-se para isso <em>equações diferenciais</em>. Quando uma única variável independente está envolvida, essas derivadas são denominadas por <em>equações diferenciais ordinárias (ODE)</em>. A solução de um <em>problema de valor inicial</em> para uma ODE dá-se por algumas técnicas de aproximação numérica, sendo bem conhecido o método de <em>Runge-Kutta-Fehelberg</em> de 4a. ordem. O programa <em>kinSite</em> utiliza o método interno do hardware para solução de equações para cinética de interação molecular (comando RKF).</div>
-<div class="line-block"></div>
+<div class="line-block">&nbsp;&nbsp;Assim como aplicado para cinética de <em>binding</em> pelo programa <em>kinSite</em>, o método de <em>Runge-Kutta-Fehlberg</em> de 4a. ordem pode ser também empregado para solução de outras <em>equações ordinárias diferenciais (ODE)</em>, como cinética enzimática de Michaelis-Mentem. O programa <em>kinMM</em> a seguir descreve o formalismo e solução numérica do problema de valor inicial das ODE por uso do comando RKF da calculadora.</div>
 <p><br>
 </p>
 <section id="equação" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="equação"><span class="header-section-number">1</span> Equação:</h2>
-<div class="line-block">&nbsp;&nbsp;O programa <em>kinSite</em> busca resolver numericamente as quantidades envolvidas num equilíbrio de interação bimolecular:</div>
-<span class="math display">\[\begin{equation}
-L+R \begin{array}{c}
-_{k_1}\\
-\rightleftharpoons\\
-^{k_2} \end{array} LR
-\end{equation}\]</span>
+<div class="line-block">&nbsp;&nbsp;O programa <em>kinMM</em> resolve as quantidades para <em>S</em> (substrato), <em>E</em> (enzima) e <em>ES</em> (complexo enzima-substrato) numa catálise enzimática a partir das seguintes relações:</div>
+<p><span class="math display">\[
+E + S
+\;\underset{k_{-1}}{\stackrel{k_{1}}{\rightleftharpoons}}\;
+ES
+\;\xrightarrow{k_{2}}\;
+E + P
+\]</span></p>
 <p><br>
 </p>
 <p><em>Onde:</em></p>
-<p><em>R</em> = receptor livre (proteína, ácido nucleico, etc);</p>
-<p><em>RL</em> = complexo formado;</p>
-<p><em>k<span class="math inline">\(_{1}\)</span></em> = taxa de associação do complexo;</p>
-<p><em>k<span class="math inline">\(_{2}\)</span></em> = taxa de dissociação do complexo</p>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nesse caso, a velocidade de associação do complexo é dada pelas seguintes <em>equações diferenciais ordinárias</em> de primeira ordem (no tempo), e de segunda ordem global em concentração:</div>
-<p><br>
-</p>
+<p><em>S</em> = substrato;</p>
+<p><em>P</em> = produto;</p>
+<p><em>k<span class="math inline">\(_{1}\)</span></em> = taxa de formação do complexo ES;</p>
+<p><em>k<span class="math inline">\(_{-1}\)</span></em> = taxa de dissociação do complexo ES</p>
+<p><em>k<span class="math inline">\(_2\)</span></em> = constante catalítica</p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A reação cinética pode ser definida por equações diferenciais que determinam a variação das quantidades ao longo da reação:</div>
 <p><span class="math display">\[
-\frac{d[LR]}{dt}=k1[L][R]
-\]</span> <span class="math display">\[
-\frac{d[L]}{dt}=-k1[L][R]
+\frac{d[S]}{dt}=-k_1[E][S]+k_{-1}[ES]
 \]</span></p>
 <p><span class="math display">\[
-\frac{d[R]}{dt}=-k1[L][R]
+\frac{d[ES]}{dt}=k_1[E][S]-(k_{-1}+k_2)[ES]
 \]</span></p>
-<div class="line-block">&nbsp;&nbsp;Analogamente, as velocidades de dissociação são dadas por:</div>
-<p><br>
-</p>
 <p><span class="math display">\[
-\frac{d[LR]}{dt}=-k2[LR]
-\]</span> <span class="math display">\[
-\frac{d[L]}{dt}=k2[LR]
-\]</span> <span class="math display">\[
-\frac{d[R]}{dt}=k2[LR]
+\frac{d[P]}{dt}=k_2[ES]
 \]</span><br>
 </p>
-<div class="line-block">&nbsp;&nbsp;No equilíbrio, as <em>velocidades globais</em> da reação são expressas como a soma das taxas de associação e de dissociação. Nesse caso, a situação descrita envolve resolver as seguintes equações diferenciais:</div>
-<p><br>
-</p>
+<p><em>Onde:</em></p>
 <p><span class="math display">\[
-\frac{d[L]}{dt}=-k1[L][R]+k2[LR]
-\]</span> <span class="math display">\[
-\frac{d[R]}{dt}= -k1[L][R]+k2[LR]
-\]</span> <span class="math display">\[
-\frac{d[LR]}{dt}=k1[L][R]-k2[LR]
-\]</span><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;A determinação dos teores de [L], [R], e [LR] em intervalos de tempo <em>dt</em> pode ser numericamente resolvida por um <em>sistema de equações diferenciais</em> a partir dos vetores:</div>
+[E]_0=[E]+[ES]
+\]</span></p>
+<div class="line-block">&nbsp;&nbsp;De forma análoga à solução numérica de ODE para cinética de interação ligante-proteína (programa <em>kinSite</em>), a determinação dos teores de [S], [P], e [ES] em intervalos de tempo <em>dt</em> pode ser resolvida por um <em>sistema de equações diferenciais</em> a partir dos vetores:</div>
 <p><span class="math display">\[
-\Delta x=f(x) \Delta t
+\Delta \mathbf{x} = f(\mathbf{x})\,\Delta t
 \]</span></p>
 </section>
-<section id="kinsite" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="kinsite"><span class="header-section-number">2</span> kinSite</h2>
-<div class="line-block">&nbsp;&nbsp;O programa utiliza a função RKF da HP50G para solução numérica de Runge-Kutta-Fehelberg. O algoritmo calcula as quantidades L, R, e LR em intervalos de tempo e plota o gráfico cinético resultante. A entrada de dados requer uma subrotina contendo o sistema de equações diferenciais em sintaxe <em>posfix</em> (RPN) (figura).</div>
+<section id="kinmm" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="kinmm"><span class="header-section-number">2</span> kinMM</h2>
+<div class="line-block">&nbsp;&nbsp;O programa utiliza a função RKF da HP50G para solução numérica de Runge-Kutta-Fehelberg de 4a ordem. O algoritmo calcula as quantidades S, P, e ES em intervalos de tempo, e plota o gráfico cinético resultante para decaimento de S e aumento de P. A entrada de dados requer uma subrotina contendo o sistema de equações diferenciais em sintaxe <em>posfix</em> (RPN) (figura).</div>
 <p><br>
 </p>
 <div class="line-block">&nbsp;&nbsp;Para uso do programa, a entrada exemplificada e a saída são:</div>
@@ -446,29 +429,31 @@ _{k_1}\\
 </p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Entradas </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  k1 <span class="ot">=</span> <span class="fl">0.02</span>;</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  k2 <span class="ot">=</span> <span class="fl">0.001</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  tol <span class="ot">=</span> <span class="fl">1e-5</span> (tolerância);</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="dv">0</span> (valor inicial);</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">=</span> [<span class="fl">0.8</span> <span class="dv">1</span> <span class="dv">0</span>] (vetor inicial para L, R e LR)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  F <span class="sc">-</span> subrotina RPN para as <span class="dv">3</span> equações</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  Clicar em <span class="st">"kinSite"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  k1 <span class="ot">=</span> <span class="dv">1000</span>;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  km1 <span class="ot">=</span> <span class="fl">0.1</span>;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  k2 <span class="ot">=</span> <span class="fl">0.05</span>;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  E0 <span class="ot">=</span> <span class="fl">0.005</span>;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  tol <span class="ot">=</span> <span class="fl">1e-5</span> (tolerância);</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="dv">0</span> (valor inicial);</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">=</span> [<span class="fl">0.001</span> <span class="dv">0</span> <span class="dv">0</span>] (vetor inicial para S, ES e P)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  F <span class="sc">-</span> subrotina RPN para as <span class="dv">3</span> equações</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Saídas:</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  Gráfico de t X L, R e RL;</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  Matriz de valores das quantidades na pilha;</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  Clicar em <span class="st">"kinMM"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Saídas:</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  Gráfico de t X S e P;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  Matriz de valores das quantidades na pilha;</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="arquivos" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="arquivos"><span class="header-section-number">3</span> Arquivos:</h2>
 <ol type="1">
-<li><a href="kinSite.zip">Programa kinSite</a></li>
-<li><a href="kinSite.pdf">Código do programa</a><br>
+<li><a href="kinMM.zip">Programa kinSite</a></li>
+<li><a href="kinMM.pdf">Código do programa</a><br>
 </li>
 </ol>
-<div class="line-block">&nbsp;&nbsp;Como para o programa <em>Site1</em>, a execução de <em>kinSite</em> é bastante lenta na calculadora física (~30s), embora seja instantânea em versões virtuais ou suites científicas. Resultados quase idênticos foram obtidos em ~1s com o algoritmo utilizado por Prinz (2011, cap. 6) com o programa <a href="https://octave.org/">Octave</a> (função <em>lsode</em>).</div>
+<div class="line-block">&nbsp;&nbsp;Da mesma forma que para os programas <em>Site1</em> e <em>kinSite</em>, o algoritmo é bastante lento na calculadora física (~20 para 9 pontos experimentais), embora seja quase instantâneo para versões digitais da HP50G bem como programas científicos (script <em>mm.m</em> de <a href="https://octave.org/">Octave</a>).</div>
 <p><br>
 </p>
 <div id="fig-kinSite" class="quarto-layout-panel">
@@ -482,7 +467,7 @@ _{k_1}\\
 <img src="F.png" class="img-fluid figure-img" data-ref-parent="fig-kinSite">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-F-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Subrotina contendo as 3 equações diferenciais para a interação ligante-receptor.
+(a) Subrotina contendo as 3 equações diferenciais para a cinética de Michaelis-Mentem.
 </figcaption>
 </figure>
 </div>
@@ -494,7 +479,7 @@ _{k_1}\\
 <img src="plot.png" class="img-fluid figure-img" data-ref-parent="fig-kinSite">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Gráfico da cinética de L, R e LR.
+(b) Gráfico da cinética de decaimento de S e aumento de P.
 </figcaption>
 </figure>
 </div>
@@ -506,7 +491,7 @@ _{k_1}\\
 <img src="result.png" class="img-fluid figure-img" data-ref-parent="fig-kinSite">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(c) Matriz com valores de L, R, LR e t.
+(c) Matriz com valores de S, ES, P e t.
 </figcaption>
 </figure>
 </div>
@@ -514,7 +499,7 @@ _{k_1}\\
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kinSite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Programa <em>kinSite</em> pela versão Android de HP50G (<a href="https://sites.google.com/site/olivier2smet2/home/go49gp">Go49gp</a>),apresentando a cinética de interação para um modelo de um sítio junto ao exemplo de <em>kinSite</em>.
+Figura&nbsp;1: Programa <em>kinSite</em> pela versão Android de HP50G (<a href="https://sites.google.com/site/olivier2smet2/home/go49gp">Go49gp</a>),apresentando a cinética enzimática para o modelo de Michaelis-Menten junto ao exemplo de <em>kinMM</em>.
 </figcaption>
 </figure>
 </div>
@@ -524,7 +509,7 @@ Figura&nbsp;1: Programa <em>kinSite</em> pela versão Android de HP50G (<a href=
 <section id="referências" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
 <ol type="1">
-<li>Prinz, Heino. Numerical Methods for the Life Scientist: Binding and Enzyme Kinetics Calculated with GNU Octave and MATLAB. Springer Science &amp; Business Media, 2011.</li>
+<li>Murray, James Dickson. Mathematical biology: II: spatial models and biomedical applications. Vol. 18. New York: springer, 2003.</li>
 </ol>
 
 
