@@ -1261,7 +1261,7 @@
     "href": "hp50_en.html#plotting",
     "title": "HP50G Graphing Calculator",
     "section": "2 Plotting",
-    "text": "2 Plotting\n\n2.1 Function simulator with random error\n  Scatter plot with error dispersion introduced via a percent coefficient of variation.\n\n\n2.2 Overlay of plots with parameter variation\n  Animated visualization of a user-defined function while varying an equation parameter.\n\n\n2.3 3D plot visualization with parameter variation\n  Animation of 3D (wireframe) function plots under parameter variation."
+    "text": "2 Plotting\n\n2.1 Titration Simulator and Isoelectric Point of Peptide\nSimulator for titration of ionizable groups in amino acid sequences and graphical determination of isoelectric point (pI).\n\n\n2.2 Function simulator with random error\n  Scatter plot with error dispersion introduced via a percent coefficient of variation.\n\n\n2.3 Overlay of plots with parameter variation\n  Animated visualization of a user-defined function while varying an equation parameter.\n\n\n2.4 3D plot visualization with parameter variation\n  Animation of 3D (wireframe) function plots under parameter variation."
   },
   {
     "objectID": "hp50_en.html#data-fitting",
@@ -2431,5 +2431,40 @@
     "title": "Multiple Comparisons by Fisher’s LSD Test",
     "section": "4 References:",
     "text": "4 References:\n\nVieira, Sônia. Analysis of Variance: ANOVA. Atlas Publishing, 2000."
+  },
+  {
+    "objectID": "nivel/superior/hp50/qNet/qNet_en.html",
+    "href": "nivel/superior/hp50/qNet/qNet_en.html",
+    "title": "qNet — Titration Simulator and Isoelectric Point of Peptide Sequences",
+    "section": "",
+    "text": "The isoelectric point (pI) is the pH value at which a molecule carries zero net electric charge under an electric field, i.e., its positive and negative charges cancel each other. Experimentally, it can be estimated by kinetic or electrokinetic measurements such as zeta potential, isoelectric focusing, or capillary electrophoresis.\n  In a related sense, the isoionic point refers to the same condition in the absence of an electric field, and may be inferred from potentiometric titration, viscosity, or directly from the structural information encoded in a monomeric sequence, as in the primary sequence of proteins. The program qNet simulates a titration curve for peptide (and protein) sequences."
+  },
+  {
+    "objectID": "nivel/superior/hp50/qNet/qNet_en.html#equation",
+    "href": "nivel/superior/hp50/qNet/qNet_en.html#equation",
+    "title": "qNet — Titration Simulator and Isoelectric Point of Peptide Sequences",
+    "section": "1 Equation",
+    "text": "1 Equation\n  The net charge of a compound, qNet, can be expressed as the sum of its acidic (qa) and basic (qb) contributions:\n\\[\nqNet = qb + qa\n\\]\n\n\nWhere:\n\nqb = charge in the basic form (+1, 0, or −1)\n\n\n\n  Considering the ionization of chemical groups via the Henderson–Hasselbalch equation:\n\\[\npH = pK_a + \\log\\left(\\frac{A^-}{HA}\\right)\n\\]\n\n\nWhere:\n\n\\(pK_a = -\\log[H^+]\\)\nHA = acid form concentration\nA\\(^-\\) = base form concentration\n\n\n\n  For a set of ionizable groups in a molecule, an operational expression for qNet can be written as:\n\\[\nqNet=\\sum_{i=1}^{n}\n\\left(\nq_{b,i}\n+\n\\frac{1}{1 + 10^{,pH - pK_i}}\n\\right)\n\\]\n\n\n  Thus, qNet is computed from the input values of \\(q_{b,i}\\), \\(pK_i\\), and \\(n\\) (the multiplicity/amount of ionizable groups of type i in the sequence)."
+  },
+  {
+    "objectID": "nivel/superior/hp50/qNet/qNet_en.html#use-and-example",
+    "href": "nivel/superior/hp50/qNet/qNet_en.html#use-and-example",
+    "title": "qNet — Titration Simulator and Isoelectric Point of Peptide Sequences",
+    "section": "2 Use and example",
+    "text": "2 Use and example\n  Plotting is performed by an independent program, plotF, which allows the user to plot a mathematical function by placing the expression on the stack along with the initial and final values of the independent variable.\n  In this way, qNet supports data input and generates a net-charge curve as a function of pH. For program execution, example inputs and outputs are:\n\n\n\n# Inputs\n1.  List with the number of ionizable groups (multiplicity):\n    Example: Glu (glutamate): {1 1 0 1 0 0 0 0 0}\n\n2.  List with \"qb\", i.e., the base-form charge of each ionizable group:\n    Example: Glu: {-1 0 -1 -1 0 -1 -1 0 0}\n\n3.  List with pKa values for each ionizable group:\n    {2.2 9.6 3.9 4.3 6.0 8.3 10.9 10.8 12.5}\n  ...or in the order:\n    {C-t N-t Glu Asp His Cys Tyr Lys Arg}\n\n# Outputs\n  Potentiometric titration curve of \"qNet\" as a function of pH (1 to 14)\n  Function expression, and Xi and Xf values returned for re-plotting"
+  },
+  {
+    "objectID": "nivel/superior/hp50/qNet/qNet_en.html#files",
+    "href": "nivel/superior/hp50/qNet/qNet_en.html#files",
+    "title": "qNet — Titration Simulator and Isoelectric Point of Peptide Sequences",
+    "section": "3 Files",
+    "text": "3 Files\n\nqNet and plotF programs\nProgram source code and examples\n\n\n\n  The figure below illustrates data entry and the execution of qNet using the examples included in the compressed file.\n\n\n\n\n\n\n\n\n\n\n\n(a) Input lists for n, qb and pKa of the sequence. Example for glutamate (Glu).\n\n\n\n\n\n\n\n\n\n\n\n(b) Glu titration curve showing the pI value (3.2).\n\n\n\n\n\n\n\n\n\n\n\n(c) Function output and Xi/Xf values for re-plotting.\n\n\n\n\n\n\n\n\n\n\n\n(d) Lysozyme titration curve and its pI value.\n\n\n\n\n\n\n\nFigure 1: Program qNet running on the Android HP50G emulator (Go49gp), showing input data, function output for re-plotting, and titration curves for an amino acid (glutamate) and for lysozyme. The X coordinate corresponds to the estimated isoelectric point (pI).\n\n\n\n\n\n  The simulated curves for the examples included in the compressed file, as well as the pI values computed by qNet, are consistent with values reported in the literature."
+  },
+  {
+    "objectID": "nivel/superior/hp50/qNet/qNet_en.html#references",
+    "href": "nivel/superior/hp50/qNet/qNet_en.html#references",
+    "title": "qNet — Titration Simulator and Isoelectric Point of Peptide Sequences",
+    "section": "References",
+    "text": "References\n\nBloomfield, Victor. Computer Simulation and Data Analysis in Molecular Biology and Biophysics: An Introduction Using R. Springer, 2009."
   }
 ]

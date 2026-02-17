@@ -1119,7 +1119,7 @@
     "href": "hp50.html#gráfico",
     "title": "Calculadora Gráfica HP50G",
     "section": "2 Gráfico",
-    "text": "2 Gráfico\n\n2.1 Simulador de função com erro aleatório\n  Gráfico de pontos com dispersão de erros por inserção de covariância percentual.\n\n\n2.2 Sobreposição de gráficos com variação em parâmetro de função\n  Visualização animada de gráficos de função inserida pelo usuário, variando-se um parâmetro da equação.\n\n\n2.3 Visualização de gráfico 3D com variação em parâmetro de função\n  Animação de gráficos tridimensionais (wireframe) de função simulada com variação de parâmetro."
+    "text": "2 Gráfico\n\n2.1 Titulação e Ponto Isoelétrico de sequências peptídicas\n  Simulador para titulação de grupos ionizáveis em sequências de aminoácidos e determinação gráfica de ponto isoelétrico (pI).\n\n\n2.2 Simulador de função com erro aleatório\n  Gráfico de pontos com dispersão de erros por inserção de covariância percentual.\n\n\n2.3 Sobreposição de gráficos com variação em parâmetro de função\n  Visualização animada de gráficos de função inserida pelo usuário, variando-se um parâmetro da equação.\n\n\n2.4 Visualização de gráfico 3D com variação em parâmetro de função\n  Animação de gráficos tridimensionais (wireframe) de função simulada com variação de parâmetro."
   },
   {
     "objectID": "hp50.html#ajuste-de-dados",
@@ -2082,5 +2082,40 @@
       "JSPlotly: objetos interativos & IA",
       "Biofísico-química"
     ]
+  },
+  {
+    "objectID": "nivel/superior/hp50/qNet/qNet.html",
+    "href": "nivel/superior/hp50/qNet/qNet.html",
+    "title": "qNet - Simulador para Titulação e Ponto Isoelétrico de Sequências Peptídicas",
+    "section": "",
+    "text": "Ponto isoelétrico, ou pI, representa o valor de pH em que uma molécula adquire uma carga líquida nula sob campo elétrico, ou seja, suas cargas positivas anulam-se com as cargas negativas. E experimentalmente obtido por medidas cinéticas, tais como potencial Zeta, eletrofocalização ou eletroforese capilar. De modo similar, o ponto isoiônico refere-se à mesma condição, no entanto na ausência de campo elétrico, podendo ser aferido por titulação potenciométrica, viscosidade, ou pela informação estrutural de uma sequência monomérica, tal como ocorre na sequência primária de proteínas. O programa qNet simula um gráfico de titulação para sequências peptídicas"
+  },
+  {
+    "objectID": "nivel/superior/hp50/qNet/qNet.html#equação",
+    "href": "nivel/superior/hp50/qNet/qNet.html#equação",
+    "title": "qNet - Simulador para Titulação e Ponto Isoelétrico de Sequências Peptídicas",
+    "section": "1 Equação:",
+    "text": "1 Equação:\n  A rede de carga líquida de um composto, qnet, pode ser determinada a partir da soma da forma ácida (qa) e básica (qb) da molécula:\n\\[\nqNet=qb+qa\n\\]\n\nOnde:\nqb = carga em base (+1, 0, ou -1)\n\n  Considerando a ionização de moléculas a partir da equação de Henderson–Hasselbalch:\n\\[\npH = pKa+log \\frac{A^-}{HA}\n\\]\n\nOnde:\npKa = -log [H\\(^+\\)];\nHA = teor de ácido;\nA\\(^⁻\\) = teor de base\n  Deduz-se a expressão para qNet para a somatória de grupos ionizáveis numa molécula como sendo:\n\\[\nqNet=\\sum_{i=1}^{n}\n\\left(\nq_{b,i}\n+\n\\frac{1}{1 + 10^{,pH - pK_i}}\n\\right)\n\\]\n  Dessa forma, o valor de qNet é obtido com inserção de valores de qb, pKa, e n, esse como quantitativo de carga do grupo i."
+  },
+  {
+    "objectID": "nivel/superior/hp50/qNet/qNet.html#uso-e-exemplo",
+    "href": "nivel/superior/hp50/qNet/qNet.html#uso-e-exemplo",
+    "title": "qNet - Simulador para Titulação e Ponto Isoelétrico de Sequências Peptídicas",
+    "section": "2 Uso e exemplo",
+    "text": "2 Uso e exemplo\n  Para o gráfico é utilizado um programa independente, plotF, e que permite plotar uma função matemática bastando a inserção dessa na pilha, e os valores inicial e final pretendidos para a variável independente.\n  Dessa forma, o programa qNet permite a entrada de dados e elaboração de um gráfico de carga líquida em função de pH. Para uso do programa, a entrada exemplificada e a saída são:\n\n\n\n# Entradas \n1.  lista contendo quantidade de grupos ionizáveis;\n    Ex: Glu (glutamato): {1 1 0 1 0 0 0 0 0}\n2.  lista contendo \"qb\", a carga em base de cada grupo na sequência;\n    Ex: Glu: {-1 0 -1 -1 0 -1 -1 0 0}\n3.  lista contendo os valores de \"pKa\" para cada aminoácido ionizável:\n    {2.2 9.6 3.9 4.3 6.0 8.3 10.9 10.8 12.5}\n  ...ou\n    {C-t N-t Glu Asp His Cys Tyr Lys Arg} \n  \n\n# Saídas:\n  Gráfico titulação potenciométrica de \"qNet\" em função de pH (1 a 14)\n  Equação, valor inicial e valor final para nova plotagem em função de pH"
+  },
+  {
+    "objectID": "nivel/superior/hp50/qNet/qNet.html#arquivos",
+    "href": "nivel/superior/hp50/qNet/qNet.html#arquivos",
+    "title": "qNet - Simulador para Titulação e Ponto Isoelétrico de Sequências Peptídicas",
+    "section": "3 Arquivos:",
+    "text": "3 Arquivos:\n\nProgramas qNet e plotF\nCódigos dos programas e exemplos\n\n\n  A figura abaixo ilustra a entrada de dados e execução do programa qNet para os exemplos do arquivo comprimido.\n\n\n\n\n\n\n\n\n\n\n\n(a) Entrada de listas para n, qb e pKa da sequência. Exemplo para glutamato (Glu).\n\n\n\n\n\n\n\n\n\n\n\n(b) Titulação de Glu, apresentando valor de pI (3.2).\n\n\n\n\n\n\n\n\n\n\n\n(c) Saída de função e valores de Xi e Xf para nova plotagem.\n\n\n\n\n\n\n\n\n\n\n\n(d) Titulação de lisozima e apresentação do valor de seu pI.\n\n\n\n\n\n\n\nFigura 1: Programa qNet pela versão Android de HP50G (Go49gp),apresentando entrada de dados, saída de função e valores pra nova plotagem, bem como titulação para um aminoácido (glutamato) e para lisozima. O valor da coordenada X representa o ponto isoelétrico (pI) encontrado.\n\n\n\n\n\n  A simulação gráfica para os exemplos incluidos no arquivo comprimido (Figura), bem como os valores para pI encontrados com o programa qNet ,coincidem com dados reportados na literatura."
+  },
+  {
+    "objectID": "nivel/superior/hp50/qNet/qNet.html#referências",
+    "href": "nivel/superior/hp50/qNet/qNet.html#referências",
+    "title": "qNet - Simulador para Titulação e Ponto Isoelétrico de Sequências Peptídicas",
+    "section": "Referências",
+    "text": "Referências\n\nBloomfield, Victor. 2009. Computer Simulation and Data Analysis in Molecular Biology and Biophysics: An Introduction Using r. Springer Science & Business Media."
   }
 ]

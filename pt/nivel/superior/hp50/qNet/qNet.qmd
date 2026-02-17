@@ -1,0 +1,116 @@
+---
+title: "qNet - Simulador para Titulação e Ponto Isoelétrico de Sequências Peptídicas"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   *Ponto isoelétrico*, ou *pI*, representa o valor de pH em que uma molécula adquire uma carga líquida nula sob campo elétrico, ou seja, suas cargas positivas anulam-se com as cargas negativas. E experimentalmente obtido por medidas cinéticas, tais como *potencial Zeta*, eletrofocalização ou eletroforese capilar. De modo similar, o *ponto isoiônico* refere-se à mesma condição, no entanto na ausência de campo elétrico, podendo ser aferido por *titulação potenciométrica*, viscosidade, ou pela informação estrutural de uma sequência monomérica, tal como ocorre na sequência primária de proteínas. O programa *qNet* simula um gráfico de titulação para sequências peptídicas
+\
+
+## Equação: 
+
+|   A rede de carga líquida de um composto, *qnet*, pode ser determinada a partir da soma da forma ácida (qa) e básica (qb) da molécula:
+
+$$
+qNet=qb+qa
+$$
+\
+
+*Onde:*
+
+*qb* = carga em base (+1, 0, ou -1)
+\
+
+|   Considerando a ionização de moléculas a partir da equação de *Henderson–Hasselbalch*:
+
+
+$$
+pH = pKa+log \frac{A^-}{HA}
+$$
+\
+
+
+*Onde:*
+
+*pKa* = -log [H$^+$];
+
+*HA* = teor de ácido;
+
+*A$^⁻$* = teor de base
+
+|   Deduz-se a expressão para *qNet* para a somatória de grupos ionizáveis numa molécula como sendo:
+
+$$
+qNet=\sum_{i=1}^{n}
+\left(
+q_{b,i}
++
+\frac{1}{1 + 10^{,pH - pK_i}}
+\right)
+$$
+
+|   Dessa forma, o valor de *qNet* é obtido com inserção de valores de *qb*, *pKa*, e *n*, esse como quantitativo de carga do grupo *i*.
+
+
+## Uso e exemplo
+
+|   Para o gráfico é utilizado um programa independente, *plotF*, e que permite plotar uma função matemática bastando a inserção dessa na pilha, e os valores inicial e final pretendidos para a variável independente.
+
+|   Dessa forma, o programa *qNet* permite a entrada de dados e elaboração de um gráfico de carga líquida em função de *pH*. Para uso do programa, a entrada exemplificada e a saída são:
+\
+
+```{r, eval=FALSE}
+# Entradas 
+1.  lista contendo quantidade de grupos ionizáveis;
+    Ex: Glu (glutamato): {1 1 0 1 0 0 0 0 0}
+2.  lista contendo "qb", a carga em base de cada grupo na sequência;
+    Ex: Glu: {-1 0 -1 -1 0 -1 -1 0 0}
+3.  lista contendo os valores de "pKa" para cada aminoácido ionizável:
+    {2.2 9.6 3.9 4.3 6.0 8.3 10.9 10.8 12.5}
+  ...ou
+    {C-t N-t Glu Asp His Cys Tyr Lys Arg} 
+  
+
+# Saídas:
+  Gráfico titulação potenciométrica de "qNet" em função de pH (1 a 14)
+  Equação, valor inicial e valor final para nova plotagem em função de pH
+  
+```
+
+
+## Arquivos:
+
+1. [Programas qNet e plotF](qNet.zip)
+2. [Códigos dos programas e exemplos](qNet.pdf)
+\
+
+|   A figura abaixo ilustra a entrada de dados e execução do programa *qNet* para os exemplos do arquivo comprimido.
+
+::: {#fig-qNet layout-ncol=4}
+
+![Entrada de listas para n, qb e pKa da sequência. Exemplo para glutamato (Glu).](gluEntr.jpeg){#fig-gluEntr}
+
+
+
+![Titulação de Glu, apresentando valor de pI (3.2).](Glu.jpeg){#fig-Glu}
+
+![Saída de função e valores de Xi e Xf para nova plotagem.](result.jpeg){#fig-result}
+
+![Titulação de lisozima e apresentação do valor de seu pI.](liso.jpeg){#fig-pept}
+
+
+Programa *qNet* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)),apresentando entrada de dados, saída de função e valores pra nova plotagem, bem como titulação para um aminoácido (glutamato) e para lisozima. O valor da coordenada *X* representa o ponto isoelétrico (*pI*) encontrado.
+
+:::
+
+\
+
+|   A simulação gráfica para os exemplos incluidos no arquivo comprimido (Figura), bem como os valores para *pI* encontrados com o programa *qNet* ,coincidem com dados reportados na literatura.
+
+## Referências {.unnumbered}
+
+1. Bloomfield, Victor. 2009. Computer Simulation and Data Analysis in Molecular Biology and Biophysics: An Introduction Using r. Springer Science & Business Media.
+
