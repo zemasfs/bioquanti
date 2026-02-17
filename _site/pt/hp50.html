@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,14 +33,15 @@ ul.task-list li input[type="checkbox"] {
 <link href="./avatar.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-056485e23718eb098d02f4d9d73b99ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-549f3be30359eb806ba06f6caa3061de.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -92,7 +93,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -119,7 +120,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./logo-unifal.png" alt="" class="navbar-logo">
+    <img src="./logo-unifal.png" alt="" class="navbar-logo light-content">
+    <img src="./logo-unifal.png" alt="" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Procurar"></div>
@@ -319,8 +321,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#sistema-linear-e-determinação-simultânea-de-deltah-e-deltas-para-2-temperaturas-newrpl" id="toc-sistema-linear-e-determinação-simultânea-de-deltah-e-deltas-para-2-temperaturas-newrpl" class="nav-link" data-scroll-target="#sistema-linear-e-determinação-simultânea-de-deltah-e-deltas-para-2-temperaturas-newrpl"><span class="header-section-number">1.1</span> Sistema linear e determinação simultânea de <span class="math inline">\(\Delta\)</span>H e <span class="math inline">\(\Delta\)</span>S para 2 temperaturas (newRPL)</a></li>
   <li><a href="#sistema-de-equações-e-equilíbrio-de-binding" id="toc-sistema-de-equações-e-equilíbrio-de-binding" class="nav-link" data-scroll-target="#sistema-de-equações-e-equilíbrio-de-binding"><span class="header-section-number">1.2</span> Sistema de equações e equilíbrio de <em>binding</em></a></li>
-  <li><a href="#solução-numérica-de-equações-diferenciais-ordinárias-e-cinética-de-binding" id="toc-solução-numérica-de-equações-diferenciais-ordinárias-e-cinética-de-binding" class="nav-link" data-scroll-target="#solução-numérica-de-equações-diferenciais-ordinárias-e-cinética-de-binding"><span class="header-section-number">1.3</span> Solução numérica de equações diferenciais ordinárias e cinética de <em>binding</em></a></li>
-  <li><a href="#solução-numérica-de-equações-diferenciais-ordinárias-e-cinética-enzimática" id="toc-solução-numérica-de-equações-diferenciais-ordinárias-e-cinética-enzimática" class="nav-link" data-scroll-target="#solução-numérica-de-equações-diferenciais-ordinárias-e-cinética-enzimática"><span class="header-section-number">1.4</span> Solução numérica de equações diferenciais ordinárias e cinética enzimática</a></li>
+  <li><a href="#equações-diferenciais-ordinárias-ode-e-cinética-de-binding" id="toc-equações-diferenciais-ordinárias-ode-e-cinética-de-binding" class="nav-link" data-scroll-target="#equações-diferenciais-ordinárias-ode-e-cinética-de-binding"><span class="header-section-number">1.3</span> Equações diferenciais ordinárias (ODE) e cinética de <em>binding</em></a></li>
+  <li><a href="#equações-diferenciais-ordinárias-ode-e-cinética-enzimática" id="toc-equações-diferenciais-ordinárias-ode-e-cinética-enzimática" class="nav-link" data-scroll-target="#equações-diferenciais-ordinárias-ode-e-cinética-enzimática"><span class="header-section-number">1.4</span> Equações diferenciais ordinárias (ODE) e cinética enzimática</a></li>
   </ul></li>
   <li><a href="#gráfico" id="toc-gráfico" class="nav-link" data-scroll-target="#gráfico"><span class="header-section-number">2</span> Gráfico</a>
   <ul class="collapse">
@@ -403,12 +405,12 @@ window.Quarto = {
 <h3 data-number="1.2" class="anchored" data-anchor-id="sistema-de-equações-e-equilíbrio-de-binding"><span class="header-section-number">1.2</span> <a href="./nivel/superior/hp50/Site1/Site1.html">Sistema de equações e equilíbrio de <em>binding</em></a></h3>
 <div class="line-block">&nbsp;&nbsp;Determinação de quantidades em interação bimolecular para um conjunto de sítios de mesma afinidade.</div>
 </section>
-<section id="solução-numérica-de-equações-diferenciais-ordinárias-e-cinética-de-binding" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="solução-numérica-de-equações-diferenciais-ordinárias-e-cinética-de-binding"><span class="header-section-number">1.3</span> <a href="./nivel/superior/hp50/kinSite/kinSite.html">Solução numérica de equações diferenciais ordinárias e cinética de <em>binding</em></a></h3>
+<section id="equações-diferenciais-ordinárias-ode-e-cinética-de-binding" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="equações-diferenciais-ordinárias-ode-e-cinética-de-binding"><span class="header-section-number">1.3</span> <a href="./nivel/superior/hp50/kinSite/kinSite.html">Equações diferenciais ordinárias (ODE) e cinética de <em>binding</em></a></h3>
 <div class="line-block">&nbsp;&nbsp;Método de Runge-Kutta-Fehelberg para ODE e cinética de interação ligante-receptor com gráfico de quantidades no tempo.</div>
 </section>
-<section id="solução-numérica-de-equações-diferenciais-ordinárias-e-cinética-enzimática" class="level3" data-number="1.4">
-<h3 data-number="1.4" class="anchored" data-anchor-id="solução-numérica-de-equações-diferenciais-ordinárias-e-cinética-enzimática"><span class="header-section-number">1.4</span> <a href="./nivel/superior/hp50/kinMM/kinMM.html">Solução numérica de equações diferenciais ordinárias e cinética enzimática</a></h3>
+<section id="equações-diferenciais-ordinárias-ode-e-cinética-enzimática" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="equações-diferenciais-ordinárias-ode-e-cinética-enzimática"><span class="header-section-number">1.4</span> <a href="./nivel/superior/hp50/kinMM/kinMM.html">Equações diferenciais ordinárias (ODE) e cinética enzimática</a></h3>
 <div class="line-block">Método de Runge-Kutta-Fehelberg para ODE e cinética enzimática de Michaelis-Mentem com gráfico de quantidades no tempo.</div>
 </section>
 </section>
@@ -586,13 +588,14 @@ window.Quarto = {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

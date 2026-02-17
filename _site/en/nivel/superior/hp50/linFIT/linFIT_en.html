@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.22">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,14 +68,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../../avatar.png" rel="icon" type="image/png">
 <script src="../../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../site_libs/bootstrap/bootstrap-4b957b30fffc5edb70387ff4d75203a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../site_libs/bootstrap/bootstrap-549f3be30359eb806ba06f6caa3061de.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -127,7 +128,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -154,7 +155,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../../logo-unifal.png" alt="" class="navbar-logo">
+    <img src="../../../../logo-unifal.png" alt="" class="navbar-logo light-content">
+    <img src="../../../../logo-unifal.png" alt="" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -378,10 +380,10 @@ window.Quarto = {
 <div class="line-block">&nbsp;&nbsp;Linear fitting or regression is ubiquitous in the Sciences, among other reasons due to the statistical simplicity of the least-squares modeling involved (requiring only variations in sums of <em>x</em>, <em>y</em>, and <em>x·y</em>), the absence of iterative procedures or algorithms, and the possibility of understanding nonlinear models through linearization strategies. Nevertheless, such linear transformations also introduce statistical distortions, which may be corrected by incorporating weights into the fitting procedure.</div>
 <div class="line-block">&nbsp;&nbsp;Accordingly, weighted linear regression is particularly useful in situations involving error dispersion arising from linearization, as well as heteroscedasticity. Below, three HP50 programs are presented for weighted linear fitting and graphical visualization, together with a test example:</div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> linFIT  <span class="sc">-</span> weighted linear regression;</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> linFIT  <span class="sc">-</span> weighted linear regression;</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Plt     <span class="sc">-</span> plot of the fit with regression line;</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> PlAdd   <span class="sc">-</span> overlay of plots on the display;</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> exLin   <span class="sc">-</span> enzymatic inhibition example.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> exLin   <span class="sc">-</span> enzymatic inhibition example.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="linfit" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="linfit"><span class="header-section-number">1</span> LinFIT</h2>
@@ -422,7 +424,7 @@ y = a + b,x
 <p><br>
 </p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Place the file <span class="st">"exLin"</span> on the stack and press EVAL, resulting <span class="cf">in</span> three <span class="fu">lists</span> (x, y, and w);</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Place the file <span class="st">"exLin"</span> on the stack and press EVAL, resulting <span class="cf">in</span> three <span class="fu">lists</span> (x, y, and w);</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> If no weighting is required, simply run <span class="st">"linFIT"</span> to obtain the parameters, <span class="cf">in</span> the following order<span class="sc">:</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">covXY</span> (covariance), <span class="fu">s2x</span> (variance <span class="cf">in</span> x), <span class="fu">s2y</span> (variance <span class="cf">in</span> y),</span>
@@ -442,7 +444,7 @@ y = a + b,x
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>   a. Press ENTER to duplicate the <span class="sc">*</span>y<span class="sc">*</span> list;</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>   b. Apply x² to square the list;</span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>   c. Apply <span class="dv">1</span><span class="sc">/</span>x to obtain the reciprocal of the squared <span class="sc">*</span>y<span class="sc">*</span> values;</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Run <span class="st">"linFIT"</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Run <span class="st">"linFIT"</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="fig-linFIT" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
@@ -557,13 +559,14 @@ Figure&nbsp;1: <em>linFIT</em> program running on the Android version of the HP5
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
