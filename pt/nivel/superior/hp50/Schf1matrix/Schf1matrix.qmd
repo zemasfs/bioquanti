@@ -1,0 +1,100 @@
+---
+title: "Teste de Scheffé para Comparações Múltiplas"
+format: html
+toc: true
+toc-depth: 3
+number-sections: true
+lang: pt
+---
+
+|   O teste de Sheffé é um teste que utiliza a distribuição F-Snedecor para se comparar um grupo específico aos demais numa amostra. Como *pos-hoc*, o teste sucede uma ANAVA e compara qualquer contraste de médias, sendo considerado superior ao de Tukey, embora bastante conservador e de menor poder. 
+\
+
+## Equação:
+
+$$
+dmS= \sqrt {(k-1)_{\alpha}}*\sqrt{\frac{2*qmr}{k-1}}
+$$
+\
+*Onde*
+
+
+*dmS* = diferença mínima significante 
+
+*k-1* = graus de liberdade (k, no. de grupos);
+
+*qmr* = quadrado médio dos resíduos;
+
+
+\
+
+|   Para se verificar se o constraste de médias é significante a determinado nível, aplica-se:
+
+$$
+S=\sqrt{(k-1)*V_L*F}
+$$
+\
+
+*Onde:*
+
+*S* = valor crítico do teste de Scheffé;
+
+*F* = valor da distribuição F-Snedecor (F$_{(k-1)(n-k)}$)
+
+*V$_L$ = variância do vetor de contraste de médias
+
+
+## Arquivos:
+
+1. [Programas Schf1matrix e 1ANAVA1matrix, e exemplo](Schf1matrix.zip)
+2. [Código do programa](Schf1matrix.pdf)
+\
+
+## Uso e exemplo
+
+|   Os dados são inseridos numa matriz, com o grupo que se deseja comparar na última posição como um vetor coluna.
+\
+
+
+```{r, eval=FALSE}
+# Entrada:
+1. Inserir a matriz contendo o conjunto de dados;
+2. Rodar o programa "1ANAVA1matrix;
+3. Rodar o programa "Schf1matrix".
+
+# Saída:
+1. "contrst": valor do constraste;
+2. "Fval": valor da distribuição F;
+2. Schf5%: valor crítico do teste com alfa=0.05;
+3. "dmS" - valor de diferença mínima significativa;
+
+```
+\
+
+|   A lógica do teste de Scheffé envolve o cálculo do valor de constraste de médias (vetor) par a par (um grupo com cada um dos demais), e sua comparaçao com o valor predito pela distribuição *F* com $\alpha$ = 0.05 (5%).
+
+
+
+::: {#fig-Schf layout-ncol=3}
+
+![Inserção de matriz de dados. O grupo a se comparar é alocado ao final da planilha (Vieira, 2026).](dados.jpeg){#fig-dados}
+
+
+![Resultados obtidos da ANAVA.](anava.jpeg){#fig-anava}
+
+![Resultados do teste de Scheffé. ](result.jpeg){#fig-result}
+
+Programa *Schf1matrix* pela versão Android de HP50G ([Go49gp](https://sites.google.com/site/olivier2smet2/home/go49gp)), exibindo entrada de dados, ANAVA, e resultados. 
+
+:::
+\
+
+|   Os resultados do programa *Schf1matrix* estão de acordo com o teste para o exemplo de Vieira (2026), com valo de *Schf5%* = 53.20 contra 5.194 da fonte. 
+
+## Referências:
+
+1. [Além do F: comparações certeiras com o teste de Scheffé]( https://soniavieira.blogspot.com/2016/09/). Blogspot. Acesso em 18/fev/26.
+
+
+
+
