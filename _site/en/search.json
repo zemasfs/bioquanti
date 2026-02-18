@@ -1268,7 +1268,7 @@
     "href": "hp50_en.html#data-fitting",
     "title": "HP50G Graphing Calculator",
     "section": "3 Data fitting",
-    "text": "3 Data fitting\n\n3.1 Weighted linear regression and the Lineweaver–Burk model\n  Least-squares fitting by matrix algebra with optional weights. The program provides results, a plot, a regression line, and an option to add another dataset to the same graph.\n\n\n3.2 Polynomial regression and a \\(\\Delta\\)G vs. temperature curve\n  Polynomial fitting with list-based input and parametric/graphical output, illustrating a biothermodynamics application.\n\n\n3.3 Multiple linear regression and QSAR (Quantitative Structure–Activity Relationship)\n  Multiple linear fitting by matrix algebra with an example in cheminformatics.\n\n\n3.4 Nonlinear regression and the Michaelis–Menten curve\n  Least-squares fitting by linear algebra using the Gauss–Newton algorithm, illustrated with enzyme-kinetics data entered as lists. The program is also available at hpcalc.org."
+    "text": "3 Data fitting\n\n3.1 Weighted linear regression and the Lineweaver–Burk model\n  Least-squares fitting by matrix algebra with optional weights. The program provides results, a plot, a regression line, and an option to add another dataset to the same graph.\n\n\n3.2 Polynomial regression and a \\(\\Delta\\)G vs. temperature curve\n  Polynomial fitting with list-based input and parametric/graphical output, illustrating a biothermodynamics application.\n\n\n3.3 Multiple linear regression and QSAR (Quantitative Structure–Activity Relationship)\n  Multiple linear fitting by matrix algebra with an example in cheminformatics.\n\n\n3.4 Nonlinear regression by Gauss algorithm and enzyme catalysis\n  Least-squares fitting by linear algebra using the Gauss–Newton algorithm, illustrated with enzyme-kinetics data entered as lists. The program is also available at hpcalc.org.\n\n\n3.5 Nonlinear regression using Newton-Raphson and Michaelis-Mentem curve\nNonlinear fitting with distinct algorithm, plotting, and regression control (iterations and results), illustrated for enzyme kinetics curve."
   },
   {
     "objectID": "hp50_en.html#descriptive-statistics",
@@ -2508,5 +2508,40 @@
     "title": "HP50G Graphing Calculator",
     "section": "1 Biophysical chemistry",
     "text": "1 Biophysical chemistry\n\n1.1 Linear system and simultaneous determination of \\(\\Delta\\)H and \\(\\Delta\\)S at two temperatures (newRPL)\n  Determination of thermodynamic quantities by a linear system for reactions at two different temperatures.\n\n\n1.2 System of equations and binding equilibrium\n  Determination of bimolecular interaction quantities for a set of sites with identical affinity.\n\n\n1.3 Numerical method for ordinary differential equations (ODE) and binding kinetics\nRunge-Kutta-Fehelberg method for ODE and ligand-receptor interaction kinetics with graph of quantities over time.\n\n\n1.4 Numerical method for ordinary differential equations (ODE) and enzyme kinetics\nRunge-Kutta-Fehelberg method for ODE and Michaelis-Mentem enzyme kinetics with graph of quantities over time.\n\n\n1.5 Titration Simulator and Isoelectric Point for Peptides and Proteins\nSimulator for titration of ionizable groups in amino acid sequences and graphical determination of isoelectric point (pI)."
+  },
+  {
+    "objectID": "nivel/superior/hp50/nlFitNR/nlFitNR_en.html",
+    "href": "nivel/superior/hp50/nlFitNR/nlFitNR_en.html",
+    "title": "nlFitNR - Nonlinear regression by Newton–Raphson and the Michaelis–Menten model",
+    "section": "",
+    "text": "This program performs nonlinear least-squares regression for a user-defined equation. It uses an iterative procedure based on a first-order (truncated) Taylor expansion and solves for a parameter update vector that reduces the sum of squared residuals."
+  },
+  {
+    "objectID": "nivel/superior/hp50/nlFitNR/nlFitNR_en.html#equation",
+    "href": "nivel/superior/hp50/nlFitNR/nlFitNR_en.html#equation",
+    "title": "nlFitNR - Nonlinear regression by Newton–Raphson and the Michaelis–Menten model",
+    "section": "1 Equation",
+    "text": "1 Equation\n  Using a first-order Taylor expansion around \\(a_0\\), the model can be linearized as:\n\\[\n\\phi(x,a)\\approx\\phi(x,a_0)+\\sum_{j=1}^{p}\n\\left.\\frac{\\partial \\phi(x,a)}{\\partial a_j}\\right|_{a_0},\\Delta a_j\n\\]\nWhere:\n\n\\(\\phi(x,a)\\) = model (fitting) equation\n\\(a_j\\) = model parameters\n\\(a_0\\) = parameter seed (or the parameter vector at iteration \\(i\\))\n\\(\\Delta a_j\\) = parameter update for \\(a_j\\)\n\n\n\n  Defining the Jacobian entries as:\n\\[\nX_{ij}=\n\\left.\\frac{\\partial \\phi(x_i,a)}{\\partial a_j}\\right|_{a_0}\n\\]\n  the linearized least-squares step has the form:\n\\[\ny \\approx X,\\Delta a\n\\]\n  where \\(X\\) is the Jacobian matrix evaluated at \\((x_i,a_0)\\)."
+  },
+  {
+    "objectID": "nivel/superior/hp50/nlFitNR/nlFitNR_en.html#files-and-example",
+    "href": "nivel/superior/hp50/nlFitNR/nlFitNR_en.html#files-and-example",
+    "title": "nlFitNR - Nonlinear regression by Newton–Raphson and the Michaelis–Menten model",
+    "section": "2 Files and example",
+    "text": "2 Files and example\n\nnlFitNR and PLT programs, and example\nSource code\n\n\n\n  The program runs independently. The final plot (points plus fitted curve) is produced by a separate program (PLT). To use nlFitNR, the following items must be placed on the stack in order:\n\n\n\n# Input data (stack order)\n\n1. list of x_i values: {x1 x2 ... xn};\n2. list of y_i values: {y1 y2 ... yn};\n3. list of weights: {w1 w2 ... wn}.\n   Note: if no weights are used, enter a unit list: {1 1 ... 1};\n4. fitting function (e.g., Vm*x/(Km+x) for Michaelis–Menten).\n   Note: use \"x\" as the independent variable;\n5. list of parameters: {p1 p2}.\n   In the example: p1 = Vm and p2 = Km;\n6. list of parameter seeds.\n\n\n\n  The example data come from the L.minor dataset (nitrogen uptake by macrophytes), as presented in the nlstools package of the statistical software R.\n\n\n\n# How to run\n\n1. Press EVAL on the example file to unpack the input lists;\n2. Run \"nlFitNR\";\n3. The program outputs:\n   a. updated parameters (stack);\n   b. \"sd-RSE\"  - residual variance of the fit;\n   c. \"+/- se\"  - standard errors of the parameters;\n   d. \"Chi2\"    - chi-square value of the fit;\n\n4. If satisfied, interrupt the program (KILL) and inspect the plot.\n   If not, run one more iteration by pressing \"CONT\".\n\nNote: for your own data, simply replace the input lists."
+  },
+  {
+    "objectID": "nivel/superior/hp50/nlFitNR/nlFitNR_en.html#results",
+    "href": "nivel/superior/hp50/nlFitNR/nlFitNR_en.html#results",
+    "title": "nlFitNR - Nonlinear regression by Newton–Raphson and the Michaelis–Menten model",
+    "section": "3 Results",
+    "text": "3 Results\n\n\n\n\n\n\n\n\n\n\n\n(a) Data entry. The bundled example requires EVAL to unpack the list.\n\n\n\n\n\n\n\n\n\n\n\n(b) Results from the first iteration.\n\n\n\n\n\n\n\n\n\n\n\n(c) Scatter plot with fitted curve overlay after the first Newton–Raphson iteration.\n\n\n\n\n\n\n\nFigure 1: Program nlFitNR running on the Android HP50G emulator (Go49gp), showing data entry, nonlinear regression output, and the scatter plot with the fitted curve overlay.\n\n\n\n\n\n  The regression results approach those obtained with the statistical software R (table below) already in the first iteration, and the error metric (\\(\\chi^{2}\\)) is reduced by about half. Subsequent iterations reduce the parameter uncertainties but may increase the global fit error. Values matching those obtained with R were reached by the third iteration.\n\n\n\n\n\nParameter\nnlFitNR\nR\n\n\n\n\nKm\n12.01 ± 0.71\n17.079 ± 2.953\n\n\nVm\n117.51 ± 3.17\n126.033 ± 7.173\n\n\nIterations\n1\n7\n\n\n\\(\\chi^{2}\\)\n124.29\n234.375"
+  },
+  {
+    "objectID": "nivel/superior/hp50/nlFitNR/nlFitNR_en.html#references",
+    "href": "nivel/superior/hp50/nlFitNR/nlFitNR_en.html#references",
+    "title": "nlFitNR - Nonlinear regression by Newton–Raphson and the Michaelis–Menten model",
+    "section": "References",
+    "text": "References\n\nWickes, W. C. HP 48 Insights: 1. Principles and Programming of the HP 48 (HP 48G/GX Edition). Larken Pub., 1991."
   }
 ]

@@ -1,0 +1,61 @@
+@ Programa nlFitNR - Ajuste N„o Linear por Newton-Raphson
+
+@ JosÈ MaurÌcio Schneedorf Ferreira da Silva
+@ Departamento de BioquÌmica
+@ Universidade Federal de Alfenas, UNIFAL-MG
+@ email: jose.dasilva@unifal-mg.edu.br
+
+´ ç x1 y1 w1 f1 p1 v1
+  ´ x1 SIZE ç n
+    ´ p1 SIZE ç m
+      ´ v1 p1 STO
+        ´ 'X'
+        ª 'X' STO 1. m
+        FOR i f1 p1 i GET à EVAL
+        NEXT m çLIST ç da
+        ´ y1 x1 2.
+          ´ 'X' STO f1 EVAL -
+          ª DOLIST AXL 1. COLç 1. n
+          FOR i x1 i GET 'X' STO 1. m
+            FOR j da j GET EVAL
+            NEXT
+          NEXT { n m } çARRY w1 DUP SIZE SWAP OBJç çARRY SWAP DIAGç ç ym xm wm
+          ´ xm TRN wm * xm * INV DUP xm TRN * wm * ym * DUP m 1. çLIST RDM 3.
+ROLLD ym xm ROT * - DUP TRN SWAP * 1. GET n m - / 3. çLIST ç res
+            ´ 2. FIX res 1. GET AXL v1 ADD DUP 'v1' STO p1 DUP2 STO çTAG EVAL
+res 3. GET É DUP 'sd≠RSE' çTAG SWAP DUP res 2. GET çDIAG AXL É * '±se' çTAG
+SWAP SQ n m - * 'Chi2' çTAG f1 STEQ x1 'x2' STO y1 'y2' STO
+              IF HALT
+              THEN x1 y1 w1 f1 p1 v1 nlFIT2
+              ELSE KILL
+              END
+            ª
+          ª
+        ª
+      ª
+    ª
+  ª
+ª
+
+@@@@@@@ PROGRAMAS COMPLEMENTARES @@@@@@@@@@@@@
+
+@ Programa PLT - Gr·fico da regress„o
+
+´ ERASE SCATTER x2
+  ´ MIN
+  ª STREAM ABS NEG 1.1 * x2
+  ´ MAX
+  ª STREAM ABS 1.1 * XRNG 'X' INDEP y2
+  ´ MIN
+  ª STREAM y2
+  ´ MAX
+  ª STREAM DUP2 - ABS 1.2 * DUP .05 * ROT + ABS 3. ROLLD .15 * - ABS NEG SWAP
+YRNG 0. RES DRAX 1. x2 SIZE
+  FOR q x2 y2 q GET SWAP q GET SWAP RçC PIXON
+  NEXT FUNCTION DRAW PICTURE
+ª
+
+@ Programa FIM - TÈrmino das iteraÁıes
+
+´ { X } PURGE KILL
+ª
