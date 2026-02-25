@@ -7,9 +7,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     r-base \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget -O /tmp/quarto.deb \
-    "https://github.com/quarto-dev/quarto-cli/releases/latest/download/quarto-linux-amd64.deb" \
-    && apt-get update \
-    && apt-get install -y /tmp/quarto.deb \
-    && rm -f /tmp/quarto.deb \
-    && rm -rf /var/lib/apt/lists/*
+# --- Quarto CLI (stable install via tarball) ---
+ARG QUARTO_VERSION=1.5.57
+
+RUN wget -qO /tmp/quarto.tar.gz \
+      "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz" \
+    && tar -xzf /tmp/quarto.tar.gz -C /opt \
+    && ln -sf /opt/quarto-${QUARTO_VERSION}/bin/quarto /usr/local/bin/quarto \
+    && rm -f /tmp/quarto.tar.gz
