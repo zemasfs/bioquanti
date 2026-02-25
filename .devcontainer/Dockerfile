@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     r-base \
     r-cran-rmarkdown \
     r-cran-knitr \
+    r-cran-plotly \
     && rm -rf /var/lib/apt/lists/*
 
 # --- Quarto CLI (stable install via tarball) ---
