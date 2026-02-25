@@ -5,6 +5,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates curl wget git \
     r-base \
+    r-cran-rmarkdown \
+    r-cran-knitr \
     && rm -rf /var/lib/apt/lists/*
 
 # --- Quarto CLI (stable install via tarball) ---
