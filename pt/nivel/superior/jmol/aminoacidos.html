@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Aminoácidos – Visualização de moléculas com Jmol</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./peptidio.html" rel="next">
+<link href="./agua.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-52d6303cf82ad8c9aaf9f2c6806b06de.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./aminoacidos.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aminoácidos</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Visualização de moléculas com Jmol</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">index.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./carac.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Algumas características do Jmol como visualizador molecular:</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./comandos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Comandos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./agua.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Água</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aminoacidos.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aminoácidos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./peptidio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Peptídios</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proteina.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Proteínas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./enzima.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Enzimas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./carboidrato.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Carboidratos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lipidio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lipídios</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acnucleico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ácidos Nucleicos</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#estrutura" id="toc-estrutura" class="nav-link active" data-scroll-target="#estrutura"><span class="header-section-number">5.1</span> Estrutura</a></li>
+  <li><a href="#jsmol---um-applet-para-exibição-do-jmol-em-navegadores-de-internete" id="toc-jsmol---um-applet-para-exibição-do-jmol-em-navegadores-de-internete" class="nav-link" data-scroll-target="#jsmol---um-applet-para-exibição-do-jmol-em-navegadores-de-internete"><span class="header-section-number">5.2</span> JSmol - Um Applet Para Exibição do Jmol Em Navegadores de Internete</a></li>
+  <li><a href="#derivados-metabólicos" id="toc-derivados-metabólicos" class="nav-link" data-scroll-target="#derivados-metabólicos"><span class="header-section-number">5.3</span> Derivados Metabólicos</a>
+  <ul>
+  <li><a href="#outros-exemplos-estrutura-e-derivados" id="toc-outros-exemplos-estrutura-e-derivados" class="nav-link" data-scroll-target="#outros-exemplos-estrutura-e-derivados"><span class="header-section-number">5.3.1</span> Outros Exemplos (estrutura e derivados)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="AAcido" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aminoácidos</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="estrutura" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="estrutura"><span class="header-section-number">5.1</span> Estrutura</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Existem centenas de aminoácidos, principalmente em solos e microorganismos, embora apenas 20 desses possam participar do código genético para a tradução em proteínas.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Afim de iniciar a observação de alguns desses aminoácidos, baixe a estrutura da <em>Glicina</em> por um arquivo salvo no HD como “gly.png” ou por <em>File, Get Mol</em> (e digitando <em>gly</em> em seguida). Observe os grupos amino e carboxilato na <strong>coloração CPK</strong>. Identifique a estrutura do aminoácido:</div>
+<p>Qual a <strong>cadeia lateral</strong> de Gly ?</p>
+<p>E o <strong>esqueleto carbônico</strong> ?</p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Observe que a glicina apresenta um código de cores formal (<em>CPK</em>, Corey, Pauling, Koltun) para carbono (cinza), nitrogênio (azul), fósforo ou enxofre (amarelo), e hidrogênio (branco). Diversas estruturas poliméricas, contudo, são carregadas sem a presença do <em>átomo de hidrogênio</em>. Para exemplificar, carregue a estrutura da proteína vegetal <em>crambina</em>, mas desta vez utilizando o <strong>Console</strong> do <em>Jmol</em> (<em>File,Console</em>):</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>load<span class="ot">=</span><span class="dv">1</span>crn</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Observe que os átomos de <em>hidrogênio</em> não são apresentados na estrutura. Para que o sejam, é necessário configurar o <em>Jmol</em> pela janela do <strong>Console</strong>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>set pdbAddHydrogens</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deverá aparecer a mensagem <em>pdbAddHydrogens = true</em>. Agora você poderá visualizar os átomos de hidrogênio da crambina, carregando-a novamente.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para sequências de comandos mais amplas, pode-se utilizar o <strong>Editor</strong> do <em>Jmol</em>, ao invés do <strong>Console</strong>. O <em>Editor</em> permite inserir os comandos linha a linha, e com comentários explicativos para cada. Para isto, basta clicar em <em>Editor</em> no próprio <em>Console</em>. Uma vez aberta a janela, pode-se compor uma sequência de comandos ou colar uma previamente elaborada.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exemplificando-se, o trecho de código a seguir carrega o aminoácido <em>Glutamato</em>, calcula sua <em>carga parcial</em>, e o renderiza em varetas apresentando os valores das cargas. Para “rodá-lo”, basta copiar e colar no <em>Editor</em> aberto:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Script para observações do aminoácido Glutamato:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    load <span class="sc">$</span>glu <span class="co"># carregamento de micromolécula (veja que o sinal de igualdade reporta-se a macromoléculas de atributo PDB, e não à micromoléculas - $; e veja também que um aminoácido pode ser carregado digitando-se sua abreviação de 3 letras)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    calculate partialcharge <span class="co"># carga parcial</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    wireframe only <span class="co"># renderização exclusiva de varetas</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    label %P</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># etiquetagem de cargas parciais nos átomos</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como já mencionado, não é necessário possuir o <em>Jmol</em> instalado ou o diretório do <em>Jmol</em> e seu executável em <em>Java</em> no computador. O programa pode ser acessado por <em>applets</em> encontrados em diversos sites da internete, como por exemplo:</div>
+<p>Os <em>links</em> abaixo levam à algumas páginas da internete que permitem acesso remoto ao <em>JSmol</em>:</p>
+<ol type="1">
+<li><p><a href="https://chemapps.stolaf.edu/jmol/jsmol/simple.htm" target="_blank">St.&nbsp;Olaf College - Jmol &amp; JSmol (applet direto para JSmol)</a> - interface com alguns comandos em botões.</p></li>
+<li><p><a href="https://chemapps.stolaf.edu/jmol/jsmol/jsmol.htm?_USE=HTML5" target="_blank">St.&nbsp;Olaf College 2</a> - interface mais elaborada, com diversos exemplos, botões e comandos por <em>hiperlink</em>.</p></li>
+<li><p><a href="http://www.iza-structure.org/IZA-SC/jsmol/supersimple.htm" target="_blank">IZA-SC - Comissão de Estruturas de Valência (ES)</a> - interface bem simplificada.</p></li>
+<li><p><a href="https://proteopedia.org/wiki/fgij/">First Glance in Jmol - Acesso pelo portal Proteopedia</a></p></li>
+</ol>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;Para “rodar” o script anterior, por exemplo,</div>
+<ol type="1">
+<li>Entre no site <a href="https://chemapps.stolaf.edu/jmol/jsmol/simple.htm">St.&nbsp;Olaf College - Jmol &amp; JSmol)</a>;</li>
+<li>Inicie o Console (canto inferior esquerdo da tela);</li>
+<li>Copie o <em>script</em> acima e cole-o no <em>Console</em>.</li>
+</ol>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alternativamente, ao invés de copiar/colar algum trecho de código, o <em>Jmol</em> torna possível o carregamento do <em>script</em>, desde que previamente salvo com atributo <em>spt</em> (para <em>script</em>). Na verdade, o <em>script</em> pode ser salvo em qualquer editor de texto simples, mantendo esse atributo <em>spt</em>.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A imagem abaixo ilustra o resultado do <em>script</em> para o glutamato.</div>
+<div id="fig-glu" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-glu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/glu.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-glu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.1: Imagem gerada no <strong>Jmol</strong> a partir de <em>script</em> para cargas parciais do ácido glutâmico.
+</figcaption>
+</figure>
+</div>
+<p>Para exportar imagens criadas no <em>Jmol</em>, basta seguir o <em>Menu</em>, ou o comando abaixo digitado no <em>Console</em> do programa <em>standalone</em> ou pelo <em>link</em> do <em>JSmol</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>write glutamato_cargas.jpg  <span class="co"># também são possíveis atributos png e pdf</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="jsmol---um-applet-para-exibição-do-jmol-em-navegadores-de-internete" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="jsmol---um-applet-para-exibição-do-jmol-em-navegadores-de-internete"><span class="header-section-number">5.2</span> JSmol - Um Applet Para Exibição do Jmol Em Navegadores de Internete</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entre as vantagens do emprego do <em>Jmol</em> para visualização de modelos moleculares elenca-se a possibilidade já mencionada de uso do programa pela internet, sem necessidade de instalação local (PC). Essa flexiblidade é garantida por auxílio de um <em>applet</em> desenvolvido em HTML5, <strong>JSmol</strong>, que compila o <em>Jmol</em> por <em>JavaScript</em>, ao invés de <em>JAVA</em>. Dessa forma não há necessidade nem do <em>Jmol</em> e tampouco de <em>JAVA</em> instalados localmente.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para facilitar o estudo de modelos moleculares neste material, esse os capítulos subsequentes incluirão um link denominado <strong>JSmol</strong> para acesso a uma nova aba de exibição integrada ao <em>applet</em>, apresentando uma molécula de <em>água</em> e o <em>Console</em> pra scriptagem, tal como segue:</div>
+<!-- Script para renderização de nova aba com água e Console -->
+<p><a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=water&amp;script=Console"><img src="jsmol.png" class="img-fluid" style="width:20.0%"></a></p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alternativamente, modelos moleculares serão também disponibilizados como <em>applet</em> <em>JSmol</em> na mesma página de conteúdos quando conveniente, como por exemplo, a molécula de <strong>glutamato</strong>:</div>
+<script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jmol.php?model=glutamate&amp;inline&amp;width=300">
+</script>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, basta clicar com o botão direito do mouse em qualquer área da janela aberta do “JSmol”, e selecionar algum ítem de <em>Menu</em> ou utilizar o <em>Console</em>, da mesma forma que para o programa <em>standalone</em> instalado localmente no PC.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras estruturas de aminoácidos podem elencar os diversos grupos (alifático e aromático apolares, bem como polares neutros, básicos e ácidos), tal como segue:</div>
+<script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jmol.php?model=lys&amp;link=Lys&amp;script=Console"></script>
+
+
+<script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jmol.php?model=trp&amp;link=Trp&amp;script=Console"></script>
+
+
+<script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jmol.php?model=cys&amp;link=Cys&amp;script=Console"></script>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demais aminoácidos podem ser carregados <em>online</em> em <em>File, Get Mol</em> no aplicativo instalado, ou pelo <em>Console</em>, nesse caso:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>load <span class="sc">$</span>nome do aminoácido ou sua abreviação de <span class="dv">3</span> letras</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Existem diversos <em>sites</em> de internete para estudo de biomoléculas com auxílio do <em>JSmol</em>, incluindo aminoácidos. Como exemplo, a <a href="https://www.ufrgs.br/bioquimica/#Moleculas"><em>Seção de Moléculas Interativas</em></a> desenvolvida pelo Depto. de Patologia Clínica Veterinária da UFRGS.</div>
+</section>
+<section id="derivados-metabólicos" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="derivados-metabólicos"><span class="header-section-number">5.3</span> Derivados Metabólicos</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Com a janela do Jmol local ou da internete (<em>JSmol</em>), carregue o arquivo <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=gaba&amp;script=Console" target="_blank">gaba</a> a partir do <em>Menu</em> ou do <em>Console</em> (<em>load $gaba</em>) e posicione-o para que fique parecido com o que foi apresentado na sessão do <em>Jmol</em> contendo o modelo de <em>Glu</em>; vê semelhanças ? Trata-se de um derivado metabólico do aminoácido, de suma importância no controle neurológico, denominado ácido <span class="math inline">\(\gamma\)</span>-aminobutírico, GABA, um neurodepressor do sistema nervoso.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agora carregue com o aminoácido <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=pro&amp;script=Console" target="_blank">Pro</a>. Onde está o <em>grupo amino</em> do esqueleto carbônico ? Rotacionando a estrutura, veja que esse grupo pertence à cadeia lateral, estando inserido num <em>anel de pirrolidina</em>.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Se você recuperar com setas o comando anterior de carga parcial, verá também que trata-se de um aminoácido com cadeia lateral próxima da neutralidade, dessa forma sendo classificado como <em>polar neutro</em> em alguns livros.</div>
+<section id="outros-exemplos-estrutura-e-derivados" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="outros-exemplos-estrutura-e-derivados"><span class="header-section-number">5.3.1</span> Outros Exemplos (estrutura e derivados)</h3>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Carregue agora a <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=his&amp;script=Console" target="_blank">His</a>. Veja que, como a Pro, His também possui um anel, mas este encontra-se na cadeia lateral somente (<em>anel imidazol</em>). Pra visualizar melhor, altere o plano de fundo:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>background lightyellow</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Em princípio, você arriscaria afirmar tratar-se de um aminoácido de carga negativa, pelos valores que estão apresentados. Ocorre que esses valores dizem respeito ao átomo, no caso O e N. Contrariamente, portanto, enquanto O não participa da cadeia lateral, mas sim do esqueleto carbônico, N carregado negativamente atua como um nucleófilo, atraindo H e formando amina. Pois essa amina pode exibir carga neutra ou positiva, dependendo do pH em que está inserida, e em função de seu valor de pKa, no caso, 6,0. Dessa forma, em pH ácido His fica fortemente protonada em N, caracterizando o aminoácido como básico (positivo). No pH fisiológico, contudo, seu teor distribui-se em formas neutra e básica. Como um todo, é caracterizada como aminoácido básico.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A histidina possui um metabólito derivado muito importante na homeostasia da inflamação. Carregue a <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=histamine&amp;script=Console" target="_blank">histamina</a> e compare com seu precursor.</div>
+<p>Carregue agora o <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=trp&amp;script=Console" target="_blank">Trp</a>. Também possui um anel, <em>indol</em>, fortemente aromático (veja as ligações duplas) e que confere essa característica ao aminoácido. O Trp possui um derivado metabólico muito conhecido, a <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=serotonin&amp;script=Console" target="_blank">serotonina</a>. Serotonina é portanto um derivado metabólico de aminoácido, um mediador químico de relaxamento corporal, portanto ligado à administração dos chamados serotoninérgicos contra ansiedade.</p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agora carregue a <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=cys&amp;script=Console" target="_blank">Cys</a>. Veja que em sua cadeia lateral existe um átomo de enxofre. Clique na esfera amarela e veja o que aparece no <em>Console.</em> Os dois primeiros números referem-se ao número do átomo na estrutura, e os três últimos às suas coordenadas espaciais XYZ do átomo. O <em>grupo tiol</em> da cadeia lateral de Cys confere a essa um caráter fortemente reativo, capaz de formar ligações covalentes ou de magnitude similar com halogênios (<em>iodoacetato</em>, por ex), outro grupo tiol (formando <em>dissulfetos</em> em proteínas) e mesmo <em>ouro</em> (utilizado na pesquisa de nanomateriais e funcionalização de superfícies). Cys possui valor de pKa da cadeia lateral de 8,3, embora em proteínas possa apresentar uma faixa de 5-10.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para outro derivado metabólico, carregue a <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=phe&amp;script=Console" target="_blank">Phe</a>. Veja que também pode ser classificada como aminoácido aromático (benzeno). Veja também a <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=tyr&amp;script=Console" target="_blank">Tyr</a> e observe a diferença com Phe. Não à toa, Phe é um precursor de Tyr no metabolismo, sendo o primeiro um <em>aminoácido essencial</em> (precisa ser ingerido) para mamíferos, e Tyr não. Também como aromático, o anel fenólico de Tyr possui pKa, embora distante do fisiológico, com valor de 10,4. Há diversos derivados metabólicos de importância para Tyr, um dos quais o principal hormônio tireoideano, tiroxina.</div>
+<p>Para visualizá-la, carregue a <a href="https://chemapps.stolaf.edu/jmol/jmol.php?model=thyroxin&amp;script=Console" target="_blank">tiroxina</a> e veja sua estrutura. Clique na esfera púrpura e veja tratar-se de um átomo de iodo no <em>Console.</em> Como são quatro átomos de iodo, a estrutura é também denominada <em>tetraiodotironina</em> (ou <em>T4</em> no jargão clínico).</p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bom, fechamos por aqui. Esse capítulo não tem a função de abranger as caraterísticas de todos os 20 aminoácidos proteicos, o que seria um tanto maçante, e sim de permitir uma familiarização com o tema, bem como com uso do próprio <em>Jmol.</em> Dessa forma sugere-se ao estudante carregar e estudar com auxílio de algum livro-texto ou da internete as outras estruturas de aminoácidos, avaliar suas características e reatividade das cadeias laterais, bem como de derivados metabólicos de importância.</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./agua.html" class="pagination-link" aria-label="Água">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Água</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./peptidio.html" class="pagination-link" aria-label="Peptídios">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Peptídios</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
