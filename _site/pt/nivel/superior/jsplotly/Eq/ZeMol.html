@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSPlotly</title>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.20.0/plotly.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.1/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-statistics@7.8.3/dist/simple-statistics.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ml-regression@6.0.0/dist/ml-regression.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/ml-levenberg-marquardt@3.3.0/dist/ml-levenberg-marquardt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.5/jstat.min.js"></script>
+
+ <!---<body style="margin:0; padding:0;">--->
+
+
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { display: flex; justify-content: space-between; align-items: flex-start; }
+        #grafico { width: 55%; height: 500px; }
+        #editor-container { width: 40%; }
+        #editor { width: 100%; height: 350px; border: 1px solid #ccc; }
+
+.header-bar {
+    width: 100%;
+    height: 30px; 
+    background: linear-gradient(to right, #F5F5DC, #EDEAE0); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #5a4a42; /
+    letter-spacing: 2px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 40px;  
+}
+
+    /* --- Bloco extra para expansão/contração --- */
+    .container.__two_cols{
+      display:grid !important;
+      grid-template-columns:minmax(600px,2fr) 8px minmax(320px,1fr);
+      gap:10px; align-items:stretch;
+    }
+    .container.__two_cols #grafico{ width:100% !important; height:calc(100vh - 180px); min-height:520px; }
+    .container.__two_cols #editor-container{ width:auto !important; }
+    #__splitter{
+      width:8px; background:#e5e7eb; border-radius:4px; cursor:col-resize;
+    }
+    #__splitter:hover{ background:#d1d5db; }
+    .container.__two_cols.__collapsed{ grid-template-columns:1fr 0 0; }
+    #expand3d-btn{ background:none; border:0; font-size:18px; cursor:pointer; line-height:1 }
+
+.license-info {
+  font-size: 12px;
+  color: gray;
+  font-family: Arial, sans-serif;
+  opacity: 0.8;
+  text-align: center;
+  margin: 30px auto 10px auto;
+}
+
+
+#toggleTheme {
+  position: relative;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  margin: -2px 0 0 10px; /* margem superior e esquerda */
+  display: inline-block;
+  z-index: 10;
+}
+
+
+
+.dev-info {
+    position: absolute;
+    top: 3px; 
+    left: 10px; 
+    font-size: 13px !important; 
+    color: #999; 
+    font-family: Arial, sans-serif;
+}
+
+.dev-info a {
+    text-decoration: none;
+    color: #888; 
+    font-weight: bold;
+}
+.dev-info a:hover {
+    text-decoration: underline;
+    color: #666; /
+}
+
+       
+.button-container { 
+    display: flex; 
+    gap: 10px; 
+    margin-top: 10px; 
+
+  position: relative;
+  z-index: 10;
+}
+
+button { 
+    padding: 10px; 
+    cursor: pointer; 
+    border: none; 
+    font-size: 14px; 
+    border-radius: 5px; 
+    transition: background 0.3s ease-in-out; 
+}
+
+
+/* Botão base */
+button {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.add-btn {
+  background: #e2f6e9;
+  color: #207a44;
+  border-color: #b1e2c3;
+}
+.add-btn:hover {
+  background: #ccf0dd;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(50, 150, 100, 0.3);
+}
+
+.remove-btn {
+  background: #fff8c6;
+  color: #887200;
+  border-color: #f0dc7d;
+}
+.remove-btn:hover {
+  background: #fdf2a8;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(200, 180, 20, 0.3);
+}
+
+.reset-btn {
+  background: #fce1e1;
+  color: #b42c2c;
+  border-color: #f4b6b6;
+}
+.reset-btn:hover {
+  background: #f8caca;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(200, 50, 50, 0.3);
+}
+
+.save-btn {
+  background: #fff1db;
+  color: #8a4b00;
+  border-color: #ffd9a2;
+}
+.save-btn:hover {
+  background: #ffe1ba;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(200, 120, 30, 0.3);
+}
+
+.clear-btn {
+  background: #f99;
+  color: white;
+  border-color: #d33;
+}
+.clear-btn:hover {
+  background: #e55;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(255, 80, 80, 0.5);
+}
+
+.save-html-btn {
+  background: #e6f1fb;
+  color: #125a8f;
+  border-color: #a8d0f0;
+}
+.save-html-btn:hover {
+  background: #d2e9fc;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(50, 100, 200, 0.3);
+}
+
+
+.author-info { position: absolute; top: 60px; right: 20px; font-size: 14px; color: gray; }
+.logo { position: fixed; bottom: 10px; right: 20px; width: 100px; z-index: 10;} 
+.ascii-logo {
+ position: fixed;
+ bottom: 10px;
+ right: 20px;
+ font-family: monospace;
+ font-size: 2px;
+ white-space: pre;
+ text-align: right;
+ z-index: 10; 
+ }
+ 
+.save-project-btn {
+  background: linear-gradient(to bottom, #f3e6ff, #d3bdf0);
+  color: #5e2d91;
+  font-weight: normal;
+  border: 2px solid #b48ce3;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(140, 90, 200, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.save-project-btn:hover {
+  background: linear-gradient(to bottom, #e7d4ff, #c9aee8);
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(120, 60, 180, 0.5);
+}
+
+
+</style>
+
+
+<style>
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #grafico {
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+    #editor-container {
+      width: 100% !important;
+    }
+
+    #editor {
+      height: 300px !important;
+    }
+
+    .button-container {
+      flex-direction: column;
+      gap: 8px;
+    
+  position: relative;
+  z-index: 10;
+}
+
+    button {
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .header-bar {
+      font-size: 16px;
+    }
+
+    .popup {
+      width: 90%;
+    }
+
+    .external-link {
+      position: relative;
+      top: auto;
+      right: auto;
+      margin-top: 10px;
+      text-align: right;
+    }
+  }
+</style>
+
+
+<style>
+  body.dark-mode {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+
+  body.dark-mode .header-bar {
+    background: linear-gradient(to right, #2e2e2e, #1a1a1a);
+    color: #f0f0f0;
+  }
+
+  body.dark-mode .button-container button {
+    background: #333 !important;
+    color: #ddd !important;
+  }
+
+  body.dark-mode .clear-btn {
+    background-color: #a71d2a !important;
+    color: white !important;
+  }
+
+  body.dark-mode #editor {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+
+  body.dark-mode .popup {
+    background-color: #2b2b2b;
+    color: #eee;
+  }
+  
+</style>
+
+
+</head>
+
+
+<body>
+<div class="header-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 4px 10px;">
+  <button id="toggleTheme" onclick="alternarTema()" style="font-size: 18px; background: none; border: none; cursor: pointer;">
+    🌙
+  </button>
+
+  <div style="flex: 1; text-align: center; font-weight: bold; font-size: 16px;">
+    JSPlotly - Interactive Graphics
+  </div>
+
+  <div style="width: 30px;"><!-- espaço vazio para equilibrar com o botão da esquerda --></div>
+</div>
+
+
+
+
+<div class="external-link">
+  <a href="https://bioquanti.netlify.app/" target="_blank">🔗 Bioquanti</a>  
+</div>
+
+
+<div class="dev-info">
+    Developed with 
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JavaScript</a> 
+    and 
+    <a href="https://plotly.com/javascript/" target="_blank">Plotly.js</a>
+</div>
+
+<div class="container">
+
+ <div id="grafico"></div>
+
+<div id="popup" class="popup">
+    <p>Save as:</p>
+    <button onclick="salvarImagem('png')">PNG</button>
+    <button onclick="salvarImagem('svg')">SVG</button>
+    <button onclick="fecharPopup()">Cancelar</button>
+</div>
+
+<style>
+.popup {
+    display: none;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+.popup button {
+    margin: 5px;
+    padding: 8px;
+}
+
+.external-link {  
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+}
+
+.external-link a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.external-link a:hover {
+  text-decoration: underline;
+  color: #0077cc;
+}
+
+.save-html-btn {
+  background: linear-gradient(to bottom, #dff0f7, #add9e6);
+  color: #004b66;
+  font-weight: normal;
+  border: 2px solid #66b8d4;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.save-html-btn:hover {
+  background: linear-gradient(to bottom, #c4ecff, #8fd3ec);
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+}
+
+
+</style>
+
+  <div id="editor-container">
+  
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+  <input type="file" id="fileInput" accept=".js" onchange="carregarEquacaoAuto(event)">
+  
+  <span style="font-size: 13px; font-family: Arial, sans-serifbioq; color: #2e7d57; text-align: right;">
+    For easy code construction, try 
+    <a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly" 
+       target="_blank" 
+       style="color: #2e7d57 !important; font-weight: bold; text-decoration: underline;">
+      GSPlotly
+    </a>
+  </span>
+</div>
+
+
+
+
+
+       <div id="editor"></div>
+       <div class="button-container">
+       <button class="add-btn" onclick="adicionarCurva()">add</button>
+       <button class="remove-btn" onclick="removerUltimaCurva()">remove</button>
+       <button class="clear-btn" onclick="resetarGrafico()">clean</button> 
+       <button class="reset-btn" onclick="limparEditor()">delete</button>
+     <!---  <button class="save-html-btn" onclick="salvarHTML()">html</button> --->             
+       <button class="save-btn" onclick="salvarEquacao()">script</button> 
+       <button class="save-html-btn" onclick="salvarProjetoSomenteGrafico()">html</button>
+    <!---<button class="save-html-btn" onclick="salvarProjetoCompleto()">save project</button> --->
+       <button class="save-project-btn" onclick="salvarCloneJSPlotly()">clone</button>
+       
+    
+  </div>
+</div>
+    </div>
+    
+    
+<script>
+ var curvas = [];
+ var cores = ["red", "blue", "green", "purple", "orange", "brown", "pink", "gray"];
+ var corIndex = 0;
+ var editor = ace.edit("editor");
+ editor.setTheme("ace/theme/github");
+ editor.session.setMode("ace/mode/javascript");
+ editor.session.setUseWrapMode(true);
+ editor.setOptions({
+  fontSize: "14px",
+  wrap: true,
+  showPrintMargin: false
+});
+
+
+
+var customSaveButton = {
+    name: 'PNG or SVG',
+    icon: Plotly.Icons.disk,
+    click: function(gd) {
+        abrirPopup();
+    }
+};
+
+
+var config = {
+  modeBarButtonsToAdd: [
+    'toggleSpikelines',
+    'hoverCompareCartesian',
+    'drawline',
+    'drawopenpath',
+    'drawrect',
+    'drawcircle',
+    //'eraseshape',
+    customSaveButton,
+    {
+      name: 'change color',
+      icon: Plotly.Icons.camera,
+      click: function(gd) {
+        const ultima = curvas.length - 1;
+        const novaCor = cores[Math.floor(Math.random() * cores.length)];
+        Plotly.restyle(gd, { 'line.color': novaCor }, [ultima]);
+        curvas[ultima].line.color = novaCor;
+      }
+    },
+  {
+  name: 'Adicionar Texto',
+  icon: {
+    width: 1000,
+    height: 1000,
+    path: 'M200 800V160h600v80H540v560h-80V240H200z' // Ícone simples em forma de "T"
+  },
+  click: function(gd) {
+    // O clique no botão ativa o modo de anotação
+    const handler = function(eventData) {
+      const x = eventData.points[0].x;
+      const y = eventData.points[0].y;
+      const texto = prompt("Digite o texto a ser inserido:");
+      if (texto) {
+        Plotly.relayout(gd, {
+          annotations: (gd.layout.annotations || []).concat([{
+            x: x,
+            y: y,
+            text: texto,
+            showarrow: true,
+            arrowhead: 2
+          }])
+        });
+      }
+      gd.removeListener('plotly_click', handler);
+    };
+    gd.on('plotly_click', handler);
+  }
+}
+  ],
+  showEditInChartStudio: true,
+  plotlyServerURL: "https://chart-studio.plotly.com",
+  displaylogo: false,
+  displayModeBar: true,
+  responsive: true,
+  scrollZoom: true,
+  editable: true,
+  modeBarButtonsToRemove: [
+    'select2d',
+    'lasso2d',
+    'resetScale2d',
+    'zoomOut2d',
+    'zoomIn2d',
+    'toImage'
+  ]
+};
+ 
+
+function executarCodigo() {
+    try {
+        var codigoUsuario = editor.getValue().trim();
+        Plotly.purge('grafico'); 
+        eval(codigoUsuario);
+    } 
+
+catch (error) {
+           
+    }
+}
+
+function limparGrafico() {
+    Plotly.purge('grafico');
+}
+
+function carregarEquacaoAuto(event) {
+ const file = event.target.files[0];
+ if (file) {
+   const reader = new FileReader();
+         reader.onload = function(e) {
+         editor.setValue(e.target.result, -1);
+                 };
+         reader.readAsText(file);
+                 }
+           }
+
+function adicionarCurva() {
+  const codigoUsuario = editor.getValue();
+
+  let consoleSaida = [];
+  const logOriginal = console.log;
+  console.log = (...args) => {
+    consoleSaida.push(args.map(arg => typeof arg === "object" ? JSON.stringify(arg) : String(arg)).join(" "));
+  };
+
+  let resultado;
+  try {
+    const func = new Function(codigoUsuario + "\nreturn typeof output !== 'undefined' ? output : undefined;");
+    resultado = func();
+  } catch (e1) {
+    try {
+      const func = new Function(codigoUsuario);
+      resultado = func();
+    } catch (e2) {
+      console.log = logOriginal;
+      alert("Erro ao executar o código:\n" + e2.message);
+      return;
+    }
+  }
+
+  console.log = logOriginal;
+  if (!resultado) return;
+
+  const texto = consoleSaida.map(l => "> " + l).join("<br>");
+  const layout = resultado.layout || {};
+  layout.annotations = layout.annotations || [];
+
+  if (texto.trim()) {
+    layout.annotations.push({
+      text: `<div style="font-family: monospace; font-size: 14px; max-height: 200px; overflow-y: auto; background:#f9f9f9; padding:5px; border:1px solid #ccc;">${texto}</div>`,
+      showarrow: false,
+      xref: 'paper',
+      yref: 'paper',
+      x: 0,
+      y: 1,
+      align: 'left',
+      xanchor: 'left',
+      yanchor: 'top'
+    });
+  }
+
+const config = {
+  responsive: true,
+  displaylogo: false,
+  scrollZoom: true,
+  editable: true,
+  modeBarButtonsToRemove: ['sendDataToCloud'],
+  modeBarButtonsToAdd: [
+    'toggleSpikelines',
+    'hoverCompareCartesian',
+    'drawline',
+    'drawopenpath',
+    'drawrect',
+    'drawcircle',
+    {
+      name: 'Salvar PNG/SVG',
+      icon: Plotly.Icons.disk,
+      click: () => abrirPopup()
+    },
+    {
+      name: 'Mudar cor',
+      icon: Plotly.Icons.camera,
+      click: function(gd) {
+        const ultima = curvas.length - 1;
+        const novaCor = cores[Math.floor(Math.random() * cores.length)];
+        Plotly.restyle(gd, { 'line.color': novaCor }, [ultima]);
+        curvas[ultima].line.color = novaCor;
+      }
+    },
+    {
+      name: 'Adicionar Texto',
+      icon: {
+        width: 1000,
+        height: 1000,
+        path: 'M200 800V160h600v80H540v560h-80V240H200z'
+      },
+      click: function(gd) {
+        const handler = function(eventData) {
+          const x = eventData.points[0].x;
+          const y = eventData.points[0].y;
+          const texto = prompt("Digite o texto a ser inserido:");
+          if (texto) {
+            Plotly.relayout(gd, {
+              annotations: (gd.layout.annotations || []).concat([{
+                x, y, text: texto, showarrow: true, arrowhead: 2
+              }])
+            });
+          }
+          gd.removeListener('plotly_click', handler);
+        };
+        gd.on('plotly_click', handler);
+      }
+    }
+  ]
+};
+
+
+  let data = [];
+  if (resultado.data) {
+    data = resultado.data;
+  } else if (resultado.trace) {
+    data = [resultado.trace];
+  } else if (resultado.traces) {
+    data = resultado.traces;
+  } else if (resultado.x_values && resultado.y_values) {
+    data = [{
+      x: resultado.x_values,
+      y: resultado.y_values,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: resultado.title || "Curva"
+    }];
+    if (resultado.x_range) layout.xaxis = { range: resultado.x_range, title: resultado.x_label || "" };
+    if (resultado.y_range) layout.yaxis = { range: resultado.y_range, title: resultado.y_label || "" };
+    layout.title = resultado.title || "";
+  }
+
+  curvas.push(...data);
+
+  Plotly.newPlot("grafico", curvas, layout, config).then(() => {
+    if (resultado.frames && resultado.frames.length > 0) {
+      Plotly.addFrames("grafico", resultado.frames);
+      Plotly.animate("grafico", null, {
+        frame: { duration: 80, redraw: true },
+        transition: { duration: 0 }
+      });
+    }
+  });
+}
+
+
+
+
+function resetarGrafico() {
+            curvas = [];
+            corIndex = 0;
+            Plotly.newPlot('grafico', [], {xaxis: { title: 'X' }, yaxis: {
+          zeroline: true,
+          zeroline: true, title: 'Y' } });
+        }
+
+function salvarEquacao() {
+    var blob = new Blob([editor.getValue()], { type: "text/javascript" });
+    var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "script.js";
+        document.body.appendChild(a);
+        a.click();
+            document.body.removeChild(a);
+       }
+
+        
+
+function salvarHTML() {
+    var plotlyData = JSON.parse(JSON.stringify(curvas));
+    var plotlyLayout = document.getElementById('grafico').layout;
+    var htmlContent = '<!DOCTYPE html>\n' +
+                '<html>\n' +
+                '<head>\n' +
+                '    <meta charset="UTF-8">\n' +
+                '    <title>Gráfico Salvo</title>\n' +
+                '    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.20.0/plotly.min.js"><\/script>\n' +
+                '</head>\n' +////
+                '<body>\n' +
+                '    <div id="grafico" style="width: 100%; height: 600px;"></div>\n' +
+                '    <script>\n' +
+                '        var data = ' + JSON.stringify(plotlyData) + ';\n' +
+                '        var layout = ' + JSON.stringify(plotlyLayout) + ';\n' +
+                '        Plotly.newPlot("grafico", data, layout);\n' +
+                '    <\/script>\n' +
+                '</body>\n' +
+                '</html>';
+
+function salvarAppCompleto() {
+  const htmlBase = document.documentElement.outerHTML;
+  const blob = new Blob([htmlBase], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "jsplotly_completo.html";
+  a.click();
+}
+
+
+var blob = new Blob([htmlContent], { type: 'text/html' });
+var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+//    a.download = 'grafico_interativo.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+        }
+
+function limparEditor() {
+    editor.setValue("", -1); 
+    }
+
+function removerUltimaCurva() {
+    if (curvas.length > 0) {
+    curvas.pop(); 
+    atualizarGrafico(); 
+        } else {
+        alert("No curves to remove!");
+      }
+    }
+
+
+function atualizarGrafico() {
+    Plotly.newPlot('grafico', curvas, {
+        title: 'Gráfico Interativo',
+        xaxis: { title: 'X' },
+        yaxis: {
+          zeroline: true,
+          zeroline: true, title: 'Y' },
+        showlegend: true
+    });
+}
+
+function abrirPopup() {
+    document.getElementById('popup').style.display = 'block';
+}
+
+function fecharPopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+
+function salvarImagem(formato) {
+    Plotly.downloadImage('grafico', {format: formato, filename: 'plot'});
+    fecharPopup();
+}
+
+
+function limparTudo() {
+   editor.setValue("", -1);
+     let graficoDiv = document.getElementById("grafico");
+     if (graficoDiv) {
+            Plotly.newPlot("grafico", [], {
+            xaxis: { title: "Eixo X" },
+            yaxis: {
+          zeroline: true,
+          zeroline: true, title: "Eixo Y" }
+        });
+        graficoDiv.data = [];
+    }
+}
+
+
+// Definir a equação quadrática padrão
+var codigoPadrao = `
+// =====================================================
+// ZeMol - Visualizador de moléculas 3D
+// =====================================================
+
+// --- reset global (permite rerodar sem refresh) ---
+try {
+  var G = window.__PDB3D__;
+  if (G && G.ui && G.ui.remove) G.ui.remove();
+  if (G && G.meta && G.meta.remove) G.meta.remove();
+} catch(e){}
+window.__PDB3D__ = {};
+
+// ======= Estado global =======
+var __baseData = [], __hiData = [], __baseLayout = null, __lastParsed = null;
+var __ssData = {helix:[], sheet:[]}, __ssSel = {helix:false, sheet:false}; // OFF por padrão
+var __polOn = false, __polTrace = null;
+
+// sliders
+var __caSize = 6;   // tamanho das esferas (CA/átomos)
+// sliders
+var __opacity = 1.0;   // opacidade global
+
+// MOL/SDF/XYZ
+var __isGenericMol = false;
+var __molAtoms = null, __molBonds = null;
+
+(function(){
+  if (window.__PDB3D__.init) return; window.__PDB3D__.init = true;
+
+  var host = document.getElementById("grafico");
+
+  // ---------- UI ----------
+  var ui = document.createElement("div");
+  ui.id = "pdb3d-ui2";
+  ui.style.margin = "6px 0";
+  ui.style.display = "flex";
+  ui.style.flexWrap = "wrap";
+  ui.style.gap = "8px";
+  ui.style.alignItems = "center";
+  host.parentNode.insertBefore(ui, host);
+  window.__PDB3D__.ui = ui;
+
+  function mkSpan(t){ var s=document.createElement("span"); s.textContent=t; return s; }
+
+  ui.appendChild(mkSpan("Arquivo PDB/MOL/SDF/XYZ:"));
+  var inpFile = document.createElement("input");
+  inpFile.type = "file";
+  inpFile.accept = ".pdb,.ent,.mol,.sdf,.xyz,.txt,text/plain";
+  ui.appendChild(inpFile);
+
+  ui.appendChild(mkSpan(" ou PDB ID:"));
+  var inpId = document.createElement("input");
+  inpId.type = "text"; inpId.placeholder = "ex.: 1CRN"; inpId.size = 8;
+  ui.appendChild(inpId);
+
+  var btnFetch = document.createElement("button");
+  btnFetch.textContent = "baixar";
+  ui.appendChild(btnFetch);
+  
+  ui.appendChild(mkSpan("  ou PubChem:"));
+var inpPub = document.createElement("input");
+inpPub.type = "text";
+inpPub.placeholder = "CID ou nome (ex.: 2244 ou caffeine)";
+inpPub.size = 18;
+ui.appendChild(inpPub);
+
+var btnPub = document.createElement("button");
+btnPub.textContent = "PubChem 3D";
+ui.appendChild(btnPub);
+
+
+  var info = document.createElement("span");
+  info.style.fontSize = "12px"; info.style.color = "#555";
+  info.textContent = " selecione arquivo ou informe ID";
+  ui.appendChild(info);
+
+  // seleção
+  var selBox = document.createElement("input");
+  selBox.type = "text";
+  selBox.placeholder = "ex.: Arg15, A:15-30, Asp117  |  em MOL: 1-20, C,N,O";
+  selBox.size = 36;
+  ui.appendChild(selBox);
+
+  var btnHi = document.createElement("button"); btnHi.textContent = "destacar"; ui.appendChild(btnHi);
+  var btnClear = document.createElement("button"); btnClear.textContent = "limpar"; ui.appendChild(btnClear);
+
+  // toggles HELIX/SHEET (desmarcados por padrão)
+  var cbHelix = document.createElement("input"); cbHelix.type = "checkbox"; cbHelix.checked = false; ui.appendChild(cbHelix);
+  var lbHelix = document.createElement("label"); lbHelix.textContent = "hélice"; lbHelix.style.marginRight = "8px"; ui.appendChild(lbHelix);
+  var cbSheet = document.createElement("input"); cbSheet.type = "checkbox"; cbSheet.checked = false; ui.appendChild(cbSheet);
+  var lbSheet = document.createElement("label"); lbSheet.textContent = "folha β"; ui.appendChild(lbSheet);
+  cbHelix.onchange = function(){ __ssSel.helix = !!cbHelix.checked; updatePlot(); };
+  cbSheet.onchange = function(){ __ssSel.sheet = !!cbSheet.checked; updatePlot(); };
+
+  // polaridade (PDB apenas)
+  var btnPol = document.createElement("button"); btnPol.textContent = "polaridade"; ui.appendChild(btnPol);
+  btnPol.onclick = function(){ if(!__isGenericMol){ __polOn = !__polOn; btnPol.style.fontWeight = __polOn ? "700":"400"; updatePlot(); } };
+
+  // slider CA size
+  ui.appendChild(mkSpan(" CA size:"));
+  var sliderCA = document.createElement("input");
+  sliderCA.type = "range"; sliderCA.min = 1; sliderCA.max = 100; sliderCA.value = __caSize;
+  sliderCA.style.width = "120px";
+  ui.appendChild(sliderCA);
+  sliderCA.oninput = function(){ __caSize = parseInt(sliderCA.value,10); updatePlot(); };
+
+  // slider opacidade
+  ui.appendChild(mkSpan(" opacidade:"));
+  var sliderOp = document.createElement("input");
+  sliderOp.type = "range"; sliderOp.min = 1; sliderOp.max = 100; sliderOp.value = Math.round(__opacity*100);
+  sliderOp.style.width = "120px";
+  ui.appendChild(sliderOp);
+  sliderOp.oninput = function(){
+    __opacity = Math.max(0, Math.min(1, parseInt(sliderOp.value,10)/100));
+    updatePlot();
+  };
+
+  // ---- barra de metadados ----
+  var metaBar = document.createElement("div");
+  metaBar.id = "pdb3d-meta";
+  metaBar.style.margin = "6px 0 10px 0";
+  metaBar.style.padding = "8px";
+  metaBar.style.border = "1px solid #ddd";
+  metaBar.style.borderRadius = "6px";
+  metaBar.style.background = "#fafafa";
+  metaBar.style.fontSize = "12px";
+  metaBar.style.lineHeight = "1.35em";
+  host.parentNode.insertBefore(metaBar, host);
+  window.__PDB3D__.meta = metaBar;
+
+  // wrapper
+  var root = host.parentNode, wrap = document.getElementById("pdb3d-wrap");
+  if (!wrap) {
+    wrap = document.createElement("div");
+    wrap.id = "pdb3d-wrap";
+    wrap.style.display = "grid";
+    wrap.style.gridTemplateRows = "auto auto 1fr";
+    wrap.style.gap = "8px";
+    wrap.style.width = "100%";
+    wrap.style.boxSizing = "border-box";
+    root.insertBefore(wrap, host);
+  }
+  if (ui.parentNode !== wrap) wrap.appendChild(ui);
+  if (metaBar.parentNode !== wrap) wrap.appendChild(metaBar);
+  if (host.parentNode !== wrap) wrap.appendChild(host);
+  ui.style.width = "100%"; metaBar.style.width = "100%"; host.style.width = "100%";
+  host.style.display = "block"; host.style.clear = "both"; host.style.minHeight = "820px";
+
+  function updateMetaBar(meta, counts, extra){
+    var t = meta && meta.title ? meta.title : "";
+    var h = meta && meta.header? meta.header: "";
+    var txt = (__isGenericMol
+      ? ("MOL/SDF/XYZ — átomos: "+(counts.atoms||0)+"  ligações: "+(counts.bonds||0))
+      : (h+"--"+t+"  cadeias: "+(counts.chains||0)+"   ligantes: "+(counts.lig||0)+"   ions: "+(counts.ions||0)+"   S-S: "+(counts.ss||0))
+    );
+    metaBar.textContent = txt + (extra ? ("  "+extra) : "");
+  }
+
+  // ===== Cores e utils =====
+  var chainPalette = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
+  var ionColors = {"NA":"#1f77b4","K":"#9467bd","CA":"#2ca02c","MG":"#8c564b","ZN":"#7f7f7f","FE":"#d62728","MN":"#bcbd22","CU":"#ff7f0e","NI":"#17becf","CO":"#e377c2"};
+  var ionSet={}; for (var k in ionColors) ionSet[k]=true;
+
+  // CPK (compacto)
+  var CPK = {
+    H:"#FFFFFF", C:"#909090", N:"#3050F8", O:"#FF0D0D", F:"#90E050", CL:"#1FF01F",
+    BR:"#A62929", I:"#940094", P:"#FF8000", S:"#FFFF30",
+    NA:"#AB5CF2", K:"#8F40D4", MG:"#8AFF00", CA:"#3DFF00",
+    FE:"#E06633", ZN:"#7D80B0", CU:"#C88033", NI:"#50D050",
+    SI:"#F0C8A0", SE:"#FFA100", AU:"#FFD123", AG:"#C0C0C0"
+  };
+  function cpk(el){ if(!el) return "#CCCCCC"; el=String(el).toUpperCase().trim(); return CPK[el] || CPK[el.replace(/[^A-Z]/g,"")] || "#CCCCCC"; }
+
+  var NL=String.fromCharCode(10), CR=String.fromCharCode(13);
+  function splitLines(t){ var s=String(t||""); s=s.split(CR+NL).join(NL); s=s.split(CR).join(NL); return s.split(NL); }
+  function dist2(a,b){ var dx=a.x-b.x,dy=a.y-b.y,dz=a.z-b.z; return dx*dx+dy*dy+dz*dz; }
+  function splitSpaces(s){ var a=[],cur=""; for (var i=0;i<s.length;i++){ var ch=s.charAt(i); if(ch===" "||ch==="	"){ if(cur){a.push(cur);cur="";} } else { cur+=ch; } } if(cur){a.push(cur);} return a; }
+
+  // AA / NA
+  var AA3 = {ALA:"ALA",ARG:"ARG",ASN:"ASN",ASP:"ASP",CYS:"CYS",GLN:"GLN",GLU:"GLU",GLY:"GLY",HIS:"HIS",ILE:"ILE",LEU:"LEU",LYS:"LYS",MET:"MET",PHE:"PHE",PRO:"PRO",SER:"SER",THR:"THR",TRP:"TRP",TYR:"TYR",VAL:"VAL"};
+  var AA1 = {A:"ALA",R:"ARG",N:"ASN",D:"ASP",C:"CYS",Q:"GLN",E:"GLU",G:"GLY",H:"HIS",I:"ILE",L:"LEU",K:"LYS",M:"MET",F:"PHE",P:"PRO",S:"SER",T:"THR",W:"TRP",Y:"TYR",V:"VAL"};
+  
+  // --- grupos e helpers de AA ---
+var AA_GROUPS = {
+  basico:       ["ARG","LYS","HIS"],
+  acido:      ["ASP","GLU"],
+  aromatico:    ["PHE","TYR","TRP"],
+  polar:       ["SER","THR","ASN","GLN","TYR","CYS","HIS"],
+  apolar: ["ILE","VAL","LEU","PHE","CYS","MET","ALA","TRP","TYR"],
+  small:       ["GLY","ALA","SER"],
+  carga:     ["ASP","GLU","ARG","LYS","HIS"]
+};
+
+function normalizeAA(tok){ // 1 letra -> 3 letras; já-3-letras permanece
+  if (!tok) return null;
+  tok = tok.toUpperCase().trim();
+  if (tok.length===1 && AA1[tok]) return AA1[tok];
+  if (AA3[tok]) return tok;
+  return null;
+}
+function aaListFromToken(s){ // aceita “ARG”, “R”, “ARG/LYS”, “arg+lys”, “aromatic”, etc.
+  if (!s) return null;
+  s = s.trim();
+  var key = s.toLowerCase();
+
+  // grupo?
+  if (AA_GROUPS[key]) return AA_GROUPS[key].slice();
+
+  // lista explícita (separada por , ; / +)
+  var parts = s.split(/[,+/;s]+/).filter(Boolean);
+  if (parts.length){
+    var out = [];
+    for (var i=0;i<parts.length;i++){
+      var aa = normalizeAA(parts[i]);
+      if (aa) out.push(aa);
+    }
+    if (out.length) return out;
+  }
+  // 1 item simples
+  var aa1 = normalizeAA(s);
+  return aa1? [aa1] : null;
+}
+
+  
+  var KD  = {ILE:4.5,VAL:4.2,LEU:3.8,PHE:2.8,CYS:2.5,MET:1.9,ALA:1.8,GLY:-0.4,THR:-0.7,SER:-0.8,TRP:-0.9,TYR:-1.3,PRO:-1.6,HIS:-3.2,GLU:-3.5,GLN:-3.5,ASP:-3.5,ASN:-3.5,LYS:-3.9,ARG:-4.5};
+  function aaPolarity(res){ var kd = KD[(res||"").toUpperCase()]; return (typeof kd==="number")? -kd : 0; }
+
+  var NA_RES = {DA:1,DC:1,DG:1,DT:1, A:1,C:1,G:1,U:1, ADE:1,CYT:1,GUA:1,THY:1,URA:1};
+  function isNA(r){ return !!NA_RES[String(r||"").toUpperCase()]; }
+  function isNABackboneAtom(n){ n=String(n||"").toUpperCase(); return (n==="P" || n==="C4'" || n==="C4*"); }
+  function isAA3(x){ return !!AA3[String(x||"").toUpperCase()]; }
+
+  // HEADER/TITLE
+  function extractHeaderTitle(pdbText){
+    var lines=splitLines(pdbText),header="",title="";
+    for (var i=0;i<lines.length;i++){
+      var L=lines[i]; if (L.length<5) continue; var rec=L.substr(0,6);
+      if (rec==="HEADER"&&header===""){ header=L.substr(10).trim(); }
+      if (L.substr(0,5)==="TITLE"){ var part=L.substr(10).trim(); if(part) title+=(title?" ":"")+part; }
+      if (rec==="ATOM  "||rec==="HETATM") break;
+    } return {header:header,title:title};
+  }
+
+  // seleção AA
+  function buildCAIndex(CA){
+    var idx={}; for (var ch in CA){ var arr=CA[ch]||[]; idx[ch]={}; for (var i=0;i<arr.length;i++){ idx[ch][arr[i].resSeq]=arr[i]; } }
+    return idx;
+  }
+  function parseResidLabel(lbl){
+  lbl = String(lbl||"").trim();
+  if (!lbl) return null;
+
+  var chain = null;
+  var parts = lbl.split(":");
+  if (parts.length===2){
+    chain = (parts[0]||"").trim().toUpperCase() || null;
+    lbl   = (parts[1]||"").trim();
+  }
+
+  // caso 1: só-letras (ex.: ARG | arg/lys | aromatic)
+  if (/^[A-Za-z+-_,;/s]+$/.test(lbl) && !/[0-9]/.test(lbl)){
+    var list = aaListFromToken(lbl);
+    if (list && list.length){
+      return { chain: chain, aaList: list }; // << nova via
+    }
+    return { chain: chain, raw: lbl };
+  }
+
+  // caso 2: faixa tipo "15-30"
+  var range = lbl.split("-");
+  if (range.length===2){
+    return { chain: chain, range: [range[0].trim(), range[1].trim()] };
+  }
+
+  // caso 3: AA + número (ARG117, A117, etc.)
+  var m = /^([A-Za-z]{1,3})?([0-9]+)$/.exec(lbl);
+  if (!m) return { chain: chain, raw: lbl };
+
+  var aa = m[1] ? m[1].toUpperCase() : null;
+  var n  = parseInt(m[2],10);
+  if (aa && aa.length===1 && AA1[aa]) aa = AA1[aa];
+  if (aa && AA3[aa]!==aa) aa = AA3[aa] || aa;
+
+  return { chain: chain, aa: aa, n: n };
+}
+
+  function expandEntry(entry){
+    function numFrom(s){ var m=/^([A-Za-z]{0,3})?([0-9]+)$/.exec(String(s||"").trim()); return m?parseInt(m[2],10):null; }
+    var out=[]; if(entry.range){ var n1=numFrom(entry.range[0]), n2=numFrom(entry.range[1]); if(n1!=null&&n2!=null){ if(n1>n2){var t=n1;n1=n2;n2=t;} for(var n=n1;n<=n2;n++) out.push({chain:entry.chain,n:n}); } return out; }
+    if(entry.n!=null) out.push({chain:entry.chain,n:entry.n,aa:entry.aa}); return out;
+  }
+  function parseSelectionQuery(q, CA){
+  if (__isGenericMol) return parseSelectionForMol(q); // modo MOL/XYZ
+
+  var idx = buildCAIndex(CA);
+  var items = String(q||"").split(",");
+  var sel = [];
+
+  for (var i=0;i<items.length;i++){
+    var tok = parseResidLabel(items[i]);
+    if (!tok) continue;
+
+    // (A) lista de AAs (ex.: ARG, ARG/LYS, aromatic...)
+    if (tok.aaList && tok.aaList.length){
+      var want = {}; tok.aaList.forEach(function(a){ want[a]=1; });
+      if (tok.chain){
+        var arr = CA[tok.chain]||[];
+        for (var u=0; u<arr.length; u++){
+          var r = arr[u];
+          if (want[(r.resName||"").toUpperCase()]) sel.push(r);
+        }
+      } else {
+        for (var ch in CA){
+          var arr2 = CA[ch]||[];
+          for (var v=0; v<arr2.length; v++){
+            var r2 = arr2[v];
+            if (want[(r2.resName||"").toUpperCase()]) sel.push(r2);
+          }
+        }
+      }
+      continue;
+    }
+
+    // (B) faixas/índices já existentes
+    var expanded = expandEntry(tok, CA);
+    for (var k=0;k<expanded.length;k++){
+      var c = expanded[k].chain, n = expanded[k].n;
+      if (!c){
+        for (var ch in idx){
+          var obj = idx[ch][n]; if (!obj) continue;
+          if (tok.aa && obj.resName.toUpperCase() !== tok.aa) continue;
+          sel.push(obj);
+        }
+      } else {
+        var obj2 = (idx[c]||{})[n];
+        if (obj2){
+          if (tok.aa && obj2.resName.toUpperCase() !== tok.aa) continue;
+          sel.push(obj2);
+        }
+      }
+    }
+  }
+
+  // unique por chain:resSeq
+  var seen={}, uniq=[];
+  for (var j=0;j<sel.length;j++){
+    var key=(sel[j].chain||"_")+":"+sel[j].resSeq;
+    if (!seen[key]){ seen[key]=1; uniq.push(sel[j]); }
+  }
+  return uniq;
+}
+
+
+  function makeHighlightTraces(selected){
+    if(!selected||!selected.length) return [];
+    var xs=[],ys=[],zs=[],txt=[];
+    for(var i=0;i<selected.length;i++){
+      var r=selected[i]; xs.push(r.x); ys.push(r.y); zs.push(r.z);
+      txt.push("Cadeia "+(r.chain||" ")+(r.resName?" "+r.resName:"")+" "+(r.resSeq||""));
+    }
+    return [{
+      type:"scatter3d", mode:"markers",
+      x:xs, y:ys, z:zs, text:txt, hoverinfo:"text",
+      name:"selecionados",
+      marker:{ size:8, opacity:__opacity, color:"#e31a1c" }
+    }];
+  }
+
+  function fadeBaseData(enable){
+    if(!__baseData) return;
+    for(var i=0;i<__baseData.length;i++){
+      var tr=__baseData[i];
+      if(tr.type==="scatter3d"){
+        if(tr.line)   tr.line.opacity   = enable? 0.25 : __opacity;
+        if(tr.marker) tr.marker.opacity = enable? 0.25 : __opacity;
+      }
+    }
+  }
+
+  // ---------- Parser PDB ----------
+  function parsePDB(txt){
+    var lines=splitLines(txt);
+    var CA={},CYS_CA={},CYS_SG=[],ssBonds=[],ions=[],ligResidues={},helices=[],sheets=[];
+    var modelStarted=false,firstModelOnly=true;
+
+    for(var i=0;i<lines.length;i++){
+      var line=lines[i]; if(line.length<6) continue; var rec=line.substr(0,6);
+
+      if(rec==="HELIX "){
+        var ch1=(line.length>20? line.substr(19,1):" ").trim()||" ";
+        var s1 =parseInt((line.length>25? line.substr(21,4):"").trim(),10);
+        var ch2=(line.length>33? line.substr(31,1):" ").trim()||" ";
+        var s2 =parseInt((line.length>38? line.substr(33,4):"").trim(),10);
+        if(isFinite(s1)&&isFinite(s2)) helices.push({chain:ch1,start:s1,end:s2});
+        continue;
+      }
+      if(rec==="SHEET "){
+        var chS=(line.length>22? line.substr(21,1):" ").trim()||" ";
+        var sS =parseInt((line.length>27? line.substr(22,4):"").trim(),10);
+        var chE=(line.length>34? line.substr(32,1):" ").trim()||" ";
+        var eS =parseInt((line.length>39? line.substr(33,4):"").trim(),10);
+        if(isFinite(sS)&&isFinite(eS)) sheets.push({chain:chS,start:sS,end:eS});
+      }
+
+      if(rec==="MODEL "){ if(firstModelOnly){ if(modelStarted) break; modelStarted=true; } }
+      if(rec==="ENDMDL"){ if(firstModelOnly) break; }
+
+      if(rec==="SSBOND"){
+        var c1=line.substr(15,1),s1b=parseInt(line.substr(17,4),10);
+        var c2=line.substr(29,1),s2b=parseInt(line.substr(31,4),10);
+        if(isFinite(s1b)&&isFinite(s2b)) ssBonds.push({c1:c1,r1:s1b,c2:c2,r2:s2b});
+        continue;
+      }
+      if(rec!=="ATOM  "&&rec!=="HETATM") continue;
+      if(line.length<54) continue;
+
+      var name=line.substr(12,4).trim();
+      var resName=line.substr(17,3).trim();
+      var chain=line.substr(21,1)||" ";
+      var resSeq=parseInt(line.substr(22,4),10);
+      var iCode=line.substr(26,1).trim();
+      var x=parseFloat(line.substr(30,8)), y=parseFloat(line.substr(38,8)), z=parseFloat(line.substr(46,8));
+      var alt=line.substr(16,1);
+      if(!isFinite(x)||!isFinite(y)||!isFinite(z)) continue;
+      if(alt&&alt!==" "&&alt!=="A") continue;
+
+      if(rec==="ATOM  "){
+        // Proteína: CA; Nucleotídeo: P/C4' como pseudo-CA
+        var takeAsBackbone = false;
+        if (name==="CA") takeAsBackbone = true;
+        else if (isNA(resName) && isNABackboneAtom(name)) takeAsBackbone = true;
+
+        if (takeAsBackbone){
+          if(!CA[chain]) CA[chain]=[];
+          var obj={x:x,y:y,z:z,resName:resName,resSeq:resSeq,iCode:iCode,chain:chain};
+
+          // tenta ler valor ao fim; senão: aa→KD, NA→0
+          var pol=null;
+          if (line.length>66){
+            var tail=line.substr(66).trim();
+            if (tail){
+              var toks=splitSpaces(tail);
+              var last=toks.length? toks[toks.length-1] : "";
+              var v=parseFloat(last);
+              if (!isNaN(v)) pol=v;
+            }
+          }
+          if (pol===null) pol = isNA(resName) ? 0 : aaPolarity(resName);
+          obj.pol=pol;
+
+          CA[chain].push(obj);
+
+          if(resName==="CYS" && name==="CA"){
+            CYS_CA[chain+":"+resSeq]={x:x,y:y,z:z};
+          }
+        }
+
+        if(resName==="CYS" && name==="SG"){ CYS_SG.push({chain:chain,resSeq:resSeq,x:x,y:y,z:z}); }
+      } else {
+        var isWater=(resName==="HOH"||resName==="WAT"||resName==="DOD"||resName==="SOL");
+        if (isWater) continue;
+
+        var el=""; if (line.length>=78) el=line.substr(76,2).trim().toUpperCase();
+        if (!el) el=line.substr(12,2).trim().toUpperCase();
+
+        if (ionSet[el]){
+          ions.push({x:x,y:y,z:z,el:el,name:name,resName:resName,chain:chain,resSeq:resSeq});
+        } else {
+          var key=chain+":"+resSeq+":"+resName;
+          if (!ligResidues[key]) ligResidues[key]={ chain:chain, resSeq:resSeq, resName:resName, atoms:[] };
+          ligResidues[key].atoms.push({x:x,y:y,z:z, el:el, atom:name});
+          if (!ligResidues.__names) ligResidues.__names={};
+          ligResidues.__names[resName]=true;
+        }
+      }
+    }
+
+    var sPairs=[];
+    for(var p=0;p<ssBonds.length;p++){
+      var ssp=ssBonds[p];
+      var ca1=CYS_CA[ssp.c1+":"+ssp.r1], ca2=CYS_CA[ssp.c2+":"+ssp.r2];
+      if(ca1&&ca2) sPairs.push({a:ca1,b:ca2});
+    }
+    if(sPairs.length===0){
+      var thr2=2.2*2.2;
+      for(var i1=0;i1<CYS_SG.length;i1++){
+        for(var j=i1+1;j<CYS_SG.length;j++){
+          if(dist2(CYS_SG[i1],CYS_SG[j])<=thr2){
+            var ca1=CYS_CA[CYS_SG[i1].chain+":"+CYS_SG[i1].resSeq];
+            var ca2=CYS_CA[CYS_SG[j].chain+":"+CYS_SG[j].resSeq];
+            if(ca1&&ca2) sPairs.push({a:ca1,b:ca2});
+          }
+        }
+      }
+    }
+
+    var ligNames=[]; if (ligResidues.__names){ for (var nm in ligResidues.__names) ligNames.push(nm); ligNames.sort(); }
+    return { CA:CA, sPairs:sPairs, ions:ions, ligResidues:ligResidues, ligNames:ligNames, helices:helices, sheets:sheets };
+  }
+
+  // ---------- Traces ----------
+  function tracesCA(CA){
+  var out=[],idx=0;
+  for (var ch in CA){
+    var arr=CA[ch];
+    arr.sort(function(a,b){ return (a.resSeq-b.resSeq) || (a.iCode||"").localeCompare(b.iCode||""); });
+    var xs=[],ys=[],zs=[],txt=[];
+    for (var k=0;k<arr.length;k++){
+      var r=arr[k]; xs.push(r.x); ys.push(r.y); zs.push(r.z);
+      txt.push("Chain "+ch+" "+r.resName+" "+r.resSeq);
+    }
+    var chainLooksNA = arr.every(function(r){ return !isAA3(r.resName); });
+    var col = chainLooksNA ? "#444444" : chainPalette[idx%chainPalette.length];
+
+    out.push({
+      type:"scatter3d",
+      mode:"lines+markers",
+      x:xs,y:ys,z:zs,text:txt,hoverinfo:"text",
+      name:"Chain "+ch,
+      line:{width:3,color:col,opacity:__opacity},
+      marker:{size:__caSize,color:col,opacity:__opacity},
+      _isCA:true // <<< flag pra sabermos que este trace é de CA
+    });
+    idx++;
+  }
+  return out;
+}
+
+
+  function tracesSS(sPairs){
+    var out=[];
+    for(var i=0;i<sPairs.length;i++){
+      var p=sPairs[i];
+      out.push({
+        type:"scatter3d", mode:"lines",
+        x:[p.a.x,p.b.x], y:[p.a.y,p.b.y], z:[p.a.z,p.b.z],
+        name:"S-S", hoverinfo:"none",
+        line:{width:4,color:"#ffd11a",opacity:__opacity},
+        showlegend:(i===0)
+      });
+    }
+    return out;
+  }
+
+function tracesLig(ligResidues){
+  var out = [];
+  var firstLegend = true;              // só o primeiro par (linhas+marcadores) aparece na legenda
+  var thr = 1.9, thr2 = thr*thr;
+
+  function ensure(dict,key){
+    if(!dict[key]) dict[key] = {x:[],y:[],z:[], lx:[],ly:[],lz:[]};
+    return dict[key];
+  }
+
+  for (var key in ligResidues){
+    if (key === "__names") continue;
+    var g = ligResidues[key], A = g.atoms;
+    if (!A || !A.length) continue;
+
+    var byEl = {};
+
+    // pontos por elemento
+    for (var k=0;k<A.length;k++){
+      var el = (A[k].el||"").toUpperCase();
+      var b  = ensure(byEl, el);
+      b.x.push(A[k].x); b.y.push(A[k].y); b.z.push(A[k].z);
+    }
+
+    // ligações por distância (stick simples; usa a cor do 1º átomo do par)
+    for (var i=0;i<A.length;i++){
+      for (var j=i+1;j<A.length;j++){
+        var dx=A[i].x-A[j].x, dy=A[i].y-A[j].y, dz=A[i].z-A[j].z;
+        var d2=dx*dx+dy*dy+dz*dz;
+        if (d2<=thr2){
+          var elLine=(A[i].el||"").toUpperCase();
+          var bb=ensure(byEl, elLine);
+          bb.lx.push(A[i].x, A[j].x, null);
+          bb.ly.push(A[i].y, A[j].y, null);
+          bb.lz.push(A[i].z, A[j].z, null);
+        }
+      }
+    }
+
+    // emite para cada elemento um par (lines + markers) no mesmo grupo "lig"
+    for (var el in byEl){
+      var b = byEl[el];
+
+      if (b.lx.length){
+        out.push({
+          type: "scatter3d",
+          mode: "lines",
+          x: b.lx, y: b.ly, z: b.lz,
+          hoverinfo: "none",
+          name: firstLegend ? "Ligantes (ligações)" : "Lig (ligações)",
+          line: { width: 3, color: cpk(el), opacity: __opacity },
+          showlegend: firstLegend,
+          legendgroup: "lig"
+        });
+      }
+
+      out.push({
+        type: "scatter3d",
+        mode: "markers",
+        x: b.x, y: b.y, z: b.z,
+        text: Array(b.x.length).fill("Ligante "+g.resName+" • "+el),
+        hoverinfo: "text",
+        name: firstLegend ? "Ligantes (átomos)" : "Lig (átomos)",
+        marker: { size: 2, color: cpk(el), opacity: __opacity },
+        showlegend: firstLegend,
+        legendgroup: "lig"
+      });
+
+      firstLegend = false; // só o primeiro par entra na legenda
+    }
+  }
+
+  return out;
+}
+
+
+  function tracesIons(ions){
+    if(!ions.length) return [];
+    var byEl={}, out=[];
+    ions.forEach(function(a){ (byEl[a.el]=byEl[a.el]||[]).push(a); });
+    for (var el in byEl){
+      var arr=byEl[el], xs=[],ys=[],zs=[],txt=[];
+      arr.forEach(function(a){ xs.push(a.x); ys.push(a.y); zs.push(a.z); txt.push(el+" ("+a.resName+")"); });
+      out.push({
+        type:"scatter3d", mode:"markers",
+        x:xs,y:ys,z:zs, text:txt, hoverinfo:"text",
+        name:"ion "+el,
+        marker:{ size:7, color:(ionColors[el]||"#f0f"), opacity:__opacity }
+      });
+    }
+    return out;
+  }
+
+  // HELIX/SHEET helpers
+  function _sliceCA(CA, chain, start, end){
+    var arr=(CA[chain]||[]).slice().sort(function(a,b){ if(a.resSeq!==b.resSeq) return a.resSeq-b.resSeq; return (a.iCode||"").localeCompare(b.iCode||""); });
+    var xs=[],ys=[],zs=[],txt=[];
+    for (var i=0;i<arr.length;i++){
+      var r=arr[i]; if (r.resSeq>=start && r.resSeq<=end){
+        xs.push(r.x); ys.push(r.y); zs.push(r.z);
+        txt.push("Chain "+(r.chain||" ")+" "+r.resName+" "+r.resSeq);
+      }
+    }
+    return {x:xs,y:ys,z:zs,txt:txt};
+  }
+  function tracesSecStruct(CA,segs,color,label){
+    var out=[], first=true;
+    for (var k=0;k<segs.length;k++){
+      var s=segs[k];
+      var poly=_sliceCA(CA,(s.chain||" ").toUpperCase(),s.start,s.end);
+      if (poly.x.length<2) continue;
+      out.push({
+        type:"scatter3d", mode:"lines",
+        x:poly.x,y:poly.y,z:poly.z, text:poly.txt, hoverinfo:"text",
+        name:label,
+        line:{width:8,color:color,opacity:__opacity},
+        showlegend:first
+      });
+      out.push({
+        type:"scatter3d", mode:"markers",
+        x:poly.x,y:poly.y,z:poly.z, hoverinfo:"skip",
+        name:label+" (pontos)",
+        marker:{size:2,color:color,opacity:__opacity},
+        showlegend:false
+      });
+      first=false;
+    }
+    return out;
+  }
+
+  // Polaridade
+  function makePolarityTrace(CA){
+    var xs=[],ys=[],zs=[],cv=[],txt=[],cmin=1e9,cmax=-1e9;
+    for (var ch in CA){
+      var arr=CA[ch]||[];
+      for (var i=0;i<arr.length;i++){
+        var r=arr[i];
+        var pol=(typeof r.pol==="number")? r.pol : (isNA(r.resName)? 0 : aaPolarity(r.resName));
+        xs.push(r.x); ys.push(r.y); zs.push(r.z); cv.push(pol);
+        if (pol<cmin) cmin=pol; if (pol>cmax) cmax=pol;
+        txt.push("Chain "+r.chain+" "+r.resName+" "+r.resSeq+" | pol "+(pol.toFixed?pol.toFixed(2):pol));
+      }
+    }
+    if (!xs.length) return null;
+    return {
+      type:"scatter3d", mode:"markers",
+      x:xs,y:ys,z:zs,text:txt,hoverinfo:"text",
+      name:"polaridade (CA)",
+      marker:{ size:5, color:cv, opacity:__opacity,
+        colorscale:[[0,'#2166ac'],[0.5,'#f7f7f7'],[1,'#b2182b']], cmin:cmin, cmax:cmax,
+        colorbar:{title:"polaridade"} },
+      showlegend:true
+    };
+  }
+
+function layout3D(title){
+  return {
+    title: title,
+    scene:{ xaxis:{visible:false}, yaxis:{visible:false}, zaxis:{visible:false}, aspectmode:"data" },
+    margin:{l:0,r:0,t:40,b:0},
+    showlegend:true,
+    legend: {
+      // permite clicar uma única entrada "Ligantes" para esconder/mostrar todos
+      groupclick: "togglegroup",
+      itemclick: "toggle"
+    }
+  };
+}
+
+
+  // ======== MOL/SDF/XYZ parsers ========
+  function parseMOLorSDF(text){
+    var lines=splitLines(text), atoms=[], bonds=[];
+    var i=0, v3000=false;
+    for(; i<lines.length; i++){
+      if(/^s*Ms+V30s+BEGINs+CTAB/i.test(lines[i])){ v3000=true; break; }
+      if(/V2000/.test(lines[i])){ break; }
+    }
+    if(i>=lines.length) i=3; // fallback
+
+    if(v3000){
+      var inAtoms=false,inBonds=false;
+      for(var k=0;k<lines.length;k++){
+        var L=lines[k];
+        if(/Ms+V30s+BEGINs+ATOM/i.test(L)){ inAtoms=true; continue; }
+        if(/Ms+V30s+ENDs+ATOM/i.test(L)){ inAtoms=false; continue; }
+        if(/Ms+V30s+BEGINs+BOND/i.test(L)){ inBonds=true; continue; }
+        if(/Ms+V30s+ENDs+BOND/i.test(L)){ inBonds=false; continue; }
+        if(inAtoms && /Ms+V30s+/i.test(L)){
+          var t=splitSpaces(L.replace(/^.*Ms+V30s+/i,""));
+          if(t.length>=6){ atoms.push({el:t[1], x:parseFloat(t[2]), y:parseFloat(t[3]), z:parseFloat(t[4])}); }
+        }
+        if(inBonds && /Ms+V30s+/i.test(L)){
+          var b=splitSpaces(L.replace(/^.*Ms+V30s+/i,""));
+          if(b.length>=5){ bonds.push({a1:parseInt(b[2],10)-1, a2:parseInt(b[3],10)-1, order:parseInt(b[1],10)||1}); }
+        }
+      }
+    } else {
+      var counts = lines[i]||"";
+      var na = parseInt((counts.substr(0,3)||"0"),10);
+      var nb = parseInt((counts.substr(3,3)||"0"),10);
+      var aStart=i+1, bStart=aStart+na;
+      for(var ia=0; ia<na; ia++){
+        var L=lines[aStart+ia]||"";
+        var x=parseFloat(L.substr(0,10)), y=parseFloat(L.substr(10,10)), z=parseFloat(L.substr(20,10));
+        var el=(L.substr(31,3)||"").trim();
+        atoms.push({el:el,x:x,y:y,z:z});
+      }
+      for(var ib=0; ib<nb; ib++){
+        var B=lines[bStart+ib]||"";
+        var a1=parseInt(B.substr(0,3),10)-1, a2=parseInt(B.substr(3,3),10)-1, order=parseInt(B.substr(6,3),10)||1;
+        bonds.push({a1:a1,a2:a2,order:order});
+      }
+    }
+    return {atoms:atoms,bonds:bonds};
+  }
+
+  function parseXYZ(text){
+    var lines=splitLines(text).filter(Boolean);
+    var n=parseInt(lines[0],10);
+    var atoms=[];
+    for(var i=2;i<2+n && i<lines.length;i++){
+      var t=splitSpaces(lines[i]);
+      if(t.length>=4){ atoms.push({el:t[0],x:parseFloat(t[1]),y:parseFloat(t[2]),z:parseFloat(t[3])}); }
+    }
+    return {atoms:atoms,bonds:inferBonds(atoms)};
+  }
+
+  // infer bonds por distância
+  var RC={H:0.31,C:0.76,N:0.71,O:0.66,F:0.57,P:1.07,S:1.05,CL:1.02,BR:1.20,I:1.39};
+  function rc(el){el=(el||"").toUpperCase(); return (RC[el]!=null?RC[el]:0.77);}
+  function inferBonds(at){ var b=[], n=at.length; for(var i=0;i<n;i++) for(var j=i+1;j<n;j++){
+    var rcut=1.2*(rc(at[i].el)+rc(at[j].el)); var d2=dist2(at[i],at[j]); if(d2<=rcut*rcut) b.push({a1:i,a2:j,order:1});
+  } return b; }
+
+  // Traces MOL/SDF/XYZ
+  function tracesMol(atoms,bonds){
+    if(!atoms||!atoms.length) return [];
+    var xs=[],ys=[],zs=[];
+    for (var i=0;i<bonds.length;i++){
+      var a1=atoms[bonds[i].a1], a2=atoms[bonds[i].a2];
+      if(!a1||!a2) continue;
+      xs.push(a1.x,a2.x,null); ys.push(a1.y,a2.y,null); zs.push(a1.z,a2.z,null);
+    }
+    var out=[];
+    if(xs.length){
+      out.push({type:"scatter3d",mode:"lines",x:xs,y:ys,z:zs,hoverinfo:"none",name:"ligações",
+                line:{width:3,color:"#888",opacity:__opacity},showlegend:true});
+    }
+    var ax=[],ay=[],az=[],col=[],txt=[];
+    for (var k=0;k<atoms.length;k++){
+      var a=atoms[k]; ax.push(a.x); ay.push(a.y); az.push(a.z); col.push(cpk(a.el)); txt.push((a.el||"?")+" #"+(k+1));
+    }
+    out.push({type:"scatter3d",mode:"markers",x:ax,y:ay,z:az,text:txt,hoverinfo:"text",name:"átomos",
+              marker:{size:4,color:col,opacity:__opacity},showlegend:true});
+    return out;
+  }
+
+  // seleção em MOL
+  function parseSelectionForMol(q){
+    if(!__molAtoms) return [];
+    var parts=String(q||"").split(",").map(function(s){return s.trim();}).filter(Boolean);
+    var idxSel={}, ret=[];
+    function add(i){ if(i>=0 && i<__molAtoms.length && !idxSel[i]){ idxSel[i]=1; ret.push(__molAtoms[i]); } }
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i];
+      if(/^[0-9]+-[0-9]+$/.test(p)){ var t=p.split("-"); var a=parseInt(t[0],10)-1, b=parseInt(t[1],10)-1; if(a>b){var tt=a;a=b;b=tt;} for(var k=a;k<=b;k++) add(k); continue; }
+      if(/^[0-9]+$/.test(p)){ add(parseInt(p,10)-1); continue; }
+      var list=p.replace(/s+/g,"").split(/[,;]+/).filter(Boolean);
+      if(list.length){
+        var set={}; list.forEach(function(e){ set[e.toUpperCase()]=1; });
+        for(var j=0;j<__molAtoms.length;j++){ if(set[(__molAtoms[j].el||"").toUpperCase()]) add(j); }
+      }
+    }
+    return ret;
+  }
+
+  // ---------- Render ----------
+  function renderFromPDB(txt,title){
+    __isGenericMol=false;
+    var meta=extractHeaderTitle(txt), parsed=parsePDB(txt), ligList=parsed.ligNames||[];
+
+    var base=[]
+      .concat(tracesCA(parsed.CA))
+      .concat(tracesSS(parsed.sPairs))
+      .concat(tracesLig(parsed.ligResidues))
+      .concat(tracesIons(parsed.ions));
+
+    if(!base.length){
+      info.textContent=" nenhum dado plotavel";
+      Plotly.react("grafico",[ {type:"scatter",x:[0],y:[0],mode:"text",text:["PDB sem dados"]} ],{title:"Sem dados"});
+      updateMetaBar(meta,{chains:0,lig:0,ions:0,ss:0});
+      return;
+    }
+
+    __baseData=base; __baseLayout=layout3D(title); __hiData=[]; __lastParsed=parsed;
+    __ssData.helix=tracesSecStruct(parsed.CA,parsed.helices,"#ff0000","hélice α");
+    __ssData.sheet=tracesSecStruct(parsed.CA,parsed.sheets, "#ffa500","folha β");
+    __polTrace = makePolarityTrace(parsed.CA);
+
+    var nChains=Object.keys(parsed.CA).length;
+    var nLig=Object.keys(parsed.ligResidues).length; if(parsed.ligResidues.__names) nLig--;
+    updateMetaBar(meta,{chains:nChains,lig:nLig,ions:parsed.ions.length,ss:parsed.sPairs.length},
+                  (ligList.length?("lig: ["+ligList.join(", ")+"]"):""));
+    fadeBaseData(false);
+    __baseData.forEach(function(tr){ tr.__isBase = true; });
+
+    updatePlot();
+    info.textContent=" pronto: "+title.replace(/^PDB:s*/,"");
+  }
+
+  function renderFromMol(text, title){
+    __isGenericMol=true; __polOn=false; __polTrace=null; __hiData=[];
+    var mol=parseMOLorSDF(text);
+    if(!mol.atoms.length){
+      info.textContent=" arquivo sem átomos reconhecíveis";
+      Plotly.react("grafico",[ {type:"scatter",x:[0],y:[0],mode:"text",text:["Sem dados"]} ],{title:"Sem dados"});
+      return;
+    }
+    __molAtoms=mol.atoms; __molBonds=mol.bonds||inferBonds(mol.atoms);
+    __baseData=tracesMol(__molAtoms,__molBonds);
+    __baseLayout=layout3D(title); __lastParsed=null; __ssData.helix=[]; __ssData.sheet=[];
+    updateMetaBar(null,{atoms:__molAtoms.length,bonds:__molBonds.length});
+    Plotly.react("grafico", __baseData, __baseLayout);
+    info.textContent=" pronto: "+title;
+  }
+
+  function renderFromXYZ(text, title){
+    __isGenericMol=true; __polOn=false; __polTrace=null; __hiData=[];
+    var mol=parseXYZ(text); __molAtoms=mol.atoms; __molBonds=mol.bonds;
+    __baseData=tracesMol(__molAtoms,__molBonds);
+    __baseLayout=layout3D(title); __lastParsed=null; __ssData.helix=[]; __ssData.sheet=[];
+    updateMetaBar(null,{atoms:__molAtoms.length,bonds:__molBonds.length});
+    Plotly.react("grafico", __baseData, __baseLayout);
+    info.textContent=" pronto: "+title;
+  }
+  
+  // depois de montar __baseData:
+__baseData.forEach(function(tr){ tr.__isBase = true; });
+
+  
+  function __applySlidersToTraces(allTraces, fadeOn){
+  // fadeOn = true quando polaridade/destaque estiverem ativos (deixa base mais clarinha)
+  var baseOpacity = __opacity;
+  var fadedOpacity = Math.min(0.25, baseOpacity);
+
+  for (var i=0;i<allTraces.length;i++){
+    var tr = allTraces[i];
+    if (tr.type !== "scatter3d") continue;
+
+    // Opacidade padrão
+    var targetOpacity = baseOpacity;
+
+    // Se for um trace que está nos "dados base" e o fade estiver ligado, clareia:
+    // (marcamos o fade na própria chamada de updatePlot; aqui só aplicamos)
+    if (tr.__isBase && fadeOn){
+      targetOpacity = fadedOpacity;
+    }
+
+    if (tr.line){
+      tr.line.opacity = targetOpacity;
+    }
+    if (tr.marker){
+      tr.marker.opacity = targetOpacity;
+
+      // PDB: só CA; Moléculas pequenas (PubChem/MOL/XYZ): todos os markers
+      if (__isGenericMol || tr._isCA){
+        tr.marker.size = __caSize;
+      }
+    }
+  }
+}
+
+
+  function updatePlot(){
+  if(!__baseData||!__baseLayout) return;
+
+  var fade = (!__isGenericMol && (__polOn || (__hiData && __hiData.length)));
+
+  var all = [].concat(__baseData);
+  if(!__isGenericMol){
+    if(__ssSel.helix && __ssData.helix.length) all = all.concat(__ssData.helix);
+    if(__ssSel.sheet && __ssData.sheet.length) all = all.concat(__ssData.sheet);
+    if(__polOn && __polTrace) all = all.concat([__polTrace]);
+  }
+  if(__hiData && __hiData.length) all = all.concat(__hiData);
+
+  // <<< aplica sliders (tamanho CA + opacidade) antes de renderizar
+  __applySlidersToTraces(all, fade);
+
+  Plotly.react("grafico", all, __baseLayout);
+}
+
+
+  // ======== Handlers ========
+  btnHi.onclick=function(){
+    if(__isGenericMol){
+      var sel = parseSelectionForMol(selBox.value);
+      if(!sel.length){ info.textContent=" nenhum átomo encontrado"; __hiData=[]; updatePlot(); return; }
+      __hiData = makeHighlightTraces(sel); updatePlot(); info.textContent=" selecionados: "+sel.length; return;
+    }
+    if(!__lastParsed || !__lastParsed.CA){ info.textContent=" carregue um PDB antes"; return; }
+    var q=selBox.value, sel=parseSelectionQuery(q, __lastParsed.CA);
+    if(!sel.length){ info.textContent=" nenhum residuo correspondente a: "+q; __hiData=[]; updatePlot(); return; }
+    __hiData = makeHighlightTraces(sel); updatePlot(); info.textContent=" selecionados: "+sel.length;
+  };
+
+  btnClear.onclick=function(){ __hiData=[]; fadeBaseData(false); updatePlot(); info.textContent=" destaque limpo"; };
+
+  inpFile.onchange=function(){
+    var f=inpFile.files&&inpFile.files[0]; if(!f) return;
+    info.textContent=" carregando "+f.name+" ..."; var r=new FileReader();
+    r.onload=function(ev){
+      var txt=ev.target.result||"", name=(f.name||"").toLowerCase();
+      if(/.(mol|sdf)$/.test(name)) return renderFromMol(txt,"MOL/SDF: "+f.name);
+      if(/.(xyz)$/.test(name))     return renderFromXYZ(txt,"XYZ: "+f.name);
+      return renderFromPDB(txt,"PDB: "+f.name);
+    };
+    r.readAsText(f);
+  };
+  
+  btnPub.onclick = function(){
+  var q = (inpPub.value||"").trim();
+  if (!q){ info.textContent=" informe CID ou nome (PubChem)"; return; }
+
+  var isCID = /^[0-9]+$/.test(q);
+  var baseCID  = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/";
+  var baseNAME = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/";
+  var url3D    = (isCID? (baseCID+q) : (baseNAME+encodeURIComponent(q))) + "/SDF?record_type=3d";
+  var url2D    = (isCID? (baseCID+q) : (baseNAME+encodeURIComponent(q))) + "/SDF"; // fallback sem 3D
+
+  info.textContent = " baixando (PubChem) " + q + " ...";
+
+  fetch(url3D)
+    .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+    .then(function(sdf){ renderFromMol(sdf, "PubChem: "+q); })
+    .catch(function(){
+      // tenta sem record_type=3d (às vezes não há conformação 3D salva)
+      fetch(url2D)
+        .then(function(r2){ if(!r2.ok) throw 0; return r2.text(); })
+        .then(function(sdf2){ renderFromMol(sdf2, "PubChem: "+q+" (2D->3D flat)"); })
+        .catch(function(){
+          info.textContent = " erro ao baixar do PubChem: "+q;
+          Plotly.react("grafico",
+            [{type:"scatter",x:[0],y:[0],mode:"text",text:["Nao foi possivel baixar do PubChem"]}],
+            {title:"Erro PubChem"}
+          );
+        });
+    });
+};
+
+
+  btnFetch.onclick=function(){
+    var raw=(inpId.value||"").trim(); if(!raw){ info.textContent=" informe um ID"; return; }
+    var idU=raw.toUpperCase(), idL=raw.toLowerCase();
+    info.textContent=" baixando "+idU+" ...";
+    var url1="https://files.rcsb.org/download/"+idU+".pdb";
+    var url1b="https://files.rcsb.org/view/"+idU+".pdb";
+    var url2="https://www.ebi.ac.uk/pdbe/entry-files/download/pdb"+idL+".ent";
+    fetch(url1).then(function(r){ if(!r.ok) throw 0; return r.text(); })
+      .then(function(txt){ return renderFromPDB(txt,"PDB: "+idU+".pdb"); })
+      .catch(function(){
+        return fetch(url1b).then(function(r1b){ if(!r1b.ok) throw 0; return r1b.text(); })
+          .then(function(txt1b){ return renderFromPDB(txt1b,"PDB: "+idU+".pdb"); })
+          .catch(function(){
+            return fetch(url2).then(function(r2){ if(!r2.ok) throw 0; return r2.text(); })
+              .then(function(txt2){ return renderFromPDB(txt2,"PDB: "+idU); })
+              .catch(function(){
+                info.textContent = " erro ao baixar "+idU;
+                Plotly.react("grafico",
+                  [{type:"scatter",x:[0],y:[0],mode:"text",text:["Nao foi possivel baixar "+idU]}],
+                  {title:"Erro download"});
+              });
+          });
+      });
+  };
+
+  // retorno inicial
+  var data0=[{type:"scatter",mode:"text",x:[0],y:[0],text:["Use upload (PDB/MOL/SDF/XYZ) ou informe um ID e clique em baixar."],hoverinfo:"none",showlegend:false}];
+  var layout0={title:"PDB/MOL 3D viewer",margin:{l:0,r:0,t:40,b:0}};
+  Plotly.react("grafico", data0, layout0);
+
+})(); // fim IIFE
+
+`;
+
+
+window.onload = function() {
+    editor.setValue(codigoPadrao, -1);
+    resetarGrafico();
+};
+
+   
+</script>
+
+
+<div class="license-info">
+  <p>
+    Licence under 
+    <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" style="color: gray; text-decoration: none;">
+      CC BY-NC-SA 4.0
+    </a>
+    © 2025 José Maurício Schneedorf FS
+  </p>
+</div>
+
+
+</div>
+
+<script>
+  function alternarTema() {
+  document.body.classList.toggle("dark-mode");
+
+  const isDark = document.body.classList.contains("dark-mode");
+  const botao = document.getElementById("toggleTheme");
+  botao.textContent = isDark ? "☀️" : "🌙";
+  editor.setTheme(isDark ? "ace/theme/monokai" : "ace/theme/github");
+  const layoutEscuro = {
+    plot_bgcolor: "#1e1e1e",
+    paper_bgcolor: "#1e1e1e",
+    font: { color: "#e0e0e0" },
+    xaxis: { color: "#e0e0e0", gridcolor: "#444" },
+    yaxis: {
+          zeroline: true,
+          zeroline: true, color: "#e0e0e0", gridcolor: "#444" }
+  };
+
+  const layoutClaro = {
+    plot_bgcolor: "#ffffff",
+    paper_bgcolor: "#ffffff",
+    font: { color: "#000000" },
+    xaxis: { color: "#000", gridcolor: "#ccc" },
+    yaxis: {
+          zeroline: true,
+          zeroline: true, color: "#000", gridcolor: "#ccc" }
+  };
+
+  const layoutNovo = isDark ? layoutEscuro : layoutClaro;
+
+  Plotly.relayout("grafico", layoutNovo);
+}
+
+</script>
+
+<script>
+function salvarAppCompleto() {
+  const gd = document.getElementById("grafico");
+  const curvasAtuais = JSON.stringify(gd.data);
+  const layoutAtual = JSON.stringify(gd.layout || {});
+
+  let htmlCompleto = document.documentElement.outerHTML;
+
+  // Script que será injetado no HTML salvo para redesenhar o gráfico
+  const scriptPlotly = `
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const data = ${curvasAtuais};
+        const layout = ${layoutAtual};
+        Plotly.newPlot("grafico", data, layout);
+      });
+    <\\/script>
+  `;
+
+</script>
+
+
+<script>
+function salvarProjetoCompleto() {
+  const gd = document.getElementById("grafico");
+  const curvasStr = JSON.stringify(gd.data);
+  const layoutStr = JSON.stringify(gd.layout || {});
+  const codigoStr = JSON.stringify(editor.getValue());
+  const temaEscuro = document.body.classList.contains("dark-mode");
+
+  let htmlContent = ''
+    + '<!DOCTYPE html>\n'
+    + '<html lang="pt">\n'
+    + '<head>\n'
+    + '  <meta charset="UTF-8">\n'
+    + '  <title>JSPlotly Projeto Salvo</title>\n'
+    + '  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"><\/script>\n'
+    + '  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"><\/script>\n'
+    + '  <style>\n'
+    + '    body { font-family: Arial, sans-serif; margin: 20px; }\n'
+    + '    .container { display: flex; justify-content: space-between; align-items: flex-start; }\n'
+    + '    #grafico { width: 55%; height: 500px; }\n'
+    + '    #editor-container { width: 40%; }\n'
+    + '    #editor { width: 100%; height: 350px; border: 1px solid #ccc; }\n'
+    + '  </style>\n'
+    + '</head>\n'
+    + '<body>\n'
+    + '  <h2>JSPlotly - Projeto Salvo</h2>\n'
+    + '  <div class="container">\n'
+    + '    <div id="grafico"></div>\n'
+    + '    <div id="editor-container">\n'
+    + '      <div id="editor"></div>\n'
+    + '    </div>\n'
+    + '  </div>\n'
+    + '  <script>\n'
+    + '    const curvas = ' + curvasStr + ';\n'
+    + '    const layout = ' + layoutStr + ';\n'
+    + '    const codigo = ' + codigoStr + ';\n'
+    + '    const temaEscuro = ' + JSON.stringify(temaEscuro) + ';\n'
+    + '    const editor = ace.edit("editor");\n'
+    + '    editor.setTheme(temaEscuro ? "ace/theme/monokai" : "ace/theme/github");\n'
+    + '    editor.session.setMode("ace/mode/javascript");\n'
+    + '    editor.setValue(codigo, -1);\n'
+    + '    layout.editable = true;\n'
+    + '    Plotly.newPlot("grafico", curvas, layout);\n'
+    + '    document.body.classList.toggle("dark-mode", temaEscuro);\n'
+    + '    document.getElementById("grafico").on("plotly_click", function(data) {\n'
+    + '      const y = data.points[0].y;\n'
+    + '      const ctx = new (window.AudioContext || window.webkitAudioContext)();\n'
+    + '      const osc = ctx.createOscillator();\n'
+    + '      const gain = ctx.createGain();\n'
+    + '      osc.type = "sine";\n'
+    + '      osc.frequency.setValueAtTime(y, ctx.currentTime);\n'
+    + '      osc.connect(gain);\n'
+    + '      gain.connect(ctx.destination);\n'
+    + '      osc.start();\n'
+    + '      osc.stop(ctx.currentTime + 0.4);\n'
+    + '    });\n'
+    + '  <\/script>\n'
+    + '</body>\n'
+    + '</html>';
+
+  const blob = new Blob([htmlContent], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "jsplotly_projeto.html";
+  a.click();
+}
+</script>
+
+<script>
+function salvarProjetoSomenteGrafico() {
+  const gd = document.getElementById("grafico");
+  const curvasStr = JSON.stringify(gd.data);
+  const layoutStr = JSON.stringify(gd.layout || {});
+  const framesData = gd._transitionData && gd._transitionData._frames;
+  const framesStr = JSON.stringify(framesData || []);
+  const temaEscuro = document.body.classList.contains("dark-mode");
+
+  let htmlContent = ''
+    + '<!DOCTYPE html>\n'
+    + '<html lang="pt">\n'
+    + '<head>\n'
+    + '  <meta charset="UTF-8">\n'
+    + '  <title>JSPlotly Gráfico Exportado</title>\n'
+    + '  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"><\/script>\n'
+    + '  <style>\n'
+    + '    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: ' + (temaEscuro ? '#1e1e1e' : '#ffffff') + '; color: ' + (temaEscuro ? '#e0e0e0' : '#000000') + '; }\n'
+    + '    #grafico { width: 100vw; height: 100vh; }\n'
+    + '  </style>\n'
+    + '</head>\n'
+    + '<body>\n'
+    + '  <div id="grafico"></div>\n'
+    + '  <script>\n'
+    + '    const data = ' + curvasStr + ';\n'
+    + '    const layout = ' + layoutStr + ';\n'
+    + '    const frames = ' + framesStr + ';\n'
+    + '    layout.editable = false;\n'
+    + '    Plotly.newPlot("grafico", data, layout).then(function() {\n'
+    + '      if (frames && frames.length > 0) {\n'
+    + '        Plotly.addFrames("grafico", frames);\n'
+    + '        Plotly.animate("grafico", null, { frame: { duration: 500, redraw: true }, transition: { duration: 300 } });\n'
+    + '      }\n'
+    + '    });\n'
+    + '    document.getElementById("grafico").on("plotly_click", function(data) {\n'
+    + '      const y = data.points[0].y;\n'
+    + '      const ctx = new (window.AudioContext || window.webkitAudioContext)();\n'
+    + '      const osc = ctx.createOscillator();\n'
+    + '      const gain = ctx.createGain();\n'
+    + '      osc.type = "sine";\n'
+    + '      osc.frequency.setValueAtTime(y, ctx.currentTime);\n'
+    + '      osc.connect(gain);\n'
+    + '      gain.connect(ctx.destination);\n'
+    + '      osc.start();\n'
+    + '      osc.stop(ctx.currentTime + 0.4);\n'
+    + '    });\n'
+    + '  <\/script>\n'
+    + '</body>\n'
+    + '</html>';
+
+  const blob = new Blob([htmlContent], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "play.html";
+  a.click();
+}
+</script>
+
+
+
+
+<script>
+function salvarCloneJSPlotly() {
+  // 1) Pega o código do editor e escapa com segurança
+  const codigoNovo = editor.getValue()
+    .replace(/\\/g, '\\\\')
+    .replace(/`/g, '\\`')
+    .replace(/\$/g, '\\$')
+    .replace(/<\/script>/gi, '<\\/script>');
+
+  const novaDefinicao = 'var codigoPadrao = `' + codigoNovo + '`;';
+
+  // 2) Clona o HTML atual e limpa o que é *dinâmico* do viewer
+  const htmlOriginal = document.documentElement.outerHTML;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlOriginal, 'text/html');
+
+  // remove UI dinâmica criada pelo codigoPadrao
+  const ui   = doc.getElementById('pdb3d-ui2');   if (ui) ui.remove();
+  const meta = doc.getElementById('pdb3d-meta');  if (meta) meta.remove();
+  const wrap = doc.getElementById('pdb3d-wrap');
+  if (wrap) {
+    // move #grafico para fora e descarta o wrapper
+    const graf = doc.getElementById('grafico');
+    if (graf && wrap.parentNode) {
+      wrap.parentNode.replaceChild(graf, wrap);
+    }
+  }
+  // esvazia o container do plot (nada pré-renderizado no clone)
+  const gd = doc.getElementById('grafico');
+  if (gd) gd.innerHTML = '';
+
+  // 3) Substitui o codigoPadrao na cópia do HTML
+  doc.documentElement.innerHTML = doc.documentElement.innerHTML.replace(
+    /var codigoPadrao = `([\s\S]*?)`;/,
+    novaDefinicao
+  );
+
+  // 4) Salva o clone “limpo”
+  const saida = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+  const blob = new Blob([saida], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "JSPlotly.html";
+  a.click();
+}
+</script>
+
+
+  <!-- Script de expansão/contração -->
+  <script>
+  (function(){
+    const container = document.querySelector('.container');
+    const grafico   = document.getElementById('grafico');
+    const editorBox = document.getElementById('editor-container');
+    const btn       = document.getElementById('expand3d-btn');
+    if(!container || !grafico || !editorBox || !btn) return;
+
+    let splitter = null;
+    let dragging = false;
+    let collapsed = false;
+
+    function ensureGrid(){
+      if (!container.classList.contains('__two_cols')){
+        container.classList.add('__two_cols');
+        splitter = document.createElement('div');
+        splitter.id = '__splitter';
+        container.insertBefore(splitter, editorBox);
+
+        splitter.addEventListener('mousedown', ()=>{ if(!collapsed) dragging = true; });
+        window.addEventListener('mouseup',   ()=> dragging = false);
+        window.addEventListener('mousemove', e=>{
+          if (!dragging || collapsed) return;
+          const minLeft = 480;
+          const maxLeft = Math.max(600, window.innerWidth - 260);
+          const left = Math.min(maxLeft, Math.max(minLeft, e.clientX));
+          container.style.gridTemplateColumns = left + 'px 8px 1fr';
+          resizeAll();
+        });
+      }
+    }
+
+    function resizeAll(){
+      try{ if (window.Plotly && grafico) Plotly.Plots.resize(grafico); }catch(e){}
+      try{ if (window.editor && editor.resize) editor.resize(); }catch(e){}
+    }
+
+    btn.addEventListener('click', ()=>{
+      ensureGrid();
+      collapsed = !collapsed;
+      container.classList.toggle('__collapsed', collapsed);
+      btn.title = collapsed ? 'Mostrar editor' : 'Expandir 3D';
+      btn.textContent = collapsed ? '☰' : '⤢';
+      setTimeout(resizeAll, 60);
+    });
+
+    window.addEventListener('resize', resizeAll);
+  })();
+  </script>
+
+</body>
+</html>
+
+

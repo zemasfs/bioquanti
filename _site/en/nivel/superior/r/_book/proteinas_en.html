@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Proteins – Quantitative Biochemistry &amp; R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./enzimas_en.html" rel="next">
+<link href="./aminoacid_en.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5cd4c82f5794ab985b4ec67d486cba7b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./proteinas_en.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Proteins</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Quantitative Biochemistry &amp; R</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./biomoleculas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Biomolecules</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tampoes_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Biological buffer system</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aminoacid_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Amino acids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proteinas_en.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Proteins</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./enzimas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Enzymes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./enzInib_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Enzyme inhibition</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./binding_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Molecular interaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acnucleic_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nucleic Acids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./membranas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Biological membranes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./biotermodin_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Biothermodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./metabolismo_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cellular Metabolism</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./planejExper_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Experimental design</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./redes_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Metabolic Networks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#sec-Proteins" id="toc-sec-Proteins" class="nav-link active" data-scroll-target="#sec-Proteins"><span class="header-section-number">5.1</span> Amino acid composition</a></li>
+  <li><a href="#protein-purification-table-r-as-a-spreadsheet" id="toc-protein-purification-table-r-as-a-spreadsheet" class="nav-link" data-scroll-target="#protein-purification-table-r-as-a-spreadsheet"><span class="header-section-number">5.2</span> Protein Purification Table &amp; R as a spreadsheet</a></li>
+  <li><a href="#interaction-of-oxygen-with-myoglobin-and-hemoglobin" id="toc-interaction-of-oxygen-with-myoglobin-and-hemoglobin" class="nav-link" data-scroll-target="#interaction-of-oxygen-with-myoglobin-and-hemoglobin"><span class="header-section-number">5.3</span> Interaction of oxygen with myoglobin and hemoglobin</a></li>
+  <li><a href="#some-r-packages-for-studying-proteins" id="toc-some-r-packages-for-studying-proteins" class="nav-link" data-scroll-target="#some-r-packages-for-studying-proteins"><span class="header-section-number">5.4</span> Some R packages for studying proteins</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Proteins</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-Proteins" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-Proteins"><span class="header-section-number">5.1</span> Amino acid composition</h2>
+<div class="line-block">Proteins are biopolymers formed by 20 amino acids. In this way, it is possible to easily evaluate the composition of any protein available in a database, such as the <em>PDB</em> seen in the <em>Amino Acids</em> chapter. Taking human serum albumin as an example, code <em>AAA98797</em> from the <em>National Center for Biotechnology Information</em>, it is possible to count the 20 types of amino acids that make up its sequence. To do this, simply consider the <em>FASTA</em> sequence as a <em>string</em> and extract the quantity of each letter, using the <em>stringr</em> library, as follows.</div>
+<div class="line-block">First, obtain the <em>FASTA</em> sequence of serum albumin.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>seq <span class="ot">&lt;-</span> <span class="st">"MKWVTFISLLFLFSSAYSRGVFRRDAHKSEVAHRFKDLGEENFKALVLIAFAQYLQQCPFEDHVKLVNEV</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">TEFAKTCVADESAENCDKSLHTLFGDKLCTVATLRETYGEMADCCAKQEPERNECFLQHKDDNPNLPRLV</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">RPEVDVMCTAFHDNEETFLKKYLYEIARRHPYFYAPELLFFAKRYKAAFTECCQAADKAACLLPKLDELR</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">DEGKASSAKQRLKCASLQKFGERAFKAWAVARLSQRFPKAEFAEVSKLVTDLTKVHTECCHGDLLECADD</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">RADLAKYICENQDSISSKLKECCEKPLL EKSHCIAEVENDEMPADLPSLAADFVESKDVCKNYAEAKDVF</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">LGMFLYEYARRHPDYSVVLLLRLAKTYETTLEKCCAAADPHECYAKVFDEFKPLVEEPQNLIKQNCELFE</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">QLGEYKFQNALLVRYTKKVPQVSTPTLVEVSRNLGKVGSKCCKHPEAKRMPCAEDYLSVVLNQLCVLHEK</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">TPVSDRVTKCCTESLVNRRPCFSALEVDETYVPKEFNAETFTFHADICTLSEKERQIKKQTALVELVKHK</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">PKATKEQLKAVMDDFAAFVEKCCKADDKETCFAEEGKKLVAASQAALGL"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">You can see that there are empty spaces, which can be omitted for aesthetic reasons or not, since the <em>stringr</em> package will not count them, unlike more specific packages for biological sequences, such as <em>seqinr</em> seen previously. But if you want to omit these spaces, just run the code below.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>seq <span class="ot">&lt;-</span> seq[seq <span class="sc">!=</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>seq <span class="co"># boolean operation != means "no"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, you get the quantity of a specific letter in the sequence.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>aa <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"A"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>aa</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 63</code></pre>
+</div>
+</div>
+<div class="line-block">Note that the <code>str_count</code> command only counts the letter “A” in the sequence. This way, you can get all 20 amino acids by repeating this command.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ala <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"A"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>arg <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"R"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>asn <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"N"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>asp <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"D"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>cys <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"C"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>glu <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"E"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>gln <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"Q"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>gly <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"G"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>his <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"H"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>ile <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"I"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>leu <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"L"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>lys <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"K"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>met <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"M"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>phe <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"F"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>pro <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"P"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>ser <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"S"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>thr <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"T"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>trp <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"W"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>tyr <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"Y"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>val <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">"V"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And, to visualize the result in a table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>aa_3abrev <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ala"</span>, <span class="st">"Arg"</span>, <span class="st">"Asn"</span>, <span class="st">"Asp"</span>, <span class="st">"Cys"</span>, <span class="st">"Glu"</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gln"</span>, <span class="st">"Gly"</span>, <span class="st">"His"</span>, <span class="st">"Ile"</span>, <span class="st">"Leu"</span>, <span class="st">"Lys"</span>, <span class="st">"Met"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Phe"</span>, <span class="st">"Pro"</span>, <span class="st">"Ser"</span>, <span class="st">"Thr"</span>, <span class="st">"Trp"</span>, <span class="st">"Tyr"</span>, <span class="st">"Val"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>aa_quant <span class="ot">&lt;-</span> <span class="fu">c</span>(ala, arg, asn, asp, cys, glu, gln, gly,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    his, ile, leu, lys, met, phe, pro, ser, thr, trp,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    tyr, val)  <span class="co"># vector with the quantity of amino acids in the protein</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>aa_seq <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(aa_3abrev, aa_quant)  <span class="co"># dataframe with the results</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(aa_seq) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Tipo"</span>, <span class="st">"Qtde"</span>)  <span class="co"># rename the columns</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Amino acid composition in human serum albumin</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>aa_seq  <span class="co"># displays the table</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Tipo Qtde
+1   Ala   63
+2   Arg   27
+3   Asn   17
+4   Asp   36
+5   Cys   35
+6   Glu   62
+7   Gln   20
+8   Gly   13
+9   His   16
+10  Ile    9
+11  Leu   64
+12  Lys   60
+13  Met    7
+14  Phe   35
+15  Pro   24
+16  Ser   28
+17  Thr   29
+18  Trp    2
+19  Tyr   19
+20  Val   43</code></pre>
+</div>
+</div>
+<div class="line-block">‘R’ has some commands for the aesthetic generation of tables, including those included in the ‘knitr’ package, as follows:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) <span class="co"># to generate the table</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(aa_seq, <span class="at">caption =</span> <span class="st">"Composition of amino acids in human serum albumin."</span>, <span class="st">"pipe"</span>) <span class="co"># table</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Composition of amino acids in human serum albumin.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: right;">Qtde</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ala</td>
+<td style="text-align: right;">63</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Arg</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Asn</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Asp</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cys</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Glu</td>
+<td style="text-align: right;">62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gln</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gly</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">His</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ile</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leu</td>
+<td style="text-align: right;">64</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lys</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Met</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Phe</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pro</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ser</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thr</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trp</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tyr</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Val</td>
+<td style="text-align: right;">43</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="line-block">Note that, despite the result obtained, there was some work to obtain the composition of the albumin, from the 20 modified lines for each amino acid. A more practical alternative is to consider a <em>loop</em> that performs the extraction of the desired information for a vector containing the abbreviation of a letter for each amino acid.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>aa_1abrev <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"R"</span>, <span class="st">"N"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>, <span class="st">"E"</span>, <span class="st">"Q"</span>, <span class="st">"G"</span>, <span class="st">"H"</span>, <span class="st">"I"</span>, <span class="st">"L"</span>, <span class="st">"K"</span>, <span class="st">"M"</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">"F"</span>, <span class="st">"P"</span>, <span class="st">"S"</span>, <span class="st">"T"</span>, <span class="st">"W"</span>, <span class="st">"Y"</span>, <span class="st">"V"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> aa_1abrev) {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>aa_quant2 <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> aa_1abrev)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(aa_quant2) <span class="co"># optional syntax for function with only one output</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>aa_seq <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(aa_3abrev, aa_quant2) <span class="co"># dataframe with results</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(aa_seq) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Type"</span>, <span class="st">"Quantity"</span>) <span class="co"># rename columns</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(aa_seq, <span class="at">caption =</span> <span class="st">"Amino acid composition in human serum albumin</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="st">(using loop)."</span>, <span class="st">"pipe"</span>) <span class="co"># table</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Amino acid composition in human serum albumin (using loop).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Type</th>
+<th style="text-align: right;">Quantity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ala</td>
+<td style="text-align: right;">63</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Arg</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Asn</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Asp</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cys</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Glu</td>
+<td style="text-align: right;">62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gln</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gly</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">His</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ile</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leu</td>
+<td style="text-align: right;">64</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lys</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Met</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Phe</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pro</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ser</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thr</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trp</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tyr</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Val</td>
+<td style="text-align: right;">43</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="line-block">This way you get the same result, but with less memory consumption and higher processing speed, characteristics in any programming logic. Although the <em>loop</em> exemplifies automation, the <code>str_count</code> function retains an internal <em>loop</em>, since an element counting function is applied to a sequence, based on a predefined pattern (the vector <em>aa_1abrev</em>, in this case). This way, the script can be further simplified, without the need for the external <em>loop</em>.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_count</span>(seq, <span class="at">pattern =</span> aa_1abrev)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 63 27 17 36 35 62 20 13 16  9 64 60  7 35 24 28 29  2 19 43</code></pre>
+</div>
+</div>
+<div class="line-block">Several R functions exhibit this internal <em>loop</em>, which can be applied to vectors, lists, matrices and <em>dataframes</em> (datasheets). The simplest involve the application of a preprogrammed R function to a vector, for example:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(y)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 63</code></pre>
+</div>
+</div>
+<div class="line-block">Another common vectorization is the application of a user <em>function</em> to a vector, reducing the need for repeated commands, as in the example below:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimated average size of a protein from the number of</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># amino acid residues</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>prot.size <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>MM <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">110</span> <span class="co"># 'x' represents the number of amino acids in the protein</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(MM)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">prot.size</span>(<span class="dv">575</span>) <span class="co"># number of amino acid residues in human albumin</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 63250</code></pre>
+</div>
+</div>
+<div class="line-block">Another form of vectorization involves the <code>apply</code> family of functions, consisting of the <code>apply</code>, <code>sapply</code>, <code>tapply</code>, <code>lapply</code>, and <code>mapply</code> commands. Although they have faster processing than external <em>loop</em> functions for using very complex matrices, each one is aimed at a distinct object or specific R situation (returning a list, vector or matrix), allows the use of <code>subset</code> (data subsets), uses R functions or functions previously defined by the user, and runs in just one command line. These advantages contrast with the use of <em>for</em> loops applied to vectors. However, vectorization works very well when you want to apply or map a function to a vector/matrix/list. When, on the other hand, you want to apply a function whose result depends on more than one vector/matrix/list, the <em>for</em> loop becomes indispensable, as in the titration of weak acids in the <em>Amino Acids</em> chapter.</div>
+<div class="line-block">Regardless of the method used (and here it is worth highlighting the so-called <em>good programming practices</em> in the construction of <em>scripts</em> <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>), it is possible to build a more general composition for the set of residues of the protein. Thus, we can obtain any quantitative relationship from the sequence, since we are treating it as a <em>string</em>. For example, a table containing the class of each amino acid that makes up the sequence.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>aa_ac <span class="ot">&lt;-</span> aa_seq[<span class="dv">4</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">6</span>, <span class="dv">2</span>] <span class="co"># AA acids</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>aa_bas <span class="ot">&lt;-</span> aa_seq[<span class="dv">2</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">9</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">12</span>, <span class="dv">2</span>] <span class="co"># AA basics</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>aa_arom <span class="ot">&lt;-</span> aa_seq[<span class="dv">14</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">18</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">19</span>, <span class="dv">2</span>] <span class="co"># AA aromatics</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>aa_alif <span class="ot">&lt;-</span> aa_seq[<span class="dv">10</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">11</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">15</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">1</span>, <span class="dv">2</span>] <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a> aa_seq[<span class="dv">20</span>, <span class="dv">2</span>] <span class="co"># Aliphatic AA</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>aa_pol <span class="ot">&lt;-</span> aa_seq[<span class="dv">3</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">5</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">7</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">8</span>, <span class="dv">2</span>] <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>aa_seq[<span class="dv">13</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">16</span>, <span class="dv">2</span>] <span class="sc">+</span> aa_seq[<span class="dv">17</span>, <span class="dv">2</span>] <span class="do">## Neutral polar AA</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Now, instead of building a table with the count of these groups, let’s calculate their percentage, for a more general view of the sequence.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>aa_tot <span class="ot">&lt;-</span> <span class="fu">str_count</span>(seq, <span class="at">pattern =</span> <span class="st">""</span>) <span class="co"># length of the sequence</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>class_perc <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">c</span>(aa_ac, aa_bas, aa_arom, aa_alif, aa_pol) <span class="sc">/</span> aa_tot <span class="sc">*</span> <span class="dv">100</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And now, yes, we build the table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>aa_class <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"acidic"</span>, <span class="st">"basic"</span>, <span class="st">"aromatic"</span>, <span class="st">"aliphatic"</span>, <span class="st">"polar"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>aa_perc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(aa_class, class_perc) <span class="co"># dataframe with results</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(aa_perc) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Class"</span>, <span class="st">"%"</span>) <span class="co"># rename columns</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(aa_perc, <span class="at">caption =</span> <span class="st">"Distribution of amino acid classes</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st">in human albumin."</span>, <span class="st">"pipe"</span>) <span class="co"># table</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Distribution of amino acid classes in human albumin.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Class</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">acidic</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">basic</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aromatic</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">aliphatic</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">polar</td>
+<td style="text-align: right;">24</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="line-block">It can be seen from the table above that the distribution of amino acid residue classes in albumin is reasonably homogeneous, which contributes to its amphoteric function of transporting polar (e.g.&nbsp;calcium) and nonpolar (e.g.&nbsp;cholesterol, fatty acids) compounds.</div>
+</section>
+<section id="protein-purification-table-r-as-a-spreadsheet" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="protein-purification-table-r-as-a-spreadsheet"><span class="header-section-number">5.2</span> Protein Purification Table &amp; R as a spreadsheet</h2>
+<div class="line-block">Despite the ease with which we can create/edit conventional spreadsheets (<em>spreadsheet</em>; e.g.&nbsp;MS Excel, Libreoffice Calc, Gnumeric, etc.), ‘R’ also allows us to work with spreadsheets. Although less intuitive than those mentioned, scripting in R allows the creation/editing of highly complex spreadsheets, given the nature of the statistical programming of the suite.</div>
+<div class="line-block">To illustrate the construction of a simple spreadsheet, let us take as an example a <em>Protein Purification Table</em>, commonly used in Biotechnology and related areas. The simplest way to construct a spreadsheet involves 1) the individual preparation of vectors, and 2) the union of the vectors in a spreadsheet.<br>
+The procedures for protein purification (or isolation, fractionation) involve techniques such as <strong>chemical treatment (ammonium sulfate precipitation, acetone)</strong>, <strong>acid treatment</strong>, <strong>thermal treatment</strong>, <strong>dialysis</strong>, <strong>chromatography (molecular filtration, ion exchange, affinity, reverse phase)</strong>, among others. To measure the degree of purity of the sample obtained, simple <strong>electrophoresis</strong>, <strong>isoelectric focusing</strong>, <strong>2D electrophoresis</strong>, use of <strong>monoclonal antibodies</strong>, and specific <strong>activity assays</strong>, among others, are normally used.<br>
+For the purification table, only the <strong>sample mass</strong> and <strong>sample enzymatic activity</strong> vectors obtained at each purification step are required. A simple spreadsheet could be constructed as:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preparation of a simple enzyme purification spreadsheet</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (each element of the vector represents a purification step)</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Definition of the main vectors:</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>prot.total <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6344</span>, <span class="dv">302</span>, <span class="dv">145</span>, <span class="dv">34</span>, <span class="dv">10</span>, <span class="fl">3.8</span>) <span class="co"># protein, mg</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>ativ.tot <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">122</span>, <span class="dv">106</span>, <span class="dv">70</span>, <span class="dv">53</span>, <span class="dv">24</span>) <span class="sc">*</span> <span class="dv">1000</span> <span class="co"># activity, U</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Construction of the spreadsheet:</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>purif.plan <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(prot.total, ativ.tot)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>purif.plan</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  prot.total ativ.tot
+1     6344.0   200000
+2      302.0   122000
+3      145.0   106000
+4       34.0    70000
+5       10.0    53000
+6        3.8    24000</code></pre>
+</div>
+</div>
+<div class="line-block">The spreadsheet now forms an R dataset. There are other simple ways to create a dataset, such as using the ‘cbind’ function (to join columns) or ‘rbind’ (to join rows):</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>purif.plan2 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(prot.total, ativ.tot)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>purif.plan2</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     prot.total ativ.tot
+[1,]     6344.0   200000
+[2,]      302.0   122000
+[3,]      145.0   106000
+[4,]       34.0    70000
+[5,]       10.0    53000
+[6,]        3.8    24000</code></pre>
+</div>
+</div>
+<div class="line-block">Regardless of the procedure, you can change the column names, as follows:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Editing column names</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(purif.plan2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"totalProt"</span>, <span class="st">"enzAtiv"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>purif.plan2</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     totalProt enzAtiv
+[1,]    6344.0  200000
+[2,]     302.0  122000
+[3,]     145.0  106000
+[4,]      34.0   70000
+[5,]      10.0   53000
+[6,]       3.8   24000</code></pre>
+</div>
+</div>
+<div class="line-block">As in a conventional spreadsheet, it is also possible to create new vectors calculated from the initial ones:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>purif.plan3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(prot.total, ativ.tot, ativ.tot <span class="sc">/</span> prot.total)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">1</span>) <span class="co"># option for no. of decimal places</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(purif.plan3) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"prot.total"</span>, <span class="st">"ativ.tot"</span>, <span class="st">"ativ.specif"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(purif.plan3) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"extr.bruto"</span>, <span class="st">"NH4SO2"</span>, <span class="st">"acetone"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="st">"Sephadex G-100"</span>, <span class="st">"DEAE-cellulose"</span>, <span class="st">"C8-phase rev"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>purif.plan3</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               prot.total ativ.tot ativ.specif
+extr.bruto           6344    2e+05          32
+NH4SO2                302    1e+05         404
+acetone               145    1e+05         731
+Sephadex G-100         34    7e+04        2059
+DEAE-cellulose         10    5e+04        5300
+C8-phase rev            4    2e+04        6316</code></pre>
+</div>
+</div>
+<div class="line-block">The spreadsheet can also be edited in its values, simply by assigning a new name so that the changes are saved:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple spreadsheet editing (changes in values ​​and column names)</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>purif.plan4 <span class="ot">&lt;-</span> <span class="fu">edit</span>(purif.plan3) <span class="co"># or data.entry( )</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Of course, you can also import data from a spreadsheet already created in another program. Example for a spreadsheet saved as <em>CSV</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing data from another spreadsheet (CSV):</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Import with the name of the desired spreadsheet:</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>purif.plan5 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"planilha.csv"</span>, <span class="at">header =</span> T, <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Import with the search screen for the desired spreadsheet:</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>purif.plan5 <span class="ot">&lt;-</span> frame <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.choose</span>())</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">A large number of operations can be performed on spreadsheets in ‘R’, such as insertion, deletion, modification, aggregation (<em>merge</em>), filtering, subset extraction, mathematical operations and statistical calculations (mean, standard deviation, etc.). You can also convert the spreadsheet into a more visual table using the ‘tibble’ library, part of a set of packages used in data science called <em>Tidyverse</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>purif.plan6 <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(purif.plan3)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>purif.plan6</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  prot.total ativ.tot ativ.specif
+       &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+1     6344     200000        31.5
+2      302     122000       404. 
+3      145     106000       731. 
+4       34      70000      2059. 
+5       10      53000      5300  
+6        3.8    24000      6316. </code></pre>
+</div>
+</div>
+<div class="line-block">The <em>Tidyverse</em> comprises an ecosystem of ‘R’ packages that share the same philosophy, grammar and data structure. These packages include ‘tibble’ (tables), ‘ggplot2’ (high-quality visual graphics), and ‘dplyr’ (data manipulation). As for ‘dplyr’, it is quite flexible to create and edit spreadsheets, which are converted to tables, as follows for the purification example above:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enzyme purification table with 'dplyr' package:</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>purif.plan7 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(purif.plan, <span class="at">ativ.esp =</span> ativ.tot <span class="sc">/</span> prot.total)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>purif.plan7</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  prot.total ativ.tot ativ.esp
+1       6344    2e+05       32
+2        302    1e+05      404
+3        145    1e+05      731
+4         34    7e+04     2059
+5         10    5e+04     5300
+6          4    2e+04     6316</code></pre>
+</div>
+</div>
+<div class="line-block">Note that with the ‘dplyr’ package, inserting a new column did not require a new array for column names (‘colnames’). In addition, the final spreadsheet was created using the grammar of the ‘tibble’ package from the <em>Tidyverse</em>. This facility also extends to the spreadsheet editing and filtering processes, such as the extraction of a modified column:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>ativ.tot.kU <span class="ot">&lt;-</span> <span class="fu">transmute</span>(purif.plan7, <span class="at">ativ.tot =</span> ativ.tot <span class="sc">/</span> <span class="fl">1e3</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>ativ.tot.kU <span class="co"># specific activity vector in U x 10^3</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ativ.tot
+1      200
+2      122
+3      106
+4       70
+5       53
+6       24</code></pre>
+</div>
+</div>
+<div class="line-block">This way you can build a complete purification table, listing, in addition to the <em>specific activity</em>, the <em>purification level</em> (how many times the specific activity increased in relation to the initial sample) and the <em>yield</em> obtained (how many times the target enzyme content decreased in relation to the initial sample - remaining activity):</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>purif.plan8 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(purif.plan7,</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="at">purif =</span> ativ.esp <span class="sc">/</span> ativ.esp[<span class="dv">1</span>], <span class="co"># purification level</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="at">rend.perc =</span> <span class="dv">100</span> <span class="sc">*</span> ativ.tot <span class="sc">/</span> ativ.tot[<span class="dv">1</span>]</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>) <span class="co"># percentage yield</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting to the table...</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(purif.plan8, <span class="at">caption =</span> <span class="st">"Purification table for an enzyme"</span>, <span class="st">"pipe"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Purification table for an enzyme</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">prot.total</th>
+<th style="text-align: right;">ativ.tot</th>
+<th style="text-align: right;">ativ.esp</th>
+<th style="text-align: right;">purif</th>
+<th style="text-align: right;">rend.perc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">6344</td>
+<td style="text-align: right;">2e+05</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">302</td>
+<td style="text-align: right;">1e+05</td>
+<td style="text-align: right;">404</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">61</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">1e+05</td>
+<td style="text-align: right;">731</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">53</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">7e+04</td>
+<td style="text-align: right;">2059</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">5e+04</td>
+<td style="text-align: right;">5300</td>
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2e+04</td>
+<td style="text-align: right;">6316</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">12</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="line-block">Additionally, ‘R’ has some packages that speed up the creation/editing of spreadsheets in an interactive way, closer to a conventional spreadsheet, among which the ‘DT’ package stands out, a library written in <em>JavaScript</em> that produces an editable spreadsheet in <em>HTML</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>purif.plan9 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(purif.plan8)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(purif.plan9) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"extr.bruto"</span>, <span class="st">"NH4SO2"</span>, <span class="st">"acetone"</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="st">"Sephadex G-100"</span>, <span class="st">"DEAE-cellulose"</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="st">"C8-phase rev"</span>) <span class="co"># converts the purification table</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co"># into a spreadsheet for use by the DT package</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(purif.plan9) <span class="sc">%&gt;%</span> <span class="fu">formatRound</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span>) <span class="co"># columns with 1 decimal place</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Since this is an interactive HTML output, the result of the code snippet must be omitted for correct compilation by ‘R’ (eval=FALSE, include=TRUE).</div>
+<div class="line-block">The ‘DT’ library allows, among other things, reordering, filtering, and even editing of values, interactively (just click on the desired cell):</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(purif.plan9, <span class="at">editable =</span> <span class="st">"cell"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="interaction-of-oxygen-with-myoglobin-and-hemoglobin" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="interaction-of-oxygen-with-myoglobin-and-hemoglobin"><span class="header-section-number">5.3</span> Interaction of oxygen with myoglobin and hemoglobin</h2>
+<div class="line-block">Both human myoglobin (<em>PD 1MBO</em>) and hemoglobin (<em>PDB 6BB5</em>) are proteins that transport molecular oxygen. Hemoglobin, with a quaternary structure, transports it from the lungs to the tissues, while myoglobin, tertiary, distributes it between them. Its oxygen saturation curves are well known in textbooks, and learning about them can add value when simulated.</div>
+<div class="line-block">Thus, the binding of O<span class="math inline">\(_{2}\)</span> to myoglobin can be considered as a saturation fraction <em>y</em> given as a function of its half-saturation at 50% O<span class="math inline">\(_{2}\)</span> pressure (dissociation constant <em><span class="math inline">\(K_{50}\)</span></em> of 2.8 mmHg).</div>
+<p><span id="eq-Mb"><span class="math display">\[
+y=\frac{pO_2}{K_{50}+pO_2}
+\tag{5.1}\]</span></span></p>
+<p>On the other hand, the value of <em><span class="math inline">\(K_{50}\)</span></em> for hemoglobin is 26 mmHg, but its function is expressed differently from that of myoglobin:</p>
+<p><span id="eq-Hb"><span class="math display">\[
+y=\frac{pO_2^{nH}} {K_{50}^{nH}+pO_2^{nH}}
+\tag{5.2}\]</span></span></p>
+<p>In this <a href="#eq-Hb" class="quarto-xref">Equação&nbsp;<span>5.2</span></a>, <em>nH</em> represents the Hill cooperativity coefficient, which summarizes the energy distributed among the four microscopic dissociation constants of O<span class="math inline">\(_{2}\)</span> to the four porphyrin centers of hemoglobin (<em>heme</em> groups). Simulating both curves:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>K50 <span class="ot">&lt;-</span> <span class="fl">2.8</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(x <span class="sc">/</span> (K50 <span class="sc">+</span> x),</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>),</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="at">xlab =</span> <span class="st">"pO2 (mmHg)"</span>, <span class="at">ylab =</span> <span class="st">"y"</span>, <span class="at">lty =</span> <span class="st">"dotted"</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>K50 <span class="ot">&lt;-</span> <span class="dv">26</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>nH <span class="ot">&lt;-</span> <span class="fl">2.8</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(x<span class="sc">^</span>nH <span class="sc">/</span> (K50<span class="sc">^</span>nH <span class="sc">+</span> x<span class="sc">^</span>nH),</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>),</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="at">xlab =</span> <span class="st">"pO2 (mmHg)"</span>, <span class="at">ylab =</span> <span class="st">"y"</span>, <span class="at">col =</span> <span class="st">"red"</span>,</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="at">add =</span> <span class="cn">TRUE</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>) <span class="co"># "add" allows you to add curves to the graph</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># add baseline at half saturation</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="proteinas_en_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Oxygen saturation isotherm for myoglobin (solid line) and hemoglobin (dotted line), indicating the intercept at 50% pO2 (half saturation).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">As mentioned in the previous paragraph, the four binding centers with molecular oxygen are related to four microscopic dissociation equilibrium constants, from <em>K1</em> to <em>K4</em>. Simplifying the value of pO<span class="math inline">\(_{2}\)</span> to <em>L</em>, ligand, it is also possible to represent the binding of O<span class="math inline">\(_{2}\)</span> to hemoglobin by the Adair equation <span class="citation" data-cites="pauling1935oxygen">(<a href="#ref-pauling1935oxygen" role="doc-biblioref">Pauling 1935</a>)</span>:</div>
+<p><span id="eq-HbKmicro"><span class="math display">\[
+y=\frac{K1*L+2*K2*K1*L^2+3*K3*K2*K1*L^3+4*K4*K3*K2*K1*L^4} {4*(1+K1*L+2*K2*K1*L^2+3*K3*K2*K1*L^3+4*K4*K3*K2*K1*L^4)}
+\tag{5.3}\]</span></span></p>
+<div class="line-block">It turns out that there is a statistical effect associated with the interaction under study, since O<span class="math inline">\(_{2}\)</span> has 4 initial sites of interaction with hemoglobin <span class="citation" data-cites="tyuma1973analysis">(<a href="#ref-tyuma1973analysis" role="doc-biblioref">Tyuma, Imai, e Shimizu 1973</a>)</span>, values ​​that reduce until the saturation of the 4 sites. Thus, it is necessary to account for the microscopic constants <em>Ki</em> due to this statistical compromise:</div>
+<p><span id="eq-HbKSta"><span class="math display">\[
+Ki_{corr} = \frac{i}{N-1+i}*Ki
+\tag{5.4}\]</span></span></p>
+<div class="line-block">In R, this can be aided by a <em>for</em> loop:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.011</span>, <span class="fl">0.016</span>, <span class="fl">0.118</span>, <span class="fl">0.400</span>) <span class="co"># vector of microscopic constants for</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dissociation of Hb to O2</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">201</span>, <span class="dv">2</span>) <span class="co"># vector of O2 contents</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>Kcorr <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="co"># initialize an empty vector to output the corrected Ki vector</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># declare the number of sites in Hb</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) Kcorr[i] <span class="ot">&lt;-</span> i <span class="sc">/</span> (N <span class="sc">-</span> i <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">*</span> K[i]</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>Kcorr <span class="co"># returns the vector of Ki values corrected for the statistical effect</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.003 0.011 0.177 1.600</code></pre>
+</div>
+</div>
+<div class="line-block">Note that the corrected <em>Ki</em> values are in a proportion that follows the availability of sites, from 4 times lower for the 1st site (highest binding), up to 4 times greater than for the 4th site (lowest binding). It is now possible to apply <a href="#eq-HbKmicro" class="quarto-xref">Equação&nbsp;<span>5.3</span></a> using the constants calculated as follows:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>numer <span class="ot">&lt;-</span> K[<span class="dv">1</span>] <span class="sc">*</span> L <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> K[<span class="dv">2</span>] <span class="sc">*</span> K[<span class="dv">1</span>] <span class="sc">*</span> L<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> K[<span class="dv">3</span>] <span class="sc">*</span> K[<span class="dv">2</span>] <span class="sc">*</span> K[<span class="dv">1</span>] <span class="sc">*</span> L<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">*</span> K[<span class="dv">4</span>] <span class="sc">*</span> K[<span class="dv">3</span>] <span class="sc">*</span> K[<span class="dv">2</span>] <span class="sc">*</span> K[<span class="dv">1</span>] <span class="sc">*</span> L<span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>denom <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> numer</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> numer <span class="sc">/</span> denom</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, y, <span class="at">xlab =</span> <span class="st">"pO2"</span>, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="proteinas_en_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Hemoglobin oxygen saturation isotherm by the Adair equation.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">Finally, it is also possible to obtain the binding curve using a variation of <em>for</em> loop in which the <a href="#eq-HbKmicro" class="quarto-xref">Equação&nbsp;<span>5.3</span></a> is produced by iteration, as follows <span class="citation" data-cites="bloomfield2009computer">(<a href="#ref-bloomfield2009computer" role="doc-biblioref">Bloomfield 2009</a>)</span>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculation of y in each L</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>Yi <span class="ot">&lt;-</span> <span class="cf">function</span>(L, Kcorr) {</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">length</span>(Kcorr)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>conc <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>conc[<span class="dv">1</span>] <span class="ot">&lt;-</span> L <span class="sc">*</span> Kcorr[<span class="dv">1</span>]</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>N) conc[i] <span class="ot">&lt;-</span> conc[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">*</span> L <span class="sc">*</span> Kcorr[i]</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>numer2 <span class="ot">&lt;-</span> <span class="fu">sum</span>((<span class="dv">1</span><span class="sc">:</span>N) <span class="sc">*</span> conc) <span class="sc">/</span> N</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>denom2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">sum</span>(conc)</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(numer2 <span class="sc">/</span> denom2)</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculation of y to vector L</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="cf">function</span>(L, Kcorr) {</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>YY <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(L)) YY[j] <span class="ot">&lt;-</span> <span class="fu">Yi</span>(L[j], Kcorr)</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(YY)</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Application of the function of y to L and graph</span></span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>Yfinal <span class="ot">&lt;-</span> <span class="fu">Y</span>(L, Kcorr)</span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, Yfinal, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">"pO2"</span>, <span class="at">ylab =</span> <span class="st">"y"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="proteinas_en_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Hemoglobin oxygen saturation curve obtained by iteration of the Adair equation, as corrected for statistical effect.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">Note that there are minimal differences between the curves obtained by the different procedures, due to the different algorithms used.</div>
+</section>
+<section id="some-r-packages-for-studying-proteins" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="some-r-packages-for-studying-proteins"><span class="header-section-number">5.4</span> Some R packages for studying proteins</h2>
+<div class="line-block">Some R packages are quite useful in studying proteins, especially the <code>seqinr</code> library seen in the <em>Amino Acids</em> chapter, which computes various values ​​and information for protein sequences, such as <em>pI</em>, hydroxypathy index, residue distribution, among others. The project website [^seqinrSitio-1] contains detailed information for its use. Using the same procedure to obtain the <em>FASTA</em> sequence for lysozyme from the <em>Amino Acids</em> chapter (code CAA32175 on the <em>NCBI</em> site), one can obtain an extensive set of protein information, as exemplified below:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seqinr)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'seqinr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    count</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>lysozyme <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"KVFERCELARTLKRLGMDGYRGISLANWMCLAKWESGYNTRATNYNAGDRSTDYGIFQ</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="st">INSRYWCNDGKTPGAVNACHLSCSALLQDNIADAVACAKRVVRDPQGIRAWVAWRNRCQNRDVRQYVQGCGV"</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>seq_liso <span class="ot">&lt;-</span> <span class="fu">s2c</span>(lysozyme) <span class="co"># convert amino acid string sequence to</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the seqinr pattern (character vector)</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>seq_liso2 <span class="ot">&lt;-</span> seq_liso[seq_liso <span class="sc">!=</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>] <span class="co"># elimination of spaces required by</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co"># seqinr from copy/paste procedure.</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>seq_liso2</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "K" "V" "F" "E" "R" "C" "E" "L" "A" "R" "T" "L" "K" "R" "L" "G" "M" "D"
+ [19] "G" "Y" "R" "G" "I" "S" "L" "A" "N" "W" "M" "C" "L" "A" "K" "W" "E" "S"
+ [37] "G" "Y" "N" "T" "R" "A" "T" "N" "Y" "N" "A" "G" "D" "R" "S" "T" "D" "Y"
+ [55] "G" "I" "F" "Q" "I" "N" "S" "R" "Y" "W" "C" "N" "D" "G" "K" "T" "P" "G"
+ [73] "A" "V" "N" "A" "C" "H" "L" "S" "C" "S" "A" "L" "L" "Q" "D" "N" "I" "A"
+ [91] "D" "A" "V" "A" "C" "A" "K" "R" "V" "V" "R" "D" "P" "Q" "G" "I" "R" "A"
+[109] "W" "V" "A" "W" "R" "N" "R" "C" "Q" "N" "R" "D" "V" "R" "Q" "Y" "V" "Q"
+[127] "G" "C" "G" "V"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pmw</span>(seq_liso2) <span class="co"># molecular weight of the protein</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14701</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aaa</span>(seq_liso2) <span class="co"># residue distribution</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "Lys" "Val" "Phe" "Glu" "Arg" "Cys" "Glu" "Leu" "Ala" "Arg" "Thr" "Leu"
+ [13] "Lys" "Arg" "Leu" "Gly" "Met" "Asp" "Gly" "Tyr" "Arg" "Gly" "Ile" "Ser"
+ [25] "Leu" "Ala" "Asn" "Trp" "Met" "Cys" "Leu" "Ala" "Lys" "Trp" "Glu" "Ser"
+ [37] "Gly" "Tyr" "Asn" "Thr" "Arg" "Ala" "Thr" "Asn" "Tyr" "Asn" "Ala" "Gly"
+ [49] "Asp" "Arg" "Ser" "Thr" "Asp" "Tyr" "Gly" "Ile" "Phe" "Gln" "Ile" "Asn"
+ [61] "Ser" "Arg" "Tyr" "Trp" "Cys" "Asn" "Asp" "Gly" "Lys" "Thr" "Pro" "Gly"
+ [73] "Ala" "Val" "Asn" "Ala" "Cys" "His" "Leu" "Ser" "Cys" "Ser" "Ala" "Leu"
+ [85] "Leu" "Gln" "Asp" "Asn" "Ile" "Ala" "Asp" "Ala" "Val" "Ala" "Cys" "Ala"
+ [97] "Lys" "Arg" "Val" "Val" "Arg" "Asp" "Pro" "Gln" "Gly" "Ile" "Arg" "Ala"
+[109] "Trp" "Val" "Ala" "Trp" "Arg" "Asn" "Arg" "Cys" "Gln" "Asn" "Arg" "Asp"
+[121] "Val" "Arg" "Gln" "Tyr" "Val" "Gln" "Gly" "Cys" "Gly" "Val"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AAstat</span>(seq_liso2, <span class="at">plot =</span> <span class="cn">TRUE</span>) <span class="co"># distribution graph, composition</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="proteinas_en_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Compo
+
+ *  A  C  D  E  F  G  H  I  K  L  M  N  P  Q  R  S  T  V  W  Y 
+ 0 14  8  8  3  2 11  1  5  5  8  2 10  2  6 14  6  5  9  5  6 
+
+$Prop
+$Prop$Tiny
+[1] 0.3
+
+$Prop$Small
+[1] 0.6
+
+$Prop$Aliphatic
+[1] 0.2
+
+$Prop$Aromatic
+[1] 0.1
+
+$Prop$Non.polar
+[1] 0.6
+
+$Prop$Polar
+[1] 0.4
+
+$Prop$Charged
+[1] 0.2
+
+$Prop$Basic
+[1] 0.2
+
+$Prop$Acidic
+[1] 0.08
+
+
+$Pi
+[1] 9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># and proportion of residues, pI value</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Other functions of <code>seqinr</code> include conversion of amino acids to 1- and 3-letter abbreviations (<code>a</code> and <code>aaa</code>, respectively), listing of 544 physicochemical properties of the 20 protein amino acids (<code>aaindex</code>), <code>pK</code> (self-explanatory, and seen previously), and isolated computation of <em>pI</em> (<code>computePI</code>) and molecular mass (<code>pmw</code>), in addition to several others, both for proteomics and genomics.<br>
+Another interesting R package for studying proteins is <em>Peptides</em> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, which also computes several physicochemical properties for amino acid sequences, in addition to enabling plotting integration with the <em>GROMACS</em> molecular dynamics package. As for <code>seqinr</code>, <code>Peptides</code> requires conversion of the sequence into <em>string</em> for the recognized vector pattern. The package’s functions include the computation of 66 descriptors for each amino acid in a sequence (<code>aaDescriptors</code>), the composition of the sequence by residue classification (<code>aaComp</code>), the computation of the aliphatic index (<code>aIndex</code>), the hydrophobicity index (<code>hydrophobicity</code>), the instability index (<code>instalIndex</code>), the mass/charge ratio (<code>mz</code>), molecular mass (<code>mw</code>), and pI (<code>pI</code>), among others.<br>
+Among the packages more focused on comparative studies and visualization of structures, as well as for bioinformatics and chemogenomics descriptors, it is worth mentioning <code>Bio3d</code>, <code>Autoplotprotein</code>, <code>protr</code>, <code>BioMedR</code>, and <code>UniprotR</code>, among many others.</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-bloomfield2009computer" class="csl-entry" role="listitem">
+Bloomfield, Victor. 2009. <em>Computer simulation and data analysis in molecular biology and biophysics: an introduction using R</em>. Springer Science &amp; Business Media.
+</div>
+<div id="ref-pauling1935oxygen" class="csl-entry" role="listitem">
+Pauling, Linus. 1935. <span>«The oxygen equilibrium of hemoglobin and its structural interpretation»</span>. <em>Proceedings of the National Academy of Sciences of the United States of America</em> 21 (4): 186.
+</div>
+<div id="ref-tyuma1973analysis" class="csl-entry" role="listitem">
+Tyuma, Itiro, Kiyohiro Imai, e Katsuhiko Shimizu. 1973. <span>«Analysis of oxygen equilibrium of hemoglobin and control mechanism of organic phosphates»</span>. <em>Biochemistry</em> 12 (8): 1491–98.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Some programming practices (<em>Best Codes</em>): 1) organize a project into folders (e.g.: data, figures, scripts) or create an R package as an option; 2) create sections in a code to make it easier to find; 3) name the <em>code chunks</em> (pieces of code); 4) place the libraries used, sources, and data calls at the beginning of the code (avoids searching for something necessary for the <em>script</em> to run throughout the code); 5) indent, preferably with 1 or 2 commands per line; 6) always use function parameters inside the function; 7) avoid global parameters; 8) do not use ‘attach’; 8) use parameters with intuitive names (and not x and y; e.g.: function_name); 9) assign names to objects with one of the three naming conventions (e.g.: KiCompet, ki_compet, ki.compet).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Peptides package: https://cran.r-project.org/web/packages/Peptides/index.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./aminoacid_en.html" class="pagination-link" aria-label="Amino acids">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Amino acids</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./enzimas_en.html" class="pagination-link" aria-label="Enzymes">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Enzymes</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Enzyme inhibition – Quantitative Biochemistry &amp; R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./binding_en.html" rel="next">
+<link href="./enzimas_en.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5cd4c82f5794ab985b4ec67d486cba7b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./enzInib_en.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Enzyme inhibition</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Quantitative Biochemistry &amp; R</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./biomoleculas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Biomolecules</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tampoes_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Biological buffer system</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aminoacid_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Amino acids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proteinas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Proteins</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./enzimas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Enzymes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./enzInib_en.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Enzyme inhibition</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./binding_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Molecular interaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acnucleic_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nucleic Acids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./membranas_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Biological membranes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./biotermodin_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Biothermodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./metabolismo_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cellular Metabolism</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./planejExper_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Experimental design</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./redes_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Metabolic Networks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias_en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#types-of-inhibition" id="toc-types-of-inhibition" class="nav-link active" data-scroll-target="#types-of-inhibition"><span class="header-section-number">7.1</span> Types of inhibition</a>
+  <ul class="collapse">
+  <li><a href="#inhibition-by-the-substrate" id="toc-inhibition-by-the-substrate" class="nav-link" data-scroll-target="#inhibition-by-the-substrate"><span class="header-section-number">7.1.1</span> Inhibition by the substrate</a></li>
+  <li><a href="#enzyme-inhibition-models" id="toc-enzyme-inhibition-models" class="nav-link" data-scroll-target="#enzyme-inhibition-models"><span class="header-section-number">7.1.2</span> Enzyme inhibition models</a></li>
+  </ul></li>
+  <li><a href="#statistical-diagnosis-of-enzyme-inhibition" id="toc-statistical-diagnosis-of-enzyme-inhibition" class="nav-link" data-scroll-target="#statistical-diagnosis-of-enzyme-inhibition"><span class="header-section-number">7.2</span> Statistical diagnosis of enzyme inhibition</a></li>
+  <li><a href="#pre-steady-state-kinetics" id="toc-pre-steady-state-kinetics" class="nav-link" data-scroll-target="#pre-steady-state-kinetics"><span class="header-section-number">7.3</span> Pre-steady state kinetics</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Enzyme inhibition</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="types-of-inhibition" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="types-of-inhibition"><span class="header-section-number">7.1</span> Types of inhibition</h2>
+<div class="line-block">A vast chapter in enzymology and with direct application in Chemistry, Pharmacology, Biotechnology, Biomedicine and related areas, enzyme inhibition is at the heart of drugs, medicines and biosensors. From a simplified point of view, enzyme activity can be reduced in the presence of several effectors, among endogenous or exogenous molecules of cellular metabolism, including the substrate itself. Generically, <em>enzyme inhibition</em> is classified as <em>irreversible</em> when the activity decreases due to the covalent binding of an inhibitor, or <em>reversible</em>, when there is an equilibrium of association/dissociation with the macromolecule. Reversible inhibitions will be illustrated below.</div>
+<section id="inhibition-by-the-substrate" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="inhibition-by-the-substrate"><span class="header-section-number">7.1.1</span> Inhibition by the substrate</h3>
+<div class="line-block">A common enzyme inhibition in metabolism is caused by the substrate itself in excess in the medium, defined by:</div>
+<p><span id="eq-eqInibS"><span class="math display">\[
+v=\frac{Vm*S}{S(1+\frac{S}{Ks})+Km}
+\tag{7.1}\]</span></span></p>
+<div class="line-block">Thus, the graph resulting from an inhibition due to excess substrate can be reproduced by:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inhibition due to excess S</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>v_alos <span class="ot">&lt;-</span> <span class="cf">function</span>(S, <span class="at">Vm =</span> <span class="dv">10</span>, <span class="at">Km =</span> <span class="fl">0.5</span>, <span class="at">Ks =</span> <span class="dv">2</span>) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Vm <span class="sc">*</span> S <span class="sc">/</span> (S <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> S <span class="sc">/</span> Ks) <span class="sc">+</span> Km)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(v_alos, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">xlab =</span> <span class="st">"S"</span>, <span class="at">ylab =</span> <span class="st">"v"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-figInibS" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-figInibS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="enzInib_en_files/figure-html/fig-figInibS-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-figInibS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.1: Kinetic behavior of an enzyme inhibited by excess substrate.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">It can be seen from <a href="#fig-figInibS" class="quarto-xref">Figura&nbsp;<span>7.1</span></a> that the enzyme activity reaches a limit and is reduced with increasing substrate content.</div>
+</section>
+<section id="enzyme-inhibition-models" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="enzyme-inhibition-models"><span class="header-section-number">7.1.2</span> Enzyme inhibition models</h3>
+<div class="line-block">Assuming the simplified relation below:</div>
+<span class="math display">\[\begin{equation}
+E+S \begin{array}{c}
+_{k1}\\
+\rightleftharpoons\\
+^{k2} \end{array} ES
+\begin{array}{c}
+_{k3}\\
+\rightarrow \\
+^{}\end{array}E+P
+(\#eq:diagMM)
+\end{equation}\]</span>
+<div class="line-block">Enzyme inhibition by molecules other than the substrate itself can be represented by a diagram in which the effector alters one of the elements represented in the above equation, as follows.</div>
+<p><br>
+</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/inibDiag.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>Diagram representing the types of enzyme inhibition. kcat: catalytic constant; Ki: equilibrium constant for dissociation of the inhibitor, with indices for competitive (Ki), uncompetitive (Kiu) and non-competitive (Kic and Kiu) inhibition.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">In this case, the three main types of reversible enzyme inhibition can be defined as <em>competitive, uncompetitive and non-competitive (pure or mixed) inhibition</em>. In summary, <em>competitive inhibition</em> occurs when the inhibitor complexes with the enzyme’s active site; <em>uncompetitive inhibition</em>, when the inhibitor interacts with the enzyme-substrate complex; and <em>non-competitive inhibition</em>, when the inhibitor binds to a site other than the enzyme’s active site, and can also be <em>pure</em> (Kiu = Kic) or <em>mixed</em> (Kiu &gt; or &lt; Kic).<br>
+A mathematical model that encompasses these three types of enzyme inhibition is described in the equation below:</div>
+<p><span id="eq-inibAll"><span class="math display">\[
+v=\frac{Vm*S}{Km(1+\frac{I}{Kic})+S(1+\frac{I}{Kiu})}
+\tag{7.2}\]</span></span></p>
+<div class="line-block">Thus, <a href="#eq-inibAll" class="quarto-xref">Equação&nbsp;<span>7.2</span></a> is reduced in its multiplying terms in the denominator, depending on the type of enzyme inhibition present, up to the primitive Michaelis-Mentem model, when there is no inhibitor.<br>
+</div>
+<section id="michaelis-mentem-curve-for-enzyme-inhibition-models" class="level4" data-number="7.1.2.1">
+<h4 data-number="7.1.2.1" class="anchored" data-anchor-id="michaelis-mentem-curve-for-enzyme-inhibition-models"><span class="header-section-number">7.1.2.1</span> Michaelis-Mentem curve for enzyme inhibition models</h4>
+<div class="line-block">We can simulate in <code>R</code> the Michaelian curves for classical inhibition models, considering values ​​for the inhibitor dissociation equilibrium constants such as Kic = 0.2, and Kiu = 1, as in the code snippet below.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Classical inhibition &amp; Michaelis-Mentem</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)) <span class="co"># divide the plot area</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>) <span class="co"># generation of S contents</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>contr <span class="ot">&lt;-</span> <span class="cf">function</span>(S, <span class="at">Vm =</span> <span class="dv">10</span>, <span class="at">Km =</span> <span class="fl">0.5</span>) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>Vm <span class="sc">*</span> S <span class="sc">/</span> (Km <span class="sc">+</span> S)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>} <span class="co"># MM function, without inhibition</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(contr, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">xlab =</span> <span class="st">"S"</span>, <span class="at">ylab =</span> <span class="st">"v"</span>, <span class="at">main =</span> <span class="st">"Competitive"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># control curve; note that the title has to be added for the 1a. of pair</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># of curves, control and inhibition</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Inhibition models:</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Competitive</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>comp.i <span class="ot">&lt;-</span> <span class="cf">function</span>(S, <span class="at">Vm =</span> <span class="dv">10</span>, <span class="at">Km =</span> <span class="fl">0.5</span>, <span class="at">I =</span> <span class="dv">2</span>, <span class="at">Kic =</span> <span class="fl">0.2</span>) {</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>Vm <span class="sc">*</span> S <span class="sc">/</span> (Km <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Kic) <span class="sc">+</span> S)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(comp.i, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># competitive</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Pure noncompetitive</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>pura.i <span class="ot">&lt;-</span> <span class="cf">function</span>(S, <span class="at">Vm =</span> <span class="dv">10</span>, <span class="at">Km =</span> <span class="fl">0.5</span>, <span class="at">I =</span> <span class="dv">2</span>, <span class="at">Ki =</span> <span class="dv">1</span>) {</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>Vm <span class="sc">*</span> S <span class="sc">/</span> (Km <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Ki) <span class="sc">+</span> S <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Ki))</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(contr, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">xlab =</span> <span class="st">"S"</span>, <span class="at">ylab =</span> <span class="st">"v"</span>, <span class="at">main =</span> <span class="st">"Pure Noncompet."</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(pura.i, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># pure non-competitive (Kiu=Kic=Ki)</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Mixed non-competitive</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>mista.i <span class="ot">&lt;-</span> <span class="cf">function</span>(S, <span class="at">Vm =</span> <span class="dv">10</span>, <span class="at">Km =</span> <span class="fl">0.5</span>, <span class="at">I =</span> <span class="dv">2</span>, <span class="at">Kic =</span> <span class="fl">0.2</span>, <span class="at">Kiu =</span> <span class="dv">1</span>) {</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a> Vm <span class="sc">*</span> S <span class="sc">/</span> (Km <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Kic) <span class="sc">+</span> S <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Kiu))</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(contr, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">xlab =</span> <span class="st">"S"</span>, <span class="at">ylab =</span> <span class="st">"v"</span>, <span class="at">main =</span> <span class="st">"Non-Compet. Mixed"</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(mista.i, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># mixed non-competitive</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncompetitive</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>uncomp.i <span class="ot">&lt;-</span> <span class="cf">function</span>(S, <span class="at">Vm =</span> <span class="dv">10</span>, <span class="at">Km =</span> <span class="fl">0.5</span>, <span class="at">I =</span> <span class="dv">2</span>, <span class="at">Kiu =</span> <span class="dv">1</span>) {</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>Vm <span class="sc">*</span> S <span class="sc">/</span> (Km <span class="sc">+</span> S <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Kiu))</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(contr, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">xlab =</span> <span class="st">"S"</span>, <span class="at">ylab =</span> <span class="st">"v"</span>, <span class="at">main =</span> <span class="st">"Uncompetitive"</span>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(uncomp.i, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># uncompetitive</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="dv">1</span>) <span class="co"># returns to the original graphic window</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-inibMM" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-inibMM-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="enzInib_en_files/figure-html/fig-inibMM-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inibMM-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.2: Michaelis-Mentem curve in the presence of classical inhibitors.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">Note that for the <em>competitive model</em> the limiting reaction rate <em>Vm</em> tends to be reached, since the occupation of the enzyme’s active site is mutually exclusive between substrate and inhibitor, favoring the former when in high concentration. On the other hand, the <em>Vm</em> value is not tangible for the other inhibition models, since the inhibitor binds to another site on the enzyme (<em>non-competitive</em>) or to the substrate itself (<em>uncompetitive</em>). To see changes in the graphs, try modifying the simulation parameters (Vm, Km, Ki, Kic, Kiu, I).<br>
+Although it is possible to distinguish the competitive model from the others, also note that this was only possible for a simulation that used an <em>S</em> content 20 times greater than the <em>Km</em> value of the reaction. This is not always possible in practice, as listed below, since the use of high <em>S</em> contents:</div>
+<ol type="1">
+<li>Adds greater financial cost to the test.</li>
+<li>May result in inhibition due to excess substrate.</li>
+<li>May increase the viscosity of the medium, reducing the catalytic rate.</li>
+</ol>
+<div class="line-block">It can be seen from <a href="#fig-inibMM" class="quarto-xref">Figura&nbsp;<span>7.2</span></a> and the observations above that it is difficult to classify the type of enzyme inhibition based on direct observation of a Michaelis-Mentem curve.</div>
+</section>
+<section id="diagnosis-of-enzyme-inhibition-models-by-lineweaver-burk" class="level4" data-number="7.1.2.2">
+<h4 data-number="7.1.2.2" class="anchored" data-anchor-id="diagnosis-of-enzyme-inhibition-models-by-lineweaver-burk"><span class="header-section-number">7.1.2.2</span> Diagnosis of enzyme inhibition models by Lineweaver-Burk</h4>
+<div class="line-block">Linear transformations of the Michaelis-Mentem equation are very useful in the visual diagnosis of inhibition models. In this sense, the use of double-reciprocal linearization for these models will result in the following inhibition equations:</div>
+<p><span id="eq-eqComp"><span class="math display">\[
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km(1+\frac{I}{Kic})}{Vm}*\frac{1}{S} \quad ;\, competitive
+\tag{7.3}\]</span></span></p>
+<p><span id="eq-eqPure"><span class="math display">\[
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km(1+\frac{I}{Ki})}{Vm}*\frac{1}{S(1+\frac{I}{Ki})} \quad ;\, pure
+\tag{7.4}\]</span></span></p>
+<p><span id="eq-eqMixed"><span class="math display">\[
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km(1+\frac{I}{Kic})}{Vm}*\frac{1}{S(1+\frac{I}{Kiu})} \quad ;\, mixed
+\tag{7.5}\]</span></span></p>
+<p><span id="eq-eqIncomp"><span class="math display">\[
+\frac{1}{v}=\frac{1}{Vm}+\frac{Km}{Vm}*\frac{1}{S(1+\frac{I}{Kiu})} \quad ;\, uncompetitive
+\tag{7.6}\]</span></span></p>
+<div class="line-block">Note that the multiplier terms inserted in <em>S</em> and <em>Km</em> in the double-reciprocal equation only change its formalism presented in the Lineweaver-Burk equation of the previous chapter. Thus, enzyme inhibition models can be illustrated by <code>R</code> together with the Lineweaver-Burk transformation (or any other), as below.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diagnosis of inhibition by Lineweaver-Burk</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Substrate and Inhibitor</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">10</span>, <span class="at">length =</span> <span class="dv">10</span>) <span class="co"># create a vector for substrate</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>I <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># inhibitor concentration</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Kinetic parameters:</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Km <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>Vm <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>Kic <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>Ki <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>Kiu <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Equations</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> Vm <span class="sc">*</span> S <span class="sc">/</span> (Km <span class="sc">+</span> S) <span class="co"># MM equation</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>v.comp <span class="ot">&lt;-</span> Vm <span class="sc">*</span> S <span class="sc">/</span> (Km <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Kic) <span class="sc">+</span> S) <span class="co"># competitive</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>v.pure <span class="ot">&lt;-</span> Vm <span class="sc">*</span> S <span class="sc">/</span> (Km <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Ki) <span class="sc">+</span> S <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Ki))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a> <span class="co"># pure non-competitive</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>v.mixed <span class="ot">&lt;-</span> Vm <span class="sc">*</span> S <span class="sc">/</span> (Km <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Kic) <span class="sc">+</span> S <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Kiu))</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a> <span class="co"># mixed non-competitive</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>v.incomp <span class="ot">&lt;-</span> Vm <span class="sc">*</span> S <span class="sc">/</span> (Km <span class="sc">+</span> S <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> I <span class="sc">/</span> Kiu))</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Graphics</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)) <span class="co"># plot area for 4 graphs</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span> <span class="sc">/</span> S, <span class="dv">1</span> <span class="sc">/</span> v, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Competitive"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>))</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span> <span class="sc">/</span> S, <span class="dv">1</span> <span class="sc">/</span> v.comp, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span> <span class="sc">/</span> S, <span class="dv">1</span> <span class="sc">/</span> v, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Pure"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>))</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span> <span class="sc">/</span> S, <span class="dv">1</span> <span class="sc">/</span> v, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span> <span class="sc">/</span> S, <span class="dv">1</span> <span class="sc">/</span> v, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Mixed"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>))</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span> <span class="sc">/</span> S, <span class="dv">1</span> <span class="sc">/</span> v.mixed, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span> <span class="sc">/</span> S, <span class="dv">1</span> <span class="sc">/</span> v, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Uncompetitive"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span> <span class="sc">/</span> S, <span class="dv">1</span> <span class="sc">/</span> v.incomp, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="enzInib_en_files/figure-html/inibLB-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Diagnosis of enzyme inhibition models by Lineweaver-Burk.</figcaption>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="dv">1</span>) <span class="co"># return to normal graphics window</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Now the distinction of inhibition models becomes more evident by linearization. As mentioned for the models represented in the direct Michaelis-Mentem equation, one can vary the kinetic parameters and experiment with the visualization of double reciprocals.<br>
+Again, although linearization allows a better diagnosis of the type of inhibition present, nonlinear adjustment is more appropriate for determining inhibition constants (<em>Ki’</em>s), since it does not include errors arising from linear transformations (although the insertion of statistical weights can alleviate the imprecision of the results).</div>
+</section>
+<section id="ki-ic_50" class="level4" data-number="7.1.2.3">
+<h4 data-number="7.1.2.3" class="anchored" data-anchor-id="ki-ic_50"><span class="header-section-number">7.1.2.3</span> Ki &amp; IC<span class="math inline">\(_{50}\)</span></h4>
+<div class="line-block">The inhibitory concentration at 50% of the inhibitor content, defined as <em>IC<span class="math inline">\(_{50}\)</span></em>, can be determined empirically without knowledge of the enzyme catalysis parameters involved. To do so, it is enough to obtain a relative inhibition value in a test at a fixed concentration of <em>S</em>, varying the inhibitor content. In fact, analogues to <em>IC<span class="math inline">\(_{50}\)</span></em> exist in a wide range in the Natural Sciences, not involving necessarily any kinetic or thermodynamic information of the compounds involved, but only the empirical information of the result. For example, the parameters <em>DE<span class="math inline">\(_{50}\)</span></em> (effective dose) or <em>DL<span class="math inline">\(_{50}\)</span></em> (lethal dose), and even projections of <em>X<span class="math inline">\(_{50}\)</span></em>, such as <em>Tm</em> (denaturation temperature at 50%), and the value of <em>pKa</em> in buffers (pH at which the species are 50% ionized/protonated in solution).</div>
+<div class="line-block">However, there is a useful relationship between the inhibitor dissociation equilibrium constant <em>Ki</em> and the value of <em>IC<span class="math inline">\(_{50}\)</span></em> that allows their exchange, as long as the inhibition model is known <span class="citation" data-cites="yung1973relationship">(<a href="#ref-yung1973relationship" role="doc-biblioref">Yung-Chi e Prusoff 1973</a>)</span>. Generalizing to inhibition models, a general equation for the Cheng-Prusoff relation can be defined as:</div>
+<p><span id="eq-eqCPrusso"><span class="math display">\[
+IC_{50} = \frac{(1+\frac{S}{Km})}{(\frac{1}{Kic})+(\frac{1}{Km*Kiu})}
+\tag{7.7}\]</span></span></p>
+<div class="line-block">For example, for a <em>competitive</em> inhibition model, where <em>Kiu</em> is zero:</div>
+<p><span id="eq-eqPrusfComp"><span class="math display">\[
+IC_{50} = Kic(1+\frac{S}{Km})
+\tag{7.8}\]</span></span></p>
+<div class="line-block">As mentioned above, the value of <em>IC<span class="math inline">\(_{50}\)</span></em> can be obtained from experimental data of relative inhibition (<em>v/Vm</em>, for example) at different inhibitor concentrations by setting a value of <em>S</em>. In this case, we can illustrate in <code>R</code> the obtaining of <em>IC<span class="math inline">\(_{50}\)</span></em>, using a non-linear fit to the following four-parameter equation (<em>Rodbard curve</em>, <span class="citation" data-cites="delean1978simultaneous">DeLean, Munson, e Rodbard (<a href="#ref-delean1978simultaneous" role="doc-biblioref">1978</a>)</span>).</div>
+<p><span class="math display">\[
+residual act. \, \% =\frac{v}{Vm} = inf+\frac{sup-inf}{1+log(\frac{I}{IC_{50}})^{nH}})
+\]</span> {#eq:eqRodb}</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-linear fit to IC50 curve</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>logI.nM <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.5</span>, <span class="fl">5.2</span>, <span class="fl">4.9</span>, <span class="fl">4.6</span>, <span class="fl">4.3</span>, <span class="fl">3.7</span>, <span class="fl">3.3</span>, <span class="dv">3</span>, <span class="fl">2.8</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># conc. of I, in log10 units</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>ativ.res <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.02</span>, <span class="fl">0.07</span>, <span class="fl">0.12</span>, <span class="fl">0.22</span>, <span class="fl">0.36</span>, <span class="fl">0.53</span>, <span class="fl">0.67</span>, <span class="fl">0.83</span>, <span class="fl">0.85</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ativ. residual, v/Vm</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(logI.nM, ativ.res) <span class="co"># create dataframe</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ativ.res <span class="sc">~</span> logI.nM, data) <span class="co"># plot data</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>ic50.fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(<span class="fu">formula</span>(ativ.res <span class="sc">~</span> inf <span class="sc">+</span> (sup <span class="sc">-</span> inf) <span class="sc">/</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="sc">+</span> (logI.nM <span class="sc">/</span> logIC50)<span class="sc">^</span>nH)),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="at">algorithm =</span> <span class="st">"port"</span>, <span class="at">data =</span> data,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">start =</span> <span class="fu">list</span>(<span class="at">inf =</span> <span class="dv">0</span>, <span class="at">sup =</span> <span class="fl">0.80</span>, <span class="at">logIC50 =</span> <span class="dv">4</span>, <span class="at">nH =</span> <span class="dv">10</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">lower =</span> <span class="fu">c</span>(<span class="at">inf =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">sup =</span> <span class="sc">-</span><span class="cn">Inf</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="at">logIC50 =</span> <span class="dv">0</span>, <span class="at">nH =</span> <span class="sc">-</span><span class="cn">Inf</span>)) <span class="co"># nonlinear fit</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ic50.fit) <span class="co"># fit summary</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Formula: ativ.res ~ inf + (sup - inf)/(1 + (logI.nM/logIC50)^nH)
+
+Parameters:
+        Estimate Std. Error t value Pr(&gt;|t|)    
+inf      -0.3211     0.2932  -1.095  0.32348    
+sup       1.1200     0.2311   4.847  0.00469 ** 
+logIC50   4.0807     0.2309  17.675 1.06e-05 ***
+nH        4.0540     1.7462   2.322  0.06792 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.02769 on 5 degrees of freedom
+
+Algorithm "port", convergence message: relative convergence (4)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(logI.nM, <span class="fu">fitted</span>(ic50.fit), <span class="at">col =</span> <span class="st">"blue"</span>) <span class="co"># fitted line</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="enzInib_en_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># And to extract the value of IC50...</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>IC50 <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span>(<span class="fu">coef</span>(ic50.fit)[<span class="dv">3</span>]) <span class="co"># extraction of the 3rd parameter from the</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fitting table, that is: logIC50:</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>IC50</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> logIC50 
+12042.04 </code></pre>
+</div>
+</div>
+<div class="line-block">Note that the <em>logIC50</em> parameter was extracted from the nonlinear fitting table by the <code>coef</code> command. This is very useful when we want to use a coefficient obtained in automatic (programmable) calculations, as we will see later. For now, it is interesting to present the <em>IC50</em> parameter obtained in a more elegant way.<br>
+To do this, we can use two <code>R</code> functions to express quantitative results together with characters (words, sentences): <code>print()</code> and <code>cat</code>. The code snippet below illustrates this <em>output</em>, and some differences.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"IC50 Value (nM):"</span>, IC50, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>IC50 Value (nM): 12042.04 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"IC50 Value (nM):"</span>, IC50))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "IC50 Value (nM): 12042.0403466162"</code></pre>
+</div>
+</div>
+<div class="line-block">Basically, <code>print</code> displays quotes and indexes the column name, while <code>cat</code> omits them. In addition, another variation in the printing format between the two commands can be seen in the example below:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"teores:"</span>, <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>)))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "teores: 10" "teores: 25" "teores: 50"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"teores:"</span>, <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>teores: 10 25 50</code></pre>
+</div>
+</div>
+<div class="line-block">Another possibility in <code>R</code> is to reduce the number of decimal places displayed. In this case, the <code>round</code> command can be used.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>IC50 <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span>(<span class="fu">coef</span>(ic50.fit)[<span class="dv">3</span>])</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"IC50 value (nM):"</span>, <span class="fu">round</span>(IC50, <span class="at">digits =</span> <span class="dv">2</span>)))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "IC50 value (nM): 12042.04"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rounding to two decimal places</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">Once again, it is worth highlighting the existence of some useful <code>R</code> packages for calculating <em>IC50</em>, including the <code>drc</code> package (<em>dose-response curve</em>).</div>
+</section>
+</section>
+</section>
+<section id="statistical-diagnosis-of-enzyme-inhibition" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="statistical-diagnosis-of-enzyme-inhibition"><span class="header-section-number">7.2</span> Statistical diagnosis of enzyme inhibition</h2>
+<div class="line-block">In parallel with the visual inspection of linearization graphs for enzyme inhibition, it is possible to validate one model over another by analyzing the dispersion of model errors. But it is also possible to use the <code>BIC</code> function or the <code>AIC</code> function of <code>R</code>, which respectively calculate values ​​for the <em>Baysean Information Criterion</em> <span class="citation" data-cites="spiess2010evaluation">(<a href="#ref-spiess2010evaluation" role="doc-biblioref">Spiess e Neumeyer 2010</a>)</span> or the <em>Akaike Information Criterion</em> <span class="citation" data-cites="akaike1974new">(<a href="#ref-akaike1974new" role="doc-biblioref">Akaike 1974</a>)</span>. In common, these parameters calculate a relative value of information not computed by an evaluated model. The lowest value found for both reflects the solution of the best fitting model.<br>
+Mathematically, <em>BIC</em> and <em>AIC</em> can be expressed as:</div>
+<p><span id="eq-BICAIC"><span class="math display">\[
+BIC = p*ln(n)-2*ln(RSE)\\
+\\
+AIC = n*ln(\frac{RSE}{n})+2k+[\frac{2k(k+1)}{n-k-1}])\\
+\tag{7.9}\]</span></span></p>
+<p>Where <em>p</em> represents the no. of model parameters, <em>n</em> the total number of experimental points, <em>k</em> the factor <em>p+1</em>, and <em>RSE</em> the value of the sum of squares of the residuals (<em>residual sum squares</em>).</p>
+<div class="line-block">To exemplify the use of these quality parameters of the statistical model, one can use a dataset contained in the <code>nlstools</code> package, providing the fitting, plotting, inspection of residuals, and application of <em>BIC</em> and <em>AIC</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Application of information criteria for fitting kinetic curves</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlstools)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+'nlstools' has been loaded.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>IMPORTANT NOTICE: Most nonlinear regression models and data set examples</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>related to predictive microbiolgy have been moved to the package 'nlsMicrobio'</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> <span class="fu">nls</span>(compet_mich, vmkmki, <span class="fu">list</span>(<span class="at">Km =</span> <span class="dv">1</span>, <span class="at">Vmax =</span> <span class="dv">20</span>, <span class="at">Ki =</span> <span class="fl">0.5</span>))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># competitive fitting, with data, equation and seeds provided</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># by the nlstools package</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotfit</span>(comp, <span class="at">variable =</span> <span class="dv">1</span>) <span class="co"># plotting command of the package</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="enzInib_en_files/figure-html/AIC-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(comp)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Formula: v ~ S/(S + Km * (1 + I/Ki)) * Vmax
+
+Parameters:
+     Estimate Std. Error t value Pr(&gt;|t|)    
+Km    15.2145     2.5005   6.085 5.79e-08 ***
+Vmax  18.0557     0.6288  28.713  &lt; 2e-16 ***
+Ki    22.2822     4.9060   4.542 2.30e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.603 on 69 degrees of freedom
+
+Number of iterations to convergence: 11 
+Achieved convergence tolerance: 5.116e-06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>res_comp <span class="ot">&lt;-</span> <span class="fu">nlsResiduals</span>(comp) <span class="co"># residuals of the fit</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res_comp, <span class="at">which =</span> <span class="dv">1</span>) <span class="co"># plotting of residuals</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="enzInib_en_files/figure-html/AIC-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>noncomp <span class="ot">&lt;-</span> <span class="fu">nls</span>(non_compet_mich, vmkmki, <span class="fu">list</span>(<span class="at">Km =</span> <span class="dv">1</span>, <span class="at">Vmax =</span> <span class="dv">20</span>, <span class="at">Ki =</span> <span class="fl">0.5</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># same as above, but for the non-competitive model</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotfit</span>(noncomp, <span class="at">variable =</span> <span class="dv">1</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="enzInib_en_files/figure-html/AIC-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(noncomp)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Formula: v ~ S/((S + Km) * (1 + I/Ki)) * Vmax
+
+Parameters:
+     Estimate Std. Error t value Pr(&gt;|t|)    
+Km    22.7787     1.4738   15.46   &lt;2e-16 ***
+Vmax  20.5867     0.4306   47.80   &lt;2e-16 ***
+Ki   101.3563     7.3303   13.83   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8925 on 69 degrees of freedom
+
+Number of iterations to convergence: 7 
+Achieved convergence tolerance: 8.27e-06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>res_noncomp <span class="ot">&lt;-</span> <span class="fu">nlsResiduals</span>(noncomp)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res_noncomp, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="enzInib_en_files/figure-html/AIC-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(comp, noncomp) <span class="co"># Bayesian information criterion</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        df      BIC
+comp     4 286.2994
+noncomp  4 201.9981</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(comp, noncomp) <span class="co"># Akaike information criterion</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        df      AIC
+comp     4 277.1928
+noncomp  4 192.8915</code></pre>
+</div>
+</div>
+<div class="line-block">It can be seen in the comparison of the non-linear fits that the non-competitive model fitted better than the competitive model (lower values ​​for BIC and AIC)</div>
+</section>
+<section id="pre-steady-state-kinetics" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="pre-steady-state-kinetics"><span class="header-section-number">7.3</span> Pre-steady state kinetics</h2>
+<div class="line-block">There are basically three types of kinetic behavior for enzymes: Henry-Michaelis-Mentem-Briggs-Haldane behavior, succinctly called Michaelian or steady-state behavior, lag-phase behavior (when the substrate takes some time to be converted to product), and burst, transient, or pre-steady-state behavior (when a phase with rapid product release precedes the steady state). Some enzymes work following burst kinetics, including some nucleosidases and glycosidases, and dehalogenases <span class="citation" data-cites="johnson19921">Tang et al. (<a href="#ref-tang2003kinetic" role="doc-biblioref">2003</a>)</span>.<br>
+Pre-steady-state kinetics follows a slightly different formalism, which depends on the number of reaction steps. Example below for a 3-step reaction <span class="citation" data-cites="johnson19921">(<a href="#ref-johnson19921" role="doc-biblioref">Johnson 1992</a>)</span>:</div>
+<p><span id="eq-burst"><span class="math display">\[
+E+S \begin{array}{c}
+_{k1}\\
+\rightleftharpoons\\
+^{km1} \end{array}
+E*S
+\begin{array}{c}
+_{k2}\\
+\rightleftharpoons\\
+^{km2} \end{array}
+E*P
+\begin{array}{c}
+_{k3}\\
+\rightarrow \\
+^{}\end{array}
+E+P
+\tag{7.10}\]</span></span></p>
+<div class="line-block">In this case, the equations derived from the experimental observations, and which lead to the determination of the rate constants are:</div>
+<p><span id="eq-burstKobs1"><span class="math display">\[
+kobs=k2+km2+k3
+\tag{7.11}\]</span></span></p>
+<p><span id="eq-burstKobs2"><span class="math display">\[
+Ao=\frac{k2*(k2+km2)}{kobs^2}
+\tag{7.12}\]</span></span></p>
+<p><span id="eq-burstKobs3"><span class="math display">\[
+kcat=\frac{k2*k3}{kobs}
+\tag{7.13}\]</span></span></p>
+<p>Where <em>kobs</em> and <em>Ao</em> represent experimental parameters of observed rate constant and amplitude, respectively. These parameters can be obtained from the nonlinear fit of the equation below to the experimental data:</p>
+<p><span id="eq-burstP"><span class="math display">\[
+P=Ao(1-e^ {-kobs} + kcat * t)
+\tag{7.14}\]</span></span></p>
+<div class="line-block">The following code snippet simulates a pre-stationary behavior curve, when the rate constants that determine the experimental parameters are known.</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MM curve in pre-steady state enzyme</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>k2 <span class="ot">&lt;-</span> <span class="dv">387</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>km2 <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>k3 <span class="ot">&lt;-</span> <span class="dv">22</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>xmin <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>xmax <span class="ot">&lt;-</span> <span class="fl">0.075</span> <span class="co"># definition of limits for function</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Variables of the simulation equation (function of parameters)</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>kobs <span class="ot">&lt;-</span> k2 <span class="sc">+</span> km2 <span class="sc">+</span> k3</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>Ao <span class="ot">&lt;-</span> k2 <span class="sc">*</span> (k2 <span class="sc">+</span> km2) <span class="sc">/</span> kobs<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>kcat <span class="ot">&lt;-</span> k2 <span class="sc">*</span> k3 <span class="sc">/</span> kobs</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Definition of the simulation function</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>sim <span class="ot">&lt;-</span> <span class="cf">function</span>(x, kobs, Ao, kcat) {</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>Ao <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span>kobs <span class="sc">*</span> x)) <span class="sc">+</span> kcat <span class="sc">*</span> x</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulation curve</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">sim</span>(x, <span class="at">kobs =</span> kobs, <span class="at">Ao =</span> Ao, <span class="at">kcat =</span> kcat),</span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="at">type =</span> <span class="st">"o"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(xmin, xmax), <span class="at">cex =</span> <span class="fl">0.5</span>,</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="at">xlab =</span> <span class="st">"time"</span>, <span class="at">ylab =</span> <span class="st">"[P]"</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-figBurst" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-figBurst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="enzInib_en_files/figure-html/fig-figBurst-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-figBurst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.3: Product formation in a pre-steady state kinetic model.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="line-block">Note from <a href="#fig-figBurst" class="quarto-xref">Figura&nbsp;<span>7.3</span></a> that in transient state kinetics, there is an initial pre-stationary phase that rapidly increases the product content <em>P</em>, and that precedes the stationary phase of constant release of <em>P</em>.</div>
+<div class="line-block">On the other hand, sometimes the opposite is necessary, that is, to determine the rate constants from knowledge of the experimental parameters <em>kobs</em> and <em>Ao</em>. In this case (and in many other transdisciplinary cases) <code>R</code> has minimization functions that allow finding the root of linear or nonlinear equations.<br>
+The procedure involves iteratively minimizing a vector of equations given the seeds for each parameter. To do this, we seek to obtain <em>f(x) = 0</em> by the difference between a reference value; that is, when the solution finds <em>x</em> when <em>f(x)-y = 0</em>. For example, suppose that f(x) is <em>a+b/x</em>, and that y is 3. Then the search is to find <em>a</em> and <em>b</em> in <em>a+b/x-3</em>.<br>
+To determine the rate constants represented in transient kinetics, it is worth mentioning the <code>optim</code> function in <code>stats</code> or the <code>rootSolve</code> package, which seek to minimize linear and nonlinear equations to find the values ​​of their parameters.<br>
+In the solution of the parameters for pre-steady state, the use of <code>R</code> with <code>rootSolve</code> is illustrated below, also adding the search for <em>Km</em> as follows.</div>
+<p><span class="math display">\[
+Km = \frac{k3}{k2+k3}
+\]</span> {#eq:burstKm}</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculation of kinetic constants by solving a system of nonlinear</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># equations applied to burst kinetics.</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rootSolve)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>kobs <span class="ot">&lt;-</span> <span class="fl">0.06</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>Ao <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>kcat <span class="ot">&lt;-</span> <span class="dv">300</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>Ks <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># defines the nonlinear fitting parameters obtained by progressive curve</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="co"># experimental, t x P; # Note: Ks obtained experimentally from the S x kobs curve</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="co"># x[1]=k2</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="co"># x[2]= k3</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co"># x[3] = Km</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Model</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(x[<span class="dv">1</span>] <span class="sc">/</span> kobs<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> Ao, (x[<span class="dv">1</span>] <span class="sc">*</span> x[<span class="dv">2</span>]) <span class="sc">/</span> kobs <span class="sc">-</span> kcat,</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>Ks <span class="sc">*</span> x[<span class="dv">2</span>] <span class="sc">/</span> (x[<span class="dv">1</span>] <span class="sc">+</span> x[<span class="dv">2</span>]) <span class="sc">-</span> x[<span class="dv">3</span>])</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="co"># the model above must contain a list of equations whose equality is zero,</span></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="co"># that is, f(x)=0</span></span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>(ss <span class="ot">&lt;-</span> <span class="fu">multiroot</span>(model, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))) <span class="co"># rootSolve execution command</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$root
+[1]   0.18000 100.00000  14.97305
+
+$f.root
+[1]  0.000000e+00  1.136868e-13 -1.243054e-09
+
+$iter
+[1] 4
+
+$estim.precis
+[1] 4.143891e-10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (seeds for the algorithm)</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">The results of the minimization can be interpreted as:</div>
+<ol type="1">
+<li><em>root</em> = values of xi for f(xi)=0 ; that is, <em>k2, k3, and Km</em>; 2. <em>f.root</em> = value of each function for each xi (must be close to zero for each);</li>
+<li><em>iter</em> = no. iterations;</li>
+<li><em>esti.precis</em> = precision estimate.</li>
+</ol>
+<div class="line-block">Considering an extensive chapter on enzyme kinetics, there are numerous topics left out, given the main focus of using <code>R</code> in solving quantitative problems in biophysical chemistry. Thus, we omit several concepts, such as <em>slow kinetics of substrate interaction (slow binding), kinetics of multiple substrates (sequential and ping-pong reactions), integrated Michaelis-Menten equation and progressive curves, activation of modulators, influence of pH and temperature on catalysis, and multisite enzymes</em>, among others.</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-akaike1974new" class="csl-entry" role="listitem">
+Akaike, Hirotugu. 1974. <span>«A new look at the statistical model identification»</span>. <em>IEEE transactions on automatic control</em> 19 (6): 716–23.
+</div>
+<div id="ref-delean1978simultaneous" class="csl-entry" role="listitem">
+DeLean, A, PJ Munson, e Dl Rodbard. 1978. <span>«Simultaneous analysis of families of sigmoidal curves: application to bioassay, radioligand assay, and physiological dose-response curves.»</span> <em>American Journal of Physiology-Endocrinology And Metabolism</em> 235 (2): E97.
+</div>
+<div id="ref-johnson19921" class="csl-entry" role="listitem">
+Johnson, Kenneth A. 1992. <span>«1 transient-state kinetic analysis of enzyme reaction pathways»</span>. Em <em>The enzymes</em>, 20:1–61. Elsevier.
+</div>
+<div id="ref-spiess2010evaluation" class="csl-entry" role="listitem">
+Spiess, Andrej-Nikolai, e Natalie Neumeyer. 2010. <span>«An evaluation of R2 as an inadequate measure for nonlinear models in pharmacological and biochemical research: a Monte Carlo approach»</span>. <em>BMC pharmacology</em> 10 (1): 1–11.
+</div>
+<div id="ref-tang2003kinetic" class="csl-entry" role="listitem">
+Tang, Lixia, Jeffrey H Lutje Spelberg, Marco W Fraaije, e Dick B Janssen. 2003. <span>«Kinetic mechanism and enantioselectivity of halohydrin dehalogenase from Agrobacterium radiobacter»</span>. <em>Biochemistry</em> 42 (18): 5378–86.
+</div>
+<div id="ref-yung1973relationship" class="csl-entry" role="listitem">
+Yung-Chi, Cheng, e William H Prusoff. 1973. <span>«Relationship between the inhibition constant (KI) and the concentration of inhibitor which causes 50 per cent inhibition (I50) of an enzymatic reaction»</span>. <em>Biochemical pharmacology</em> 22 (23): 3099–3108.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./enzimas_en.html" class="pagination-link" aria-label="Enzymes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Enzymes</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./binding_en.html" class="pagination-link" aria-label="Molecular interaction">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Molecular interaction</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

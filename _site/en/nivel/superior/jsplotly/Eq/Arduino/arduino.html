@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Voltímetro • mV (Ymin/Ymax)</title>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<style>
+  :root { --pad:10px; }
+  body { font-family:system-ui,sans-serif; margin:var(--pad); font-size:14px; }
+  h1 { font-size:22px; margin:0 0 8px 0; }
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+  button{padding:6px 10px;border-radius:10px;border:1px solid #ccc;background:#fafafa;cursor:pointer}
+  input[type="number"]{width:130px;padding:6px;border:1px solid #ccc;border-radius:10px}
+  .label{font-size:12px;color:#555}
+  #plot{width:100%;height:75vh}
+  #log{width:100%;height:16vh;white-space:pre;overflow:auto;border:1px solid #ddd;padding:6px;border-radius:8px}
+</style>
+</head>
+<body>
+<h1>Biocélula • Aquisição de Dados (mV)</h1>
+
+<div class="row">
+  <button id="btnConnect">Conectar</button>
+  <button id="btnClear">Limpar</button>
+  <button id="btnSave">Salvar CSV</button>
+
+  <span class="label">Y min (mV)</span>
+  <input id="inYmin" type="number" step="10" placeholder="ex.: 0 ou 50" value="0"/>
+
+  <span class="label">Y máx (mV)</span>
+  <input id="inYmax" type="number" step="50" placeholder="ex.: 200 ou 5000" value="5000"/>
+
+  <button id="btnApply">Aplicar</button>
+</div>
+
+<div id="plot"></div>
+<pre id="log"></pre>
+
+<script>
+let port, reader, keepReading = false;
+let xs = [], raw_mV = [], plot_mV = [], textBuffer = "";
+let yMin = 0, yMax = 5000;
+
+const plotEl = document.getElementById('plot');
+const logEl  = document.getElementById('log');
+const inYmin = document.getElementById('inYmin');
+const inYmax = document.getElementById('inYmax');
+const btnApply   = document.getElementById('btnApply');
+const btnConnect = document.getElementById('btnConnect');
+const btnClear   = document.getElementById('btnClear');
+const btnSave    = document.getElementById('btnSave');
+
+// ---- Layout (sempre mV, faixa Ymin..Ymax) ----
+function mkLayout(ymin, ymax){
+  const span = Math.max(1, Math.abs(ymax - ymin));
+  const dt   = span / 10;
+  const dmin = Math.max(dt / 4, 1);
+  return {
+    title:{text:'Potencial (mV)',font:{size:16}},
+    font:{size:12},
+    margin:{l:60,r:18,t:40,b:45},
+    xaxis:{
+      title:'Tempo (s)', showgrid:true, gridcolor:'#e6e6e6', gridwidth:1,
+      tickfont:{size:11}, nticks:10,
+      minor:{show:true, showgrid:true, gridcolor:'#f3f3f3', gridwidth:1, ticklen:3}
+    },
+    yaxis:{
+      title:'Tensão (mV)', range:[ymin, ymax],
+      showgrid:true, gridcolor:'#e2e2e2', gridwidth:1, zeroline:false,
+      tickfont:{size:11}, ticks:'outside', dtick:dt,
+      minor:{show:true, showgrid:true, gridcolor:'#f5f5f5', gridwidth:1, ticklen:3, dtick:dmin}
+    },
+    annotations:[{
+      xref:'paper', yref:'paper', x:0.98, y:0.98,
+      xanchor:'right', yanchor:'top',
+      showarrow:false, bgcolor:'#fff', bordercolor:'#ccc', borderwidth:1, opacity:0.95,
+      text:'—', font:{size:18, family:'system-ui'}
+    }]
+  };
+}
+
+// traço vazio
+Plotly.newPlot(plotEl, [{x:[], y:[], mode:'lines', name:'mV'}], mkLayout(yMin, yMax));
+
+// aplica nova faixa Ymin/Ymax (inverte se vier trocado)
+function applyYRange(minVal, maxVal){
+  let a = Number(minVal), b = Number(maxVal);
+  if (!Number.isFinite(a)) a = yMin;
+  if (!Number.isFinite(b)) b = yMax;
+  if (a === b) { b = a + 1; }       // evita faixa zero
+  if (a > b) [a, b] = [b, a];       // corrige inversão
+  yMin = a; yMax = b;
+
+  const span = Math.max(1, Math.abs(b - a));
+  const dt   = span / 10;
+  const dmin = Math.max(dt / 4, 1);
+  Plotly.relayout(plotEl, {
+    'yaxis.range':[a, b],
+    'yaxis.dtick':dt,
+    'yaxis.minor.dtick':dmin
+  });
+}
+
+btnApply.onclick = ()=> applyYRange(inYmin.value, inYmax.value);
+
+function appendLog(s){ logEl.textContent += s; logEl.scrollTop = logEl.scrollHeight; }
+
+// Converte entrada para mV: se chegar ≤10, assume Volts e multiplica por 1000
+function normalizeToMilliVolts(v){
+  if (!Number.isFinite(v)) return NaN;
+  return (Math.abs(v) <= 10) ? v*1000.0 : v;
+}
+
+async function connect(){
+  try{
+    port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 115200 });
+    keepReading = true;
+
+    const decoder = new TextDecoderStream();
+    port.readable.pipeTo(decoder.writable);
+    reader = decoder.readable.getReader();
+
+    btnConnect.textContent = 'Desconectar';
+    appendLog('Conectado.\n');
+
+    let batchX = [], batchY = [];
+    let lastExtend = performance.now();
+
+    while (keepReading){
+      const { value, done } = await reader.read();
+      if (done) break;
+      if (!value) continue;
+
+      textBuffer += value;
+      const lines = textBuffer.split(/\r?\n/);
+      textBuffer = lines.pop();
+
+      for (const line of lines){
+        const s = line.trim(); if (!s) continue;
+        appendLog(s + '\n');
+
+        const parts = s.split(',');
+        if (parts.length >= 2){
+          const t_ms = Number(parts[0]);
+          const vIn  = Number(parts[1]);
+          const vRaw = normalizeToMilliVolts(vIn);   // mV
+          if (!Number.isFinite(t_ms) || !Number.isFinite(vRaw)) continue;
+
+          const t_s = t_ms/1000;
+          xs.push(t_s); raw_mV.push(vRaw); plot_mV.push(vRaw);
+          batchX.push(t_s); batchY.push(vRaw);
+        }
+      }
+
+      const now = performance.now();
+      if (batchX.length && now - lastExtend > 100){
+        Plotly.extendTraces(plotEl, { x:[batchX], y:[batchY] }, [0]);
+        const vLast = batchY[batchY.length - 1];
+        Plotly.relayout(plotEl, {
+          'annotations[0].text': 'V = ' + vLast.toFixed(2) + ' mV',
+          'yaxis.range': [yMin, yMax]   // mantém faixa que você definiu
+        });
+        batchX = []; batchY = []; lastExtend = now;
+      }
+    }
+  }catch(err){
+    appendLog('Erro: ' + err + '\n');
+  }
+}
+
+async function disconnect(){
+  keepReading = false;
+  try{ await reader?.cancel(); }catch(e){}
+  try{ await port?.close(); }catch(e){}
+  btnConnect.textContent = 'Conectar';
+  appendLog('Desconectado.\n');
+}
+
+btnConnect.addEventListener('click', async ()=>{
+  if (!port) await connect(); else { await disconnect(); port = null; }
+});
+
+btnClear.addEventListener('click', ()=>{
+  xs = []; raw_mV = []; plot_mV = [];
+  Plotly.react(plotEl, [{x:[], y:[], mode:'lines', name:'mV'}], mkLayout(yMin, yMax));
+  appendLog('--- Limpo ---\n');
+});
+
+btnSave.addEventListener('click', ()=>{
+  let csv = 't_s,raw_mV\n';
+  for (let i=0;i<xs.length;i++) csv += xs[i] + ',' + raw_mV[i] + '\n';
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'voltimetro_mv.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+</script>
+<p style="font-size:11px;color:#666">
+Formato esperado: <code>t_ms,valor</code>. Se o valor ≤10, será tratado como Volts e convertido para mV. Ajuste <b>Y min</b> e <b>Y máx</b> para a faixa do experimento (ex.: 0–200 mV para biocélula, 0–5000 mV para fonte de 5 V).
+</p>
+</body>
+</html>
+
