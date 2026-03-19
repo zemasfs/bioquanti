@@ -3,6 +3,6 @@ Bioquanti website was designed to contribute to reproducible and self-instructio
 Essentially, the website aims to provide tools and tutorials for the use of computational thinking focused on programming logic with the help of programming languages, directly applied to curriculum content through the execution, modification, and creation of codes for the construction and study of interactive objects for technical and scientific topics.
 
 
-In short… code for content.
+In short… codes for content.
 
 https://bioquanti.netlify.app
