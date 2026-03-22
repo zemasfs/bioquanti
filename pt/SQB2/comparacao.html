@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>13&nbsp; Comparação – JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./potencial.html" rel="next">
+<link href="./fisico.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1526adf17c83be85f59fe9015b4c95d8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-7b3f903fae729091bd99fb01b4712c3a.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1526adf17c83be85f59fe9015b4c95d8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6e5033b9f7ae8419266b0651169cf70c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-fc20a98321b6d2f442b2b036e3a3a7ee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-6e5033b9f7ae8419266b0651169cf70c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+<style>
+   /* ===== largura máxima do conteúdo ===== */
+  :root { --content-max-width: 1600px; }
+
+  /* ===== cores utilitárias (suas classes) ===== */
+  .red  { color: #e53935; }
+  .blue { color: dodgerblue; }
+  .darkblue  { color: #003366; }   /* azul escuro */
+  .darkgreen { color: #006400; }   /* verde escuro */
+  .orange    { color: #ff8c00; }   /* laranja */
+  .purple    { color: #800080; }   /* roxo */
+  .note { color:#6f42c1; background:#f3e8ff; padding:2px 6px; border-radius:6px; }
+
+  /* ===== BOTÃO CENTRAL personalizável ===== */
+  #qst-centered {
+    position: fixed;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1031;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #e6ecf3;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    cursor: pointer;
+  }
+  #qst-centered:hover {
+    box-shadow: 0 3px 12px rgba(0,0,0,.12);
+    border-color: #d8e2ef;
+  }
+  #qst-centered .qst-bar {
+    width: 18px; height: 2px; background:#333; margin: 2px 0;
+  }
+
+  /* Em telas pequenas, deixe o comportamento padrão do tema */
+  @media (max-width: 991.98px){
+    #qst-centered { display: none; }
+  }
+
+  /* Evitar que o botão sobreponha o H1 ao navegar por âncoras */
+  .content h1.title, .content h1 { scroll-margin-top: 60px; }
+</style>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // 1) Verifique se o include carregou: deve haver o quadradinho verde no canto (body::after)
+    // 2) Criar um botão central próprio (independente do botão do tema)
+    if (!document.getElementById('qst-centered')) {
+      const b = document.createElement('button');
+      b.id = 'qst-centered';
+      b.setAttribute('type','button');
+      b.setAttribute('title','Mostrar/ocultar barra lateral');
+
+      for (let i=0;i<3;i++){
+        const bar = document.createElement('div');
+        bar.className = 'qst-bar';
+        b.appendChild(bar);
+      }
+      document.body.appendChild(b);
+
+      // Handler do clique: alterna o estado do sidebar usando Bootstrap Collapse
+      b.addEventListener('click', () => {
+        try {
+          const sidebar = document.querySelector('#quarto-sidebar');
+          const body = document.body;
+
+          // alterna uma classe no body (útil para temas que usam isso)
+          body.classList.toggle('sidebar-collapsed');
+
+          if (sidebar) {
+            // se estiver colapsado, mostramos; se estiver aberto, escondemos
+            const isOpen = sidebar.classList.contains('show');
+            // tenta usar a API do Bootstrap, se estiver presente
+            const bs = (window.bootstrap && window.bootstrap.Collapse)
+              ? window.bootstrap.Collapse.getOrCreateInstance(sidebar)
+              : null;
+
+            if (bs) {
+              if (isOpen) { bs.hide(); } else { bs.show(); }
+            } else {
+              // fallback: alterna class "show" manualmente
+              sidebar.classList.toggle('show');
+            }
+
+            // mantém a classe do body coerente
+            if (sidebar.classList.contains('show')) {
+              body.classList.remove('sidebar-collapsed');
+            } else {
+              body.classList.add('sidebar-collapsed');
+            }
+          }
+        } catch (e) {
+          console.warn('Toggle central falhou:', e);
+        }
+      });
+    }
+  });
+</script>
+<script>
+  (function(){
+    function pickVisible(el){ return el && el.offsetParent !== null; }
+
+    function findNativeToggle(){
+      // 1) seletores “clássicos” do Quarto (cobrindo variações)
+      const sels = [
+        '#quarto-sidebar-toggle',
+        '.quarto-sidebar-toggle',
+        'button.sidebar-toggle',
+        'button[aria-controls="quarto-sidebar"]',
+        'a[aria-controls="quarto-sidebar"]',
+        '[data-bs-target="#quarto-sidebar"]',
+        '[aria-label*="sidebar" i]'
+      ];
+      for (const s of sels){
+        const el = document.querySelector(s);
+        if (pickVisible(el)) return el;
+      }
+
+      // 2) Heurística: procura um botão pequeno no canto sup. esquerdo
+      const candidates = Array.from(document.querySelectorAll('button, a, .btn'));
+      const ranked = candidates
+        .map(el => [el, el.getBoundingClientRect()])
+        .filter(([el, r]) => r.width > 20 && r.width < 64 && r.height > 20 && r.height < 64 && r.top >= 0 && r.top < 120 && r.left >= 0 && r.left < 140)
+        .sort((a,b) => (a[1].top - b[1].top) || (a[1].left - b[1].left));
+      return ranked.length ? ranked[0][0] : null;
+    }
+
+    function moveNativeToggle(){
+      const btn = findNativeToggle();
+      if (!btn) return;
+
+      // reposiciona o PRÓPRIO botão nativo
+      btn.style.position   = 'fixed';
+      btn.style.left       = '50%';
+      btn.style.top        = '12px';
+      btn.style.transform  = 'translateX(-50%)';
+      btn.style.zIndex     = '1060';
+
+      // estética opcional (remova se quiser o padrão do tema)
+      btn.style.background = '#fff';
+      btn.style.border     = '1px solid #e6ecf3';
+      btn.style.boxShadow  = '0 2px 8px rgba(0,0,0,.08)';
+      btn.style.borderRadius = '999px';
+      btn.style.width      = '36px';
+      btn.style.height     = '36px';
+      btn.style.display    = 'inline-flex';
+      btn.style.alignItems = 'center';
+      btn.style.justifyContent = 'center';
+      btn.style.padding    = '0';
+    }
+
+    function wire(){
+      moveNativeToggle();
+      // se o DOM mudar (p.ex. render tardio), tentamos de novo
+      const obs = new MutationObserver(() => moveNativeToggle());
+      obs.observe(document.body, {childList:true, subtree:true});
+      // também ao redimensionar
+      window.addEventListener('resize', moveNativeToggle);
+    }
+
+    if (document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', wire);
+    } else {
+      wire();
+    }
+  })();
+</script>
+
+<style>
+  /* Esconde o botão nativo original no canto ESQUERDO em telas médias+,
+     caso ele reapareça por algum motivo (opcional). */
+  @media (min-width: 992px){
+    .sidebar .quarto-sidebar-toggle,
+    .sidebar #quarto-sidebar-toggle,
+    .sidebar button.sidebar-toggle{ visibility:hidden !important; }
+  }
+  /* Em telas pequenas, deixe como está (botão no canto esq.) */
+  @media (max-width: 991.98px){
+    /* nada aqui: usamos o padrão do tema */
+  }
+</style>
+<style>
+  /* ===== LARGURA MENOR PARA SIDEBAR E TOC =====
+     Aplica só em telas médias/grandes para não atrapalhar mobile */
+  @media (min-width: 992px){
+
+    /* (1) Se o seu Quarto expõe variáveis, use-as (fica mais limpo) */
+    :root{
+      --sidebar-width: 220px;            /* esquerda */
+      --margin-sidebar-width: 240px;     /* TOC à direita */
+    }
+
+    /* (2) Fallback robusto (quando tema/versão não usa as variáveis) */
+    #quarto-sidebar{
+      width: var(--sidebar-width) !important;
+    }
+    /* alguns temas têm contêiner interno com largura própria */
+    #quarto-sidebar .sidebar,
+    #quarto-sidebar .sidebar-content,
+    .sidebar.sidebar-navigation{
+      width: var(--sidebar-width) !important;
+      max-width: var(--sidebar-width) !important;
+    }
+
+    /* TOC / margin sidebar (direita) */
+    #quarto-margin-sidebar{
+      width: var(--margin-sidebar-width) !important;
+    }
+    .margin-sidebar{
+      width: var(--margin-sidebar-width) !important;
+      max-width: var(--margin-sidebar-width) !important;
+    }
+
+    /* (3) Diminui o espaço entre as 3 colunas (sidebar | conteúdo | TOC) */
+    #quarto-content.page-columns{
+      column-gap: 14px !important;  /* experimente 10–18px */
+    }
+
+    /* (4) Conteúdo central sem “colchões” extras */
+    main.content{
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    /* (5) Só estética: o search acompanha a nova largura */
+    #quarto-sidebar input.sidebar-search{
+      width: 100% !important;
+    }
+  }
+</style>
+<style>
+  /* ===== Preenche melhor a área central ===== */
+  @media (min-width: 992px){
+
+    /* use os mesmos valores que você já está usando
+       para sidebar e TOC (ou deixe estes) */
+    :root{
+      --sidebar-width: 220px;
+      --margin-sidebar-width: 240px;
+    }
+
+    /* gap entre colunas + “almofada” lateral de página (gutters) */
+    :root{
+      --lv-gap: 14px;       /* mesmo column-gap que você definiu */
+      --lv-page-pad: 12px;  /* gutters externos (um de cada lado) */
+    }
+
+    /* Faz o track do conteúdo central ocupar todo o restante da tela */
+    :root{
+      --content-max-width: calc(
+        100vw
+        - var(--sidebar-width)
+        - var(--margin-sidebar-width)
+        - (2 * var(--lv-gap))
+        - (2 * var(--lv-page-pad))
+      ) !important;
+    }
+
+    /* Garante que o elemento não imponha um max-width menor */
+    main.content{
+      max-width: none !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    /* Ajusta o espaçamento entre as 3 colunas */
+    #quarto-content.page-columns{
+      column-gap: var(--lv-gap) !important;
+    }
+
+    /* Opcional: controla os gutters externos (margens da página) */
+    .page-columns{
+      padding-left: var(--lv-page-pad) !important;
+      padding-right: var(--lv-page-pad) !important;
+    }
+  }
+</style>
+
+<style>
+  /* ===== Ajuste seguro de larguras sem redesenhar o grid ===== */
+  @media (min-width: 992px){
+    /* 1) larguras das colunas do Quarto */
+    :root{
+      /* sidebar (esquerda) e TOC (direita) */
+      --sidebar-width:           220px;  /* ajuste aqui, ex: 200-240 */
+      --margin-sidebar-width:    240px;  /* TOC; ajuste aqui, ex: 220-260 */
+
+      /* largura máxima do conteúdo (miolo) — pode ser grande */
+      --content-max-width:       2000px; /* evita “miolo” estreito */
+    }
+
+    /* 2) aplica os valores sem mexer no grid */
+    #quarto-sidebar{
+      width: var(--sidebar-width) !important;
+      min-width: var(--sidebar-width) !important;
+    }
+    #quarto-margin-sidebar{
+      width: var(--margin-sidebar-width) !important;
+      min-width: var(--margin-sidebar-width) !important;
+    }
+
+    /* 3) respiro e liberação de largura no conteúdo */
+    main.content{
+      max-width: none !important;          /* ignora limites herdados */
+      padding-left:  14px !important;      /* “respiro” interno */
+      padding-right: 14px !important;
+      overflow: visible !important;        /* não corta texto nas bordas */
+      box-sizing: border-box !important;
+    }
+
+    /* 4) diminui o espaço entre colunas (sem trocar ordem) */
+    #quarto-content.page-columns{
+      column-gap: 14px !important;         /* ajuste: 10–16px */
+    }
+  }
+
+  /* Em telas pequenas, deixa o padrão móvel */
+  @media (max-width: 991.98px){
+    main.content{
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+    }
+  }
+</style>
+<style>
+  /* espaçamento padrão entre parágrafos */
+  .content p { 
+    margin-top: 0;
+    margin-bottom: 1.2rem;  /* aumente/diminua aqui */
+    line-height: 1.55;      /* opcional: linhas mais arejadas */
+  }
+
+  /* um pouco mais de espaço quando um parágrafo vem logo após outro */
+  .content p + p {
+    margin-top: 0.8rem;
+  }
+
+  /* parágrafos dentro de callouts/listas costumam ser “apertados” */
+  .callout p { margin-bottom: 0.8rem; }
+  li p { margin-bottom: 0.6rem; }
+</style>
+
+
+<link rel="stylesheet" href="miniproj.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part3.html">Parte 3 - STEAM</a></li><li class="breadcrumb-item"><a href="./comparacao.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Comparação</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">JSPlotly</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">IISIQB</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parte 1 - Introdução</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Contexto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Simulação</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./jsplotly.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">JSPlotly</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gsplotly.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">GSPlotly</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parte 2 - Oficina</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./funcionalidade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Funcionalidades</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./componentes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Componentes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./widgets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Widgets</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./criacao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Criação</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./avaliacao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Avaliação</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parte 3 - STEAM</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./virtual.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Virtual</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fisico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Físico</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./comparacao.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Comparação</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./potencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Tecnologia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part3.html">Parte 3 - STEAM</a></li><li class="breadcrumb-item"><a href="./comparacao.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Comparação</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Comparação</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><br>
+</p>
+<section id="sec-compara" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="sec-compara"><span class="header-section-number">13.1</span> Ensino e aprendizagem</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JSPlotly se apresenta como um aplicativo pensado desde sua concepção para facilitar o ensino e aprendizagem com ferramentas diversas, embora com máxima simplicidade. Neste caminho faz-se interessante comparar suas funcionalidades com algumas ferramentas disponíveis em pesquisa e ensino, e comumente utilizadas do chão da Escola até os bancos universitários. A seleção que segue levou em conta softwares voltados para visualização científica, simulação educacional, ciência de dados, educação STEAM, e produção de objetos educacionais na web.</div>
+<p><br>
+</p>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nesse caso, foram selecionadas as ferramentas abaixo, tangentes a tecnologias para objetos didáticos interativos, e contemplando abordagens, aplicações pedagógicas e tecnologias inseridas.</div>
+<ol type="1">
+<li><a href="https://www.geogebra.org/">Geogebra</a> - Ambiente para matemática dinâmica, gratuito e de código aberto, que combina geometria, álgebra, planilhas, gráficos, estatística e cálculo</li>
+<li><a href="https://observablehq.com/">Observable JS</a> - Ambiente de notebooks reativos em JavaScript voltado para visualização de dados, no qual alterações no código atualizam automaticamente os resultados na interface;</li>
+<li><a href="https://d3js.org/">D3.js</a> - Biblioteca JavaScript de baixo nível para criação de visualizações altamente personalizadas e interativas, baseada na manipulação direta do DOM (<em>pode ser facilmente incorporada ao JSPlotly</em>);</li>
+<li><a href="https://scratch.mit.edu/">Scratch</a> - Ambiente de programação visual baseado em blocos, amplamente utilizado no ensino introdutório de lógica e pensamento computacional;</li>
+<li><a href="https://www.netlogo.org/">NetLogo</a> - Plataforma voltada à modelagem de sistemas complexos baseada em agentes, muito utilizada em simulações sociais, ecológicas e biológicas;</li>
+<li><a href="https://unity.com/campaign/unity-industry-product-walkthrough-demos?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=nxt_dd_ind_amer_amer-t2_en_aw_sem-gg_acq_br-pr_2023-04_industry-brand_cc3022_ev-br_id:22288935016&amp;utm_content=nxt_dd_ind_amer_aw_sem_gg_ev-br_pros_x_ggl_cpc_x_sd_all_x_x_usecasedemo_id:181248973611&amp;utm_term=unity%20industry&amp;&amp;&amp;&amp;&amp;gclsrc=aw.ds&amp;gad_source=1&amp;gad_campaignid=22288935016&amp;gclid=Cj0KCQjwpv7NBhCzARIsADkIfWy7MBMCJkXSqtgY-8_rPWl9CCcDIpXpK409xg_n4nskLXPX3Vf_dHcaAsVQEALw_wcB">Unity (WebGL)</a> - Motor de desenvolvimento de jogos e simulações interativas, permitindo a criação de ambientes imersivos tridimensionais com alto nível de controle;</li>
+<li><a href="https://www.desmos.com/">Desmos</a> - Calculadora gráfica online gratuita e de alta potência, acessível via navegador ou aplicativo, usada para visualizar funções, equações e dados matemáticos em tempo real</li>
+<li><a href="https://phet.colorado.edu/">PhET Simulation</a> - Conjunto de simulações interativas prontas para uso educacional, focadas na exploração conceitual em Física, Química e Matemática;</li>
+<li><a href="https://p5js.org/">p5.js</a> - Biblioteca JavaScript voltada à programação criativa, muito utilizada para visualizações interativas, arte computacional e ensino de lógica (<em>pode ser facilmente incorporada ao JSPlotly</em>);</li>
+<li><a href="https://jupyter.org/">Jupyter Notebook</a> - Ambiente computacional baseado em células que integra código, texto e visualizações, amplamente utilizado em ciência de dados e modelagem científica.</li>
+</ol>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As tabelas a seguir fornecem um comparativo entre as tecnologias.</div>
+<p><br>
+</p>
+<section id="abordagens-didáticas" class="level3" data-number="13.1.1">
+<h3 data-number="13.1.1" class="anchored" data-anchor-id="abordagens-didáticas"><span class="header-section-number">13.1.1</span> Abordagens didáticas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 19%">
+<col style="width: 8%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Plataforma / abordagem</th>
+<th>Linguagem principal</th>
+<th>Tipo de ambiente</th>
+<th>Execucao</th>
+<th>Foco principal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>JSPlotly</td>
+<td>JavaScript</td>
+<td>Script web interativo</td>
+<td>local ou web</td>
+<td>visualizacao cientifica e objetos educacionais</td>
+</tr>
+<tr class="even">
+<td>Observable / OJS</td>
+<td>JavaScript</td>
+<td>notebook reativo</td>
+<td>web</td>
+<td>visualizacao e ciencia de dados</td>
+</tr>
+<tr class="odd">
+<td>GeoGebra</td>
+<td>linguagem propria + matematica</td>
+<td>ambiente educacional</td>
+<td>local / web</td>
+<td>matematica interativa</td>
+</tr>
+<tr class="even">
+<td>PhET Simulations</td>
+<td>HTML5 / JavaScript</td>
+<td>simulacoes prontas</td>
+<td>web</td>
+<td>ensino conceitual de ciencias</td>
+</tr>
+<tr class="odd">
+<td>Jupyter Notebook</td>
+<td>Python</td>
+<td>notebook computacional</td>
+<td>local / web</td>
+<td>ciencia de dados e modelagem</td>
+</tr>
+<tr class="even">
+<td>Desmos</td>
+<td>JavaScript</td>
+<td>ambiente matematico</td>
+<td>web</td>
+<td>visualizacao matematica</td>
+</tr>
+<tr class="odd">
+<td>Scratch</td>
+<td>linguagem visual</td>
+<td>ambiente educacional</td>
+<td>web</td>
+<td>programacao educacional</td>
+</tr>
+<tr class="even">
+<td>NetLogo</td>
+<td>linguagem propria</td>
+<td>simulador de sistemas</td>
+<td>local / web</td>
+<td>modelagem baseada em agentes</td>
+</tr>
+<tr class="odd">
+<td>Unity WebGL</td>
+<td>C#</td>
+<td>motor de jogos</td>
+<td>web</td>
+<td>simulacoes e experiencias imersivas</td>
+</tr>
+<tr class="even">
+<td>p5.js</td>
+<td>JavaScript</td>
+<td>biblioteca criativa</td>
+<td>web</td>
+<td>visualizacao interativa e arte computacional</td>
+</tr>
+<tr class="odd">
+<td>D3.js</td>
+<td>JavaScript</td>
+<td>biblioteca de visualizacao</td>
+<td>web</td>
+<td>visualizacao avancada de dados</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="aplicações-pedagógicas" class="level3" data-number="13.1.2">
+<h3 data-number="13.1.2" class="anchored" data-anchor-id="aplicações-pedagógicas"><span class="header-section-number">13.1.2</span> Aplicações pedagógicas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 10%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 3%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>JSPlotly</th>
+<th>OJS</th>
+<th>GeoGebra</th>
+<th>PhET</th>
+<th>Jupyter</th>
+<th>Desmos</th>
+<th>Scratch</th>
+<th>NetLogo</th>
+<th>Unity</th>
+<th>p5.js</th>
+<th>D3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Criacao de novos objetos</td>
+<td>Alta</td>
+<td>Alta</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Alta</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Alta</td>
+<td>Alta</td>
+</tr>
+<tr class="even">
+<td>Facilidade para iniciantes</td>
+<td>Media</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Muito alta</td>
+<td>Media</td>
+<td>Muito alta</td>
+<td>Muito alta</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Baixa</td>
+</tr>
+<tr class="odd">
+<td>Controle do codigo</td>
+<td>Completo</td>
+<td>Alto</td>
+<td>Limitado</td>
+<td>Muito limitado</td>
+<td>Completo</td>
+<td>Limitado</td>
+<td>Medio</td>
+<td>Medio</td>
+<td>Alto</td>
+<td>Alto</td>
+<td>Completo</td>
+</tr>
+<tr class="even">
+<td>Visualizacao cientifica</td>
+<td>Muito alta</td>
+<td>Muito alta</td>
+<td>Media</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Alta</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Alta</td>
+<td>Muito alta</td>
+</tr>
+<tr class="odd">
+<td>Simulacao de sistemas</td>
+<td>Alta</td>
+<td>Media</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Alta</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Muito alta</td>
+<td>Muito alta</td>
+<td>Media</td>
+<td>Media</td>
+</tr>
+<tr class="even">
+<td>Programacao educacional</td>
+<td>Alta</td>
+<td>Alta</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Alta</td>
+<td>Baixa</td>
+<td>Muito alta</td>
+<td>Media</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Alta</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="tecnologia-envolvida" class="level3" data-number="13.1.3">
+<h3 data-number="13.1.3" class="anchored" data-anchor-id="tecnologia-envolvida"><span class="header-section-number">13.1.3</span> Tecnologia envolvida</h3>
+<p><br>
+</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio tecnico</th>
+<th>JSPlotly</th>
+<th>OJS</th>
+<th>GeoGebra</th>
+<th>PhET</th>
+<th>Jupyter</th>
+<th>Desmos</th>
+<th>Scratch</th>
+<th>NetLogo</th>
+<th>Unity</th>
+<th>p5.js</th>
+<th>D3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Execucao offline</td>
+<td>Sim</td>
+<td>Parcial</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Nao</td>
+<td>Parcial</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+</tr>
+<tr class="even">
+<td>Integracao web</td>
+<td>Nativa</td>
+<td>Nativa</td>
+<td>Boa</td>
+<td>Media</td>
+<td>Boa</td>
+<td>Nativa</td>
+<td>Nativa</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Nativa</td>
+<td>Nativa</td>
+</tr>
+<tr class="odd">
+<td>Exportacao HTML autonoma</td>
+<td>Sim</td>
+<td>Parcial</td>
+<td>Sim</td>
+<td>Nao</td>
+<td>Parcial</td>
+<td>Nao</td>
+<td>Nao</td>
+<td>Parcial</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+</tr>
+<tr class="even">
+<td>Integracao com hardware</td>
+<td>Alta</td>
+<td>Baixa</td>
+<td>Muito baixa</td>
+<td>Nenhuma</td>
+<td>Alta</td>
+<td>Nenhuma</td>
+<td>Baixa</td>
+<td>Baixa</td>
+<td>Alta</td>
+<td>Alta</td>
+<td>Alta</td>
+</tr>
+<tr class="odd">
+<td>Personalizacao de interface</td>
+<td>Alta</td>
+<td>Media</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Media</td>
+<td>Muito alta</td>
+<td>Alta</td>
+<td>Muito alta</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<section id="paradigmas-educacionais" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="paradigmas-educacionais">Paradigmas educacionais</h4>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, pode-se também encaixar resumidamente o JSPlotly, bem como os demais aplicativos avaliados, face a alguns paradigmas educacionais, tal como segue.</div>
+<p><br>
+</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Paradigma de aprendizagem</th>
+<th>Tecnologias tipicas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exploracao conceitual guiada</td>
+<td>PhET, GeoGebra, Desmos</td>
+</tr>
+<tr class="even">
+<td>Visualizacao cientifica</td>
+<td>JSPlotly, D3.js, Observable</td>
+</tr>
+<tr class="odd">
+<td>Simulacao parametrica</td>
+<td>JSPlotly, NetLogo, Unity</td>
+</tr>
+<tr class="even">
+<td>Ciencia de dados educacional</td>
+<td>Jupyter, Observable</td>
+</tr>
+<tr class="odd">
+<td>Programacao criativa</td>
+<td>Scratch, p5.js</td>
+</tr>
+<tr class="even">
+<td>Modelagem cientifica</td>
+<td>JSPlotly, NetLogo, Jupyter</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A análise comparativa dos paradigmas de interatividade educacional acima evidencia que diferentes tecnologias tendem a privilegiar formas distintas de mediação do conhecimento, variando entre exploração guiada, simulação paramétrica, investigação aberta e aprendizagem baseada em modelos. Essa diversidade não representa apenas diferenças técnicas, mas reflete concepções pedagógicas subjacentes, que dialogam com abordagens construtivistas, investigativas e baseadas em resolução de problemas. Nesse contexto, ferramentas como o JSPlotly destacam-se por sua flexibilidade em transitar entre esses paradigmas, permitindo tanto a construção de objetos orientados à exploração conceitual quanto ambientes mais abertos de experimentação e modelagem. Tal característica amplia seu potencial como tecnologia educacional, ao favorecer a articulação entre visualização científica, interatividade e construção ativa do conhecimento, elementos centrais nas teorias contemporâneas de aprendizagem.</div>
+</section>
+</section>
+</section>
+<section id="pesquisa-científica" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="pesquisa-científica"><span class="header-section-number">13.2</span> Pesquisa científica</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Na mesma linha de comparação anterior, o JSPlotly pode ser colocado frente a um conjunto de softwares proprietários ou não, desta vez ao emprego na pesquisa. As suites escolhidas para essa comparação são:</div>
+<p><br>
+</p>
+<ol type="1">
+<li><a href="https://www.mathworks.com/products/matlab.html">Matlab</a> / <a href="https://octave.org/">Octave</a> - Plataformas voltadas à computação numérica e modelagem matemática, amplamente utilizadas em engenharia, física e simulações científicas;</li>
+<li><a href="https://www.originlab.com/">OriginLab</a> - Software dedicado à análise de dados experimentais e geração de gráficos científicos de alta qualidade, com foco em ajuste de curvas e tratamento de dados;</li>
+<li><a href="https://cran.r-project.org/">R</a> / <a href="https://posit.co/download/rstudio-desktop/">RStudio</a> - Linguagem de programação e IDE para ambiente estatístico voltado à análise de dados, modelagem e reprodutibilidade científica, com forte suporte a visualização e relatórios dinâmicos;</li>
+<li><a href="https://www.graphpad.com/features">Prism</a> - Ferramenta voltada principalmente às ciências biológicas e biomédicas, combinando análise estatística com geração simplificada de gráficos científicos;</li>
+<li><a href="https://grafiti.com/sigmaplot-detail/">SigmaPlot</a> - Software focado em visualização técnica e análise de dados, com recursos avançados para ajuste de curvas e modelagem empírica;</li>
+<li><a href="https://www.microsoft.com/pt-br/microsoft-365/p/excel/cfq7ttc0pbmf">MS Excel</a> - Planilha eletrônica amplamente utilizada para organização, análise básica de dados e visualização simples, com suporte a fórmulas e automação via VBA;</li>
+<li><a href="https://www.wolfram.com/mathematica/">Mathematica</a> - Ambiente de computação simbólica e numérica, voltado à modelagem matemática avançada, incluindo álgebra simbólica e simulações complexas;</li>
+<li><a href="https://www.microsoft.com/pt-br/power-platform/products/power-bi">Power BI</a> - Plataforma de business intelligence voltada à análise de dados e construção de dashboards interativos para exploração e comunicação de informações.</li>
+</ol>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As tabelas a seguir fornecem um comparativo entre as tecnologias.</div>
+<p><br>
+</p>
+<section id="abordagens" class="level3" data-number="13.2.1">
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="abordagens"><span class="header-section-number">13.2.1</span> Abordagens</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 17%">
+<col style="width: 20%">
+<col style="width: 8%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Plataforma / abordagem</th>
+<th>Linguagem principal</th>
+<th>Tipo de ambiente</th>
+<th>Execucao</th>
+<th>Foco principal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>JSPlotly</td>
+<td>JavaScript</td>
+<td>script web interativo</td>
+<td>local ou web</td>
+<td>visualizacao cientifica interativa e objetos programaveis</td>
+</tr>
+<tr class="even">
+<td>Matlab / Octave</td>
+<td>linguagem propria</td>
+<td>ambiente computacional numerico</td>
+<td>local</td>
+<td>modelagem matematica e simulacao numerica</td>
+</tr>
+<tr class="odd">
+<td>OriginLab</td>
+<td>interface grafica + script</td>
+<td>software de analise cientifica</td>
+<td>local</td>
+<td>analise de dados e graficos cientificos</td>
+</tr>
+<tr class="even">
+<td>R / RStudio</td>
+<td>R</td>
+<td>ambiente estatistico</td>
+<td>local ou web</td>
+<td>estatistica, analise e reproducibilidade</td>
+</tr>
+<tr class="odd">
+<td>GraphPad Prism</td>
+<td>interface grafica</td>
+<td>software estatistico</td>
+<td>local</td>
+<td>analise estatistica aplicada a biociencias</td>
+</tr>
+<tr class="even">
+<td>SigmaPlot</td>
+<td>interface grafica + script</td>
+<td>software cientifico</td>
+<td>local</td>
+<td>graficos tecnicos e ajuste de curvas</td>
+</tr>
+<tr class="odd">
+<td>MS Excel</td>
+<td>formula + VBA</td>
+<td>planilha eletronica</td>
+<td>local ou web</td>
+<td>analise basica e visualizacao de dados</td>
+</tr>
+<tr class="even">
+<td>Mathematica</td>
+<td>linguagem propria</td>
+<td>ambiente simbolico</td>
+<td>local ou web</td>
+<td>modelagem simbolica e computacao avancada</td>
+</tr>
+<tr class="odd">
+<td>Power BI</td>
+<td>DAX / interface grafica</td>
+<td>plataforma de BI</td>
+<td>web ou local</td>
+<td>analise de dados e dashboards interativos</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="tecnologias-envolvidas" class="level3" data-number="13.2.2">
+<h3 data-number="13.2.2" class="anchored" data-anchor-id="tecnologias-envolvidas"><span class="header-section-number">13.2.2</span> Tecnologias envolvidas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 7%">
+<col style="width: 13%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 9%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio tecnico</th>
+<th>JSPlotly</th>
+<th>Matlab / Octave</th>
+<th>OriginLab</th>
+<th>R / RStudio</th>
+<th>Prism</th>
+<th>SigmaPlot</th>
+<th>Excel</th>
+<th>Mathematica</th>
+<th>Power BI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Execucao local</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+</tr>
+<tr class="even">
+<td>Execucao web</td>
+<td>Nativa</td>
+<td>Limitada</td>
+<td>Nao</td>
+<td>Parcial</td>
+<td>Nao</td>
+<td>Nao</td>
+<td>Sim</td>
+<td>Parcial</td>
+<td>Nativa</td>
+</tr>
+<tr class="odd">
+<td>Reprodutibilidade</td>
+<td>Alta</td>
+<td>Alta</td>
+<td>Media</td>
+<td>Muito alta</td>
+<td>Media</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Alta</td>
+<td>Media</td>
+</tr>
+<tr class="even">
+<td>Automacao por codigo</td>
+<td>Completa</td>
+<td>Completa</td>
+<td>Parcial</td>
+<td>Completa</td>
+<td>Limitada</td>
+<td>Parcial</td>
+<td>Limitada</td>
+<td>Completa</td>
+<td>Parcial</td>
+</tr>
+<tr class="odd">
+<td>Exportacao interativa</td>
+<td>Alta</td>
+<td>Baixa</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Baixa</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Alta</td>
+</tr>
+<tr class="even">
+<td>Integracao com web</td>
+<td>Nativa</td>
+<td>Baixa</td>
+<td>Nenhuma</td>
+<td>Media</td>
+<td>Nenhuma</td>
+<td>Nenhuma</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Alta</td>
+</tr>
+<tr class="odd">
+<td>Integracao com hardware</td>
+<td>Alta</td>
+<td>Alta</td>
+<td>Baixa</td>
+<td>Alta</td>
+<td>Nenhuma</td>
+<td>Baixa</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Baixa</td>
+</tr>
+<tr class="even">
+<td>Customizacao de interface</td>
+<td>Alta</td>
+<td>Media</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Alta</td>
+<td>Alta</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="aplicações-para-pesquisa" class="level3" data-number="13.2.3">
+<h3 data-number="13.2.3" class="anchored" data-anchor-id="aplicações-para-pesquisa"><span class="header-section-number">13.2.3</span> Aplicações para pesquisa</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 8%">
+<col style="width: 13%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio funcional</th>
+<th>JSPlotly</th>
+<th>Matlab / Octave</th>
+<th>OriginLab</th>
+<th>R / RStudio</th>
+<th>Prism</th>
+<th>SigmaPlot</th>
+<th>Excel</th>
+<th>Mathematica</th>
+<th>Power BI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Visualizacao cientifica</td>
+<td>Muito alta</td>
+<td>Alta</td>
+<td>Muito alta</td>
+<td>Muito alta</td>
+<td>Alta</td>
+<td>Muito alta</td>
+<td>Media</td>
+<td>Muito alta</td>
+<td>Alta</td>
+</tr>
+<tr class="even">
+<td>Analise estatistica</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Alta</td>
+<td>Muito alta</td>
+<td>Muito alta</td>
+<td>Alta</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Alta</td>
+</tr>
+<tr class="odd">
+<td>Modelagem matematica</td>
+<td>Media</td>
+<td>Muito alta</td>
+<td>Baixa</td>
+<td>Alta</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Muito alta</td>
+<td>Baixa</td>
+</tr>
+<tr class="even">
+<td>Ajuste de curvas</td>
+<td>Media</td>
+<td>Alta</td>
+<td>Muito alta</td>
+<td>Alta</td>
+<td>Muito alta</td>
+<td>Muito alta</td>
+<td>Baixa</td>
+<td>Alta</td>
+<td>Baixa</td>
+</tr>
+<tr class="odd">
+<td>Simulacao de sistemas</td>
+<td>Alta</td>
+<td>Muito alta</td>
+<td>Baixa</td>
+<td>Alta</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Muito alta</td>
+<td>Baixa</td>
+</tr>
+<tr class="even">
+<td>Interatividade</td>
+<td>Muito alta</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Baixa</td>
+<td>Baixa</td>
+<td>Baixa</td>
+<td>Media</td>
+<td>Alta</td>
+</tr>
+<tr class="odd">
+<td>Compartilhamento</td>
+<td>Muito alto</td>
+<td>Baixo</td>
+<td>Baixo</td>
+<td>Medio</td>
+<td>Baixo</td>
+<td>Baixo</td>
+<td>Alto</td>
+<td>Medio</td>
+<td>Muito alto</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="paradigmas-de-uso-em-pesquisa" class="level3" data-number="13.2.4">
+<h3 data-number="13.2.4" class="anchored" data-anchor-id="paradigmas-de-uso-em-pesquisa"><span class="header-section-number">13.2.4</span> Paradigmas de uso em pesquisa</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Paradigma de uso</th>
+<th>Tecnologias tipicas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Computacao numerica</td>
+<td>Matlab, Octave</td>
+</tr>
+<tr class="even">
+<td>Estatistica e reproducibilidade</td>
+<td>R, Jupyter</td>
+</tr>
+<tr class="odd">
+<td>Analise grafica aplicada</td>
+<td>OriginLab, SigmaPlot, Prism</td>
+</tr>
+<tr class="even">
+<td>Planilhas e analise geral</td>
+<td>Excel</td>
+</tr>
+<tr class="odd">
+<td>Computacao simbolica</td>
+<td>Mathematica</td>
+</tr>
+<tr class="even">
+<td>Business intelligence</td>
+<td>Power BI</td>
+</tr>
+<tr class="odd">
+<td>Visualizacao interativa web</td>
+<td>JSPlotly</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Diferentemente das plataformas tradicionais de análise científica, geralmente orientadas à execução local e à produção de resultados estáticos, ferramentas baseadas em tecnologias web, como o JSPlotly, ampliam significativamente as possibilidades de interatividade, compartilhamento e integração com diferentes ambientes computacionais. Essa mudança de paradigma não substitui os ambientes clássicos, mas os complementa, ao introduzir uma camada adicional de visualização dinâmica e acessibilidade, especialmente relevante em contextos de comunicação científica, ensino e prototipagem de modelos interativos.</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation column-page-right">
+  <div class="nav-page nav-page-previous">
+      <a href="./fisico.html" class="pagination-link" aria-label="Físico">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Físico</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./potencial.html" class="pagination-link" aria-label="Tecnologia">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Tecnologia</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<button id="sb-toggle" class="btn btn-light" title="Sidebar" aria-label="Sidebar">
+  <i class="bi bi-layout-text-sidebar-reverse"></i>
+</button>
+
+<style>
+  /* Botão fixo: não interfere no layout */
+  #sb-toggle{
+    position: fixed; top: 12px; left: 12px; z-index: 10000;
+    border-radius: 999px; padding: 8px 10px; box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  }
+
+  /* Quando a classe estiver no body, sumir com sidebars e ocupar largura total */
+  body.sb-hidden #quarto-sidebar,
+  body.sb-hidden #quarto-sidebar-glass,
+  body.sb-hidden #quarto-margin-sidebar { display: none !important; }
+
+  /* Grid do Quarto: faz o main ocupar tudo quando sidebar está oculta */
+  body.sb-hidden .page-columns { grid-template-columns: 1fr !important; }
+  body.sb-hidden main.content { grid-column: 1 / -1 !important; }
+</style>
+
+<script type="module">
+  const BODY = document.body;
+  const btn  = document.getElementById('sb-toggle');
+
+  // restaura preferência
+  if (localStorage.getItem('sb-hidden') === '1') BODY.classList.add('sb-hidden');
+
+  const sync = () => localStorage.setItem('sb-hidden', BODY.classList.contains('sb-hidden') ? '1' : '0');
+
+  btn?.addEventListener('click', () => { BODY.classList.toggle('sb-hidden'); sync(); });
+
+  // atalho S (fora de inputs)
+  document.addEventListener('keydown', ev => {
+    if (ev.key.toLowerCase() === 's' && !ev.target.closest('input, textarea, [contenteditable="true"]')) {
+      ev.preventDefault(); btn.click();
+    }
+  });
+
+  // se o botão nativo do Quarto existir, manter estados sincronizados
+  const hdrBtn = document.querySelector('header .quarto-btn-toggle');
+  hdrBtn?.addEventListener('click', () => setTimeout(sync, 200));
+</script>
+
+
+
+
+</body></html>
