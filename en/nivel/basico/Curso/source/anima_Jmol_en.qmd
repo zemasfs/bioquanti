@@ -1,0 +1,103 @@
+---
+title: "6 - Some animations with Jmol"
+format: html
+toc: true
+number-sections: true
+lang: en
+---
+
+<div class="reminder-objetivos">
+
+Objectives:\
+1. Understand a molecule animation as a script\
+2. Use the molecule animation console\
+
+</div>
+
+
+## Animate the molecules.
+
+
+| And we have reached the last part of the *Course* with *Jmol*, to present a very interesting educational effect of the program: *molecule animation*.
+
+| You may want to show a molecule with different styles during a certain period, or make a slow transition between colors in specific atoms, or even controlled enlargement, reduction, or rotation effects. And many others that your imagination and technical rigor allow you to study.
+
+| In these cases, it is interesting to know and apply a few animation commands explained below. The examples have been selected to simplify each command. But don't be fooled by the capabilities of *Jmol*, because for each command there are always several complementary options. And if you want to know anything about any *Jmol* command, visit the [reference website](https://chemapps.stolaf.edu/jmol/docs/).
+
+
+### Spin
+
+| Simple command to rotate the molecule.
+
+```{r, eval = FALSE}
+load $glucose; spin 30 # the value refers to the rotation speed
+```
+
+
+### ZoomTo (resize)
+
+| This command is impressive because it allows for controlled magnification or reduction over time. Its syntax is:
+
+```{r, eval=FALSE}
+*zoomTo* : time (optional expression) size
+```
+
+Examples:
+
+```{r, eval = FALSE} 
+Increase by 3x, half a second at a time: zoomto 0.5 *3 
+
+Increase by 4x, half a second at a time: zoomto 0.5 400
+
+Focus on a biopolymer ligand with 2x magnification: zoomto 2(ligand) 0
+
+Focus on a biopolymer ligand with 4x magnification, half a second at a time: zoomto 0.5(ligand)* 4
+```
+
+
+### Delay
+
+| This is a **key command** for any animation, as it allows the image of the molecule in *Jmol* to pause (in seconds) before the next action. It is normally used in the sequence of commands by the *Console* throughout a *script*.
+
+```{r, eval=FALSE}
+delay 3 # waits 3 seconds before the next action
+```
+
+
+| We can try out an animation with the above commands using the cyclohexanol model.
+
+
+![Cyclohexanol structure. Source: MAPA: high school - 2nd semester, 3rd year, p.57. Natural sciences and their technologies.](ciclohexanol_mapa.png)
+
+| Here is a code snippet for you to try out animations with *Jmol*. Just copy and paste it into the *Console* and run it. If you prefer to make any changes, it is best to copy it to a notepad, modify it, and test the *script* in the *Console*.
+
+
+<div class="reminder-markdown">
+
+**Now it's up to you:**
+
+load $cyclohexanol
+\
+delay 2
+\
+spin Y 70
+\
+delay 2
+\
+spin off
+\
+zoomTo 2 \*2
+\
+cpk
+\
+delay 2
+\
+color transparent
+\
+zoomTo 2 \*0.5
+\
+spin 50
+
+
+
+</div>

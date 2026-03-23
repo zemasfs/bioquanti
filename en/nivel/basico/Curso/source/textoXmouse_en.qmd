@@ -1,0 +1,132 @@
+---
+title: "2 - Mouse clicks *versus* command text"
+format: html
+toc: true
+number-sections: true
+lang: en
+---
+
+<div class="reminder-objetivos">
+
+Objectives:\
+1. Observe that there are two ways to perform actions in some programs: using the mouse or using text commands\
+2. Observe the characteristics of each method\
+3. Learn some principles for "Reproducible Teaching" and the advantages of using command lines instead of mouse movements\
+</div>
+
+
+
+## Mouse clicks
+
+| Any computer program you have ever used, even on mobile devices, has its *usability* centered on the ease of use of clicks and drags with a *mouse*, *touchpad*, and even your fingers (capacitive screens). This greatly facilitates the intended quick actions. For example, in text editors, it is common to click on a formatting icon (italics, bold, etc.) or even type its shortcut to complete what you want in the text.
+
+
+| Simple, practical, and fast. In the same way, you can use *Jmol*, both in the version downloaded to your computer and in the *online* version. For the downloaded version, just look at the range of menu items and submenus. For the browser version, note that there is no menu!
+
+
+
+| However, the online version allows you to view the same information, albeit with a different formatting, by simply right-clicking anywhere on the screen (a fancy name for the screen containing some information, the molecule, in this case).
+
+
+## Command lines {#sec-linhasComando}
+
+
+| As with mouse clicks, you can also access a text field to enter *Jmol* commands, both in the downloaded version (*standalone*) and in the browser version (*JSmol applet*). For the former, click on *File--\>Console*, and a window will appear for entering text. In the online version, right-click anywhere on the screen and choose *Console*.
+
+
+## Mouse clicks *versus* command lines
+
+
+| Although it is possible to use *Jmol* with both mouse clicks and text commands, *which is better?*
+
+
+| To help answer this question, let's use an electronic spreadsheet, such as *Excel* from the MS-Office suite, *Calc* from the *Libreoffice* suite, or *Spreadsheets* from the Google suite. Suppose you want to make a simple graph, taking two columns, each for a variable (independent or *x*, and dependent, or *y*). The usual thing would be to click on a menu item for graphs, select the desired columns in specific fields of the window that opens, select the type of graph, click on *next* or a similar term, select other characteristics (labels or names on the *x* and *y* axes, for example), and finally click on *finish* (or *OK*, or a term with a similar meaning). Simple, fast, and practical.
+
+
+| But (there's always a "but")...what if, in addition to constructing the graph, you needed to perform additional actions, such as obtaining the linear fit of the data, displaying the resulting line with a specific color and style, inserting the line equation at a specific point on the graph, adding a title, and changing the symbol of the points, including the type, size, and color. Phew!!!
+
+| No problem, either... as long as you have a good tutorial at hand, of course! Or that you are already familiar with the spreadsheet program, menus, and actions relevant to the various mouse clicks that will be necessary to obtain a nice linear regression graph at the end.
+
+| Now... one more small variable to add to the example above: suppose that you are not the one constructing the graph, but a student in your class, and that they have not been trained in the use of the spreadsheet or in the intended calculations!
+
+| Notice that now there will be some discomfort, since:
+
+
+1. The student has no prior knowledge of how to use the spreadsheet;
+2. The student has no prior knowledge of the intended calculations;
+3. You will have to train the student or provide them with a related training *guide*;
+4. If training has already taken place but the *guide* is not available, both you and the student will depend on your *memory retention* to successfully complete the task.
+
+| Now, what if the instructions for executing the final product were not in a *guide* for repeating *mouse* clicks, but rather in a short text containing both the commands in sequence and explanatory comments for each individual action, and that when inserted into the program, it generated the graph already fully formatted, colored, and with the linear adjustment and result parameters?
+
+## Advantages of using command lines over mouse clicks
+
+| In the hypothetical example above, note that a short text containing the command lines in sequence and comments referring to them allows:
+
+* the final product to be **reproducible** and error-free;
+the final product to be produced without prior knowledge by the student; simply execute the code in the program;
+* the final product to be produced independently of the memory of those involved (sequence of clicks, for example);
+* a virtually infinite number of sequential actions, without the need to memorize the order of mouse clicks;
+* the learning of each command used in human language, since there are comments from the author for each line;
+* the product can be modified to generate a different object at the end (change of color, axis labels, another title, for example)
+* the same graph can be **reproduced**, but with another set of data (*x* and *y*);
+* that the learner can try other commands to add different formatting and/or calculations to the product;
+* that you or the student can **reproduce** the product without resorting to memory, even centuries later, if predictions of mass extinction do not come true;
+* that anyone can *reproduce* the object, regardless of their level of technical training or the program's operability;
+* finally, that it is possible to teach certain content in a reproducible way...or...**Reproducible Teaching**.
+
+| Thus, this course intends to use only *command lines* to materialize the advantages described above, tangential to an active methodology focused, albeit incipient, on *Reproducible Teaching*, both for the *Jmol* tool and for the *R & RStudio* tool.
+
+| Regarding *Jmol*, therefore, the sequential actions for three-dimensional visualization of molecular models will be performed by the *Console* accessible as per item @sec-commandLines above.
+
+## *Scripts*
+
+| Put in the above form, when you have any set of sequential command lines, allowing you to act on an object such as a molecular model, and for a multitude of things, you then have a *script*. Technically speaking, a *script* is a block of sequential instructions in text for compilation into a program.
+
+| *Scripts* can be created in *Jmol* in a *browser* in two ways:
+
+```{r, eval=FALSE}
+1. Separating commands with ";" - e.g., "cpk only; color blue"
+2. Separating commands by lines - e.g.,
+"cpk only
+color blue"
+```
+
+
+
+| If you want the model to perform a few commands, the best option is to separate them with semicolons (";"). But if you want something more "sophisticated," we suggest separating them by lines. And more... commented lines written in a notepad or any text editor!
+
+
+### Advantages of using a notepad or text editor for serial commands
+
+| Imagine a more significant transformation to the original molecule loaded, such as magnification, coloring, representation, and movement effects. It is easy to see that a set of commented lines arranged in sequence facilitates both the observation of what is intended with the model and the identification of errors and adjustments.
+
+| This is also inherited from the concepts of *Reproducible Teaching*, as it facilitates the visualization of the code (*human readable format*) and its debugging (*code debug*). See the example below, reflect on its interpretation, copy it to a *notepad*, and test it in the *Console* of *Jmol*.
+
+![Structure of nicotine. Source: MAPA: high school - 2nd semester, 3rd year, p.61. Natural sciences and their technologies.](nicotine_mapa.png)
+
+```{r, eval = FALSE}
+load $nicotine
+background black # black background color
+spin 80 # rotates the molecule
+delay 3 # wait 1 second
+spin off # stop rotation
+cpk # render as fill pattern
+```
+
+
+<div class="reminder-markdown">
+
+**Now it's up to you**:
+
+1. Copy the code snippet above into a notepad.
+1. Change the lines of code randomly, copy and run again in the Console. 
+1. Suggestions for changes (one or two... or all!): 
+\
+spin 300
+\
+delay 1
+\
+background magenta
+</div>
+
