@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>JSPlotly Gráfico Exportado</title>
+  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #ffffff; color: #000000; }
+    #grafico { width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="grafico"></div>
+  <script>
+    const data = [{"x":[0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10,10.5,11,11.5,12,12.5,13,13.5,14,14.5,15,15.5,16,16.5,17,17.5,18,18.5,19,19.5,20],"y":[0.5,1.7,2.8,3.8,4.7,5.5,6.2,6.8,7.3,7.7,8,8.2,8.3,8.299999999999999,8.2,8,7.699999999999999,7.299999999999999,6.800000000000001,6.199999999999999,5.5,4.699999999999999,3.799999999999997,2.799999999999997,1.6999999999999993,0.5,-0.8000000000000043,-2.200000000000003,-3.700000000000003,-5.300000000000004,-7,-8.800000000000004,-10.700000000000003,-12.700000000000003,-14.800000000000004,-17,-19.299999999999997,-21.700000000000003,-24.200000000000003,-26.799999999999997,-29.5],"type":"scatter","mode":"lines+markers","name":"Função Quadrática"}];
+    const layout = {"annotations":[],"xaxis":{"range":[0,15],"title":{"text":"Valores de X"},"type":"linear"},"yaxis":{"range":[0,8.3],"title":{"text":"Valores de Y"},"type":"linear"},"title":{"text":"Função Quadrática"},"autosize":true};
+    const frames = [];
+    layout.editable = false;
+    Plotly.newPlot("grafico", data, layout).then(function() {
+      if (frames && frames.length > 0) {
+        Plotly.addFrames("grafico", frames);
+        Plotly.animate("grafico", null, { frame: { duration: 500, redraw: true }, transition: { duration: 300 } });
+      }
+    });
+    document.getElementById("grafico").on("plotly_click", function(data) {
+      const y = data.points[0].y;
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(y, ctx.currentTime);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.4);
+    });
+  </script>
+</body>
+</html>
