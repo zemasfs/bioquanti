@@ -754,422 +754,106 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
-// ===============================
-// TDS via Arduino + Web Serial
-// JSPlotly
-// ===============================
+const n_frames = 50;
+const n_particulas = 100; // Número de partículas de umidade a simular
+const intensidade_base = 10; // Intensidade base da umidade
+const desmatamento_fator = 0.5; // Fator de redução de umidade em caso de desmatamento
 
-// ----- estado global -----
-let porta = null;
-let reader = null;
-let conectado = false;
-let tempo = 0;
+// Gera dados fictícios para simular as partículas de umidade
+function gerarDadosRiosVoadores(n, nFrames) {
+  const dados = [];
+  for (let i = 0; i < nFrames; i++) {
+    const frameData = [];
+    const desmatamento = (i > nFrames / 2) ? desmatamento_fator : 1; // Simula desmatamento na metade da animação
 
-let dadosBrutos = [];
-let dadosSuavizados = [];
+    for (let j = 0; j < n; j++) {
+      // Posição inicial (norte do Brasil)
+      const x_inicial = -65 + Math.random() * 5;
+      const y_inicial = -5 + Math.random() * 5;
 
-// calibração linear: valor_calibrado = a * leitura + b
-let usarCalibracao = true;
-let aCal = 1.00;
-let bCal = 0.00;
+      // Posição final (sul/sudeste do Brasil) com dispersão
+      const x_final = x_inicial + (i / nFrames) * (Math.random() * 20 + 10);
+      const y_final = y_inicial - (i / nFrames) * (Math.random() * 20 + 20);
 
-// janela da média móvel
-let janelaMedia = 5;
+      // Intensidade da umidade, diminuindo com o tempo e com o desmatamento
+      const intensidade = (intensidade_base * (1 - i / nFrames)) * desmatamento;
 
-// ----- cria controles só uma vez -----
-if (!document.getElementById("arduino-controls")) {
-  const wrap = document.createElement("div");
-  wrap.id = "arduino-controls";
-  wrap.style.display = "flex";
-  wrap.style.flexWrap = "wrap";
-  wrap.style.alignItems = "center";
-  wrap.style.gap = "10px";
-  wrap.style.margin = "10px 0 14px 10px";
-  wrap.style.fontFamily = "Arial, sans-serif";
-
-  const botao = document.createElement("button");
-  botao.id = "btn-serial";
-  botao.textContent = "🔌 Conectar Arduino";
-  botao.style.padding = "8px 14px";
-  botao.style.border = "1px solid #999";
-  botao.style.borderRadius = "8px";
-  botao.style.cursor = "pointer";
-  botao.style.background = "#f5f5f5";
-  botao.style.fontSize = "14px";
-
-  const status = document.createElement("span");
-  status.id = "serial-status";
-  status.textContent = "🔴 Desconectado";
-  status.style.fontWeight = "bold";
-  status.style.fontSize = "14px";
-
-  const rotJanela = document.createElement("label");
-  rotJanela.textContent = "Média móvel:";
-
-  const inputJanela = document.createElement("input");
-  inputJanela.id = "input-janela";
-  inputJanela.type = "number";
-  inputJanela.min = "1";
-  inputJanela.max = "50";
-  inputJanela.value = janelaMedia;
-  inputJanela.style.width = "60px";
-  inputJanela.onchange = function () {
-    const v = parseInt(this.value, 10);
-    if (!isNaN(v) && v >= 1) {
-      janelaMedia = v;
-      recalcularSuavizacao();
+      frameData.push({ x: x_final, y: y_final, z: intensidade });
     }
-  };
-
-  const chkCal = document.createElement("input");
-  chkCal.id = "chk-cal";
-  chkCal.type = "checkbox";
-  chkCal.checked = usarCalibracao;
-  chkCal.onchange = function () {
-    usarCalibracao = this.checked;
-    recalcularCalibracaoESuavizacao();
-  };
-
-  const lblCal = document.createElement("label");
-  lblCal.htmlFor = "chk-cal";
-  lblCal.textContent = "Usar calibração";
-
-  const rotA = document.createElement("label");
-  rotA.textContent = "a:";
-
-  const inputA = document.createElement("input");
-  inputA.id = "input-a";
-  inputA.type = "number";
-  inputA.step = "0.01";
-  inputA.value = aCal;
-  inputA.style.width = "70px";
-  inputA.onchange = function () {
-    const v = parseFloat(this.value);
-    if (!isNaN(v)) {
-      aCal = v;
-      recalcularCalibracaoESuavizacao();
-    }
-  };
-
-  const rotB = document.createElement("label");
-  rotB.textContent = "b:";
-
-  const inputB = document.createElement("input");
-  inputB.id = "input-b";
-  inputB.type = "number";
-  inputB.step = "0.01";
-  inputB.value = bCal;
-  inputB.style.width = "70px";
-  inputB.onchange = function () {
-    const v = parseFloat(this.value);
-    if (!isNaN(v)) {
-      bCal = v;
-      recalcularCalibracaoESuavizacao();
-    }
-  };
-
-  const btnExportar = document.createElement("button");
-  btnExportar.id = "btn-exportar";
-  btnExportar.textContent = "💾 Exportar CSV";
-  btnExportar.style.padding = "8px 14px";
-  btnExportar.style.border = "1px solid #999";
-  btnExportar.style.borderRadius = "8px";
-  btnExportar.style.cursor = "pointer";
-  btnExportar.style.background = "#f5f5f5";
-  btnExportar.style.fontSize = "14px";
-  btnExportar.onclick = exportarCSV;
-
-  const btnLimpar = document.createElement("button");
-  btnLimpar.id = "btn-limpar";
-  btnLimpar.textContent = "🧹 Limpar gráfico";
-  btnLimpar.style.padding = "8px 14px";
-  btnLimpar.style.border = "1px solid #999";
-  btnLimpar.style.borderRadius = "8px";
-  btnLimpar.style.cursor = "pointer";
-  btnLimpar.style.background = "#f5f5f5";
-  btnLimpar.style.fontSize = "14px";
-  btnLimpar.onclick = limparGrafico;
-
-  wrap.appendChild(botao);
-  wrap.appendChild(status);
-  wrap.appendChild(rotJanela);
-  wrap.appendChild(inputJanela);
-  wrap.appendChild(chkCal);
-  wrap.appendChild(lblCal);
-  wrap.appendChild(rotA);
-  wrap.appendChild(inputA);
-  wrap.appendChild(rotB);
-  wrap.appendChild(inputB);
-  wrap.appendChild(btnExportar);
-  wrap.appendChild(btnLimpar);
-
-  document.body.insertBefore(wrap, document.body.firstChild);
-}
-
-// ----- helpers -----
-function atualizarInterface() {
-  const botao = document.getElementById("btn-serial");
-  const status = document.getElementById("serial-status");
-
-  if (!botao || !status) return;
-
-  if (conectado) {
-    botao.textContent = "❌ Desconectar Arduino";
-    status.textContent = "🟢 Conectado";
-  } else {
-    botao.textContent = "🔌 Conectar Arduino";
-    status.textContent = "🔴 Desconectado";
+    dados.push(frameData);
   }
+  return dados;
 }
 
-function aplicarCalibracao(valor) {
-  if (!usarCalibracao) return valor;
-  return aCal * valor + bCal;
-}
+const all_data = gerarDadosRiosVoadores(n_particulas, n_frames);
 
-function mediaMovelAteIndice(vetor, indice, n) {
-  const inicio = Math.max(0, indice - n + 1);
-  const trecho = vetor.slice(inicio, indice + 1);
-  const soma = trecho.reduce((acc, item) => acc + item.y, 0);
-  return soma / trecho.length;
-}
-
-function atualizarGrafico() {
-  Plotly.update("grafico", {
-    x: [
-      dadosBrutos.map(p => p.x),
-      dadosSuavizados.map(p => p.x)
-    ],
-    y: [
-      dadosBrutos.map(p => p.y),
-      dadosSuavizados.map(p => p.y)
-    ]
+// Frames da animação
+const frames = [];
+for (let i = 0; i < n_frames; i++) {
+  const frame_data_scatter = {
+    type: 'scattergeo',
+    lon: all_data[i].map(d => d.x),
+    lat: all_data[i].map(d => d.y),
+    marker: {
+      size: all_data[i].map(d => d.z),
+      color: all_data[i].map(d => d.z),
+      colorscale: 'YlGnBu', // Escala de cor para a intensidade
+      showscale: true,
+      colorbar: { title: 'Intensidade da Umidade' }
+    },
+    mode: 'markers',
+    name: 'Rios Voadores'
+  };
+  frames.push({
+    name: String(i),
+    data: [frame_data_scatter]
   });
 }
 
-function recalcularSuavizacao() {
-  dadosSuavizados = dadosBrutos.map((p, i) => ({
-    x: p.x,
-    y: mediaMovelAteIndice(dadosBrutos, i, janelaMedia)
-  }));
-  atualizarGrafico();
-}
-
-function recalcularCalibracaoESuavizacao() {
-  dadosBrutos = dadosBrutos.map(p => ({
-    x: p.x,
-y: aplicarCalibracaoOriginal(
-  typeof p.yOriginal !== "undefined" ? p.yOriginal : p.y
-)
-  }));
-
-  dadosBrutos = dadosBrutos.map((p, i) => ({
-    x: p.x,
-    y: p.y,
-yOriginal: typeof dadosBrutos[i].yOriginal !== "undefined" ? dadosBrutos[i].yOriginal : p.y
-  }));
-
-  recalcularSuavizacao();
-}
-
-function aplicarCalibracaoOriginal(valorOriginal) {
-  if (!usarCalibracao) return valorOriginal;
-  return aCal * valorOriginal + bCal;
-}
-
-function limparGrafico() {
-  dadosBrutos = [];
-  dadosSuavizados = [];
-  tempo = 0;
-  atualizarGrafico();
-}
-
-function exportarCSV() {
-  if (dadosBrutos.length === 0) {
-    alert("Não há dados para exportar.");
-    return;
-  }
-
-let csv = "tempo_s,tds_bruto,tds_suavizado";
-csv += String.fromCharCode(10);
-
-for (let i = 0; i < dadosBrutos.length; i++) {
-  let t = "";
-  let y1 = "";
-  let y2 = "";
-
-  if (dadosBrutos[i] && dadosBrutos[i].x !== undefined) {
-    t = dadosBrutos[i].x;
-  }
-
-  if (dadosBrutos[i] && dadosBrutos[i].y !== undefined) {
-    y1 = dadosBrutos[i].y;
-  }
-
-  if (dadosSuavizados[i] && dadosSuavizados[i].y !== undefined) {
-    y2 = dadosSuavizados[i].y;
-  }
-
-csv += t + "," + y1 + "," + y2 + String.fromCharCode(10);
-}
-
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "dados_condutividade.csv";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-// ----- gráfico -----
-Plotly.newPlot("grafico", [
-  {
-    x: [],
-    y: [],
-    mode: "lines",
-    name: "TDS bruto"
+// Configuração do layout
+const layout = {
+  title: 'Animação dos Rios Voadores da Amazônia',
+  geo: {
+    scope: 'south america',
+    showland: true,
+    landcolor: 'rgb(243, 243, 243)',
+    countrycolor: 'rgb(204, 204, 204)',
+    showocean: true,
+    oceancolor: 'rgb(100, 149, 237)'
   },
-  {
-    x: [],
-    y: [],
-    mode: "lines",
-    name: "TDS suavizado"
-  }
-], {
-  title: "Leitura de Condutividade (TDS)",
-  xaxis: { title: "Tempo (s)" },
-  yaxis: { title: "TDS (ppm)", range: [0, 2000] }
-});
-
-// ----- conexão serial -----
-async function conectarArduino() {
-  try {
-    if (conectado) {
-      alert("A porta já está conectada.");
-      return;
-    }
-
-    porta = await navigator.serial.requestPort();
-
-    if (!porta.readable) {
-      await porta.open({ baudRate: 115200 });
-    }
-
-    conectado = true;
-    atualizarInterface();
-
-    const decoder = new TextDecoderStream();
-    porta.readable.pipeTo(decoder.writable).catch(() => {});
-    reader = decoder.readable.getReader();
-
-    let buffer = "";
-
-    while (conectado) {
-      const { value, done } = await reader.read();
-
-      if (done) break;
-      if (!value) continue;
-
-      buffer += value;
-var linhas = buffer.split(String.fromCharCode(10));
-      buffer = linhas.pop();
-
-      for (const linhaBruta of linhas) {
-        const linha = linhaBruta.trim();
-
-let match = linha.match(/TDS *Value *: *([0-9]+)/i);
-
-if (!match) {
-  match = linha.match(/TDS *: *([0-9]+)/i);
-}
-
-if (!match) {
-  match = linha.match(/^([0-9]+)$/);
-}
-        if (match) {
-          const leituraOriginal = parseInt(match[1], 10);
-          const leituraCalibrada = aplicarCalibracaoOriginal(leituraOriginal);
-
-          tempo += 1;
-
-          dadosBrutos.push({
-            x: tempo,
-            y: leituraCalibrada,
-            yOriginal: leituraOriginal
-          });
-
-          if (dadosBrutos.length > 200) dadosBrutos.shift();
-
-          const valorSuavizado = mediaMovelAteIndice(
-            dadosBrutos,
-            dadosBrutos.length - 1,
-            janelaMedia
-          );
-
-          dadosSuavizados.push({
-            x: tempo,
-            y: valorSuavizado
-          });
-
-          if (dadosSuavizados.length > 200) dadosSuavizados.shift();
-
-          atualizarGrafico();
-        }
-      }
-    }
-
-  } catch (erro) {
-    console.error("Erro ao conectar:", erro);
-    alert("Erro ao conectar: " + erro.message);
-    conectado = false;
-    atualizarInterface();
-  }
-}
-
-// ----- desconexão segura -----
-async function desconectarArduino() {
-  try {
-    conectado = false;
-
-    if (reader) {
-      try {
-        await reader.cancel();
-      } catch (e) {}
-      try {
-        reader.releaseLock();
-      } catch (e) {}
-      reader = null;
-    }
-
-    if (porta) {
-      try {
-        await porta.close();
-      } catch (e) {}
-      porta = null;
-    }
-
-  } catch (erro) {
-    console.error("Erro ao desconectar:", erro);
-  } finally {
-    conectado = false;
-    atualizarInterface();
-  }
-}
-
-// ----- botão alterna conectar/desconectar -----
-document.getElementById("btn-serial").onclick = async function () {
-  if (conectado) {
-    await desconectarArduino();
-  } else {
-    await conectarArduino();
-  }
+  updatemenus: [{
+    type: 'buttons',
+    showactive: false,
+    buttons: [{
+      label: '▶️ Simular',
+      method: 'animate',
+      args: [null, {
+        frame: { duration: 200, redraw: true },
+        mode: 'immediate',
+        fromcurrent: true
+      }]
+    }]
+  }]
 };
 
-// ----- inicializa interface -----
-atualizarInterface();
+const output = {
+  data: [{
+    type: 'scattergeo',
+    lon: all_data[0].map(d => d.x),
+    lat: all_data[0].map(d => d.y),
+    marker: {
+      size: all_data[0].map(d => d.z),
+      color: all_data[0].map(d => d.z),
+      colorscale: 'YlGnBu',
+      showscale: true,
+      colorbar: { title: 'Intensidade da Umidade' }
+    },
+    mode: 'markers',
+    name: 'Rios Voadores'
+  }],
+  layout,
+  frames
+};
 
 `;
 
