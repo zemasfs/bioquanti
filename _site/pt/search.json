@@ -307,5 +307,41 @@
     "title": "ScriptRplot",
     "section": "Notas de rodapé",
     "text": "Notas de rodapé\n\n\nWickham, Hadley. “A layered grammar of graphics.” Journal of computational and graphical statistics 19.1 (2010): 3-28.↩︎"
+  },
+  {
+    "objectID": "nivel/superior/ScriptRplot/scriptrplot.html",
+    "href": "nivel/superior/ScriptRplot/scriptrplot.html",
+    "title": "ScriptRplot",
+    "section": "",
+    "text": "ScriptRplot, uma corruptela para script com R para a produção de plots, permite a produção de gráficos com o pacote ggplot2 do R por comandos de texto, embora sem o conhecimento da sintaxe da linguagem ou do pacote.\nDiferentemente da sintaxe convencional de programação de R e do sistema gráfico do pacote, o ScriptRplot oferece ao usuário os ajustes necessários à plotagem em linguagem natural. Não obstante, também fornece a linha completa de comandos para a compilação do gráfico pretendido.\n### Estrutura de camadas para o ScriptRplot\n\n1. Data load - carregamento de dados;\n2. Reshape - conversão facultativa de dados de formato Wide para Long exigido pelo pacote;\n3. Preamble - transformações prévias no conjuto de dados (atualmente, somente uma conversão facultativa de variável numérica em categórica);\n4. Dataset- atribuição de variáveis dependente e independente\n5. Grouping - atribuição de variável de grupo;\n6. Error bar - barra de erros e formatação;\n7. Symbol - tipo e atribuições para símbolos;\n8. Line - tipo e atribuições para linhas;\n9. Curve - linhas matemáticas de tendência e formatação;\n10. Other plots - atribuições facultativas para barras, histogramas, gráfico de matriz de dados, simulação de curvas matemáticas, e apresentação de paineis;\n11. Axis - atribuição dos eixos (primário e secundário);\n12. Linhas - adição e formatação de linhas verticais e horizontais;\n13. Zoom - nível de cobertura dos eixos do gráfico;\n14. Additional colour scale - paletas adicionais de cores;\n15. Additional expression - expressões aditivas facultativas;\n16. Legend - formatação de legendas;\n17. Caption - formatação de rótulos (títulos, subtítulos);\n18. Text - inserção e posicionamento de texto;\nComponentes gráficos para o ScriptRplot junto à gramática de gráficos do pacote gglot2 para R.\n\n\n\n\n\n\n\nElemento\nObjeto\nComando\n\n\n\n\nMapping\nmain\nggplot(data=dataset, mapping)\n\n\nTítulo e Legenda\ntitles\ntheme(plot.title = …, plot.caption = …)\n\n\nRótulos\nlabels\nlabs(x=…, y=…, title=…, …)\n\n\nBarras de erro\nerror_bar\ngeom_errorbar(… aes(ymin=y-error_down, ymax=y+error_up))\n\n\nLegenda\nplot_legend\ntheme(legend.title=…, legend.position=…, …)\n\n\nGuias\nlegend_guide\nguides(colour=…, size=…, …)\n\n\nAnotação de texto\nannotation\nannotate(“text”, x=…, y=…, label=…, parse=TRUE)\n\n\nValores dos eixos\naxis_values\ntheme(axis.text.x=…, axis.text.y=…)\n\n\nRótulos dos eixos\naxis_labels\ntheme(axis.title.x=…, axis.title.y=…)\n\n\nZoom\naxis_lim\ncoord_cartesian(xlim=c(x_min,x_max), ylim=c(y_min,y_max))\n\n\nLinha horizontal\nline_add_horiz\ngeom_hline(yintercept=…, …)\n\n\nLinha vertical\nline_add_vert\ngeom_vline(xintercept=…, …)\n\n\nLinha inclinada\nline_add_incl\ngeom_abline(intercept=…, slope=…, …)\n\n\nTipo 1 - Todos os pontos\ntype_allpoints\nallpoints(shape=…, colour=…, …)\n\n\nTipo 2 - Agrupamento\ntype_group\ngrouping(stroke=…, aes(shape=…, …))\n\n\nResumo estatístico\nsummary_stats\nstat_summary(fun.data=…, fun=…, …)\n\n\nLinha 1 - Todos os pontos\nline_all\ngeom_line(size=…, alpha=…, …)\n\n\nLinha 2 - Agrupamento\nline_group\ngeom_line(size=…, aes(…))\n\n\nCurva 1 - Todos os pontos\ncurve_all\ngeom_smooth(data=subset(…), method=…, aes(…))\n\n\nCurva 2 - Agrupamento\ncurve_group\ngeom_smooth(data=subset(…), method=…, aes(…))\n\n\nBarra/Histograma\nbar_hist\nhist_bar(stat=…, bins=…, aes(…))\n\n\nSimulação\nsimul\nsimulation(fun=…, geom=…, …)\n\n\nComando Principal\np_main\nmain + theme_plot + … + bar_hist + …\n\n\nComplementos\np\np_main + axis_inversion + … + simul + legend_inversion",
+    "crumbs": [
+      "Sobre",
+      "R - Cálculos e gráficos",
+      "scriptRplot: gráficos elegantes"
+    ]
+  },
+  {
+    "objectID": "nivel/superior/ScriptRplot/scriptrplot.html#código-fonte-para-o-scriptrplot",
+    "href": "nivel/superior/ScriptRplot/scriptrplot.html#código-fonte-para-o-scriptrplot",
+    "title": "ScriptRplot",
+    "section": "Código-fonte para o ScriptRplot",
+    "text": "Código-fonte para o ScriptRplot\n  Segue o código para livre distribuição e adaptação junto ao ScriptRplot. O código permite a construção de um gráfico a partir de dados carregados pelo usuário no próprio script, e fornecidos abaixo. Lembre-se: é necessário que os dados para o gráfico estejam no mesmo diretório de sessão do RStudio, e juntamente ao script.\n\nDownload\nScriptRplot versão 1.0\nDados para o gráfico\n\n  Quando compilado, o script resulta no gráfico que segue, para visualização da atividade cinética em ensaio de inibição com puromicina.\n  Observe que o gráfico apresenta a inserção de 1) dados multivariados, com 2) símbolos e 3) espessura definida, 4) tipos distintos, 5) preenchimento e 6) cores distintas para cada subconjunto, 7) barras de erro, 8) disposição em painel, 9) configuração e tema específicos, e 10) ajuste não linear em subconjuntos para cada nível dos dados, e por equação introduzida pelo usuário.\n\n\n\nSaída gráfica do ScriptRplot (versão 1.0) para os dados atividade enzimática sob ação do antibiótico puromicina.\n\n\n  E o mais importante: à despeito da complexidade envolvida na visualização dos dados, o scriptRplot permite a construção do gráfico sem necessidade de conhecimento da sintaxe da linguagem R de programação, bem como do pacote envolvido (ggplot2). Dessa forma, basta “rodar” o script, embora seja plausível e desejável sua modificação. Todas essas características ímpares coadunam para a oferta de um Ensino Reprodutível voltado à construção de gráficos elegantes.",
+    "crumbs": [
+      "Sobre",
+      "R - Cálculos e gráficos",
+      "scriptRplot: gráficos elegantes"
+    ]
+  },
+  {
+    "objectID": "nivel/superior/ScriptRplot/scriptrplot.html#footnotes",
+    "href": "nivel/superior/ScriptRplot/scriptrplot.html#footnotes",
+    "title": "ScriptRplot",
+    "section": "Notas de rodapé",
+    "text": "Notas de rodapé\n\n\nWickham, Hadley. “A layered grammar of graphics.” Journal of computational and graphical statistics 19.1 (2010): 3-28.↩︎",
+    "crumbs": [
+      "Sobre",
+      "R - Cálculos e gráficos",
+      "scriptRplot: gráficos elegantes"
+    ]
   }
 ]
