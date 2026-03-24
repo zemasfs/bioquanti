@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; GSPlotly – JSPlotly</title>
+<title>7&nbsp; Componentes – JSPlotly</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -65,18 +30,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./part2.html" rel="next">
-<link href="./jsplotly.html" rel="prev">
+<link href="./widgets.html" rel="next">
+<link href="./funcionalidade.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-1d9f70472b66e70c69a6003a1de983bb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d6caf19ee87734aafca4a6fe3badcbc1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b7f115bf9a2ddc846da77cb4b0b3b9e9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-077f7beac1dda89f54accc9f17ccf53d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-82705bcb627ee6a79987d30027e3c766.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -105,382 +72,132 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-   /* ===== largura máxima do conteúdo ===== */
-  :root { --content-max-width: 1600px; }
+  :root{
+    --sidebar-width: 220px;
+    --margin-sidebar-width: 240px;
+    --content-max-width: 1600px;
+  }
 
-  /* ===== cores utilitárias (suas classes) ===== */
-  .red  { color: #e53935; }
+  .red { color: #e53935; }
   .blue { color: dodgerblue; }
-  .darkblue  { color: #003366; }   /* azul escuro */
-  .darkgreen { color: #006400; }   /* verde escuro */
-  .orange    { color: #ff8c00; }   /* laranja */
-  .purple    { color: #800080; }   /* roxo */
-  .note { color:#6f42c1; background:#f3e8ff; padding:2px 6px; border-radius:6px; }
-
-  /* ===== BOTÃO CENTRAL personalizável ===== */
-  #qst-centered {
-    position: fixed;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1031;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 999px;
-    background: #fff;
-    border: 1px solid #e6ecf3;
-    box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    cursor: pointer;
-  }
-  #qst-centered:hover {
-    box-shadow: 0 3px 12px rgba(0,0,0,.12);
-    border-color: #d8e2ef;
-  }
-  #qst-centered .qst-bar {
-    width: 18px; height: 2px; background:#333; margin: 2px 0;
+  .darkblue { color: #003366; }
+  .darkgreen { color: #006400; }
+  .orange { color: #ff8c00; }
+  .purple { color: #800080; }
+  .note {
+    color: #6f42c1;
+    background: #f3e8ff;
+    padding: 2px 6px;
+    border-radius: 6px;
   }
 
-  /* Em telas pequenas, deixe o comportamento padrão do tema */
-  @media (max-width: 991.98px){
-    #qst-centered { display: none; }
-  }
-
-  /* Evitar que o botão sobreponha o H1 ao navegar por âncoras */
-  .content h1.title, .content h1 { scroll-margin-top: 60px; }
-</style>
-
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // 1) Verifique se o include carregou: deve haver o quadradinho verde no canto (body::after)
-    // 2) Criar um botão central próprio (independente do botão do tema)
-    if (!document.getElementById('qst-centered')) {
-      const b = document.createElement('button');
-      b.id = 'qst-centered';
-      b.setAttribute('type','button');
-      b.setAttribute('title','Mostrar/ocultar barra lateral');
-
-      for (let i=0;i<3;i++){
-        const bar = document.createElement('div');
-        bar.className = 'qst-bar';
-        b.appendChild(bar);
-      }
-      document.body.appendChild(b);
-
-      // Handler do clique: alterna o estado do sidebar usando Bootstrap Collapse
-      b.addEventListener('click', () => {
-        try {
-          const sidebar = document.querySelector('#quarto-sidebar');
-          const body = document.body;
-
-          // alterna uma classe no body (útil para temas que usam isso)
-          body.classList.toggle('sidebar-collapsed');
-
-          if (sidebar) {
-            // se estiver colapsado, mostramos; se estiver aberto, escondemos
-            const isOpen = sidebar.classList.contains('show');
-            // tenta usar a API do Bootstrap, se estiver presente
-            const bs = (window.bootstrap && window.bootstrap.Collapse)
-              ? window.bootstrap.Collapse.getOrCreateInstance(sidebar)
-              : null;
-
-            if (bs) {
-              if (isOpen) { bs.hide(); } else { bs.show(); }
-            } else {
-              // fallback: alterna class "show" manualmente
-              sidebar.classList.toggle('show');
-            }
-
-            // mantém a classe do body coerente
-            if (sidebar.classList.contains('show')) {
-              body.classList.remove('sidebar-collapsed');
-            } else {
-              body.classList.add('sidebar-collapsed');
-            }
-          }
-        } catch (e) {
-          console.warn('Toggle central falhou:', e);
-        }
-      });
-    }
-  });
-</script>
-<script>
-  (function(){
-    function pickVisible(el){ return el && el.offsetParent !== null; }
-
-    function findNativeToggle(){
-      // 1) seletores “clássicos” do Quarto (cobrindo variações)
-      const sels = [
-        '#quarto-sidebar-toggle',
-        '.quarto-sidebar-toggle',
-        'button.sidebar-toggle',
-        'button[aria-controls="quarto-sidebar"]',
-        'a[aria-controls="quarto-sidebar"]',
-        '[data-bs-target="#quarto-sidebar"]',
-        '[aria-label*="sidebar" i]'
-      ];
-      for (const s of sels){
-        const el = document.querySelector(s);
-        if (pickVisible(el)) return el;
-      }
-
-      // 2) Heurística: procura um botão pequeno no canto sup. esquerdo
-      const candidates = Array.from(document.querySelectorAll('button, a, .btn'));
-      const ranked = candidates
-        .map(el => [el, el.getBoundingClientRect()])
-        .filter(([el, r]) => r.width > 20 && r.width < 64 && r.height > 20 && r.height < 64 && r.top >= 0 && r.top < 120 && r.left >= 0 && r.left < 140)
-        .sort((a,b) => (a[1].top - b[1].top) || (a[1].left - b[1].left));
-      return ranked.length ? ranked[0][0] : null;
-    }
-
-    function moveNativeToggle(){
-      const btn = findNativeToggle();
-      if (!btn) return;
-
-      // reposiciona o PRÓPRIO botão nativo
-      btn.style.position   = 'fixed';
-      btn.style.left       = '50%';
-      btn.style.top        = '12px';
-      btn.style.transform  = 'translateX(-50%)';
-      btn.style.zIndex     = '1060';
-
-      // estética opcional (remova se quiser o padrão do tema)
-      btn.style.background = '#fff';
-      btn.style.border     = '1px solid #e6ecf3';
-      btn.style.boxShadow  = '0 2px 8px rgba(0,0,0,.08)';
-      btn.style.borderRadius = '999px';
-      btn.style.width      = '36px';
-      btn.style.height     = '36px';
-      btn.style.display    = 'inline-flex';
-      btn.style.alignItems = 'center';
-      btn.style.justifyContent = 'center';
-      btn.style.padding    = '0';
-    }
-
-    function wire(){
-      moveNativeToggle();
-      // se o DOM mudar (p.ex. render tardio), tentamos de novo
-      const obs = new MutationObserver(() => moveNativeToggle());
-      obs.observe(document.body, {childList:true, subtree:true});
-      // também ao redimensionar
-      window.addEventListener('resize', moveNativeToggle);
-    }
-
-    if (document.readyState === 'loading'){
-      document.addEventListener('DOMContentLoaded', wire);
-    } else {
-      wire();
-    }
-  })();
-</script>
-
-<style>
-  /* Esconde o botão nativo original no canto ESQUERDO em telas médias+,
-     caso ele reapareça por algum motivo (opcional). */
   @media (min-width: 992px){
-    .sidebar .quarto-sidebar-toggle,
-    .sidebar #quarto-sidebar-toggle,
-    .sidebar button.sidebar-toggle{ visibility:hidden !important; }
-  }
-  /* Em telas pequenas, deixe como está (botão no canto esq.) */
-  @media (max-width: 991.98px){
-    /* nada aqui: usamos o padrão do tema */
-  }
-</style>
-<style>
-  /* ===== LARGURA MENOR PARA SIDEBAR E TOC =====
-     Aplica só em telas médias/grandes para não atrapalhar mobile */
-  @media (min-width: 992px){
-
-    /* (1) Se o seu Quarto expõe variáveis, use-as (fica mais limpo) */
-    :root{
-      --sidebar-width: 220px;            /* esquerda */
-      --margin-sidebar-width: 240px;     /* TOC à direita */
-    }
-
-    /* (2) Fallback robusto (quando tema/versão não usa as variáveis) */
-    #quarto-sidebar{
-      width: var(--sidebar-width) !important;
-    }
-    /* alguns temas têm contêiner interno com largura própria */
-    #quarto-sidebar .sidebar,
-    #quarto-sidebar .sidebar-content,
-    .sidebar.sidebar-navigation{
-      width: var(--sidebar-width) !important;
-      max-width: var(--sidebar-width) !important;
-    }
-
-    /* TOC / margin sidebar (direita) */
-    #quarto-margin-sidebar{
-      width: var(--margin-sidebar-width) !important;
-    }
-    .margin-sidebar{
-      width: var(--margin-sidebar-width) !important;
-      max-width: var(--margin-sidebar-width) !important;
-    }
-
-    /* (3) Diminui o espaço entre as 3 colunas (sidebar | conteúdo | TOC) */
-    #quarto-content.page-columns{
-      column-gap: 14px !important;  /* experimente 10–18px */
-    }
-
-    /* (4) Conteúdo central sem “colchões” extras */
-    main.content{
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-
-    /* (5) Só estética: o search acompanha a nova largura */
-    #quarto-sidebar input.sidebar-search{
-      width: 100% !important;
-    }
-  }
-</style>
-<style>
-  /* ===== Preenche melhor a área central ===== */
-  @media (min-width: 992px){
-
-    /* use os mesmos valores que você já está usando
-       para sidebar e TOC (ou deixe estes) */
-    :root{
-      --sidebar-width: 220px;
-      --margin-sidebar-width: 240px;
-    }
-
-    /* gap entre colunas + “almofada” lateral de página (gutters) */
-    :root{
-      --lv-gap: 14px;       /* mesmo column-gap que você definiu */
-      --lv-page-pad: 12px;  /* gutters externos (um de cada lado) */
-    }
-
-    /* Faz o track do conteúdo central ocupar todo o restante da tela */
-    :root{
-      --content-max-width: calc(
-        100vw
-        - var(--sidebar-width)
-        - var(--margin-sidebar-width)
-        - (2 * var(--lv-gap))
-        - (2 * var(--lv-page-pad))
-      ) !important;
-    }
-
-    /* Garante que o elemento não imponha um max-width menor */
-    main.content{
-      max-width: none !important;
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-
-    /* Ajusta o espaçamento entre as 3 colunas */
-    #quarto-content.page-columns{
-      column-gap: var(--lv-gap) !important;
-    }
-
-    /* Opcional: controla os gutters externos (margens da página) */
-    .page-columns{
-      padding-left: var(--lv-page-pad) !important;
-      padding-right: var(--lv-page-pad) !important;
-    }
-  }
-</style>
-
-<style>
-  /* ===== Ajuste seguro de larguras sem redesenhar o grid ===== */
-  @media (min-width: 992px){
-    /* 1) larguras das colunas do Quarto */
-    :root{
-      /* sidebar (esquerda) e TOC (direita) */
-      --sidebar-width:           220px;  /* ajuste aqui, ex: 200-240 */
-      --margin-sidebar-width:    240px;  /* TOC; ajuste aqui, ex: 220-260 */
-
-      /* largura máxima do conteúdo (miolo) — pode ser grande */
-      --content-max-width:       2000px; /* evita “miolo” estreito */
-    }
-
-    /* 2) aplica os valores sem mexer no grid */
     #quarto-sidebar{
       width: var(--sidebar-width) !important;
       min-width: var(--sidebar-width) !important;
     }
+
     #quarto-margin-sidebar{
       width: var(--margin-sidebar-width) !important;
       min-width: var(--margin-sidebar-width) !important;
     }
 
-    /* 3) respiro e liberação de largura no conteúdo */
+    #quarto-content.page-columns{
+      column-gap: 14px !important;
+    }
+
     main.content{
-      max-width: none !important;          /* ignora limites herdados */
-      padding-left:  14px !important;      /* “respiro” interno */
+      max-width: none !important;
+      padding-left: 14px !important;
       padding-right: 14px !important;
-      overflow: visible !important;        /* não corta texto nas bordas */
+      box-sizing: border-box !important;
+    }
+  }
+
+  @media (max-width: 991.98px){
+    #quarto-margin-sidebar{
+      display: none !important;
+    }
+
+    main.content{
+      width: 100% !important;
+      max-width: none !important;
+      padding-left: 14px !important;
+      padding-right: 14px !important;
       box-sizing: border-box !important;
     }
 
-    /* 4) diminui o espaço entre colunas (sem trocar ordem) */
-    #quarto-content.page-columns{
-      column-gap: 14px !important;         /* ajuste: 10–16px */
+    html, body{
+      overflow-x: hidden !important;
+    }
+
+    img, video, canvas, svg, iframe{
+      max-width: 100% !important;
+      height: auto !important;
+    }
+
+    #quarto-sidebar{
+      width: 86vw !important;
+      max-width: 420px !important;
     }
   }
 
-  /* Em telas pequenas, deixa o padrão móvel */
-  @media (max-width: 991.98px){
-    main.content{
-      padding-left: 12px !important;
-      padding-right: 12px !important;
-    }
-  }
-</style>
-<style>
-  /* espaçamento padrão entre parágrafos */
-  .content p { 
+  .content p{
     margin-top: 0;
-    margin-bottom: 1.2rem;  /* aumente/diminua aqui */
-    line-height: 1.55;      /* opcional: linhas mais arejadas */
+    margin-bottom: 1.2rem;
+    line-height: 1.55;
   }
 
-  /* um pouco mais de espaço quando um parágrafo vem logo após outro */
-  .content p + p {
+  .content p + p{
     margin-top: 0.8rem;
   }
 
-  /* parágrafos dentro de callouts/listas costumam ser “apertados” */
-  .callout p { margin-bottom: 0.8rem; }
-  li p { margin-bottom: 0.6rem; }
-</style>
-<style>
-:root{
-  --lv-sidebar-w: 330px;
-  --lv-side-solid: #e8f0ff;  /* cor da sidebar */
-  --lv-main-solid: #f5f8fc;  /* <<< cor do CONTEÚDO */
-}
-/* use cores sólidas: */
-#quarto-sidebar{ background: var(--lv-side-solid) !important; }
-main.content,
-#quarto-margin-sidebar{
-  background: var(--lv-main-solid) !important;
-}
-/* opcional: reduzir o espaço entre colunas */
-#quarto-content.page-columns{ gap: 10px 16px; }
-#quarto-sidebar{ width: var(--lv-sidebar-w); }
-</style>
-<style>
-   /* ===== largura máxima do conteúdo ===== */
-  :root { --content-max-width: 1600px; }
+  .callout p{
+    margin-bottom: 0.8rem;
+  }
 
-  /* ===== cores utilitárias (suas classes) ===== */
-  .red  { color: #e53935; }
-  .blue { color: dodgerblue; }
-  .darkblue  { color: #003366; }   /* azul escuro */
-  .darkgreen { color: #006400; }   /* verde escuro */
-  .orange    { color: #ff8c00; }   /* laranja */
-  .purple    { color: #800080; }   /* roxo */
-  .note { color:#6f42c1; background:#f3e8ff; padding:2px 6px; border-radius:6px; }
- </style>
+  li p{
+    margin-bottom: 0.6rem;
+  }
+
+  #sb-toggle{
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 10000;
+    border-radius: 999px;
+    padding: 8px 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  }
+
+  body.sb-hidden #quarto-sidebar,
+  body.sb-hidden #quarto-sidebar-glass,
+  body.sb-hidden #quarto-margin-sidebar{
+    display: none !important;
+  }
+
+  body.sb-hidden .page-columns{
+    grid-template-columns: 1fr !important;
+  }
+
+  body.sb-hidden main.content{
+    grid-column: 1 / -1 !important;
+  }
+</style>
+<style>
+  :root{
+    --lv-sidebar-w: 330px;
+    --lv-side-solid: #e8f0ff;
+    --lv-main-solid: #f5f8fc;
+  }
+  #quarto-sidebar{ background: var(--lv-side-solid) !important; }
+  main.content,
+  #quarto-margin-sidebar{
+    background: var(--lv-main-solid) !important;
+  }
+  #quarto-content.page-columns{ gap: 10px 16px; }
+  #quarto-sidebar{ width: var(--lv-sidebar-w); }
+</style>
 
 
 <link rel="stylesheet" href="miniproj.css">
@@ -495,7 +212,7 @@ main.content,
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part1.html">Parte 1 - Introdução</a></li><li class="breadcrumb-item"><a href="./gsplotly.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">GSPlotly</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2.html">Parte 2 - Oficina</a></li><li class="breadcrumb-item"><a href="./componentes.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Componentes</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -511,6 +228,9 @@ main.content,
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">JSPlotly</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -530,11 +250,11 @@ main.content,
       <div class="sidebar-item-container"> 
             <a href="./part1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Parte 1 - Introdução</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introd.html" class="sidebar-item-text sidebar-link">
@@ -555,7 +275,7 @@ main.content,
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gsplotly.html" class="sidebar-item-text sidebar-link active">
+  <a href="./gsplotly.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">GSPlotly</span></span></a>
   </div>
 </li>
@@ -565,11 +285,11 @@ main.content,
       <div class="sidebar-item-container"> 
             <a href="./part2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Parte 2 - Oficina</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Alternar seção">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./funcionalidade.html" class="sidebar-item-text sidebar-link">
@@ -578,7 +298,7 @@ main.content,
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./componentes.html" class="sidebar-item-text sidebar-link">
+  <a href="./componentes.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Componentes</span></span></a>
   </div>
 </li>
@@ -635,16 +355,175 @@ main.content,
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#algumas-dicas-para-uma-boa-conversa-com-o-gsplotly" id="toc-algumas-dicas-para-uma-boa-conversa-com-o-gsplotly" class="nav-link active" data-scroll-target="#algumas-dicas-para-uma-boa-conversa-com-o-gsplotly"><span class="header-section-number">5.1</span> Algumas dicas para uma <em>“boa conversa”</em> com o <em>GSPlotly</em></a></li>
+  <li><a href="#componentes-de-interatividade" id="toc-componentes-de-interatividade" class="nav-link active" data-scroll-target="#componentes-de-interatividade"><span class="header-section-number">7.1</span> Componentes de interatividade</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
+<script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    window.setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        disableStylesheet(primaryStylesheets)
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      window.setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    window.hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(darkModeDefault) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const darkModeDefault = false;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !window.hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+    };
+    // Switch to dark mode if need be
+    if (window.hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part1.html">Parte 1 - Introdução</a></li><li class="breadcrumb-item"><a href="./gsplotly.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">GSPlotly</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2.html">Parte 2 - Oficina</a></li><li class="breadcrumb-item"><a href="./componentes.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Componentes</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">GSPlotly</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Componentes</span></h1>
 </div>
 
 
@@ -661,72 +540,171 @@ main.content,
 </header>
 
 
-<div class="line-block">&nbsp;&nbsp;Como visto nas seções anteriores, o <em>JSPlotly</em> trabalha com códigos de programação ! São comandos escritos em linguagem <em>JavaScript</em>, a qual é interpretada junto a máquinas homônimas de navegadores modernos (ex: Chrome, Firefox, Safari, Opera, Edge, etc). Agora…convenhamos…além de amantes das <em>Ciências da Computação</em>, quem gosta de códigos de programação ?!</div>
-<div class="line-block">&nbsp;&nbsp;Pensando nisso foi desenvolvido junto ao aplicativo um <em>gerador de códigos pro JSPlotly por assistente de inteligência artificial (IA)</em> !!! Isso quer dizer que <span class="orange"><strong>você não precisa saber nada sobre programação !!!</strong></span>.</div>
+<section id="componentes-de-interatividade" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="componentes-de-interatividade"><span class="header-section-number">7.1</span> Componentes de interatividade</h2>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Existem diversos componentes que podem combinar-se com o conteúdo em JavaScript de JSPlotly para promover interatividade. Conceitualmente, nesse caso, enquanto a <em>lógica</em> permeia a linguagem JS e a <em>visualização</em> ocorre pela biblioteca <code>Plotly</code>, componentes de <em>HTML nativos</em> atuam como <em>widgets</em>, APIs de interatividade do Plotly.js (<em>Interface de Programação de Aplicações</em>) que proporcionam um nível avançado para interatividade.</div>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrisca-se na tabela a seguir uma classificação desses componentes.</div>
 <p><br>
 </p>
-<div class="line-block">&nbsp;&nbsp;Quer fazer o um teste ?</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 73%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Widget / Recurso</th>
+<th>Caracterização</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>rangeslider</td>
+<td>Barra de seleção de intervalo no eixo (geralmente x), permitindo zoom temporal.</td>
+</tr>
+<tr class="even">
+<td>slider</td>
+<td>Controle deslizante para navegar entre estados ou frames (ex: tempo).</td>
+</tr>
+<tr class="odd">
+<td>updatemenus (buttons)</td>
+<td>Botões para alternar dados, estilos ou modos de visualização.</td>
+</tr>
+<tr class="even">
+<td>updatemenus (dropdown)</td>
+<td>Menu suspenso para seleção de opções ou conjuntos de dados.</td>
+</tr>
+<tr class="odd">
+<td>hover (tooltips)</td>
+<td>Exibição dinâmica de valores ao passar o mouse sobre os dados.</td>
+</tr>
+<tr class="even">
+<td>hovermode</td>
+<td>Define como o hover se comporta (por ponto, eixo, unificado, etc.).</td>
+</tr>
+<tr class="odd">
+<td>legend interativa</td>
+<td>Permite ativar/desativar séries clicando na legenda.</td>
+</tr>
+<tr class="even">
+<td>click events</td>
+<td>Interação por clique em pontos do gráfico (via JS).</td>
+</tr>
+<tr class="odd">
+<td>selected / lasso / box</td>
+<td>Seleção interativa de pontos por área ou laço.</td>
+</tr>
+<tr class="even">
+<td>relayout</td>
+<td>Atualização dinâmica de layout (zoom, eixos, shapes).</td>
+</tr>
+<tr class="odd">
+<td>restyle</td>
+<td>Atualização dinâmica de dados ou estilo das curvas.</td>
+</tr>
+<tr class="even">
+<td>frames + animation controls</td>
+<td>Controle de animações com play/pause e transições.</td>
+</tr>
+<tr class="odd">
+<td>annotations</td>
+<td>Inserção de textos interativos ou explicativos no gráfico.</td>
+</tr>
+<tr class="even">
+<td>shapes</td>
+<td>Inclusão de elementos gráficos (linhas, regiões, marcadores).</td>
+</tr>
+<tr class="odd">
+<td>colorbar interativa</td>
+<td>Escala de cores com interação visual em mapas e superfícies.</td>
+</tr>
+<tr class="even">
+<td>config (modebar)</td>
+<td>Barra de ferramentas com zoom, pan, exportação, etc.</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Não obstante, pode-se ampliar essa oportunidade interativa para outros componentes do JSPlotly, como segue.</div>
 <p><br>
 </p>
-<div class="line-block">&nbsp;&nbsp;Clique no link do <a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly?model=gpt-4o">GSPlotly</a> (<em>G</em> para <em>gerador</em>) ou na imagem abaixo, e peça ao gerador para construir alguma coisa…digamos….</div>
-<div class="line-block">&nbsp;&nbsp;<span class="note">…“faça um gráfico de barras sobre as principais regiões de terras raras”…</span></div>
-<p><br>
-</p>
-<div class="#fig-gsplotly">
-<div id="fig-gsplotly" class="quarto-float quarto-figure quarto-figure-center anchored" target="_blank">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-gsplotly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly" target="_blank"><img src="figs/gsplotly.png" class="img-fluid figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gsplotly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;5.1: Tela do <em>GSPlotly</em> para criação de códigos ao simulador JSPlotly. Clique na imagem para acessar o gerador!
-</figcaption>
-</figure>
-</div>
-</div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;Observe que o <em>GSPlotly</em> fornece o código <em>JavaScript</em> quase que instantaneamente, e ainda por cima dá algumas dicas pra melhoria do próprio código !</div>
-<div class="line-block">&nbsp;&nbsp;Agora é só copiar o código pelo ícone que aparece no canto superior direito (<em>“copy code”</em>) e rodar no <em>JSPlotly</em>. Para isso:</div>
-<ol type="1">
-<li>Copie o código;</li>
-<li>Clique em <em>delete</em> no <em>JSPlotly</em> abaixo;</li>
-<li>Cole o código;</li>
-<li>Clique em <em>add</em>.</li>
-</ol>
-<div style="margin:1rem 0; padding-right:16px;">
-  <iframe src="https://bioquanti.netlify.app/pt/nivel/superior/jsplotly/jsplotly" width="100%" height="760" style="border:0;border-radius:10px;"></iframe>
-</div>
-<p><br>
-</p>
-<div class="line-block">&nbsp;&nbsp;Se deu tudo certo, você deverá ver algo parecido com a imagem <em>interativa</em> abaixo:</div>
-<p><br>
-</p>
-<div id="fig-terrasraras" class="quarto-float quarto-figure quarto-figure-center anchored" target="_blank">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-terrasraras-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="figs/terrasraras.html" target="_blank"><img src="figs/terrasraras.png" class="img-fluid figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-terrasraras-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;5.2: <em>JSPlotly</em> interativo contendo o código para a construção de um gráfico de barras para reservas mundiais de terras raras, tal como sugerido acima ao gerador <em>GSPlotly</em> de IA.
-</figcaption>
-</figure>
-</div>
-<section id="algumas-dicas-para-uma-boa-conversa-com-o-gsplotly" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="algumas-dicas-para-uma-boa-conversa-com-o-gsplotly"><span class="header-section-number">5.1</span> Algumas dicas para uma <em>“boa conversa”</em> com o <em>GSPlotly</em></h2>
-<!-- |   Elaborar um gráfico, mapa, animação, simulação, sonorização, e mesmo um game inteiro no *JSPlotly*  com auxílio de um bot de IA como o *GSPlotly* é plenamente possível (vide os objetos virtuais disponíveis para [ensino básico](https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/jsplotly_bas) ou [ensino superior](https://bioquanti.netlify.app/pt/nivel/superior/jsplotly/jsplt_bioq) no site *Bioquanti*). Contudo, há objetos virtuais mais simples (um gráfico, por exemplo) e mais complexos (um objeto multimídia, por exemplo) e, para isso, faz-se necessário um *"toma lá dá cá"* entre você e o assistente de IA, dependendo do grau de complexidade do objeto virtual pretendido. -->
-<div class="line-block">&nbsp;&nbsp;Algumas rápidas orientações para que essa comunicação ou <em>engenharia de prompts</em> seja eficiente são sugeridas abaixo.</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Fundamentalmente, não desista da <span class="dv">1</span>a. vez <span class="sc">!!</span> Por vezes a IA não entrega o que se deseja de primeira, exigindo uma troca de informações entre o usuário e o bot para que se atinja o objetivo do primeiro;</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Se a IA não lhe devolver o que deseja nas primeiras tentativas, comece com algo mais simples;</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Se mesmo o simples não resolver, reduza a complexidade do pedido. Separe o problema em partes, e tente a solução para a parte mais básica do problema; só depois de <span class="fu">conquistada</span> (testada no JSPlotly), solicite à IA a solução para uma nova parte a acrescentar junto a que foi bem <span class="fu">sucedida.</span> (sem trocadilhos, isso é <span class="st">"parte"</span> do chamado <span class="st">"pensamento computacional"</span>...ou....<span class="st">"dividir para conquistar"</span><span class="sc">!</span>);</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Experimente oferecer o código que ainda não está a seu gosto para outro assistente de IA, para correção ou melhorias. Você pode fazê<span class="sc">-</span>lo simplesmente copiando o código e colando<span class="sc">-</span>o no outro bot de IA, ou por carregamento nesse após salvá<span class="sc">-</span>lo como arquivo no JSPlotly com o botão <span class="st">"script"</span>.</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Aprenda a conhecer linguagem aos poucos. Isso lhe dará maior autonomia e segurança, tanto pra lidar com bots de IA, como para corrigir e aprimorar códigos <span class="st">"sem auxílio da IA"</span>. E mesmo para <span class="st">"desenvolver novos códigos sozinho"</span> <span class="sc">!!!</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<!-- ## Componentes e widgets do JSPlotly
+
+| Widget / Componente | Tipo | Descrição | Uso didático |
+|---|---|---|---|
+| Campo de entrada (input) | Entrada | Permite ao usuário inserir valores numéricos ou texto | Parametrização de equações, dados experimentais |
+| Slider | Entrada | Controle deslizante para variar valores continuamente | Exploração de funções e análise de sensibilidade |
+| Botão (button) | Controle | Executa ações ao ser clicado | Atualizar gráfico, iniciar simulação |
+| Checkbox | Entrada | Permite ativar/desativar opções | Exibir/ocultar curvas ou elementos |
+| Radio button | Entrada | Seleção única entre opções | Escolha de modelo, função ou cenário |
+| Dropdown (select) | Entrada | Lista suspensa de opções | Seleção de variáveis ou datasets |
+| Área de texto (textarea) | Entrada | Entrada de múltiplas linhas | Inserção de dados experimentais |
+| Label / Texto | Saída | Exibição de textos dinâmicos ou estáticos | Mostrar resultados, unidades, feedback |
+| Display numérico | Saída | Mostra valores calculados | Resultados de cálculos ou simulações |
+| Gráfico 2D | Visualização | Representação bidimensional de dados ou funções | Funções matemáticas, dados experimentais |
+| Gráfico 3D | Visualização | Representação tridimensional interativa | Superfícies, campos, modelagem |
+| Mapa interativo | Visualização | Representação geográfica de dados | Aplicações em geografia, epidemiologia |
+| Animação | Dinâmico | Atualização contínua ao longo do tempo | Processos dinâmicos e fenômenos físicos |
+| Tooltip | Interatividade | Exibe informações ao passar o mouse | Leitura de dados pontuais |
+| Zoom / Pan | Interatividade | Navegação no gráfico | Exploração detalhada de regiões |
+| Autoescala | Interatividade | Ajuste automático dos eixos | Melhor visualização de dados |
+| Exportação (PNG/SVG/HTML) | Saída | Salva o gráfico ou aplicação | Compartilhamento e documentação |
+| Editor de código | Estrutura | Área para inserção e edição do script | Ensino de programação |
+| Área gráfica | Estrutura | Região de renderização do gráfico | Visualização principal |
+| Botão "Add" | Controle | Adiciona novos elementos gráficos | Comparação de curvas |
+| Botão "Remove" | Controle | Remove elementos do gráfico | Ajuste de visualização |
+| Botão "Clear" | Controle | Limpa o gráfico | Reinício da análise |
+| Botão "Save" | Controle | Salva script ou gráfico | Persistência de dados |
+| ModeBar (Plotly) | Interatividade | Barra com ferramentas do gráfico | Zoom, exportação, seleção |
+| Integração com áudio | Multimídia | Geração de som a partir de dados | Sonificação e acessibilidade |
+| Integração com sensores | Físico | Entrada de dados de dispositivos | Experimentos em tempo real |
+| Web Serial / Arduino | Físico | Comunicação com microcontroladores | Instrumentação e prototipagem |
+| Timer / Loop | Dinâmico | Atualização periódica automática | Simulações contínuas |
+| Eventos (onClick, onChange) | Lógica | Resposta a ações do usuário | Interatividade reativa |
+| Bibliotecas externas JS | Extensão | Integração com outras libs | Estatística, álgebra, física |
+| IA (GSPlotly ou similares) | Automação | Geração automática de código | Apoio à aprendizagem e prototipagem |
+\
+
+
+|       Do ponto de vista pedagógico e tecnológico, os componentes interativos podem ser agrupados em entrada, processamento, saída, e controle. Nesse caso:
+
+1. Entrada (input, slider, checkbox, dropdown)
+2. Processamento (funções JS, eventos)
+3. Saída (gráfico, texto, valores)
+4. Controle (botões, reset, animação)
+
+|       Dessa forma, a classificação funcional desses widgets de JSPlotly ficam como:
+
+
+### Tabela: Classificação funcional de widgets no JSPlotly
+
+| Categoria | Widget / Componente | Implementação | Função | Potencial didático |
+|---|---|---|---|---|
+| Entrada | Campo de entrada (input) | HTML | Inserção de valores numéricos ou textuais | Parametrização de modelos e equações |
+| Entrada | Slider | HTML + JS | Variação contínua de parâmetros | Exploração de sensibilidade e comportamento funcional |
+| Entrada | Checkbox | HTML + JS | Ativação/desativação de elementos | Comparação de cenários |
+| Entrada | Radio button | HTML + JS | Seleção exclusiva entre opções | Escolha de modelos conceituais |
+| Entrada | Dropdown | HTML | Seleção em lista | Manipulação de datasets |
+| Entrada | Textarea | HTML | Inserção de múltiplos dados | Entrada de dados experimentais |
+| Controle | Botão | HTML + JS | Execução de ações | Atualização de simulações |
+| Controle | Eventos (onClick, onChange) | JavaScript | Resposta a ações do usuário | Interatividade reativa |
+| Controle | Timer / Loop | JavaScript | Execução contínua | Simulações dinâmicas |
+| Processamento | Funções JS | JavaScript | Cálculo e lógica | Modelagem matemática e computacional |
+| Visualização | Gráfico 2D | Plotly.js | Representação bidimensional | Ensino de funções e dados |
+| Visualização | Gráfico 3D | Plotly.js | Representação tridimensional | Modelagem de superfícies |
+| Visualização | Mapas | Plotly.js | Representação geográfica | Aplicações interdisciplinares |
+| Visualização | Animação | Plotly + JS | Evolução temporal | Fenômenos dinâmicos |
+| Interatividade | Tooltip | Plotly | Informação sob demanda | Leitura pontual de dados |
+| Interatividade | Zoom / Pan | Plotly | Navegação gráfica | Análise detalhada |
+| Interatividade | ModeBar | Plotly | Ferramentas integradas | Autonomia do usuário |
+| Saída | Display numérico | HTML + JS | Exibição de resultados | Feedback quantitativo |
+| Saída | Texto dinâmico | HTML + JS | Comunicação de estados | Feedback conceitual |
+| Exportação | PNG / SVG / HTML | Plotly | Persistência de resultados | Compartilhamento e reprodutibilidade |
+| Estrutura | Editor de código | HTML + JS | Inserção e edição de scripts | Ensino de programação |
+| Estrutura | Área gráfica | Plotly | Renderização visual | Centralidade cognitiva |
+| Extensão | Bibliotecas JS externas | JS | Expansão funcional | Estatística, álgebra, física |
+| Multimídia | Áudio | JS (Tone.js etc.) | Sonificação | Inclusão e percepção multimodal |
+| Integração | Sensores / Arduino | Web Serial | Dados em tempo real | Experimentação física |
+| Automação | IA (GSPlotly) | IA + JS | Geração de código | Redução de barreira cognitiva | -->
 
 
 </section>
@@ -734,6 +712,19 @@ Figura&nbsp;5.2: <em>JSPlotly</em> interativo contendo o código para a constru�
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    window.setColorSchemeToggle(window.hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1133,13 +1124,13 @@ Figura&nbsp;5.2: <em>JSPlotly</em> interativo contendo o código para a constru�
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="./jsplotly.html" class="pagination-link" aria-label="JSPlotly">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">JSPlotly</span></span>
+      <a href="./funcionalidade.html" class="pagination-link" aria-label="Funcionalidades">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Funcionalidades</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./part2.html" class="pagination-link" aria-label="Parte 2 - Oficina">
-        <span class="nav-page-text">Parte 2 - Oficina</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./widgets.html" class="pagination-link" aria-label="Widgets">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Widgets</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1148,44 +1139,35 @@ Figura&nbsp;5.2: <em>JSPlotly</em> interativo contendo o código para a constru�
   <i class="bi bi-layout-text-sidebar-reverse"></i>
 </button>
 
-<style>
-  /* Botão fixo: não interfere no layout */
-  #sb-toggle{
-    position: fixed; top: 12px; left: 12px; z-index: 10000;
-    border-radius: 999px; padding: 8px 10px; box-shadow: 0 4px 10px rgba(0,0,0,.15);
+<script>
+  const BODY = document.body;
+  const btn = document.getElementById('sb-toggle');
+
+  if (localStorage.getItem('sb-hidden') === '1') {
+    BODY.classList.add('sb-hidden');
   }
 
-  /* Quando a classe estiver no body, sumir com sidebars e ocupar largura total */
-  body.sb-hidden #quarto-sidebar,
-  body.sb-hidden #quarto-sidebar-glass,
-  body.sb-hidden #quarto-margin-sidebar { display: none !important; }
+  const sync = () => {
+    localStorage.setItem(
+      'sb-hidden',
+      BODY.classList.contains('sb-hidden') ? '1' : '0'
+    );
+  };
 
-  /* Grid do Quarto: faz o main ocupar tudo quando sidebar está oculta */
-  body.sb-hidden .page-columns { grid-template-columns: 1fr !important; }
-  body.sb-hidden main.content { grid-column: 1 / -1 !important; }
-</style>
-
-<script type="module">
-  const BODY = document.body;
-  const btn  = document.getElementById('sb-toggle');
-
-  // restaura preferência
-  if (localStorage.getItem('sb-hidden') === '1') BODY.classList.add('sb-hidden');
-
-  const sync = () => localStorage.setItem('sb-hidden', BODY.classList.contains('sb-hidden') ? '1' : '0');
-
-  btn?.addEventListener('click', () => { BODY.classList.toggle('sb-hidden'); sync(); });
-
-  // atalho S (fora de inputs)
-  document.addEventListener('keydown', ev => {
-    if (ev.key.toLowerCase() === 's' && !ev.target.closest('input, textarea, [contenteditable="true"]')) {
-      ev.preventDefault(); btn.click();
-    }
+  btn?.addEventListener('click', () => {
+    BODY.classList.toggle('sb-hidden');
+    sync();
   });
 
-  // se o botão nativo do Quarto existir, manter estados sincronizados
-  const hdrBtn = document.querySelector('header .quarto-btn-toggle');
-  hdrBtn?.addEventListener('click', () => setTimeout(sync, 200));
+  document.addEventListener('keydown', ev => {
+    if (
+      ev.key.toLowerCase() === 's' &&
+      !ev.target.closest('input, textarea, [contenteditable="true"]')
+    ) {
+      ev.preventDefault();
+      btn.click();
+    }
+  });
 </script>
 
 

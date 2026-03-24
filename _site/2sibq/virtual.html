@@ -107,352 +107,131 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-   /* ===== largura máxima do conteúdo ===== */
-  :root { --content-max-width: 1600px; }
+  :root{
+    --sidebar-width: 220px;
+    --margin-sidebar-width: 240px;
+    --content-max-width: 1600px;
+  }
 
-  /* ===== cores utilitárias (suas classes) ===== */
-  .red  { color: #e53935; }
+  .red { color: #e53935; }
   .blue { color: dodgerblue; }
-  .darkblue  { color: #003366; }   /* azul escuro */
-  .darkgreen { color: #006400; }   /* verde escuro */
-  .orange    { color: #ff8c00; }   /* laranja */
-  .purple    { color: #800080; }   /* roxo */
-  .note { color:#6f42c1; background:#f3e8ff; padding:2px 6px; border-radius:6px; }
-
-  /* ===== BOTÃO CENTRAL personalizável ===== */
-  #qst-centered {
-    position: fixed;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1031;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 999px;
-    background: #fff;
-    border: 1px solid #e6ecf3;
-    box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    cursor: pointer;
-  }
-  #qst-centered:hover {
-    box-shadow: 0 3px 12px rgba(0,0,0,.12);
-    border-color: #d8e2ef;
-  }
-  #qst-centered .qst-bar {
-    width: 18px; height: 2px; background:#333; margin: 2px 0;
+  .darkblue { color: #003366; }
+  .darkgreen { color: #006400; }
+  .orange { color: #ff8c00; }
+  .purple { color: #800080; }
+  .note {
+    color: #6f42c1;
+    background: #f3e8ff;
+    padding: 2px 6px;
+    border-radius: 6px;
   }
 
-  /* Em telas pequenas, deixe o comportamento padrão do tema */
-  @media (max-width: 991.98px){
-    #qst-centered { display: none; }
-  }
-
-  /* Evitar que o botão sobreponha o H1 ao navegar por âncoras */
-  .content h1.title, .content h1 { scroll-margin-top: 60px; }
-</style>
-
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // 1) Verifique se o include carregou: deve haver o quadradinho verde no canto (body::after)
-    // 2) Criar um botão central próprio (independente do botão do tema)
-    if (!document.getElementById('qst-centered')) {
-      const b = document.createElement('button');
-      b.id = 'qst-centered';
-      b.setAttribute('type','button');
-      b.setAttribute('title','Mostrar/ocultar barra lateral');
-
-      for (let i=0;i<3;i++){
-        const bar = document.createElement('div');
-        bar.className = 'qst-bar';
-        b.appendChild(bar);
-      }
-      document.body.appendChild(b);
-
-      // Handler do clique: alterna o estado do sidebar usando Bootstrap Collapse
-      b.addEventListener('click', () => {
-        try {
-          const sidebar = document.querySelector('#quarto-sidebar');
-          const body = document.body;
-
-          // alterna uma classe no body (útil para temas que usam isso)
-          body.classList.toggle('sidebar-collapsed');
-
-          if (sidebar) {
-            // se estiver colapsado, mostramos; se estiver aberto, escondemos
-            const isOpen = sidebar.classList.contains('show');
-            // tenta usar a API do Bootstrap, se estiver presente
-            const bs = (window.bootstrap && window.bootstrap.Collapse)
-              ? window.bootstrap.Collapse.getOrCreateInstance(sidebar)
-              : null;
-
-            if (bs) {
-              if (isOpen) { bs.hide(); } else { bs.show(); }
-            } else {
-              // fallback: alterna class "show" manualmente
-              sidebar.classList.toggle('show');
-            }
-
-            // mantém a classe do body coerente
-            if (sidebar.classList.contains('show')) {
-              body.classList.remove('sidebar-collapsed');
-            } else {
-              body.classList.add('sidebar-collapsed');
-            }
-          }
-        } catch (e) {
-          console.warn('Toggle central falhou:', e);
-        }
-      });
-    }
-  });
-</script>
-<script>
-  (function(){
-    function pickVisible(el){ return el && el.offsetParent !== null; }
-
-    function findNativeToggle(){
-      // 1) seletores “clássicos” do Quarto (cobrindo variações)
-      const sels = [
-        '#quarto-sidebar-toggle',
-        '.quarto-sidebar-toggle',
-        'button.sidebar-toggle',
-        'button[aria-controls="quarto-sidebar"]',
-        'a[aria-controls="quarto-sidebar"]',
-        '[data-bs-target="#quarto-sidebar"]',
-        '[aria-label*="sidebar" i]'
-      ];
-      for (const s of sels){
-        const el = document.querySelector(s);
-        if (pickVisible(el)) return el;
-      }
-
-      // 2) Heurística: procura um botão pequeno no canto sup. esquerdo
-      const candidates = Array.from(document.querySelectorAll('button, a, .btn'));
-      const ranked = candidates
-        .map(el => [el, el.getBoundingClientRect()])
-        .filter(([el, r]) => r.width > 20 && r.width < 64 && r.height > 20 && r.height < 64 && r.top >= 0 && r.top < 120 && r.left >= 0 && r.left < 140)
-        .sort((a,b) => (a[1].top - b[1].top) || (a[1].left - b[1].left));
-      return ranked.length ? ranked[0][0] : null;
-    }
-
-    function moveNativeToggle(){
-      const btn = findNativeToggle();
-      if (!btn) return;
-
-      // reposiciona o PRÓPRIO botão nativo
-      btn.style.position   = 'fixed';
-      btn.style.left       = '50%';
-      btn.style.top        = '12px';
-      btn.style.transform  = 'translateX(-50%)';
-      btn.style.zIndex     = '1060';
-
-      // estética opcional (remova se quiser o padrão do tema)
-      btn.style.background = '#fff';
-      btn.style.border     = '1px solid #e6ecf3';
-      btn.style.boxShadow  = '0 2px 8px rgba(0,0,0,.08)';
-      btn.style.borderRadius = '999px';
-      btn.style.width      = '36px';
-      btn.style.height     = '36px';
-      btn.style.display    = 'inline-flex';
-      btn.style.alignItems = 'center';
-      btn.style.justifyContent = 'center';
-      btn.style.padding    = '0';
-    }
-
-    function wire(){
-      moveNativeToggle();
-      // se o DOM mudar (p.ex. render tardio), tentamos de novo
-      const obs = new MutationObserver(() => moveNativeToggle());
-      obs.observe(document.body, {childList:true, subtree:true});
-      // também ao redimensionar
-      window.addEventListener('resize', moveNativeToggle);
-    }
-
-    if (document.readyState === 'loading'){
-      document.addEventListener('DOMContentLoaded', wire);
-    } else {
-      wire();
-    }
-  })();
-</script>
-
-<style>
-  /* Esconde o botão nativo original no canto ESQUERDO em telas médias+,
-     caso ele reapareça por algum motivo (opcional). */
   @media (min-width: 992px){
-    .sidebar .quarto-sidebar-toggle,
-    .sidebar #quarto-sidebar-toggle,
-    .sidebar button.sidebar-toggle{ visibility:hidden !important; }
-  }
-  /* Em telas pequenas, deixe como está (botão no canto esq.) */
-  @media (max-width: 991.98px){
-    /* nada aqui: usamos o padrão do tema */
-  }
-</style>
-<style>
-  /* ===== LARGURA MENOR PARA SIDEBAR E TOC =====
-     Aplica só em telas médias/grandes para não atrapalhar mobile */
-  @media (min-width: 992px){
-
-    /* (1) Se o seu Quarto expõe variáveis, use-as (fica mais limpo) */
-    :root{
-      --sidebar-width: 220px;            /* esquerda */
-      --margin-sidebar-width: 240px;     /* TOC à direita */
-    }
-
-    /* (2) Fallback robusto (quando tema/versão não usa as variáveis) */
-    #quarto-sidebar{
-      width: var(--sidebar-width) !important;
-    }
-    /* alguns temas têm contêiner interno com largura própria */
-    #quarto-sidebar .sidebar,
-    #quarto-sidebar .sidebar-content,
-    .sidebar.sidebar-navigation{
-      width: var(--sidebar-width) !important;
-      max-width: var(--sidebar-width) !important;
-    }
-
-    /* TOC / margin sidebar (direita) */
-    #quarto-margin-sidebar{
-      width: var(--margin-sidebar-width) !important;
-    }
-    .margin-sidebar{
-      width: var(--margin-sidebar-width) !important;
-      max-width: var(--margin-sidebar-width) !important;
-    }
-
-    /* (3) Diminui o espaço entre as 3 colunas (sidebar | conteúdo | TOC) */
-    #quarto-content.page-columns{
-      column-gap: 14px !important;  /* experimente 10–18px */
-    }
-
-    /* (4) Conteúdo central sem “colchões” extras */
-    main.content{
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-
-    /* (5) Só estética: o search acompanha a nova largura */
-    #quarto-sidebar input.sidebar-search{
-      width: 100% !important;
-    }
-  }
-</style>
-<style>
-  /* ===== Preenche melhor a área central ===== */
-  @media (min-width: 992px){
-
-    /* use os mesmos valores que você já está usando
-       para sidebar e TOC (ou deixe estes) */
-    :root{
-      --sidebar-width: 220px;
-      --margin-sidebar-width: 240px;
-    }
-
-    /* gap entre colunas + “almofada” lateral de página (gutters) */
-    :root{
-      --lv-gap: 14px;       /* mesmo column-gap que você definiu */
-      --lv-page-pad: 12px;  /* gutters externos (um de cada lado) */
-    }
-
-    /* Faz o track do conteúdo central ocupar todo o restante da tela */
-    :root{
-      --content-max-width: calc(
-        100vw
-        - var(--sidebar-width)
-        - var(--margin-sidebar-width)
-        - (2 * var(--lv-gap))
-        - (2 * var(--lv-page-pad))
-      ) !important;
-    }
-
-    /* Garante que o elemento não imponha um max-width menor */
-    main.content{
-      max-width: none !important;
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-
-    /* Ajusta o espaçamento entre as 3 colunas */
-    #quarto-content.page-columns{
-      column-gap: var(--lv-gap) !important;
-    }
-
-    /* Opcional: controla os gutters externos (margens da página) */
-    .page-columns{
-      padding-left: var(--lv-page-pad) !important;
-      padding-right: var(--lv-page-pad) !important;
-    }
-  }
-</style>
-
-<style>
-  /* ===== Ajuste seguro de larguras sem redesenhar o grid ===== */
-  @media (min-width: 992px){
-    /* 1) larguras das colunas do Quarto */
-    :root{
-      /* sidebar (esquerda) e TOC (direita) */
-      --sidebar-width:           220px;  /* ajuste aqui, ex: 200-240 */
-      --margin-sidebar-width:    240px;  /* TOC; ajuste aqui, ex: 220-260 */
-
-      /* largura máxima do conteúdo (miolo) — pode ser grande */
-      --content-max-width:       2000px; /* evita “miolo” estreito */
-    }
-
-    /* 2) aplica os valores sem mexer no grid */
     #quarto-sidebar{
       width: var(--sidebar-width) !important;
       min-width: var(--sidebar-width) !important;
     }
+
     #quarto-margin-sidebar{
       width: var(--margin-sidebar-width) !important;
       min-width: var(--margin-sidebar-width) !important;
     }
 
-    /* 3) respiro e liberação de largura no conteúdo */
+    #quarto-content.page-columns{
+      column-gap: 14px !important;
+    }
+
     main.content{
-      max-width: none !important;          /* ignora limites herdados */
-      padding-left:  14px !important;      /* “respiro” interno */
+      max-width: none !important;
+      padding-left: 14px !important;
       padding-right: 14px !important;
-      overflow: visible !important;        /* não corta texto nas bordas */
+      box-sizing: border-box !important;
+    }
+  }
+
+  @media (max-width: 991.98px){
+    #quarto-margin-sidebar{
+      display: none !important;
+    }
+
+    main.content{
+      width: 100% !important;
+      max-width: none !important;
+      padding-left: 14px !important;
+      padding-right: 14px !important;
       box-sizing: border-box !important;
     }
 
-    /* 4) diminui o espaço entre colunas (sem trocar ordem) */
-    #quarto-content.page-columns{
-      column-gap: 14px !important;         /* ajuste: 10–16px */
+    html, body{
+      overflow-x: hidden !important;
+    }
+
+    img, video, canvas, svg, iframe{
+      max-width: 100% !important;
+      height: auto !important;
+    }
+
+    #quarto-sidebar{
+      width: 86vw !important;
+      max-width: 420px !important;
     }
   }
 
-  /* Em telas pequenas, deixa o padrão móvel */
-  @media (max-width: 991.98px){
-    main.content{
-      padding-left: 12px !important;
-      padding-right: 12px !important;
-    }
-  }
-</style>
-<style>
-  /* espaçamento padrão entre parágrafos */
-  .content p { 
+  .content p{
     margin-top: 0;
-    margin-bottom: 1.2rem;  /* aumente/diminua aqui */
-    line-height: 1.55;      /* opcional: linhas mais arejadas */
+    margin-bottom: 1.2rem;
+    line-height: 1.55;
   }
 
-  /* um pouco mais de espaço quando um parágrafo vem logo após outro */
-  .content p + p {
+  .content p + p{
     margin-top: 0.8rem;
   }
 
-  /* parágrafos dentro de callouts/listas costumam ser “apertados” */
-  .callout p { margin-bottom: 0.8rem; }
-  li p { margin-bottom: 0.6rem; }
+  .callout p{
+    margin-bottom: 0.8rem;
+  }
+
+  li p{
+    margin-bottom: 0.6rem;
+  }
+
+  #sb-toggle{
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 10000;
+    border-radius: 999px;
+    padding: 8px 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  }
+
+  body.sb-hidden #quarto-sidebar,
+  body.sb-hidden #quarto-sidebar-glass,
+  body.sb-hidden #quarto-margin-sidebar{
+    display: none !important;
+  }
+
+  body.sb-hidden .page-columns{
+    grid-template-columns: 1fr !important;
+  }
+
+  body.sb-hidden main.content{
+    grid-column: 1 / -1 !important;
+  }
+</style>
+<style>
+  :root{
+    --lv-sidebar-w: 330px;
+    --lv-side-solid: #e8f0ff;
+    --lv-main-solid: #f5f8fc;
+  }
+  #quarto-sidebar{ background: var(--lv-side-solid) !important; }
+  main.content,
+  #quarto-margin-sidebar{
+    background: var(--lv-main-solid) !important;
+  }
+  #quarto-content.page-columns{ gap: 10px 16px; }
+  #quarto-sidebar{ width: var(--lv-sidebar-w); }
 </style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -635,9 +414,87 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#sec-virtual" id="toc-sec-virtual" class="nav-link active" data-scroll-target="#sec-virtual"><span class="header-section-number">10.1</span> Equação de van der Waals para gases ideais</a>
+  <ul class="collapse">
+  <li><a href="#contexto" id="toc-contexto" class="nav-link" data-scroll-target="#contexto">Contexto:</a></li>
+  <li><a href="#equação" id="toc-equação" class="nav-link" data-scroll-target="#equação">Equação:</a></li>
+  <li><a href="#sugestão" id="toc-sugestão" class="nav-link" data-scroll-target="#sugestão">Sugestão:</a></li>
+  </ul></li>
+  <li><a href="#consumo-de-oxigênio-por-mitocôndria" id="toc-consumo-de-oxigênio-por-mitocôndria" class="nav-link" data-scroll-target="#consumo-de-oxigênio-por-mitocôndria"><span class="header-section-number">10.2</span> Consumo de Oxigênio por mitocôndria</a>
+  <ul class="collapse">
+  <li><a href="#contexto-1" id="toc-contexto-1" class="nav-link" data-scroll-target="#contexto-1">Contexto:</a></li>
+  <li><a href="#sugestão-1" id="toc-sugestão-1" class="nav-link" data-scroll-target="#sugestão-1">Sugestão:</a></li>
+  </ul></li>
+  <li><a href="#cinética-de-reação-química" id="toc-cinética-de-reação-química" class="nav-link" data-scroll-target="#cinética-de-reação-química"><span class="header-section-number">10.3</span> Cinética de reação química</a>
+  <ul class="collapse">
+  <li><a href="#bncc-ef09ci07-em13cnt204-em13cnt205" id="toc-bncc-ef09ci07-em13cnt204-em13cnt205" class="nav-link" data-scroll-target="#bncc-ef09ci07-em13cnt204-em13cnt205">BNCC: EF09CI07, EM13CNT204, EM13CNT205</a></li>
+  <li><a href="#equação-1" id="toc-equação-1" class="nav-link" data-scroll-target="#equação-1">Equação:</a></li>
+  <li><a href="#sugestão-2" id="toc-sugestão-2" class="nav-link" data-scroll-target="#sugestão-2">Sugestão</a></li>
+  </ul></li>
+  <li><a href="#vaso-de-torno-de-olaria-steam" id="toc-vaso-de-torno-de-olaria-steam" class="nav-link" data-scroll-target="#vaso-de-torno-de-olaria-steam"><span class="header-section-number">10.4</span> Vaso de torno de olaria (STEAM)</a>
+  <ul class="collapse">
+  <li><a href="#bncc-em13mat101-em13mat403-em13cnt204-em13ar01-em13ar02" id="toc-bncc-em13mat101-em13mat403-em13cnt204-em13ar01-em13ar02" class="nav-link" data-scroll-target="#bncc-em13mat101-em13mat403-em13cnt204-em13ar01-em13ar02">BNCC: EM13MAT101, EM13MAT403, EM13CNT204, EM13AR01, EM13AR02</a></li>
+  </ul></li>
+  <li><a href="#anava-e-teste-de-tukey-hsd" id="toc-anava-e-teste-de-tukey-hsd" class="nav-link" data-scroll-target="#anava-e-teste-de-tukey-hsd"><span class="header-section-number">10.5</span> ANAVA e teste de Tukey-HSD</a>
+  <ul class="collapse">
+  <li><a href="#contexto-2" id="toc-contexto-2" class="nav-link" data-scroll-target="#contexto-2">Contexto:</a></li>
+  <li><a href="#equação-2" id="toc-equação-2" class="nav-link" data-scroll-target="#equação-2">Equação:</a></li>
+  <li><a href="#sugestão-3" id="toc-sugestão-3" class="nav-link" data-scroll-target="#sugestão-3">Sugestão:</a></li>
+  </ul></li>
+  <li><a href="#ajuste-não-linear-de-dados" id="toc-ajuste-não-linear-de-dados" class="nav-link" data-scroll-target="#ajuste-não-linear-de-dados"><span class="header-section-number">10.6</span> Ajuste não linear de dados</a>
+  <ul class="collapse">
+  <li><a href="#contexto-interação-ligante-proteína-algoritmo-de-grid-search" id="toc-contexto-interação-ligante-proteína-algoritmo-de-grid-search" class="nav-link" data-scroll-target="#contexto-interação-ligante-proteína-algoritmo-de-grid-search">Contexto: Interação ligante-proteína (algoritmo de <em>grid search</em>)</a></li>
+  <li><a href="#equação-3" id="toc-equação-3" class="nav-link" data-scroll-target="#equação-3">Equação:</a></li>
+  <li><a href="#sugestão-4" id="toc-sugestão-4" class="nav-link" data-scroll-target="#sugestão-4">Sugestão:</a></li>
+  </ul></li>
+  <li><a href="#prot.id---experimentação-simulada-para-caracterização-de-aminoácidos-e-cadeias" id="toc-prot.id---experimentação-simulada-para-caracterização-de-aminoácidos-e-cadeias" class="nav-link" data-scroll-target="#prot.id---experimentação-simulada-para-caracterização-de-aminoácidos-e-cadeias"><span class="header-section-number">10.7</span> prot.Id - Experimentação simulada para caracterização de aminoácidos e cadeias</a>
+  <ul class="collapse">
+  <li><a href="#contexto-3" id="toc-contexto-3" class="nav-link" data-scroll-target="#contexto-3">Contexto:</a></li>
+  <li><a href="#instruções-do-simulador" id="toc-instruções-do-simulador" class="nav-link" data-scroll-target="#instruções-do-simulador">Instruções do simulador</a></li>
+  <li><a href="#sugestão-5" id="toc-sugestão-5" class="nav-link" data-scroll-target="#sugestão-5">Sugestão:</a></li>
+  </ul></li>
+  <li><a href="#zemol---visualizador-3d-para-modelos-moleculares" id="toc-zemol---visualizador-3d-para-modelos-moleculares" class="nav-link" data-scroll-target="#zemol---visualizador-3d-para-modelos-moleculares"><span class="header-section-number">10.8</span> ZeMol - Visualizador 3D para modelos moleculares</a>
+  <ul class="collapse">
+  <li><a href="#contexto-4" id="toc-contexto-4" class="nav-link" data-scroll-target="#contexto-4">Contexto:</a></li>
+  <li><a href="#sugestão-6" id="toc-sugestão-6" class="nav-link" data-scroll-target="#sugestão-6">Sugestão:</a></li>
+  </ul></li>
+  <li><a href="#leadhunt-toolkit" id="toc-leadhunt-toolkit" class="nav-link" data-scroll-target="#leadhunt-toolkit"><span class="header-section-number">10.9</span> LeadHunt-Toolkit</a>
+  <ul class="collapse">
+  <li><a href="#parâmetros" id="toc-parâmetros" class="nav-link" data-scroll-target="#parâmetros">Parâmetros</a></li>
+  <li><a href="#uso-do-leadhunt-para-identificação-de-um-composto-líder" id="toc-uso-do-leadhunt-para-identificação-de-um-composto-líder" class="nav-link" data-scroll-target="#uso-do-leadhunt-para-identificação-de-um-composto-líder">Uso do LeadHunt para identificação de um composto líder</a></li>
+  <li><a href="#sugestão-7" id="toc-sugestão-7" class="nav-link" data-scroll-target="#sugestão-7">Sugestão</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências:</a></li>
+  </ul></li>
+  <li><a href="#gizz---lousa-digital" id="toc-gizz---lousa-digital" class="nav-link" data-scroll-target="#gizz---lousa-digital"><span class="header-section-number">10.10</span> Gizz - Lousa Digital</a>
+  <ul class="collapse">
+  <li><a href="#contexto-5" id="toc-contexto-5" class="nav-link" data-scroll-target="#contexto-5">Contexto:</a></li>
+  <li><a href="#sugestão-8" id="toc-sugestão-8" class="nav-link" data-scroll-target="#sugestão-8">Sugestão:</a></li>
+  </ul></li>
+  <li><a href="#jogo-de-arco-e-flecha" id="toc-jogo-de-arco-e-flecha" class="nav-link" data-scroll-target="#jogo-de-arco-e-flecha"><span class="header-section-number">10.11</span> Jogo de Arco e Flecha</a>
+  <ul class="collapse">
+  <li><a href="#bncc-ef09ci09-ef09ma18-em13mat302-em13cnt104-em13lgg701" id="toc-bncc-ef09ci09-ef09ma18-em13mat302-em13cnt104-em13lgg701" class="nav-link" data-scroll-target="#bncc-ef09ci09-ef09ma18-em13mat302-em13cnt104-em13lgg701">BNCC: EF09CI09, EF09MA18, EM13MAT302, EM13CNT104, EM13LGG701</a></li>
+  <li><a href="#sugestão-9" id="toc-sugestão-9" class="nav-link" data-scroll-target="#sugestão-9">Sugestão</a></li>
+  </ul></li>
+  <li><a href="#piano" id="toc-piano" class="nav-link" data-scroll-target="#piano"><span class="header-section-number">10.12</span> Piano</a>
+  <ul class="collapse">
+  <li><a href="#bncc-f15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701" id="toc-bncc-f15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701" class="nav-link" data-scroll-target="#bncc-f15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701">BNCC: F15AR05, EF69AR09, EM13LGG601, EM13LGG604, EM13LGG701</a></li>
+  <li><a href="#sugestão-10" id="toc-sugestão-10" class="nav-link" data-scroll-target="#sugestão-10">Sugestão</a></li>
+  </ul></li>
+  <li><a href="#game-pong" id="toc-game-pong" class="nav-link" data-scroll-target="#game-pong"><span class="header-section-number">10.13</span> Game Pong</a>
+  <ul class="collapse">
+  <li><a href="#bncc-ef69ar09-ef06ma20-em13lgg604-em13lgg701" id="toc-bncc-ef69ar09-ef06ma20-em13lgg604-em13lgg701" class="nav-link" data-scroll-target="#bncc-ef69ar09-ef06ma20-em13lgg604-em13lgg701">BNCC: EF69AR09, EF06MA20, EM13LGG604, EM13LGG701</a></li>
+  <li><a href="#sugestão-11" id="toc-sugestão-11" class="nav-link" data-scroll-target="#sugestão-11">Sugestão:</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page-right" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 <script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
@@ -805,7 +662,7 @@ window.Quarto = {
 
 
 
-<div class="quarto-title-meta column-page-right">
+<div class="quarto-title-meta column-body">
 
     
   
@@ -817,24 +674,20 @@ window.Quarto = {
 </header>
 
 
-<section id="sec-virtual" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="sec-virtual"><span class="header-section-number">10.1</span> Introdução</h2>
-<p><br>
-</p>
 <div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Esta seção busca ilustrar o emprego da plataforma JSPlotly para alguns exemplos em ensino e pesquisa com abordagem <em>STEAM</em> (<em>“Science, Technology, Engineering, Arts, and Mathematics”</em>), um cordão tecnológico que integra desenho artístico e pensamento criativo em disciplinas tradicionais de Ciências, Tecnologia, Engenharia e Matemática.</div>
 <div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seguem alguns exemplos em STEAM, apresentando o contexto, equações envolvidas (quando couber), e sugestões para alteração do objeto. Esses exemplos são facilmente acompanhados clicando-se com o mouse nas imagens. Para diversos outros objetos interativos, consulte o site <em>Bioquanti</em>, nas áreas de <a href="https://bioquanti.netlify.app/pt/nivel/superior/jsplotly/jsplt_bioq">Biofísico-química</a> voltada ao <em>ensino superior</em>, bem como <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/jsplotly_bas">Escola</a>, voltada ao <em>ensino básico</em>.</div>
 <div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outros exemplos para STEAM com JSPlotly, voltados ao interfaceamento do aplicativo com dispositivos móveis e placa Arduino, estão ilustrados na próxima seção.</div>
 <p><br>
 </p>
-<section id="equação-de-van-der-waals-para-gases-ideais" class="level3" data-number="10.1.1">
-<h3 data-number="10.1.1" class="anchored" data-anchor-id="equação-de-van-der-waals-para-gases-ideais"><span class="header-section-number">10.1.1</span> Equação de van der Waals para gases ideais</h3>
-<section id="contexto" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="contexto">Contexto:</h4>
+<section id="sec-virtual" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="sec-virtual"><span class="header-section-number">10.1</span> Equação de van der Waals para gases ideais</h2>
+<section id="contexto" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="contexto">Contexto:</h3>
 <div class="line-block">Uma adaptação que relaciona as quantidades termodinâmicas de pressão, volume e temperatura para gases ideais, é a <em>equação de van der Waals</em>. Nessa são computados coeficientes que estimam a existência de um volume e de interações inter-partículas. Dessa forma, a equação de van der Waals corrije a de gases ideais considerando um termo para compensação de forças intermoleculares (a/V<span class="math inline">\(^{2}\)</span>) e o volume disponível, esse descontando o volume ocupado pelas próprias moléculas do gás.</div>
 <div class="line-block">Na simulação é oferecida uma interatividade adicional pela presença de <em>sliders</em> (controles deslizantes) para temperatura, e para os coeficientes de volume finito (<em>b</em>) e interação entre partículas (<em>a</em>).</div>
 </section>
-<section id="equação" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="equação">Equação:</h4>
+<section id="equação" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equação">Equação:</h3>
 <p><span class="math display">\[
 P = \frac{RT}{V - b} - \frac{a}{V^2}
 \]</span></p>
@@ -848,18 +701,18 @@ P = \frac{RT}{V - b} - \frac{a}{V^2}
 </ul>
 <p><a href="bioquanti/jsp_vanderWaals.html" target="_blank"><img src="bioquanti/vanderWaals.png" class="img-fluid"></a></p>
 </section>
-<section id="sugestão" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão">Sugestão:</h4>
+<section id="sugestão" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão">Sugestão:</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente variar os parâmetros da equação por meio do <span class="st">"slider"</span> para temperatura, bem como para os coeficientes <span class="st">"a e b"</span>.</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Discorra sobre qual dos coeficientes possui maior efeito no perfil da curva, e a razão para isso.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="consumo-de-oxigênio-por-mitocôndria" class="level3" data-number="10.1.2">
-<h3 data-number="10.1.2" class="anchored" data-anchor-id="consumo-de-oxigênio-por-mitocôndria"><span class="header-section-number">10.1.2</span> Consumo de Oxigênio por mitocôndria</h3>
-<section id="contexto-1" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="contexto-1">Contexto:</h4>
+<section id="consumo-de-oxigênio-por-mitocôndria" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="consumo-de-oxigênio-por-mitocôndria"><span class="header-section-number">10.2</span> Consumo de Oxigênio por mitocôndria</h2>
+<section id="contexto-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="contexto-1">Contexto:</h3>
 <div class="line-block"><em>Oxígrafos</em> são equipamentos que monitoram o teor de oxigênio dissolvido em solução. Diferente de <em>oxímetros</em>, baseados na medição de oxigenação de hemoglobina por <em>clip</em> direto na ponta de um dedo, oxígrafos são largamente utilizados em estudos de células vivas e suspensão de mitocôndrias.</div>
 <div class="line-block">O exemplo que segue ilustra uma <em>animação</em> para o teor de <span class="math inline">\(O_{2}\)</span> medido em oxígrafo para uma suspensão de mitocôndrias, e cujas taxas de consumo são variadas pelo uso de metabólitos modificadores (ex: piruvato, ADP, azida).</div>
 <p><br>
@@ -867,8 +720,8 @@ P = \frac{RT}{V - b} - \frac{a}{V^2}
 <p><a href="bioquanti/jsp_O2_mitocondria.html" target="_blank"><img src="bioquanti/O2_mitocondria.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-1" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-1">Sugestão:</h4>
+<section id="sugestão-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-1">Sugestão:</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Observe que o surgimento de metabólitos e as taxas de consumo de oxigênio decorrentes são definidas pela função <span class="st">"oxigenio"</span>. Experimente alterá<span class="sc">-</span>las e observe o efeito na animação;</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Perceba que os metabólitos e sua atuação, bem como o sinal medido, teor de O2, são facilmente adaptados para qualquer outra medição metabólica no código. Experimente, por exemplo, como ficaria o gráfico numa simulação para a via glicolítica;</span>
@@ -878,16 +731,16 @@ P = \frac{RT}{V - b} - \frac{a}{V^2}
 </p>
 </section>
 </section>
-<section id="cinética-de-reação-química" class="level3" data-number="10.1.3">
-<h3 data-number="10.1.3" class="anchored" data-anchor-id="cinética-de-reação-química"><span class="header-section-number">10.1.3</span> Cinética de reação química</h3>
-<section id="bncc-ef09ci07-em13cnt204-em13cnt205" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="bncc-ef09ci07-em13cnt204-em13cnt205">BNCC: EF09CI07, EM13CNT204, EM13CNT205</h4>
+<section id="cinética-de-reação-química" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="cinética-de-reação-química"><span class="header-section-number">10.3</span> Cinética de reação química</h2>
+<section id="bncc-ef09ci07-em13cnt204-em13cnt205" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="bncc-ef09ci07-em13cnt204-em13cnt205">BNCC: EF09CI07, EM13CNT204, EM13CNT205</h3>
 <div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Um tópico de assimilação desconfortável ao estudante refere-se à abstração necessária para se descortinar as relações matemáticas que se apresentam na cinética de reações químicas. Ao tratar da conversão de reagentes em produtos, por exemplo, é inerente certa barreira à aprendizagem referente à taxas de reação, inibição e ativação. Para reduzir o impacto dessa abstração, segue um exemplo para uma animação para cinética de reação, e cujo objeto altera-se em função de opções de taxas e moduladores à reação.</div>
 <p><br>
 </p>
 </section>
-<section id="equação-1" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="equação-1">Equação:</h4>
+<section id="equação-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equação-1">Equação:</h3>
 <p><span class="math display">\[
 R(t)=\frac{R_0}{1+k_{efetiva}​t}
 \]</span></p>
@@ -921,8 +774,8 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 <p><a href="bioquanti/cineticaRP.html" target="_blank"><img src="bioquanti/cineticaRP.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-2" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-2">Sugestão</h4>
+<section id="sugestão-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-2">Sugestão</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente alterar a constante <span class="st">"k_cinetica"</span> no topo do código (ex.<span class="sc">:</span> <span class="fl">0.008</span>, <span class="fl">0.017</span>, <span class="fl">0.05</span>) e use Play<span class="sc">/</span>Reset para comparar;</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente incluir<span class="sc">/</span>retirar inibidor e catalisador;</span>
@@ -934,10 +787,10 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 </p>
 </section>
 </section>
-<section id="vaso-de-torno-de-olaria-steam" class="level3" data-number="10.1.4">
-<h3 data-number="10.1.4" class="anchored" data-anchor-id="vaso-de-torno-de-olaria-steam"><span class="header-section-number">10.1.4</span> Vaso de torno de olaria (STEAM)</h3>
-<section id="bncc-em13mat101-em13mat403-em13cnt204-em13ar01-em13ar02" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="bncc-em13mat101-em13mat403-em13cnt204-em13ar01-em13ar02">BNCC: EM13MAT101, EM13MAT403, EM13CNT204, EM13AR01, EM13AR02</h4>
+<section id="vaso-de-torno-de-olaria-steam" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="vaso-de-torno-de-olaria-steam"><span class="header-section-number">10.4</span> Vaso de torno de olaria (STEAM)</h2>
+<section id="bncc-em13mat101-em13mat403-em13cnt204-em13ar01-em13ar02" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="bncc-em13mat101-em13mat403-em13cnt204-em13ar01-em13ar02">BNCC: EM13MAT101, EM13MAT403, EM13CNT204, EM13AR01, EM13AR02</h3>
 <div class="line-block">&nbsp;&nbsp;Segue um exemplo de simulação para torneamento cerâmico e moldagem manual de argila, e que permite experimentar formas simétricas e arredondadas, como vasos, tigelas e potes, por ajuste em alguns parâmetros e nas funções trigonométricas do código.</div>
 <p><a href="bioquanti//jsp_steam2.html" target="_blank"><img src="bioquanti/steam.png" class="img-fluid"></a></p>
 <div class="cell">
@@ -955,14 +808,14 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 </p>
 </section>
 </section>
-<section id="anava-e-teste-de-tukey-hsd" class="level3" data-number="10.1.5">
-<h3 data-number="10.1.5" class="anchored" data-anchor-id="anava-e-teste-de-tukey-hsd"><span class="header-section-number">10.1.5</span> ANAVA e teste de Tukey-HSD</h3>
-<section id="contexto-2" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="contexto-2">Contexto:</h4>
+<section id="anava-e-teste-de-tukey-hsd" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="anava-e-teste-de-tukey-hsd"><span class="header-section-number">10.5</span> ANAVA e teste de Tukey-HSD</h2>
+<section id="contexto-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="contexto-2">Contexto:</h3>
 <div class="line-block">Em pesquisa é comum proceder a análise de um conjunto de dados comparando-se a variância entre grupos com a obtida dentro de cada grupo, ou <em>Análise de Variância (ANAVA)</em>. Uma vez obtida a informação estatística de que há diferença entre os grupos superior à interna, procede-se um teste <em>pos-hoc</em> para comparação de médias, como o <em>teste de Tukey-HSD</em> (<em>Honest Significant Difference</em>).</div>
 </section>
-<section id="equação-2" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="equação-2">Equação:</h4>
+<section id="equação-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equação-2">Equação:</h3>
 <div class="line-block">A equação que caracteriza um teste de Tukeu-HSD é fornecida abaixo (correção para grupos desbalanceados):</div>
 <p><span class="math display">\[
 \text{HSD}_{ij} = q_{\alpha} \cdot \sqrt{\frac{\text{MS}_{\text{within}}}{2} \left( \frac{1}{n_i} + \frac{1}{n_j} \right)}
@@ -977,8 +830,8 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 </ul>
 <p><a href="bioquanti/jsp_tukey.html" target="_blank"><img src="bioquanti/tukey.png" class="img-fluid"></a></p>
 </section>
-<section id="sugestão-3" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-3">Sugestão:</h4>
+<section id="sugestão-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-3">Sugestão:</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Você pode clicar e arrastar os marcadores de mínima diferença (a,b,etc) acima do gráfico, para melhor ajuste visual, bem como a tabela de ANAVA e o resultado do teste estatístico;</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Altere os valores dos vetores, refaça a análise e o gráfico simultâneos, e perceba a diferença nos valores obtidos. Observe que, como informado na borda inferior, é necessário atualizar a página do site para anular dados anteriores retidos em memória cache;</span>
@@ -987,18 +840,18 @@ f_{\text{cat}}, &amp; \text{se catalisador ligado}\\[6pt]
 </div>
 </section>
 </section>
-<section id="ajuste-não-linear-de-dados" class="level3" data-number="10.1.6">
-<h3 data-number="10.1.6" class="anchored" data-anchor-id="ajuste-não-linear-de-dados"><span class="header-section-number">10.1.6</span> Ajuste não linear de dados</h3>
+<section id="ajuste-não-linear-de-dados" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="ajuste-não-linear-de-dados"><span class="header-section-number">10.6</span> Ajuste não linear de dados</h2>
 <div class="line-block">Modelagem é uma área de emprego comum nas ciências naturais, quando se deseja previsão ou correlação matemática de dados experimentais. Modelos podem constituir-se lineares ou não. Quando não lineares, podem ser aplicados de forma empírica para os dados (ex: funções quadráticas, logarítmicas, exponenciais ou de potência), ou a partir de uma função matemática explanatória do modelo.</div>
 <div class="line-block">Nesse caso são empregadas técnicas para ajuste não linear dos dados ao modelo, como <em>Simplex</em>, <em>Gauss</em>, <em>Newton-Raphson</em>, <em>Levenberg-Marquadt</em>, ou <em>mínimos quadrados</em> por exemplo. Seja qual for o método, o ajuste não linear difere-se do linear em pressupostos e tratamento dos dados (veja uma rápida explicação <a href="https://bioquanti.netlify.app/pt/nivel/superior/r/enzimas#ajuste-n%C3%A3o-linear">aqui</a>.</div>
-<section id="contexto-interação-ligante-proteína-algoritmo-de-grid-search" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="contexto-interação-ligante-proteína-algoritmo-de-grid-search">Contexto: Interação ligante-proteína (algoritmo de <em>grid search</em>)</h4>
+<section id="contexto-interação-ligante-proteína-algoritmo-de-grid-search" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="contexto-interação-ligante-proteína-algoritmo-de-grid-search">Contexto: Interação ligante-proteína (algoritmo de <em>grid search</em>)</h3>
 <div class="line-block">O exemplo a seguir ilustra a aplicação de um ajuste não linear de dados de interação molecular por modelo de Langmuir, e tratamento por <em>minimização do erro quadrático por varredura manual</em>. Nesse tratamento, calcula-se a <em>soma dos erros quadráticos (RMSE)</em> para combinações de <em>a</em> e <em>b</em>, selecionando-se o par com menor erro calculado. Nesse caso, por simplificação, apesar do <em>JSPlotly</em> trabalhar com bibliotecas mais específicas, a regressão não linear dá-se por mínimos quadrados, mas realizada por <em>grid search</em>, e não por métodos iterativos clássicos. Assim, um conjunto de valores é testado para o par (a, b) em uma malha definida previamente (tabela de combinações), permitindo a identificação dos parâmetros que melhor descrevem os dados experimentais segundo o critério de erro mínimo.</div>
 <p><br>
 </p>
 </section>
-<section id="equação-3" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="equação-3">Equação:</h4>
+<section id="equação-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="equação-3">Equação:</h3>
 <div class="line-block">A equação de Langmuir é representada abaixo:</div>
 <p><span class="math display">\[
 Y = \frac{aX}{K_d + X}
@@ -1019,8 +872,8 @@ SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
 </p>
 <p><a href="bioquanti/jsp_ajNonLin.html" target="_blank"><img src="bioquanti/ajNonLin.png" class="img-fluid"></a></p>
 </section>
-<section id="sugestão-4" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-4">Sugestão:</h4>
+<section id="sugestão-4" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-4">Sugestão:</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Como no exemplo anterior, apresente alternativamente os pontos e a curva de ajuste pela operação <span class="st">"booleana"</span> (<span class="st">"mostrarPontos = true/false"</span>; <span class="st">"mostrarCurva = true/false"</span>);</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Altere os dados e realize novo ajuste, para obtenção de outros parâmetros da equação (Kd, SSR, R², R² ajustado). Obs<span class="sc">:</span> R² adj corresponde ao valor de R² corrigido para o número de parâmetros do <span class="fu">modelo</span> (no caso, <span class="st">"2"</span>), incidindo diretamente nos <span class="st">"graus de liberdade"</span> para o ajuste.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1029,14 +882,14 @@ SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
 </p>
 </section>
 </section>
-<section id="prot.id---experimentação-simulada-para-caracterização-de-aminoácidos-e-cadeias" class="level3" data-number="10.1.7">
-<h3 data-number="10.1.7" class="anchored" data-anchor-id="prot.id---experimentação-simulada-para-caracterização-de-aminoácidos-e-cadeias"><span class="header-section-number">10.1.7</span> prot.Id - Experimentação simulada para caracterização de aminoácidos e cadeias</h3>
-<section id="contexto-3" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="contexto-3">Contexto:</h4>
+<section id="prot.id---experimentação-simulada-para-caracterização-de-aminoácidos-e-cadeias" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="prot.id---experimentação-simulada-para-caracterização-de-aminoácidos-e-cadeias"><span class="header-section-number">10.7</span> prot.Id - Experimentação simulada para caracterização de aminoácidos e cadeias</h2>
+<section id="contexto-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="contexto-3">Contexto:</h3>
 <div class="line-block">O <em>JSPlotly</em> permite se trabalhar com um conjunto de interações não necessariamente atreladas à equações e suas representações gráficas. O exemplo a seguir ilustra seu potencial para uma simulação de um experimento clássico em Bioquímica: <em>a caracterização de aminoácidos, peptídios, e proteínas, por reações cromogênicas em tubos de ensaio</em>. Como o escopo deste material é apresentar e facultar o uso de <em>OIERs</em> variados (<em>objetos interativos de ensino reprodutível</em>), recomenda-se ao usuário a busca de fontes de informação tangentes às reações descritas brevemente a seguir.</div>
 </section>
-<section id="instruções-do-simulador" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="instruções-do-simulador">Instruções do simulador</h4>
+<section id="instruções-do-simulador" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="instruções-do-simulador">Instruções do simulador</h3>
 <div class="line-block">O simulador permite duas opções: a) descobrir a natureza de uma amostra ou b) descobrir o padrão de cores de reações para uma amostra escolhida.</div>
 <p><br>
 </p>
@@ -1058,8 +911,8 @@ SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
 </ol>
 <p><a href="bioquanti/jsp_Id-Prot-7.html" target="_blank"><img src="bioquanti/Id-Prot-7.png" class="img-fluid"></a></p>
 </section>
-<section id="sugestão-5" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-5">Sugestão:</h4>
+<section id="sugestão-5" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-5">Sugestão:</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Experimente clicar em <span class="st">"Nova amostra"</span> para verificar a frequência de possibilidades;</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Experimente as duas opções de operação do <span class="st">"jogo"</span> (sim, é um jogo...afinal, tem um placar<span class="sc">!</span>);</span>
@@ -1069,10 +922,10 @@ SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
 </p>
 </section>
 </section>
-<section id="zemol---visualizador-3d-para-modelos-moleculares" class="level3" data-number="10.1.8">
-<h3 data-number="10.1.8" class="anchored" data-anchor-id="zemol---visualizador-3d-para-modelos-moleculares"><span class="header-section-number">10.1.8</span> ZeMol - Visualizador 3D para modelos moleculares</h3>
-<section id="contexto-4" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="contexto-4">Contexto:</h4>
+<section id="zemol---visualizador-3d-para-modelos-moleculares" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="zemol---visualizador-3d-para-modelos-moleculares"><span class="header-section-number">10.8</span> ZeMol - Visualizador 3D para modelos moleculares</h2>
+<section id="contexto-4" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="contexto-4">Contexto:</h3>
 <div class="line-block">Pelas características combinadas do uso de <em>JavaScript</em> e da biblioteca <em>Plotly.js</em>, é possível extender o potencial de aplicação do <em>JSPlotly</em> para a construção de verdadeiros aplicativos HTML. Um claro exemplo desse alcance é ilustrado abaixo, para um visualizador molecular de natureza similar a alguns pré-existentes e empregados em ensino e pesquisa (<em>Jmol</em>, <em>Pymol</em>, etc).</div>
 <div class="line-block">Embora seja obviamente bem menor na extensão de suas funcionalidades quando comparado a outros aplicativos, o assim alcunhado <em>“ZeMol”</em> possui menos de 70 kB de memória, e apresenta funcionalidades como:</div>
 <ul>
@@ -1094,8 +947,8 @@ SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
 </ul>
 <p><a href="bioquanti/ZeMol.html" target="_blank"><img src="bioquanti/ZeMol.png" class="img-fluid"></a></p>
 </section>
-<section id="sugestão-6" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-6">Sugestão:</h4>
+<section id="sugestão-6" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-6">Sugestão:</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Carregue um modelo com código PDB, ou uma molécula do site PubChem;</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Se proteína, experimente os efeitos separados e combinados dos <span class="st">"sliders"</span> para tamanho do CA e opacidade;</span>
@@ -1112,8 +965,8 @@ SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
 </p>
 </section>
 </section>
-<section id="leadhunt-toolkit" class="level3" data-number="10.1.9">
-<h3 data-number="10.1.9" class="anchored" data-anchor-id="leadhunt-toolkit"><span class="header-section-number">10.1.9</span> LeadHunt-Toolkit</h3>
+<section id="leadhunt-toolkit" class="level2" data-number="10.9">
+<h2 data-number="10.9" class="anchored" data-anchor-id="leadhunt-toolkit"><span class="header-section-number">10.9</span> LeadHunt-Toolkit</h2>
 <div class="line-block">O exemplo que se apresenta refere-se ao uso do <em>JSPlotly</em> como um painel (<em>dashboard</em>) para prospecção simulada do potencial de uma molécula fictícia em triagem, visando a seleção de composto líder (<em>lead compound</em>) como inibidor a um alvo enzimático.</div>
 <p><br>
 </p>
@@ -1134,8 +987,8 @@ SSR(a, K_d) = \sum_{i=1}^n \left( y_i - \frac{a x_i}{K_d + x_i} \right)^2
 <div class="line-block">Os gráficos simulam os resultados obtidos para as <em>representações de Michaelis-Mentem, Lineweaver-Burk, curva dose-reposta, e gráfico de van’t Hoff.</em></div>
 <p><br>
 </p>
-<section id="parâmetros" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="parâmetros">Parâmetros</h4>
+<section id="parâmetros" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="parâmetros">Parâmetros</h3>
 <div class="line-block">Seja qual for o modo experimentado, se para identificar o potencial do composto , os parâmetros são:</div>
 <ul>
 <li><em>Ki</em>, constante de equilíbrio de dissociação do inibidor (desejável &lt; 10<span class="math inline">\(\mu\)</span>M);</li>
@@ -1188,8 +1041,8 @@ BEI=\frac{pIC_{50}}{MW}
 </li>
 </ul>
 </section>
-<section id="uso-do-leadhunt-para-identificação-de-um-composto-líder" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="uso-do-leadhunt-para-identificação-de-um-composto-líder">Uso do LeadHunt para identificação de um composto líder</h4>
+<section id="uso-do-leadhunt-para-identificação-de-um-composto-líder" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="uso-do-leadhunt-para-identificação-de-um-composto-líder">Uso do LeadHunt para identificação de um composto líder</h3>
 <div class="line-block">A partir da visualização de gráficos e descritores da molécula fictícia, é possível se determinar:</div>
 <ol type="1">
 <li><p>O tipo de inibição reversível (competitiva, incompetitiva, não competitiva pura, não competitiva mista);</p></li>
@@ -1201,8 +1054,8 @@ BEI=\frac{pIC_{50}}{MW}
 </ol>
 <div class="line-block">Dessa forma, pode-se utilizar o <em>LeadHunt</em> para uma simulação significativa à triagem de um inibidor como <em>lead compound</em> à uma enzima-alvo.</div>
 </section>
-<section id="sugestão-7" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-7">Sugestão</h4>
+<section id="sugestão-7" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-7">Sugestão</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Compare os tipos de inibição enzimática por inspeção visual dos gráficos de Michaelis<span class="sc">-</span>Mentem e de Lineweaver<span class="sc">-</span>Burk, dando ênfase às variações ou não de <span class="st">"Km"</span> e <span class="st">"Vmax"</span> entre esses;</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1218,8 +1071,8 @@ BEI=\frac{pIC_{50}}{MW}
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Teste a curvatura do plot de Van´t Hoff para variação de capacidade calorífica da interação, fornecendo valores <span class="fu">positivos</span> (ex<span class="sc">:</span> <span class="dv">2000</span>) e <span class="fu">negativos</span> (ex<span class="sc">:</span> <span class="sc">-</span><span class="dv">2000</span>)<span class="sc">:</span> se concavidade para cima, valor negativo da variação de capacidade calorífica; se concavidade para baixo, valor positivo.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="referências" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="referências">Referências:</h4>
+<section id="referências" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="referências">Referências:</h3>
 <ol type="1">
 <li>Marangoni, Alejandro G. Enzyme kinetics: a modern approach. John Wiley &amp; Sons, 2003.</li>
 <li>Copeland, Robert A. Evaluation of enzyme inhibitors in drug discovery: a guide for medicinal chemists and pharmacologists. John Wiley &amp; Sons, 2013.</li>
@@ -1229,10 +1082,10 @@ BEI=\frac{pIC_{50}}{MW}
 </ol>
 </section>
 </section>
-<section id="gizz---lousa-digital" class="level3" data-number="10.1.10">
-<h3 data-number="10.1.10" class="anchored" data-anchor-id="gizz---lousa-digital"><span class="header-section-number">10.1.10</span> Gizz - Lousa Digital</h3>
-<section id="contexto-5" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="contexto-5">Contexto:</h4>
+<section id="gizz---lousa-digital" class="level2" data-number="10.10">
+<h2 data-number="10.10" class="anchored" data-anchor-id="gizz---lousa-digital"><span class="header-section-number">10.10</span> Gizz - Lousa Digital</h2>
+<section id="contexto-5" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="contexto-5">Contexto:</h3>
 <div class="line-block">A natureza do objeto abaixo dispensa apresentações. Trata-se mais um entre os muitos aplicativos para simular uma lousa, ou quadro de giz/caneta digital. Diferente de seus concorrentes, contudo:</div>
 <ol type="1">
 <li>Pode ser exportada como arquivo autossuficiente HTML em botão da própria lousa, e permitindo compartilhamento da imagem gerada, bem como continuidade de sua edição;</li>
@@ -1253,8 +1106,8 @@ BEI=\frac{pIC_{50}}{MW}
 <li>Atalhos de teclado: E=borracha; L=laser; Z desfaz, X limpa, H salva HTML</li>
 </ul>
 </section>
-<section id="sugestão-8" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-8">Sugestão:</h4>
+<section id="sugestão-8" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-8">Sugestão:</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Pode<span class="sc">-</span>se alterar a espessura das canetas em <span class="st">"var baseWidth = 1;"</span> ;</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Os botões <span class="dv">1</span>x, <span class="dv">2</span>x, <span class="dv">4</span>x são multiplicadores; edite as linhas de criação dos botões pra trocar rótulo<span class="sc">/</span><span class="fu">multiplicador</span> (ex.<span class="sc">:</span> <span class="st">"addSize('3x', 3, true)"</span>).</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1263,17 +1116,17 @@ BEI=\frac{pIC_{50}}{MW}
 </p>
 </section>
 </section>
-<section id="jogo-de-arco-e-flecha" class="level3" data-number="10.1.11">
-<h3 data-number="10.1.11" class="anchored" data-anchor-id="jogo-de-arco-e-flecha"><span class="header-section-number">10.1.11</span> Jogo de Arco e Flecha</h3>
-<section id="bncc-ef09ci09-ef09ma18-em13mat302-em13cnt104-em13lgg701" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="bncc-ef09ci09-ef09ma18-em13mat302-em13cnt104-em13lgg701">BNCC: EF09CI09, EF09MA18, EM13MAT302, EM13CNT104, EM13LGG701</h4>
+<section id="jogo-de-arco-e-flecha" class="level2" data-number="10.11">
+<h2 data-number="10.11" class="anchored" data-anchor-id="jogo-de-arco-e-flecha"><span class="header-section-number">10.11</span> Jogo de Arco e Flecha</h2>
+<section id="bncc-ef09ci09-ef09ma18-em13mat302-em13cnt104-em13lgg701" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="bncc-ef09ci09-ef09ma18-em13mat302-em13cnt104-em13lgg701">BNCC: EF09CI09, EF09MA18, EM13MAT302, EM13CNT104, EM13LGG701</h3>
 <p><br>
 </p>
 <p><a href="bioquanti/arcoFlecha.html" target="_blank"><img src="bioquanti/arcoFlecha.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-9" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-9">Sugestão</h4>
+<section id="sugestão-9" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-9">Sugestão</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Altere o â<span class="fu">ngulo</span> (<span class="st">"let theta_edit = 45"</span>) e<span class="sc">/</span>ou a velocidade inicial do <span class="fu">disparo</span> (<span class="st">"let v0_edit    = 20"</span>) para ajustar a parábola ao alvo;</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Perceba que a pontuação é flexível<span class="sc">:</span> <span class="dv">5</span> pontos para proximidade do alvo, e <span class="dv">10</span> pontos quando o acerta.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1282,17 +1135,17 @@ BEI=\frac{pIC_{50}}{MW}
 </p>
 </section>
 </section>
-<section id="piano" class="level3" data-number="10.1.12">
-<h3 data-number="10.1.12" class="anchored" data-anchor-id="piano"><span class="header-section-number">10.1.12</span> Piano</h3>
-<section id="bncc-f15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="bncc-f15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701">BNCC: F15AR05, EF69AR09, EM13LGG601, EM13LGG604, EM13LGG701</h4>
+<section id="piano" class="level2" data-number="10.12">
+<h2 data-number="10.12" class="anchored" data-anchor-id="piano"><span class="header-section-number">10.12</span> Piano</h2>
+<section id="bncc-f15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="bncc-f15ar05-ef69ar09-em13lgg601-em13lgg604-em13lgg701">BNCC: F15AR05, EF69AR09, EM13LGG601, EM13LGG604, EM13LGG701</h3>
 <p><br>
 </p>
 <p><a href="bioquanti/piano.html" target="_blank"><img src="bioquanti/piano.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-10" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-10">Sugestão</h4>
+<section id="sugestão-10" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-10">Sugestão</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> É um piano pequeno, mas é um <span class="fu">piano</span> (<span class="dv">2</span> oitavas) <span class="sc">!!</span> E como tal, você pode expressar sua aptidão musical com o instrumento polifônico;</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Para prolongar o som das teclas eleve a barra de <span class="st">"sustentação"</span>;</span>
@@ -1303,16 +1156,16 @@ BEI=\frac{pIC_{50}}{MW}
 </p>
 </section>
 </section>
-<section id="game-pong" class="level3" data-number="10.1.13">
-<h3 data-number="10.1.13" class="anchored" data-anchor-id="game-pong"><span class="header-section-number">10.1.13</span> Game Pong</h3>
-<section id="bncc-ef69ar09-ef06ma20-em13lgg604-em13lgg701" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="bncc-ef69ar09-ef06ma20-em13lgg604-em13lgg701">BNCC: EF69AR09, EF06MA20, EM13LGG604, EM13LGG701</h4>
+<section id="game-pong" class="level2" data-number="10.13">
+<h2 data-number="10.13" class="anchored" data-anchor-id="game-pong"><span class="header-section-number">10.13</span> Game Pong</h2>
+<section id="bncc-ef69ar09-ef06ma20-em13lgg604-em13lgg701" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="bncc-ef69ar09-ef06ma20-em13lgg604-em13lgg701">BNCC: EF69AR09, EF06MA20, EM13LGG604, EM13LGG701</h3>
 <div class="line-block">&nbsp;&nbsp;Para a reprodução deste game clássico utilizou-se a biblioteca adicional <em>p5.js</em>, voltada para arte interativa, animações e visualizações de dados na web.</div>
 <p><a href="bioquanti/pong.html" target="_blank"><img src="bioquanti/pong.png" class="img-fluid"></a><br>
 </p>
 </section>
-<section id="sugestão-11" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="sugestão-11">Sugestão:</h4>
+<section id="sugestão-11" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sugestão-11">Sugestão:</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Se achar que o jogo está lento, mesmo na velocidade <span class="st">'warp'</span> máxima, é possível alterar seu valor em <span class="st">"var base = Math.pow(1.5, warp);"</span>;</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Se achar que o jogo tá difícil ou fácil demais, é possível alterar o tamanho da raquete em <span class="st">"paddle = { w: 80, h: 10,..."</span>;</span>
@@ -1323,7 +1176,6 @@ BEI=\frac{pIC_{50}}{MW}
 </p>
 
 
-</section>
 </section>
 </section>
 
@@ -1740,7 +1592,7 @@ BEI=\frac{pIC_{50}}{MW}
     }
   });
   </script>
-<nav class="page-navigation column-page-right">
+<nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
       <a href="./part3.html" class="pagination-link" aria-label="Parte 3 - STEAM">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Parte 3 - STEAM</span>
@@ -1757,44 +1609,35 @@ BEI=\frac{pIC_{50}}{MW}
   <i class="bi bi-layout-text-sidebar-reverse"></i>
 </button>
 
-<style>
-  /* Botão fixo: não interfere no layout */
-  #sb-toggle{
-    position: fixed; top: 12px; left: 12px; z-index: 10000;
-    border-radius: 999px; padding: 8px 10px; box-shadow: 0 4px 10px rgba(0,0,0,.15);
+<script>
+  const BODY = document.body;
+  const btn = document.getElementById('sb-toggle');
+
+  if (localStorage.getItem('sb-hidden') === '1') {
+    BODY.classList.add('sb-hidden');
   }
 
-  /* Quando a classe estiver no body, sumir com sidebars e ocupar largura total */
-  body.sb-hidden #quarto-sidebar,
-  body.sb-hidden #quarto-sidebar-glass,
-  body.sb-hidden #quarto-margin-sidebar { display: none !important; }
+  const sync = () => {
+    localStorage.setItem(
+      'sb-hidden',
+      BODY.classList.contains('sb-hidden') ? '1' : '0'
+    );
+  };
 
-  /* Grid do Quarto: faz o main ocupar tudo quando sidebar está oculta */
-  body.sb-hidden .page-columns { grid-template-columns: 1fr !important; }
-  body.sb-hidden main.content { grid-column: 1 / -1 !important; }
-</style>
-
-<script type="module">
-  const BODY = document.body;
-  const btn  = document.getElementById('sb-toggle');
-
-  // restaura preferência
-  if (localStorage.getItem('sb-hidden') === '1') BODY.classList.add('sb-hidden');
-
-  const sync = () => localStorage.setItem('sb-hidden', BODY.classList.contains('sb-hidden') ? '1' : '0');
-
-  btn?.addEventListener('click', () => { BODY.classList.toggle('sb-hidden'); sync(); });
-
-  // atalho S (fora de inputs)
-  document.addEventListener('keydown', ev => {
-    if (ev.key.toLowerCase() === 's' && !ev.target.closest('input, textarea, [contenteditable="true"]')) {
-      ev.preventDefault(); btn.click();
-    }
+  btn?.addEventListener('click', () => {
+    BODY.classList.toggle('sb-hidden');
+    sync();
   });
 
-  // se o botão nativo do Quarto existir, manter estados sincronizados
-  const hdrBtn = document.querySelector('header .quarto-btn-toggle');
-  hdrBtn?.addEventListener('click', () => setTimeout(sync, 200));
+  document.addEventListener('keydown', ev => {
+    if (
+      ev.key.toLowerCase() === 's' &&
+      !ev.target.closest('input, textarea, [contenteditable="true"]')
+    ) {
+      ev.preventDefault();
+      btn.click();
+    }
+  });
 </script>
 
 
