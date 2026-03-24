@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.7.22" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+
+<title>12  Físico – JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<!-- htmldependencies:E3FAD763 -->
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+<style>
+  :root{
+    --sidebar-width: 220px;
+    --margin-sidebar-width: 240px;
+    --content-max-width: 1600px;
+  }
+
+  .red { color: #e53935; }
+  .blue { color: dodgerblue; }
+  .darkblue { color: #003366; }
+  .darkgreen { color: #006400; }
+  .orange { color: #ff8c00; }
+  .purple { color: #800080; }
+  .note {
+    color: #6f42c1;
+    background: #f3e8ff;
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+
+  @media (min-width: 992px){
+    #quarto-sidebar{
+      width: var(--sidebar-width) !important;
+      min-width: var(--sidebar-width) !important;
+    }
+
+    #quarto-margin-sidebar{
+      width: var(--margin-sidebar-width) !important;
+      min-width: var(--margin-sidebar-width) !important;
+    }
+
+    #quarto-content.page-columns{
+      column-gap: 14px !important;
+    }
+
+    main.content{
+      max-width: none !important;
+      padding-left: 14px !important;
+      padding-right: 14px !important;
+      box-sizing: border-box !important;
+    }
+  }
+
+  @media (max-width: 991.98px){
+    #quarto-margin-sidebar{
+      display: none !important;
+    }
+
+    main.content{
+      width: 100% !important;
+      max-width: none !important;
+      padding-left: 14px !important;
+      padding-right: 14px !important;
+      box-sizing: border-box !important;
+    }
+
+    html, body{
+      overflow-x: hidden !important;
+    }
+
+    img, video, canvas, svg, iframe{
+      max-width: 100% !important;
+      height: auto !important;
+    }
+
+    #quarto-sidebar{
+      width: 86vw !important;
+      max-width: 420px !important;
+    }
+  }
+
+  .content p{
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    line-height: 1.55;
+  }
+
+  .content p + p{
+    margin-top: 0.8rem;
+  }
+
+  .callout p{
+    margin-bottom: 0.8rem;
+  }
+
+  li p{
+    margin-bottom: 0.6rem;
+  }
+
+  #sb-toggle{
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 10000;
+    border-radius: 999px;
+    padding: 8px 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  }
+
+  body.sb-hidden #quarto-sidebar,
+  body.sb-hidden #quarto-sidebar-glass,
+  body.sb-hidden #quarto-margin-sidebar{
+    display: none !important;
+  }
+
+  body.sb-hidden .page-columns{
+    grid-template-columns: 1fr !important;
+  }
+
+  body.sb-hidden main.content{
+    grid-column: 1 / -1 !important;
+  }
+</style>
+<style>
+  :root{
+    --lv-sidebar-w: 330px;
+    --lv-side-solid: #e8f0ff;
+    --lv-main-solid: #f5f8fc;
+  }
+  #quarto-sidebar{ background: var(--lv-side-solid) !important; }
+  main.content,
+  #quarto-margin-sidebar{
+    background: var(--lv-main-solid) !important;
+  }
+  #quarto-content.page-columns{ gap: 10px 16px; }
+  #quarto-sidebar{ width: var(--lv-sidebar-w); }
+</style>
+
+
+<link rel="stylesheet" href="miniproj.css" />
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn"
+      data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" 
+      aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral"
+      onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <h1 class="quarto-secondary-nav-title no-breadcrumbs"></h1>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" role="link"
+        aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral"
+        onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="/">
+      JSPlotly
+      </a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>1</span>  <span class='chapter-title'>IISIQB</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="/part1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parte 1 - Introdução</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/introd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>2</span>  <span class='chapter-title'>Contexto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>3</span>  <span class='chapter-title'>Simulação</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/jsplotly.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>4</span>  <span class='chapter-title'>JSPlotly</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/gsplotly.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>5</span>  <span class='chapter-title'>GSPlotly</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="/part2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parte 2 - Oficina</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/funcionalidade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>6</span>  <span class='chapter-title'>Funcionalidades</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/componentes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>7</span>  <span class='chapter-title'>Componentes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/widgets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>8</span>  <span class='chapter-title'>Widgets</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/criacao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>9</span>  <span class='chapter-title'>Criação</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="/part3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parte 3 - STEAM</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/virtual.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>10</span>  <span class='chapter-title'>Virtual</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/virtual_aula.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>11</span>  <span class='chapter-title'>JSPlotly</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/fisico.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class='chapter-number'>12</span>  <span class='chapter-title'>Físico</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/potencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class='chapter-number'>13</span>  <span class='chapter-title'>Potencial</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" ></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <div id="quarto-toc-target"></div>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<script id = "quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    window.setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        disableStylesheet(primaryStylesheets)
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      window.setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    window.hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(darkModeDefault) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const darkModeDefault = false;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !window.hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+    };
+    // Switch to dark mode if need be
+    if (window.hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">12</span>  <span class="chapter-title">Físico</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#celular---aquisição-de-dados-de-sensores" id="toc-celular---aquisição-de-dados-de-sensores"><span class="header-section-number">12.1</span> Celular - Aquisição de dados de sensores</a></li>
+  <li><a href="#arduino---aquisição-de-dados-de-condutivimetria" id="toc-arduino---aquisição-de-dados-de-condutivimetria"><span class="header-section-number">12.2</span> Arduino - Aquisição de dados de condutivimetria</a>
+  <ul>
+  <li><a href="#sugestão-1" id="toc-sugestão-1">Sugestão:</a></li>
+  </ul></li>
+  <li><a href="#biocélula-a-combustível-interfaceada-com-arduino-serial-ou-iot" id="toc-biocélula-a-combustível-interfaceada-com-arduino-serial-ou-iot"><span class="header-section-number">12.3</span> Biocélula a Combustível Interfaceada com Arduino (serial ou IoT)</a>
+  <ul>
+  <li><a href="#célula-eletroquímica" id="toc-célula-eletroquímica"><span class="header-section-number">12.3.1</span> Célula eletroquímica</a></li>
+  <li><a href="#conexão-por-wifi-com-celular-androidios" id="toc-conexão-por-wifi-com-celular-androidios"><span class="header-section-number">12.3.2</span> Conexão por Wifi com celular Android/iOS</a></li>
+  </ul></li>
+  </ul>
+</nav>
+<div class="line-block">      Nos mesmos moldes da seção <a href="#sec-virtual" class="quarto-xref"><span class="quarto-unresolved-ref">sec-virtual</span></a> anterior, segue uma descrição para uso prático do JSPlotly em interfaceamento com celular e placa microcontroladora Arduino.</div>
+<p><br />
+</p>
+<section id="celular---aquisição-de-dados-de-sensores" class="level2" data-number="12.1">
+<h2 data-number="12.1"><span class="header-section-number">12.1</span> Celular - Aquisição de dados de sensores</h2>
+<div class="line-block">  <em>JSPlotly</em> foi inicialmente concebido para a construção de <em>objetos virtuais de aprendizagem</em> interativos. Contudo, é possível integrá-lo a diferentes interfaces para aquisição de dados do mundo real. O exemplo que segue ilustra como alvo a resposta para um <em>acelerômetro</em>, sensor de posicionamento de um dispositivo móvel (acelerômetro).</div>
+<p><a href="bioquanti/celular_JSPlotly.html" target="_blank"><img src="bioquanti/celular.png" class="img-fluid" /></a><br />
+</p>
+<section id="sugestão" class="level4 unnumbered">
+<h4 class="unnumbered">Sugestão:</h4>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Como o aplicativo é para o posicionamento <span class="st">&quot;x, y e z&quot;</span> de um dispositivo móvel, experimente alterar a posição de seu celular<span class="sc">/</span>tablet no espaço.</span></code></pre></div>
+</div>
+<p><br />
+</p>
+</section>
+</section>
+<section id="arduino---aquisição-de-dados-de-condutivimetria" class="level2" data-number="12.2">
+<h2 data-number="12.2"><span class="header-section-number">12.2</span> Arduino - Aquisição de dados de condutivimetria</h2>
+<section id="bncc-em13cnt201-em13cnt308-m13cnt301-m13cnt302" class="level4 unnumbered">
+<h4 class="unnumbered">BNCC: EM13CNT201, EM13CNT308, M13CNT301, M13CNT302</h4>
+<div class="line-block">  O exemplo abaixo ilustra uma aplicação para aquisição/controle em tempo real por navegador para uso de placa <em>Arduino</em> ou <em>ESP32</em>, elevando exponencialmente a aplicação do <em>JSPlotly</em> para experimentação real e <em>projetos STEAM experimentais</em>.</div>
+<div class="line-block">  O <em>setup</em> apresenta uma leitura de dados de condutividade em solução aquosa contendo teores crescentes de NaCl (0 a 5% p/v). Foi utilizado uma placa Arduino Uno R3 com conexão <em>Web Serial</em> por USB a notebook rodando um aplicativo autônomo para <em>JSPlotly</em>. A condutividade foi obtida por um sensor TDS comercial (<em>sólidos dissolvidos totais</em>) com excitação por potencial alternado de onda quadrada (PWM) para minimizar efeitos de polarização, e <em>script</em> adaptado do fabricante. O sensor TDS opera em faixa de 3,3 a 5,0 V (input) com saída de 0 a 2,3 V, e corrente de 3 a 6 mA.</div>
+<p><br />
+</p>
+<p><a href="bioquanti/condutiv_JSPlotly.html" target="_blank"><img src="bioquanti/arduino.jpeg" class="img-fluid" /></a> <em>Exemplo de aplicação de JSPlotly para interfaceamente com Arduino. O gráfico apresenta medidas de condutividade em meio aquoso com medidor TDS para teores crescentes de NaCl (sonda no canto esquerdo). Clique na imagem para obter o aplicativo JSPlotly autônomo para condutividade.</em><br />
+</p>
+<p><strong>Instruções:</strong></p>
+<ol type="1">
+<li>Para conexão <em>Web Serial</em> é necessário instalação de <em>Python</em> ao computador (Windows ou Linux), e <em>setup</em> de servidor local. Para Windows baixe e instale o arquivo oficial para <a href="https://www.python.org/downloads/windows/">Python</a>, lembrando-se de clicar em <em>Add Python to PATH</em>, e digite os comandos no CMD dentro da pasta do aplicativo autônomo. Segue a orientação para Linux:</li>
+</ol>
+<ul>
+<li><ol type="1">
+<li>Conecte o Arduino e componentes (sonda TDS, recipiente com água e sal);</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Copie, cole e rode o <em>script</em> do distribuidor para TDS na IDE do Arduino conectado (<a href="https://www.usinainfo.com.br/blog/projeto-sensor-condutividade-solo-thc-s-com-arduino/?srsltid=AfmBOorI1tfAWdSpnYiK34zbl7j35A4mNUXBKcDbV6OoAf4A-rkTrlu3">exemplo 1</a>, <a href="https://wiki.dfrobot.com/gravity__analog_tds_sensor___meter_for_arduino_sku__sen0244?gad_source=1&amp;gad_campaignid=834127384&amp;gclid=Cj0KCQiA-YvMBhDtARIsAHZuUzIgeSprXZrRIVB7ss58n1pBZcm5kST1Zu1kPP_q3rQK9v-ExIRUljwaAmgwEALw_wcB">exemplo 2</a> );</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>Feche a IDE do Arduíno;</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>Abra um Terminal na pasta do aplicativo autônomo do <em>JSPlotly</em> para Arduino (<em>condutiv_JSPlotly.html</em>; clicar na imagem);</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>Digite: <em>python3 -m http.server</em></li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>Abra o html autônomo do circuito no Chrome (nunca no Firefox);</li>
+</ol></li>
+</ul>
+<div class="line-block">  A leitura deverá iniciar em instantes. Caso não ocorra, verifique se a taxa de transferência para a IDE do Arduino confere com a do aplicativo (115200 bauds).</div>
+<p><br />
+</p>
+</section>
+<section id="sugestão-1" class="level3 unnumbered">
+<h3 class="unnumbered">Sugestão:</h3>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Como o aplicativo é escrito no JSPlotly, é possível personalizá<span class="sc">-</span>lo para diversas situações, como taxa de tranferência de dados, traços (tipo, cores, espessura), tipo de gráfico, entre outros.</span></code></pre></div>
+</div>
+<p><br />
+</p>
+</section>
+</section>
+<section id="biocélula-a-combustível-interfaceada-com-arduino-serial-ou-iot" class="level2" data-number="12.3">
+<h2 data-number="12.3"><span class="header-section-number">12.3</span> Biocélula a Combustível Interfaceada com Arduino (serial ou IoT)</h2>
+<p>      Este protocolo objetiva avaliar a operação de uma biocélula a combustível conectada com placas Arduino. Esse dispositivo permite verificar a geração de eletricidade a partir do fluxo de elétrons que são gerados pela oxidação de uma fonte de carbono pelo metabolismo celular, onde participam ativamente mediadores endógenos (NADH, por exemplo) e exógenos (azul de metileno). Para o modo Wifi é necessário um módulo adicional homônimo, ou uso de placa condizente (ex: Arduino Uno R4 Wifi, ESP32).</p>
+<section id="célula-eletroquímica" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1"><span class="header-section-number">12.3.1</span> Célula eletroquímica</h3>
+<ol type="1">
+<li>De posse da célula eletroquímica montada com 2 béqueres unidos, conforme a figura abaixo, adicione sequencialmente os compostos 1 a 6 em cada câmara (anodo, catodo), conforme o esquema que segue. Nota: antes de adicionar o azul de metileno, garanta a dissolução da sacarose.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="figs/biocel.png" class="img-fluid" /></p>
+<figcaption>Esquema de construção da célula eletroquímica para o experimento com biocélula a combustível microbiana</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li>Introduzir um sensor de aço inox em cada béquer.</li>
+<li>Com auxílio do par de cabos e jacarés, conectar os sensores ao Arduino conforme segue:</li>
+<li>Sensor do anodo (biocélula) - GND (Arduino);</li>
+<li>Sensor do catodo (biocélula) - Terminal A0 (Arduino)</li>
+<li>Submergir as extremidades da ponte salina, uma em cada câmara da biocélula.</li>
+</ol>
+</section>
+<section id="conexão-por-wifi-com-celular-androidios" class="level3" data-number="12.3.2">
+<h3 data-number="12.3.2"><span class="header-section-number">12.3.2</span> Conexão por Wifi com celular Android/iOS</h3>
+<ol type="1">
+<li>Conectar o Arduino</li>
+<li>Carregar o sketch</li>
+<li>Abrir o Serial Monitor</li>
+<li>Opcional: apertar Reset por ~2s no Arduino</li>
+<li>Acessar a rede específica no celular Em Wifi, escolher Biocel-no. da placa Arduino (Ex: Biocell-02) Senha: 12345678</li>
+<li>Abrir o link http://192.168.4.1</li>
+</ol>
+<div class="line-block">      A figura abaixo ilustra a obtenção do potencial gerado pela biocélula a combustível.</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="figs/biocelWifi.jpg" class="img-fluid" style="width:50.0%" /></p>
+<figcaption>JSPlotly interfaceado a Arduino R4 para aquisição de dados de biocélula a combustível por Wifi.</figcaption>
+</figure>
+</div>
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyLXRpdGxl">JSPlotly</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXItdGl0bGU=">JSPlotly</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uZXh0"><span class="chapter-number">13</span>  <span class="chapter-title">Potencial</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1wcmV2"><span class="chapter-number">11</span>  <span class="chapter-title">JSPlotly</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9pbmRleC5odG1sPHNwYW4tY2xhc3M9J2NoYXB0ZXItbnVtYmVyJz4xPC9zcGFuPi0tPHNwYW4tY2xhc3M9J2NoYXB0ZXItdGl0bGUnPklJU0lRQjwvc3Bhbj4="><span class="chapter-number">1</span>  <span class="chapter-title">IISIQB</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOnF1YXJ0by1zaWRlYmFyLXNlY3Rpb24tMQ==">Parte 1 - Introdução</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9pbnRyb2QuaHRtbDxzcGFuLWNsYXNzPSdjaGFwdGVyLW51bWJlcic+Mjwvc3Bhbj4tLTxzcGFuLWNsYXNzPSdjaGFwdGVyLXRpdGxlJz5Db250ZXh0bzwvc3Bhbj4="><span class="chapter-number">2</span>  <span class="chapter-title">Contexto</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi90b29scy5odG1sPHNwYW4tY2xhc3M9J2NoYXB0ZXItbnVtYmVyJz4zPC9zcGFuPi0tPHNwYW4tY2xhc3M9J2NoYXB0ZXItdGl0bGUnPlNpbXVsYcOnw6NvPC9zcGFuPg=="><span class="chapter-number">3</span>  <span class="chapter-title">Simulação</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9qc3Bsb3RseS5odG1sPHNwYW4tY2xhc3M9J2NoYXB0ZXItbnVtYmVyJz40PC9zcGFuPi0tPHNwYW4tY2xhc3M9J2NoYXB0ZXItdGl0bGUnPkpTUGxvdGx5PC9zcGFuPg=="><span class="chapter-number">4</span>  <span class="chapter-title">JSPlotly</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9nc3Bsb3RseS5odG1sPHNwYW4tY2xhc3M9J2NoYXB0ZXItbnVtYmVyJz41PC9zcGFuPi0tPHNwYW4tY2xhc3M9J2NoYXB0ZXItdGl0bGUnPkdTUGxvdGx5PC9zcGFuPg=="><span class="chapter-number">5</span>  <span class="chapter-title">GSPlotly</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOnF1YXJ0by1zaWRlYmFyLXNlY3Rpb24tMg==">Parte 2 - Oficina</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9mdW5jaW9uYWxpZGFkZS5odG1sPHNwYW4tY2xhc3M9J2NoYXB0ZXItbnVtYmVyJz42PC9zcGFuPi0tPHNwYW4tY2xhc3M9J2NoYXB0ZXItdGl0bGUnPkZ1bmNpb25hbGlkYWRlczwvc3Bhbj4="><span class="chapter-number">6</span>  <span class="chapter-title">Funcionalidades</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9jb21wb25lbnRlcy5odG1sPHNwYW4tY2xhc3M9J2NoYXB0ZXItbnVtYmVyJz43PC9zcGFuPi0tPHNwYW4tY2xhc3M9J2NoYXB0ZXItdGl0bGUnPkNvbXBvbmVudGVzPC9zcGFuPg=="><span class="chapter-number">7</span>  <span class="chapter-title">Componentes</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi93aWRnZXRzLmh0bWw8c3Bhbi1jbGFzcz0nY2hhcHRlci1udW1iZXInPjg8L3NwYW4+LS08c3Bhbi1jbGFzcz0nY2hhcHRlci10aXRsZSc+V2lkZ2V0czwvc3Bhbj4="><span class="chapter-number">8</span>  <span class="chapter-title">Widgets</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9jcmlhY2FvLmh0bWw8c3Bhbi1jbGFzcz0nY2hhcHRlci1udW1iZXInPjk8L3NwYW4+LS08c3Bhbi1jbGFzcz0nY2hhcHRlci10aXRsZSc+Q3JpYcOnw6NvPC9zcGFuPg=="><span class="chapter-number">9</span>  <span class="chapter-title">Criação</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOnF1YXJ0by1zaWRlYmFyLXNlY3Rpb24tMw==">Parte 3 - STEAM</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi92aXJ0dWFsLmh0bWw8c3Bhbi1jbGFzcz0nY2hhcHRlci1udW1iZXInPjEwPC9zcGFuPi0tPHNwYW4tY2xhc3M9J2NoYXB0ZXItdGl0bGUnPlZpcnR1YWw8L3NwYW4+"><span class="chapter-number">10</span>  <span class="chapter-title">Virtual</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi92aXJ0dWFsX2F1bGEuaHRtbDxzcGFuLWNsYXNzPSdjaGFwdGVyLW51bWJlcic+MTE8L3NwYW4+LS08c3Bhbi1jbGFzcz0nY2hhcHRlci10aXRsZSc+SlNQbG90bHk8L3NwYW4+"><span class="chapter-number">11</span>  <span class="chapter-title">JSPlotly</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9maXNpY28uaHRtbDxzcGFuLWNsYXNzPSdjaGFwdGVyLW51bWJlcic+MTI8L3NwYW4+LS08c3Bhbi1jbGFzcz0nY2hhcHRlci10aXRsZSc+RsOtc2ljbzwvc3Bhbj4="><span class="chapter-number">12</span>  <span class="chapter-title">Físico</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9wb3RlbmNpYWwuaHRtbDxzcGFuLWNsYXNzPSdjaGFwdGVyLW51bWJlcic+MTM8L3NwYW4+LS08c3Bhbi1jbGFzcz0nY2hhcHRlci10aXRsZSc+UG90ZW5jaWFsPC9zcGFuPg=="><span class="chapter-number">13</span>  <span class="chapter-title">Potencial</span></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWJyZWFkY3J1bWJzLVBhcnRlLTMtLS1TVEVBTQ==">Parte 3 - STEAM</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWJyZWFkY3J1bWJzLTxzcGFuLWNsYXNzPSdjaGFwdGVyLW51bWJlcic+MTI8L3NwYW4+LS08c3Bhbi1jbGFzcz0nY2hhcHRlci10aXRsZSc+RsOtc2ljbzwvc3Bhbj4="><span class="chapter-number">12</span>  <span class="chapter-title">Físico</span></span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW1ldGF0aXRsZQ=="><span class="chapter-number">12</span>  <span class="chapter-title">Físico</span> – JSPlotly</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLXR3aXR0ZXJjYXJkdGl0bGU="><span class="chapter-number">12</span>  <span class="chapter-title">Físico</span> – JSPlotly</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW9nY2FyZHRpdGxl"><span class="chapter-number">12</span>  <span class="chapter-title">Físico</span> – JSPlotly</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW1ldGFzaXRlbmFtZQ==">JSPlotly</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLXR3aXR0ZXJjYXJkZGVzYw=="></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW9nY2FyZGRkZXNj"></span></p>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id = "quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a  href="/virtual_aula.html" class="pagination-link" aria-label="JSPlotly">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class='chapter-number'>11</span>  <span class='chapter-title'>JSPlotly</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a  href="/potencial.html" class="pagination-link" aria-label="Potencial">
+        <span class="nav-page-text"><span class='chapter-number'>13</span>  <span class='chapter-title'>Potencial</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<button id="sb-toggle" class="btn btn-light" title="Sidebar" aria-label="Sidebar">
+  <i class="bi bi-layout-text-sidebar-reverse"></i>
+</button>
+
+<script>
+  const BODY = document.body;
+  const btn = document.getElementById('sb-toggle');
+
+  if (localStorage.getItem('sb-hidden') === '1') {
+    BODY.classList.add('sb-hidden');
+  }
+
+  const sync = () => {
+    localStorage.setItem(
+      'sb-hidden',
+      BODY.classList.contains('sb-hidden') ? '1' : '0'
+    );
+  };
+
+  btn?.addEventListener('click', () => {
+    BODY.classList.toggle('sb-hidden');
+    sync();
+  });
+
+  document.addEventListener('keydown', ev => {
+    if (
+      ev.key.toLowerCase() === 's' &&
+      !ev.target.closest('input, textarea, [contenteditable="true"]')
+    ) {
+      ev.preventDefault();
+      btn.click();
+    }
+  });
+</script>
+
+</body>
+
+</html>
