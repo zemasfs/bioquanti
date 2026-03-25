@@ -1,0 +1,632 @@
+---
+title: "JSPlotly"
+subtitle: "Virtual | modo aula"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    controls: true
+    progress: true
+    navigation-mode: linear
+    transition: fade
+    center: false
+    scrollable: true
+    preview-links: false
+    toc: false
+    smaller: false
+    slide-level: 2
+
+include-in-header:
+  text: |
+    <style>
+      .reveal {
+        font-size: 30px;
+      }
+
+      .reveal h1, .reveal h2, .reveal h3 {
+        color: #1f3c88;
+      }
+
+      .reveal .call {
+        padding: 0.7rem 1rem;
+        border-left: 6px solid #3b82f6;
+        background: #eef5ff;
+        border-radius: 8px;
+        margin: 0.8rem 0 1rem 0;
+      }
+
+      .reveal .mini {
+        font-size: 0.72em;
+      }
+
+      .reveal .small {
+        font-size: 0.82em;
+      }
+
+      .reveal iframe {
+        width: 100%;
+        height: 620px;
+        border: 1px solid #d9e2f2;
+        border-radius: 12px;
+        background: white;
+      }
+
+      .reveal .cols {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr;
+        gap: 1.2rem;
+        align-items: start;
+      }
+
+      .reveal .eq {
+        font-size: 0.9em;
+        background: #f8fafc;
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+      }
+
+      .reveal ul {
+        margin-top: 0.4rem;
+      }
+
+      .reveal li {
+        margin-bottom: 0.35rem;
+      }
+    </style>
+---
+
+
+# JSPlotly
+
+## Virtual
+
+### Minicurso | modo aula
+
+::: {.call}
+Nesta versão, os exemplos aparecem em sequência, para discussão guiada.
+
+A versão completa e livre continua disponível no ebook.
+:::
+
+---
+
+## Roteiro
+
+1. van der Waals
+2. Oxigênio por mitocôndria
+3. Cinética de reação
+4. Torno de olaria
+5. ANAVA e Tukey-HSD
+6. Ajuste não linear
+7. prot.Id
+8. Extras lúdicos e aplicativos
+
+---
+
+## Ideia central
+
+::: {.call}
+O JSPlotly não serve apenas para “fazer gráficos”.
+
+Ele pode sustentar simulações, animações, análise de dados, interfaces experimentais, jogos e aplicativos HTML.
+:::
+
+---
+
+## Exemplo 1
+
+### van der Waals
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Correção da equação dos gases ideais com termos para:
+
+* interações intermoleculares;
+* volume finito das partículas.
+
+::: {.eq}
+[
+P = \frac{RT}{V - b} - \frac{a}{V^2}
+]
+:::
+
+**Foco da aula**
+
+* efeito de `a`
+* efeito de `b`
+* efeito da temperatura
+  :::
+
+::: {}
+
+<iframe
+  src="bioquanti/jsp_vanderWaals.html"
+  title="van der Waals">
+</iframe>
+:::
+::::
+
+---
+
+## van der Waals
+
+### Pergunta para a turma
+
+* Qual parâmetro deforma mais o perfil da curva?
+* Em que região do gráfico isso fica mais evidente?
+* O efeito de `a` e `b` é equivalente?
+
+::: {.mini}
+Depois, na versão livro, o aluno pode explorar com calma os sliders.
+:::
+
+---
+
+## Exemplo 2
+
+### Consumo de Oxigênio por mitocôndria
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Animação inspirada em oxígrafo para monitorar o teor de (O_2) em suspensão de mitocôndrias.
+
+**Foco da aula**
+
+* dinâmica temporal;
+* metabolismo;
+* efeito de metabólitos;
+* leitura visual de uma variação contínua.
+  :::
+
+::: {}
+
+<iframe
+  src="bioquanti/jsp_O2_mitocondria.html"
+  title="Oxígrafo mitocondrial">
+</iframe>
+:::
+::::
+
+---
+
+## Oxigênio por mitocôndria
+
+### Pergunta para a turma
+
+* O que muda quando entram metabólitos?
+* O raciocínio do código poderia ser adaptado para outra via metabólica?
+* O que é específico desse exemplo e o que é genérico?
+
+---
+
+## Exemplo 3
+
+### Cinética de reação química
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Objeto para discutir conversão de reagente em produto, com ativação e inibição.
+
+::: {.eq}
+[
+R(t)=\frac{R_0}{1+k_{efetiva}t}
+]
+
+[
+P(t)=R_0-R(t)
+]
+:::
+
+**Foco da aula**
+
+* taxa;
+* catalisador;
+* inibidor;
+* previsão antes de executar.
+  :::
+
+::: {}
+
+<iframe
+  src="bioquanti/cineticaRP.html"
+  title="Cinética de reação química">
+</iframe>
+:::
+::::
+
+---
+
+## Cinética
+
+### Pergunta para a turma
+
+* O que acontece ao elevar `k_cinetica`?
+* O catalisador e o inibidor atuam de forma simétrica?
+* O que o aluno compreende melhor vendo a curva em movimento?
+
+---
+
+## Exemplo 4
+
+### Vaso de torno de olaria
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Aqui o JSPlotly entra claramente em STEAM:
+
+* forma;
+* simetria;
+* função trigonométrica;
+* estética;
+* criatividade.
+
+**Ponto forte**
+
+Sai-se do gráfico científico clássico e entra-se na construção visual.
+:::
+
+::: {}
+
+<iframe
+  src="bioquanti/jsp_steam2.html"
+  title="Vaso de torno de olaria">
+</iframe>
+:::
+::::
+
+---
+
+## Olaria
+
+### Pergunta para a turma
+
+* Como parâmetros matemáticos mudam uma forma artística?
+* O que ocorre se mudarmos sinais e funções trigonométricas?
+* Onde termina a matemática e começa o design?
+
+---
+
+## Exemplo 5
+
+### ANAVA e teste de Tukey-HSD
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Integração entre:
+
+* estatística;
+* tabela;
+* gráfico;
+* manipulação visual.
+
+::: {.eq}
+[
+\text{HSD}*{ij} =
+q*{\alpha}
+\cdot
+\sqrt{
+\frac{\text{MS}_{within}}{2}
+\left(\frac{1}{n_i}+\frac{1}{n_j}\right)
+}
+]
+:::
+
+**Foco da aula**
+
+Não apenas calcular, mas visualizar.
+:::
+
+::: {}
+
+<iframe
+  src="bioquanti/jsp_tukey.html"
+  title="ANAVA e Tukey">
+</iframe>
+:::
+::::
+
+---
+
+## ANAVA e Tukey
+
+### Pergunta para a turma
+
+* O que a visualização facilita em relação ao cálculo isolado?
+* O gráfico ajuda a interpretar ou apenas ilustrar?
+* Como a interatividade muda a leitura da estatística?
+
+---
+
+## Exemplo 6
+
+### Ajuste não linear de dados
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Modelagem por Langmuir com ajuste não linear por busca em grade.
+
+::: {.eq}
+[
+Y = \frac{aX}{K_d + X}
+]
+
+[
+SSR(a,K_d)=\sum_{i=1}^{n}
+\left(y_i-\frac{ax_i}{K_d+x_i}\right)^2
+]
+:::
+
+**Foco da aula**
+
+* parâmetros;
+* erro;
+* qualidade do ajuste;
+* interpretação do modelo.
+  :::
+
+::: {}
+
+<iframe
+  src="bioquanti/jsp_ajNonLin.html"
+  title="Ajuste não linear">
+</iframe>
+:::
+::::
+
+---
+
+## Ajuste não linear
+
+### Pergunta para a turma
+
+* O que significa “ajustar” uma curva?
+* O menor erro sempre implica melhor interpretação?
+* Como explicar `Kd`, `SSR` e `R²` sem assustar?
+
+---
+
+## Exemplo 7
+
+### prot.Id
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Simulação de experimento bioquímico para caracterização de:
+
+* aminoácidos;
+* peptídios;
+* proteínas;
+* misturas.
+
+**Ponto forte**
+
+Mostra que o JSPlotly não depende de gráfico cartesiano para ser didático.
+:::
+
+::: {}
+
+<iframe
+  src="bioquanti/jsp_Id-Prot-7.html"
+  title="prot.Id">
+</iframe>
+:::
+::::
+
+---
+
+## prot.Id
+
+### Pergunta para a turma
+
+* Isso ainda é “gráfico”?
+* O que faz desse objeto uma ferramenta de aprendizagem?
+* Onde está a lógica experimental nele?
+
+---
+
+## Extra 1
+
+### ZeMol
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Visualizador 3D molecular em HTML.
+
+**Mensagem didática**
+
+JSPlotly pode sustentar também aplicativos científicos mais completos, não apenas objetos pontuais.
+:::
+
+::: {}
+
+<iframe
+  src="bioquanti/ZeMol.html"
+  title="ZeMol">
+</iframe>
+:::
+::::
+
+---
+
+## Extra 2
+
+### Gizz - Lousa Digital
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Aplicativo de lousa digital com exportação em HTML.
+
+**Mensagem didática**
+
+O ambiente pode servir também para recursos de aula e não apenas para conteúdo disciplinar.
+:::
+
+::: {}
+
+<iframe
+  src="bioquanti/lousa.html"
+  title="Gizz - Lousa Digital">
+</iframe>
+:::
+::::
+
+---
+
+## Extra 3
+
+### Arco e Flecha
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Jogo para discussão de trajetória, ângulo e velocidade inicial.
+
+**Mensagem didática**
+
+A ludicidade pode ser incorporada sem abandonar conteúdo conceitual.
+:::
+
+::: {}
+
+<iframe
+  src="bioquanti/arcoFlecha.html"
+  title="Arco e Flecha">
+</iframe>
+:::
+::::
+
+---
+
+## Extra 4
+
+### Piano
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Instrumento polifônico com sustentação ajustável.
+
+**Mensagem didática**
+
+A plataforma também alcança musicalização e interfaces artísticas.
+:::
+
+::: {}
+
+<iframe
+  src="bioquanti/piano.html"
+  title="Piano">
+</iframe>
+:::
+::::
+
+---
+
+## Final
+
+### Game Pong
+
+:::: {.cols}
+::: {}
+**Contexto**
+
+Aqui entra o elemento surpresa.
+
+Uso de biblioteca adicional `p5.js` para arte interativa, animação e jogo clássico.
+
+::: {.call}
+Justamente por isso o Pong deve ficar no fim da apresentação, e não solto no meio da página do ebook.
+:::
+:::
+
+::: {}
+
+<iframe
+  src="bioquanti/pong.html"
+  title="Game Pong">
+</iframe>
+:::
+::::
+
+---
+
+## Fechamento
+
+### O que o capítulo Virtual mostra?
+
+* gráfico interativo;
+* animação científica;
+* simulação;
+* estatística;
+* modelagem;
+* experimento virtual;
+* aplicativo;
+* jogo.
+
+::: {.call}
+Em síntese: o JSPlotly não é apenas um gerador de gráficos.
+
+Ele pode funcionar como ambiente de construção de objetos interativos para ensino e pesquisa.
+:::
+
+---
+
+## Depois da aula
+
+Versão completa para exploração livre:
+
+[Bioquanti - capítulo Virtual](https://bioquanti.netlify.app/pt/siqb2/virtual)
+
+````
+
+---
+
+## Observações rápidas
+
+O único link do seu `virtual.qmd` que **não entra como `iframe` direto** é este:
+
+`bioquanti/lh-toolkit.js`
+
+porque ele é um arquivo `.js` para download, e não uma página HTML pronta para embutir. Então eu o deixei de fora dessa versão aula. Se você tiver uma página HTML de execução dele, aí sim dá para encaixar.
+
+## Sugestão prática
+No `index` ou no próprio `virtual.qmd`, você pode colocar algo como:
+
+```markdown
+::: {.callout-tip}
+## Versão para apresentação
+
+Para acompanhar este capítulo em modo linear de aula:
+
+[abrir slides da seção Virtual](virtual_aula.html)
+:::
+````
+
+## Pequeno ajuste importante
+
+Como você está usando `iframe`, vale testar se o Reveal renderiza bem com a altura de 620 px no projetor. Se ficar grande demais, troque para:
+
+```css
+height: 560px;
+```
+
