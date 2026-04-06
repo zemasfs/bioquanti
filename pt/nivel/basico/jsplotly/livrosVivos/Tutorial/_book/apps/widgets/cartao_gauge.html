@@ -317,10 +317,10 @@ button {
 
 
 
-
 <div class="external-link">
   <a href="https://bioquanti.netlify.app/" target="_blank">🔗 Bioquanti</a>  
 </div>
+
 
 
 <div class="dev-info">
@@ -599,60 +599,7 @@ function adicionarCurva() {
     });
   }
 
-const config = {
-  responsive: true,
-  displaylogo: false,
-  scrollZoom: true,
-  editable: true,
-  modeBarButtonsToRemove: ['sendDataToCloud'],
-  modeBarButtonsToAdd: [
-    'toggleSpikelines',
-    'hoverCompareCartesian',
-    'drawline',
-    'drawopenpath',
-    'drawrect',
-    'drawcircle',
-    {
-      name: 'Salvar PNG/SVG',
-      icon: Plotly.Icons.disk,
-      click: () => abrirPopup()
-    },
-    {
-      name: 'Mudar cor',
-      icon: Plotly.Icons.camera,
-      click: function(gd) {
-        const ultima = curvas.length - 1;
-        const novaCor = cores[Math.floor(Math.random() * cores.length)];
-        Plotly.restyle(gd, { 'line.color': novaCor }, [ultima]);
-        curvas[ultima].line.color = novaCor;
-      }
-    },
-    {
-      name: 'Adicionar Texto',
-      icon: {
-        width: 1000,
-        height: 1000,
-        path: 'M200 800V160h600v80H540v560h-80V240H200z'
-      },
-      click: function(gd) {
-        const handler = function(eventData) {
-          const x = eventData.points[0].x;
-          const y = eventData.points[0].y;
-          const texto = prompt("Digite o texto a ser inserido:");
-          if (texto) {
-            Plotly.relayout(gd, {
-              annotations: (gd.layout.annotations || []).concat([{
-                x, y, text: texto, showarrow: true, arrowhead: 2
-              }])
-            });
-          }
-          gd.removeListener('plotly_click', handler);
-        };
-        gd.on('plotly_click', handler);
-      }
-    }
-  ]
-};
+
 
 
   let data = [];
@@ -807,67 +754,48 @@ function limparTudo() {
 // Definir a equação quadrática padrão
 var codigoPadrao = `
 
+let t = 0;
 
-
-// pKa dos grupos ionizáveis laterais
-const pKa = {
-    Nt: 9.5, Ct: 2.1, D: 3.9, E: 4.1, H: 6.0,
-    C: 8.3, Y: 10.1, K: 10.5,R: 12.5
-};
-
-// Classificação: ácido (-) ou base (+)
-const tipoGrupo = {
-    Ct: "acido",
-    D: "acido",
-    E: "acido",
-    C: "acido",
-    Y: "acido",
-    H: "base",
-    K: "base",
-    R: "base",
-    Nt: "base"
-};
-
-// pH fixo para análise
-const pH = 7.5;
-
-// 🧬 Entrada do usuário
-const sequenciaStr = "Nt,Met,R,Met,K,Val,E,D,Ser,Ct";
-
-// Processar sequência
-const seq = sequenciaStr.replace(/s+/g, '').split(',');
-
-// Função para calcular carga de cada resíduo
-function carga(aa) {
-    if (!(aa in pKa)) return 0; // neutro
-
-    const pk = pKa[aa];
-    const tipo = tipoGrupo[aa];
-    const delta = tipo === "acido" ? pk - pH : pH - pk;
-    const carga = 1 / (1 + Math.pow(10, delta));
-    return tipo === "acido" ? -carga : +carga;
+function modelo(tt) {
+  return 20 + 60 * (1 - Math.exp(-tt / 8)) - 10 * Math.sin(tt / 2);
 }
 
-const y_values = seq.map(carga);
-const x_values = Array.from({ length: seq.length }, (_, i) => i + 1);
+function desenhar() {
+  const valor = modelo(t);
 
-// Layout do gráfico
-const layout = {
-    title: "Carga de Resíduos em pH " + pH,
-    xaxis: {
-        title: 'Posição na Sequência',
-        tickmode: 'array',
-        tickvals: x_values,
-        ticktext: seq,
-        tickangle: 45
-    },
-    yaxis: {
-        title: 'Carga Elétrica',
-        zeroline: true
+  const dados = [{
+    type: "indicator",
+    mode: "gauge+number",
+    value: valor,
+    number: { valueformat: ".1f" },
+    title: { text: "Resposta do processo" },
+    gauge: {
+      axis: { range: [0, 100] },
+      steps: [
+        { range: [0, 30], color: "#f8d7da" },
+        { range: [30, 70], color: "#fff3cd" },
+        { range: [70, 100], color: "#d1e7dd" }
+      ]
     }
-};
+  }];
 
-return { x_values, y_values, layout };
+  const layout = {
+    margin: { t: 60, r: 40, l: 40, b: 20 },
+    height: 320
+  };
+
+  Plotly.react("grafico", dados, layout, {displayModeBar: false});
+}
+
+desenhar();
+
+setInterval(() => {
+  t += 0.3;
+  if (t > 30) t = 0;
+  desenhar();
+}, 120);
+
+
 
 `;
 
@@ -1105,7 +1033,54 @@ function salvarCloneJSPlotly() {
   a.download = "JSPlotly.html";
   a.click();
 }
+
+function abrirNoChartStudio() {
+  const gd = document.getElementById('grafico');
+  if (!gd || !gd.data || gd.data.length === 0) {
+    alert("Não há gráfico para enviar. Clique em 'add' primeiro.");
+    return;
+  }
+
+  const dataStr   = JSON.stringify(gd.data || []);
+  const layoutStr = JSON.stringify(gd.layout || {});
+
+  // Tenta GET quando o payload é pequeno (URLs muito grandes podem falhar)
+  const urlBase = "https://chart-studio.plotly.com/create/";
+  const urlGET  = urlBase
+    + "?plotlyData="   + encodeURIComponent(dataStr)
+    + "&plotlyLayout=" + encodeURIComponent(layoutStr);
+
+  if ((dataStr.length + layoutStr.length) < 1500) {
+    window.open(urlGET, "_blank");
+    return;
+  }
+
+  // Fallback: POST via form oculto (evita limite de URL)
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = urlBase;     // Editor do Chart Studio
+  form.target = "_blank";
+
+  const inpData = document.createElement("input");
+  inpData.type = "hidden";
+  inpData.name = "plotlyData";
+  inpData.value = dataStr;
+
+  const inpLayout = document.createElement("input");
+  inpLayout.type = "hidden";
+  inpLayout.name = "plotlyLayout";
+  inpLayout.value = layoutStr;
+
+  form.appendChild(inpData);
+  form.appendChild(inpLayout);
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+}
+
+
 </script>
+
 
 
 </body>
