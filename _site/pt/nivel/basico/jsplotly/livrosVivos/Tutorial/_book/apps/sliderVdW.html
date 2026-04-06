@@ -317,10 +317,10 @@ button {
 
 
 
-
 <div class="external-link">
   <a href="https://bioquanti.netlify.app/" target="_blank">🔗 Bioquanti</a>  
 </div>
+
 
 
 <div class="dev-info">
@@ -599,60 +599,7 @@ function adicionarCurva() {
     });
   }
 
-const config = {
-  responsive: true,
-  displaylogo: false,
-  scrollZoom: true,
-  editable: true,
-  modeBarButtonsToRemove: ['sendDataToCloud'],
-  modeBarButtonsToAdd: [
-    'toggleSpikelines',
-    'hoverCompareCartesian',
-    'drawline',
-    'drawopenpath',
-    'drawrect',
-    'drawcircle',
-    {
-      name: 'Salvar PNG/SVG',
-      icon: Plotly.Icons.disk,
-      click: () => abrirPopup()
-    },
-    {
-      name: 'Mudar cor',
-      icon: Plotly.Icons.camera,
-      click: function(gd) {
-        const ultima = curvas.length - 1;
-        const novaCor = cores[Math.floor(Math.random() * cores.length)];
-        Plotly.restyle(gd, { 'line.color': novaCor }, [ultima]);
-        curvas[ultima].line.color = novaCor;
-      }
-    },
-    {
-      name: 'Adicionar Texto',
-      icon: {
-        width: 1000,
-        height: 1000,
-        path: 'M200 800V160h600v80H540v560h-80V240H200z'
-      },
-      click: function(gd) {
-        const handler = function(eventData) {
-          const x = eventData.points[0].x;
-          const y = eventData.points[0].y;
-          const texto = prompt("Digite o texto a ser inserido:");
-          if (texto) {
-            Plotly.relayout(gd, {
-              annotations: (gd.layout.annotations || []).concat([{
-                x, y, text: texto, showarrow: true, arrowhead: 2
-              }])
-            });
-          }
-          gd.removeListener('plotly_click', handler);
-        };
-        gd.on('plotly_click', handler);
-      }
-    }
-  ]
-};
+
 
 
   let data = [];
@@ -808,66 +755,121 @@ function limparTudo() {
 var codigoPadrao = `
 
 
+const R = 0.0821;
+const V_values = Array.from({ length: 100 }, (_, i) => 0.5 + i * 0.05);
 
-// pKa dos grupos ionizáveis laterais
-const pKa = {
-    Nt: 9.5, Ct: 2.1, D: 3.9, E: 4.1, H: 6.0,
-    C: 8.3, Y: 10.1, K: 10.5,R: 12.5
-};
-
-// Classificação: ácido (-) ou base (+)
-const tipoGrupo = {
-    Ct: "acido",
-    D: "acido",
-    E: "acido",
-    C: "acido",
-    Y: "acido",
-    H: "base",
-    K: "base",
-    R: "base",
-    Nt: "base"
-};
-
-// pH fixo para análise
-const pH = 7.5;
-
-// 🧬 Entrada do usuário
-const sequenciaStr = "Nt,Met,R,Met,K,Val,E,D,Ser,Ct";
-
-// Processar sequência
-const seq = sequenciaStr.replace(/s+/g, '').split(',');
-
-// Função para calcular carga de cada resíduo
-function carga(aa) {
-    if (!(aa in pKa)) return 0; // neutro
-
-    const pk = pKa[aa];
-    const tipo = tipoGrupo[aa];
-    const delta = tipo === "acido" ? pk - pH : pH - pk;
-    const carga = 1 / (1 + Math.pow(10, delta));
-    return tipo === "acido" ? -carga : +carga;
+function calcularPressao(V, a, b, T) {
+    return (R * T) / (V - b) - (a / (V * V));
 }
 
-const y_values = seq.map(carga);
-const x_values = Array.from({ length: seq.length }, (_, i) => i + 1);
+function gerarDados(a, b, T) {
+    const y = V_values.map(V => {
+        const P = calcularPressao(V, a, b, T);
+        return (P > 0 && isFinite(P)) ? P : null;
+    });
+    return { x: V_values, y };
+}
 
-// Layout do gráfico
-const layout = {
-    title: "Carga de Resíduos em pH " + pH,
-    xaxis: {
-        title: 'Posição na Sequência',
-        tickmode: 'array',
-        tickvals: x_values,
-        ticktext: seq,
-        tickangle: 45
-    },
-    yaxis: {
-        title: 'Carga Elétrica',
-        zeroline: true
-    }
+let a0 = 1.7, b0 = 0.1, T0 = 300;
+const { x, y } = gerarDados(a0, b0, T0);
+
+const trace = {
+    x: x,
+    y: y,
+    type: 'scatter',
+    mode: 'lines',
+    line: { color: 'blue' },
+    name: 'Van der Waals'
 };
 
-return { x_values, y_values, layout };
+function atualizarTitulo(a, b, T) {
+    return 'Van der Waals (T = ' + T + ' K, a = ' + a.toFixed(2) + ', b = ' + b.toFixed(2) + ')';
+}
+
+const layout = {
+    title: atualizarTitulo(a0, b0, T0),
+    xaxis: { title: 'Volume (L)', range: [0, 5] },
+    yaxis: { title: 'Pressão (atm)', range: [0, 50] },
+    showlegend: false,
+    sliders: [
+        {
+            active: 6,
+            pad: { t: 40 },
+            currentvalue: {
+                visible: true,
+                prefix: 'a (interação): ',
+                font: { size: 14, color: '#000' }
+            },
+            len: 0.8,
+            ticklen: 0,
+            font: { color: '#007bff' },
+            steps: Array.from({ length: 25 }, (_, i) => {
+                const a = 0.5 + i * 0.2;
+                const dados = gerarDados(a, b0, T0);
+                return {
+                    method: 'update',
+                    label: '',
+                    args: [
+                        { x: [dados.x], y: [dados.y] },
+                        { title: atualizarTitulo(a, b0, T0) }
+                    ]
+                };
+            })
+        },
+        {
+            active: 2,
+            pad: { t: 100 },
+            currentvalue: {
+                visible: true,
+                prefix: 'b (volume molar): ',
+                font: { size: 14, color: '#000' }
+            },
+            len: 0.8,
+            ticklen: 0,
+            font: { color: '#007bff' },
+            steps: Array.from({ length: 20 }, (_, i) => {
+                const b = 0.01 + i * 0.05;
+                const dados = gerarDados(a0, b, T0);
+                return {
+                    method: 'update',
+                    label: '',
+                    args: [
+                        { x: [dados.x], y: [dados.y] },
+                        { title: atualizarTitulo(a0, b, T0) }
+                    ]
+                };
+            })
+        },
+        {
+            active: 4,
+            pad: { t: 160 },
+            currentvalue: {
+                visible: true,
+                prefix: 'Temperatura (K): ',
+                font: { size: 14, color: '#000' }
+            },
+            len: 0.8,
+            ticklen: 0,
+            font: { color: '#007bff' },
+            steps: Array.from({ length: 13 }, (_, i) => {
+                const T = 200 + i * 25;
+                const dados = gerarDados(a0, b0, T);
+                return {
+                    method: 'update',
+                    label: '',
+                    args: [
+                        { x: [dados.x], y: [dados.y] },
+                        { title: atualizarTitulo(a0, b0, T) }
+                    ]
+                };
+            })
+        }
+    ]
+};
+
+return { trace, layout };
+
+
 
 `;
 
@@ -1105,7 +1107,54 @@ function salvarCloneJSPlotly() {
   a.download = "JSPlotly.html";
   a.click();
 }
+
+function abrirNoChartStudio() {
+  const gd = document.getElementById('grafico');
+  if (!gd || !gd.data || gd.data.length === 0) {
+    alert("Não há gráfico para enviar. Clique em 'add' primeiro.");
+    return;
+  }
+
+  const dataStr   = JSON.stringify(gd.data || []);
+  const layoutStr = JSON.stringify(gd.layout || {});
+
+  // Tenta GET quando o payload é pequeno (URLs muito grandes podem falhar)
+  const urlBase = "https://chart-studio.plotly.com/create/";
+  const urlGET  = urlBase
+    + "?plotlyData="   + encodeURIComponent(dataStr)
+    + "&plotlyLayout=" + encodeURIComponent(layoutStr);
+
+  if ((dataStr.length + layoutStr.length) < 1500) {
+    window.open(urlGET, "_blank");
+    return;
+  }
+
+  // Fallback: POST via form oculto (evita limite de URL)
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = urlBase;     // Editor do Chart Studio
+  form.target = "_blank";
+
+  const inpData = document.createElement("input");
+  inpData.type = "hidden";
+  inpData.name = "plotlyData";
+  inpData.value = dataStr;
+
+  const inpLayout = document.createElement("input");
+  inpLayout.type = "hidden";
+  inpLayout.name = "plotlyLayout";
+  inpLayout.value = layoutStr;
+
+  form.appendChild(inpData);
+  form.appendChild(inpLayout);
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+}
+
+
 </script>
+
 
 
 </body>
