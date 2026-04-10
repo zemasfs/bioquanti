@@ -2,6 +2,7 @@
    - Exporta CSV (separador ';', decimal vírgula) com MM/LB/Replot + ajustes + Ki
    - Importa CSV exportado e reconstrói os 3 gráficos e Diagnóstico
    - Mantém Dixon robusto, LaTeX, anotações editáveis, legenda única, modais arrastáveis
+   - FIX: modelos não clássicos ficam sem ajuste MM/LB/Replot
 */
 
 (function(){
@@ -13,6 +14,19 @@
   const addNoise=(y,rel)=>rel<=0?y.slice():y.map(v=>v+v*rel*randn());
   const minmax=a=>{let mn=Infinity,mx=-Infinity; for(const v of a){ if(v<mn) mn=v; if(v>mx) mx=v; } return (!isFinite(mn)||!isFinite(mx))?{min:0,max:1}:{min:mn,max:mx};};
   const clone=o=>Object.assign({},o);
+
+  function isClassicModel(name){
+    return [
+      "Michaelis-Menten",
+      "Competitiva",
+      "Nao-competitiva (pura)",
+      "Mista",
+      "Incompetitiva",
+      "Ativador (Vmax-up)"
+    ].includes(name);
+  }
+  function allowFitForModel(name){ return isClassicModel(name); }
+  function onlyPointsForModel(name){ return !isClassicModel(name); }
 
   // WLS 1/y^2 (LB e replot slope/intercept)
   function wlsFit_1_over_y2(x,y){let sw=0,sx=0,sy=0,sxx=0,sxy=0,used=0;
@@ -73,7 +87,7 @@
     modifierKind:"auto",modifierSeries:[0,1,2,5,10],
     replotMetric:"slope",replotXLabel:"Modificador (I ou A)",
     showLegend:false,compareAB:false,showNotes:false,
-    csvMode:false, csvData:null // quando true, renderiza a partir do CSV importado
+    csvMode:false, csvData:null
   };
   fillDef(state.paramsA,state.modelA);
   function fillDef(dst,name){const d=Models[name]?.def||{}; Object.keys(d).forEach(k=>dst[k]=d[k]);}
@@ -124,7 +138,6 @@
   const c2=el("div","ek-card",grid); el("div","ek-title",c2,"Lineweaver–Burk"); const g2=el("div","",c2);
   const c3=el("div","ek-card",grid); el("div","ek-title",c3,"Replot"); const g3=el("div","",c3);
 
-  // modal (arrastável)
   const modal=el("div","ek-modal",document.body);
   const panel=el("div","ek-panel",modal);
   const cap=el("div","cap",panel,"");
@@ -147,10 +160,8 @@
   bLoad.onclick=()=>triggerLoad();
   bClear.onclick=()=>{state.csvMode=false; state.csvData=null; bClear.style.display="none"; renderAll();};
 
-  // ---------- cache para CSV ----------
-  let datasetCache=null; // será preenchido no render
+  let datasetCache=null;
 
-  // ---------- Modals ----------
   function openModel(){
     cap.textContent="Modelos e Equações (texto)";
     const groups=["Geral","Inibidores","Bi-Substrato","Multisito","User"];
@@ -182,8 +193,7 @@
         lst.innerHTML=out;
         lst.querySelectorAll("button[data-k]").forEach(b=>b.onclick=()=>{
           const name=b.getAttribute("data-k"), as=b.getAttribute("data-as");
-          if(as==="A"){state.modelA=name; state.paramsA={}; fillDef(state.paramsA,name);}
-          else {state.modelB=name; state.paramsB={}; fillDef(state.paramsB,name); state.compareAB=true; document.getElementById("ek-cmp").checked=true;}
+          if(as==="A"){state.modelA=name; state.paramsA={}; fillDef(state.paramsA,name);} else {state.modelB=name; state.paramsB={}; fillDef(state.paramsB,name); state.compareAB=true; document.getElementById("ek-cmp").checked=true;}
           modal.style.display="none"; renderAll();
         });
       }
@@ -251,7 +261,6 @@
   }
   function openDiag(){ cap.textContent="Diagnóstico e Parâmetros"; body.innerHTML=lastFigs.diag+lastFigs.paramHTML; modal.style.display="flex"; }
 
-  // ---------- motor ----------
   let lastFigs={diag:"",paramHTML:"",vS:null,LB:null,RP:null,kiA:null,kiB:null};
   function evalModel(name,p,S){const m=Models[name]; if(!m) return S.map(()=>NaN); return S.map(s=>{const v=m.evalv(p,s); return isFinite(v)?v:NaN;});}
 
@@ -269,23 +278,27 @@
         const mod=+series[mindex]; const p=clone(base); if(mk==="I") p.I=mod; else p.A=mod;
         const color=colorFor(tag,mindex);
         const yN=addNoise(evalModel(name,p,S),state.errRel);
-        // cache MM
         for(let i=0;i<S.length;i++){ datasetCache.rows.push({plot:"MM",tag,modelo:name,modificador:mod,S:S[i],v:yN[i],invS: (S[i]>0?1/S[i]:""),invV:(yN[i]>0?1/yN[i]:"")}); }
+
         tracesV.push({x:S,y:yN,mode:"markers",marker:{size:6,color},name:`${tag} ${mk}=${mod} pts`,showlegend:false});
 
-        // LB pts + fit
         const xLB=[],yLB=[]; for(let i=0;i<S.length;i++){ if(S[i]>0 && yN[i]>0){xLB.push(1/S[i]); yLB.push(1/yN[i]);} }
-        const fit=wlsFit_1_over_y2(xLB,yLB);
         for(let i=0;i<xLB.length;i++){ datasetCache.rows.push({plot:"LB",tag,modelo:name,modificador:mod,S:"",v:"",invS:xLB[i],invV:yLB[i]}); }
-        if(fit.ok){
-          datasetCache.rows.push({plot:"LB_fit",tag,modelo:name,modificador:mod,S:"",v:"",invS:fit.b,invV:fit.a, slope:fit.b, intercept:fit.a, r2:fit.r2});
-          const Vmax=1/fit.a, Km=fit.b/fit.a, Sfine=linspace(state.Smin,state.Smax,120), curve=Sfine.map(s=>(Vmax*s)/(Km+s));
-          tracesV.push({x:Sfine,y:curve,mode:"lines",line:{dash:dashes[mindex%5],width:(mindex===0?2:1),color},name:`${tag} ${mk}=${mod}`,showlegend:state.showLegend});
-          const xi=Math.abs(fit.b)>1e-12?(-fit.a/fit.b):null; if(xi!=null) xInts.push(xi);
-          const mm=minmax(xLB), x0=Math.min(0,mm.min,xi??mm.min), x1=Math.max(0,mm.max,xi??mm.max), xs=[x0,x1], ys=[fit.a+fit.b*x0, fit.a+fit.b*x1];
+
+        if(allowFitForModel(name)){
+          const fit=wlsFit_1_over_y2(xLB,yLB);
+          if(fit.ok){
+            datasetCache.rows.push({plot:"LB_fit",tag,modelo:name,modificador:mod,S:"",v:"",invS:fit.b,invV:fit.a, slope:fit.b, intercept:fit.a, r2:fit.r2});
+            const Vmax=1/fit.a, Km=fit.b/fit.a, Sfine=linspace(state.Smin,state.Smax,120), curve=Sfine.map(s=>(Vmax*s)/(Km+s));
+            tracesV.push({x:Sfine,y:curve,mode:"lines",line:{dash:dashes[mindex%5],width:(mindex===0?2:1),color},name:`${tag} ${mk}=${mod}`,showlegend:state.showLegend});
+            const xi=Math.abs(fit.b)>1e-12?(-fit.a/fit.b):null; if(xi!=null) xInts.push(xi);
+            const mm=minmax(xLB), x0=Math.min(0,mm.min,xi??mm.min), x1=Math.max(0,mm.max,xi??mm.max), xs=[x0,x1], ys=[fit.a+fit.b*x0, fit.a+fit.b*x1];
+            tracesLB.push({x:xLB,y:yLB,mode:"markers",marker:{size:6,color},name:`${tag} ${mk}=${mod} pts`,showlegend:false});
+            tracesLB.push({x:xs,y:ys,mode:"lines",line:{color},name:`${tag} ${mk}=${mod}`,showlegend:state.showLegend});
+            if(state.showNotes) annLB.push({x:x1,y:ys[1],ax:0,ay:-20-6*mindex,showarrow:true,arrowhead:2,text:`a=${fit.a.toFixed(3)}, b=${fit.b.toFixed(3)}, r²=${fit.r2.toFixed(3)}${xi!=null?`, x₀=${xi.toFixed(3)}`:""}`});
+          }
+        } else {
           tracesLB.push({x:xLB,y:yLB,mode:"markers",marker:{size:6,color},name:`${tag} ${mk}=${mod} pts`,showlegend:false});
-          tracesLB.push({x:xs,y:ys,mode:"lines",line:{color},name:`${tag} ${mk}=${mod}`,showlegend:state.showLegend});
-          if(state.showNotes) annLB.push({x:x1,y:ys[1],ax:0,ay:-20-6*mindex,showarrow:true,arrowhead:2,text:`a=${fit.a.toFixed(3)}, b=${fit.b.toFixed(3)}, r²=${fit.r2.toFixed(3)}${xi!=null?`, x₀=${xi.toFixed(3)}`:""}`});
         }
       }
     }
@@ -298,17 +311,17 @@
     const M=minmax(poolX), pad=(M.max-M.min)*0.06||1;
     Plotly.newPlot(g2,tracesLB,{margin:{l:50,r:10,t:10,b:50},xaxis:{title:"1/[S]",range:[M.min-pad,M.max+pad]},yaxis:{title:"1/v"},legend:{orientation:(state.showLegend?"v":"h"),x:(state.showLegend?1.02:0),xanchor:"left",y:1,yanchor:"top"},shapes:[vLine(),hLine()],annotations:(state.showNotes?annLB:[])},{displaylogo:false});
 
-    // Replot
     const tracesRP=[], annRP=[], allX=[0], allY=[0];
     let kiA=null, kiB=null;
     function addRP(xs,ys,label,colors,accKi,isDixon,tag,modelo){
       if(!xs||!xs.length) return;
-      // cache pontos Replot
       for(let i=0;i<xs.length;i++){ datasetCache.rows.push({plot:"Replot",tag,modelo,modificador:xs[i],S:"",v:"",invS:"",invV:ys[i]});}
-      // pontos
       const xr=minmax(xs), yr=minmax(ys); allX.push(xr.min,xr.max); allY.push(yr.min,yr.max);
       tracesRP.push({x:xs,y:ys,mode:"markers",marker:{size:7,color:colors?.[0]||"#444"},name:label+" pts",showlegend:false});
-      const f=isDixon?olsFit(xs,ys):wlsFit_1_over_y2(xs,ys); if(!f.ok) return;
+
+      if(!allowFitForModel(modelo)) return;
+
+      const f=isDixon?olsFit(xs,ys):olsFit(xs,ys); if(!f.ok) return;
       const mm=minmax(xs), xi=(Math.abs(f.b)>1e-12?(-f.a/f.b):null), x0=Math.min(0,mm.min,xi??mm.min), x1=Math.max(0,mm.max,xi??mm.max);
       const yr0=f.a+f.b*x0, yr1=f.a+f.b*x1; allX.push(x0,x1); allY.push(yr0,yr1);
       tracesRP.push({x:[x0,x1],y:[yr0,yr1],mode:"lines",line:{width:2,color:colors?.[1]||"#000"},name:label,showlegend:state.showLegend});
@@ -339,7 +352,9 @@
       function collect(tag,name,p0){ if(!name) return; const mk=detectMod(name); const xs=[], ys=[];
         for(const mRaw of state.modifierSeries){ const mod=+mRaw; const p=clone(p0); if(mk==="I") p.I=mod; else p.A=mod;
           const yN=addNoise(evalModel(name,p,S),state.errRel); const xLB=[],yLB=[]; for(let i=0;i<S.length;i++){ if(S[i]>0 && yN[i]>0){ xLB.push(1/S[i]); yLB.push(1/yN[i]); } }
-          const fit=wlsFit_1_over_y2(xLB,yLB); if(fit.ok){ xs.push(mod); ys.push(state.replotMetric==="slope"?fit.b:fit.a); }
+          if(allowFitForModel(name)){
+            const fit=wlsFit_1_over_y2(xLB,yLB); if(fit.ok){ xs.push(mod); ys.push(state.replotMetric==="slope"?fit.b:fit.a); }
+          }
         }
         addRP(xs,ys,tag,(tag==="A"?[PA[0],PA[4]]:[PB[0],PB[4]]),null,false,tag,name);
       }
@@ -354,13 +369,11 @@
     function gatherX(div,traces){const xs=[]; traces.forEach(t=>{if(t.x) xs.push(...t.x);}); return xs;}
     function gatherY(div,traces){const ys=[]; traces.forEach(t=>{if(t.y) ys.push(...t.y);}); return ys;}
 
-    // click-editar anotações
     g2.on('plotly_clickannotation',ev=>{const idx=ev.index, txt=g2.layout.annotations[idx].text, nv=prompt("Editar anotação:",txt); if(nv!=null){const A=g2.layout.annotations.slice(); A[idx]=Object.assign({},A[idx],{text:nv}); Plotly.relayout(g2,{annotations:A});}});
     g3.on('plotly_clickannotation',ev=>{const idx=ev.index, txt=g3.layout.annotations[idx].text, nv=prompt("Editar anotação:",txt); if(nv!=null){const A=g3.layout.annotations.slice(); A[idx]=Object.assign({},A[idx],{text:nv}); Plotly.relayout(g3,{annotations:A});}});
 
-    // diagnóstico / export
     lastFigs.vS={data:tracesV,layout:g1.layout}; lastFigs.LB={data:tracesLB,layout:g2.layout}; lastFigs.RP={data:g3.data,layout:g3.layout};
-    lastFigs.kiA=null; lastFigs.kiB=null; // serão preenchidos acima nos pushes Ki
+    lastFigs.kiA=null; lastFigs.kiB=null;
     const kiArow=datasetCache.rows.find(r=>r.plot==="Ki"&&r.tag==="A"); const kiBrow=datasetCache.rows.find(r=>r.plot==="Ki"&&r.tag==="B");
     if(kiArow) lastFigs.kiA=kiArow.modificador; if(kiBrow) lastFigs.kiB=kiBrow.modificador;
 
@@ -371,18 +384,17 @@
       ${lastFigs.kiB!=null?`<li>Ki (B) ≈ ${(+lastFigs.kiB).toFixed(4)}</li>`:""}
       <li>Modificadores: [${state.modifierSeries.join(", ")}]</li>
       <li>[S]: ${state.Smin}→${state.Smax} (${state.Npts} pts), erro rel=${state.errRel}</li>
-      <li>Legenda: ${state.showLegend?"ON":"OFF"}</li></ul>`;
+      <li>Legenda: ${state.showLegend?"ON":"OFF"}</li>
+      ${onlyPointsForModel(state.modelA)|| (state.modelB && onlyPointsForModel(state.modelB)) ? '<li><i>Para modelos não clássicos, ajustes MM/LB e replots foram desativados para evitar interpretações indevidas.</i></li>' : ''}
+      </ul>`;
     lastFigs.paramHTML=(function(){const fmt=o=>"<ul>"+Object.keys(o).map(k=>`<li>${k}: ${o[k]}</li>`).join("")+"</ul>";
       let s="<h3>Parâmetros dos modelos</h3><b>A — "+state.modelA+"</b>"+fmt(state.paramsA); if(state.modelB) s+="<b>B — "+state.modelB+"</b>"+fmt(state.paramsB); return s;})();
   }
 
-  // --------- render a partir de CSV importado ---------
   function renderFromCSV(){
-    // csvData.rows é lista de objetos já normalizados (numéricos em ponto nos fields numéricos)
     const rows=state.csvData.rows;
     const tracesV=[], tracesLB=[], tracesRP=[], annLB=[], annRP=[];
     const byKey=(r)=>`${r.tag}|${r.modelo}|${r.modificador}`;
-    // MM
     const groupsMM={};
     rows.filter(r=>r.plot==="MM").forEach(r=>{const key=byKey(r); (groupsMM[key]||(groupsMM[key]=[])).push(r);});
     Object.keys(groupsMM).forEach((k,i)=>{
@@ -390,14 +402,12 @@
       tracesV.push({x:arr.map(r=>r.S),y:arr.map(r=>r.v),mode:"markers",marker:{size:6,color},name:`${arr[0].tag} ${arr[0].modelo} mod=${arr[0].modificador}`,showlegend:false});
     });
 
-    // LB
     const groupsLB={};
     rows.filter(r=>r.plot==="LB").forEach(r=>{const key=byKey(r); (groupsLB[key]||(groupsLB[key]=[])).push(r);});
     Object.keys(groupsLB).forEach((k,i)=>{
       const arr=groupsLB[k].sort((a,b)=>a.invS-b.invS); const tag=arr[0].tag, color=(tag==="A")?PA[i%5]:PB[i%5];
       tracesLB.push({x:arr.map(r=>r.invS),y:arr.map(r=>r.invV),mode:"markers",marker:{size:6,color},name:`${tag} mod=${arr[0].modificador} pts`,showlegend:false});
     });
-    // LB fits
     rows.filter(r=>r.plot==="LB_fit").forEach((r,i)=>{
       const color=(r.tag==="A")?PA[i%5]:PB[i%5];
       const xi = Math.abs(r.slope)>1e-12?(-r.intercept/r.slope):null;
@@ -407,7 +417,6 @@
       annLB.push({x:x1,y:y1,ax:0,ay:-24,showarrow:true,arrowhead:2,text:`a=${r.intercept.toFixed(3)}, b=${r.slope.toFixed(3)}, r²=${(r.r2||0).toFixed(3)}${xi!=null?`, x₀=${xi.toFixed(3)}`:""}`});
     });
 
-    // Replot
     const groupsRP={};
     rows.filter(r=>r.plot==="Replot").forEach(r=>{const key=`${r.tag}|${r.modelo}`; (groupsRP[key]||(groupsRP[key]=[])).push(r);});
     Object.keys(groupsRP).forEach((k,i)=>{
@@ -416,7 +425,6 @@
     });
     rows.filter(r=>r.plot==="Replot_fit").forEach((r,i)=>{
       const color=(r.tag==="A")?PA[i%5]:PB[i%5];
-      // range por dados replot desse tag
       const arr=rows.filter(q=>q.plot==="Replot" && q.tag===r.tag);
       const mm=minmax(arr.map(q=>q.modificador));
       const xi=Math.abs(r.slope)>1e-12?(-r.intercept/r.slope):null;
@@ -425,16 +433,13 @@
       tracesRP.push({x:[x0,x1],y:[y0,y1],mode:"lines",line:{width:2,color},name:`${r.tag} replot`,showlegend:false});
       annRP.push({x:x1,y:y1,ax:0,ay:-24,showarrow:true,arrowhead:2,text:`a=${r.intercept.toFixed(3)}, b=${r.slope.toFixed(3)}, r²=${(r.r2||0).toFixed(3)}${xi!=null?`, x₀=${xi.toFixed(3)}`:""}`});
     });
-    // Ki markers
     const kis=rows.filter(r=>r.plot==="Ki");
     kis.forEach((r,i)=>{const color=(r.tag==="A")?PA[4]:PB[4]; tracesRP.push({x:[r.modificador,r.modificador],y:[-1,1],mode:"lines",line:{dash:"dot",width:2,color},name:`Ki (${r.tag})`,showlegend:false});});
 
-    // plot
     Plotly.newPlot(g1,tracesV,{margin:{l:50,r:10,t:10,b:50},xaxis:{title:"[S]"},yaxis:{title:"v"},legend:{orientation:"h"}},{displaylogo:false});
     Plotly.newPlot(g2,tracesLB,{margin:{l:50,r:10,t:10,b:50},xaxis:{title:"1/[S]"},yaxis:{title:"1/v"},legend:{orientation:"h"},shapes:[vLine(),hLine()],annotations:(state.showNotes?annLB:[])},{displaylogo:false});
     Plotly.newPlot(g3,tracesRP,{margin:{l:50,r:10,t:10,b:50},xaxis:{title:state.replotXLabel},yaxis:{title:"Replot (carregado)"},legend:{orientation:"h"},shapes:[vLine(),hLine()],annotations:(state.showNotes?annRP:[])},{displaylogo:false});
 
-    // diag a partir do CSV
     lastFigs.vS={data:tracesV,layout:g1.layout}; lastFigs.LB={data:tracesLB,layout:g2.layout}; lastFigs.RP={data:tracesRP,layout:g3.layout};
     lastFigs.kiA = (kis.find(r=>r.tag==="A")||{}).modificador ?? null;
     lastFigs.kiB = (kis.find(r=>r.tag==="B")||{}).modificador ?? null;
@@ -446,27 +451,19 @@
     lastFigs.paramHTML=`<h3>Parâmetros</h3><div>Parâmetros originais não são reconstruídos a partir do CSV (apenas dados e ajustes).</div>`;
   }
 
-  // ---------- CSV Export ----------
   function exportCSV(){
     if(!datasetCache || !datasetCache.rows) { alert("Gere os gráficos antes de exportar."); return; }
     const head=["plot","tag","modelo","modificador","S","v","1/S","1/v","slope","intercept","r2"];
     const lines=[ joinBR(head) ];
     datasetCache.rows.forEach(r=>{
       const row=[r.plot||"", r.tag||"", r.modelo||"", r.modificador, r.S, r.v, r.invS, r.invV, r.slope, r.intercept, r.r2];
-      // decimal vírgula
-      const conv=row.map(v=>{
-        if(typeof v==="number"){ return fmtNumBR(v); }
-        if(v==null) return "";
-        if(typeof v==="string" && v!=="" && !isNaN(v)) return fmtNumBR(parseFloat(v));
-        return String(v);
-      });
+      const conv=row.map(v=>{ if(typeof v==="number"){ return fmtNumBR(v); } if(v==null) return ""; if(typeof v==="string" && v!=="" && !isNaN(v)) return fmtNumBR(parseFloat(v)); return String(v); });
       lines.push( joinBR(conv) );
     });
     const csv=lines.join("\n");
     downloadTxt("ektoolkit.csv", csv);
   }
 
-  // ---------- CSV Load ----------
   function triggerLoad(){
     const inp=el("input","",document.body); inp.type="file"; inp.accept=".csv,text/csv";
     inp.onchange=function(){
@@ -484,35 +481,23 @@
     inp.click();
   }
   function parseCSV_BR(txt){
-    // separador ';', decimal vírgula -> ponto
     const lines=txt.split(/\r?\n/).filter(l=>l.trim().length>0);
     if(lines.length<2) return [];
     const head=lines[0].split(';').map(h=>h.trim());
-    const idx=(k)=>head.indexOf(k);
     const R=[];
     for(let i=1;i<lines.length;i++){
       const cols=lines[i].split(';');
       const obj={};
       head.forEach((h,ix)=>{
         let val=cols[ix]!=null?cols[ix].trim():"";
-        // numéricos: trocar vírgula por ponto
-        if(["modificador","S","v","1/S","1/v","slope","intercept","r2"].includes(h)){
-          obj[ mapKey(h) ] = val===""? "" : parseFloat(val.replace(',','.'));
-        } else {
-          obj[ mapKey(h) ] = val;
-        }
+        if(["modificador","S","v","1/S","1/v","slope","intercept","r2"].includes(h)) obj[ mapKey(h) ] = val===""? "" : parseFloat(val.replace(',','.')); else obj[ mapKey(h) ] = val;
       });
       R.push(obj);
     }
     return R;
-    function mapKey(h){
-      if(h==="1/S") return "invS";
-      if(h==="1/v") return "invV";
-      return h;
-    }
+    function mapKey(h){ if(h==="1/S") return "invS"; if(h==="1/v") return "invV"; return h; }
   }
 
-  // ---------- HTML Export (já existente) ----------
   function exportHTML(){
     const P="https://cdn.plot.ly/plotly-2.32.0.min.js", M="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
     const esc=x=>JSON.stringify(x);
@@ -531,6 +516,5 @@
     download("ektoolkit_export.html", html);
   }
 
-  // GO
   renderAll();
 })();
