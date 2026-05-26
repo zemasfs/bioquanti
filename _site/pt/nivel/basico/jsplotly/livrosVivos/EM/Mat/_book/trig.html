@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Quando o movimento se repete: trigonometria, periodicidade e números complexos – Matemática &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./financ.html" rel="next">
+<link href="./prob.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./trig.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Quando o movimento se repete: trigonometria, periodicidade e números complexos</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Matemática &amp; JSPlotly</a> 
+        <div class="sidebar-tools-main">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.docx">
+              <i class="bi bi-file-word pe-1"></i>
+            Download Docx
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fun.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Padrões de Mudança: como funções descrevem o comportamento do mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geometria integrada: do plano ao espaço e às coordenadas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilidade e Estatística: quando o acaso revela padrões</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trig.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Quando o movimento se repete: trigonometria, periodicidade e números complexos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./financ.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Crescimento, Tempo e Decisão: Matemática Financeira</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matriz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Matrizes e modelagem - Transformando relações em sistemas manipuláveis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Cálculo Diferencial e Integral - Quando o mundo começa a mudar, e você aprende a medir essa mudança</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Quando o movimento se repete: trigonometria, periodicidade e números complexos</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As ondas sonoras, o movimento das rodas, a corrente alternada, as vibrações mecânicas, o movimento das marés, as estações do ano, o batimento cardíaco, além de inúmeros outros sinais periódicos, aparecem em diferentes contextos da ciência e da tecnologia. A Trigonometria permite descrever esses fenômenos por meio de razões geométricas, funções periódicas e representações no plano, temas deste capítulo.</p>
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> reconhecer seno, cosseno e tangente como relações geométricas em triângulos retângulos<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar seno e cosseno como coordenadas no círculo trigonométrico<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> relacionar ângulo, rotação e repetição em representações gráficas<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> compreender a periodicidade em fenômenos matemáticos e físicos<span class="kw">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> estabelecer a conexão entre trigonometria e números complexos no plano<span class="kw">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> integrar diferentes representações de uma mesma ideia matemática por meio de modelos interativos.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-gizz_trig" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_trig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_trig.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_trig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.1: A trigonometria como um caminho para interpretar formas, ângulos e relações.
+</figcaption>
+</figure>
+</div>
+<!-- ## Galhos deste tronco
+
+### Galho 1 - Relacoes em triangulos
+Estudo das razoes trigonometrica em triangulos retangulos, com enfase em catetos, hipotenusa e variacao angular.
+
+### Galho 2 - Funcoes periodicas
+Interpretacao de seno e cosseno como funcoes que descrevem repeticao, oscilacao e movimento ciclico.
+
+### Galho 3 - Numeros complexos e rotacao
+Introducao a representacao geometrica dos numeros complexos e sua conexao com modulos, argumentos e rotacoes no plano. -->
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Você pode iniciar os temas desse capítulo com calma, apenas observando e editando o código que aparece no JSPlotly da <a href="#fig-trig" class="quarto-xref">Figura&nbsp;<span>5.2</span></a>, e que trata das relações em triângulos.</p>
+<div id="fig-trig" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/trig.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.2: Seno, cosseno e tangente como relações geométricas entre lados de um triângulo retângulo. Clique neste <a href="apps/trig.html">LINK</a> para abrir o aplicativo em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O script mostra como 3 funções básicas, <code>seno</code>, <code>cosseno</code> e <code>tangente</code>, aparecem diretamente em um <code>triângulo retângulo</code>. A ideia é simples: ao escolher um <code>ângulo</code> e uma <code>hipotenusa</code>, essa o maior lado de um triângulo retângulo, o modelo calcula automaticamente os outros dois lados, denominados por <code>cateto adjacente</code> (próximo ao ângulo), e <code>cateto oposto</code>, bem como as <code>razões trigonométricas</code> correspondentes.</p>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>Comece alterando apenas dois valores no início do código, e apenas observe o que acontece no <em>app</em>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ang_deg <span class="op">=</span> <span class="dv">40</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hip <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O valor <code>ang_deg</code> representa o ângulo, em graus. Para evitar triângulos muito achatados ou quase verticais, experimente valores entre 5 e 85. O valor <code>hip</code> define o tamanho da <em>hipotenusa</em>. Depois de modificar os valores, clique em <code>add</code> e observe como o triângulo muda.</p>
+<p>Quando o ângulo aumenta, o cateto oposto cresce e o cateto adjacente diminui. Assim fica “fácil” perceber que o seno está associado ao cateto oposto, enquanto o cosseno ao cateto adjacente.</p>
+<p>No código, isso aparece aqui:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> adj <span class="op">=</span> hip <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(ang)<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> opo <span class="op">=</span> hip <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(ang)<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tanv <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">tan</span>(ang)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ou seja, o triângulo é construído a partir das próprias relações trigonométricas. Você pode explorar alguns cenários para sedimentar esse aprendizado. E também pode optar por limpar a tela (<code>clean</code>) antes de cada experiência. Ou não limpá-la, e nesse caso permitindo a comparação entre valores no aplicativo.</p>
+<ol type="1">
+<li><em>Ângulo de 30 graus</em>. Experimente editar o código como segue, e observe que o cateto oposto fica menor que o adjacente. E discuta por que o seno de 30<span class="math inline">\(^\circ\)</span> é menor que o cosseno de 30<span class="math inline">\(^\circ\)</span>.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ang_deg <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hip <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Ângulo de 45 graus</em>. Aqui os dois catetos ficam iguais, resultando no chamado <code>triângulo isósceles</code>, e com propriedades especiais entre seno e cosseno.</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ang_deg <span class="op">=</span> <span class="dv">45</span><span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hip <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Ângulo de 60 graus</em>. Dessa vez, o cateto oposto fica maior que o adjacente. Compare com o caso de 30<span class="math inline">\(^\circ\)</span> e observe a inversão entre seno e cosseno.</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ang_deg <span class="op">=</span> <span class="dv">60</span><span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hip <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Mesma forma, tamanho diferente</em>. Teste os valores abaixo.</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ang_deg <span class="op">=</span> <span class="dv">40</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hip <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois teste:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ang_deg <span class="op">=</span> <span class="dv">40</span><span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hip <span class="op">=</span> <span class="dv">15</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Perceba então que o triângulo aumenta ou diminui, mas os valores de seno, cosseno e tangente permanecem os mesmos. Isso ajuda a mostrar que essas razões dependem do ângulo, e não do tamanho absoluto do triângulo.</p>
+<ol start="5" type="1">
+<li><em>Prevendo valores.</em> Agora que você já percebeu que os valores para seno, cosseno e tangente são obtidos em função dos tamanhos dos lados de um triângulo retângulo e de suas razões, experimente prever alguns resultados para o script da <a href="#fig-trig" class="quarto-xref">Figura&nbsp;<span>5.2</span></a>. Para isso, basta esconder os textos que o gráfico apresenta, veja:</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mostrar_textos <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ou:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mostrar_arco <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>“Truquento”, não ?!</p>
+<ol start="6" type="1">
+<li><p><em>Ângulos pequenos</em>. Compare 10, 20 e 30 graus. O que cresce mais rápido: o seno, o cosseno ou a tangente ?</p></li>
+<li><p><em>Aproximação de 90 graus</em>. O que acontece com a tangente quando o ângulo se aproxima de 90 graus ? Como isso aparece geometricamente ?</p></li>
+<li><p><em>Triângulos semelhantes</em>. Mude a hipotenusa mantendo o ângulo fixo. O que muda e o que permanece ?</p></li>
+<li><p><em>Relação entre forma e razão</em>. Compare triângulos diferentes com o mesmo ângulo. Por que seno, cosseno e tangente continuam os mesmos ?</p></li>
+</ol>
+<p>Após testar esses cenários no JSPlotly, você deve perceber algumas relações de triângulos retângulos. Por exemplo, que o cateto adjacente corresponde a projeção horizontal, enquanto que o cateto oposto corresponde a projeção vertical. Que o seno cresce conforme a componente vertical aumenta, enquanto o cosseno diminui conforme a componente horizontal diminui. E que a tangente expressa a razão entre a altura e a base do triângulo.</p>
+<p>Ou seja, quando o ângulo muda, as proporções mudam. Quando apenas o tamanho do triângulo muda, as proporções permanecem. Esses mesmos conceitos também aparecem no gráfico de uma função periódica, no ponto que gira sobre uma circunferência, ou na representação de um número complexo.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A trigonometria pode ser compreendida como uma relação entre forma, movimento e representacao. Num <em>triângulo</em>, as razões entre os lados descrevem <code>proporções</code>. Num <em>círculo</em>, elas descrevem <code>coordenadas</code>, enquanto que nos <em>gráficos</em>, tornam-se <code>funções periódicas</code>. E num <em>plano complexo</em>, convertem-se em <code>rotação e orientação</code>.</p>
+<p>Para tornar essas ideais mais claras, comece pelo <em>app</em> de JSPlotly que segue, e que aborda, de forma realmente <em>animada</em>, o conceito trigonométrico de onda como uma projeção de movimento circular.</p>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>Clique em <code>add</code> para executar o script, e em <code>Play</code> para iniciar a animação. Veja que o ponto gira em torno de um círculo no painel. À medida que ele se move, sua altura é projetada para a direita, formando uma <code>curva senoidal</code>, representando a altura de um ponto que gira.</p>
+<div id="fig-trig2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/trig2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.3: Uma onda senoidal pode ser entendida como o rastro de um movimento circular. Clique neste <a href="apps/trig2.html">LINK</a> para abrir o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<p>O <em>slider</em> altera o valor de <code>T</code>, que representa o período do movimento. Valores menores de <code>T</code> geram ciclos mais rápidos (<code>frequência</code> maior), enquanto que valores maiores deixam o movimento mais lento e a onda mais alongada (<code>comprimento de onda</code>). No código, o período inicial está definido aqui:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> T0 <span class="op">=</span> <span class="fl">2.5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E os valores disponíveis no slider são criados neste trecho:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">let</span> T <span class="op">=</span> <span class="fl">1.2</span><span class="op">;</span> T <span class="op">&lt;=</span> <span class="fl">5.0</span><span class="op">;</span> T <span class="op">+=</span> <span class="fl">0.4</span>) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  steps<span class="op">.</span><span class="fu">push</span>({</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> T<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="op">,</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">method</span><span class="op">:</span> <span class="st">"animate"</span><span class="op">,</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">args</span><span class="op">:</span> [<span class="fu">gerarAnimacao</span>(T)]</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe primeiro o ponto girando no círculo, e depois acompanhe a linha pontilhada horizontal que leva a altura desse ponto até o início da onda. A altura do ponto no círculo é a mesma altura do ponto marcado na onda. Isso mostra que a onda é construída a partir da projeção vertical do movimento circular. A relação trigonométrica aparece nesse trecho do código:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> px <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(ang)<span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> py <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(ang)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A coordenada <code>px</code> indica a posição horizontal do ponto no círculo, e a coordenada <code>py</code> indica sua altura. É essa altura, dada pelo seno do ângulo, que aparece na onda. Para <em>“brincar”</em> um pouco com o <em>app</em>, seguem alguns cenários.</p>
+<ol type="1">
+<li><em>Período curto</em>. Use o slider em um valor baixo, como:</li>
+</ol>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="fl">1.2</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E veja que a onda fica mais comprimida, e que o movimento circular completa ciclos mais rapidamente. Isso aponta para uma maior <code>frequência</code> associada a um menor período.</p>
+<ol type="1">
+<li><p><em>Período intermediário</em>. Mude <em>T</em> para 2.5. Observe que a animação fica mais equilibrada, permitindo que se observe com clareza a ligação entre o círculo e a onda.</p></li>
+<li><p><em>Período longo</em>. Agora use <em>T</em> = 5.0, e perceba que a onda fica mais alongada e o movimento parece mais lento. Ou seja, maior período significa menor frequência e maior comprimento de onda.</p></li>
+<li><p><em>Comparando forma e tempo</em>. Mantenha a <code>amplitude</code> fixa e altere apenas <em>T</em>. Observe que a altura máxima da onda não muda, e sim a distância entre repetições. Isso acontece porque o período e a amplitude são propriedades diferentes. O período controla a repetição, enquanto que a amplitude controla a altura.</p></li>
+</ol>
+<p>Esse script mostra que, quando um ponto gira, sua altura sobe e desce de modo periódico. Essa oscilação vertical acompanhada no espaço forma uma onda. Isso é bem legal, porque agora você pode enxergar o círculo trigonométrico como uma máquina de gerar ciclos.</p>
+<p>Em outras palavras, o círculo gera uma rotação que produz um seno, o qual gera uma onda que revela periodicidade.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Essas relações da trigonometria aparecem em inúmeros contextos da vida real. Só para citar alguns: ondas e vibrações, corrente alternada, processamento de sinais, navegação e localização, sonar, animações, computação gráfica, telecomunicações, eletrotécnica, e em quase todo fenômeno periódico, como o batimento cardíaco, ou as marolas que se sucedem à passagem de uma embarcação.</p>
+<section id="números-complexos" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="números-complexos"><span class="header-section-number">5.1</span> Números complexos</h2>
+<p>Uma extensão do conceito acima também ocorre em ramos da Física e Química, como a <code>Eletrônica</code> e estudos de interfaces, e que envolve os assim chamados <code>números complexos</code>.</p>
+<p>O valor de um número num <em>eixo cartesiano</em>, aquele que tem um <code>x</code> e um <code>y</code>, pode ser dado de dois jeitos: ou pelas coordenadas <em>x</em> e <em>y</em>, denominadas <code>coordenadas retangulares</code>, ou pela pela trigonometria. Nesse caso, chamado por <code>coordenadas polares</code>, utiliza-se o ângulo que define o ponto junto a origem do gráfico. Essa forma trigonométrica (ou polar) para representar um ponto no espaço plano faz uso dos chamados <code>números complexos</code>.</p>
+<p>Números complexos são expressões do tipo <span class="math inline">\(z = a + bi\)</span>, onde<code>a</code> e <code>b</code> são números reais e <code>i</code> é a um termo imaginário, esse definido por <span class="math inline">\(i^2 = -1\)</span>. Eles estendem os números reais para permitir raízes quadradas de números negativos. O termo <em>a</em> é chamado de <code>parte real</code>, e <em>b</em> de <code>parte imaginária</code>.</p>
+<p>A <code>forma trigonométrica</code> (ou polar) de um número complexo <span class="math inline">\(z = a + bi\)</span> é dada abaixo.</p>
+<p><span id="eq-complex"><span class="math display">\[
+z = \rho(\cos \theta + i \sin \theta)
+\tag{5.1}\]</span></span></p>
+<p>Onde <span class="math inline">\(\rho\)</span> é o <code>módulo</code> <span class="math inline">\(\rho = \sqrt{a^2 + b^2}\)</span> e <span class="math inline">\(\theta\)</span> é o <code>argumento</code> (ângulo).</p>
+<p>Pode parecer estranho à primeira vista, mas essa representação facilita operações como multiplicação, divisão e potenciação. O eixo cartesiano em que essa representação geométrica tem seu lugar é também chamado de <code>plano complexo</code> ou <code>plano de Argand</code>. Por vezes, esse plano possui seus eixos denominados por <code>real</code>(<em>x</em>) e <code>imaginário</code>(<em>y</em>) !</p>
+<p>Caramba !!! Quanta coisa esquisita. Que tal então um script de JSPlotly para se compreender um pouco melhor o <em>plano de Argand</em> e tornar a vida menos chata ?</p>
+<div id="fig-trig3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/trig3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.4: Trigonometria, periodicidade e números complexos são temas que envolvem rotação. Clique neste <a href="apps/trig3.html">LINK</a> e abra o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<p>Esse script integra as três representações da trigonometria vistas acima: o círculo trigonométrico, as funções periódicas e o plano complexo. A proposta é mostrar que, além de representarem razões em triângulos ou um ponto que gira, seno e cosseno também representam componentes de um número complexo.</p>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>Comece alterando o ângulo no início do código. Teste valores clássicos como 30, 45, 90, ou 180<span class="math inline">\(^\circ\)</span>. A cada alteração, clique em <code>add</code> e observe os três painéis: o círculo, o gráfico das funções e o plano complexo.</p>
+<p>No primeiro painel, o ponto gira sobre o círculo. Sua coordenada horizontal corresponde ao cosseno, e sua coordenada vertical corresponde ao seno. No segundo painel, o mesmo ângulo aparece como posição em uma curva periódica. O ponto marcado mostra o valor de seno ou cosseno naquele instante angular. Já no terceiro painel, o mesmo ponto é interpretado como um número complexo:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> px <span class="op">=</span> mod <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(ang)<span class="op">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> py <span class="op">=</span> mod <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(ang)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assim, o mesmo par <code>(px, py)</code> aparece em duas leituras, uma como ponto do círculo trigonométrico, e outra como número complexo no plano. Isso significa que o número complexo pode ser visto como um vetor que tem módulo <code>mod</code> e argumento <code>ang_deg</code>.</p>
+<p>Seguem alguns cenários para você explorar.</p>
+<ol type="1">
+<li><em>Ângulo de 0 graus</em></li>
+</ol>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ang_deg <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mod <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O ponto fica sobre o eixo real positivo. O cosseno vale 1 e o seno vale 0. Esse é um bom ponto de partida para discutir por que o círculo trigonométrico começa no eixo horizontal.</p>
+<ol start="2" type="1">
+<li><p><em>Ângulo de 90 graus</em>. O ponto vai para o eixo imaginário positivo. O cosseno se aproxima de 0 e o seno vale 1. Nesse cenário aparece a ligação entre rotação e coordenadas.</p></li>
+<li><p><em>Ângulo de 180 graus</em>. O ponto fica sobre o eixo real negativo. O cosseno vale -1 e o seno volta a 0. Esse cenário é típico do apresentado por alguns <code>sinais</code> e <code>quadrantes</code>.</p></li>
+<li><p><em>Aumento do módulo</em>.</p></li>
+</ol>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ang_deg <span class="op">=</span> <span class="dv">45</span><span class="op">;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mod <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O ponto mantém a mesma direção, mas se afasta da origem. Isso mostra que o módulo altera o tamanho do vetor, mas não o ângulo.</p>
+<ol start="5" type="1">
+<li><em>Aumento da frequência</em></li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> freq <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A curva completa mais oscilações no mesmo intervalo. Esse cenário também auxlia na interpretação já vista para periodicidade, ondas, vibração e fenômenos repetitivos.</p>
+<ol start="6" type="1">
+<li><em>Compare seno e cosseno</em>. Você pode comparar “seno”, “cosseno”, ou “ambos”, bastando alterar esse trecho do código:</li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mostrar <span class="op">=</span> <span class="st">"seno"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe o deslocamento entre as duas curvas para a opção “ambos”. O cosseno começa no valor máximo, enquanto o seno começa em zero. Essa diferença aparece porque são projeções diferentes do mesmo movimento circular.</p>
+<p>Se quiser aprender um pouco mais do script, a <em>conversão de graus para radianos</em> acontece aqui:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ang <span class="op">=</span> ang_deg <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span> <span class="op">/</span> <span class="dv">180</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso é necessário porque as funções trigonométricas em <code>JavaScript</code> usam radianos. Já as funções periódicas são construídas repetindo seno e cosseno ao longo de um intervalo angular:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>y_sen<span class="op">.</span><span class="fu">push</span>(amp <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(freq <span class="op">*</span> x))<span class="op">;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>y_cos<span class="op">.</span><span class="fu">push</span>(amp <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(freq <span class="op">*</span> x))<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A variável <code>amp</code> controla a altura da onda, enquanto <code>freq</code> controla o número de repetições.</p>
+<p>Dessa forma, pode-se dizer que seno e o cosseno podem ser entendidos ao mesmo tempo como razões de um triângulo, coordenadas de um ponto, e números complexos. Suas características permitem que sejam adequadas para descrever fenômenos periódicos. E isso é pra lá de legal, pois você percebe agora que uma mesma grandeza angular pode organizar representações geométricas, gráficas e algébricas !</p>
+<p>Em suma, percebe que um ponto que gira no círculo gera coordenadas, e essas coordenadas formam seno e cosseno. Quando acompanhadas ao longo do tempo, viram ondas (ciclos), e quando interpretadas como par real-imaginário, viram números complexos (rotação).</p>
+</section>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aqui a gente “deita e rola” na abstração verificável (ou não) com os scripts do capítulo. Em relação ao script da <a href="#fig-trig" class="quarto-xref">Figura&nbsp;<span>5.2</span></a>:</p>
+<ul>
+<li>E se o ângulo ficar muito pequeno ?</li>
+<li>E se o ângulo se aproximar de 90<span class="math inline">\(^\circ\)</span> ?</li>
+<li>E se a hipotenusa dobrar, mas o ângulo continuar igual ?</li>
+<li>E se dobrarmos a frequência ?</li>
+<li>E se a amplitude for reduzida pela metade ?</li>
+<li>E se o ponto girar no sentido horario em vez de anti-horario ?</li>
+<li>E se compararmos ângulos equivalentes, como 30 graus e 390 graus ?</li>
+</ul>
+<p>Já para o script da <a href="#fig-trig2" class="quarto-xref">Figura&nbsp;<span>5.3</span></a>:</p>
+<ul>
+<li>E se o período for muito pequeno ?</li>
+<li>E se o período for muito grande ?</li>
+<li>E se a velocidade <code>v</code> aumentar ?</li>
+<li>E se a amplitude <code>A</code> também fosse usada para aumentar o raio do círculo ?</li>
+<li>E se, em vez da projeção vertical, usássemos a projeção horizontal ?</li>
+</ul>
+<p>E para o script da <a href="#fig-trig3" class="quarto-xref">Figura&nbsp;<span>5.4</span></a>:</p>
+<ul>
+<li>E se o ângulo passar de 90<span class="math inline">\(^o\)</span> para 180<span class="math inline">\(^o\)</span> ?</li>
+<li>E se o módulo aumentar, mas o ângulo continuar igual ?</li>
+<li>E se a frequência dobrar ?</li>
+<li>E se mostrarmos apenas o seno ?</li>
+<li>E se mostrarmos apenas o cosseno ?</li>
+<li>E se compararmos o mesmo ângulo no círculo e no plano complexo ?</li>
+<li>E se o modulo do numero complexo deixar de ser 1 ?</li>
+</ul>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Vimos no capítulo algumas situações em que o emprego da trigonometria é refletido no estudo de relações em triângulos, ondas e plano complexo, e tudo isso com “cadeira vitalícia” nas ciências e engenharia. Mas sempre tem lugar para mais uma cadeirinha.</p>
+<p>Todos esses conceitos também estão espelhados no funcionamento do relógio analógico e seu movimento angular, nos ciclos naturais das marés, nas ondas sonoras, em rotação de vetores, em fasores da física, em animações, computação gráfica, modelagem de ciclos naturais, localização espacial, corrente alternada, e em todos os sinais elétricos senoidais.</p>
+<p>Em relação a esses últimos, alguns sinais são transformados em ondas quadradas repetitivas, em função de certas restrições instrumentais. Isso é visto aos montes na chamada <em>PWM (Pulse Width Modulation)</em>, sinal de saída de microcontroladores, como placas Arduino, ESP32, e Raspberry pi.</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nos scripts desse capitulo, a ideia principal foi converter um ângulo em diferentes representações numéricas e geométricas. Aqui vamos destrinchar um pouquinho mais do script da <a href="#fig-trig2" class="quarto-xref">Figura&nbsp;<span>5.3</span></a>, aquele de movimento circular gerando uma onda. O código calcula a frequência a partir do período:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> T<span class="op">;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> omega <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span> <span class="op">*</span> f<span class="op">;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lambda <span class="op">=</span> v <span class="op">*</span> T<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso significa que:</p>
+<ul>
+<li><code>T</code> é o tempo de um ciclo completo;</li>
+<li><code>f</code> é quantos ciclos ocorrem por unidade de tempo;</li>
+<li><code>omega</code> é a velocidade angular;</li>
+<li><code>lambda</code> é o comprimento de onda.</li>
+</ul>
+<p>Quando <code>T</code> diminui, a frequência aumenta. Quando <code>T</code> aumenta, a frequência diminui.</p>
+<p>A animação é construída por uma sequência de <em>frames</em>. Em cada frame, o ponto gira um pouco mais e a onda é redesenhada:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ang <span class="op">=</span> omega <span class="op">*</span> tempo<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Esse ângulo muda com o tempo e controla tanto o ponto no círculo quanto a fase da onda. Uma sugestão para pseudocódigo do script é dada abaixo.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">INICIAR</span> parâmetros principais</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">definir</span> amplitude A</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">definir</span> velocidade v</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">definir</span> número de pontos da onda</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">definir</span> quantidade de frames da animação</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="ex">FUNÇÃO</span> gerarFrame<span class="er">(</span><span class="ex">T,</span> tempo<span class="kw">)</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">calcular</span> frequência:</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">f</span> = 1 / T</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">calcular</span> velocidade angular:</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">omega</span> = 2πf</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">calcular</span> comprimento de onda:</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">lambda</span> = vT</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">calcular</span> ângulo atual:</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ang</span> = omega × tempo</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="ex">calcular</span> posição do ponto no círculo:</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>        <span class="ex">px</span> = cos<span class="er">(</span><span class="ex">ang</span><span class="kw">)</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>        <span class="ex">py</span> = sen<span class="er">(</span><span class="ex">ang</span><span class="kw">)</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">gerar</span> pontos do círculo:</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PARA</span> vários ângulos th</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>            <span class="ex">calcular</span> x = cos<span class="er">(</span><span class="ex">th</span><span class="kw">)</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>            <span class="ex">calcular</span> y = sen<span class="er">(</span><span class="ex">th</span><span class="kw">)</span></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>        <span class="ex">FIM</span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    <span class="ex">gerar</span> pontos da onda:</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PARA</span> vários pontos x</span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>            <span class="ex">calcular</span> fase:</span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>                <span class="ex">fase</span> = 2π<span class="er">(</span><span class="ex">x/lambda</span><span class="kw">)</span> <span class="ex">+</span> ang</span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>            <span class="ex">calcular</span> altura da onda:</span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>                <span class="ex">y</span> = sen<span class="er">(</span><span class="ex">fase</span><span class="kw">)</span></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>        <span class="ex">FIM</span></span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    <span class="ex">retornar:</span></span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>        <span class="ex">círculo</span></span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ponto</span> girando</span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>        <span class="ex">onda</span></span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>        <span class="ex">parâmetros</span> associados</span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a><span class="ex">FIM</span> FUNÇÃO</span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a><span class="ex">FUNÇÃO</span> gerarAnimação<span class="er">(</span><span class="ex">T</span><span class="kw">)</span></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>    <span class="ex">criar</span> lista de frames</span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>    <span class="ex">PARA</span> cada instante de tempo</span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a>        <span class="ex">gerar</span> frame usando gerarFrame<span class="er">(</span><span class="ex">T,</span> tempo<span class="kw">)</span></span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a>        <span class="ex">armazenar</span> frame</span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a>    <span class="ex">FIM</span></span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a>    <span class="ex">retornar</span> animação completa</span>
+<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a><span class="ex">FIM</span> FUNÇÃO</span>
+<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a><span class="ex">gerar</span> animação inicial</span>
+<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a><span class="ex">criar</span> gráficos:</span>
+<span id="cb24-64"><a href="#cb24-64" aria-hidden="true" tabindex="-1"></a>    <span class="ex">círculo</span></span>
+<span id="cb24-65"><a href="#cb24-65" aria-hidden="true" tabindex="-1"></a>    <span class="ex">raio</span> girando</span>
+<span id="cb24-66"><a href="#cb24-66" aria-hidden="true" tabindex="-1"></a>    <span class="ex">linha</span> de projeção</span>
+<span id="cb24-67"><a href="#cb24-67" aria-hidden="true" tabindex="-1"></a>    <span class="ex">onda</span></span>
+<span id="cb24-68"><a href="#cb24-68" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ponto</span> da onda</span>
+<span id="cb24-69"><a href="#cb24-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-70"><a href="#cb24-70" aria-hidden="true" tabindex="-1"></a><span class="ex">criar</span> slider:</span>
+<span id="cb24-71"><a href="#cb24-71" aria-hidden="true" tabindex="-1"></a>    <span class="ex">alterar</span> T</span>
+<span id="cb24-72"><a href="#cb24-72" aria-hidden="true" tabindex="-1"></a>    <span class="ex">recalcular</span> animação</span>
+<span id="cb24-73"><a href="#cb24-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-74"><a href="#cb24-74" aria-hidden="true" tabindex="-1"></a><span class="ex">criar</span> botões:</span>
+<span id="cb24-75"><a href="#cb24-75" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Play</span></span>
+<span id="cb24-76"><a href="#cb24-76" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Pause</span></span>
+<span id="cb24-77"><a href="#cb24-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-78"><a href="#cb24-78" aria-hidden="true" tabindex="-1"></a><span class="ex">mostrar</span> resultado final</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./prob.html" class="pagination-link" aria-label="Probabilidade e Estatística: quando o acaso revela padrões">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilidade e Estatística: quando o acaso revela padrões</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./financ.html" class="pagination-link" aria-label="Crescimento, Tempo e Decisão: Matemática Financeira">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Crescimento, Tempo e Decisão: Matemática Financeira</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

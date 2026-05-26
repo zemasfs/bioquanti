@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Ecologia: populações, interações e fluxo de energia – Biologia &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./gen.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./eco.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ecologia: populações, interações e fluxo de energia</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Biologia &amp; JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eco.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ecologia: populações, interações e fluxo de energia</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Genética Mendeliana e Molecular: dos padrões de herança à manipulação do DNA</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./vida.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Origem, Organização, e Evolução da Vida</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./seres.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vida em rede: Microbiologia, Botânica e Zoologia</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fisio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Metabolismo e Fisiologia: Energia, Equilíbrio e Vida</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./biomol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reprogramando a Vida: DNA, Genes e Biotecnologia Moderna</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./human.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Corpo Humano: Integração, Controle e Vida em Funcionamento</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ecologia: populações, interações e fluxo de energia</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Populações de organismos não crescem de forma contínua em muitos dos <em>ecossistemas</em> naturais. Em vez disso, apresentam oscilações ao longo do tempo. Por exemplo, populações de presas, como ratos, podem crescer rapidamente quando há abundância de recursos. No entanto, esse crescimento pode favorecer o aumento de predadores, como serpentes, que passam a se alimentar dessas presas. Como consequência, a população de presas diminui, o que, posteriormente, leva também à redução dos predadores. Além disso, a quantidade de energia disponível em um ecossistema limita o tamanho das populações, sendo transferida de forma decrescente entre os <em>níveis tróficos</em>. Esses fenômenos acabam por interligar a dinâmica populacional com relações ecológicas, interações presa–predador e o fluxo de energia e biomassa.</p>
+<div id="fig-eco_gizz" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-eco_gizz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/eco_gizz.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eco_gizz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.1: Mais presas podem sustentar mais predadores, mas muitos predadores podem reduzir as presas, criando oscilações no sistema ecológico.
+</figcaption>
+</figure>
+</div>
+<p><strong>Ao final, você será capaz de:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> explicar por que populações naturais oscilam<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> diferenciar tipos de relações ecológicas pelo comportamento dinâmico<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> relacionar fluxo de energia com tamanho populacional<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar modelos computacionais de sistemas biológicos.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sem preocupar-se com a teoria e os conceitos que envolvem este capítulo, <em>“divirta-se”</em> um pouco usando o aplicativo JSPlotly personalizado para a relação presa-predador a seguir. Sem pressa…curtindo o momento !</p>
+<div id="fig-eco" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-eco-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/eco.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eco-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.2: Aplicativo de JSPlotly para explorar a dinâmica de relação entre presa e predador. Clique com o botão direito do mouse neste <a href="apps/eco.html">LINK</a> e abra-o numa nova aba. Ou use a tela capacitiva de seu dispositivo móvel (celular, tablet).
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>O <em>app</em> da <a href="#fig-eco" class="quarto-xref">Figura&nbsp;<span>2.2</span></a> simula uma relação ecológica entre presas e predadores ao longo do tempo. Antes de estudar o modelo em detalhes, altere pequenos valores no código e observe como as populações respondem. Após clicar no botão <em>add</em>, observe que editor de códigos traz alguns valores em seu início:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> presa <span class="op">=</span> <span class="dv">40</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> predador <span class="op">=</span> <span class="dv">9</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaCrescimento <span class="op">=</span> <span class="fl">0.1</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaPredacao <span class="op">=</span> <span class="fl">0.002</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaMorte <span class="op">=</span> <span class="fl">0.2</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> eficiencia <span class="op">=</span> <span class="fl">0.0008</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Altere os parâmetros, observe as respostas do <em>app</em>, e construa hipóteses.</p>
+<ol type="1">
+<li><p>Observe as populações iniciais. O sistema começa com:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> presa <span class="op">=</span> <span class="dv">40</span><span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> predador <span class="op">=</span> <span class="dv">9</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+<p>A primeira representa a população de presas. A segunda representa a população de predadores.</p>
+<ol start="2" type="1">
+<li><p>Escolha qual população visualizar. Altere esta linha:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mostrar <span class="op">=</span> <span class="st">"presas"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para observar os predadores, troque por:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mostrar <span class="op">=</span> <span class="st">"predadores"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Explore o crescimento das presas. Modifique:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaCrescimento <span class="op">=</span> <span class="fl">0.1</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Valores maiores fazem as presas crescerem mais rapidamente quando há alimento e espaço disponíveis.</p></li>
+<li><p>Explore a predação. Altere:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaPredacao <span class="op">=</span> <span class="fl">0.002</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Essa taxa controla o quanto os predadores reduzem a população de presas.</p></li>
+<li><p>Explore a morte dos predadores. Modifique:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaMorte <span class="op">=</span> <span class="fl">0.1</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Valores maiores fazem a população de predadores diminuir mais rapidamente quando há poucas presas.</p></li>
+<li><p>Explore a eficiência ecológica. Altere:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> eficiencia <span class="op">=</span> <span class="fl">0.0008</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Esse parâmetro indica o quanto a presença de presas contribui para o aumento dos predadores.</p></li>
+</ol>
+<p>Agora você já está preparado para comparar cenários da relação entre presas e predadores. Assim, experimente, por exemplo:</p>
+<ul>
+<li>aumentar a quantidade inicial de presas;</li>
+<li>reduzir a quantidade inicial de predadores;</li>
+<li>aumentar a taxa de predação;</li>
+<li>aumentar a taxa de morte dos predadores;</li>
+<li>trocar entre <code>"presas"</code> e <code>"predadores"</code> para comparar as curvas.</li>
+</ul>
+<p>Com um pouquinho de tempo no aplicativo, você já conseguirá responder diversas perguntas, como por exemplo, se há um crescimento contínuo, se existe algum padrão de repetição, e mesmo quem “controla” quem nessa relação !</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No modelo proposto da <a href="#fig-eco" class="quarto-xref">Figura&nbsp;<span>2.2</span></a>, duas populações interagem ao longo do tempo. Dependendo do tipo de relação ecológica, o comportamento do sistema muda significativamente. Em <em>predação</em>, por exemplo, há oscilações típicas entre presa e predador. Em <em>competição</em>, ambas as populações disputam recursos. Em <em>mutualismo</em>, as duas populações se beneficiam. Em <em>parasitismo</em>, uma se beneficia enquanto a outra é prejudicada. Use os botões do <em>app</em> para explorar cada cenário, e tente responder as perguntas abaixo.</p>
+<ul>
+<li>O que acontece com as presas quando há muitos predadores ?</li>
+<li>O que acontece com os predadores quando há poucas presas ?</li>
+<li>Uma população pode crescer indefinidamente ?</li>
+<li>O equilíbrio ecológico significa ausência de mudança ?</li>
+<li>Há ciclos durante a relação ?</li>
+<li>Qual população controla a outra ?</li>
+</ul>
+<p>Ou seja, em resumo…</p>
+<p><em>Como as interações ecológicas regulam a dinâmica das populações ao longo do tempo ?</em></p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esses modelos de interação presa-predador extendem-se para além do rato e serpente ilustrado ao início do capítulo. Na verdade, com a modelagem adequada, podem ser aplicados para ajudar a entender como ocorrem surtos populacionais e colapsos ecológicos, e também como se dá o controle biológico e o impacto humano em ecossistemas. Isso porque ecossistemas reais não são estáticos. A interação entre organismos e o fluxo de energia determina o equilíbrio ecológico, bem como colapsos populacionais e explosões demográficas. Um exemplo simples que você pode comprovar com o <em>app</em> da <a href="#fig-eco" class="quarto-xref">Figura&nbsp;<span>2.2</span></a>: a retirada de predadores pode causar superpopulação de presas, levando à escassez de recursos e colapso do sistema.</p>
+<p>Agora experimente o JSPlotly mais completo que segue. Ele simula um controle mais abrangente para o estudo das relações ecológicas, fazendo com que a <em>“brincadeira”</em> vá para outro nível !</p>
+<div id="fig-eco2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-eco2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/eco2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eco2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.3: As populações evoluem influenciando-se continuamente e criando padrões dinâmicos no ecossistema. JSPlotly para estudo de relações ecológicas, pirâmide de energia e biomassa. Clique com o botão direito do mouse neste <a href="apps/eco2.html">LINK</a> ou use a tela capacitiva de seu dispositivo móvel para acessar <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h3>
+<p>O <em>app</em> simula diferentes <em>relações ecológicas</em>, apresentando a evolução das populações no tempo, um diagrama de fase (relação entre espécies), e pirâmides de energia e biomassa. Ele possui 3 painéis independentes com botões para <em>predação, competição, mutualismo, e parasitismo</em>. Para utilizá-lo, basta clicar em uma relação ecológica, observar os três painéis, e clicar no botão de animação correspondente à relação. O <em>app</em> possui um <em>menu</em> de relações ecológicas, e apresenta gráficos de dinâmica populacional e de pirâmide de energia. O ajuste de parâmetros é feito diretamente no código, e permite:</p>
+<ol type="1">
+<li>controle de presas iniciais;</li>
+<li>controle de predadores iniciais;</li>
+<li>controle de crescimento da presa;</li>
+<li>controle de taxa de predação;</li>
+<li>controle de morte do predador;</li>
+<li>controle de eficiência do predador.</li>
+</ol>
+<p>Assim, é possível utilizar o aplicativo para explorar diversos cenários de relações ecológicas. Para um aproveitamente mais completo, siga as instruções que seguem.</p>
+<ol type="1">
+<li>Escolha o tipo de interação ecológica. Cada um representa uma forma diferente de interação entre duas populações. Use os botões:</li>
+</ol>
+<ul>
+<li>Predação<br>
+</li>
+<li>Competição<br>
+</li>
+<li>Mutualismo<br>
+</li>
+<li>Parasitismo</li>
+</ul>
+<ol start="2" type="1">
+<li><p>Observe o gráfico principal (tempo × população) e compare o crescimento das populações, quedas abruptas, estabilização ou oscilações.</p></li>
+<li><p>Use o botão <code>Animar</code> e interprete o movimento do ponto ao longo do tempo. Clique em:</p></li>
+</ol>
+<ul>
+<li>Animar Predação<br>
+</li>
+<li>Animar Competição<br>
+</li>
+<li>Animar Mutualismo<br>
+</li>
+<li>Animar Parasitismo</li>
+</ul>
+<ol start="5" type="1">
+<li><p>Interprete o diagrama de fase. No gráfico da direita (população <em>A</em> X população <em>B</em>). Esse gráfico mostra como uma população depende da outra. Quando uma cresce, a outra também cresce ou diminui ?</p></li>
+<li><p>Analise as pirâmides ecológicas. Na parte inferior você observa <code>energia</code> e <code>biomassa</code>. Observe produtores (maior valor) e consumidores (valores menores). Por que há menos energia nos níveis superiores ?</p></li>
+<li><p>Compare os cenários:</p></li>
+</ol>
+<ul>
+<li>Predação <span class="math inline">\(\rightarrow\)</span> oscilações cíclicas</li>
+<li>Competição <span class="math inline">\(\rightarrow\)</span> limitação mútua<br>
+</li>
+<li>Mutualismo <span class="math inline">\(\rightarrow\)</span> crescimento conjunto<br>
+</li>
+<li>Parasitismo <span class="math inline">\(\rightarrow\)</span> benefício de um e prejuízo do outro</li>
+</ul>
+<ol start="8" type="1">
+<li>Explore padrões e observe:<br>
+</li>
+</ol>
+<ul>
+<li>Há equilíbrio ?<br>
+</li>
+<li>Há ciclos ?<br>
+</li>
+<li>Uma população domina a outra ?<br>
+</li>
+<li>Ambas sobrevivem ?</li>
+<li>Qual sistema gera maior biomassa ?</li>
+<li>Qual mantém populações mais equilibradas ?</li>
+<li>Qual colapsa mais rápido ?</li>
+</ul>
+<p>Agora que você explorou o <em>app</em>, reflita sobre o que observou frente às questões que seguem:</p>
+<ul>
+<li>Predação - algumas curvas oscilam entre presas e predadores. O que acontece com predadores quando há poucas presas ?<br>
+</li>
+<li>Competição - outras curvas oscilam ou estabilizam. A competição sempre reduz as duas populações ?<br>
+</li>
+<li>Mutualismo - outras podem crescer junto ou colapsar. No mutualismo as espécies podem crescer indefinidamente ?<br>
+</li>
+<li>Parasitismo - alguém vence em longo prazo. O parasitismo leva à extinção de uma das espécies ?</li>
+</ul>
+<p>Se você chegou até aqui testando as possibilidades acima, deverá verificar que nem toda interação gera um ciclo, que nem todo sistema é estável e que relações ecológicas têm <em>“assinaturas matemáticas”</em> que levam à oscilação, estabilidade, ou instabilidade.</p>
+</section>
+<section id="significado-dos-parâmetros-dos-cenários-ecológicos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="significado-dos-parâmetros-dos-cenários-ecológicos">Significado dos parâmetros dos cenários ecológicos</h3>
+<p>O script da <a href="#fig-eco2" class="quarto-xref">Figura&nbsp;<span>2.3</span></a> também possui uma série de parâmetros que definem os cenários ecológicos. Caso queira experimentar variações nesses parâmetros, ou mesmo a criação de outro cenário, como o <em>comensalismo</em>, basta modificá-los.</p>
+<p><code>nome</code> Indica o tipo de interação ecológica simulada: predação, competição, mutualismo ou parasitismo.</p>
+<p><code>presa0</code> População inicial da primeira espécie. No cenário de predação, representa a população inicial de presas.</p>
+<p><code>pred0</code> População inicial da segunda espécie. No cenário de predação, representa a população inicial de predadores.</p>
+<p><code>rPresa</code> Taxa de crescimento natural da população de presas, na ausência de predadores ou outras limitações fortes.</p>
+<p><code>Kpresa</code> Capacidade de suporte do ambiente para a população de presas. Representa o tamanho máximo aproximado que essa população pode atingir no ambiente.</p>
+<p><code>ataque</code> Intensidade com que predadores encontram, capturam ou consomem presas.</p>
+<p><code>eficiencia</code> Eficiência com que o consumo de presas contribui para o crescimento da população de predadores.</p>
+<p><code>mortePred</code> Taxa de mortalidade natural dos predadores quando não há alimento suficiente.</p>
+<p><code>rPred</code> Taxa de crescimento natural da segunda espécie, usada nos cenários em que ela não depende diretamente de consumir a primeira.</p>
+<p><code>Kpred</code> Capacidade de suporte do ambiente para a segunda espécie.</p>
+<p><code>compAB</code> Efeito competitivo da espécie B sobre a espécie A. Quanto maior esse valor, maior a redução do crescimento de A causada por B.</p>
+<p><code>compBA</code> Efeito competitivo da espécie A sobre a espécie B. Quanto maior esse valor, maior a redução do crescimento de B causada por A.</p>
+<p><code>beneficioAB</code> Benefício que a espécie B exerce sobre a espécie A no mutualismo.</p>
+<p><code>beneficioBA</code> Benefício que a espécie A exerce sobre a espécie B no mutualismo.</p>
+<p><code>rHosp</code> Taxa de crescimento natural do hospedeiro no cenário de parasitismo.</p>
+<p><code>Khosp</code> Capacidade de suporte do ambiente para a população de hospedeiros.</p>
+<p><code>dano</code> Intensidade do prejuízo causado pelo parasita ao hospedeiro.</p>
+<p><code>ganhoPar</code> Ganho populacional do parasita associado à exploração do hospedeiro.</p>
+<p><code>mortalidadePar</code> Taxa de mortalidade natural do parasita quando sua manutenção não é compensada pelo hospedeiro.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Agora pare um pouquinho para refletir sobre situações experimentadas da vida planetária ou criadas em sua mente, e nas quais as relações ecológicas são golpeadas por situações críticas. Algumas são passíveis de teste pelos aplicativos deste capítulo, outras não. Vão aí alguma ideias…</p>
+<ul>
+<li>E se não houvesse limite de recursos ?</li>
+<li>E se uma das espécies desaparecesse ?</li>
+<li>E se não houvesse perda de energia entre níveis tróficos ?</li>
+<li>E se existissem apenas produtores ?</li>
+<li>E se dois predadores competissem pela mesma presa ?</li>
+<li>E se a taxa de crescimento fosse muito alta ?</li>
+<li>E se a taxa de crescimento</li>
+</ul>
+<p>Dessa forma, pode-se resumir o tema de relações ecológicas abordado aqui em função do perfil esperado pela dinâmicas das curvas encontradas nessas interações. A presa cresce proporcionalmente à sua população, enquanto o predador depende da presa para crescer. Nesse caso, a interação reduz a presa e favorece o predador, e tudo limitado pela energia disponível nessa interação. Ou seja, se as curvas oscilam, tem-se um sistema presa-predador clássico. Se as curvas estabilizam, uma provável competição com equilíbrio. E se as curvas crescem juntas, mutualismo reinando !</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os conceitos deste capítulo também são aplicados em situação distintas em outros temas da Biologia. Modelos semelhantes são encontrados no crescimento bacteriano em cultura, na dinâmica de insetos em plantações, no controle biológico de pragas agrícolas (competição / parasitismo), no equilíbrio de cadeias alimentares (predação), e nas <em>interações simbióticas</em> entre alguns organismos (mutualismo), tais como as observadas em líquens (algas e musgos) e no cultivo de <em>quefir</em> e <em>kombucha</em>, dois <code>probióticos</code> da medicina popular. Além disso, os modelos matemáticos por detrás dessas relações são comumente aplicados em áreas bem diversas, como em alguns sistemas dinâmicos da Física e no comportamento de soluções da Química.</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esse espaço é dedicado para inserir o <strong>pensamento computacional</strong> <code>plugado</code> ao longo dos capítulos, e de propiciar algumas explicações que estão por detrás das <strong>competências digitais</strong> que você alcançou <em>mesmo sem perceber</em> ao longo dos temas. Para isso, é fornecido abaixo uma <strong>lógica de código</strong> explicitada na forma de um <strong>pseudocódigo</strong>, e que traduz o que um <em>script</em> de JSPlotly realiza para produzir um objeto interativo. Para essa seção, ilustra-se o objeto da <a href="#fig-eco" class="quarto-xref">Figura&nbsp;<span>2.2</span></a>, por ser mais simples de compreender.</p>
+<p>Esse JSPlotly personalizado trabalha em cima do <code>crescimento logístico</code> (limite ambiental), das interações entre espécies, e da transferência de energia entre níveis tróficos. Para isso, o modelo utilizado baseia-se em interações dinâmicas entre populações. Em termos simplificados, a ideia é:</p>
+<pre><code>Para cada instante de tempo:
+  calcular crescimento da presa
+  calcular efeito da predação
+  calcular crescimento do predador
+  atualizar populações
+  calcular energia disponível</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Introdução">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./gen.html" class="pagination-link" aria-label="Genética Mendeliana e Molecular: dos padrões de herança à manipulação do DNA">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Genética Mendeliana e Molecular: dos padrões de herança à manipulação do DNA</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Plataformas gráficas e a biblioteca Plotly.js – Plotly.js - uma biblioteca perfeita para o JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./config.html" rel="next">
+<link href="./alfabetiza.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5cd4c82f5794ab985b4ec67d486cba7b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./biblioteca.html">Parte I - A biblioteca <code>Plotly.js</code></a></li><li class="breadcrumb-item"><a href="./introd.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Plataformas gráficas e a biblioteca <code>Plotly.js</code></span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Plotly.js - uma biblioteca perfeita para o JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./biblioteca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parte I - A biblioteca `Plotly.js`</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./alfabetiza.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Alfabetização visual de gráficos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introd.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Plataformas gráficas e a biblioteca <code>Plotly.js</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./config.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Construção de gráficos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3D.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Gráficos 3D</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interativ.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interatividade</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./personaliz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parte II - Personalização</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./layout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Argumento <em>layout</em></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./layout2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mais Plotly - Avançado</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./layoutAdv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><em>Layout</em> avançado</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./exemplos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parte 4 - Exemplos de uso para *JSPlotly*</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exemplos/exBasico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Uso básico do <em>JSPlotly</em> para estudo de funções gráficas</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#sec-plataf" id="toc-sec-plataf" class="nav-link active" data-scroll-target="#sec-plataf"><span class="header-section-number">2.1</span> Plataformas gráficas</a></li>
+  <li><a href="#a-biblioteca-plotly.js" id="toc-a-biblioteca-plotly.js" class="nav-link" data-scroll-target="#a-biblioteca-plotly.js"><span class="header-section-number">2.2</span> A biblioteca <code>Plotly.js</code></a></li>
+  <li><a href="#plataformas-gráficas-x-plotly.js" id="toc-plataformas-gráficas-x-plotly.js" class="nav-link" data-scroll-target="#plataformas-gráficas-x-plotly.js"><span class="header-section-number">2.3</span> Plataformas gráficas X <code>Plotly.js</code></a></li>
+  <li><a href="#sec-introd" id="toc-sec-introd" class="nav-link" data-scroll-target="#sec-introd"><span class="header-section-number">2.4</span> Racional para um gráfico e as habilidades de <code>Plotly.js</code></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./biblioteca.html">Parte I - A biblioteca <code>Plotly.js</code></a></li><li class="breadcrumb-item"><a href="./introd.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Plataformas gráficas e a biblioteca <code>Plotly.js</code></span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Plataformas gráficas e a biblioteca <code>Plotly.js</code></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-plataf" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-plataf"><span class="header-section-number">2.1</span> Plataformas gráficas</h2>
+<div class="line-block">&nbsp;&nbsp;Existe um bom número de pacotes gráficos e estatísticos que vão de encontro a simulações para funções matemáticas em áreas diversas. Ilustrando, as versões pagas ou de demonstração de <a href="https://www.graphpad.com/">Prisma Graphpad</a>, <a href="https://www.originlab.com/">Origin Lab</a>, <a href="https://www.mathworks.com/products/matlab.html">MathWorks Matlab</a>, <a href="https://www.wolfram.com/mathematica/">Wolfram Mathematica</a>, <a href="https://www.microsoft.com/pt-br/power-platform/products/power-bi">Microsoft Power Bi</a>, e <a href="https://grafiti.com/sigmaplot-detail/">Grafiti SigmaPlot</a>, suites gráficas que apresentam modelos para ajuste não linear de dados ou simulação para algumas equações.</div>
+<div class="line-block">&nbsp;&nbsp;Dentre as iniciativas gratuitas, elenca-se <a href="https://www.geogebra.org/">Geogebra</a>, um software para matemática, estatística e gráficos em geral, <a href="https://copasi.org/">COPASI</a>, um simulador para redes bioquímicas, <a href="https://octave.org/">Gnu Octave</a>, uma alternativa de código aberto ao <em>Matlab</em>, e <a href="http://wxmaxima-developers.github.io/wxmaxima/">WxMaxima</a>, um software para <em>CAS</em> (sistema de computação algébrica) e gráficos, e <a href="https://jupyter.org/">Jupyter Notebooks</a>, uma plataforma para edição e visualização <em>online</em> de trechos de códigos.</div>
+<div class="line-block">&nbsp;&nbsp;Além desses, a forte recomendação de uso para o programa de computação estatística <a href="https://cran.r-project.org/">R</a> e sua interface gráfica e ambiente integrado de desenvolvimento <a href="https://posit.co/download/rstudio-desktop/">RStudio</a>. A plataforma <em>R &amp; RStudio</em> é largamente empregada em cursos acadêmicos da área, principalmente para Bioestatística. Não obstante, possui diversos pacotes que agregam recursos para visualização gráfica em Bioquímica. Entre essas bibliotecas adicionais, <code>nls.multstart</code> (modelos de cinética enzimática e de cooperatividade de Hill), <code>drc</code>(modelos de cinética e de curvas dose-resposta), <code>fme</code> (modelagem de reações bioquímicas e cinética de fármacos), e <code>kinfit</code> (modelos cinéticos, farmacológicos, logísticos, e de crescimento celular).</div>
+<div class="line-block">&nbsp;&nbsp;Se por um lado esses sistemas permitem um estudo avançado das características de modelagem propostas, em contrapartida apresentam:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Necessidade de instalação ou acesso credenciado em nuvem para programa<span class="sc">/</span>pacotes;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Dependência de licença, ainda que temporária, para uso de programas;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Necessidade de conexão a internet para as versões em nuvem dos programas;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Preços altos ou versões de demonstração limitadas para os programas pagos;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Usabilidade dependente de janelas, menus e abas específicas de cada suite;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fl">6.</span> Limitação de modelos matemáticos <span class="fu">propostos</span> (embora o conhecimento da sintaxe de cada programa permita a inserção de equações pelo usuário);</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fl">7.</span> Presença de diversas janelas e abas individuais dessas, para acesso às informações de inserção e visualização gráfica de dados e funções;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fl">8.</span> Programas que usualmente operam por cliques de mouse não permitem ao aprendiz a inserção em pensamento computacional envolvido em linguagens de programação (ex<span class="sc">:</span> <span class="er">*</span>Prism<span class="sc">*</span>, <span class="sc">*</span>Geogebra<span class="sc">*</span>, <span class="sc">*</span>Origin<span class="sc">*</span>, <span class="sc">*</span>Sigma Plot<span class="sc">*</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fl">9.</span> Programas que não trabalham com linhas de comando produzem os resultados gráficos em janelas diferentes, exigindo alterância à sua usabilidade;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fl">10.</span> Gráficos produzidos visualizados somente dentro dos programas;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fl">11.</span> Alguns programas para gráficos não permitem a abertura de mais de uma sessão (ex<span class="sc">:</span> <span class="er">*</span>Origin<span class="sc">*</span>, <span class="sc">*</span>Prism<span class="sc">*</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fl">12.</span> Uma vasta coleção de funcionalidades de cada suite, muito além da necessidade básica que envolve um estudo para compreensão de um gráfico;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fl">13.</span> Gráficos renderizáveis por vezes apenas bidimensionalmente, e não em <span class="dv">3</span>D;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fl">14.</span> Tipos gráficos <span class="dv">2</span>D bastante limitados para alguns programas;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fl">15.</span> Um caminho por vezes detalhado e único junto aos programas, entre janelas e abas, para se buscar apenas a funcionalidade específica à elaboração de um gráfico simulado por uma função matemática;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fl">16.</span> Níveis limitados para ações de <span class="st">"desfazer/refazer"</span> (<span class="sc">*</span>undo<span class="sc">/</span>redo<span class="sc">*</span>) para vários programas listados acima;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fl">17.</span> Dependência de hardware de bom desempenho para alguns <span class="fu">programas</span> (exemplificando, <span class="sc">*</span>Origin Lab<span class="sc">*</span> requer <span class="dv">3</span> GB de memória de disco e um mínimo de <span class="dv">4</span>GB de RAM para operar, essa última também necessária ao <span class="sc">*</span>Matlab<span class="sc">*</span>);</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fl">18.</span> Limitação de compartilhamento para o arquivo original do gráfico a quem não possua o mesmo programa, e impossibilitando também a personalização do <span class="fu">produto</span> (ex<span class="sc">:</span> limites e rótulos de eixos, novos dados, títulos e subtítulos);</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fl">19.</span> Compartilhamento do gráfico produzido como arquivo de imagem, ou como arquivo compilável especificamente em cada programa;</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fl">20.</span> Produção e compartilhamento de gráficos sem qualquer <span class="fu">interatividade</span> (<span class="sc">*</span>Power Bi<span class="sc">*</span> e outros pagos, como excessões raras);</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fl">21.</span> Apresentação estática dos dados e gráficos envolvidos na confecção (à excessão de alguns pacotes para <span class="sc">*</span>R<span class="sc">*</span>, incluindo <span class="st">`</span><span class="at">plotly</span><span class="st">`</span>);</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fl">22.</span> Limitação de uso em ambientes virtuais de <span class="fu">aprendizagem</span> (instalação de programas no portal, por ex) e, por conseguinte, para algumas modalidades de <span class="fu">ensino</span> (ex<span class="sc">:</span> híbrido, EaD).</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="a-biblioteca-plotly.js" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="a-biblioteca-plotly.js"><span class="header-section-number">2.2</span> A biblioteca <code>Plotly.js</code></h2>
+<div class="line-block">&nbsp;&nbsp;A biblioteca <code>Plotly.js</code> constitui uma ferramenta de código aberto para visualização de dados interativos em <em>JavaScript</em>. Foi criada pela empresa <a href="https://plotly.com/">Plotly Inc.</a>, fundada em 2013 por Alex Johnson, Chris Parmer e Jack Parmer, e lançada em 2015 pela empresa homônima. A empresa é sediada no Canadá, e permanece como a principal mantenedora do <code>Plotly.js</code>, além de outras soluções analíticas, como <em>Dash</em>, um <em>framework</em> popular para aplicações <em>web</em> baseadas em <em>Python</em> e <em>R</em>. <code>Plotly.js</code> está sob a licença <em>MIT</em> (Massachusetts Institute of Technology), para modificação, cópia, distribuição, e venda de softwares, preservados os direitos autorais e a licença.</div>
+<div class="line-block">&nbsp;&nbsp;A biblioteca foi originalmente idealizada para aplicações científicas e empresariais, como uma solução de contorno à limitações de interatividade de outras bibliotecas para uso na <em>web</em> (<em>D3.js</em>, <em>WebGL</em>, e <em>Chart.js</em>). O principal diferencial de <code>Plotly.js</code> é sua habilidade para criação e manejo de gráficos diretamente em um visualizador HTML ou navegador de internet, embora sem a necessidade de renderização em servidor, e mesmo de conexão à rede. Essa habilidade decorre da incorporação da linguagem <em>JavaScript</em> na estrutura moderna de <em>HTML5</em>.</div>
+<div class="line-block">&nbsp;&nbsp;<code>Plotly.js</code> é amplamente utilizada por instituições e empresas de porte, incluindo NASA, Google, Microsoft, MIT, Harvard, Johns Hopkins University, e IBM, em função de sua flexibilidade e capacidade para lidar com grandes volumes de dados interativos. Para informações detalhadas, documentação oficial e exemplos de uso, sugere-se consultar os repositórios do <code>Plotly.js</code> no <a href="https://github.com/plotly/plotly.js">GitHub</a>, bem como os tutoriais e documentação disponíveis no <a href="https://plotly.com/javascript/">site oficial</a>, ou sites devotados à linguagem (ex: <a href="https://www.w3schools.com/js/js_graphics_plotly.asp">W3Schools</a>.</div>
+</section>
+<section id="plataformas-gráficas-x-plotly.js" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="plataformas-gráficas-x-plotly.js"><span class="header-section-number">2.3</span> Plataformas gráficas X <code>Plotly.js</code></h2>
+<div class="line-block">&nbsp;&nbsp;Algumas características chancelam <code>Plotly.js</code> como uma alternativa séria e potencial para uso, tanto em pesquisa científica, como em contexto educacional, e nominalmente em função de <em>dois simples aspectos</em>:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> O gráfico é gerado diretamente em HTML;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Pode<span class="sc">-</span>se agregar valor ao gráfico com outras bibliotecas <span class="st">`</span><span class="at">JavaScript</span><span class="st">`</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;Frente à essas 2 características, emerge da estrutura da biblioteca as seguintes vantagens para um gráfico construído com <code>Plotly.js</code>, e em relação a concorrentes:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Não requer instalação;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Não requer requisitos <span class="fu">complementares</span> (ex<span class="sc">:</span> bibliotecas <span class="sc">*</span>.NET Microsoft<span class="sc">*</span>, Java<span class="sc">*</span>);</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Não requer conexão de rede;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Não requer configuração de máquina de mínimo <span class="fu">desempenho</span> (ex<span class="sc">:</span> memória RAM);</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Pode ser carregado a partir de um simples visualizador de <span class="fu">HTML</span> (<span class="sc">*</span>Firefox<span class="sc">*</span>, <span class="sc">*</span>Edge<span class="sc">*</span>, <span class="sc">*</span>Safari<span class="sc">*</span>, <span class="sc">*</span>Chrome<span class="sc">*</span>);</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fl">6.</span> Não requer um editor específico para construção, podendo ser elaborado a partir de um simples bloco de notas;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fl">7.</span> Possui código<span class="sc">-</span>fonte e produto contidos em um mesmo arquivo, facilitando armazenamento e compartilhamento;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fl">8.</span> Pode ser carregado a partir de computador, dispositivos móveis (smartphone) ou removíveis (pendrive);</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fl">9.</span> É interpretado a partir de um código de texto simples, utilizando memória física desprezível (<span class="dv">20</span>kB), ainda que permita a elaboração de gráficos sofisticados, interativos e dinâmicos (atualização por evento de usuário ou em tempo real);</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fl">10.</span> Por ser passível de construção em editor simples de texto, possui compartilhamento irrestrito de seu código<span class="sc">-</span>fonte;</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fl">11.</span> É capaz de produzir gráficos <span class="dv">2</span>D e <span class="dv">3</span>D interativos instantaneamente, e tanto a partir de equações, como de dados inseridos pelo usuário;</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fl">12.</span> É capaz de produzir mapas interativos, elevando a extensão de uso para aplicações não matemáticas;</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fl">13.</span> Correlaciona<span class="sc">-</span>se diretamente ao uso de linguagens de programação, tal como requerido pela <span class="sc">*</span><span class="dv">4</span>a. e <span class="dv">5</span>a. Revolução Industrial<span class="sc">*</span>, e respectivamente  espelhados nas competências digitais da <span class="sc">*</span>Educação <span class="dv">4</span> e <span class="fl">5.0</span><span class="sc">*</span>; </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fl">14.</span> Por sua simplicidade como arquivo único em HTML, pode ser incorporado em páginas da web ou ambientes virtuais, permitindo seu uso para qualquer modalidade de ensino<span class="sc">-</span><span class="fu">aprendizagem</span> (ex<span class="sc">:</span> presencial, híbrido, remoto, EaD);</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fl">15.</span> Insere<span class="sc">-</span>se nos conceitos de <span class="sc">*</span>pesquisa reproduzível<span class="sc">*</span> bem como de <span class="sc">*</span>ensino reprodutível<span class="sc">*</span>, alicerçados pelo acesso e compartilhamento abertos, facilitados e documentados, para ferramentas digitais direcionadas a conteúdos científico, bem como das matrizes curriculares;</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fl">16.</span> Permite que se incorpore no código<span class="sc">-</span>fonte outras bibliotecas em <span class="sc">*</span>JavaScript<span class="sc">*</span>, complementares à produção e manejo gráficos (ex<span class="sc">:</span> <span class="er">*</span>numjs<span class="sc">*</span> para computação numérica e álgebra linear, <span class="sc">*</span>jsmath<span class="sc">*</span> para notações matemáticas complexas, <span class="sc">*</span>jStat<span class="sc">*</span> para computação estatística);</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fl">18.</span> Possui diversas ações interativas por cliques de mouse, e que pontuam um grau lúdico à experimentação de funções matemáticas;</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fl">19.</span> Renderiza gráficos a partir de linguagem de programação moderna e largamente utilizada, o que também permite ao aprendiz sua inserção paulatina em técnicas de programação contidos em outras linguagens <span class="fu">recorrentes</span> (<span class="sc">*</span>Python<span class="sc">*</span>, <span class="sc">*</span>R<span class="sc">*</span>), e do mundo <span class="sc">*</span>geek<span class="sc">*</span> (Arduino <span class="sc">-</span> <span class="er">*</span>C<span class="sc">/</span>C<span class="sc">++</span><span class="er">*</span>).</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="line-block">&nbsp;&nbsp;Parte das características acima coadunam com a proposta de abordagem metodológica de <em>Pesquisa Reproduzível</em> <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, como de <em>Ensino Reprodutível</em> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, uma vez que cumpre os requisitos para ambas as arestas de conhecimento e informação de:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Dados e códigos abertos;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Documentação detalhada;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Ambiente computacional reproduzível;</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Compartilhamento e ética. </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="sec-introd" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-introd"><span class="header-section-number">2.4</span> Racional para um gráfico e as habilidades de <code>Plotly.js</code></h2>
+<div class="line-block">&nbsp;&nbsp;Independentemente do programa ou aplicativo móvel para construção de um gráfico, a <em>receita</em> costuma trilhar um caminho comum, tal como:</div>
+<ol type="1">
+<li>Uso de uma equação ou de um conjunto de dados (ex: <em>x,y</em> para 2D; <em>x,y e z</em> para 3D) para confecção do gráfico;</li>
+<li>Definição do tipo de gráfico (ex: ponto, linhas, barras, etc)</li>
+<li>Geração de gráfico (2D ou 3D);</li>
+<li>Ajuste visual (ex: ampliação/redução, limites de eixos);</li>
+<li>Personalização (cores, linhas, estilos);</li>
+<li>Rotulagem (título, subtítulo, eixos);</li>
+<li>Adição de outros conjuntos de dados (ex: múltiplas curvas);</li>
+<li>Formatação de legendas;</li>
+<li>Utilização de marcadores (ex: setas);</li>
+<li>Utilização de anotações;</li>
+<li>Exportação em arquivo (ex: <em>png, svg, jpeg</em>).</li>
+</ol>
+<div class="line-block">&nbsp;&nbsp;Para uma biblioteca gráfica como <code>plotly.js</code> não é diferente, podendo-se construir uma diversidade rica de gráficos (<em>40 tipos</em>, segundo o <a href="https://plotly.com/javascript/">mantenedor</a>. Não obstante, <code>plotly.js</code> permite extender significativamente a experiência de usuário de forma dinâmica, possibilitando uma abordagem intrinsecamente interativa à visualização de dados. Essa interatividade de <code>plotly.js</code> é facultada por diversas habilidades da biblioteca, tanto por ações de mouse como por inserções de eventos, a destacar:</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Efeito de afastamento<span class="sc">/</span>aproximação visual <span class="fl">1.</span> geral ou de área específica (<span class="sc">*</span>zoom<span class="sc">*</span>);</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Arraste do ecrã de visualização (<span class="sc">*</span>pan<span class="sc">*</span>, panorâmica);</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Deslocamento individual de eixos;</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Retorno à configuração <span class="fu">original</span> (<span class="sc">*</span>reset<span class="sc">*</span>);</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fl">5.</span> Seleção de dados<span class="sc">/</span>pontos individuais ou coletivos <span class="fu">por</span> (<span class="sc">*</span>box<span class="sc">*</span> ou <span class="sc">*</span>lasso<span class="sc">*</span>);</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fl">6.</span> Informações por passagem de <span class="fu">mouse</span> (<span class="sc">*</span>hover<span class="sc">*</span> ou <span class="sc">*</span>mouse over<span class="sc">*</span>; ex<span class="sc">:</span> exibição dinâmica de valores);</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fl">7.</span> Dicas customizáveis de <span class="fu">ferramentas</span> (<span class="sc">*</span>tooltips<span class="sc">*</span>);</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fl">8.</span> Legendas interativas;</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fl">9.</span> Gráficos dinâmicos (atualização automática em fluxo);</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fl">10.</span> Navegação <span class="fu">detalhada</span> (<span class="sc">*</span>drill1.down<span class="sc">*</span>; exploração em área específica);</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fl">11.</span> Botões personalizados <span class="fu">no</span>  (<span class="sc">*</span>buttons<span class="sc">*</span>);</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fl">12.</span> Eventos personalizados por mouse ou ação de usuário (<span class="sc">*</span>callbacks<span class="sc">*</span>, atualização de página por interação);</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fl">13.</span> <span class="fu">Deslizadores</span> (<span class="sc">*</span>sliders<span class="sc">*</span>) e menus para filtragem de informações;</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fl">14.</span> Marcação de dados por linhas pontilhadas nos eixos gráficos e <span class="sc">*</span>hover<span class="sc">*</span> (<span class="sc">*</span>Toggle Spike Lines<span class="sc">*</span>);</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fl">15.</span> Menu de ícones para interatividade padrão (<span class="sc">*</span>Mode bar<span class="sc">*</span>);</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fl">16.</span> Personalização do <span class="sc">*</span>Mode bar<span class="sc">*</span> (ex<span class="sc">:</span> exportação da imagem em SVG, cópia de dados do gráfico para a área de transferência);</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fl">17.</span> Animações em <span class="sc">*</span>layout<span class="sc">*</span> ou transição de dados;</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fl">18.</span> Facetas <span class="fu">interativas</span> (<span class="sc">*</span>facets<span class="sc">*</span>, gráficos lado a lado);</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fl">19.</span> Sincronização entre gráficos <span class="fu">interconectados</span> (<span class="sc">*</span>zoom<span class="sc">*</span> e seleção de dados);</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fl">20.</span> Criação de paineis dinâmicos <span class="fu">interativos</span> (<span class="sc">*</span>dashboards<span class="sc">*</span>);</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fl">21.</span> Integração com bibliotecas <span class="fu">interativas</span> (<span class="sc">*</span>D3.js<span class="sc">*</span> e <span class="sc">*</span>React.js<span class="sc">*</span>) ou analíticas (ex<span class="sc">:</span> <span class="er">*</span>numjs<span class="sc">*</span>, <span class="sc">*</span>mathjs<span class="sc">*</span>, <span class="sc">*</span>jstat<span class="sc">*</span>).</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Peng, Roger D., and Stephanie C. Hicks. <a href="https://www.annualreviews.org/content/journals/10.1146/annurev-publhealth-012420-105110">“Reproducible research: a retrospective.” Annual review of public health 42.1 (2021): 79-93</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Dogucu, Mine, and Mine Çetinkaya-Rundel. <a href="https://www.tandfonline.com/doi/full/10.1080/26939169.2022.2138645">“Tools and recommendations for reproducible teaching.” Journal of Statistics and Data Science Education 30.3 (2022): 251-260</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./alfabetiza.html" class="pagination-link" aria-label="Alfabetização visual de gráficos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Alfabetização visual de gráficos</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./config.html" class="pagination-link" aria-label="Construção de gráficos">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Construção de gráficos</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,2399 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8&nbsp; Química Analítica: como descobrir o que existe, quanto existe, e por quê – Química &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./tecnol.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./analit.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Química Analítica: como descobrir o que existe, quanto existe, e por quê</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Química &amp; JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./solEqkin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Como o meio e a velocidade moldam as reações: soluções, equilíbrio, e cinética</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./termsteq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Termoquímica e Estequiometria: matéria e energia se transformando juntas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./materia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Arquitetura da matéria: como átomos se organizam e se conectam</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./orginorg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funções e transformações químicas: da matéria mineral às moléculas da vida</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ambEletroq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Mundo em reação: Química Ambiental e Eletroquímica</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tecnol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Química de Materiais e Nanotecnologia - Do plástico do dia-a-dia às partículas invisíveis que mudam o mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analit.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Química Analítica: como descobrir o que existe, quanto existe, e por quê</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Química Analítica: como descobrir o que existe, quanto existe, e por quê</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Química Analítica: Medindo o invisível, revelando o que está escondido
+
+A lógica ficaria linda:
+
+Script 1: titulação → ponto de equivalência
+Script 2: espectrofotometria → cor vira concentração
+Script 3: calibração → sinal vira número
+Script 4: fracionamento → mistura vira frações
+Script 5: cromatografia ABSURDO++ → detector muda o que enxergamos
+
+(ou, se quiser algo mais chamativo ainda)
+👉 “Química Analítica: como descobrir o que existe, quanto existe — e por quê”
+
+🌳 Estrutura integrada (tronco → ramos → galhos)
+🌲 Tronco:
+
+Química Analítica
+
+🌿 Ramos principais:
+Análise qualitativa → o que tem ali?
+Análise quantitativa → quanto tem ali?
+🌱 Galhos (conteúdos integrados)
+🔹 1. Titulação (clássico + essencial)
+ácido-base
+ponto de equivalência × ponto final
+indicadores (fenolftaleína, azul de bromotimol)
+
+urva de titulação interativa
+slider de concentração
+escolha de indicador
+visual + gráfico ao mesmo tempo
+🔹 2. Espectrofotometria (ponte com física e bio!)
+absorção de luz
+cor × comprimento de onda
+relação concentração × absorbância
+
+Ouro didático:
+
+aluno vê cor → traduz em número
+número → vira concentração
+🔹 3. Curvas de calibração (o coração da análise moderna)
+padrão conhecido → construir reta
+amostra desconhecida → interpolar
+
+💡 conexão direta:
+👉 matemática (função linear)
+👉 erro experimental
+👉 estatística básica
+
+🔹 4. Sensibilidade, erro e incerteza
+erro sistemático × aleatório
+precisão × exatidão
+limites de detecção
+
+💡 aqui entra maturidade científica — MUITO bom pro ensino médio avançado
+
+🔹 5. Métodos modernos (toque final, sem pesar)
+cromatografia (ideia geral)
+sensores (tipo Arduino 👀🔥)
+análise em tempo real
+🔥 Por que esse capítulo é ouro didático
+
+Porque ele conecta:
+
+Química → reações, soluções
+Física → luz, energia
+Matemática → funções, gráficos
+Biologia → análises clínicas
+Tecnologia → sensores, Arduino
+
+👉 é literalmente “ciência aplicada ao mundo real”
+
+🎯 Sugestão de scripts JSPlotly (níveis)
+🧪 Script 1 — Titulação interativa
+curva pH × volume
+slider de concentração
+escolha ácido/base forte/fraco
+indicador visual (mudança de cor)
+🌈 Script 2 — Espectrofotometria
+escolher comprimento de onda
+variar concentração
+ver cor simulada + absorbância
+📈 Script 3 — Curva de calibração (Kryptonity 🔥)
+adicionar pontos experimentais
+ver reta sendo ajustada
+clicar → descobrir concentração desconhecida
+🚀 Script 4 — Sistema analítico completo (ABSURDO++)
+escolher método: titulação ou espectro
+simular experimento completo
+erro experimental incluído
+resposta final automática
+🧠 Ideia central do capítulo (pra seu QMD)
+
+👉 “Medir não é apenas observar — é transformar fenômenos em números confiáveis.” -->
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Você já reparou que muitas das coisas do mundo não podem ser vistas diretamente ? Por exemplo, uma água aparentemente limpa não significa que seja realmente potável. E um suco de laranja pode não conter o valor de vitamina C informado pelo fabricante. Por outro lado, um impacto ambiental pode requerer que se determine o teor de um poluente invisível. Nessas situações, é importante usar alguma técnica que permita verificar certas propriedades da amostra em análise.</p>
+<p>Esse movimento normalmente acompanha uma medida na amostra, sua adequação a um modelo teórico, a calibração do valor junto ao equipamento de medida, e a interpretação do resultado. É assim no cotidiano das empresas de abastecimento de água para medição do teor de cloro, na indústria de alimentos para aferição da acidez e concentração de substâncias, para medir o teor de glicose do sangue, bem como de poluentes em amostras para monitoramento de impacto ambiental.</p>
+<p>Nesse sentido, o capítulo lida com algo bastante prático da Química: como analisar e quantificar soluções e compostos de interesse (<code>analitos</code>), transformando sinais químicos em informação confiável. Dessa forma busca-se responder “o que existe” (<code>análise qualitativa</code>) e o “quanto existe” de uma substância na amostra (<code>análise quantitativa</code>).</p>
+<div id="fig-gizz_analit" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_analit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_analit.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_analit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.1: Convertendo um sinal químico numa quantidade.
+</figcaption>
+</figure>
+</div>
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> compreender a diferença entre análise qualitativa e quantitativa<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar uma titulação como uma reação monitorada<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> relacionar absorbância, luz e concentração em espectrofotometria<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> construir e interpretar curvas de calibração<span class="kw">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> reconhecer erros, incertezas e limitações de uma medida<span class="kw">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> usar gráficos interativos baseados em códigos para investigar amostras simuladas.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<!-- A Química Analítica é a ponte entre:
+
+
+Árvore do conhecimento
+
+Tronco: Química Analítica
+
+Ramo 1: Análise qualitativa
+Pergunta: o que há na amostra?
+
+Ramo 2: Análise quantitativa
+Pergunta: quanto há na amostra?
+
+Galhos principais:
+
+titulação;
+espectrofotometria;
+curva de calibração;
+erro e incerteza;
+sensores e análises modernas.
+
+
+1. Análise qualitativa: o que existe aqui?
+
+A análise qualitativa procura identificar substâncias, íons ou grupos químicos presentes em uma amostra.
+
+Exemplos:
+
+identificar se há íons cloreto em uma água;
+verificar se uma solução é ácida ou básica;
+detectar presença de ferro, cobre ou cálcio;
+reconhecer uma substância pela mudança de cor em uma reação.
+
+Nesse tipo de análise, a resposta principal é:
+
+está presente ou não está presente?
+
+Mas, em ciência, quase sempre queremos ir além.
+
+Não basta saber que existe.
+
+Queremos saber quanto existe.
+
+2. Análise quantitativa: quanto existe aqui?
+
+A análise quantitativa mede a quantidade de uma substância.
+
+Ela transforma um sinal experimental em número.
+
+Esse sinal pode ser:
+
+volume gasto em uma titulação;
+intensidade de cor;
+absorbância de luz;
+corrente elétrica;
+massa;
+condutividade;
+pH;
+tempo de reação.
+
+A ideia central é simples:
+
+medir um efeito observável para descobrir uma quantidade invisível.
+
+3. Titulação: quando uma reação vira régua química
+
+A titulação é uma das técnicas clássicas mais importantes da Química Analítica.
+
+Nela, uma solução de concentração conhecida é usada para descobrir a concentração de outra solução.
+
+A solução conhecida é chamada de titulante.
+
+A solução desconhecida é chamada de amostra ou analito.
+
+Na titulação ácido-base, por exemplo, podemos usar uma base conhecida para descobrir a concentração de um ácido.
+
+ácido + base -> sal + água
+
+O ponto mais importante é o ponto de equivalência.
+
+Ele ocorre quando as quantidades químicas reagiram na proporção correta.
+
+Antes de qualquer definição formal, experimente.
+
+No primeiro script, o aluno observa uma curva de titulação.
+
+Ele pode variar:
+
+concentração do ácido;
+concentração da base;
+volume adicionado;
+tipo de ácido ou base;
+indicador escolhido.
+
+O objetivo é perceber que a titulação não é apenas uma mudança de cor.
+
+Ela é uma reação química acompanhada por uma curva.
+
+
+
+Script 1 — Titulação interativa -->
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Imagine que uma água pareça limpa, embora contenha contaminantes. Ou que uma agência nacional confie no teor de lactose, colesterol, ou açúcar informado pelo fabricante no rótulo do produto. Ou ainda que uma solução pareça mais azul que outra, comparando-as apenas visualmente. Em todos esses casos, é necessário sair da impressão visual e chegar a uma medida. Para isso utilizam-se alguns métodos da Química, e dentre os mais famosos, a <code>titulometria</code>, apresentada pela <a href="#fig-analit" class="quarto-xref">Figura&nbsp;<span>8.2</span></a> como um JSPlotly para investigação.</p>
+<section id="titulometria" class="level4">
+<h4 class="anchored" data-anchor-id="titulometria">Titulometria</h4>
+<div id="fig-analit" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-analit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/analit.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.2: A titulação transforma uma reação química em uma medida quantitativa. Clique com o botão direito neste <a href="apps/analit.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O script de JSPlotly da <a href="#fig-analit" class="quarto-xref">Figura&nbsp;<span>8.2</span></a> simula uma <code>titulação ácido-base</code>, procedimento que ajuda a encontrar a quantidade de um composto por mudança de cor da solução. Você acompanha como o pH muda quando uma base é adicionada pouco a pouco a uma solução ácida. O gráfico mostra a <code>curva de titulação</code>, o <code>ponto de equivalência</code>, e a faixa de viragem do indicador.</p>
+</section>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>A curva mostra que o pH muda lentamente no início. Perto da equivalência, isto é, quando a quantidade de base adicionada é igual à de ácido, uma pequena adição de titulante causa um grande salto de pH. Após esse ponto, o pH passa a ser dominado pelo excesso de base As linhas horizontais indicam a faixa de viragem do indicador.</p>
+<p>Execute o script com:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Ca <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Cb <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Va <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> indicador <span class="op">=</span> <span class="st">"fenolftaleina"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois teste outros indicadores, como o “azul_bromotimol” e o “alaranjado_metila”.</p>
+<pre><code>
+Também altere as concentrações, e observe como o volume de equivalência muda.
+
+```js
+const Ca = 0.20;
+const Cb = 0.10;</code></pre>
+<p><em>Como a titulação ajuda a predizer quanto de ácido havia na solução inicial ?</em></p>
+<p>Durante a titulação, a base neutraliza o ácido. No <code>ponto de equivalência</code>, o teor de ácido e base se iguala, considerando a proporção da reação (<code>estequimetria</code>).</p>
+<!--- , isto é, quando se percebe que a quantidade que se adicionou do `titulante` parece igualar a quantidade do `analito` na amostra,--->
+<p>Neste caso simples:</p>
+<p><span id="eq-n_H"><span class="math display">\[
+n_H = n_{OH}
+\tag{8.1}\]</span></span></p>
+<p>Com <span class="math inline">\(n\)</span> representando o <code>número de mols</code>. Como:</p>
+<p><span id="eq-CV"><span class="math display">\[
+n = C \cdot V
+\tag{8.2}\]</span></span></p>
+<p>O volume de equivalência permite calcular a concentração ou quantidade da substância analisada. Segue um modo de usar para o aplicativo.</p>
+<ol type="1">
+<li>Rode o script com os valores originais;</li>
+<li>Observe a curva de pH;</li>
+<li>Localize o ponto de equivalência;</li>
+<li>Veja se a faixa do indicador passa perto da região de salto da curva;</li>
+<li>Troque o indicador;</li>
+<li>Compare as faixas de viragem;</li>
+<li>Aumente a concentração do ácido;</li>
+<li>Veja se o volume de equivalência aumenta;</li>
+<li>Aumente a concentração da base;</li>
+<li>Veja se o volume de equivalência diminui.</li>
+</ol>
+<p>Perceba que um bom <code>indicador</code> é aquele que muda de cor perto do ponto certo. Seguem alguns contextos para uma experiência “titulável”.</p>
+<ol type="1">
+<li><em>Titulação equilibrada</em>. Por que o ponto de equivalência aparece próximo de 25 mL ?</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Ca <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Cb <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Va <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Ácido mais concentrado</em>. Por que é necessário mais base para neutralizar o ácido ?</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Ca <span class="op">=</span> <span class="fl">0.20</span><span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Cb <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Base mais concentrada</em>. Por que o volume de equivalência diminui ?</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Ca <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Cb <span class="op">=</span> <span class="fl">0.20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Fenolftaleína</em>. A viragem ocorre próxima do salto de pH ?</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> indicador <span class="op">=</span> <span class="st">"fenolftaleina"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Azul de bromotimol</em>. Por que esse indicador combina bem com equivalência próxima de pH 7 ?</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> indicador <span class="op">=</span> <span class="st">"azul_bromotimol"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Alaranjado de metila</em>. Em que tipo de titulação esse indicador poderia ser mais adequado ?</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> indicador <span class="op">=</span> <span class="st">"alaranjado_metila"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Existem alguns tipos diferentes de titulação também, como a <code>titulação complexométrica</code>, a <code>titulação redox</code>, e a <code>titulação por precipitação</code>. Em comum a elas, está o fato de que são técnicas que permitem descobrir a quantidade de uma substância observando como ela reage com outra de concentração conhecida.</p>
+</section>
+<section id="por-dentro-do-script" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script">Por dentro do script</h4>
+<p>O script começa definindo os parâmetros principais:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Ca <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Cb <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Va <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> indicador <span class="op">=</span> <span class="st">"fenolftaleina"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois simula a adição de base:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">let</span> vb <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> vb <span class="op">&lt;=</span> <span class="dv">50</span><span class="op">;</span> vb <span class="op">+=</span> <span class="fl">0.5</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para cada volume, calcula os mols de ácido e base:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> molH <span class="op">=</span> Ca <span class="op">*</span> Va <span class="op">/</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> molOH <span class="op">=</span> Cb <span class="op">*</span> vb <span class="op">/</span> <span class="dv">1000</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Se ainda há excesso de ácido, calcula-se o pH pelo excesso de H<span class="math inline">\(^+\)</span>. Se há excesso de base, calcula-se o pH pelo excesso de OH<span class="math inline">\(^-\)</span>. Então o ponto de equivalência é calculado por:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Veq <span class="op">=</span> (Ca <span class="op">*</span> Va) <span class="op">/</span> Cb<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Por fim, o script desenha a faixa de viragem do indicador escolhido.</p>
+</section>
+<section id="espectrofotometria" class="level4">
+<h4 class="anchored" data-anchor-id="espectrofotometria">Espectrofotometria</h4>
+<p>Reações de titulação dependem normalmente do olhar do observador para perceber o ponto de viragem correto. É claro que existem máquinas capazes de identificá-lo com precisão, mas são caras e pouco disponíveis em instituições de ensino básico e mesmo superior. Além disso, mesmo essas máquinas se baseiam em algum princípio quantitativo, como uma mudança de pH, um sinal elétrico, ou a intensidade de uma cor. Assim, uma técnica que dependa do olhar humano para detectar o ponto exato da mudança de uma cor pode ser substituida por outra que a quantifique. É disso que se trata o próximo JSPlotly: mostrar que uma “cor” pode virar medida química, revelando a concentração do composto.</p>
+<div id="fig-analit2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-analit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/analit2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.3: Na espectrofotometria, quanto mais uma solução absorve luz, mais informação ela revela sobre sua concentração. Clique com o botão direito neste <a href="apps/analit2.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>A espectrofotometria é uma técnica de laboratório que mede a quantidade de luz absorvida por uma substância química. Basicamente, um feixe de luz atravessa uma amostra e o equipamento calcula a intensidade da luz que passa. Como cada molécula absorve cores ou comprimentos de onda específicos, essa medição permite identificar o que há na amostra e determinar sua concentração exata.</p>
+<p>O <em>app</em> da <a href="#fig-analit2" class="quarto-xref">Figura&nbsp;<span>8.3</span></a> simula uma análise espectrofotométrica. A ideia é observar como uma substância absorve luz em diferentes comprimentos de onda. O gráfico mostra o <code>espectro de absorção</code> do composto, o comprimento de onda escolhido, a <code>absorbância</code> do composto (quanto de luz é absorvida pela interação com a molécula), bem como sua <code>transmitância</code> (quanto de luz atravessa a solução sem interagir com a molécula). A intensidade da cor é representada visualmente.</p>
+<p>Execute o script com:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> concentracao <span class="op">=</span> <span class="fl">0.50</span><span class="op">;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lambda <span class="op">=</span> <span class="dv">520</span><span class="op">;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> epsilonMax <span class="op">=</span> <span class="fl">1.8</span><span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> caminho <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois altere a concentração:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> concentracao <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> concentracao <span class="op">=</span> <span class="fl">0.80</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E teste outros comprimentos de onda, e observe como a absorbância muda:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lambda <span class="op">=</span> <span class="dv">400</span><span class="op">;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lambda <span class="op">=</span> <span class="dv">520</span><span class="op">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lambda <span class="op">=</span> <span class="dv">650</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Na espectrofotometria, como descobrir a concentração de uma solução usando luz ?</em></p>
+<p>Na espectrofotometria, uma luz atravessa a amostra. Parte da luz passa (<em>transmitida</em>) e parte é absorvida (<em>absorção</em>), e a relação quantitativa entre as duas é dada por:</p>
+<p><span id="eq-AT"><span class="math display">\[
+A=-\log _{10}T
+\tag{8.3}\]</span></span></p>
+<p>Já a relação entre absorção e concentração é descrita pela <code>Lei de Beer-Lambert</code>:</p>
+<p><span class="math display">\[
+A = \varepsilon \cdot b \cdot c
+\]</span></p>
+<p>Onde:</p>
+<ul>
+<li><span class="math inline">\(A\)</span> é a absorbância;</li>
+<li><span class="math inline">\(\varepsilon\)</span> é um coeficiente de absorção (ou de <code>extinção</code>) da substância, e que depende do comprimento de onda da faixa de luz escolhida (<span class="math inline">\(\lambda\)</span>, ou <em>lambda</em>, em nm), indicando a capacidade da substância em absorver luz naquela faixa;</li>
+<li><span class="math inline">\(b\)</span> é o <code>caminho óptico</code>, a espessura do frasco que contém a amostra que é lida pelo equipamento;</li>
+<li><span class="math inline">\(c\)</span> é a concentração da substância.</li>
+</ul>
+<p>Assim, medir luz pode revelar quantidade de matéria. Segue um pequeno tutorial de uso:</p>
+<ol type="1">
+<li>Rode o script com os valores originais;</li>
+<li>Observe o pico de absorção;</li>
+<li>Veja onde está o comprimento de onda escolhido;</li>
+<li>Altere <code>lambda</code>;</li>
+<li>Observe se o ponto se aproxima ou se afasta do máximo;</li>
+<li>Aumente <code>concentracao</code>;</li>
+<li>Veja a absorbância aumentar;</li>
+<li>Observe a transmitância diminuir;</li>
+<li>Altere <code>caminho</code>;</li>
+<li>Veja como o percurso da luz também afeta a medida.</li>
+</ol>
+<p><em>A melhor medida ocorre em qualquer “cor de luz” ou perto do máximo de absorção ?</em> Seguem também alguns contextos para você experimentar.</p>
+<ol type="1">
+<li><em>Medida no máximo de absorção</em>. Por que medir no pico melhora a sensibilidade da análise ?</li>
+</ol>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lambda <span class="op">=</span> <span class="dv">520</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Medida longe do pico</em>. Por que a absorbância diminui quando a luz escolhida é pouco absorvida ?</li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lambda <span class="op">=</span> <span class="dv">650</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Solução diluída</em>. Por que soluções diluídas deixam passar mais luz ?</li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> concentracao <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><p><em>Solução concentrada</em>. Agora passe a <code>concentracao</code> para 0.90. Por que soluções mais concentradas reduzem a transmitância ?</p></li>
+<li><p><em>Caminho óptico maior</em>. Por que a luz sofre maior absorção quando atravessa um caminho maior de solução ?</p></li>
+</ol>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> caminho <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Molécula mais absorvente</em>. Como uma substância com maior absorção molar altera a sensibilidade da análise ?</li>
+</ol>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> epsilonMax <span class="op">=</span> <span class="fl">3.0</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O gráfico mostra que a substância não absorve todas as cores igualmente. Existe uma região em que a absorção é maior e, medir próximo dessa região torna a análise mais sensível. A absorbância aumenta quando a concentração e/ou o caminho óptico aumentam. Nessa situação, a substância absorve mais naquele comprimento de onda. Em suma, a cor da solução pode esconder uma medida quantitativa.</p>
+</section>
+<section id="por-dentro-do-script-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-1">Por dentro do script</h4>
+<p>O script começa com os parâmetros principais:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> concentracao <span class="op">=</span> <span class="fl">0.50</span><span class="op">;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lambda <span class="op">=</span> <span class="dv">520</span><span class="op">;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> epsilonMax <span class="op">=</span> <span class="fl">1.8</span><span class="op">;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> caminho <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois define um modelo simplificado para uma função de absorção relativa:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">absorcaoRelativa</span>(lam) {<span class="op">...</span>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Essa função cria um pico de absorção em torno de 520 nm:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> centro <span class="op">=</span> <span class="dv">520</span><span class="op">;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> largura <span class="op">=</span> <span class="dv">70</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Em seguida, o script calcula o espectro:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>espectro<span class="op">.</span><span class="fu">push</span>(epsilonMax <span class="op">*</span> <span class="fu">absorcaoRelativa</span>(l))<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para o comprimento de onda escolhido, calcula:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> epsilonAtual <span class="op">=</span> epsilonMax <span class="op">*</span> <span class="fu">absorcaoRelativa</span>(lambda)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A absorbância vem de:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> absorbancia <span class="op">=</span> epsilonAtual <span class="op">*</span> caminho <span class="op">*</span> concentracao<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E a transmitância é calculada por:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> transmitancia <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="dv">10</span><span class="op">,</span> <span class="op">-</span>absorbancia) <span class="op">*</span> <span class="dv">100</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assim, o script transforma luz absorvida em informação quantitativa.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Independentemente do uso de uma titulação ou de um espectrofotômetro, a conversão do sinal observado em concentração, como o ponto de equivalência para a primeira e a medida de absorção molecular para a segunda, depende de uma <code>curva de calibração</code>. Sendo bem sincero, <code>qualquer medida analítica depende de uma referência confiável</code>, e a curva de calibração é procedimento para se obtê-la. Só é possível obter um resultado preciso do teor de um analito calibrando-se o método usado para obtê-lo, já que o procedimento associa um sinal abstrato do equipamento (absorbância) a um valor do mundo real, como a concentração.</p>
+<p>Esse é coração do próximo JSPlotly da <a href="#fig-analit3" class="quarto-xref">Figura&nbsp;<span>8.4</span></a>, a simulação de uma curva de calibração, quando o sinal passa a virar concentração.</p>
+<div id="fig-analit3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-analit3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/analit3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analit3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.4: Quando se conhece a relação entre concentração e sinal, pode-se usar o sinal para descobrir a concentração. Clique com o botão direito neste <a href="apps/analit3.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O script simula uma curva de calibração. A ideia é comparar padrões de concentração conhecida com seus sinais medidos. Depois, usando uma reta teórica ajustada aos pontos experimentais, estimamos a concentração de uma amostra desconhecida.</p>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>No <em>app</em>, os pontos representam padrões conhecidos. A reta representa o modelo de calibração. O diamante representa a amostra desconhecida.</p>
+<p>Execute o script com:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erro <span class="op">=</span> <span class="fl">0.04</span><span class="op">;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> sinalAmostra <span class="op">=</span> <span class="fl">0.72</span><span class="op">;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inclinacaoReal <span class="op">=</span> <span class="fl">1.35</span><span class="op">;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interceptoReal <span class="op">=</span> <span class="fl">0.03</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois altere o sinal da amostra:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> sinalAmostra <span class="op">=</span> <span class="fl">0.40</span><span class="op">;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> sinalAmostra <span class="op">=</span> <span class="fl">1.10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E teste diferentes níveis de erro, observando como a estimativa muda.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erro <span class="op">=</span> <span class="fl">0.01</span><span class="op">;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erro <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Como descobrir a concentração de uma amostra que não se conhece ?</em></p>
+<p>Primeiro, medimos padrões conhecidos. Depois ajustamos uma reta:</p>
+<p><span id="eq-reta"><span class="math display">\[
+y = ax + b
+\tag{8.4}\]</span></span></p>
+<p>Onde:</p>
+<ul>
+<li><span class="math inline">\(y\)</span> é o sinal medido;</li>
+<li><span class="math inline">\(x\)</span> é a concentração;</li>
+<li><span class="math inline">\(a\)</span> é a inclinação da reta;</li>
+<li><span class="math inline">\(b\)</span> é o intercepto da reta no eixo <em>y</em>.</li>
+</ul>
+<p>Essa reta é puramente teórica e busca mostrar a tendência de comportamento entre a <code>variável independente</code> <span class="math inline">\(x\)</span> e sua <code>variável resposta</code> <span class="math inline">\(y\)</span>. Esse ajuste é feito por um procedimento que revela qual a reta que mostra a menor distância entre os pontos experimentais e os previstos teoricamente (<code>Método dos Mínimos Quadrados</code>). Esse procedimento é bastante conhecido das Ciências como um todo, e denominado por <code>regressão linear</code> ou <code>ajuste linear</code>. Ou seja, uma aproximação que permite predizer o comportamento esperado a partir dos dados. Ou mais curtinho ainda, um modelo de predição a partir do que é observado.</p>
+<p>Continuando no script, para uma amostra desconhecida, fazemos o caminho inverso:</p>
+<p><span id="eq-retaX"><span class="math display">\[
+x = \frac{y-b}{a}
+\tag{8.5}\]</span></span></p>
+<p>Assim, o sinal medido se transforma em concentração estimada. Abaixo um tutorial rápido para uso do <em>app</em>.</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Observe os pontos dos padrões conhecidos;</li>
+<li>Veja a reta de calibração;</li>
+<li>Localize a amostra desconhecida;</li>
+<li>Leia a concentração estimada;</li>
+<li>Altere <code>sinalAmostra</code>;</li>
+<li>Veja o ponto da amostra se mover;</li>
+<li>Aumente <code>erro</code>;</li>
+<li>Observe se os pontos ficam menos alinhados;</li>
+<li>Compare estimativas com erro baixo e erro alto.</li>
+</ol>
+<p>Exercitando-se acima, perceba que uma curva de calibração confiável depende da reta, dos pontos e do controle do erro. Seguem alguns cenários para você explorar.</p>
+<ol type="1">
+<li><em>Baixo erro experimental</em>. Pontos mais alinhados tornam a estimativa mais confiável ?</li>
+</ol>
+<div class="sourceCode" id="cb32"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erro <span class="op">=</span> <span class="fl">0.005</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Erro maior</em>. Como a dispersão dos pontos afeta a confiança na concentração estimada ?</li>
+</ol>
+<div class="sourceCode" id="cb33"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erro <span class="op">=</span> <span class="fl">0.12</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Amostra diluída</em>. Por que sinais menores indicam menor concentração ?</li>
+</ol>
+<div class="sourceCode" id="cb34"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> sinalAmostra <span class="op">=</span> <span class="fl">0.25</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Amostra concentrada</em>. A amostra ainda está dentro da faixa dos padrões ?</li>
+</ol>
+<div class="sourceCode" id="cb35"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> sinalAmostra <span class="op">=</span> <span class="fl">1.20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Maior sensibilidade</em>. Uma reta mais inclinada torna o método mais sensível ?</li>
+</ol>
+<div class="sourceCode" id="cb36"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inclinacaoReal <span class="op">=</span> <span class="fl">2.00</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Intercepto diferente de zero</em>. O que significa haver sinal mesmo quando a concentração é zero ?</li>
+</ol>
+<div class="sourceCode" id="cb37"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interceptoReal <span class="op">=</span> <span class="fl">0.20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe que, se a amostra cai dentro da faixa dos padrões, a estimativa é uma <code>interpolação</code>. Se cai fora, vira <code>extrapolação</code> — e a confiança diminui. Portanto, a medição nada mais é do que transformar um sinal em informação confiável.</p>
+<p>Traduzindo tudo isso num esquema:</p>
+<p><span id="eq-esquema"><span class="math display">\[
+amostra \rightarrow sinal \rightarrow medida \rightarrow modelo \rightarrow concentração \rightarrow decisão
+\tag{8.6}\]</span></span></p>
+</section>
+<section id="por-dentro-do-script-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-2">Por dentro do script</h4>
+<p>O script começa definindo parâmetros do “experimento”:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erro <span class="op">=</span> <span class="fl">0.04</span><span class="op">;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> sinalAmostra <span class="op">=</span> <span class="fl">0.72</span><span class="op">;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inclinacaoReal <span class="op">=</span> <span class="fl">1.35</span><span class="op">;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interceptoReal <span class="op">=</span> <span class="fl">0.03</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois cria padrões conhecidos:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> conc <span class="op">=</span> [<span class="dv">0</span><span class="op">,</span> <span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.4</span><span class="op">,</span> <span class="fl">0.6</span><span class="op">,</span> <span class="fl">0.8</span><span class="op">,</span> <span class="fl">1.0</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada padrão gera um sinal com pequena variação experimental:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ruido <span class="op">=</span> erro <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(i <span class="op">*</span> <span class="fl">2.7</span>)<span class="op">;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> interceptoReal <span class="op">+</span> inclinacaoReal <span class="op">*</span> c <span class="op">+</span> ruido<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Em seguida, o script calcula a reta de calibração por <em>ajuste linear</em>:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> (n <span class="op">*</span> sxy <span class="op">-</span> sx <span class="op">*</span> sy) <span class="op">/</span> (n <span class="op">*</span> sxx <span class="op">-</span> sx <span class="op">*</span> sx)<span class="op">;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> (sy <span class="op">-</span> a <span class="op">*</span> sx) <span class="op">/</span> n<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Por fim, estima a concentração da amostra:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> concAmostra <span class="op">=</span> (sinalAmostra <span class="op">-</span> b) <span class="op">/</span> a<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Esse é o passo essencial da análise quantitativa.</p>
+</section>
+</div>
+</div>
+<!-- :::
+
+::: {.callout-note}
+
+## Volta pro mundo ![](figuras/icons/tronco_bg.png){width=10%}
+
+Curvas de calibração são usadas em análises de:
+
+* medicamentos;
+* poluentes;
+* proteínas;
+* metais;
+* alimentos;
+* água;
+* sangue;
+* solo.
+
+Quase todo laboratório analítico depende dessa lógica.
+
+Primeiro, aprende-se como o instrumento responde.
+
+Depois, usa-se essa resposta para descobrir o desconhecido.
+
+A Química Analítica é, em grande parte, a arte de fazer o invisível virar número. -->
+<!-- 
+
+A espectrofotometria é usada para analisar:
+
+* qualidade da água;
+* concentração de medicamentos;
+* proteínas;
+* pigmentos;
+* poluentes;
+* alimentos;
+* amostras biológicas.
+
+Em muitos casos, o olho humano apenas percebe “mais claro” ou “mais escuro”.
+
+Mas o espectrofotômetro transforma essa diferença em número.
+
+A Química Analítica começa quando a cor deixa de ser impressão e vira evidência.
+:::
+
+```
+```
+
+:::
+
+---
+
+::: {.callout-note}
+
+## VOLTA PRO MUNDO ![](figuras/icons/tronco_bg.png){width=7%}
+
+Titulações são usadas para analisar:
+
+* acidez de alimentos;
+* qualidade de água;
+* pureza de reagentes;
+* concentração de medicamentos;
+* controle industrial;
+* análises ambientais.
+
+A Química Analítica nasce desse tipo de pergunta:
+
+**o que há na amostra e quanto há?**
+
+Neste script, a resposta aparece quando a curva revela o ponto certo da reação.
+:::
+
+```
+```
+
+
+
+### Modo de usar
+
+Comece com uma titulação ácido forte × base forte.
+Observe o pH inicial.
+Aumente lentamente o volume de titulante.
+Veja a região em que o pH muda rapidamente.
+Compare o ponto de equivalência com a faixa de viragem do indicador.
+Troque o indicador e observe se ele continua adequado.
+Altere a concentração da amostra e veja como o volume necessário muda.
+Cenários exploráveis
+Cenário 1: ácido forte diluído titulado com base forte.
+Cenário 2: ácido forte concentrado titulado com base forte.
+Cenário 3: indicador adequado.
+Cenário 4: indicador inadequado.
+Cenário 5: erro de leitura no volume da bureta.
+Cenário 6: comparação entre ponto final e ponto de equivalência.
+
+### Questões para observar
+
+E se a concentração da base estiver errada?
+E se o aluno passar do ponto final?
+E se o indicador mudar de cor antes do ponto de equivalência?
+E se a curva for de ácido fraco?
+E se a amostra estiver muito diluída? -->
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nas seções acima você acompanhou duas das principais técnicas na análise Química, e viu também como calibrar um instrumento para obter medidas com <code>precisão</code>. A questão que sucede agora é saber se, ainda que tenha obtido medidas precisas, se essas medidas são confiáveis (<code>acurácia</code>). Isso é conduzido com outros procedimentos, normalmente do campo da Estatística, e espelhados no JSPlotly da <a href="#fig-analit4" class="quarto-xref">Figura&nbsp;<span>8.5</span></a>, tais como medida, erro e confiança no resultado.</p>
+<div id="fig-analit4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-analit4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/analit4.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analit4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.5: Toda medida química precisa ser acompanhada de uma avaliação de qualidade. Clique com o botão direito neste <a href="apps/analit4.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>Depois de explorar titulação, espectrofotometria e curva de calibração, esse <em>app</em> agora mostra que todo resultado analítico precisa ser interpretado. Além de “medir concentração” com precisão, é importante saber se essa medida tem acurácia, ou seja, se essa “concentração é confiável”.</p>
+<p>Essa diferença entre <em>precisão</em> e <em>acurácia</em> é visualmente simples. Pense num arco e flecha e um alvo. Precisão é acertar uma fecha algumas vezes lado a lado em qualquer lugar do alvo, enquanto que acurácia é acertá-la no centro do alvo.</p>
+<!--- 
+==================================================
+AQUI CABE DESENHO CLÁSSICO DE ARCO E FLECHA 
+======================================================--->
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>O script simula um sistema analítico com titulação ou espectrofotometria. Em cada caso, há uma concentração real e uma concentração medida. O gráfico mostra uma curva associada ao método escolhido. O ponto em destaque representa o resultado medido. A caixa de texto contém várias informações do “experimento”:</p>
+<ul>
+<li>método;</li>
+<li>concentração real;</li>
+<li>concentração medida;</li>
+<li>interferente;</li>
+<li>erro relativo;</li>
+<li>avaliação final.</li>
+</ul>
+<p>A diferença entre elas gera um erro relativo que classifica o resultado como <em>aceitável</em>, <em>duvidoso</em>, ou <em>ruim</em>.</p>
+<p>Execute o script com:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> metodo <span class="op">=</span> <span class="st">"espectro"</span><span class="op">;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> concentracaoReal <span class="op">=</span> <span class="fl">0.55</span><span class="op">;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erroPercentual <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interferente <span class="op">=</span> <span class="fl">0.00</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois teste:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> metodo <span class="op">=</span> <span class="st">"titulacao"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Agora aumente o erro:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erroPercentual <span class="op">=</span> <span class="dv">15</span><span class="op">;</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erroPercentual <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E simule interferência, como um composto que também é titulado ou absorvido junto no experimento, camuflando o valor real do analito que se deseja determinar:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interferente <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interferente <span class="op">=</span> <span class="op">-</span><span class="fl">0.10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe como a avaliação muda.</p>
+<p><em>Quando uma medida deve ser aceita, questionada ou rejeitada ?</em></p>
+<p>Para qualquer medida experimental, quer em Química, Física, Biologia ou qualquer outra área do conhecimento, o valor medido pode ser afetado de diferentes maneiras:</p>
+<ul>
+<li>erro experimental;</li>
+<li>interferentes;</li>
+<li>limitações do método;</li>
+<li>leitura do instrumento;</li>
+<li>escolha inadequada da técnica.</li>
+</ul>
+<p>Por isso, dois resultados podem parecer próximos, mas ter confiabilidades diferentes. Para verificar isso, use o <em>app</em> como segue:</p>
+<ol type="1">
+<li>Rode o script em modo <code>"espectro"</code>;</li>
+<li>Observe a curva analítica;</li>
+<li>Veja a concentração real e a concentração medida;</li>
+<li>Observe o erro relativo;</li>
+<li>Aumente <code>erroPercentual</code>;</li>
+<li>Veja quando o resultado deixa de ser aceitável;</li>
+<li>Aumente <code>interferente</code>;</li>
+<li>Observe se a medida fica superestimada;</li>
+<li>Use interferente negativo;</li>
+<li>Observe se a medida fica subestimada;</li>
+<li>Troque para <code>"titulacao"</code>;</li>
+<li>Compare como o mesmo conceito aparece nesse outro método.</li>
+</ol>
+<p>Depois de rodar o script algumas vezes, perceba que um resultado numérico precisa ser acompanhado de sua qualidade. Alguns cenários para você “validar”…ou não !</p>
+<ol type="1">
+<li><em>Medida quase ideal</em>. Por que o resultado fica próximo do valor real ?</li>
+</ol>
+<div class="sourceCode" id="cb47"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erroPercentual <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interferente <span class="op">=</span> <span class="fl">0.00</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Erro moderado</em>. Em que momento o resultado começa a ficar duvidoso ?</li>
+</ol>
+<div class="sourceCode" id="cb48"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erroPercentual <span class="op">=</span> <span class="dv">12</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><p><em>Erro grande</em>. Troque agora o erro para 30. Por que um erro elevado pode comprometer completamente a interpretação ?</p></li>
+<li><p><em>Interferente positivo</em>. O que acontece quando outra substância aumenta o sinal medido ?</p></li>
+</ol>
+<div class="sourceCode" id="cb49"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interferente <span class="op">=</span> <span class="fl">0.15</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Interferente negativo</em>. Como uma interferência pode fazer a concentração parecer menor do que realmente é ? .</li>
+</ol>
+<div class="sourceCode" id="cb50"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interferente <span class="op">=</span> <span class="op">-</span><span class="fl">0.10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Comparação entre métodos</em>. O erro aparece do mesmo jeito em métodos diferentes ?</li>
+</ol>
+<div class="sourceCode" id="cb51"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> metodo <span class="op">=</span> <span class="st">"titulacao"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>depois:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> metodo <span class="op">=</span> <span class="st">"espectro"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Em laboratórios reais, erros e interferentes aparecem em análises de água, alimentos, medicamentos, sangue, solo e poluentes, para citar apenas alguns. Um resultado errado pode levar a decisões erradas, como aprovar uma água imprópria, reprovar um alimento seguro (ou vice-versa), dosar mal um medicamento ou subestimar uma contaminação. Por isso, a análise em Química, assim como em outras áreas, exige controle, calibração, repetição e interpretação crítica.</p>
+</section>
+<section id="por-dentro-do-script-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-3">Por dentro do script</h4>
+<p>O script começa definindo o método e a concentração real:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> metodo <span class="op">=</span> <span class="st">"espectro"</span><span class="op">;</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> concentracaoReal <span class="op">=</span> <span class="fl">0.55</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois cria uma concentração medida com erro:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erroFator <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> erroPercentual <span class="op">/</span> <span class="dv">100</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(concentracaoReal <span class="op">*</span> <span class="fl">9.1</span>)<span class="op">;</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> concentracaoMedida <span class="op">=</span> concentracaoReal <span class="op">*</span> erroFator <span class="op">+</span> interferente<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso simula a diferença entre o valor verdadeiro e o valor obtido no laboratório. Quando o método é a titulação, o script gera uma curva de pH:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (metodo <span class="op">===</span> <span class="st">"titulacao"</span>) {<span class="op">...</span>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Quando o método é a espectrofotometria, gera uma curva analítica:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  y<span class="op">.</span><span class="fu">push</span>(<span class="fl">1.45</span> <span class="op">*</span> c <span class="op">+</span> <span class="fl">0.04</span>)<span class="op">;</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois calcula o erro relativo:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> erroRelativo <span class="op">=</span> <span class="dv">100</span> <span class="op">*</span> diferenca <span class="op">/</span> concentracaoReal<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E classifica o resultado:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(erroRelativo) <span class="op">&gt;</span> <span class="dv">10</span>) avaliacao <span class="op">=</span> <span class="st">"Resultado duvidoso"</span><span class="op">;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(erroRelativo) <span class="op">&gt;</span> <span class="dv">20</span>) avaliacao <span class="op">=</span> <span class="st">"Resultado ruim"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assim, o script combina medida, erro e julgamento analítico.</p>
+</section>
+<section id="cromatografia" class="level4">
+<h4 class="anchored" data-anchor-id="cromatografia">Cromatografia</h4>
+<p>Um outro método muito comum em laboratórios de maior porte é a <code>cromatografia</code>. Na verdade, ela pode ser realizada até em papel, mas para medidas precisas quantitativas, em que se deseja a detecção e quantificação de uma substância de interesse no meio de uma mistura, a <em>cromatografia em coluna</em> é preferível. Entre os diversos métodos cromatográficos em coluna destacam-se a <code>cromatografia de filtração molecular</code>, a <code>cromatografia de troca iônica</code>, a <code>cromatografia gasosa</code>, a <code>cromatografia de fase reversa</code>, e a <code>cromatografia de afinidade</code>.</p>
+<p>Seja qual for a escolha, os métodos cromatográficos são empregados desde a universidade até a indútria, quando se deseja rastrear e quantificar uma substância numa mistura. Essa mistura pode ser sangue, urina, extratos celulares, leite, ou qualquer outra fonte do composto sob investigação, o que faz com que o método seja utilizado desde laboratórios universitários até a análise forense.</p>
+<p>Assim, não poderíamos deixar de dar um passeio, ainda que discreto, num JSPlotly voltado ao emprego da cromatografia, como na <a href="#fig-analit5" class="quarto-xref">Figura&nbsp;<span>8.6</span></a> abaixo.</p>
+<div id="fig-analit5" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-analit5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/analit5.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analit5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.6: Substâncias diferentes percorrem uma coluna de cromatografia em velocidades diferentes. Clique com o botão direito neste <a href="apps/analit5.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O <em>app</em> coloca você como um <em>“detetive químico”</em> a explorar separação, identificação e interpretação de misturas apresentadas em forma de gráfico. Assim, ele simula cromatografia de coluna com solvente, hidrofobicidade, ruído e composição da mistura. A ideia é separar componentes de uma mistura com base em suas interações com a coluna e com o solvente.</p>
+<p>O gráfico tem várias informações. Ele mostra os picos individuais dos analitos, o perfil total da mistura, o efeito da força do solvente, a influência da hidrofobicidade e uma representação visual da coluna.</p>
+</section>
+<section id="agite-antes-de-usar-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-3">Agite antes de usar</h4>
+<p>Cada pico do gráfico representa um componente da mistura. A posição do pico indica quando ele saiu da coluna. A altura do pico está relacionada à quantidade relativa do analito. O perfil total mostra o que o <code>detector</code> enxergaria ao final.</p>
+<p>Execute o script com:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.55</span><span class="op">;</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ruidoLigado <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mostrarColuna <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mistura <span class="op">=</span> <span class="st">"balanceada"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois teste:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mistura <span class="op">=</span> <span class="st">"polar"</span><span class="op">;</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mistura <span class="op">=</span> <span class="st">"hidrofobica"</span><span class="op">;</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mistura <span class="op">=</span> <span class="st">"complexa"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Agora altere a força do solvente:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.25</span><span class="op">;</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.85</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe como os picos se deslocam.</p>
+<p><em>Como separar substâncias que estão misturadas na mesma amostra ?</em></p>
+<p>Na cromatografia, cada componente interage de forma diferente com a <code>fase estacionária</code> (uma resina) e com a <code>fase móvel</code> (a passagem do solvente). O modelo da <a href="#fig-analit5" class="quarto-xref">Figura&nbsp;<span>8.6</span></a> apresenta uma <code>cromatografia de separação por hidrofobicidade</code>. Nessa, os compostos mais hidrofóbicos interagem mais fortemente com a coluna e ficam mais retidos. Para retirá-los da coluna usa-se solventes mais fortes (deslocamento mais cedo dos picos). Ao final, o <code>cromatograma</code> revela a composição da mistura. A adição de <code>ruído</code> no modelo é feita para dificultar intencionalmente a interpretação, não para te provocar dor-de-cabeça, mas para aproximar a simulação de um experimento do mundo real. Segue um tutorial de uso do <em>app</em>.</p>
+<ol type="1">
+<li>Rode o script com a mistura <code>"balanceada"</code>;</li>
+<li>Observe o perfil total;</li>
+<li>Compare os picos individuais;</li>
+<li>Veja quais analitos saem primeiro;</li>
+<li>Reduza <code>solvente</code>;</li>
+<li>Observe os picos deslocarem para a direita;</li>
+<li>Aumente <code>solvente</code>;</li>
+<li>Observe os picos deslocarem para a esquerda;</li>
+<li>Troque para mistura <code>"complexa"</code>;</li>
+<li>Veja se os picos ficam mais difíceis de separar;</li>
+<li>Ligue o ruído;</li>
+<li>Observe como a leitura fica menos limpa.</li>
+</ol>
+<p>Exercitando-se acima, observe que uma boa separação depende da mistura, da coluna e do solvente. Abaixo vão alguns cenários cinematográficos…digo, “cromatográficos”.</p>
+<ol type="1">
+<li><em>Mistura polar</em>. Por que compostos mais polares tendem a sair mais cedo neste modelo ?</li>
+</ol>
+<div class="sourceCode" id="cb62"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mistura <span class="op">=</span> <span class="st">"polar"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Mistura hidrofóbica</em>. Por que compostos hidrofóbicos ficam mais retidos ?</li>
+</ol>
+<div class="sourceCode" id="cb63"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mistura <span class="op">=</span> <span class="st">"hidrofobica"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Mistura complexa</em>. O que acontece quando muitos analitos possuem retenções próximas ?</li>
+</ol>
+<div class="sourceCode" id="cb64"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mistura <span class="op">=</span> <span class="st">"complexa"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Solvente fraco</em>. Por que os picos demoram mais para aparecer ?</li>
+</ol>
+<div class="sourceCode" id="cb65"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.25</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Solvente forte</em>. Por que os picos saem mais cedo, mas podem ficar menos separados ?</li>
+</ol>
+<div class="sourceCode" id="cb66"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.90</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Com ruído</em>. Como o ruído dificulta identificar picos pequenos ?</li>
+</ol>
+<div class="sourceCode" id="cb67"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ruidoLigado <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="7" type="1">
+<li><em>Sem coluna visual</em>. O gráfico sozinho é suficiente para interpretar a separação ?</li>
+</ol>
+<div class="sourceCode" id="cb68"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mostrarColuna <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Veja também que, enquanto picos bem separados tornam a análise mais clara, a sobreposição deles dificulta a interpretação.</p>
+</section>
+<section id="por-dentro-do-script-4" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-4">Por dentro do script</h4>
+<p>O script começa definindo os controles principais:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.55</span><span class="op">;</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ruidoLigado <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mostrarColuna <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mistura <span class="op">=</span> <span class="st">"balanceada"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois define diferentes tipos de mistura:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> misturas <span class="op">=</span> {</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">polar</span><span class="op">:</span> [<span class="op">...</span>]<span class="op">,</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">balanceada</span><span class="op">:</span> [<span class="op">...</span>]<span class="op">,</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">hidrofobica</span><span class="op">:</span> [<span class="op">...</span>]<span class="op">,</span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">complexa</span><span class="op">:</span> [<span class="op">...</span>]</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada analito possui um nome, uma quantidade e um grau de hidrofobicidade. Os picos são gerados com uma <code>função gaussiana</code> (curva de sino comum na Estatística):</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">gauss</span>(x<span class="op">,</span> mu<span class="op">,</span> sigma<span class="op">,</span> amp)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O tempo de retenção depende da hidrofobicidade e da força do solvente:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> k <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">9</span> <span class="op">*</span> a<span class="op">.</span><span class="at">hidro</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> solvente)<span class="op">;</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tr <span class="op">=</span> <span class="dv">2</span> <span class="op">+</span> k <span class="op">*</span> <span class="fl">2.1</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Quanto maior a hidrofobicidade e mais fraco o solvente, maior o tempo de retenção. O perfil total é dado pela soma dos picos individuais.</p>
+<p>Esse é o princípio visual de um cromatograma.</p>
+<section id="detectores-cromatográficos" class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="detectores-cromatográficos">Detectores cromatográficos</h5>
+<p>Até agora você viu que a cromatografia é um processo de separação baseado nas características da molécula e do solvente. Mas… e se a molécula possuir características que permita ser identificada de jeitos diferentes ? Esse é o alvo do próximo JSPlotly (<a href="#fig-analit6" class="quarto-xref">Figura&nbsp;<span>8.7</span></a>), prover dois detectores distintos para informações também distintas do analito. A ideia agora é mostrar que o que você enxerga depende do tipo de detector.</p>
+<div id="fig-analit6" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-analit6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/analit6.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analit6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.7: O resultado analítico depende tanto do sistema quanto da forma de detecção. Clique com o botão direito neste <a href="apps/analit6.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O <em>app</em> simula uma cromatografia de coluna “completa”. Isso inclui: - diferentes misturas; - efeito do solvente; - hidrofobicidade; - ruído experimental; - dois detectores distintos: UV (luz ultravioleta) e RI (refração da luz).</p>
+<p>A presença de dois detectores para propriedade distintas mostra que uma mesma mistura pode parecer diferente dependendo de como você observa. O gráfico mostra o perfil total da mistura, os picos individuais e o efeito do detector na intensidade dos sinais.</p>
+</section>
+</section>
+<section id="agite-antes-de-usar-4" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-4">Agite antes de usar</h4>
+<p>Execute o script com:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.55</span><span class="op">;</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> misturaInicial <span class="op">=</span> <span class="st">"balanceada"</span><span class="op">;</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> detectorInicial <span class="op">=</span> <span class="st">"uv"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois use os botões:</p>
+<ul>
+<li>Polar UV</li>
+<li>Balanceada UV</li>
+<li>Hidrofóbica UV</li>
+<li>Complexa UV</li>
+</ul>
+<p>Agora troque para:</p>
+<ul>
+<li>Polar RI</li>
+<li>Balanceada RI</li>
+<li>Hidrofóbica RI</li>
+<li>Complexa RI</li>
+</ul>
+<p>Compare os perfis.</p>
+<p>Ative também:</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ruidoLigado <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>O que realmente existe na amostra e o que o detector consegue enxergar ?</em></p>
+<p>Na prática, o detector UV responde a moléculas que absorvem luz na faixa de onda ultravioleta, enquanto que o detector RI responde a mudanças no índice de refração da amostra. Dessa forma, diferentes substâncias geram respostas diferentes em cada detector. Isso significa que uma substância desejada pode até estar presente na amostra, mas praticamente invisível para determinado tipo de detector.</p>
+</section>
+<section id="por-dentro-do-script-5" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-5">Por dentro do script</h4>
+<p>O script começa definindo os parâmetros principais:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.55</span><span class="op">;</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> misturaInicial <span class="op">=</span> <span class="st">"balanceada"</span><span class="op">;</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> detectorInicial <span class="op">=</span> <span class="st">"uv"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada analito possui propriedades duplas:</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>uv<span class="op">:</span> <span class="fl">0.50</span><span class="op">,</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>ri<span class="op">:</span> <span class="fl">0.90</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ou seja, a mesma substância responde diferente em cada detector. O sinal é calculado por:</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> amp <span class="op">=</span> analito<span class="op">.</span><span class="at">qtd</span> <span class="op">*</span> resposta<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Onde <code>resposta</code> depende do detector. Os picos são gerados como funções gaussianas:</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gauss</span>(t<span class="op">,</span> tr<span class="op">,</span> largura<span class="op">,</span> amp)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois, o script cria diferentes “estados”, e permite alternar entre eles com botões.:</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>estados[mistura <span class="op">+</span> <span class="st">"_"</span> <span class="op">+</span> detector]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso simula trocar o detector no laboratório sem mudar a amostra. Seguem instruções rápidas para uso do aplicativo.</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Observe o perfil total;</li>
+<li>Identifique os picos individuais;</li>
+<li>Troque de UV para RI;</li>
+<li>Compare a altura dos picos;</li>
+<li>Veja quais compostos “desaparecem” ou ganham destaque;</li>
+<li>Mude a mistura;</li>
+<li>Observe a complexidade aumentar;</li>
+<li>Aumente o solvente;</li>
+<li>Veja os picos deslocarem;</li>
+<li>Ative o ruído;</li>
+<li>Observe a dificuldade de interpretação.</li>
+</ol>
+<p>Perceba que um detector não mostra tudo, mas apenas parte da realidade. Seguem alguns cenários “detectáveis”.</p>
+<ol type="1">
+<li><em>Mesmo sistema, detector diferente</em>. Por que o mesmo analito muda de intensidade ?</li>
+</ol>
+<p>UV:</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>detectorInicial <span class="op">=</span> <span class="st">"uv"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>RI:</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>detectorInicial <span class="op">=</span> <span class="st">"ri"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Mistura complexa</em>. Qual detector separa melhor os componentes ?</li>
+</ol>
+<div class="sourceCode" id="cb82"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> misturaInicial <span class="op">=</span> <span class="st">"complexa"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Solvente fraco</em>. Por que os picos ficam mais espaçados ?</li>
+</ol>
+<div class="sourceCode" id="cb83"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.25</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Solvente forte</em>. Por que os picos se comprimem e podem se sobrepor ?</li>
+</ol>
+<div class="sourceCode" id="cb84"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.90</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Ruído experimental</em>. Como distinguir sinal real de ruído ?</li>
+</ol>
+<div class="sourceCode" id="cb85"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ruidoLigado <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Invisibilidade analítica</em>. Observe um analito com resposta baixa em UV. Ele desaparece ou só não está sendo detectado ?</li>
+</ol>
+<p>Cada pico representa um componente da mistura. Mas sua altura depende do detector. Isso significa que uma mesma concentração pode apresentar sinais diferentes. E também quer dizer que uma mesma mistura os gráficos podem apresentar-se diferentes. Ou seja, uma mesma realidade pode ter interpretações diferentes. Tudo depende de como você mede, com o que você mede, e o que você escolhe observar.</p>
+</section>
+</div>
+</div>
+<!-- Espectrofotometria: quando a cor vira número
+
+Nem toda análise depende de uma reação visível em um erlenmeyer.
+
+Muitas substâncias absorvem luz.
+
+Quanto maior a concentração, maior tende a ser a absorção.
+
+A espectrofotometria transforma essa absorção em uma medida chamada absorbância.
+
+A relação central é a Lei de Beer-Lambert:
+
+A=ε⋅l⋅c
+
+Em que:
+
+A é a absorbância;
+ε é o coeficiente de absorção molar;
+l é o caminho óptico;
+c é a concentração.
+
+A ideia é poderosa:
+
+quanto mais luz a solução absorve, maior pode ser a concentração da substância analisada.
+
+Cor observada e luz absorvida
+
+Uma solução colorida não mostra diretamente a cor que ela absorve.
+
+Ela mostra principalmente a luz que chega aos nossos olhos.
+
+Por exemplo:
+
+uma solução azul pode absorver mais luz na região alaranjada/vermelha;
+uma solução vermelha pode absorver mais luz na região verde;
+uma solução muito concentrada pode absorver tanta luz que perde linearidade.
+
+Isso abre espaço para discutir física, química e biologia ao mesmo tempo.
+
+Script 2 — Espectrofotometria interativa -->
+<!-- No segundo script, o aluno controla a concentração de uma solução colorida e observa a absorbância.
+
+Ele também pode alterar o comprimento de onda e perceber que nem toda luz é igualmente absorvida.
+
+### Modo de usar
+
+Modo de usar
+Escolha uma substância simulada.
+Ajuste a concentração.
+Observe a mudança na cor aparente.
+Veja a absorbância calculada.
+Varie o comprimento de onda.
+Procure o ponto de maior absorção.
+Compare soluções diluídas e concentradas.
+Cenários exploráveis
+Cenário 1: baixa concentração e baixa absorbância.
+Cenário 2: concentração intermediária e resposta linear.
+Cenário 3: concentração muito alta e possível perda de linearidade.
+Cenário 4: comprimento de onda inadequado.
+Cenário 5: melhor comprimento de onda para análise.
+Cenário 6: comparação entre duas soluções aparentemente parecidas.
+E se...?
+E se a solução for muito escura?
+E se o comprimento de onda escolhido não for o ideal?
+E se a cubeta estiver suja?
+E se houver outra substância absorvendo luz?
+E se a amostra precisar ser diluída?
+
+
+
+
+### Em síntese
+
+A espectrofotometria mostra que a cor pode ser transformada em número.
+
+Quando a concentração aumenta, a absorbância tende a aumentar. Mas isso só funciona bem dentro de uma faixa adequada de medida. Soluções muito concentradas, comprimentos de onda mal escolhidos ou interferentes podem comprometer o resultado.
+
+Por isso, medir luz também exige escolha, calibração e interpretação.
+
+### Ideia central
+
+A ideia central é que uma substância pode ser quantificada pela luz que absorve.
+
+A cor deixa de ser apenas uma impressão visual e passa a ser um sinal analítico. 
+
+---
+
+::: {.callout-caution}
+## Volta pro mundo  ![](figuras/icons/galho_bg.png){width=10%}
+
+A Química Analítica aparece em situações muito próximas da vida real.
+
+Ela ajuda a responder perguntas como:
+
+a água está potável?
+o alimento tem a composição indicada no rótulo?
+há contaminação por metais?
+um medicamento tem a dose correta?
+uma reação industrial está controlada?
+um exame clínico está dentro da faixa esperada?
+um rio recebeu descarte químico?
+um suco tem vitamina C suficiente?
+
+A força dessa área está em transformar dúvidas práticas em medidas confiáveis.
+
+### Calibração e erro
+
+Curva de calibração: ensinando o gráfico a medir
+
+A curva de calibração é uma das ideias mais importantes da ciência experimental.
+
+Primeiro, medimos soluções de concentração conhecida.
+
+Essas soluções são chamadas de padrões.
+
+Depois, construímos um gráfico:
+
+Sinal medido×Concentra
+c
+¸
+    ​
+
+a
+˜
+o conhecida
+
+Se a relação for linear, podemos ajustar uma reta:
+
+y=ax+b
+
+Depois, medimos uma amostra desconhecida.
+
+O sinal dela é usado para estimar a concentração.
+
+Assim, o gráfico vira uma ferramenta de medição.
+
+Script 3 — Curva de calibração Kryptonite
+
+![Script inicial mais simples. Clique com o botão direito neste [LINK](apps/analit3.html) e abra em nova aba.](figuras/analit3.png){#fig-analit3}
+
+O gráfico como instrumento
+
+No terceiro script, o aluno adiciona pontos experimentais, ajusta uma reta e estima a concentração de uma amostra desconhecida.
+
+Esse script conecta Química Analítica, Matemática, Estatística e pensamento científico.
+
+:::
+
+Modo de usar
+Observe os pontos dos padrões conhecidos.
+Veja a reta de calibração.
+Adicione pequenos erros experimentais.
+Compare uma curva perfeita com uma curva realista.
+Insira o sinal de uma amostra desconhecida.
+Estime a concentração pelo gráfico.
+Discuta se o resultado é confiável.
+Cenários exploráveis
+Cenário 1: dados quase perfeitos.
+Cenário 2: dados com pequeno erro aleatório.
+Cenário 3: ponto experimental muito fora da reta.
+Cenário 4: amostra dentro da faixa de calibração.
+Cenário 5: amostra fora da faixa de calibração.
+Cenário 6: comparação entre interpolação e extrapolação.
+E se...?
+E se um ponto da curva estiver errado?
+E se a amostra estiver fora da faixa medida?
+E se a reta não passar pela origem?
+E se houver erro sistemático?
+E se a concentração estimada parecer boa, mas o gráfico for ruim?
+
+### Conectando ideias
+
+Precisão, exatidão e erro
+
+Medir não é apenas obter um número.
+
+É saber o quanto podemos confiar nele.
+
+::: {.callout-important}
+
+Três ideias essenciais
+
+Precisão: medidas próximas entre si.
+
+Exatidão: medidas próximas do valor verdadeiro.
+
+Erro: diferença entre o valor medido e o valor esperado ou real.
+
+:::
+
+Um conjunto de medidas pode ser preciso e não ser exato.
+
+Também pode ser pouco preciso, mas ter média próxima do valor verdadeiro.
+
+Essa distinção é essencial para formar pensamento científico.
+
+Erro aleatório e erro sistemático
+
+O erro aleatório varia de uma medida para outra.
+
+Pode ocorrer por pequenas flutuações na leitura, no equipamento ou no operador.
+
+O erro sistemático desloca todas as medidas em uma mesma direção.
+
+Pode ocorrer por instrumento descalibrado, reagente mal preparado ou método inadequado.
+
+Na Química Analítica, não basta medir.
+
+É preciso perguntar:
+
+que tipo de erro pode estar escondido nesta medida?
+
+7. Limite de detecção: quando o invisível quase desaparece
+
+Nem sempre conseguimos medir qualquer quantidade.
+
+Toda técnica possui limites.
+
+O limite de detecção indica a menor quantidade que pode ser percebida de forma confiável.
+
+O limite de quantificação indica a menor quantidade que pode ser medida com confiança suficiente.
+
+Essa discussão é muito importante em temas como:
+
+poluição ambiental;
+análise de água;
+exames clínicos;
+controle de alimentos;
+resíduos de medicamentos;
+metais pesados.
+8. Cromatografia e sensores: caminhos modernos
+
+Além de titulação e espectrofotometria, a Química Analítica usa muitas outras técnicas.
+
+A cromatografia separa componentes de uma mistura.
+
+Sensores eletroquímicos medem sinais elétricos associados à concentração.
+
+Dispositivos com Arduino ou microcontroladores podem registrar dados em tempo real.
+
+A ideia geral permanece a mesma:
+
+substância -> interação -> sinal -> calibração -> resultado
+
+Isso permite conectar o capítulo com tecnologias de baixo custo, instrumentação educacional e projetos experimentais.
+
+Script 4 — Sistema analítico completo
+
+Integração final
+
+O quarto script pode funcionar como um mini-laboratório analítico.
+
+O aluno escolhe o método, ajusta variáveis, adiciona erro experimental e interpreta o resultado.
+
+
+
+:::
+
+Possibilidades do script
+escolher entre titulação e espectrofotometria;
+simular amostra desconhecida;
+gerar resultado com erro experimental;
+comparar valor real e valor medido;
+mostrar se a análise foi confiável;
+discutir limite de detecção e faixa linear.
+Cenários exploráveis
+Cenário 1: análise ideal.
+Cenário 2: erro pequeno, resultado aceitável.
+Cenário 3: erro grande, resultado duvidoso.
+Cenário 4: método inadequado para a amostra.
+Cenário 5: amostra muito concentrada.
+Cenário 6: amostra muito diluída.
+Cenário 7: interferente químico.
+Cenário 8: comparação entre métodos.
+
+--->
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de “taxiarmos” a pista de vôo espacial para divagações múltiplas do capítulo, segue um último JSPlotly, dessa vez pra (quase) relaxar ! Uma animação que pretende juntar o que você aprendeu ao longo do tema, bem como para simular um fracionamento cromatográfico <em>tendo você como o pesquisador que opera a coluna</em>. Agora você vai separar, observar e coletar.</p>
+<div id="fig-analit7" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-analit7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/analit7.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analit7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.8: Separar é um equilíbrio entre tempo, interação e escolha experimental. Clique com o botão direito neste <a href="apps/analit7.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-5" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-5">Agite antes de usar</h4>
+<p>Imagine que você tem uma mistura complexa contendo vários compostos juntos e invisíveis entre si. Como separar ? Na prática, você não “vê” as moléculas mas observa como elas se movem em um sistema. A mistura entrando na coluna, as bandas se separando, o sinal surgindo no detector e, finalmente, os compostos sendo coletados em <code>frações</code> (pequenas quantidades, normalmente em tubos).</p>
+<p>O modelo da <a href="#fig-analit7" class="quarto-xref">Figura&nbsp;<span>8.8</span></a> representa técnicas reais como <code>cromatografia em coluna</code>, <code>HPLC</code> (cromatografia de alta eficiência), <code>separação preparativa</code> e purificação de compostos. A ideia é separar, detectar e coletar no tempo.</p>
+<p>Execute o script e clique em <code>Play</code>.</p>
+<p>Agora experimente:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>input_mistura <span class="op">=</span> <span class="st">"polar"</span><span class="op">;</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>input_solvente <span class="op">=</span> <span class="fl">0.40</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois:</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>input_mistura <span class="op">=</span> <span class="st">"complexa"</span><span class="op">;</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>input_solvente <span class="op">=</span> <span class="fl">0.75</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E também:</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>input_tempoColeta <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>input_tempoColeta <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe no gráfico que há uma coluna à esquerda, um <code>cromatograma</code> ao centro, e frações sendo coletadas à direita. O que o que cai no tubo é a soma do que passou em determinado tempo. Segue um tutorial rápido para o <em>app</em> animado.</p>
+<ol type="1">
+<li>Clique em <code>Play</code>;</li>
+<li>Observe as bandas descendo na coluna;</li>
+<li>Acompanhe o cromatograma surgindo;</li>
+<li>Veja quando cada pico aparece;</li>
+<li>Observe as frações sendo preenchidas;</li>
+<li>Identifique quais frações contêm cada analito;</li>
+<li>Compare frações vizinhas;</li>
+<li>Ajuste o solvente;</li>
+<li>Ajuste a seletividade;</li>
+<li>Ajuste o tempo de coleta;</li>
+<li>Repita e compare os resultados.</li>
+</ol>
+<p><em>Uma separação mais rápida também é uma separação melhor ?</em></p>
+<p>Seguem alguns cenários.</p>
+<ol type="1">
+<li><em>Separação ideal</em>. Por que os picos ficam bem separados ?</li>
+</ol>
+<div class="sourceCode" id="cb89"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>input_solvente <span class="op">=</span> <span class="fl">0.45</span><span class="op">;</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>input_seletividade <span class="op">=</span> <span class="fl">1.5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Corrida rápida (solvente forte)</em>. Por que tudo sai junto ?</li>
+</ol>
+<div class="sourceCode" id="cb90"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>input_solvente <span class="op">=</span> <span class="fl">0.90</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Separação lenta (solvente fraco)</em>. Por que melhora a separação, mas demora mais ?</li>
+</ol>
+<div class="sourceCode" id="cb91"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>input_solvente <span class="op">=</span> <span class="fl">0.20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Mistura complexa</em>. Quantas frações são necessárias para separar tudo ?</li>
+</ol>
+<div class="sourceCode" id="cb92"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>input_mistura <span class="op">=</span> <span class="st">"complexa"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Coleta muito rápida</em>. Por que as frações ficam “misturadas” ?</li>
+</ol>
+<div class="sourceCode" id="cb93"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>input_tempoColeta <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Coleta mais lenta</em>. Por que melhora a pureza, mas reduz resolução temporal ?</li>
+</ol>
+<div class="sourceCode" id="cb94"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>input_tempoColeta <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="7" type="1">
+<li><em>Baixa seletividade</em>. Por que os picos se sobrepõem ?</li>
+</ol>
+<div class="sourceCode" id="cb95"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>input_seletividade <span class="op">=</span> <span class="fl">0.6</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="por-dentro-do-script-6" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-6">Por dentro do script</h4>
+<p>O comportamento do script começa aqui:</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> solvente <span class="op">=</span> <span class="fl">0.55</span><span class="op">;</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> seletividade <span class="op">=</span> <span class="fl">1.2</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A retenção de cada analito depende dessa relação:</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>retencao <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> seletividade <span class="op">*</span> <span class="dv">8</span> <span class="op">*</span> hidro <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> solvente)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ou seja, quanto mais hidrofóbico, maior a retenção. Se o solvente é forte a coluna retém menos. E quanto maior a seletividade, melhor a separação.</p>
+<p>Os picos são simulados com funções gaussianas:</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gauss</span>(t<span class="op">,</span> tRet<span class="op">,</span> largura<span class="op">,</span> intensidade)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A posição na coluna é calculada dinamicamente:</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">posicaoBanda</span>(a<span class="op">,</span> tempo)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E o sistema de coleta integra o sinal ao longo do tempo:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>soma <span class="op">+=</span> sinal <span class="op">*</span> dt<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Agora sim, aqueles “E se…” pra coluna (vertebral) nenhuma botar defeito !</p>
+<ul>
+<li>E se você escolher um indicador “bonito”, mas cuja faixa de viragem não coincide com o ponto de equivalência…o experimento erra ou é você que interpreta errado ?</li>
+<li>E se duas soluções tiverem exatamente a mesma concentração, mas cores diferentes…a espectrofotometria ainda funciona igual ?</li>
+<li>E se o espectro tiver um pico largo demais…você está medindo uma substância ou várias sobrepostas ?</li>
+<li>E se a curva de calibração for linear mas o sistema real não for…até onde dá pra confiar na reta ?</li>
+<li>E se o erro experimental for pequeno mas sistemático, ele é mais perigoso que o erro aleatório ?</li>
+<li>E se você acertar o cálculo mas errar a coleta da amostra…a matemática salva o experimento ?</li>
+<li>E se você separar perfeitamente na coluna…mas usar um detector que não responde ao seu analito e ele “desaparece” ?</li>
+<li>E se dois compostos eluem separados (saem da coluna) mas têm o mesmo sinal no detector…eles voltam a se confundir ?</li>
+<li>E se o solvente for forte demais…você mede mais rápido ou perde informação ?</li>
+<li>E se o tempo de coleta for mal escolhido…você coleta frações ou mistura frações ?</li>
+<li>E se a melhor separação não for a mais rápida…qual você escolheria no laboratório real ?</li>
+<li>E se cada técnica mostra apenas uma parte da verdade…qual é a “verdade analítica” ?</li>
+<li>E se você fizer uma titulação perfeita mas houver interferentes que também reagem…o ponto de equivalência ainda significa algo ?</li>
+<li>E se o valor da concentração obtido na calibração não bater com o da titulação…qual está errado ? Ou nenhum está errado ?</li>
+<li>E se a espectrofotometria indicar uma concentração mas a cromatografia mostrar duas substâncias…o que você realmente mediu ?</li>
+<li>E se a cromatografia separar tudo mas o detector mostrar só um pico…quantas substâncias você “viu” ?</li>
+<li>E se medir for sempre filtrar a realidade…qual filtro você está usando sem perceber ?</li>
+<li>E se toda medida for dependente do método…existe “valor verdadeiro” ou só “valor medido” ?</li>
+<li>E se dois cientistas usam técnicas diferentes e chegam a resultados diferentes…quem está certo ?</li>
+<li>E se a realidade química for mais complexa do que qualquer modelo…o modelo simplifica ou distorce ?</li>
+<li>E se o erro não for um problema mas parte inevitável do conhecimento…como isso muda o ensino ?</li>
+<li>E se aprender química não for decorar métodos…mas entender limites de cada método ?</li>
+<li>E se você levasse esse sistema analítico para outro planeta com outra gravidade…a cromatografia funcionaria igual ?</li>
+<li>E se a luz tivesse velocidade diferente…a espectrofotometria ainda mediria a mesma coisa ?</li>
+<li>E se moléculas interagissem de forma diferente…o conceito de “polaridade” ainda existiria ?</li>
+<li>E se a matéria fosse mais “ruidosa”…o erro experimental dominaria tudo ?</li>
+<li>E se em outra civilização os cientistas nunca separassem antes de medir…como seria a química deles ?</li>
+<li>E se “medir” for sempre uma forma de interagir com o sistema e nunca apenas observar ?</li>
+<li>E se o instrumento fizer parte do fenômeno…existe observação neutra ?</li>
+<li>E se toda técnica analítica for uma linguagem…você está lendo a natureza ou traduzindo ela ?</li>
+<li>E se o que você chama de “dado” for apenas uma interpretação estruturada ?</li>
+<li>E se o maior erro não for numérico, mas conceitual ?</li>
+<li>E se separar, medir e interpretar forem três etapas inseparáveis…qual delas você realmente domina ?</li>
+<li>E se o experimento perfeito não existi, mas apenas experimentos mais conscientes…o que muda na formação de um aluno ?</li>
+<li>E se o verdadeiro objetivo não for medir o mundo…mas entender <code>como</code> estamos medindo o mundo ?</li>
+</ul>
+</section>
+</div>
+</div>
+<!-- 
+
+E se o indicador escolhido não mudar de cor no momento certo?
+
+E se a solução for tão concentrada que a absorbância deixe de ser proporcional à concentração?
+
+E se um ponto experimental estiver errado e puxar a reta de calibração?
+
+E se a amostra desconhecida estiver fora da faixa analisada?
+
+E se duas técnicas derem resultados diferentes?
+
+Essas perguntas mostram que a Química Analítica não é apenas uma coleção de métodos. Ela é uma forma de pensar criticamente sobre medidas, evidências e decisões.
+
+## Conectando ideias
+
+
+
+Ela é uma das áreas mais integradoras da Química.
+
+
+## Em Síntese
+
+A Química Analítica é a ciência da pergunta bem medida.
+
+Ela ensina que uma cor, uma gota, uma luz ou um sinal elétrico podem carregar informações profundas sobre uma amostra.
+
+Titulação mostra como uma reação pode revelar concentração.
+
+Espectrofotometria mostra como a luz pode medir matéria.
+
+Curvas de calibração mostram como gráficos podem funcionar como instrumentos.
+
+Erro e incerteza mostram que toda medida precisa ser interpretada com cuidado.
+
+No fim, analisar é mais do que medir.
+
+É construir confiança entre o fenômeno, o número e a decisão. -->
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A Química Analítica conversa com várias áreas. Com a Matemática, por meio de gráficos, funções e ajuste de dados a modelos (regressão). Com a Física, por meio da luz, energia e eletricidade. Com a Biologia, por meio de exames e moléculas da vida. Com a Química Ambiental, por meio de poluentes e qualidade da água. Com a Tecnologia, por meio de sensores, automação e análise de dados.</p>
+<p>Um conjunto interminável de técnicas de detecção e quantifição vivem no mundo da universidade, de centros de pesquisa e da indústria. É assim para análises em Saúde (glicose, colesterol, hemoglobina, hormônios), ambiente (pH da água, metais pesados, nitrato, fosfato), alimentos (acidez, corantes, vitamina C, sal, açúcares), indústria (controle de qualidade, pureza, concentração de reagentes), e Educação (experimentos simples, sensores, curvas e simulações), como neste livro.</p>
+<p>Do elenco da materiais detectáveis e quantificáveis pelos métodos descritos nesse capítulo estão: acidez de alimentos, qualidade de água, pureza de reagentes, concentração de medicamentos, controle industrial, análises ambientais, pigmentos, drogas, aromas, proteínas, combustíveis, poluentes, metais, sangue, urina, solos e muito outros.</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="separação-de-comandos-inserção-de-comentários-e-boas-práticas" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="separação-de-comandos-inserção-de-comentários-e-boas-práticas">Separação de comandos, inserção de comentários, e boas práticas</h3>
+<p>Os comandos em <em>JS</em> são separados por <em>ponto e vírgula, “;”</em>. Já os <em>comentários</em> constituem trechos não interpretados, comumente utilizados em programação. Comentários são tremendamente úteis quando se deseja colocar um título no <em>script</em> de código, por exemplo, para explicar quem é quem nas variáveis ou determinada ação no código, e apontar uma futura melhoria, entre muitos (lista <em>ToDo</em>, ou “para fazer”). Em <em>JS</em>, os comentários são alternativamente inseridos por <em>” // “</em> antes de cada comando, ou por <em>” /</em>….<em>/ “</em>, para comentários mais extensos.</p>
+<p>Códigos em <em>JS</em> podem ser inseridos também junto à páginas web (HTML) com seus comandos intercalados pela notação que segue (etiquetas ou <em>tags</em>:</p>
+<div class="cell">
+<script>
+<script>  // abre para inserção
+
+...comandos JavaScript
+
+</script>
+</div>
+<p>Uma característica interessante no <em>JS</em> é que tanto faz colocar ou não espaços entre os comandos, pois a linguagem não interpreta esses espaços. Contudo, dentro das <em>boas práticas em programação</em>, é aconselhável separar blocos de comandos por <em>identação</em> de 2 espaços, de modo a facilitar a leitura do código. Outro cuidado que deve ser apreciado diz respeito ao uso de fonte maiúscula ou minúscula. <em>JS</em> interpreta diferentemente termos em caixa alta ou baixa do teclado, então é bom prestar atenção pra não incorrer em erro na interpretação.</p>
+</section>
+<section id="declaração-de-variáveis" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="declaração-de-variáveis">Declaração de variáveis</h3>
+<p>Entre os diversos tipos de variáveis, duas são frequentemente utilizadas: <em>const</em> e <em>let</em>. A variável <em>const</em> é utilizada para se atribuir um valor fixo a uma variável no código, enquanto a variável <em>let</em> é empregada quando se deseja reatribuir um valor a ela, por meio de algum cálculo ou <code>laço</code> iterativo. Exemplificando, quando se deseja variáveis de controle que mudam ao longo do tempo (<em>sliders</em>, passos, intervalos).</p>
+<p><em>Obs: </em> em versões antigas de <em>JS</em> é também empregado <em>var</em>, hoje em desuso.</p>
+</section>
+<section id="botando-a-mão-na-massa" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="botando-a-mão-na-massa">“Botando a mão na massa”</h3>
+<p>Como esse treinamento envolve instruir o algoritmo com uma <em>entrada</em> para que sua interpretação resulte numa <em>saída</em>, aqui propomos essa última pelo comando <code>print</code>, como segue.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="op">-</span><span class="fl">0.2</span><span class="op">;</span></span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para esse treinamento, use o <em>JSPlotly</em> personalizado do capítulo anterior. Assim, teste a atribuição da variável <em>const</em> e do comando <code>print</code> por cópia do trecho acima e cola no campo de texto <em>ÁREA PARA DIGITAR COMANDOS</em> do script. Existem outros comandos de saída para <em>JS</em>, como <code>console.log()</code> e <code>document.body.appendChild()</code>, mas não utilizáveis pelo JSPlotly.</p>
+<p>Pode-se atribuir também um texto para apresentar a constante, veja:</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="op">-</span><span class="fl">0.2</span><span class="op">;</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"constante:"</span><span class="op">,</span>a)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="dv">5</span><span class="op">;</span> <span class="co">// variável constante (não se altera ao longo do código)</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> <span class="dv">10</span><span class="op">;</span> <span class="co">// variável que pode alterar seu valor no código</span></span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a<span class="op">*</span>b)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Outro exemplo, com inserção de texto antes do resultado:</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> a <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> resultado <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Soma de a + b:"</span><span class="op">,</span> resultado)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>###<em>const</em> versus <em>let</em></p>
+<p>Pode parecer que <em>const</em> e <em>let</em> são distintas apenas na aparência, já que operam de modo intercambiável. Contudo, para explicitar a diferença entre os dois comandos, apague o ecrã gráfico (<em>clean</em>) e substitua a linha de código da seção anterior pela que segue na <em>ÁREA PARA DIGITAR COMANDOS</em> do script:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> passo <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span>          <span class="co">// usuário pode alterar</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x0 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>      <span class="co">// domínios dinâmicos</span></span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(passo<span class="op">,</span> x0) </span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="co">// ... mais tarde:</span></span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a>passo <span class="op">=</span> <span class="fl">0.2</span><span class="op">;</span> x0 <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></span>
+<span id="cb105-7"><a href="#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(passo<span class="op">,</span> x0)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Aparentemente, o resultado sugere que na prática nada muda, sendo a diferença mais centrada na clareza e segurança do código. Mas não é bem assim. Experimente agora trocar o campo pra executar o código abaixo:</p>
+<p>Agora substitua a variável do <em>“contador”</em> para <em>const</em> ao invés de <em>let</em>. O resultado incorrerá no erro abaixo:</p>
+<div id="fig-erroConst" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-erroConst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/erroConst.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-erroConst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.9: Erro gerado quando se substitui a variável <em>let</em> por <em>const</em> num trecho de reatribuição de valor.
+</figcaption>
+</figure>
+</div>
+<p>Resumindo: para constantes, use <em>const</em> e para variável reatribuível use <em>let</em>.</p>
+</section>
+<section id="tipos-de-dados" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="tipos-de-dados">Tipos de dados</h3>
+<p>Como é comum também em outras linguagens, <em>JavaScript</em> possui alguns tipos comuns para definição de dados. Para uso de <code>Plotly.js</code>, são bem significativos:</p>
+<p>Seguem alguns exemplos práticos. Experimente trocar cada um na saída <code>print</code>:</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Numbers:</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> comprimento <span class="op">=</span> <span class="dv">116</span><span class="op">;</span></span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> peso <span class="op">=</span> <span class="dv">75</span><span class="op">;</span></span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Strings:</span></span>
+<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> color <span class="op">=</span> <span class="st">"Yellow"</span><span class="op">;</span></span>
+<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> lastName <span class="op">=</span> <span class="st">"Johnson"</span><span class="op">;</span></span>
+<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="co">// Booleans</span></span>
+<span id="cb106-10"><a href="#cb106-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb106-11"><a href="#cb106-11" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb106-12"><a href="#cb106-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-13"><a href="#cb106-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Object:</span></span>
+<span id="cb106-14"><a href="#cb106-14" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> membro <span class="op">=</span> {<span class="dt">firstName</span><span class="op">:</span><span class="st">"John"</span><span class="op">,</span> <span class="dt">lastName</span><span class="op">:</span><span class="st">"Doe"</span>}<span class="op">;</span></span>
+<span id="cb106-15"><a href="#cb106-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-16"><a href="#cb106-16" aria-hidden="true" tabindex="-1"></a><span class="co">// Array object:</span></span>
+<span id="cb106-17"><a href="#cb106-17" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> carros <span class="op">=</span> [<span class="st">"Saab"</span><span class="op">,</span> <span class="st">"Volvo"</span><span class="op">,</span> <span class="st">"BMW"</span>]<span class="op">;</span></span>
+<span id="cb106-18"><a href="#cb106-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-19"><a href="#cb106-19" aria-hidden="true" tabindex="-1"></a><span class="co">// Date object:</span></span>
+<span id="cb106-20"><a href="#cb106-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> datas <span class="op">=</span> <span class="kw">new</span> <span class="bu">Date</span>(<span class="st">"2022-03-25"</span>)<span class="op">;</span></span>
+<span id="cb106-21"><a href="#cb106-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-22"><a href="#cb106-22" aria-hidden="true" tabindex="-1"></a><span class="co">// Saídas:</span></span>
+<span id="cb106-23"><a href="#cb106-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(comprimento)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="constantes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="constantes">Constantes</h3>
+<p>Por vezes, é necessária a inserção de constantes matemáticas em equações para construção de gráficos ou para fazer cálculos. Seguem alguns exemplos. Para a saída no <em>JSPlotly</em> customizado abaixo, basta o bom e velho <code>print</code> que segue ao também bom e velho <em>clean</em>.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span> <span class="op">-</span> valor <span class="fu">de</span> (pi)<span class="op">,</span> aproximadamente <span class="fl">3.14159</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">E</span> <span class="op">-</span> valor da constante de Euler<span class="op">,</span> aproximadamente <span class="fl">2.71828</span></span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">LN2</span> <span class="op">-</span> logaritmo natural de <span class="dv">2</span><span class="op">,</span> aproximadamente <span class="fl">0.693</span></span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">LN10</span> <span class="op">-</span> logaritmo natural de <span class="dv">10</span><span class="op">,</span> aproximadamente <span class="fl">2.302</span></span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">LOG2E</span> <span class="op">-</span> logaritmo de e na base <span class="dv">2</span><span class="op">,</span> aproximadamente <span class="fl">1.442</span></span>
+<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">LOG10E</span> <span class="op">-</span> logaritmo de e na base <span class="dv">10</span><span class="op">,</span> aproximadamente <span class="fl">0.434</span></span>
+<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="bu">Number</span><span class="op">.</span><span class="cn">MAX_VALUE</span> <span class="op">-</span> maior número positivo</span>
+<span id="cb107-8"><a href="#cb107-8" aria-hidden="true" tabindex="-1"></a><span class="bu">Number</span><span class="op">.</span><span class="cn">MIN_VALUE</span> <span class="op">-</span> menor número positivo<span class="op">...</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para constantes naturais, contudo, é necessário defini-las antecipadamente, como em:</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Definindo constantes físico-químicas comuns</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Avogadro <span class="op">=</span> <span class="fl">6.02214076e23</span><span class="op">;</span>  <span class="co">// Número de Avogadro (mol⁻¹)</span></span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Boltzmann <span class="op">=</span> <span class="fl">1.380649e-23</span><span class="op">;</span>  <span class="co">// Constante de Boltzmann (J/K)</span></span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Planck <span class="op">=</span> <span class="fl">6.62607015e-34</span><span class="op">;</span>   <span class="co">// Constante de Planck (J·s)</span></span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> gas <span class="op">=</span> <span class="fl">8.31446</span><span class="op">;</span>    <span class="co">// Constante dos gases ideais (J/(mol·K))</span></span>
+<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> luz <span class="op">=</span> <span class="dv">299792458</span><span class="op">;</span> <span class="co">// Velocidade da luz no vácuo (m/s)</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="funções" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="funções">Funções</h3>
+<p>Funções constituem um bloco de códigos para efetuar alguma ação. Em <em>JavaScript</em> uma função possui a seguinte sintaxe:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">nome</span>(parâmetro1<span class="op">,</span> parâmetro2<span class="op">,</span> parâmetro3) {</span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// código para execução</span></span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Seguem alguns exemplos de funções para testes.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">soma</span>(a) { <span class="co">// define o nome e os "parâmetros" da função</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a> <span class="cf">return</span> a <span class="op">+</span> a <span class="co">// define os argumentos da função (no caso, a*a),</span></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>            <span class="co">// pra retorna dos valores</span></span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Teste</span></span>
+<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x <span class="op">=</span> <span class="fu">soma</span>(<span class="dv">7</span>)<span class="op">;</span> <span class="co">// aplica parâmetros</span></span>
+<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x) <span class="co">// saída da função</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Obs: </em> O comando <em>return</em>, por vezes omitido, se apresenta útil quando se deseja que o “retorno” seja concluído somente ao final do fluxo do script, sem resultados intermediários.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">expoente</span>(a<span class="op">,</span> b) { <span class="co">// define o nome e os "parâmetros" da função</span></span>
+<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> a <span class="op">**</span> b<span class="op">;</span>  <span class="co">// define os argumentos da função (no caso, a^b),</span></span>
+<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a>                  <span class="co">// pra retorna dos valores</span></span>
+<span id="cb111-5"><a href="#cb111-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb111-6"><a href="#cb111-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-7"><a href="#cb111-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Teste da função</span></span>
+<span id="cb111-8"><a href="#cb111-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x <span class="op">=</span> <span class="fu">expoente</span>(<span class="dv">4</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span> <span class="co">// aplica parâmetros</span></span>
+<span id="cb111-9"><a href="#cb111-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)<span class="op">;</span>         <span class="co">// saída da função</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">indexa</span>(vetor){</span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a> <span class="cf">return</span> vetor <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> vetor <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
+<span id="cb112-6"><a href="#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">indexa</span>(vetor))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">Celsius</span>(Fahrenheit) {</span>
+<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> (<span class="dv">5</span><span class="op">/</span><span class="dv">9</span>) <span class="op">*</span> (Fahrenheit<span class="op">-</span><span class="dv">32</span>)<span class="op">;</span></span>
+<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-5"><a href="#cb113-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> conversao <span class="op">=</span> <span class="fu">Celsius</span>(<span class="dv">115</span>)<span class="op">;</span></span>
+<span id="cb113-6"><a href="#cb113-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(conversao)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="funções-de-seta-arrow-functions" class="level4">
+<h4 class="anchored" data-anchor-id="funções-de-seta-arrow-functions">Funções de seta (<em>arrow functions</em>)</h4>
+<div class="line-block">&nbsp;&nbsp;Como visto anteriormente, uma notação alternativa é a função <em>arrow</em>, que abrevia a sintaxe de funções. Segue um exemplo:</div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> multiplica <span class="op">=</span> (a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">*</span> b<span class="op">;</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">multiplica</span>(<span class="dv">4</span><span class="op">,</span> <span class="dv">6</span>))<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Se gostou até aqui…não perca as <strong>estruturas de controle</strong> do capítulo final desta obra.</p>
+</section>
+</section>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<!-- 
+Semente
+amostra
+  -> interação química ou física
+  -> sinal medido
+  -> calibração
+  -> concentração estimada
+  -> interpretação crítica
+
+Essa semente pode ser reutilizada em vários contextos:
+
+titulação;
+espectrofotometria;
+sensores;
+cromatografia;
+análise ambiental;
+exames clínicos;
+controle de qualidade.
+
+:::
+
+
+Absurdo como saideira, Santa! Cromatografia de coluna fecha com chave de ouro. Segue o Script 5 — Cromatografia de coluna: mistura, hidrofobicidade e perfil de eluição.
+
+## Script 5 — Cromatografia de coluna: separando o que parecia uma coisa só
+
+Neste script, a mistura deixa de ser vista como uma substância única. Cada analito possui uma quantidade e um grau de hidrofobicidade.
+
+![Script inicial mais simples. Clique com o botão direito neste [LINK](apps/analit5b.html) e abra em nova aba.](figuras/analit5b.png){#fig-analit5b}
+
+Analitos mais hidrofóbicos interagem mais com a fase estacionária e tendem a sair depois da coluna. Quando a força do solvente aumenta, esses analitos são arrastados mais rapidamente, deslocando os picos para tempos menores.
+
+### Modo de usar
+
+Altere a mistura inicial e observe o perfil total.
+
+Depois, aumente ou diminua a força do solvente.
+
+Ative o ruído experimental para comparar uma separação ideal com uma separação mais realista.
+
+Use a visualização da coluna para relacionar o gráfico com o movimento dos analitos.
+
+### Questões para observar
+
+E se dois analitos tiverem hidrofobicidades muito próximas?
+
+E se o solvente for fraco demais?
+
+E se o solvente for forte demais?
+
+E se a mistura for muito complexa?
+
+E se o ruído experimental esconder um pico pequeno?
+
+### Script 6 - Cromatografia de coluna: separando misturas invisíveis
+
+![Script inicial mais simples. Clique com o botão direito neste [LINK](apps/analit6.html) e abra em nova aba.](figuras/analit6.png){#fig-analit6}
+
+Neste script, a amostra é tratada como uma mistura de analitos com diferentes graus de hidrofobicidade.
+
+Analitos mais hidrofóbicos interagem mais intensamente com a fase estacionária e, por isso, tendem a sair mais tarde da coluna. Quando a força do solvente aumenta, os analitos são arrastados com maior facilidade, deslocando os picos para tempos menores.
+
+O aluno também pode comparar detectores diferentes. No detector UV, alguns compostos produzem sinais mais intensos do que outros. No detector RI, a resposta é mais geral, mas pode mudar a aparência relativa dos picos.
+
+### Modo de usar
+
+Escolha uma mistura pelos botões.
+
+Compare misturas polares, balanceadas, hidrofóbicas e complexas.
+
+Altere a força do solvente e observe o deslocamento dos picos.
+
+Ative o ruído para aproximar a simulação de um experimento real.
+
+Compare os perfis obtidos nos detectores UV e RI.
+
+Observe a coluna e relacione as bandas com o gráfico de eluição.
+
+### Cenários exploráveis
+
+**Cenário 1:** mistura polar com solvente fraco.
+
+**Cenário 2:** mistura hidrofóbica com solvente fraco.
+
+**Cenário 3:** mistura complexa com picos sobrepostos.
+
+**Cenário 4:** aumento da força do solvente para acelerar a eluição.
+
+**Cenário 5:** detector UV favorecendo alguns analitos.
+
+**Cenário 6:** detector RI alterando a interpretação do perfil.
+
+### Questões para observar
+
+E se dois analitos tiverem hidrofobicidades muito próximas?
+
+E se o solvente for forte demais e todos os compostos saírem quase juntos?
+
+E se o solvente for fraco demais e alguns compostos demorarem muito para sair?
+
+E se um detector enxergar melhor um analito do que outro?
+
+E se o ruído esconder um pico pequeno? -->
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./tecnol.html" class="pagination-link" aria-label="Química de Materiais e Nanotecnologia - Do plástico do dia-a-dia às partículas invisíveis que mudam o mundo">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Química de Materiais e Nanotecnologia - Do plástico do dia-a-dia às partículas invisíveis que mudam o mundo</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Arquitetura da matéria: como átomos se organizam e se conectam – Química &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./orginorg.html" rel="next">
+<link href="./termsteq.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./materia.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Arquitetura da matéria: como átomos se organizam e se conectam</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Química &amp; JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./solEqkin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Como o meio e a velocidade moldam as reações: soluções, equilíbrio, e cinética</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./termsteq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Termoquímica e Estequiometria: matéria e energia se transformando juntas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./materia.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Arquitetura da matéria: como átomos se organizam e se conectam</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./orginorg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funções e transformações químicas: da matéria mineral às moléculas da vida</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ambEletroq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Mundo em reação: Química Ambiental e Eletroquímica</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tecnol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Química de Materiais e Nanotecnologia - Do plástico do dia-a-dia às partículas invisíveis que mudam o mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Química Analítica: como descobrir o que existe, quanto existe, e por quê</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Arquitetura da matéria: como átomos se organizam e se conectam</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O sal se dissolve na água, o cobre conduz eletricidade, o diamante é muito duro, e o grafite quebra-se com facilidade por ser macio. Compreender essas diferenças começa dentro do átomo, na forma como os elétrons se organizam, e se estende até como os átomos interagem entre si.</p>
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Compreender a organização eletrônica dos átomos </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Relacionar distribuição eletrônica com propriedades químicas  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Diferenciar ligações iônicas, covalentes e metálicas  </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Interpretar como interações entre átomos geram materiais com propriedades distintas  </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Explorar modelos químicos de forma interativa e computacional </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Utilizar um aplicativo completo para observar e estudar moléculas em 3D</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-gizz_materia" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_materia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_materia.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_materia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.1: A estrutura eletrônica define o comportamento da matéria.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de explorar os conceitos deste capítulo, experimente o script abaixo sobre distribuição eletrônica. Ele mostra como os <code>elétrons</code> se distribuem e preenchem progressivamente as <code>camadas eletrônicas</code>:</p>
+<p><span id="eq-camad"><span class="math display">\[
+K \rightarrow L \rightarrow M \rightarrow N
+\tag{4.1}\]</span></span></p>
+<p>E também mostra tendência à estabilidade quando a camada externa se completa, essa denominada <code>camada de valência</code>.</p>
+<div id="fig-materia" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-materia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/materia.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-materia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.2: A matéria começa com a distribuição dos elétrons ao redor do núcleo. Clique com o botão direito neste <a href="apps/materia.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>O script mostra como os elétrons de um átomo se distribuem em camadas ao redor do núcleo. Para utilizá-lo, começe alterando no topo do código o valor para o <code>número atômico</code> de um átomo (<code>Z</code>). Ele representa o número de prótons do átomo. Em um átomo neutro, também representa o número de elétrons.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> input_Z <span class="op">=</span> <span class="dv">35</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Você pode clicar no botão <code>add</code> após apagar a área gráfica (<code>clean</code>), ou não, e nesse caso podendo comparar valores distintos para <em>Z</em>. Cada barra do gráfico representa uma camada eletrônica, <em>K</em> (mais interna), <em>L</em>, <em>M</em>, e <em>N</em>. A altura da barra indica quantos elétrons estão naquela camada. Assim, os elétrons não ficam distribuídos ao acaso, mas ocupam camadas com capacidades máximas:</p>
+<ul>
+<li>K <span class="math inline">\(\rightarrow\)</span> até 2 elétrons</li>
+<li>L <span class="math inline">\(\rightarrow\)</span> até 8 elétrons</li>
+<li>M <span class="math inline">\(\rightarrow\)</span> até 18 elétrons</li>
+<li>N <span class="math inline">\(\rightarrow\)</span> até 32 elétrons</li>
+</ul>
+<p>No script, essas camadas são preenchidas de dentro para fora. Algumas situações para você pode trabalhar no <em>app</em>:</p>
+<ol type="1">
+<li><em>Hidrogênio</em>. Possui apenas 1 elétron na camada K.</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>input_Z <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Oxigênio</em>. A camada K se completa, e L parcialmente preenchida.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>input_Z <span class="op">=</span> <span class="dv">8</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Cálcio</em>. Começa a ocupar camadas mais externas.</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>input_Z <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Bromo</em>. Ocupa várias camadas.</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>input_Z <span class="op">=</span> <span class="dv">35</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Usando o script, tente comparar elementos com <em>Z</em> pequeno e grande, e observe padrões de repetição (periodicidade).</p>
+<p>Durante a <em>distribuição eletrônica</em>, as camadas internas enchem primeiro, as externas definem o comportamento químico, e o último nível ocupado responde às reações químicas do átomo, podendo então ser considerado, se não o mais importante, o mais prático ! Ou seja, não é o átomo inteiro que reage, mas sim seus elétrons mais externos.</p>
+<p>Esses eletróns da última <code>camada orbital</code> respondem também porque os átomos fazem ligações, e porque alguns ganham, perdem, ou compartilham elétrons. Daí é que nascem as <code>ligações químicas</code>. Portanto, a estrutura da matéria não é aleatória, mas segue uma lógica de preenchimento em camadas que determina a estabilidade, reatividade e o tipo de ligação que os átomos conseguem fazer.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os átomos tendem a reagir com outros átomos em função de sua última camada orbital. Assim, é possível que a observação da quantidade de seus <code>elétrons livres</code> tenha correlação com essa capacidade de fazer ligações químicas. Nessa direção, tente prever o comportamento químico de um átomo só olhando sua última camada, pra saber se o átomo escolhido tende a perder, ganhar ou compartilhar elétrons.</p>
+<p>Átomos não se ligam “por acaso”. Eles se ligam porque isso leva a um estado de <em>menor energia</em>. Entre os tipos de ligação química encontram-se as <code>ligações iônicas</code>(transferência de elétrons), as <code>ligações covalentes</code> (compartilhamento de elétrons), e as <code>ligações metálicas</code>(por elétrons livres).</p>
+<p>Se quiser uma ajudinha, experimente o <em>app</em> de JSPlotly na sequência, e que trata de ligações químicas, ou seja, de como os átomos interagem energeticamente.</p>
+<div id="fig-materia2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-materia2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/materia2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-materia2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.3: Toda ligação química é uma busca por estabilidade energética. Clique neste <a href="apps/materia2.html">LINK</a> para abrir o <em>app</em> em uma nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>Esse script é bem facinho. Basta você selecionar o tipo de ligação no código (iônica, metálica, ou covalente) para ter o perfil energético da interação entre dois átomos em função da distância. Dessa forma, ele compara, de forma simplificada, os tipos de ligação química. Para seu uso, basta alterar:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> input_tipo <span class="op">=</span> <span class="st">"covalente"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe que tanto a curva como o título do gráfico mudam a cada opção. A curva não representa uma equação real completa da ligação, é claro, pois isso está bem além da proposta deste livro. Mas é um <em>modelo visual simplificado</em> para comparar ideias. Observe a forma da curva e a estabilidade energética. Esse script ajuda você a perceber que a matéria não depende apenas dos átomos presentes, mas também da forma como eles se conectam.</p>
+<p>Na situação apresentada, significa que a ligação iônica se dá por uma transferência de elétrons, enquanto que a ligação covalente por um compartilhamento de elétrons, e a ligação metálica pela existência de um “mar” de elétrons livres, ou melhor uma <em>“nuvem eletrônica”</em> circulando entre vários átomos.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O sal de cozinha (<em>NaCl</em>) forma uma rede cristalina devido às ligações iônicas entre seus átomos. O cobre (<em>Cu</em>) conduz eletricidade devido às ligações metálicas existentes. A água (<em>H<span class="math inline">\(_2\)</span>O</em>) compartilha seus elétrons numa ligação covalente (<code>polar</code>). Isso sugere que a forma como os elétrons se organizam determina como os átomos se ligam (<em>invisível</em>), o que por sua vez resulta nas propriedades da matéria (<em>visível</em>).</p>
+<p>Agora o mais legal. Como você já percebeu que as ligações químicas são apenas modos diferentes nos quais a matéria organiza elétrons entre átomos, use o <em>app</em> da <a href="#fig-materia" class="quarto-xref">Figura&nbsp;<span>4.2</span></a> para compreender um pouco mais o que o <em>app</em> da <a href="#fig-materia2" class="quarto-xref">Figura&nbsp;<span>4.3</span></a> quis dizer. Você pode trabalhar com os cenários abaixo:</p>
+<ol type="1">
+<li><p><em>Quem quer elétrons ?</em>. Teste o script da <a href="#fig-materia" class="quarto-xref">Figura&nbsp;<span>4.2</span></a> com Z = 11 (Na) e Z = 17 (Cl), e visualize o potencial para a formação de uma ligação iônica entre esses átomos.</p></li>
+<li><p><em>Compartilhar ou não ?</em>. Teste elementos com Z próximos, e discuta sobre a <code>eletronegatividade</code> que os permite compartilhar elétrons numa ligação covalente.</p></li>
+<li><p><em>Por que metais conduzem ?</em>. Selecione uma ligação metálica no script da <a href="#fig-materia2" class="quarto-xref">Figura&nbsp;<span>4.3</span></a>, e tente relaciná-lo com o potencial de <code>mobilidade eletrônica</code> de seus átomos.</p></li>
+</ol>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Algumas questões surgem naturalmente dos <em>apps</em> explorados até então.</p>
+<ul>
+<li>E se aumentarmos o número atômico, o que muda na distribuição eletrônica, e como isso afeta a tendência do átomo em fazer ligações ?</li>
+<li>E se os átomos tiverem eletronegatividade muito diferente, em que ponto o compartilhamento deixa de ser “justo” e passa a ser praticamente uma transferência ?</li>
+<li>E se houver muitos átomos compartilhando elétrons ao mesmo tempo (<code>rede covalente</code>), como isso explica materiais extremamente duros, como o diamante ?</li>
+<li>E se os elétrons mudam de comportamento em cada tipo de ligação, por que os materiais resultantes também mudam tanto ?</li>
+<li>E se a ligação química é a “alma” da matéria, o que a conecta com propriedades como dureza, condução elétrica e ponto de fusão ?</li>
+<li>E se apenas os elétrons da camada de valência participam das ligações, o que aconteceria se os elétrons mais internos também participassem ?</li>
+<li>E se um átomo “quer” ganhar ou perder elétrons, então esse “querer” é real ou é uma forma de descrever busca por estabilidade ?</li>
+<li>E se a mesma dupla de átomos puder formar ligações diferentes dependendo do ambiente, o que muda quando a interação ocorre isolada ou dentro de um material maior ?</li>
+<li>E se organizarmos os átomos de forma diferente, mantendo os mesmos elementos, como explicar que grafite e diamante são feitos só de carbono, mas têm propriedades tão distintas ?</li>
+</ul>
+<p>Agora um “E…se” já respondido: “E se…” tudo isso for verdade, como a gente poderia resumir tudo ?</p>
+<p><span class="math display">\[
+\text{átomo} \rightarrow \text{distribuição eletrônica} \rightarrow \text{ligação} \rightarrow \text{estrutura}\rightarrow \text{propriedade}
+\]</span></p>
+<p>Ou seja, a distribuição eletrônica sugere a ligação, e essa gera uma estrutura que define as propriedades da matéria.</p>
+<p>E que tal agora um JSPlotly para observar exatamente o exposto no diagrama acima ?</p>
+<div id="fig-materia3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-materia3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/materia3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-materia3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.4: A matéria é explicada pela forma como os átomos se organizam. Clique neste <a href="apps/materia3.html">LINK</a> para abrir o aplicativo em nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>O script busca integrar tudo o que foi visto no capítulo: distribuição eletrônica, tipo de ligação, estrutura do material, e propriedades macroscópicas. Para utilizá-lo, altere apenas:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> input_sistema <span class="op">=</span> <span class="st">"NaCl"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E teste para “H2O”, “O2”, “Cu”, e “SiO2”, executando o código após cada mudança pelo (botão <code>clean</code> seguido de <code>add</code>). O script está dividido em 4 partes: distribuição eletrônica, curva de energia, estrutura, e propriedades.</p>
+<ul>
+<li><em>Distribuição eletrônica</em>. Mostra como os elétrons estão organizados em cada átomo, e define o comportamento químico.</li>
+<li><em>Curva de energia</em>. Mostra como a energia varia com a distância entre átomos, e indica a estabilidade da ligação.</li>
+<li><em>Estrutura</em>. Representa visualmente o tipo de ligação (rede iônica, molécula covalente, metal, ou rede covalente), e mostra “como os átomos ficam juntos”.</li>
+<li><em>Propriedades</em>. Uma representação em <em>radar</em>, resume algumas características do material, como <code>rigidez</code>, <code>condutividade</code>, <code>solubilidade</code>, <code>ponto de fusão</code>, e <code>maleabilidade</code>.</li>
+</ul>
+<p>Alguns cenários são sugeridos para você sedimentar as ideias desse capítulo sobre átomos, ligações, e matéria.</p>
+<ol type="1">
+<li><em>Compare extremos</em>. Observe como estrutura e propriedades mudam completamente.</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="st">"NaCl"</span>  <span class="co">// iônica</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">"Cu"</span>    <span class="co">// metálica</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Molécula X rede</em>. Veja que uma mesma ideia para ligação covalente pode resultar em comportamentos muito diferentes.</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="st">"H2O"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">"SiO2"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Mesmo elemento, organização diferente</em>. Observe uma ligação simples sem rede extensa.</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="st">"O2"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Em resumo, perceba que os elétrons definem ligações, que as ligações definem estrutura, e que a estrutura define as propriedades da matéria. Além de consistir em partículas em torno do núcleo, a organização e redistribuição dos elétrons explicam por que a matéria assume formas, funções e comportamentos tão distintos no mundo real. Em outras palavras, a matéria é uma consequência da organização dos elétrons.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aqui o termo <em>“outros mundos”</em> chega mesmo a possuir um significado mais amplo, já que elementos químicos da matéria são vistos bem além do nosso planeta ! Mas, mantendo o pé no chão desse, pode-se elencar <code>propriedades emergentes</code> distintas entre átomos ou moléculas até mesmo parecidas, e vindas da interação entre seus átomos. Ilustrando, a diferença de atração entre átomos de O<span class="math inline">\(_2\)</span> ou entre átomos de N<span class="math inline">\(_2\)</span>. Embora sejam dois gases simples, seus comportamentos são bem diferentes, pois o primeiro possui uma ligação dupla, enquanto o segundo uma tripla. Isso afeta diretamenta a estabilidade, reatividade e energia envolvida nas reações.</p>
+<p>Um exemplo “brilhante” é o que acontece com o diamante e o grafites, que são materiais feitos exclusivamente por carbono, mas com estruturais bastante distintos. Esses arranjos transformam um material macio em um dos mais duros que existem, consequência da rede de ligações também diferentes. As ligas metálicas, por sua vez, possuem propriedades ajustáveis, e que permitem que misturas de metais acabem por gerar novos materiais, distintos em <code>condutividade</code>, <code>resistência</code> e <code>maleabilidade</code>.</p>
+<p>Polaridade e geometria também são propriedades emergentes das conexões diferenciadas entre átomos, como ocorre com água e dióxido de carbono (CO<span class="math inline">\(_2\)</span>). Ambos têm oxigênio, mas comportamentos totalmente distintos. A água em seu estado líquido ajuda a dissolver várias substâncias, enquanto CO<span class="math inline">\(_2\)</span> é um gás pouco interativo. Um propriedade “eletrizante” da matéria é a condução elétrica de compostos como NaCl sólido e NaCl dissolvido em água, a qual está presente apenas na segunda.</p>
+<p>Há também elementos idênticos a compor determinados materiais, mas com estruturas também distintas, como acontece com o SiO<span class="math inline">\(_2\)</span> quando comparado ao CO<span class="math inline">\(_2\)</span>. Um forma um sólido rígido por uma rede cristalina, enquanto o outro forma moléculas em forma de gás dispersas no meio. Por fim, mas nunca “o fim”, as propriedades distintas entre metais e polímeros. Os primeiros possuem elétrons livres cuja interação entre átomos resulta em materiais rígidos, enquanto os polímeros encerram seus elétrons em moléculas unidas por cadeias, resultando na flexibilidade estrutural do composto.</p>
+<p>Você já ouviu aquela famosa frase de um astronauta norte-americano ao pousar na Lua, “…um pequeno passo para um homem, um salto gigantesco para a humanidade” ? Ou aquela do Tio Ben no universo do Homem-Aranha, “com grandes poderes vêm grandes responsabilidades” ?</p>
+<p>Então, para o tema de átomos, ligações e materiais, que tal… “Pequenas mudanças na organização, grandes mudanças no comportamento !”</p>
+<section id="zemol---um-visualizador-3d-para-modelos-atômicos" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="zemol---um-visualizador-3d-para-modelos-atômicos"><span class="header-section-number">4.1</span> ZeMol - um visualizador 3D para modelos atômicos</h2>
+<p>Agora vamos para um <code>aplicativo completo</code> feito com JSPlotly e voltado para a observação de modelos atômicos, <em>ZeMol</em>. Trata-se de um <em>app</em> que permite estudar diversas características de moléculas simples e polímeros, incluindo os polímeros biológicos, tais como proteínas, enzimas, DNA, e RNA.</p>
+<div id="fig-ZeMol" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ZeMol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figuras/ZeMol.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ZeMol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.5: ZeMol: um aplicativo completo para estudo de átomos, moléculas e biopolímeros. Clique neste <a href="apps/ZeMol.html">LINK</a> para acesar o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-3">Agite antes de usar</h4>
+<p>Com o <em>ZeMol</em> é possível estudar diversas características de biomoléculas grandes em 3D, como proteínas e DNA, bem como moléculas pequenas, e mesmo átomos isolados. Embora seja mais voltado para estudos que envolvem moléculas biológicas complexas, é possível visualizar diversas moléculas conhecidas, seus átomos e ligações, carregando-as no <em>app</em> a partir de um banco de dados na <em>nuvem</em>.</p>
+</section>
+<section id="pequenas-moléculas" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="pequenas-moléculas"><span class="header-section-number">4.1.1</span> Pequenas moléculas</h3>
+<p>Para carregar uma molécula simples, digite no campo <code>PubChem:</code> uma molécula de seu interesse. O inconveniente é que o banco de dados que busca a molécula só o faz se você escrever o nome dela <em>em inglês</em>. Assim, para uma molécula de aspirina, por exemplo, você digita <code>aspirin</code>.</p>
+<p>Depois de digitar o nome da molécula, basta clicar no botão <code>PubChem 3D</code>. Veja o resultado para a <code>aspirin</code>:</p>
+<div id="fig-materia_aspirin" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-materia_aspirin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/materia_aspirin.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-materia_aspirin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.6: Exemplo de uso do <em>ZeMol</em> com carregamento da estrutura da aspirina (campo <code>PubChem</code>).
+</figcaption>
+</figure>
+</div>
+<p>Agora você pode usar o mouse (ou a tela capacitiva) para girar a molécula ou dar um <em>zoom</em>. Perceba também que a molécula possui átomos cinza e vermelhos. Essa coloração é devida a um padrão internacional da Química chamada <code>coloração CPK</code>, e na qual o cinza representa o carbono e o vermelho o oxigênio (se houver azul, é nitrogênio, e o laranja é representado para o fósforo ou enxofre).</p>
+<p>Você também pode aumentar o tamanho dos átomos da molécula, as “bolinhas”. Para isso, basta deslizar a barra de <code>CA size</code>. E pode também colocar uma transparência nessas “bolinhas” (átomos), usando o <em>slider</em> para <code>opacidade</code>.</p>
+<p>Se você achou legal, carregue outras moléculas e veja a diferença das estruturas no espaco 3D. Algumas sugestões são (inglês): <code>glucose</code>, <code>caffein</code>, <code>ethanol</code>, e <code>menthol</code>. Uma dica: se as bolinhas não estiverem aparecendo, basta recarregar a página. E se quiser ver “a cara” de outras moléculas, verifique antes se elas existem no <a href="https://pubchem.ncbi.nlm.nih.gov/">banco de dados do Pubchem</a>.</p>
+</section>
+<section id="moléculas-gigantes" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="moléculas-gigantes"><span class="header-section-number">4.1.2</span> Moléculas gigantes</h3>
+<p>Um exemplo impressionante é quando você carrega uma molécula bem grandona, como uma proteína, um biopolímero que pode ter mais de 5.000 átomos ! Para isso, você deve usar o campo <code>ou PDB ID:</code>, e digitar um código que é específico de outro banco de dados: o <a href="https://www.rcsb.org/">PDB</a>, iniciais para <em>“Protein Data Bank”</em>. Aí é só clicar em <code>baixar</code> para ver a proteína também em 3D.</p>
+<p>Alguns exemplos bem legais são: <code>3I40</code>, a insulina, principal regulador de glicose do sangue), e <code>6VXX</code>, a proteína espícula (<em>spike</em>) do vírus SARS-Cov-2 que nos atingiu a durante a pandemia da COVID-19. Essa imensa proteína com mais de 45.000 átomos é ilustrada abaixo.</p>
+<div id="fig-materia_spike" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-materia_spike-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/materia_spike.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-materia_spike-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.7: A proteína <em>spike</em> do capsídio viral de SARS-Cov-2, tal como visualizada pelo <em>ZeMol</em>.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+</div>
+</div>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No primeiro script da <a href="#fig-materia" class="quarto-xref">Figura&nbsp;<span>4.2</span></a>, você viu como a distribuição eletrônica é construída a partir do número atômico. Olhando isso “por dentro”, o script resolve o problema de como distribuir elétrons em camadas, respeitando suas capacidades máximas. Pelo código:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Z <span class="op">=</span> <span class="kw">typeof</span> input_Z <span class="op">!==</span> <span class="st">"undefined"</span> <span class="op">?</span> input_Z <span class="op">:</span> <span class="dv">35</span><span class="op">;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> eletrons_restantes <span class="op">=</span> Z<span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> camadas <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> capacidade <span class="op">=</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="dv">18</span><span class="op">,</span> <span class="dv">32</span>]<span class="op">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> capacidade<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (eletrons_restantes <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> alocar <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(eletrons_restantes<span class="op">,</span> capacidade[i])<span class="op">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    camadas<span class="op">.</span><span class="fu">push</span>(alocar)<span class="op">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    eletrons_restantes <span class="op">-=</span> alocar<span class="op">;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    camadas<span class="op">.</span><span class="fu">push</span>(<span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nesse trecho, o script começa com o número total de elétrons (<span class="math inline">\(Z\)</span>). Depois ele define a capacidade máxima de cada camada e a preenche, começando pela mais interna. E então para quando não há mais elétrons disponíveis. Uma sugestão para seu <em>pseudocódigo</em> pode ser:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Definir</span> número total de elétrons <span class="er">(</span><span class="ex">Z</span><span class="kw">)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Definir</span> capacidades das camadas:</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">K,</span> L, M, N</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Para</span> cada camada:</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Se</span> ainda há elétrons:</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">colocar</span> o máximo possível na camada</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">diminuir</span> elétrons restantes</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Senão:</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">colocar</span> zero</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Fim</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./termsteq.html" class="pagination-link" aria-label="Termoquímica e Estequiometria: matéria e energia se transformando juntas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Termoquímica e Estequiometria: matéria e energia se transformando juntas</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./orginorg.html" class="pagination-link" aria-label="Funções e transformações químicas: da matéria mineral às moléculas da vida">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funções e transformações químicas: da matéria mineral às moléculas da vida</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

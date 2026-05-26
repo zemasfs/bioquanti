@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Modelos cinéticos e modificadores enzimáticos - EK-Toolkit – Fatos sobre Figuras - Simulações em Biofísico-Química &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./LH.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./EK.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos cinéticos e modificadores enzimáticos - EK-Toolkit</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Fatos sobre Figuras - Simulações em Biofísico-Química &amp; JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./EK.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos cinéticos e modificadores enzimáticos - EK-Toolkit</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./LH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Seleção de Composto Líder para Alvos Enzimáticos - LH-Toolkit</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./LB.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interação Ligante-Proteína - LB-Toolkit</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#sec-ek" id="toc-sec-ek" class="nav-link active" data-scroll-target="#sec-ek"><span class="header-section-number">2.1</span> Uso do EK-Toolkit</a>
+  <ul class="collapse">
+  <li><a href="#equação-de-michaelis-mentem" id="toc-equação-de-michaelis-mentem" class="nav-link" data-scroll-target="#equação-de-michaelis-mentem"><span class="header-section-number">2.1.1</span> Equação de Michaelis-Mentem</a></li>
+  <li><a href="#equações-e-parâmetros" id="toc-equações-e-parâmetros" class="nav-link" data-scroll-target="#equações-e-parâmetros"><span class="header-section-number">2.1.2</span> Equações e Parâmetros</a></li>
+  <li><a href="#efeito-dos-parâmetros-de-km-e-vm" id="toc-efeito-dos-parâmetros-de-km-e-vm" class="nav-link" data-scroll-target="#efeito-dos-parâmetros-de-km-e-vm"><span class="header-section-number">2.1.3</span> Efeito dos parâmetros de Km e Vm</a></li>
+  </ul></li>
+  <li><a href="#inibição-enzimática" id="toc-inibição-enzimática" class="nav-link" data-scroll-target="#inibição-enzimática"><span class="header-section-number">2.2</span> Inibição Enzimática</a>
+  <ul class="collapse">
+  <li><a href="#inibição-reversível" id="toc-inibição-reversível" class="nav-link" data-scroll-target="#inibição-reversível"><span class="header-section-number">2.2.1</span> Inibição reversível</a></li>
+  <li><a href="#erro-e-simulação" id="toc-erro-e-simulação" class="nav-link" data-scroll-target="#erro-e-simulação"><span class="header-section-number">2.2.2</span> Erro e simulação</a></li>
+  </ul></li>
+  <li><a href="#outros-modelos" id="toc-outros-modelos" class="nav-link" data-scroll-target="#outros-modelos"><span class="header-section-number">2.3</span> Outros modelos</a></li>
+  <li><a href="#outras-características-do-toolkit" id="toc-outras-características-do-toolkit" class="nav-link" data-scroll-target="#outras-características-do-toolkit"><span class="header-section-number">2.4</span> Outras características do toolkit</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos cinéticos e modificadores enzimáticos - EK-Toolkit</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>A catálise enzimática é modelada por diversas equações na ausência e presença de um modificador. O modificador pode apresentar-se como um inibidor ou ativador. O <em>EK-Toolkit</em>, assim como os demais <em>toolkits</em> deste livro, aborda uma “caixa de ferramentas”, na acepção do termo, e nesse caso voltada para estudos de cinética, inibição, ativação, e alosterismo em modelos enzimáticos.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+EK-Toolkit
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O kit possui um quantitativo considerável para análise de catálise e inibição enzimáticas, a saber:</p>
+<ul>
+<li>Seleção de diversos modelos enzimáticos: Michaelis-Menten; Excesso de Substrato; Inibição Irreversível; Inibição Competitiva; Inibição Não-competitiva (pura); Inibição Mista; Inibição Incompetitiva; Bi-substrato (Aleatório-BiBi - <em>Random Sequential</em>, Ordenado BiBi - <em>Ordered Sequential</em>, Ping-Pong); Hill (cooperatividade); Ativação enzimática (Vmax-up);</li>
+<li>Modelo introduzido pelo usuário (equação livre);</li>
+<li>Painel contendo 3 gráficos interativos e sincronizados: Michaelis-Menten (v×[S]), Lineweaver-Burk - LB (1/v vs 1/[S]) , e Replot (inclinação ou intercepto LB, ou gráfico de Dixon (1/v vs [A]; inibidor ou ativador);</li>
+<li>Personalização de parâmetros para cada modelo, e com erro relativo;</li>
+<li>Comparação entre dois modelos (A/B) com paletas de cores consistentes entre os gráficos;</li>
+<li>Diagnóstico dos modelos;</li>
+<li>Painéis para modelos, equações, diagnóstico, e parâmetros (faixa de [S], número de pontos simulados, erro, modificadores e parâmetros);</li>
+<li>Replot configurável com <em>rótulo do eixo X</em> editável.</li>
+<li>Ajuste linear ponderado em LB e replots - WLS (<em>weighted least squares</em>, peso: 1/y²); OLS (<em>ordinary least squares</em>) em Dixon;</li>
+<li>Parâmetros de regressão opcionalmente visíveis nos gráficos (LB e Dixon);</li>
+<li>Estimativa de <em>Ki</em> em Dixon (marcador vertical em \(x = -K_i\));</li>
+<li>Exportação HTML com gráficos interativos, equações e diagnóstico;</li>
+<li>Exportação para CSV;</li>
+<li>Importação de CSV para reconstrução de gráficos e diagnóstico (e botão <em>´Limpar CSV’</em> para voltar à simulação);</li>
+<li>Modais arrastáveis;</li>
+<li>Anotações clicáveis/editáveis;</li>
+<li>Legenda global ON/OFF;<br>
+</li>
+</ul>
+</div>
+</div>
+<p>A figura abaixo ilustra as principais funcionalidades do toolkit, o qual pode ser baixado nesta <a href="https://bioquanti.netlify.app/pt/nivel/superior/jsplotly/Eq/toolkit/ek-toolkit.js">LINK</a> do website <a href="https://bioquanti.netlify.app/">Bioquanti</a>.</p>
+<div id="fig-fig2.1_app" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.1_app-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.1_app.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.1_app-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.1: Tela principal do <em>EK-Toolkit</em>. Acesse o script do aplicativo nesse <a href="https://bioquanti.netlify.app/pt/nivel/superior/jsplotly/Eq/toolkit/ek-toolkit.js">LINK</a>. A imagem ilustra um modelo de inibição reversível competitiva.
+</figcaption>
+</figure>
+</div>
+<section id="sec-ek" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-ek"><span class="header-section-number">2.1</span> Uso do EK-Toolkit</h2>
+<p>Seguem sugestões algumas simulações tangentes ao uso do <em>toolkit</em> em cinética enzimática.</p>
+<section id="equação-de-michaelis-mentem" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="equação-de-michaelis-mentem"><span class="header-section-number">2.1.1</span> Equação de Michaelis-Mentem</h3>
+<p>Como já mencionado, a proposta deste livro é apresentar uma forma alternativa para o aprendizado em físico-química de proteínas e enzimas, e não o aprofundamento dos temas envolvidos. Para esses, sugere-se a bibliografia listada ao final do capítulo, bem como as inúmeras fontes existentes na nuvem.</p>
+<p>A <a href="#fig-fig2.2_kin" class="quarto-xref">Figura&nbsp;<span>2.2</span></a> que segue apresenta uma síntese dos conceitos que envolvem a equação de Michaelis-Mentem e sua transformação linear por duplo-recíproco.</p>
+<div id="fig-fig2.2_kin" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.2_kin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.2_kin.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.2_kin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.2: Síntese das relações paramétricas da equação de Michaelis-Mentem, bem como de sua transformação linear por Lineweaver-Burk.
+</figcaption>
+</figure>
+</div>
+<p>Para simular as curvas individuais observadas na <a href="#fig-fig2.2_kin" class="quarto-xref">Figura&nbsp;<span>2.2</span></a> basta:</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sua vez…
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Clicar em <em>Modelos</em> no app e selecionar o modelo de Michaelis-Mentem, clicando em <em>Usar como A</em>. Feche a janela;</li>
+<li>Clicar em <em>Parâmetros</em> e selecionar para o modelo A um <em>erro relativo</em> igual a zero. Feche a janela.</li>
+</ol>
+</div>
+</div>
+<p>Observe que o simulador produzirá algo semelhante à <a href="#fig-fig2.3_MM" class="quarto-xref">Figura&nbsp;<span>2.3</span></a> abaixo, contendo os três gráficos do ecrã (Michelis-Mentem, Lineweaver-Burk, e replot).</p>
+<div id="fig-fig2.3_MM" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.3_MM-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.3_MM.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.3_MM-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.3: Área gráfica do app contendo os 3 gráficos gerados por simulação.
+</figcaption>
+</figure>
+</div>
+<p>Aqui vale uma observação: o simulador plota automaticamente o modelo A e o modelo B, razão pela qual a <a href="#fig-fig2.3_MM" class="quarto-xref">Figura&nbsp;<span>2.3</span></a>. Como o modelo escolhido foi somente o de Michaelis-Mentem, o simulador acaba por apresentar uma sobreposição de pontos do mesmo modelo (A e B). A consequência disso é que o app apresenta legenda e anotações dos ajustes lineares considerando o teor de modificador como zero. Observa-se isso clicando-se em <em>Legenda</em> e <em>Anotações</em>.</p>
+<p>Outra consequência é que, dos três gráficos, o de <em>replot</em> não possui significado físico para a representação da equação de Michaelis-Mentem, pois os três tipos de representação (inclinação e intercepto do duplo-recíprico, ou gráfico de Dixon) só fazem sentido na presença de um modificador (inibidor ou ativador, com teor acima de zero).</p>
+</section>
+<section id="equações-e-parâmetros" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="equações-e-parâmetros"><span class="header-section-number">2.1.2</span> Equações e Parâmetros</h3>
+<p>O <em>EK-toolkit</em> permite simular diversos modelos de catálise enzimática, bem como ajustar parâmetros numéricos ou categóricos. Para cada modelo é aplicada uma equação e parâmetros ajustáveis , tais como ilustrado na figura abaixo.</p>
+<p><img src="figuras/fig2.16_eq1.png" class="img-fluid"></p>
+<div id="fig-fig2.16_eq2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.16_eq2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.16_eq2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.16_eq2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.4: Equações utilizadas pelo <em>EK-toolkit</em> (clique em <em>Equações</em> para reprodução desta imagem).
+</figcaption>
+</figure>
+</div>
+<p>Em relação aos parâmetros de ajuste, a <a href="#fig-fig2.17_par" class="quarto-xref">Figura&nbsp;<span>2.5</span></a> ilustra a janela para valores de um modelo de substratos múltiplos (<em>Bibi Random Seq</em>).</p>
+<div id="fig-fig2.17_par" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.17_par-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig-fig2.17_par.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.17_par-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.5: Janela de <em>Parâmetros</em> exemplificada para o modelo <em>Bibi Random Seq</em> de substratos.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="efeito-dos-parâmetros-de-km-e-vm" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="efeito-dos-parâmetros-de-km-e-vm"><span class="header-section-number">2.1.3</span> Efeito dos parâmetros de Km e Vm</h3>
+<p>Para visualizar como os parâmetros cinéticos interferem no modelo de Michaelis-Mentem, experimente valores distintos para A e B, como segue:</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sua vez…
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Selecione o modelo de Michaelis-Mentem para o modelo B em <em>Modelos</em>;</li>
+<li>Altere Vm e Km em <em>Parâmetros</em>.</li>
+</ol>
+</div>
+</div>
+<p>É possível também alterar os valores na aba de <em>Parâmetros</em> do modelo, e com visualização instantânea do efeito, para se verificar a aceitabilidade da alteração, sem necessidade de fechamento da janela. A <a href="#fig-mm-vmkm" class="quarto-xref">Figura&nbsp;<span>2.6</span></a> apresenta o perfil de Michaelis-Mentem para valores de Vm = 10 e Km = 2, contrastando-os com os perfis de Vm = 5 (A) e de Km = 4 (B).</p>
+<div id="fig-mm-vmkm" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mm-vmkm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/fig2.4a.MMdiffVm.png" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Perfil de Michaelis-Menten com alteração em Vm.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/fig2.4b.MMdiffKm.png" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Perfil de Michaelis-Menten com alteração em Km. A curva para o modelo B com Km alterado é ilustrada pela anotação (<em>hover</em> de mouse).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mm-vmkm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.6: Perfis de Michaelis-Menten com variações nos parâmetros cinéticos: (a) alteração em Vm; (b) alteração em Km.
+</figcaption>
+</figure>
+</div>
+<p>Como se observa na <a href="#fig-mm-vmkm" class="quarto-xref">Figura&nbsp;<span>2.6</span></a>, painel (a), a alteração em Vm aumenta a altura da curva. No painel (b), a alteração em Km modifica o perfil cinético.</p>
+<p>Por fim, experimente variar Vm e Km simultaneamente. A <a href="#fig-fig2.5_MMdiff" class="quarto-xref">Figura&nbsp;<span>2.7</span></a> apresenta o contraste entre os modelos de Michaelis-Mentem considerando valores invertidos para comparação dos parâmetros: Vm de 10 e 5 (modelo A), e Km de 5 e 10 (modelo B).</p>
+<div id="fig-fig2.5_MMdiff" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.5_MMdiff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.5_MMdiff.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.5_MMdiff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.7: Representação de Michaelis-Mentem e duplo-recíproco para parâmetros distintos de Vm e Km (vide texto).
+</figcaption>
+</figure>
+</div>
+<p>Diferentemente da <a href="#fig-mm-vmkm" class="quarto-xref">Figura&nbsp;<span>2.6</span></a>, em que é possível diferenciar o perfil de atividade do par de enzimas sob alteração unitária em Vm e Km, fica mais difícil perceber essa diferença sob alteração simultânea nos parâmetros. Desssa forma, concebe-se o conceito de <em>eficiência catalítica</em> considerando a <em>razão Vm/Km</em> apresentada pelo par de enzimas. Ilustrando pela Figura 1.5, a eficiência catalítica para a enzima A é de 15 (10/2), enquanto que o valor dessa para a enzima B é de 1,25 (5/4), pontuando a enzima A como a de melhor eficiência catalítica.</p>
+</section>
+</section>
+<section id="inibição-enzimática" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="inibição-enzimática"><span class="header-section-number">2.2</span> Inibição Enzimática</h2>
+<p>O <em>EK-toolkit</em> pemite a simulação de diversos modelos de inibição catalítica, como os modelos clássicos reversíveis de inibição (competitiva, não competitiva - pura e mista, e incompetitiva), bem como modelos de múltiplos substratos (<em>Random Sequential</em>, <em>Ordered Sequential</em>, e Ping-Pong), além de inibição por excesso de substrato e inibição irreversível.</p>
+<section id="inibição-reversível" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="inibição-reversível"><span class="header-section-number">2.2.1</span> Inibição reversível</h3>
+<p>Os modelos para inibição competitiva, não competitiva (pura e mista) e incompetitiva podem ser representados a partir de uma única equação, e com gráfico por duplo-recíproco.</p>
+<ol type="1">
+<li>Modelo isolado: selecione um modelo como A, somente;</li>
+<li>Modelo isolado com simulação de erro: digite um valor para erro relativo na janela de parâmetros;</li>
+<li>Comparação entre modelos: selecione um modelo A (ex: Michaelis-Mentem) e compare-o com um modelo B (ex: Inibição competitiva). Para isso, clique no botão de checagem <code>Comparar A/B</code>.</li>
+</ol>
+<p>A figura abaixo ilustra a opção A para os modelos clássicos de inibição enzimática.</p>
+<div id="fig-fig2.6inib" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.6inib-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.6inib.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.6inib-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.8: Quadro geral de modelos de inibição reversível.
+</figcaption>
+</figure>
+</div>
+<p>Os modelos de inibição equivalentes simulados pelo <em>EK-toolkit</em> são ilustrados nas figuras que seguem, pra os <em>gráficos de Michaelis-Mentem (MM), Lineweaver-Burk (LB), e Dixon (DX)</em>.</p>
+<div id="fig-fig2.7_comp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.7_comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.7_comp.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.7_comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.9: Inibição competitiva. Parâmetros: Vm = 10, Km = 2, Ki = 5 (não há Ki2).
+</figcaption>
+</figure>
+</div>
+<div id="fig-fig2.8_ncompur" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.8_ncompur-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.8_ncompur.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.8_ncompur-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.10: Inibição não competitiva pura. Parâmetros: Vm = 10, Km = 2, Ki = 5 (ou Ki1=Ki2).
+</figcaption>
+</figure>
+</div>
+<div id="fig-fig2.9_ncompmix" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.9_ncompmix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.9_ncompmix.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.9_ncompmix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.11: Inibição não competitiva mista. Parâmetros: Vm = 10, Km = 2, Ki1 = 5, Ki2 = 8.
+</figcaption>
+</figure>
+</div>
+<div id="fig-fig2.9_ncompmix" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.9_ncompmix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.9_ncompmix.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.9_ncompmix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.12: Inibição não competitiva mista. Parâmetros: Vm = 10, Km = 2, Ki1 = 5, Ki2 = 8.
+</figcaption>
+</figure>
+</div>
+<div id="fig-fig2.10_incomp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.10_incomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.10_incomp.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.10_incomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.13: Inibição incompetitiva. Parâmetros: Vm = 10, Km = 2, Ki = 5 (não há Ki1).
+</figcaption>
+</figure>
+</div>
+<div id="fig-fig2.10_incomp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.10_incomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.10_incomp.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.10_incomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.14: Inibição incompetitiva. Parâmetros: Vm = 10, Km = 2, Ki = 5 (não há Ki1).
+</figcaption>
+</figure>
+</div>
+<p>Observe que o perfil dos gráficos permite algumas observações sobre a distinção entre os modelos cinéticos de inibição, tais como:</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Diagnóstico de modelos de inibição
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>O modelo competitivo e os demais são facilmente distinguíveis por MM;</li>
+<li>O gráfico de MM não permite distinguir entre os modelos não competitivo (puro ou misto) e incompetitivo;</li>
+<li>Os gráficos de MM e LB não permitem distinguir entre os modelos não competitivo puro e misto;</li>
+<li>O gráfico de DX permite distinção observável entre os modelos não competitivo puro e misto;</li>
+<li>O modelo incompetitivo é facilmente distinguível dos demais com os gráficos de LB e DX.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="erro-e-simulação" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="erro-e-simulação"><span class="header-section-number">2.2.2</span> Erro e simulação</h3>
+<p>As representações gráficas acima foram obtidas considerando uma simulação com <em>erro relativo</em> de 0,05 na caixa de <em>Parâmetros</em>. Experimente como a simulação dos gráficos responde à variação de erro aleatório, o que é sempre observado na experimentação de bancada. Para simular, altere o <em>erro relativo</em> para um valor maior, digamos, 0,1. A <a href="#fig-fig2.11_erro" class="quarto-xref">Figura&nbsp;<span>2.15</span></a> abaixo ilustra essa situação para uma inibição competitiva.</p>
+<div id="fig-fig2.11_erro" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.11_erro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.11_erro.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.11_erro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.15: Modelo de inibição competitiva considerando um erro relativo de 0,05 (aba Parâmetros). O duplo-recíproco é visualizado com <em>zoom</em> próximo aos eixos.
+</figcaption>
+</figure>
+</div>
+<p>Outra observação importante: no duplo-recíproco os maiores erros são observados com os maiores valores de velocidade e teor de substrato !! Apesar disso parecer um contrasenso, lembre-se que os parâmetros gráficos são <em>1/S</em> e <em>1/v</em>. Dessa forma, os pontos mais confiáveis são aqueles próximos da origem do gráfico, e não os mais distantes. Isso implica num <em>erro estatístico</em> bastante conhecido pela representação e gráfico duplo-recíproco, e que exige uma correção devida. Para o <em>script</em> do <em>EK-toolkit</em>, essa correção é feita considerando um ajuste linear ponderado, e com peso de <em>1/v<span class="math inline">\(^{2}\)</span></em> (WLS, <em>weighted least squares</em>).</p>
+</section>
+</section>
+<section id="outros-modelos" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="outros-modelos"><span class="header-section-number">2.3</span> Outros modelos</h2>
+<p>Além dos modelos clássicos, o <em>EK-Toolkit</em> permite avaliar um conjunto significativo de outros modelos catalíticos, tais como <em>inibição por excesso de substrato, inibição irreversível, múltiplos substratos (Bibi random, ordered, e ping-pong), modelos alostéricos (cooperatividade positiva e negativa - Hill), e modelo de ativação</em>. Cada qual possui equação, inserção de parâmetros próprios e diagnóstico em janelas específicas. A figura que segue ilustra uma síntese para observação do gráfico de Lineweaver-Burk para alguns desses.</p>
+<div id="fig-fig2.12_mod" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.12_mod-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.12_mod.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.12_mod-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.16: Representação de duplo-recíproco e esboço de interpretação de modelos em catálise enzimática.
+</figcaption>
+</figure>
+</div>
+<p>As figuras a seguir ilustram simulações obtidas com alguns desses modelos, todos como modelo A, erro relativo nulo, e n = 200 pontos.</p>
+<div id="fig-fig2.13_inibSub" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.13_inibSub-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.13_inibSub.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.13_inibSub-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.17: Modelo de inibição por excesso de substrato.
+</figcaption>
+</figure>
+</div>
+<div id="fig-fig2.14_hill.png" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.14_hill.png-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.14_hill.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.14_hill.png-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.18: Modelo alostérico para cooperatividade positiva. Parâmetros: nH = 1.5; K = 5.
+</figcaption>
+</figure>
+</div>
+<div id="fig-fig2.15_hill_neg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.15_hill_neg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.15_hill_neg.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.15_hill_neg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.19: Modelo de inibição por excesso de substrato. Parâmetros: nH = 0.5; K = 5.
+</figcaption>
+</figure>
+</div>
+<p>Observe também que, pela <a href="#fig-fig2.16_eq2" class="quarto-xref">Figura&nbsp;<span>2.4</span></a>, o toolkit permite a inserção de <em>modelo cinético introduzido pelo usuário</em>. Neste caso, basta definir a equação matemática, os parâmetros e seus valores, tal como representado na <a href="#fig-fig2.18_user" class="quarto-xref">Figura&nbsp;<span>2.20</span></a> para uma equação de inibição parabólica por excesso de produto:</p>
+<p><span class="math display">\[
+v=\frac{Vmax*S}{Km+S}*\frac{Kp^2}{Kp^2+(So-S)^2}
+\]</span></p>
+<p>Onde <em>Kp</em> representa a constante de inibição do produto, e <em>So</em> o teor de substrato inicial.</p>
+<div id="fig-fig2.18_user" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fig2.18_user-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/fig2.18_user.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2.18_user-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.20: Modelo de inibição parabólica por produto. A figura apresenta a janela de parâmetros e gráficos resultantes.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="outras-características-do-toolkit" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="outras-características-do-toolkit"><span class="header-section-number">2.4</span> Outras características do toolkit</h2>
+<p>Em parelalo ao estudo de diversos modelos de catálise, o <em>EK-Toolkit</em> possibilita a exportação de um arquivo HTML autossuficiente contendo gráficos e diagnósticos de parâmetros (botão <code>Exportar HTML</code>). O arquivo é interativo, permitindo ajustes de ampliação, arraste de eixos e do conjunto de dados, bem como a identificação dos valores desses. Além disso, o kit também permite a exportação de dados em formato <em>CSV</em> (botão <code>CSV</code>.). Conversivelmente, a importação de dados em formato <em>CSV</em> pode ser efetuada pelo botão <code>Load</code>. E complementarmente, a legendas dos gráficos pode ser visualizada (<code>Legenda</code>), assim como as equações de ajuste linear para cada reta dos gráficos duplo-recíproco e secundários (inclinação, intercepto, e Dixon), incluindo o coeficiente de correlação <em>R</em> de Pearson (<code>Anotações</code>).</p>
+<section id="referências" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="referências">Referências</h4>
+<ol type="1">
+<li>Marangoni, Alejandro G. Enzyme kinetics: a modern approach. John Wiley &amp; Sons, 2003.</li>
+<li>Purich, Daniel L. Enzyme kinetics: catalysis and control: a reference of theory and best-practice methods. Elsevier, 2010.</li>
+<li>Leone, Francisco A. Fundamentos de cinética enzimática. Editora Appris, 2021.</li>
+<li>Segel, Irwin H. Enzyme kinetics: behavior and analysis of rapid equilibrium and steady state enzyme systems. Vol. 115. New York: Wiley, 1975.</li>
+</ol>
+<div style="page-break-after: always;"></div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Introdução">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./LH.html" class="pagination-link" aria-label="Seleção de Composto Líder para Alvos Enzimáticos -  LH-Toolkit">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Seleção de Composto Líder para Alvos Enzimáticos - LH-Toolkit</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

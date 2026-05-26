@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Gravitação e Fluidos — quando a gravidade molda a matéria – Física &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./term.html" rel="next">
+<link href="./ondas.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gravFlui.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gravitação e Fluidos — quando a gravidade molda a matéria</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Física &amp; JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mecanica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mecânica: Por que as coisas se movem ?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Eletricidade e Magnetismo: forças sem contato que moldam o mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ondas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Ondas: do movimento ao som e à luz</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gravFlui.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gravitação e Fluidos — quando a gravidade molda a matéria</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./term.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Transformações Invisíveis: Termodinâmica, Gases e Soluções</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./radio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radioatividade, Energia Nuclear e Impactos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./modern.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Relatividade e Quântica — Quando espaço, tempo, energia e matéria deixam de ser intuitivos</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gravitação e Fluidos — quando a gravidade molda a matéria</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!---Gravitação é um capítulo extremamente sólido sozinho.
+Tem começo, meio e fim pedagógico:
+
+Lei da Gravitação Universal
+Campo gravitacional
+Energia potencial gravitacional
+Órbitas (circular e elíptica)
+Satélites
+
+💡 E o melhor: dá pra fazer scripts lindos no JSPlotly:
+
+slider de massa → altera força
+slider de distância → mostra lei do inverso do quadrado
+simulação de órbita (nível mais avançado)
+
+👉 Isso conversa muito com matemática (funções, gráficos, inverso do quadrado)
+
+Opção 2 — Fluidos (também funciona sozinho)
+4
+
+Fluidos é outro bloco coeso:
+
+Densidade
+Pressão (hidrostática)
+Princípio de Pascal
+Princípio de Arquimedes
+Bernoulli
+
+💡 Excelente pra interatividade:
+
+slider de densidade → afunda ou flutua
+slider de profundidade → muda pressão
+simulação de fluxo
+
+👉 Muito visual e intuitivo → ótimo pra ensino médio
+
+⚠️ Mistura Gravitação + Fluidos → FUNCIONA (se fizer certo)
+
+Aqui começa a ficar interessante…
+
+Isso funciona se você usar um conceito ponte:
+
+🔗 Pressão gravitacional / equilíbrio de fluidos sob gravidade
+
+Exemplos que conectam:
+
+Atmosfera da Terra (pressão vs altitude)
+Pressão no fundo do oceano (ρgh → depende de g!)
+Estrutura de planetas e estrelas (nível mais avançado)
+
+💡 Aqui nasce um capítulo integrado de verdade:
+
+“Como a gravidade molda o comportamento dos fluidos”
+
+👉 Isso é ouro pedagógico.
+
+Dá pra ter:
+
+script: pressão vs profundidade com slider de g
+comparar Terra vs Lua vs Júpiter 😮
+
+
+Estrutura sugerida (já no seu modelo)
+🌱 Script 1 (simples — Ace)
+Lei da gravitação
+gráfico F vs r
+aluno mexe direto no código
+🌿 Script 2 (interativo)
+pressão hidrostática:
+P = ρgh
+sliders:
+densidade
+profundidade
+gravidade (!! diferencial)
+🌸 Script 3 (ninja)
+atmosfera:
+pressão vs altitude
+decaimento exponencial aproximado
+comparar planetas
+🍎 Script 4 (fruto — mundo real)
+“Por que astronauta flutua?”
+“Por que submarino precisa de casco reforçado?”
+“Por que Júpiter tem atmosfera gigante?”
+💥 Resumo sincero
+Gravitação ✔️ forte sozinho
+Fluidos ✔️ forte sozinho
+Gravitação + Fluidos ✔️🔥 integração real
+Fluidos + Radioatividade ❌ conceitualmente fraco
+
+Se quiser, eu já parto pra próxima etapa e te entrego:
+
+👉 qmd completo no seu template
+👉 Script 1 (Ace didático)
+👉 Script 2 (JSPlotly com sliders incluindo g 👀)
+👉 Script 3 (nível “uau”) --->
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Por que um astronauta parece flutuar no espaço, mesmo sob ação da gravidade ? Por que a pressão no fundo do oceano é gigantesca, a ponto de esmagar estruturas metálicas rígidas ? Por que planetas como Júpiter têm atmosferas tão extensas, e outros não ? Por que nosso ouvido parece fechar quando descemos uma serra próxima ao mar ?</p>
+<p>A resposta que unifica essas e mais um sem-número de outras relações já está ao final da primeira pergunta aí de cima: a <code>gravidade</code>, que puxa objetos e organiza fluidos. A gravitação descreve como massas se atraem, e também como se comportam o ar da atmosfera, a água dos oceanos e o interior dos planetas. Este capítulo busca explorar um pouco como a gravidade atua sobre objetos isolados e também em sistemas contínuos, tais como líquidos e gases, revelando padrões que se repetem desde o fundo dos oceanos até as atmosferas planetárias.</p>
+<p><strong>Ao final, você será capaz de:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> compreender a gravidade como uma interação capaz de organizar movimentos e estruturas no Universo<span class="kw">;</span>  </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> relacionar gravidade e pressão em líquidos e gases<span class="kw">;</span>  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar a pressão hidrostática como resultado do peso de um fluido<span class="kw">;</span>  </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> compreender como atmosferas se formam e variam em diferentes mundos<span class="kw">;</span>  </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> investigar como densidade e gravidade influenciam flutuação e empuxo<span class="kw">;</span>  </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> comparar fenômenos físicos em diferentes ambientes planetários<span class="kw">;</span>  </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> explorar visualizações interativas por códigos de programação.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-gizz_gravFlui" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_gravFlui-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_gravFlui.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_gravFlui-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.1: A gravidade descreve massas que se atraem e determina a distribuição de pressão e densidade nos fluidos.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes dos conceitos de praxe, um JSPlotly inicial para o capítulo, como já é de praxe !</p>
+<div id="fig-gravFlui" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gravFlui-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gravFlui.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gravFlui-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.2: A gravidade depende de massa e distância. Clique com o botão direito neste <a href="apps/gravFlui.html">LINK</a> e abra o <em>app</em> em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>Esse <em>app</em> mostra como a força gravitacional entre dois corpos diminui quando a distância entre eles aumenta. A ideia central é simples: as massas se atraem, mas essa atração se enfraquece rapidamente com a distância.</p>
+<p>A equação usada é:</p>
+<p><span id="eq-FG"><span class="math display">\[
+F = G \frac{m_1 m_2}{r^2}
+\tag{5.1}\]</span></span></p>
+<p>Essa é a chamada <code>Lei da Gravitação Universal</code>. Nela, <code>m1</code> e <code>m2</code> são as massas dos corpos, <code>r</code> é a distância entre eles e <code>G</code> é a constante gravitacional.</p>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>Após carregar o aplicativo, observe o gráfico da força gravitacional em função da distância. O trecho do código que determina essa força é:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">.</span><span class="fu">push</span>(G <span class="op">*</span> m1 <span class="op">*</span> m2 <span class="op">/</span> (dist <span class="op">*</span> dist))<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ele calcula a força para várias distâncias, gerando a curva mostrada no gráfico. Os parâmetros pra você mexer estão aqui:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> m1 <span class="op">=</span> <span class="fl">5.97e24</span><span class="op">;</span>   <span class="co">// massa da Terra</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> m2 <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span>      <span class="co">// massa do objeto</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> escalaDist <span class="op">=</span> <span class="fl">1e6</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Alguns cenários se mostram interessantes para você explorar o aplicativo. Como em outros scripts, você pode apagar um cenário com <code>clean</code> antes do outro, ou não, e nesse caso sobrepondo curvas para comparação entre cenários.</p>
+<ol type="1">
+<li><em>Objeto próximo da Terra</em>.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> m1 <span class="op">=</span> <span class="fl">5.97e24</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> m2 <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> escalaDist <span class="op">=</span> <span class="fl">1e6</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe que a força é maior nas menores distâncias e cai rapidamente à medida que <code>r</code> aumenta. Isso ocorre porque a gravidade não desaparece de repente, mas diminui continuamente com a distância.</p>
+<ol start="2" type="1">
+<li><p><em>Objeto mais massivo</em>. Aumente em 10 vezes a massa do objeto. Veja que a força aumenta em relação ao cenário anterior. Isso acontece por que, se você dobrar ou multiplicar a massa, a força gravitacional aumenta na mesma proporção.</p></li>
+<li><p><em>Planeta menos massivo</em> Que tal simular a força de atração em Marte ?!</p></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> m1 <span class="op">=</span> <span class="fl">6.4e23</span><span class="op">;</span> <span class="co">// massa aproximada de Marte, em kg</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> m2 <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Perceba que a força fica menor do que no caso da Terra. Ou seja, mundos com menor massa exercem menor atração gravitacional sobre o mesmo objeto.</p>
+<ol type="1">
+<li><em>Distâncias maiores</em>. Agora altere a distância entre os objetos:</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> escalaDist <span class="op">=</span> <span class="fl">5e6</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Veja que a curva fica mais baixa, porque as distâncias consideradas são maiores. Ou seja, a distância tem efeito muito forte, pois aparece ao quadrado no denominador (<a href="#eq-FG" class="quarto-xref">Equação&nbsp;<span>5.1</span></a>).</p>
+<p>Esse cenários mostram que a gravidade depende de duas coisas: massa e distância. Massas maiores aumentam a atração, e distâncias maiores reduzem a atração — e reduzem muito, porque a relação é inversamente proporcional ao quadrado da distância. Em outras palavras, aumentar a massa fortalece a gravidade, mas aumentar a distância a enfraquece. E a distância pesa muito nessa conta.</p>
+<p>Até aqui, percebe-se que a gravidade depende da massas de um corpo, o que se reflete em seu peso, ou <code>força peso</code>:</p>
+<p><span id="eq-peso"><span class="math display">\[
+P = m * g
+\tag{5.2}\]</span></span></p>
+<p>Ocorre que, se o peso for de um fluido, como a água, essa força acaba por gerar <code>pressão</code>. E a pressão explica fenômenos como <code>atmosfera</code>, <code>hidrostática</code>, <code>empuxo</code> e <code>peso aparente</code>. Temos então a gravitação sendo tratada também dentro da água, do ar e dos corpos que flutuam, e não ficando restrita somente ao espaço.</p>
+<p>Isso é assunto pro próximo <em>app</em> de JSPlotly, pressão em fluidos.</p>
+<div id="fig-gravFlui2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gravFlui2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gravFlui2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gravFlui2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.3: A pressão hidrostática surge do peso do fluido. Clique com o botão direito neste <a href="apps/gravFlui2.html">LINK</a> e abra o aplicativo em nova aba.
+</figcaption>
+</figure>
+</div>
+</section>
+</div>
+</div>
+<!---  Script 1 — Gravitação (edição via Ace)
+
+Objetivo: explorar a relação entre força e distância.
+
+![Script inicial mais simples. Clique com o botão direito neste [LINK](apps/gravFlui.html) e abra em nova aba.](figuras/gravFlui.png){#fig-gravFlui}
+
+Antes de qualquer formalização, a proposta é simples: mexa.
+
+No script a seguir, a força gravitacional entre dois corpos é calculada em função da distância. Os parâmetros estão expostos diretamente no início do código para facilitar a modificação.
+
+Leitura guiada
+
+Observe o comportamento do gráfico ao alterar:
+
+a massa dos corpos
+a escala de distância
+valores extremos (muito grandes ou muito pequenos)
+
+Pergunte-se:
+
+a força cresce ou decresce rapidamente?
+a relação parece linear?
+
+
+Apenas observe.
+
+Leitura guiada
+Como a força varia com a distância?
+O que acontece ao dobrar a massa?
+A relação é linear?
+❓ Onde está a pergunta?
+
+Quando a gravidade atua sobre um fluido (líquido ou gás), ela não apenas atrai partículas — ela gera gradientes de pressão.
+
+Como a gravidade determina a distribuição de pressão em fluidos? --->
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O script da <a href="#fig-gravFlui2" class="quarto-xref">Figura&nbsp;<span>5.3</span></a> mostra como a pressão aumenta à medida que mergulhamos mais profundamente em um fluido. A ideia é que cada camada de líquido exerce peso sobre as camadas debaixo.</p>
+<p>A equação utilizada é:</p>
+<p><span id="eq-P_rho"><span class="math display">\[
+P = \rho g h
+\tag{5.3}\]</span></span></p>
+<p>Onde <span class="math inline">\(\rho\)</span> é a densidade do fluido, <span class="math inline">\(g\)</span> é a gravidade, e <span class="math inline">\(h\)</span> é a profundidade.</p>
+<section id="agite-antes-de-usar-1" class="level4">
+<h4 class="anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar:</h4>
+<p>Você pode editar principalmente esses valores no código:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> rho <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> g <span class="op">=</span> <span class="fl">9.8</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> hmax <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois clique em <code>add</code> e observe como a pressão varia com a profundidade. O cálculo principal aparece neste trecho:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>P<span class="op">.</span><span class="fu">push</span>(rho <span class="op">*</span> g <span class="op">*</span> depth)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O script então calcula a pressão em diferentes profundidades e gera a curva correspondente. “Facinho”, não ? Alguns cenários pra você explorar.</p>
+<ol type="1">
+<li><em>Água na Terra</em>.</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> rho <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> g <span class="op">=</span> <span class="fl">9.8</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe que a pressão cresce linearmente com a profundidade, ou seja: quanto mais fundo, maior o peso da coluna de líquido acima.</p>
+<ol start="2" type="1">
+<li><p><em>Fluido mais denso</em>. Aumente para <em>“rho = 13600</em>”, um valor próximo ao do mercúrio. Veja que a curva cresce muito mais rapidamente. Isso ocorre porque líquidos mais densos exercem maior pressão para uma mesma profundidade.</p></li>
+<li><p><em>Gravidade menor</em>. Agora altere a gravidade para um valor próximo ao da Lua.</p></li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> g <span class="op">=</span> <span class="fl">1.6</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe que pressão aumenta mais lentamente, porque a pressão hidrostática depende diretamente da gravidade e, nesse caso, do mundo considerado.</p>
+<ol start="4" type="1">
+<li><em>Grandes profundidades</em>. Coloque a altura em:</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> hmax <span class="op">=</span> <span class="dv">500</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O gráfico agora se estende para profundidades maiores, porque, mesmo mantendo o mesmo líquido, as pressões são enormes.</p>
+<p>No script, a profundidade é gerada com espaçamentos iguais:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> depth <span class="op">=</span> i <span class="op">*</span> (hmax <span class="op">/</span> <span class="dv">100</span>)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ele então calcula a pressão correspondente para cada ponto, o que resulta num gráfico praticamente linear, porque:</p>
+<p><span class="math display">\[
+P \propto h
+\]</span></p>
+<p>Ou seja, dobrar a profundidade dobra a pressão. Além disso, quanto maior a densidade do líquido, ou maior a gravidade, maior será também a pressão exercida. A gravidade estudada no script não atua apenas em planetas e órbitas, mas também nos líquidos, comprimindo as camadas inferiores, e também na atmosfera como um todo.</p>
+<p>Desse modo, algumas coisas passam a fazer mais sentido, embora não sejam nada conectadas. Por exemplo, mergulhadores sofrem maior pressão quanto mais fundo descem, planetas com maior gravidade comprimem suas atmosferas, e estrelas são mantidas estáveis por equilíbrio entre gravidade e pressão. Resumindo o “babado”, todos os fluidos pesam, gerando uma pressão que aumenta com a profundidade. Inclusive o ar, pelas camadas da atmosfera.</p>
+<p>Que tal compreender um pouco mais sobre a influência da gravidade nessa última, a atmosfera ? Para isso, veja se o <em>app</em> da <a href="#fig-gravFlui3" class="quarto-xref">Figura&nbsp;<span>5.4</span></a> sobre pressão atmosférica pode te ajudar.</p>
+</section>
+</div>
+</div>
+<!---
+
+Pressão hidrostática:
+
+P=ρgh
+
+Script 2 — Pressão hidrostática
+
+Objetivo: explorar P=ρgh
+
+
+![Script mais completo Clique neste [LINK](apps/gravFlui2.html) para abrir em nova aba.](figuras/gravFlui2.png){#fig-gravFlui2}
+
+Quando um fluido está sob ação da gravidade, surge um padrão simples e poderoso:
+
+P=ρgh
+
+A pressão aumenta com a profundidade.
+Mas mais do que isso: ela depende diretamente da gravidade local.
+
+Leitura guiada
+O que acontece ao aumentar a profundidade?
+Como a gravidade influencia o resultado?
+E a densidade?
+
+Expansão JSPlotly (pra você encaixar)
+
+Aqui entra seu toque ninja depois:
+
+slider de g com presets:
+Terra (9.8)
+Lua (1.6)
+Júpiter (24.8)
+slider de densidade:
+água
+óleo
+mercúrio 😮
+
+
+Sugestão de controles (layout JSPlotly)
+densidade (ρ): 500 a 13600
+gravidade (g): 1 a 25
+profundidade máxima: 10 a 500
+
+Presets sugeridos:
+
+Água + Terra
+Água + Lua
+Mercúrio + Terra
+Júpiter (g alto)
+🔍 Leitura guiada
+O que acontece quando você aumenta g?
+E quando muda a densidade?
+A relação é linear ou não?
+
+-- --->
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O ar também possui massa. A atmosfera terrestre forma uma enorme coluna de gás ao redor do planeta, comprimida pela gravidade. Desse jeito, quanto maior a altitude, menor a quantidade de ar acima de nós, e menor a pressão atmosférica. Isso pode ser evidenciado com o script da <a href="#fig-gravFlui3" class="quarto-xref">Figura&nbsp;<span>5.4</span></a>. O código mostra como a pressão atmosférica diminui com a altitude. Diferentemente da pressão hidrostática simples, que cresce linearmente, a atmosfera apresenta uma queda aproximadamente exponencial.</p>
+<div id="fig-gravFlui3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gravFlui3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gravFlui3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gravFlui3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.4: A pressão atmosférica existe porque o ar possui massa e sofre ação da gravidade. Clique neste <a href="apps/gravFlui3.html">LINK</a> para abrir o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<p>A equação utilizada no código é:</p>
+<p><span id="eq-P_kh"><span class="math display">\[
+P = P_0 e^{-kh}
+\tag{5.4}\]</span></span></p>
+<p>Nessa equação:</p>
+<ul>
+<li><span class="math inline">\(P_0\)</span> é a pressão ao nível do solo;</li>
+<li><span class="math inline">\(h\)</span> é a altitude;</li>
+<li><span class="math inline">\(k\)</span> controla a rapidez da queda da pressão.</li>
+</ul>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>Você pode editar o trecho abaixo, clicar em <code>add</code>, e observar como a pressão varia com a altitude.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> P0 <span class="op">=</span> <span class="dv">101325</span><span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> k <span class="op">=</span> <span class="fl">0.00012</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O cálculo principal para isso aparece neste trecho:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>P<span class="op">.</span><span class="fu">push</span>(P0 <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>k <span class="op">*</span> alt))<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Essa função exponencial (<code>Math.exp</code>) faz com que a pressão diminua rapidamente nas primeiras altitudes, e mais lentamente em grandes alturas. Isso dá pra bolar alguns cenários interessantes, veja:</p>
+<ol type="1">
+<li><em>Atmosfera terrestre padrão</em>.</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> P0 <span class="op">=</span> <span class="dv">101325</span><span class="op">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> k <span class="op">=</span> <span class="fl">0.00012</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O gráfico resultante mostra que a pressão cai gradualmente com a altitude, porque há menos ar acima de nós exercendo peso.</p>
+<ol start="2" type="1">
+<li><em>Atmosfera mais densa</em>. Agora a pressão dobra ! E é isso o que ocorre com outros planetas, onde atmosferas mais densas podem apresentar pressões muito maiores ao nível do solo.</li>
+</ol>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> P0 <span class="op">=</span> <span class="dv">202650</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Queda mais rápida da pressão</em>.</li>
+</ol>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> k <span class="op">=</span> <span class="fl">0.00025</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Veja que a curva despenca mais rapidamente. Isso se dá porque valores maiores de <span class="math inline">\(k\)</span> representam atmosferas que perdem pressão mais rapidamente com a altitude.</p>
+<ol start="4" type="1">
+<li><em>Atmosfera mais extensa</em>. Aqui você deve perceber que a pressão diminui mais lentamente, já que atmosferas mais extensas conseguem manter pressão significativa mesmo em grandes altitudes.</li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> k <span class="op">=</span> <span class="fl">0.00005</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O script calcula a pressão em diferentes altitudes e depois aplica o modelo exponencial para estimar a pressão atmosférica correspondente. A diferença em relação ao que vimos no script da <a href="#fig-gravFlui2" class="quarto-xref">Figura&nbsp;<span>5.3</span></a> é simples: na água, a densidade varia pouco, mas na atmosfera, o próprio ar vai ficando menos denso com a altitude. E é por isso que o perfil vai ficando curvilinear.</p>
+<p>Experimente <em>“brincar”</em> um pouco mais com esse <em>app</em>, para verificar diferenças sobrepondo os gráficos com o botão <code>add</code>. Compare, por exemplo, atmosferas densas com rarefeitas, quedas rápidas com quedas lentas, bem como diferentes condições planetárias.</p>
+<p>Em síntese, o ar também pesa, comprimido pela gravidade, embora subir signifique atravessar camadas da atmosfera cada vez menos densas. Juntando o que você já experimentou nas seções anteriores do capítulo, perceba agora que a gravidade aparece em três escalas diferentes: entre corpos celestes, em líquidos e na atmosfera.</p>
+<p>Imagine poder juntar tudo isso, ou melhor, corpos celestes e líquidos ! De repente, um mesmo oceano se comportando de formas muito diferentes dependendo do mundo em que se está. Em planetas ou luas com gravidade maior, a pressão aumenta mais rapidamente com a profundidade. Em mundos com gravidade menor, esse aumento acontece de forma mais suave. E adivinha ?! Que tal exercitar isso num próximo script de JSPlotly ?</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Essa seção tem sido dedicada a levantar hipóteses, realistas ou não, e em contextos variados. Mas antes que nos defrontemos com as divagações de praxe, vamos explorar um pouco a ideia mencionada acima, a de que gravidade de diferentes mundos altera a pressão hidrostática, junto ao <em>app</em> da <a href="#fig-gravFlui4" class="quarto-xref">Figura&nbsp;<span>5.5</span></a>.</p>
+<div id="fig-gravFlui4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gravFlui4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gravFlui4.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gravFlui4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.5: A pressão hidrostática depende não apenas do fluido, mas também do planeta ou lua em que o fluido se encontra. Clique neste <a href="apps/gravFlui4.html">LINK</a> para abrir o aplicativo.
+</figcaption>
+</figure>
+</div>
+<p>Esse script compara como a pressão hidrostática varia em diferentes corpos celestes. Embora o fluido possa ser o mesmo, a gravidade de cada mundo altera significativamente a pressão exercida em grandes profundidades. A equação utilizada continua sendo:</p>
+<p><span class="math display">\[
+P = \rho g h
+\]</span></p>
+<p>Mas agora o valor de <code>g</code> muda para cada mundo. Assim, edite principamente o início do código:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> rho <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hmax <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O script então compara automaticamente a pressão prevista na Lua, em Marte, na Terra, e em Júpiter. E cada curva mostra como a pressão cresce com a profundidade naquele mundo. As gravidades usadas aparecem neste trecho:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mundos <span class="op">=</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Lua"</span><span class="op">:</span> <span class="fl">1.62</span><span class="op">,</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Marte"</span><span class="op">:</span> <span class="fl">3.71</span><span class="op">,</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Terra"</span><span class="op">:</span> <span class="fl">9.81</span><span class="op">,</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Júpiter"</span><span class="op">:</span> <span class="fl">24.79</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Veja que todas as curvas aumentam linearmente, mas com inclinações diferentes. A curva de Júpiter cresce muito mais rapidamente do que a da Terra, enquanto a da Lua cresce lentamente. Isso acontece porque:</p>
+<p><span class="math display">\[
+P \propto g
+\]</span></p>
+<p>Ou seja, a gravidade controla o quanto o fluido “pesa”. Vamos experimentar alguns cenários ?</p>
+<ol type="1">
+<li><em>Água em diferentes mundos</em>.</li>
+</ol>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> rho <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A comparação padrão utiliza um fluido semelhante à água. Perceba que, mesmo usando o mesmo líquido, a pressão muda drasticamente entre os mundos.</p>
+<ol start="2" type="1">
+<li><p><em>Fluido mais denso</em>. Altere a densidade acima para um valor próximo ao do mercúrio (<em>“const rho = 13600”</em>). Agora, todas as curvas ficam mais inclinadas, porque a densidade e gravidade atuam juntas no aumento da pressão.</p></li>
+<li><p><em>Grandes profundidades</em>. Agora mude:</p></li>
+</ol>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hmax <span class="op">=</span> <span class="dv">500</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Veja que as diferenças entre os mundos ficam ainda mais evidentes. De fato, em grandes profundidades, pequenas diferenças de gravidade geram enormes diferenças de pressão (acho que o Tio Ben, da saga Homem-Aranha, disse algo parecido uma vez).</p>
+<ol start="4" type="1">
+<li><p><em>Comparando Lua e Júpiter</em>. Note que, na Lua, o crescimento é lento, enquanto que em Júpiter o crescimento é muito rápido. Traduzindo…mergulhar em um oceano hipotético de Júpiter seria uma experiência realmente “esmagadora”.</p></li>
+<li><p><em>Comparando com qualquer planeta ou satélite natural</em>. Aqui é pura diversão. Basta você substituir um planeta e o seu valor no código por outro diferente, como Saturno ou Vênus, comparando-os em seguida com os demais.</p></li>
+</ol>
+<p>Enfim, a ideia até aqui é mostrar que líquidos possuem um peso que depende da gravidade local, o que faz com que mundos diferentes gerem pressões também diferentes.</p>
+<p>E isso ocorre de forma análoga em condições de atmosfera variável. Então, que tal agora, de um jeito mais breve, verificar o efeito da gravidade em atmosferas comparadas a partir de um menu de opções ?</p>
+<!-- ### Por dentro da ferramenta
+
+O script gera uma lista de profundidades:
+
+```js
+h.push(i * hmax / 100);
+```
+
+Depois calcula a pressão para cada mundo:
+
+```js
+P.push(rho * g * h[i]);
+```
+
+Cada valor de gravidade produz uma curva diferente.
+
+O gráfico final reúne todas essas curvas para comparação. -->
+<p>Para isso, teste o <em>app</em> da <a href="#fig-gravFlui5" class="quarto-xref">Figura&nbsp;<span>5.6</span></a>. Diferente dos demais até então, agora você não precisará editar nada, apenas observar o que acontece quando seleciona uma opção diferente. O script compara modelos atmosféricos usando um menu interativo do próprio gráfico, e cada qual apresentando uma velocidade diferente de queda da pressão com a altitude.</p>
+<div id="fig-gravFlui5" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gravFlui5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gravFlui5.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gravFlui5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.6: A gravidade e a estrutura da atmosfera determinam como a pressão varia com a altitude. Clique neste <a href="apps/gravFlui5.html">LINK</a> para abrir o <em>app</em> .
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-3">Agite antes de usar</h4>
+<p>Nesse <em>app</em>, basta você utilizar o menu suspenso no topo do gráfico para alternar entre <code>atmosfera rarefeita</code>, <code>atmosfera terrestre</code>, ou <code>atmosfera espessa</code>. Depois, utilize a opção <code>Mostrar todas</code>, para comparar simultaneamente os diferentes comportamentos. O resultado é apresentado como um gráfico com <em>decaimento exponencial</em>, como mostra a <a href="#fig-gravFlui5" class="quarto-xref">Figura&nbsp;<span>5.6</span></a>. Esse decaimento decorre do modelo da <a href="#eq-P_P0e" class="quarto-xref">Equação&nbsp;<span>5.5</span></a> aplicado ao código:</p>
+<p><span id="eq-P_P0e"><span class="math display">\[
+P = P_0 e^{-kh}
+\tag{5.5}\]</span></span></p>
+<p>Observe que as curvas apresentam quedas diferentes de pressão com a altitude. Assim, em atmosferas rarefeitas, ocorre uma perda rápida de pressão, pois atmosferas pouco densas oferecem menor proteção e menor retenção de gases. Por outro lado, em atmosferas espessas, essa queda é mais lenta, permanecendo a pressão elevada mesmo em grandes altitudes. Isso ocorre porque atmosferas densas conseguem sustentar pressão significativa por longas distâncias.</p>
+<p>O comportamento intermediário, por sua vez, pode ser observado junto à atmosfera terrestre. Se você clicar em “Mostrar todas”, verá que pequenas mudanças no comportamento atmosférico geram diferenças planetárias enormes. Portanto, diferentes mundos podem apresentar atmosferas extremamente distintas, mesmo obedecendo a princípios físicos semelhantes. Diferentes condições produzem atmosferas também diferentes. E por consequência, a ação da gravidade sobre essas atmosferas de massas distintas faz com que se mantenham próximas aos planetas.</p>
+<p>Agora sim, a gente tá apto a <em>“viajar na maionese”</em> como se falava nos saudosos anos 80’.</p>
+<ul>
+<li>E se estivéssemos na Lua ? Como líquidos e atmosferas se comportariam em uma gravidade tão baixa ?<br>
+</li>
+<li>E se a gravidade da Terra fosse o dobro da atual ? Nosso corpo suportaria facilmente a nova pressão ?<br>
+</li>
+<li>E se o fluido fosse muito menos denso que a água ? A pressão aumentaria lentamente ou rapidamente com a profundidade ?<br>
+</li>
+<li>E se mergulhássemos em um oceano de mercúrio ? O que aconteceria com a pressão mesmo em pequenas profundidades ?<br>
+</li>
+<li>E se estivéssemos em Marte ? Como seriam a atmosfera, a pressão e a flutuação nesse ambiente ?<br>
+</li>
+<li>E se Júpiter tivesse uma superfície líquida navegável ? O que aconteceria com um mergulhador em uma gravidade tão intensa ?<br>
+</li>
+<li>E se a atmosfera terrestre fosse muito mais espessa ? Como mudariam respiração, clima e pressão atmosférica ?<br>
+</li>
+<li>E se a Terra perdesse parte de sua atmosfera ? O que aconteceria com a pressão ao nível do solo ?<br>
+</li>
+<li>E se um planeta tivesse gravidade muito baixa, mas atmosfera extremamente densa ?<br>
+</li>
+<li>E se fosse possível construir submarinos para oceanos extraterrestres ? Quais mundos seriam mais perigosos para explorar ?<br>
+</li>
+<li>E se a gravidade variasse continuamente enquanto mergulhamos ? Como ficaria a pressão hidrostática ?<br>
+</li>
+<li>E se comparássemos um oceano terrestre, um oceano marciano e um oceano hipotético em Europa, a lua de Júpiter ?</li>
+</ul>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Bom, já estamos navegando em <em>“outros mundos”</em> desde o início do capítulo. Mas com o pé no chão, digo, na Terra, a gente pode também elencar diversas situações em que as <em>relações de gravidade, fluido e atmosfera</em> convivem conosco cotidianamente. E não são poucas ! A percepção do aumento de pressão com a profundidade, por exemplo, é clássico pra qualquer um que já mergulhou em piscinas ou oceanos. Aquele negócio do ouvido <em>“tampar”</em> em mergulhos e viagens devido à variações da pressão externa, também. Quem já observou a diferença de pressão em fluidos em seringas e canudos ? Uma simples panela de pressão também nos revela uma alteração da temperatura de ebulição pela pressão.</p>
+<p>Além disso, navios flutuam graças ao empuxo em fluidos, enquanto submarinos controlam internamente densidade e flutuação. As marés oceânicas decorrem da interação gravitacional entre Terra, Lua e Sol. Indo para o céu, o voo de aviões decorre da interação entre atmosfera, pressão e sustentação. A sensação de cansaço ao escalar montanhas também resulta da menor pressão atmosférica e da menor disponibilidade de oxigênio. Indo para o chão, a chuva “nada mais é” do que o movimento de massas de ar sob ação da gravidade (circulação atmosférica). Já as barragens exibem pressão hidrostática crescente com a profundidade. E indo para nós mesmos, a circulação sanguínea resulta de um equilíbrio entre pressão e movimento de fluidos no corpo humano. E a simples sensação de <em>“peso”</em> ao carregar objetos nada mais é do que a ação gravitacional da Terra sobre os corpos.</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A seção desse capítulo poderia ter vindo num robusto plural, já que percorremos os conceitos com auxílio de 6 aplicativos de JSPlotly:</p>
+<p>Script 1 - gravitação básica; Script 2 - pressão hidrostática; Script 3 - atmosfera simplificada; Script 4 - comparação de planetas; Script 5 - atmosferas múltiplas; Script 6 - empuxo, flutuação e “peso aparente”</p>
+<p>Junte tudo isso no mesmo caldeirão e você terá: gravidade gera peso que gera pressão, por sua vez moldando atmosferas que alteram flutuação, e essa modificando o peso aparente.</p>
+<p>Então <em>“sapequemos”</em> apenas um pseudocódigo, o de pressão hidrostática em diferentes mundos !</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">INICIAR</span> parâmetros principais</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">definir</span> densidade do fluido</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">definir</span> profundidade máxima</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="ex">criar</span> tabela de mundos:</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Lua</span> → g = 1,62</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Marte</span> → g = 3,71</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Terra</span> → g = 9,81</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Júpiter</span> → g = 24,79</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="ex">gerar</span> lista de profundidades</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">PARA</span> vários valores de profundidade</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">calcular</span> profundidade atual</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">armazenar</span> valor</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">FIM</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="ex">criar</span> conjunto de curvas</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="ex">PARA</span> cada mundo</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">obter</span> gravidade do mundo</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">criar</span> lista de pressões</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    <span class="ex">PARA</span> cada profundidade</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>        <span class="ex">calcular</span> pressão hidrostática:</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>            <span class="ex">P</span> = ρ × g × h</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>        <span class="ex">armazenar</span> pressão</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    <span class="ex">FIM</span></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>    <span class="ex">criar</span> curva do mundo:</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>        <span class="ex">profundidade</span> × pressão</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    <span class="ex">adicionar</span> curva ao gráfico</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a><span class="ex">FIM</span></span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a><span class="ex">configurar</span> gráfico:</span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>    <span class="ex">título</span></span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>    <span class="ex">eixo</span> da profundidade</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>    <span class="ex">eixo</span> da pressão</span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>    <span class="ex">legenda</span> comparativa</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a><span class="ex">mostrar</span> resultado final</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./ondas.html" class="pagination-link" aria-label="Ondas: do movimento ao som e à luz">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Ondas: do movimento ao som e à luz</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./term.html" class="pagination-link" aria-label="Transformações Invisíveis: Termodinâmica, Gases e Soluções">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Transformações Invisíveis: Termodinâmica, Gases e Soluções</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

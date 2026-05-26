@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Termoquímica e Estequiometria: matéria e energia se transformando juntas – Química &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./materia.html" rel="next">
+<link href="./solEqkin.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./termsteq.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Termoquímica e Estequiometria: matéria e energia se transformando juntas</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Química &amp; JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./solEqkin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Como o meio e a velocidade moldam as reações: soluções, equilíbrio, e cinética</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./termsteq.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Termoquímica e Estequiometria: matéria e energia se transformando juntas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./materia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Arquitetura da matéria: como átomos se organizam e se conectam</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./orginorg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funções e transformações químicas: da matéria mineral às moléculas da vida</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ambEletroq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Mundo em reação: Química Ambiental e Eletroquímica</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tecnol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Química de Materiais e Nanotecnologia - Do plástico do dia-a-dia às partículas invisíveis que mudam o mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Química Analítica: como descobrir o que existe, quanto existe, e por quê</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Termoquímica e Estequiometria: matéria e energia se transformando juntas</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quando um combustível queima, libera calor. Quando colocamos gelo em uma bebida, o ambiente esfria. Quando um comprimido efervescente reage, percebemos transformação e energia ao mesmo tempo.</p>
+<p><em>Quanto de matéria reage … e quanta energia está escondida nessa transformação ?</em></p>
+<p>Neste capítulo, vamos explorar dois ramos fundamentais da Química: a <em>Estequiometria</em>, que permite quantificar reagentes e produtos, e a <em>Termoquímica</em>, que revela a energia envolvida nas transformações. Nos livros didáticos, esses temas costumam aparecer separados. Mas o mundo não separa quantidade de energia. Na prática, toda reação química envolve simultaneamente quantidade de matéria transformada e energia trocada com o ambiente. Ou seja, cada reação envolve o quanto reage e quanta energia está envolvida no processo</p>
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar proporções em reações químicas<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> calcular quantidades de reagentes e produtos<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> compreender reações exotérmicas e endotérmicas<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> relacionar quantidade de matéria com energia liberada ou absorvida<span class="kw">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> explorar os temas do capítulo com auxílio de visualizações interativas</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-gizz_termsteq" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_termsteq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_termsteq.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_termsteq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.1: A transformação da matéria é sempre acompanhada de um fluxo de energia.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENTER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de qualquer fórmula, experimente o objeto interativo de JSPlotly que segue.</p>
+<div id="fig-termsteq" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-termsteq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/termsteq.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-termsteq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.2: JSPlotly para estudo inicial de estequiometria e termoquímica: matéria e energia evoluindo juntas. Clique com o botão direito neste <a href="apps/termsteq.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>Esse script mostra, de forma simples, como uma reação química pode ser analisada por dois lados ao mesmo tempo: a estequiometria (quanto produto se forma) e a termoquímica (quanta energia é liberada ou absorvida). Você pode variar a quantidade de reagente e observar quanto de produto é formado e quanta energia é liberada.</p>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>No início do código, altere o trecho abaixo para outros valores, e vá clicando no botão <code>add</code> entre esses para observar o resultado.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> A_inicial <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Experimente valores como 2, 8, e 10. E observe que, quando se aumenta a quantidade de (A), mais produto (B) é formado e mais energia total participa da reação. A reação usada no script é:</p>
+<p><span id="eq-AB"><span class="math display">\[
+A \rightarrow 2B
+\tag{3.1}\]</span></span></p>
+<p>Isso significa que:</p>
+<p><span id="eq-AB2"><span class="math display">\[
+1 \text{ mol de } A \rightarrow 2 \text{ mols de } B
+\tag{3.2}\]</span></span></p>
+<p>Portanto, a quantidade de produto formado depende da proporção entre os <code>coeficientes da reação</code>:</p>
+<p><span id="eq-coef"><span class="math display">\[
+B = \frac{coef_B}{coef_A} \cdot A
+\tag{3.3}\]</span></span></p>
+<p>Agora altere o trecho abaixo, experimentando valores de -20, -100, e 50.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> deltaH <span class="op">=</span> <span class="op">-</span><span class="dv">50</span> <span class="op">;</span> kJ<span class="op">/</span>mol</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Essa energia é denominada <em>entalpia</em>, com o <code>delta</code> representando sua variação global na reação. Nos livros essa quantidade é normalmente representada por <span class="math inline">\(\Delta\)</span>H. Perceba que, embora pareça estranho, valores negativos de “deltaH” dão uma inclinação positiva para a reta de energia, enquanto que valores positivos resultam em inclinação negativa. Ou seja, “-deltaH” indica que a energia aumenta com (A) enquanto que “+deltaH” indica que essa energia reduz.</p>
+<p>De fato, quando:</p>
+<p><span class="math inline">\(\Delta\)</span>H &gt; 0; a reação absorve energia (<em>endotérmica</em>); <span class="math inline">\(\Delta\)</span>H &lt; 0; a reação libera energia (<em>exotérmica</em>).</p>
+<p>No script essa energia total é calculada por:</p>
+<p><span id="eq-E"><span class="math display">\[
+E = n \cdot \Delta H
+\tag{3.4}\]</span></span></p>
+<p><em>Onde:</em> <code>n</code> é a quantidade de reagente (mol) e <span class="math inline">\(\Delta\)</span>H a variação de entalpia da reação (em kJ/mol). Assim, é possível traçar alguns cenários interessantes com o <em>app</em>:</p>
+<ol type="1">
+<li><em>Mais reagente</em>. Aumente <code>A_inicial</code> e observe que a quantidade de produto aumenta proporcionalmente.</li>
+<li><em>Reação mais exotérmica</em>. Use um valor mais negativo para <code>deltaH</code>. Isso representa uma reação que liberar energia.</li>
+<li><em>Reação endotérmica</em>. Troque a entalpia para um valor positivo. Isso representa uma reação que absorve energia.</li>
+<li><em>Mudança na proporção</em>. Troque o <code>coefB</code>para 4. Observe que mais produto é formado para a mesma quantidade de reagente.</li>
+</ol>
+<p>O script mostra que uma equação química balanceada permite prever quanto reagente é consumido, quanto produto é formado, e quanta energia é liberada ou absorvida no processo.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Agora organizemos as ideias.</p>
+<section id="estequiometria-quantificando-a-transformação" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="estequiometria-quantificando-a-transformação"><span class="header-section-number">3.1</span> Estequiometria: quantificando a transformação</h2>
+<p>A estequiometria estuda as relações quantitativas entre reagentes e produtos. A partir de uma equação balanceada, podemos determinar quanto de reagente é necessário, quanto de produto será formado, e qual reagente limita a reação. Ou seja, a reação ocorre em proporções fixas.</p>
+</section>
+<section id="termoquímica-entendendo-a-energia" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="termoquímica-entendendo-a-energia"><span class="header-section-number">3.2</span> Termoquímica: entendendo a energia</h2>
+<p>A termoquímica estuda o calor envolvido nas reações químicas. Se exotérmica, o calor é liberado (ou <em>exergônica</em>, de “energia”); se endotérmica (ou <em>endergônica</em>) a reação absorve energia. A grandeza central envolvida é a variação de entalpia (<span class="math inline">\(\Delta\)</span>H).</p>
+<p>Desse modo, toda reação possui, simultaneamente, uma proporção de matéria e uma variação de energia associada. Dobrar a quantidade de reagente resultará no dobro da energia envolvida. Reduzir a reação à metade resultará na redução da energia total. Considerando a quantidade de material envolvida na reação como <code>n</code>:</p>
+<p><span id="eq-DeltaH"><span class="math display">\[
+\Delta H_{\text{total}} = n \cdot \Delta H_{\text{reação}}
+\tag{3.5}\]</span></span></p>
+<p><em>Onde:</em></p>
+<p><em><span class="math inline">\(\Delta\)</span>H_total</em> é a energia total liberada ou absorvida pela quantidade que reagiu; <em>n</em> é a quantidade de matéria que efetivamente reagiu, em mol; *<span class="math inline">\(\Delta\)</span>_reação* é a variação de entalpia por mol de reação, definida no script como:</p>
+<p><span id="eq-DeltaH2"><span class="math display">\[
+\Delta H_{\text{reação}} = -50 \ \text{kJ/mol}
+\tag{3.6}\]</span></span></p>
+<p>A relação de proporcionalidade entre a matéria e a energia envolvidas numa reação química é conhecida por <code>Lei de Hess</code>. Por essa regra a energia é conservada na reação:</p>
+<p><span class="math display">\[
+\Delta H_{\text{reação}} = \sum \Delta H_{\text{produtos}} - \sum \Delta H_{\text{reagentes}}
+\]</span></p>
+<p>Onde o símbolo <code>$\Sigma$</code> representa a somatória de elementos envolvidos. Usando a relação de <em>entalpias de formação</em>:</p>
+<p><span class="math display">\[
+\Delta H_{\text{reação}} = \sum n_p \Delta H_f^\circ(\text{produtos})- \sum n_r \Delta H_f^\circ(\text{reagentes})
+\]</span></p>
+<p>Onde <code>n_p</code> e <code>n_r</code> são os <code>coeficientes estequiométricos</code> dos produtos e reagentes (mols de cada que reagem).</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Volte às situações iniciais. Observe que combustível queimando sugere energia liberada, que gelo derretendo indica energia absorvida, e que comprimido efervescente reagindo sugere matéria e energia juntos. Agora conseguimos interpretar melhor que a quantidade determina quanto reage, e que a energia determina como o sistema troca calor. Mas se é assim, então:</p>
+<p><em>O que explica melhor cada situação: quantidade ou energia?</em></p>
+<p>Traduzindo em perguntinhas menores:</p>
+<ul>
+<li>é possível liberar muita energia com pouca matéria ?</li>
+<li>é possível ter muita matéria reagindo com pouca energia ?</li>
+<li>como identificar o <code>reagente limitante</code> em uma situação real (aquele que, se faltar, não tem reação) ?</li>
+</ul>
+<p>Para responder esses a questionamentos, experimente o próximo <em>app</em> de JSPlotly.</p>
+<div id="fig-termsteq2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-termsteq2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/termsteq2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-termsteq2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.3: Aplicativo para estudo estequiométrico e energético da formação de amônia: quando estequiometria e termoquímica caminham juntas. Clique neste <a href="apps/termsteq2.html">LINK</a> para abrir em nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>Nesse segundo objeto interativo, você passa a trabalhar com um sistema químico mais completo e realista, onde é possível escolher diferentes reações químicas e variar a quantidade do reagente principal. E também pode observar tanto o produto formado e a energia envolvida, quanto o reagente limitante. Para isso:</p>
+<ol type="1">
+<li>Utilize o <em>menu suspenso</em> para escolher a reação química.</li>
+<li>Use a barra deslizante (<em>slider</em>) para variar a quantidade do reagente principal.</li>
+</ol>
+<p>Observe como o sistema responde a cada alteração para a quantidade de produto formado, a energia total liberada ou absorvida, qual reagente está limitando a reação, e se variações num reagente continuam tendo efeito no sistema.</p>
+<p>O script simula a reação de formação da amônia:</p>
+<p><span id="eq-amon"><span class="math display">\[
+N_2 + 3H_2 \rightarrow 2NH_3
+\tag{3.7}\]</span></span></p>
+<p>Ele permite variar a quantidade inicial de N<span class="math inline">\(_2\)</span>, mantendo H<span class="math inline">\(_2\)</span> fixo. Com isso, você pode observar qual reagente limita a reação, quanto NH<span class="math inline">\(_3\)</span> é formado, quanta energia é liberada, e como matéria e energia se transformam juntas.</p>
+<p>A equação química balanceada informa a proporção da reação:</p>
+<p><span id="eq-amon2"><span class="math display">\[
+1 \text{ mol de } N_2 + 3 \text{ mols de } H_2 \rightarrow 2 \text{ mols de } NH_3
+\tag{3.8}\]</span></span></p>
+<p>Isso significa que, para cada 1 mol de N<span class="math inline">\(_2\)</span>, são necessários 3 mols de H<span class="math inline">\(_2\)</span>. Então, se um dos reagentes acaba antes, ele se torna o <em>reagente limitante</em>. Para experimentar essa situação, use o slider <code>Quantidade de N2 (mol)</code>. Ao aumentar N<span class="math inline">\(_2\)</span>, observe:</p>
+<ul>
+<li>quando N<span class="math inline">\(_2\)</span> é o limitante;</li>
+<li>quando H<span class="math inline">\(_2\)</span> passa a limitar a reação;</li>
+<li>quanto NH<span class="math inline">\(_3\)</span> é formado;</li>
+<li>como a energia total muda.</li>
+</ul>
+<p>Observe que a quantidade de H<span class="math inline">\(_2\)</span> é fixa no código (<code>const H2_fixo</code>):</p>
+<p><span id="eq-nH2"><span class="math display">\[
+n_{H_2} = 12 \text{ mol}
+\tag{3.9}\]</span></span></p>
+<p>Como a reação exige 3 mols de H<span class="math inline">\(_2\)</span> para cada 1 mol de N<span class="math inline">\(_2\)</span>, o H<span class="math inline">\(_2\)</span> permite no máximo o valor abaixo de “mols de reação”:</p>
+<p><span id="eq-nH2b"><span class="math display">\[
+\frac{12}{3} = 4
+\tag{3.10}\]</span></span></p>
+<p>Isso significa que, quando há mais de 4 mols de N<span class="math inline">\(_2\)</span>, o H<span class="math inline">\(_2\)</span> passa a ser o limitante.</p>
+<p>O script calcula o <code>avanço possível da reação</code> (<span class="math inline">\(\xi\)</span>) a partir de cada reagente:</p>
+<p><span id="eq-xi"><span class="math display">\[
+\xi_{N_2} = \frac{n_{N_2}}{1}
+\tag{3.11}\]</span></span></p>
+<p><span id="eq-xi2"><span class="math display">\[
+\xi_{H_2} = \frac{n_{H_2}}{3}
+\tag{3.12}\]</span></span></p>
+<p>O avanço real é o menor deles:</p>
+<p><span id="eq-xi3"><span class="math display">\[
+\xi = \min(\xi_{N_2}, \xi_{H_2})
+\tag{3.13}\]</span></span></p>
+<p>Depois, o script calcula o produto formado:</p>
+<p><span id="eq-NH3"><span class="math display">\[
+n_{NH_3} = 2\xi
+\tag{3.14}\]</span></span></p>
+<p>E a energia total:</p>
+<p><span id="eq-ENH3"><span class="math display">\[
+E = \xi \cdot \Delta H
+\tag{3.15}\]</span></span></p>
+<p>Neste modelo, a energia da reação é dada por:</p>
+<p><span id="eq-dH"><span class="math display">\[
+\Delta H = -92 \ \text{kJ}
+\tag{3.16}\]</span></span></p>
+<p>Como o valor é negativo, a reação é exotérmica, ou seja, libera energia. Quanto maior o avanço da reação, maior a energia liberada.</p>
+<p>Dessa forma, é possível alguns cenários interessantes com o aplicativo da <a href="#fig-termsteq2" class="quarto-xref">Figura&nbsp;<span>3.3</span></a>:</p>
+<ol type="1">
+<li><em>Pouco <span class="math inline">\(N_2\)</span></em>. Use valores pequenos, como 1, 2 ou 3 mol, e observe que N<span class="math inline">\(_2\)</span> limita a reação.</li>
+<li><em>Mistura estequiométrica</em>. Use 4 mol de N<span class="math inline">\(_2\)</span>. Nesse caso:</li>
+</ol>
+<p><span class="math display">\[
+4N_2 + 12H_2
+\]</span></p>
+<p>Estão exatamente na proporção da reação.</p>
+<ol start="3" type="1">
+<li><em>Excesso de N<span class="math inline">\(_2\)</span></em>. Use valores maiores que 4 mol de N<span class="math inline">\(_2\)</span>, e observe que H<span class="math inline">\(_2\)</span> passa a limitar a reação. Mesmo aumentando N<span class="math inline">\(_2\)</span>, o NH<span class="math inline">\(_3\)</span> formado não aumenta mais.</li>
+</ol>
+<p>Tente também responder as perguntas que seguem.</p>
+<ul>
+<li>aumentar o reagente principal sempre aumenta o produto ?</li>
+<li>o que acontece quando outro reagente passa a limitar o sistema ?</li>
+<li>duas reações diferentes mas com quantidades semelhantes liberam a mesma energia ?</li>
+<li>por que algumas reações são muito mais energéticas que outras ?</li>
+<li>por que adicionar mais reagente não altera o resultado final quando se passa do ponto de saturação desse ?</li>
+<li>por que a energia deixa de aumentar quando esgota-se o reagente limitante ?</li>
+</ul>
+<p>E como um todo, veja que não basta ter muito reagente. É preciso ter os reagentes na proporção correta, já que a reação só avança até onde o reagente limitante permite.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Algumas considerações sobre o <em>app</em> da <a href="#fig-termsteq2" class="quarto-xref">Figura&nbsp;<span>3.3</span></a> valem a pena uma abstração da <em>“caixa pensante”</em>, sobre::</p>
+<ul>
+<li><p>E se aumentarmos N<span class="math inline">\(_2\)</span> mas mantivermos H<span class="math inline">\(_2\)</span> fixo?</p></li>
+<li><p>E se passarmos do ponto estequiométrico ?</p></li>
+<li><p>E se o reagente em excesso não for consumido ?</p></li>
+<li><p>E se a energia liberada parar de aumentar mesmo com mais N<span class="math inline">\(_2\)</span> ?</p></li>
+<li><p>E se quisermos produzir mais NH<span class="math inline">\(_3\)</span>… devemos aumentar N<span class="math inline">\(_2\)</span> , H<span class="math inline">\(_2\)</span>, ou ambos ?</p></li>
+</ul>
+<p>Agora…que tal integrar tudo isso acima com um conceito visto na <a href="solEqkin.html#sec-kin" class="quarto-xref"><span>Seção 2.3</span></a>, o tempo da reação ?! Para isso, experimente mais um JSPlotly abaixo.</p>
+<div id="fig-termsteq3kin" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-termsteq3kin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/termsteq3kin.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-termsteq3kin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.4: JSPlotly para integração de estequiometria (quanto reage), termoquímica (quanta energia está envolvida) e cinética (quão rápido ocorre). Clique neste <a href="apps/termsteq3kin.html">LINK</a> e abra-o em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>Nesse simulador, você pode explorar uma transformação química para amônia ou metano envolvendo três faces simultâneas: quanto reage, quanta energia está envolvida, e quão rápido o sistema evolui na presença de um <em>catalisador</em>.</p>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>Escolha um modo reacional e utilize o <em>slider</em> para variar a quantidade do reagente principal. Observe as quantidades finais (painel esquerdo), a energia acumulada ao longo do tempo (painel direito), o reagente limitante, a energia total e a rapidez da transformação.</p>
+<p>O código traz os coeficientes da reação para se trabalhar: <code>coefA</code>: 1, <code>coefB</code>: 3, e <code>coefP</code>: 2. Esses coeficientes representam a equação química balanceada:</p>
+<p><span class="math display">\[
+A + 3B \rightarrow 2P
+\]</span>{#ea-A3B}</p>
+<p>No exemplo da amônia:</p>
+<p><span id="eq-N2amon"><span class="math display">\[
+N_2 + 3H_2 \rightarrow 2NH_3
+\tag{3.17}\]</span></span></p>
+<p>Eles determinam a proporção entre reagentes e a quantidade de produto formado. A quantidade disponível de reagente B é dada por <code>B__fixo</code>, identificando-o como reagente limitante. A relação fica então:</p>
+<p><span id="eq-xiNA"><span class="math display">\[
+\xi = \min\left(\frac{n_A}{coefA}, \frac{n_B}{coefB}\right)
+\tag{3.18}\]</span></span></p>
+<p>Esse é o “coração” do modelo. Ele determina quanto a reação pode avançar, e conecta estequiometria com termoquímica.</p>
+<p>A constante cinética <em>k</em> controla a <em>velocidade da reação</em>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>k<span class="op">:</span> <span class="fl">0.85</span><span class="op">,</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assim, a evolução temporal da reação é modelada por:</p>
+<p><span id="eq-ft"><span class="math display">\[
+f(t) = 1 - e^{-kt}
+\tag{3.19}\]</span></span></p>
+<p>Isso significa que quando <em>k</em> é pequeno a reação é lenta, e quando <em>k</em> é grande a reação fica rápida. Nesse sentido, o <em>catalisador</em> aumenta o valor de <em>k</em>.</p>
+<p>No código, essa evolução da reação no tempo é dada por:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fracao <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>k <span class="op">*</span> tempo)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Em síntese, cada parâmetro do código representa uma ideia física:</p>
+<ul>
+<li>coeficientes <span class="math inline">\(\rightarrow\)</span> proporção</li>
+<li>quantidade <span class="math inline">\(\rightarrow\)</span> limite da reação</li>
+<li>deltaH <span class="math inline">\(\rightarrow\)</span> energia</li>
+<li>k <span class="math inline">\(\rightarrow\)</span> tempo da transformação</li>
+</ul>
+<p>Se você desejar explorar alguns cenários também para esse último <em>app</em>, seguem algumas sugestões.</p>
+<ol type="1">
+<li><em>Crescimento controlado pelo limitante</em>. Enquanto um reagente limita o sistema, aumentar sua quantidade aumenta produto e energia.</li>
+<li><em>O excesso deixa de importar</em>. Quando outro reagente passa a limitar, adicionar mais do primeiro não altera o resultado final.</li>
+<li><em>Catalisador</em>. O catalisador acelera o processo, mas não altera o resultado final.</li>
+<li><em>Comparação entre reações</em>. Duas reações com quantidades semelhantes podem liberar energias muito diferentes.</li>
+<li><em>Intensidade energética</em>. Pequenas quantidades de material podem gerar grandes quantidades de energia, dependendo da reação.</li>
+</ol>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O tema descrito ao longo do capítulo encontra aplicação prática em contextos bem diversas, como no uso de combustíveis e o funcionamento de motores, no metabolismo energético das células vivas, em diversos processos industriais, e nas calorias liberadas pelos alimentos. Em todos eles, matéria e energia estão intimamente conectadas.</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Entre os 3 scripts deste capítulo, o que permite trabalhar com proporção de matéria e energia da <a href="#fig-termsteq" class="quarto-xref">Figura&nbsp;<span>3.2</span></a> possui uma estrutura que pode ser aplicada a diversos sistemas químicos. Olhando mais panoramicamente para o script, pode-se sugerir que seu <em>pseudocódigo</em> envolve algumas etapas simples, como:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> definir a equação química<span class="kw">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> informar quantidades iniciais<span class="kw">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> identificar o reagente limitante<span class="kw">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> calcular o produto formado<span class="kw">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">5.</span> calcular a energia total<span class="kw">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">6.</span> acompanhar a evolução no tempo.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>No código do JSPlotly a proporção química aparece aqui:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> B_formado <span class="op">=</span> (coefB <span class="op">/</span> coefA) <span class="op">*</span> A_inicial<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A energia total aparece aqui:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> energia <span class="op">=</span> A_inicial <span class="op">*</span> deltaH<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E o gráfico é gerado variando a quantidade de (A) que reage:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> A_inicial<span class="op">;</span> i <span class="op">+=</span> <span class="fl">0.5</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./solEqkin.html" class="pagination-link" aria-label="Como o meio e a velocidade moldam as reações: soluções, equilíbrio, e cinética">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Como o meio e a velocidade moldam as reações: soluções, equilíbrio, e cinética</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./materia.html" class="pagination-link" aria-label="Arquitetura da matéria: como átomos se organizam e se conectam">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Arquitetura da matéria: como átomos se organizam e se conectam</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

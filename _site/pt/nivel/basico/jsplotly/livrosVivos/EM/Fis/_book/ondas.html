@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Ondas: do movimento ao som e à luz – Física &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./gravFlui.html" rel="next">
+<link href="./elect.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5cd4c82f5794ab985b4ec67d486cba7b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ondas.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Ondas: do movimento ao som e à luz</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Física &amp; JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mecanica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mecânica: Por que as coisas se movem ?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Eletricidade e Magnetismo: forças sem contato que moldam o mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ondas.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Ondas: do movimento ao som e à luz</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gravFlui.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gravitação e Fluidos — quando a gravidade molda a matéria</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./term.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Transformações Invisíveis: Termodinâmica, Gases e Soluções</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./radio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radioatividade, Energia Nuclear e Impactos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./modern.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Relatividade e Quântica — Quando espaço, tempo, energia e matéria deixam de ser intuitivos</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Ondas: do movimento ao som e à luz</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ondas estão por toda parte. Elas aparecem na vibração de uma corda, no som da voz, na música, na propagação da luz, nas cores observadas em um prisma, na pedra atirada na água, e nos dispositivos que usamos todos os dias para comunicação. Embora muitas vezes sejam estudadas em capítulos separados, as ondas mecânicas, sonoras e ópticas compartilham ideias estruturantes comuns: periodicidade, propagação, frequência, comprimento, amplitude, energia, velocidade, percepção e interação com meios materiais. Neste capítulo, você é convidado a explorar a <code>ondulatória</code> para descrever fenômenos físicos distintos.</p>
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> reconhecer características fundamentais de fenômenos ondulatórios<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> relacionar frequência, período, comprimento de onda e velocidade de propagação<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> diferenciar ondas mecânicas, sonoras e eletromagnéticas<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar amplitude, intensidade e energia em diferentes contextos<span class="kw">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> compreender qualitativamente fenômenos como interferência, reflexão, refração e difração<span class="kw">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> entender como a imagem é formada em lentes ópticas<span class="kw">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> usar simulações visuais interativas para explorar ondulatória</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-gizz_ondas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_ondas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_ondas.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_ondas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.1: A Física que se propaga em cordas, som e luz.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A melhor forma de começar a estudar ondulatória é observar como pequenas alterações em parâmetros simples mudam bastante o comportamento de uma onda. Para isso, experimente o objeto interativo de JSPlotly da figura abaixo.</p>
+<!-- 
+Script 1 — Onda básica unificada
+Visualiza forma de onda e parâmetros elementares. Serve para introdução.
+
+Script 2 — Som e luz: frequência, intensidade e meio
+Integra comparações entre onda mecânica transversal, sonora e luz, com menus e leituras qualitativas.
+
+Script 3 — Fenômenos ondulatórios integrados
+Mostra interferência, reflexão, refração/difração de forma exploratória, com foco em comparação entre domínios.
+
+Assim o capítulo cresce de:
+forma da onda -> interpretação física -> fenômenos mais ricos.
+
+Script 1 abre o capítulo, quase como “mexa antes de entender”.
+Script 2 entra no coração da integração entre mecânica, som e luz.
+Script 3 fecha com chave forte, mostrando que a ondulatória é também uma teoria de fenômenos de interação.
+
+Títulos sugeridos para os scripts no capítulo
+
+Você pode nomeá-los assim:
+
+Script 1. Uma onda para começar
+Script 2. A mesma linguagem em cordas, sons e luz
+Script 3. Quando ondas interagem -->
+<!-- ![. Clique com o botão direito neste [LINK](apps/ondas0.html) para abrir o aplicativo em nova aba.](figuras/ondas0.png){#fig-ondas0} -->
+<div id="fig-ondas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ondas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ondas.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ondas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.2: Uma onda para começar. Clique com o botão direito neste <a href="apps/ondas.html">LINK</a> para abrir o aplicativo em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>Neste primeiro experimento, você vai observar uma <em>onda senoidal</em>, uma das formas mais importantes e comuns para representar fenômenos periódicos. Ela aparece em muitos contextos, como na vibração de uma corda, na água, na luz e radiações eletromagnéticas, bem como nos sinais elétricos e na comunicação. Basicamente, <em>uma onda é uma perturbação que se repete e se propaga no espaço e no tempo</em>.</p>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>Sem se preocupar com o que está ocorrendo no gráfico, você pode alterar alguns parâmetros do código para ver como a onda se comporta. Por exemplo, pode alterar <code>A</code>, <code>f</code>, ou <code>lambda</code>, onde:</p>
+<p>O script mostra como a onda senoidal varia ao longo da posição. Para usar o <em>app</em>, basta clicar em <code>add</code> e testar algumas alterações no início do <em>script</em>, modificando os valores para os parâmetros <code>amplitude</code>, <code>frequencia</code>, <code>lambda_onda</code>, <code>fase</code>, e <code>tempo</code>. Seguem seus significados.</p>
+<ul>
+<li><span class="math inline">\(A\)</span> é a amplitude da onda;</li>
+<li><span class="math inline">\(f\)</span> é a frequência da onda;</li>
+<li><span class="math inline">\(\lambda\)</span> é o comprimento de onda (a distância entre 2 vales ou picos consecutivos);</li>
+<li><em>t</em> é o tempo onde a onda se propaga.</li>
+</ul>
+<p>Depois de alterar um valor, execute novamente o código e observe como a forma da onda muda. Você pode alternar ondas pelos botões <code>clean</code>e depois <code>add</code>, ou compará-las, bastando adicionar uma nova onda simplesmente com <code>add</code>.</p>
+<p>Como para os outros <em>apps</em> desse livro, explore alguns cenários.</p>
+<ol type="1">
+<li><p><em>Altere apenas a amplitude</em>. Coloque <em>const amplitude = 2.0;</em>, e observe que a onda fica mais alta, embora a distância entre os picos não mude.</p></li>
+<li><p><em>Onda mais comprimida</em>. Reduza o comprimento de onda para <em>const lambda_onda = 1.5;</em>. Veja que agora aparecem mais oscilações no mesmo intervalo de posição.</p></li>
+<li><p><em>Onda mais esticada</em>. Aumente o comprimento de onda para <em>const lambda_onda = 8.0;</em>, e verifique que a onda fica mais espaçada, com menos ciclos visíveis no gráfico.</p></li>
+<li><p><em>Propagação no tempo</em>. Agora mude apenas o tempo para *const tempo = 0.3, e observe que a onda parece caminhar pelo espaço.</p></li>
+<li><p><em>Mudança de fase</em>. Altere a fase inicial para <em>const fase = Math.PI / 2;</em>. Esse é um truquezinho para trazer o valor e <span class="math inline">\(\pi\)</span> à metade. Veja que a onda muda de posição, mas mantém a mesma forma geral.</p></li>
+</ol>
+<p>Se quiser aventurar-se um pouco mais…</p>
+<ol type="1">
+<li>Experimente aumentar a amplitude sem alterar a frequência, observando o que muda e o que permanece;</li>
+<li>Compare ondas de mesmo comprimento de onda, mas com frequências diferentes;</li>
+<li>Use valores de fase distintos para perceber deslocamentos horizontais na forma da onda;</li>
+<li>Tente identificar visualmente quando uma onda parece “mais comprimida” ou “mais espaçada”;</li>
+<li>Relacione o gráfico obtido com movimentos reais, como uma corda sendo agitada ou uma mola oscilando.</li>
+<li>Entenda o que realmente se desloca na propagação de uma onda: matéria ou energia;</li>
+<li>Procure saber o que muda quando alteramos o meio;</li>
+<li>Aprenda como distinguir uma onda mais intensa de uma onda mais rápida.</li>
+</ol>
+<p>Assim, utilize esse <em>script</em> de onda senoidal para explorar alguns parâmetros e compreender na próxima seção o seu significado na ondulatória: amplitude, frequência, comprimento de onda, período, velocidade, fase, e propagação.</p>
+</section>
+</div>
+</div>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A função matemática que a define onda senoidal da <a href="#fig-ondas" class="quarto-xref">Figura&nbsp;<span>4.2</span></a> não é lá assim agradável. Mas você não precisa preocupar-se com ela, e sim com o efeito que ela produz no objeto interativo. A forma matemática usada é:</p>
+<p><span id="eq-sin"><span class="math display">\[
+y(x,t) = A \cdot \sin \left[2\pi \left(\frac{x}{\lambda} - ft\right) + \phi \right]
+\tag{4.1}\]</span></span></p>
+<p>Nessa equação:</p>
+<ul>
+<li><span class="math inline">\(A\)</span> é a amplitude da onda;</li>
+<li><span class="math inline">\(f\)</span> é a frequência;</li>
+<li><span class="math inline">\(\lambda\)</span> é o comprimento de onda (a distância entre 2 vales ou picos consecutivos);</li>
+<li><span class="math inline">\(t\)</span> é o tempo;</li>
+<li><span class="math inline">\(\phi\)</span> é a fase inicial.</li>
+</ul>
+<p>Os componentes principais são explicados abaixo.</p>
+<section id="amplitude" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="amplitude"><span class="header-section-number">4.1</span> Amplitude</h2>
+<p>A amplitude controla a altura máxima da onda. Quando a amplitude aumenta, os picos e vales ficam mais afastados da linha central. Fisicamente, isso pode representar uma onda mais intensa, como um som mais forte, ou uma vibração mais forte numa corda.</p>
+</section>
+<section id="comprimento-de-onda" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="comprimento-de-onda"><span class="header-section-number">4.2</span> Comprimento de onda</h2>
+<p>O comprimento de onda, representado por <span class="math inline">\(\lambda\)</span>, indica a distância entre dois pontos equivalentes da onda, como dois picos ou dois vales consecutivos. Assim, quando <span class="math inline">\(\lambda\)</span> aumenta, a onda fica mais “esticada”, e quando <span class="math inline">\(\lambda\)</span> diminui, a onda fica mais “comprimida”.</p>
+</section>
+<section id="frequência" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="frequência"><span class="header-section-number">4.3</span> Frequência</h2>
+<p>A frequência indica quantas oscilações ocorrem por unidade de tempo. Mesmo que o gráfico mostre o perfil espacial, a frequência aparece no cálculo da velocidade como:</p>
+<p><span id="eq-veloc"><span class="math display">\[
+v = \lambda f
+\tag{4.2}\]</span></span></p>
+<p>Assim, para uma mesma frequência, aumentar o comprimento de onda também aumenta <span class="math inline">\(v\)</span>, a sua velocidade de propagação.</p>
+</section>
+<section id="período" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="período"><span class="header-section-number">4.4</span> Período</h2>
+<p>O período é o tempo necessário para uma oscilação completa. Ele é calculado por:</p>
+<p><span id="eq-periodo"><span class="math display">\[
+T = \frac{1}{f}
+\tag{4.3}\]</span></span></p>
+<p>Dessa foram, quanto maior a frequência, menor o período. Isso equivale dizer que ondas mais frequentes completam cada ciclo em menos tempo.</p>
+</section>
+<section id="tempo" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="tempo"><span class="header-section-number">4.5</span> Tempo</h2>
+<p>A variável <span class="math inline">\(tempo\)</span> permite observar a onda em diferentes instantes. Ao modificar esse valor, a curva parece se deslocar horizontalmente. Isso representa a propagação da onda.</p>
+</section>
+<section id="fase" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="fase"><span class="header-section-number">4.6</span> Fase</h2>
+<p>A fase define o ponto onde a onda começa, podendo estar atrasada ou adiantada em relação a uma referência. Assim, a fase inicial desloca a onda sem alterar sua forma, funcionando como um “ajuste de posição” da oscilação. Nesse caso, duas ondas podem ter mesma amplitude, frequência e comprimento, mas estarem <em>fora de fase</em>. E essa é a “alma” dos circuitos elétricos nos equipamentos de tomada !</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A importância de se estudar ondas não reside na compreensão de um conjunto de curvas, mas sim de utilizá-la como uma ferramenta para interpretação do mundo. O som de uma nota musical, o eco em um ambiente, a formação de sombras, as cores da luz e o funcionamento de instrumentos ópticos e acústicos podem ser observados a partir dos mesmos conceitos acima. Não obstante as ideias sejam as mesmas, as ondas se apresentam de formas distintas na natureza. Para compreender um pouco mais da diferença entre ondas mecânicas, sonoras e ópticas, experimente o JSPlotly a seguir.</p>
+<div id="fig-ondas2b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ondas2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ondas2b.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ondas2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.3: Onda mecânica, sonora e óptica: mesma linguagem, mas diferentes interpretações. Clique neste <a href="apps/ondas2b.html">LINK</a> para abrir o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<p>O <em>script</em> é um comparador para as ondas mecânica, sonora e óptica, cada qual com sua forma de expressão. Enquanto a onda mecânica pode ser lida como deslocamento transversal, a onda sonora pode ser representada como variação de pressão, e a onda óptica associada a uma cor aproximada e intensidade luminosa.</p>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>Comece escolhendo o tipo de onda no menu suspenso: <code>mecanica</code>, <code>sonora</code>, <code>optica</code>. Em seguida, mantenha a amplitude fixa e varie apenas a frequência. Observe como a forma matemática continua reconhecível, mas o significado físico muda de acordo com o fenômeno representado. Depois, mantenha a frequência fixa e altere apenas a amplitude, discutindo como isso afeta a intensidade relativa da onda.</p>
+<p>Após <em>“brincar”</em> um pouco com o <em>app</em>, tente responder às questões que seguem:</p>
+<ol type="1">
+<li><p><em>Frequência e percepção</em>. Quando aumentamos a frequência, o que muda na interpretação física do fenômeno para o som em relação ao da luz ?</p></li>
+<li><p><em>Intensidade e energia</em>. Se a amplitude dobra, por que a intensidade cresce mais do que intuitivamente poderíamos imaginar ?</p></li>
+<li><p><em>Amplitude e frequência</em>. O que dizer de duas ondas distintas na amplitude embora com a mesma frequência ?</p></li>
+<li><p><em>Luz e som</em>. Por que a luz pode se propagar no vácuo, mas o som não ?</p></li>
+<li><p><em>Amplitude e energia</em>. Por que aumentar a amplitude não significa apenas “esticar” o gráfico, mas também alterar a energia transportada ?</p></li>
+</ol>
+<p>Perceba então que a interpretação física para o tipo de onda muda, à despeito das características comuns exibidas por seus tipos. O som, por exemplo, pode ser mais grave ou mais agudo (frequência), e possuir um volume mais alto ou mais baixo (amplitude). Já a cor, por sua vez, pode se deslocar entre o amarelo e o vermelho, por exemplo. E que tal um batimento cardíaco ? Esse manifesta-se mais rápido ou mais lento (<code>frequência cardíaca</code>), mais forte ou mais fraco (<code>amplitude de pulso</code>).</p>
+<p>As ondas mecânicas precisam de um meio material para se propagar. Já as ondas sonoras, embora também sejam mecânicas, possuem características específicas ligadas a compressões e rarefações em meios materiais, como o ar ou a água. A luz, por sua vez, é uma onda eletromagnética e não depende de um meio material para sua propagação no vácuo. Ainda assim, todas elas podem ser analisadas por meio de grandezas como frequência, comprimento de onda, velocidade e amplitude.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como o que você observou acima, agora dá pra <em>“pegar uma onda”</em> em situações do tema.</p>
+<ul>
+<li>E se a amplitude dobrar ?</li>
+<li>E se aumentarmos a frequência, mas mantivermos a velocidade do meio constante ?</li>
+<li>E se a velocidade dobrar, mas a frequência permanecer constante ?</li>
+<li>E se duas ondas tiverem a mesma frequência, mas fases diferentes ?</li>
+</ul>
+<p>Agora, leia essas outras aqui embaixo, e veja se consegue imaginar uma resposta à altura !</p>
+<ul>
+<li>E se duas ondas iguais se encontrarem em fase ?</li>
+<li>E se elas se encontrarem em oposição de fase ?</li>
+<li>E se duas ondas se encontrarem ?</li>
+<li>E se a luz passar de um meio para outro ?</li>
+<li>E se a frequência aumentar, mas a velocidade do meio permanecer constante ?</li>
+<li>E se o som encontrar uma parede distante ?</li>
+<li>E se a luz atravessar uma fenda estreita ?</li>
+</ul>
+<p>Esses são assuntos discutidos em situações mais realistas, como interferência entre ondas, batimentos, ondas estacionárias, som, luz, espectro eletromagnético, óptica ondulatória, e que fazem parte de <em>fenômenos ondulatórios integrados</em>. Para uma abordagem mais eficiente do tema, experimente o script de JSPlotly abaixo.</p>
+<div id="fig-ondas3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ondas3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ondas3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ondas3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.4: Ondas que interagem: interferência, refração, e reflexão. Clique neste <a href="apps/ondas3.html">LINK</a> para abrir o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>No gráfico resultante, a linha azul pontilhada representa a primeira onda. A linha verde pontilhada representa a segunda onda ou a parte transmitida. E a linha vermelha representa o resultado observado, essa bem importante, porque porque mostra o fenômeno físico final.</p>
+<p>Comece selecionando o fenômeno de interesse no menu suspenso (<code>const tipoFenomeno =</code>). Em <code>interferência</code>, procure comparar situações em fase e em oposição de fase:</p>
+<ul>
+<li><em>interferência</em>, quando duas ondas se sobrepõem;</li>
+<li><em>reflexão</em>, quando uma onda retorna ao encontrar uma barreira;</li>
+<li><em>refração</em>, quando uma onda muda de meio e altera seu comprimento de onda.</li>
+</ul>
+<p>Como o script simula a interação entre 2 ondas, seu controle é dado também por parâmetros para a duas ondas, como:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>input_amplitude1</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>input_amplitude2</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>input_frequencia1</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>input_frequencia2</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>input_lambda1</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>input_lambda2</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>input_indice1</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>input_indice2</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Apenas o parâmetro tempo é comum às duas ondas (<code>input_tempo</code>). Alterar o tempo desloca as ondas e mostra que o gráfico representa um instante de um processo dinâmico. Já o parâmetro <code>indice</code> refere-se ao <em>índice de refração</em>, e representa o meio atravessado pela onda. Quando a onda passa para um meio com índice maior, a velocidade relativa diminui e o comprimento de onda fica menor.</p>
+<p>Em <code>reflexão</code>, observe a superposição entre a onda incidente e a onda refletida. Em <code>refração</code>, acompanhe a mudança do perfil ondulatório ao atravessar a fronteira entre meios. A interferência pode ser associada a pulsos em cordas, fontes sonoras ou franjas luminosas. Já a reflexão costuma servir para eco, extremidade fixa/livre, espelhos e reflexão de ondas em fronteiras. E a refração está bem envolvida com mudanças na velocidade no meio.</p>
+</section>
+<section id="amplitudes" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="amplitudes"><span class="header-section-number">4.6.1</span> Amplitudes</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>input_amplitude1</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>input_amplitude2</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Amplitudes controlam a altura das ondas. Em interferência, amplitudes maiores produzem uma soma mais intensa. Em reflexão, a amplitude da onda refletida indica quão forte é o retorno da onda. E em refração, a amplitude principal representa a intensidade da onda ao atravessar o meio.</p>
+</section>
+<section id="frequências" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="frequências"><span class="header-section-number">4.6.2</span> Frequências</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>input_frequencia1</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>input_frequencia2</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As frequências controlam o ritmo de oscilação das ondas. Na interferência, quando as frequências são iguais, as ondas mantêm uma relação mais estável. Quando as frequências são diferentes, o padrão resultante muda ao longo do tempo. Já na refração, a frequência permanece constante ao se mudar o meio, pois, fisicamente, ela é determinada exclusivamente pela fonte emissora na passagem entre os meios.</p>
+</section>
+<section id="comprimentos-de-onda" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="comprimentos-de-onda"><span class="header-section-number">4.6.3</span> Comprimentos de onda</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>input_lambda1</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>input_lambda2</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Os comprimentos de onda controlam o espaçamento entre cristas consecutivas. Quanto maior o comprimento de onda, mais espaçada fica a curva. Quanto menor o comprimento de onda, mais comprimida ela aparece.</p>
+</section>
+<section id="tempo-1" class="level3" data-number="4.6.4">
+<h3 data-number="4.6.4" class="anchored" data-anchor-id="tempo-1"><span class="header-section-number">4.6.4</span> Tempo</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>input_tempo</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O tempo permite observar a evolução do fenômeno. Alterar o tempo desloca as ondas e mostra que o gráfico representa um instante de um processo dinâmico.</p>
+</section>
+<section id="índices-dos-meios" class="level3" data-number="4.6.5">
+<h3 data-number="4.6.5" class="anchored" data-anchor-id="índices-dos-meios"><span class="header-section-number">4.6.5</span> Índices dos meios</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>input_indice1</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>input_indice2</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>São usados no modo de refração. Eles representam os meios atravessados pela onda. Quando a onda passa para um meio com índice maior, a velocidade relativa diminui e o comprimento de onda fica menor, como ocorre na água em comparação com o ar.</p>
+</section>
+<section id="fenômenos-de-interação" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="fenômenos-de-interação"><span class="header-section-number">4.7</span> Fenômenos de interação</h2>
+<p>Agora é possível testar alguns cenários no código para cada um dos fenômenos.</p>
+<section id="interferência" class="level3" data-number="4.7.1">
+<h3 data-number="4.7.1" class="anchored" data-anchor-id="interferência"><span class="header-section-number">4.7.1</span> Interferência</h3>
+<p>Na interferência, duas ondas ocupam a mesma região do espaço ao mesmo tempo. O script calcula:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>soma <span class="op">=</span> onda1 <span class="op">+</span> onda2<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso representa o princípio da superposição, quando <em>o deslocamento resultante é a soma dos deslocamentos das ondas individuais</em>. Quando as ondas estão em fase, ocorre <em>interferência construtiva</em>, e quando estão em oposição, ocorre <em>interferência destrutiva</em>.</p>
+<p>No código, selecione <code>interferencia</code> e escolha os parâmetro a seguir.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>input_amplitude1 <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>input_amplitude2 <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>input_frequencia1 <span class="op">=</span> <span class="fl">1.2</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>input_frequencia2 <span class="op">=</span> <span class="fl">1.2</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>input_lambda1 <span class="op">=</span> <span class="fl">4.0</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>input_lambda2 <span class="op">=</span> <span class="fl">4.0</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>input_tempo <span class="op">=</span> <span class="fl">0.0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Com isso, espera-se que ondas se somem de forma regular. Depois altere apenas:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>input_lambda2 <span class="op">=</span> <span class="fl">3.0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Agora o padrão de soma muda, pois as cristas deixam de coincidir perfeitamente.</p>
+</section>
+<section id="reflexão" class="level3" data-number="4.7.2">
+<h3 data-number="4.7.2" class="anchored" data-anchor-id="reflexão"><span class="header-section-number">4.7.2</span> Reflexão</h3>
+<p>Na reflexão, uma onda encontra uma barreira ou mudança de meio e retorna. No <em>script</em>, isso aparece nesta linha:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>onda2 <span class="op">=</span> amplitude2 <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(<span class="dv">2</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span> <span class="op">*</span> (<span class="op">-</span>xi <span class="op">/</span> lambda2 <span class="op">-</span> frequencia2 <span class="op">*</span> tempo))<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O sinal negativo em <code>-xi / lambda2</code> indica que a segunda onda se propaga no sentido oposto. A soma das duas ondas pode formar regiões de <em>reforço</em> e <em>cancelamento</em>, aproximando a ideia de <em>onda estacionária</em>. Assim, selecione <code>reflexao</code>e use:`</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>input_amplitude1 <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>input_amplitude2 <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>input_frequencia1 <span class="op">=</span> <span class="fl">1.2</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>input_frequencia2 <span class="op">=</span> <span class="fl">1.2</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>input_lambda1 <span class="op">=</span> <span class="fl">4.0</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>input_lambda2 <span class="op">=</span> <span class="fl">4.0</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>input_tempo <span class="op">=</span> <span class="fl">0.0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E depois altere:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>input_tempo <span class="op">=</span> <span class="fl">0.5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe como a superposição muda com o tempo.</p>
+</section>
+<section id="refração" class="level3" data-number="4.7.3">
+<h3 data-number="4.7.3" class="anchored" data-anchor-id="refração"><span class="header-section-number">4.7.3</span> Refração</h3>
+<p>Na refração, a onda passa de um meio para outro. O script define uma “fronteira”:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fronteira <span class="op">=</span> <span class="fl">7.5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Antes da fronteira, a onda usa o comprimento de onda original. Depois da fronteira, o comprimento de onda é recalculado:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> velocidadeRelativa <span class="op">=</span> indice1 <span class="op">/</span> indice2<span class="op">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lambdaRefratada <span class="op">=</span> lambda1 <span class="op">*</span> velocidadeRelativa<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Se <code>indice2</code> for maior que <code>indice1</code>, a onda entra em um meio mais <code>refringente</code> (menos transparente). Nesse caso, tanto sua velocidade diminui como seu comprimento de onda diminuem.</p>
+<p>Já a frequência é mantida constante por:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> frequenciaRefratada <span class="op">=</span> frequencia1<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso é importante porque, na mudança de meio, a frequência da onda não muda.</p>
+<p>Para testar o fenômeno, escolha <code>refracao</code>e faça:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>input_indice1 <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>input_indice2 <span class="op">=</span> <span class="fl">1.5</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>input_lambda1 <span class="op">=</span> <span class="fl">4.0</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>input_frequencia1 <span class="op">=</span> <span class="fl">1.2</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>input_tempo <span class="op">=</span> <span class="fl">0.0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe que depois da fronteira a onda fica mais comprimida. Depois teste:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>input_indice2 <span class="op">=</span> <span class="fl">2.0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E observe que a compressão aumenta.</p>
+<p>Bom, essa seção do capítulo é para reflexão do tipo <em>“E se…”</em>, lembra-se? Então, que tal complementá-la com mais <em>“ecês”…</em> ?</p>
+<ul>
+<li>E se as ondas tiverem a mesma frequência, mas comprimentos de onda diferentes ?</li>
+<li>E se a onda refletida tiver menor amplitude que a onda incidente ?</li>
+<li>E se a onda passar para um meio de índice menor ?</li>
+<li>E se a frequência for mantida, mas o comprimento de onda mudar ?</li>
+</ul>
+<p>Resumindo, esse terceiro <em>script</em> apresenta conceitos de interação de ondas que vão além da descrição de suas formas periódicas. Ondas podem se somar, se refletir, mudar de velocidade e reorganizar sua forma em situações específicas. Essa mesma ideia matemática também aparece em cordas vibrantes, ondas estacionárias, instrumentos musicais, eco, refração da luz, fibras ópticas, interferência em filmes finos, difração e padrões de onda, ondas em água, em sinais tecnológicos e lentes ópticas.</p>
+<p>E por falar em <em>lentes ópticas</em>, que tal um último script que as explore só um pouquinho ?</p>
+</section>
+</section>
+<section id="lentes-delgadas" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="lentes-delgadas"><span class="header-section-number">4.8</span> Lentes delgadas</h2>
+<p>A ideia do JSPlotly que segue é mostrar, de forma integrada, alguns conceitos que envolvem a óptica geométrica para lentes. O script usa a equação da lente para calcular a posição da imagem e, em seguida, usa o aumento linear para determinar sua altura e orientação. Dessa forma, são abordados o tipo de lente (<code>convergente</code> ou <code>divergente</code>), bem como alguns parâmetos do objeto (posição, altura), da imagem (posição, tamanho, orientação), bem como a <code>distância focal</code> e raios principais.</p>
+<div id="fig-ondas4b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ondas4b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ondas4b.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ondas4b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.5: A posição da imagem é uma consequência da geometria dos raios. Clique neste <a href="apps/ondas4b.html">LINK</a> para abrir em nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-3">Agite antes de usar</h4>
+<p>No script é possível alterar o tipo de lente, a distância focal, a posição do objeto e sua altura. A cada modificação, o gráfico atualiza simultaneamente a posição da imagem, sua orientação, seu tamanho relativo e os principais raios geométricos usados na construção. Uma boa estratégia é começar pela lente convergente e deslocar gradualmente o objeto ao longo do eixo óptico. Com isso, você perceberá mudanças na natureza da imagem. Em seguida, pode-se repetir a atividade com a lente divergente, observando que o padrão obtido é bastante distinto, ajudando a consolidar a interpretação física da equação das lentes.</p>
+<p>Para tanto, segue uma exploração guiada para o script da <a href="#fig-ondas4b" class="quarto-xref">Figura&nbsp;<span>4.5</span></a>.</p>
+<p>A formação da imagem segue a relação:</p>
+<p><span id="eq-foco"><span class="math display">\[
+\frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i}
+\tag{4.4}\]</span></span></p>
+<p>Onde:</p>
+<ul>
+<li><span class="math inline">\(f\)</span> é o foco da lente;</li>
+<li><span class="math inline">\(d_o\)</span> é a distância do objeto;</li>
+<li><span class="math inline">\(d_i\)</span> é a distância da imagem.</li>
+</ul>
+<p>O script então calcula automaticamente <span class="math inline">\(d_i\)</span>, o aumento, e classifica a imagem. As demais funções abaixo completam a <code>equação da lente</code>.</p>
+<p><span id="eq-lente"><span class="math display">\[
+\frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i}
+\qquad
+\Rightarrow
+\qquad
+d_i = \frac{1}{\frac{1}{f} - \frac{1}{d_o}}
+\qquad
+\Rightarrow
+\qquad
+m = \frac{h_i}{h_o} = -\frac{d_i}{d_o}
+\qquad
+\Rightarrow
+\qquad
+h_i = m \cdot h_o
+\tag{4.5}\]</span></span></p>
+<p>Os parâmetros são explicados abaixo.</p>
+<p><span class="math display">\[
+\text{foco }(f),\quad
+\text{distância do objeto }(d_o),\quad
+\text{distância da imagem }(d_i),\quad
+\text{aumento }(m),\quad
+\text{altura do objeto }(h_o),\quad
+\text{altura da imagem }(h_i)
+\]</span></p>
+<p>Para uso direto do <em>app</em>, edite este bloco no topo do código e execute o script (<code>add</code>):</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipo_lente <span class="op">=</span> <span class="st">"convergente"</span><span class="op">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> foco_valor <span class="op">=</span> <span class="fl">3.0</span><span class="op">;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> pos_objeto <span class="op">=</span> <span class="fl">8.0</span><span class="op">;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> altura_objeto <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mostrar_raios <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="o-que-cada-parâmetro-faz" class="level3" data-number="4.8.1">
+<h3 data-number="4.8.1" class="anchored" data-anchor-id="o-que-cada-parâmetro-faz"><span class="header-section-number">4.8.1</span> O que cada parâmetro faz</h3>
+<ol type="1">
+<li><p><em>Tipo de lente</em>. A lente pode ser <code>convergente</code> (forma imagem real ou virtual) ou <code>divergente</code> (forma somente imagem virtual).</p></li>
+<li><p><em>Foco (f)</em>. O foco controla do “poder” da lente. Um foco pequeno sugere uma lente forte, enquanto um foco grande sugere uma lente fraca.</p></li>
+</ol>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> foco_valor <span class="op">=</span> <span class="fl">3.0</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Posição do objeto (<span class="math inline">\(d_o\)</span>)</em>. Variável que controla o tipo de imagem, sua posição e orientação.</li>
+</ol>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> pos_objeto <span class="op">=</span> <span class="fl">8.0</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Altura do objeto</em>. Afeta o tamanho da imagem, mas não sua natureza.</li>
+</ol>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> altura_objeto <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Raios principais</em>. Aqui há uma lógica chamada <em>booleana</em> em computação, e que direciona o algoritmo quando uma condição é satisfeita (<em>verdadeiro</em>) ou não (<em>falso</em>). Nesse caso, <em>true</em> mostra a construção geométrica, enquanto que <em>false</em> deixa só o objeto e imagem.</li>
+</ol>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mostrar_raios <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Leitura do gráfico</em>. No script, você interpreta quem é quem pela cor das linhas e pontos no gráfico, como segue:</li>
+</ol>
+<ul>
+<li><em>linha verde</em> <span class="math inline">\(\rightarrow\)</span> objeto</li>
+<li><em>linha vermelha</em> <span class="math inline">\(\rightarrow\)</span> imagem</li>
+<li><em>linha azul/laranja</em> <span class="math inline">\(\rightarrow\)</span> lente</li>
+<li><em>pontos roxos</em> <span class="math inline">\(\rightarrow\)</span> focos (F e 2F)</li>
+<li><em>linhas cinza</em> <span class="math inline">\(\rightarrow\)</span> raios principais</li>
+</ul>
+<p>Com essa gama de opções, agora dá pra pensar em alguns cenários para uso do <em>app</em>:</p>
+<ol type="1">
+<li><em>Fora do foco (imagem real)</em>. Veja como a imagem parece real e invertida.</li>
+</ol>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tipo_lente <span class="op">=</span> <span class="st">"convergente"</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>pos_objeto <span class="op">=</span> <span class="fl">8.0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>No foco</em>. A imagem “vai para o infinito”.</li>
+</ol>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pos_objeto <span class="op">=</span> foco_valor</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Dentro do foco</em>. Imagem virtual e direita.</li>
+</ol>
+<div class="sourceCode" id="cb26"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pos_objeto <span class="op">=</span> <span class="fl">2.0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Lente divergente</em>. Imagem sempre virtual, direita e reduzida.</li>
+</ol>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tipo_lente <span class="op">=</span> <span class="st">"divergente"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><p>Verifique o que ocorre quando o objeto estiver exatamente em 2F.</p></li>
+<li><p>Observe o que acontecese aproximarmos o objeto lentamente do foco. Ou se aumentarmos muito o foco (lente quase plana).</p></li>
+</ol>
+<p>Veja que mover o objeto muda tudo. E observe também que a lente não “cria” a imagem, mas reorganiza os raios. A imagem real aparece do outro lado do objeto, enquanto a imagem virtual surge do mesmo lado do objeto. Ou seja, a lente não “faz mágica”, mas redireciona a trajetória dos raios, permitindo que a imagem surja onde os raios se encontram. E esse script também não “faz mágica”, embora apresente uma clara conexão entre geometria (construção de raios), álgebra (equação da lente), e física (formação de imagens).</p>
+</section>
+</section>
+</div>
+</div>
+<!-- ### Cenários aplicáveis — Script 4
+
+**Cenário 1 — objeto muito distante**
+
+Pergunta:
+Como a imagem se comporta quando o objeto está muito além do dobro da distância focal?
+
+**Cenário 2 — objeto entre F e 2F**
+
+Pergunta:
+Por que a imagem formada por uma lente convergente pode se tornar aumentada e invertida?
+
+**Cenário 3 — objeto antes do foco**
+
+Pergunta:
+O que muda quando o objeto se encontra entre a lente e o foco?
+
+**Cenário 4 — lente divergente**
+
+Pergunta:
+Por que a lente divergente forma, em geral, imagens virtuais, direitas e reduzidas?
+
+**E mais !!**
+
+- compare os resultados geométricos com a equação das lentes delgadas;
+- peça ao estudante que antecipe qualitativamente a imagem antes de observar o gráfico;
+- explore a noção de aumento linear a partir da razão entre altura da imagem e altura do objeto;
+- discuta aplicações em lupa, óculos, câmeras e instrumentos ópticos;
+- use o script como ponte entre construção geométrica e interpretação algébrica.
+
+Observação importante
+
+Esse script está bem sólido para uso didático, mas há um ponto clássico:
+
+quando pos_objeto = foco_valor, a imagem vai “para o infinito” no modelo ideal.
+
+Então, perto desse caso, o gráfico pode ficar numericamente muito esticado. Isso não é defeito físico; é justamente o comportamento esperado da lente ideal.
+
+Próximo passo que vale muito a pena
+
+Agora o capítulo já fica com uma escada bem bonita:
+
+### Modo de usar — Script 4
+
+Neste script, o estudante pode alterar o tipo de lente, a distância focal e a posição do objeto em relação à lente. A cada mudança, o gráfico mostra a nova posição da imagem, sua orientação e sua natureza física. Com isso, a formação de imagens deixa de ser apenas um exercício algébrico e passa a ser uma construção visual interpretável.
+
+Uma boa estratégia é começar com uma lente convergente e posicionar o objeto muito longe, aproximando-o progressivamente da lente. Depois, pode-se repetir o procedimento para a lente divergente, comparando os tipos de imagem obtidos. O objetivo é que o estudante perceba padrões, em vez de apenas memorizar casos.
+
+Cenários aplicáveis — Script 4
+### Cenários aplicáveis — Script 4
+
+**Cenário 1 — lente convergente**
+
+Pergunta:
+O que acontece com a imagem quando o objeto se aproxima do foco?
+
+**Cenário 2 — lente divergente**
+
+Pergunta:
+Por que a imagem formada por uma lente divergente permanece virtual e direita?
+
+**Cenário 3 — tamanho da imagem**
+
+Pergunta:
+Em que condições a imagem se torna aumentada, reduzida ou de tamanho semelhante ao objeto? -->
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Essa linguagem da física ondulatória está presente em inúmeros fenômenos do cotidiano, parte deles já descritos anteriormente. Só pra não <em>“deixar cair a peteca”</em> das comparações, lá vai uma enxurrada de outras situações práticas que envolvem ondas.</p>
+<p>Em uma corda de violão, o comprimento vibrante interfere diretamente na frequência produzida. Em ambientes fechados, a reflexão do som ajuda a explicar eco, reverberação e qualidade acústica, além de vibração de uma mola. Em instrumentos ópticos, como lentes e prismas, a mudança de meio altera a propagação da luz e permite formação de imagens e decomposição de cores. Em comunicações modernas, a transmissão de sinais por ondas eletromagnéticas interliga a ondulatória a tecnologias sofisticadas. Além disso, inúmeras investigações em ondulatória abragem também o estudo e aplicação de ultrassom, sonar, fibras ópticas, cancelamento de ruído, cores estruturais e interferência em películas finas, entre muitas outras.</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nesse capítulo foram vistos diversos códigos para JSPlotly, cada qual para uma aresta de estudo de ondulatória. Assim, enquanto o <em>script</em> no. 1 tratou de propriedades básicas de uma onda, o <em>script</em> no. 2 abordou a comparação entre os tipos de ondas. Já o <em>script</em> no. 3 apresentou os fenômenos de interação entre ondas, enquanto que o <em>script</em> no. 4, a óptica geométrica que envolve as lentes. Como não cabe explorar todo mundo nessa seção, aqui propomos uma continuidade da explicação e pseudocódigo sugeridos para o script da <a href="#fig-ondas3" class="quarto-xref">Figura&nbsp;<span>4.4</span></a>.</p>
+<p>Inicialmente, o script cria três listas principais:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> y1 <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> y2 <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ys <span class="op">=</span> []<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Elas guardam:</p>
+<ul>
+<li><code>y1</code>: a primeira onda;</li>
+<li><code>y2</code>: a segunda onda ou onda transmitida;</li>
+<li><code>ys</code>: o resultado final.</li>
+</ul>
+<p>O laço principal percorre várias posições:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> <span class="dv">500</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> xi <span class="op">=</span> i <span class="op">*</span> <span class="fl">0.03</span><span class="op">;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para cada posição, o script calcula o valor da onda naquele ponto. Ou seja, para cada ponto do espaço, o código decide como a onda se comporta dependendo do fenômeno físico. Segue o pseudocódigo:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">INÍCIO</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">DEFINIR</span> tipoFenomeno</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">(</span><span class="ex">interferencia,</span> reflexao ou refracao<span class="kw">)</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">DEFINIR</span> parâmetros das ondas:</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">amplitude1,</span> amplitude2</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">frequencia1,</span> frequencia2</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">lambda1,</span> lambda2</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">tempo</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">indice1,</span> indice2</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="ex">CRIAR</span> listas:</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">x</span> → posições</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">y1</span> → onda 1</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    <span class="ex">y2</span> → onda 2</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ys</span> → resultado final</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PARA</span> cada posição xi no espaço:</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    <span class="ex">CALCULAR</span> onda1</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SE</span> tipoFenomeno = interferencia:</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>        <span class="ex">CALCULAR</span> onda2 normalmente</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>        <span class="ex">soma</span> = onda1 + onda2</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SENÃO</span> SE tipoFenomeno = reflexao:</span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>        <span class="ex">CALCULAR</span> onda2 invertida <span class="er">(</span><span class="ex">propagação</span> oposta<span class="kw">)</span></span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>        <span class="ex">soma</span> = onda1 + onda2</span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a>    <span class="ex">SENÃO</span> SE tipoFenomeno = refracao:</span>
+<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a>        <span class="ex">DEFINIR</span> posição da fronteira</span>
+<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a>        <span class="ex">SE</span> xi está antes da fronteira:</span>
+<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a>            <span class="ex">soma</span> = onda1</span>
+<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-38"><a href="#cb30-38" aria-hidden="true" tabindex="-1"></a>        <span class="ex">SENÃO:</span></span>
+<span id="cb30-39"><a href="#cb30-39" aria-hidden="true" tabindex="-1"></a>            <span class="ex">CALCULAR</span> nova velocidade relativa</span>
+<span id="cb30-40"><a href="#cb30-40" aria-hidden="true" tabindex="-1"></a>            <span class="ex">CALCULAR</span> novo comprimento de onda</span>
+<span id="cb30-41"><a href="#cb30-41" aria-hidden="true" tabindex="-1"></a>            <span class="ex">MANTER</span> frequência constante</span>
+<span id="cb30-42"><a href="#cb30-42" aria-hidden="true" tabindex="-1"></a>            <span class="ex">CALCULAR</span> onda no novo meio</span>
+<span id="cb30-43"><a href="#cb30-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-44"><a href="#cb30-44" aria-hidden="true" tabindex="-1"></a>        <span class="ex">DEFINIR</span> onda1 = 0</span>
+<span id="cb30-45"><a href="#cb30-45" aria-hidden="true" tabindex="-1"></a>        <span class="ex">DEFINIR</span> onda2 = soma</span>
+<span id="cb30-46"><a href="#cb30-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-47"><a href="#cb30-47" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ARMAZENAR</span> valores em y1, y2 e ys</span>
+<span id="cb30-48"><a href="#cb30-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-49"><a href="#cb30-49" aria-hidden="true" tabindex="-1"></a>  <span class="ex">FIM</span> DO LOOP</span>
+<span id="cb30-50"><a href="#cb30-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-51"><a href="#cb30-51" aria-hidden="true" tabindex="-1"></a>  <span class="ex">DEFINIR</span> título de acordo com o fenômeno</span>
+<span id="cb30-52"><a href="#cb30-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-53"><a href="#cb30-53" aria-hidden="true" tabindex="-1"></a>  <span class="ex">SE</span> fenômeno = refração:</span>
+<span id="cb30-54"><a href="#cb30-54" aria-hidden="true" tabindex="-1"></a>      <span class="ex">ADICIONAR</span> anotação da fronteira</span>
+<span id="cb30-55"><a href="#cb30-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-56"><a href="#cb30-56" aria-hidden="true" tabindex="-1"></a>  <span class="ex">MONTAR</span> gráfico com:</span>
+<span id="cb30-57"><a href="#cb30-57" aria-hidden="true" tabindex="-1"></a>      <span class="ex">onda</span> 1</span>
+<span id="cb30-58"><a href="#cb30-58" aria-hidden="true" tabindex="-1"></a>      <span class="ex">onda</span> 2</span>
+<span id="cb30-59"><a href="#cb30-59" aria-hidden="true" tabindex="-1"></a>      <span class="ex">resultado</span> final</span>
+<span id="cb30-60"><a href="#cb30-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-61"><a href="#cb30-61" aria-hidden="true" tabindex="-1"></a><span class="ex">FIM</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./elect.html" class="pagination-link" aria-label="Eletricidade e Magnetismo: forças sem contato que moldam o mundo">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Eletricidade e Magnetismo: forças sem contato que moldam o mundo</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./gravFlui.html" class="pagination-link" aria-label="Gravitação e Fluidos — quando a gravidade molda a matéria">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gravitação e Fluidos — quando a gravidade molda a matéria</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

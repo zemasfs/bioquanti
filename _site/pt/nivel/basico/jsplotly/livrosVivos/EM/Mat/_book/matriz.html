@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Matrizes e modelagem - Transformando relações em sistemas manipuláveis – Matemática &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./calc.html" rel="next">
+<link href="./financ.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./matriz.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Matrizes e modelagem - Transformando relações em sistemas manipuláveis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Matemática &amp; JSPlotly</a> 
+        <div class="sidebar-tools-main">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.docx">
+              <i class="bi bi-file-word pe-1"></i>
+            Download Docx
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fun.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Padrões de Mudança: como funções descrevem o comportamento do mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geometria integrada: do plano ao espaço e às coordenadas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilidade e Estatística: quando o acaso revela padrões</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trig.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Quando o movimento se repete: trigonometria, periodicidade e números complexos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./financ.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Crescimento, Tempo e Decisão: Matemática Financeira</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matriz.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Matrizes e modelagem - Transformando relações em sistemas manipuláveis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Cálculo Diferencial e Integral - Quando o mundo começa a mudar, e você aprende a medir essa mudança</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Matrizes e modelagem - Transformando relações em sistemas manipuláveis</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Você já percebeu como o mundo moderno se apresenta hoje ? O dinheiro circula digitalmente entre setores variados da economia, dados imensos são conectados em redes sociais, imagens digitais em 3D são criadas por grades numéricas para jogos digitais, a inteligência artificial processa milhões de relações matemáticas ao mesmo tempo por pedaços de palavras (<em>tokens</em>), carros autônomos se locomovem sem motorista, e mesmo uma simples consulta de um produto no celular já faz com que você receba uma enxurrada de ofertas parecidas depois.</p>
+<p>Essas situações variadas envolvem entradas, transformações numéricas, e saídas. Em todos esses casos, as transformações estão relacionadas a objetos que podem ser ampliados, comprimidos, girados, inclinados ou refletidos. Na base desses cálculos frequentemente existe uma <code>matriz</code>, uma “máquina” de relações matemáticas capaz de transformar posições no espaço.</p>
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Representar transformações geométricas usando matrizes</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Relacionar rotações, escalas e deformações com operações matemáticas</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Interpretar matrizes como regras de transformação</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Simular sistemas que evoluem ao longo do tempo</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Observar como pequenas interações alteram trajetórias futuras</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Comparar diferentes cenários usando o mesmo modelo matemático</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Relacionar matrizes com situações do cotidiano, como redes, populações, economia e propagação</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Entender que matrizes podem descrever tanto mudanças no espaço quanto mudanças no tempo</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> explorar, modificar e discutir modelos computacionais simples para matrizes.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-matriz_figura" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-matriz_figura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_matriz.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matriz_figura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.1: Matrizes permitem transformar situações reais em modelos manipuláveis.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de decorar regras, observe uma transformação acontecendo, com auxílio do script de JSPlotly da <a href="#fig-matriz" class="quarto-xref">Figura&nbsp;<span>7.2</span></a>. No script você escolhe um ponto, aplica uma regra e o ponto muda de lugar.</p>
+<div id="fig-matriz" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-matriz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/matriz.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matriz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.2: Transformação linear: a matriz pode funcionar como uma regra que altera a posição de um ponto. Clique com o botão direito neste <a href="apps/matriz.html">LINK</a> e abra o aplicativo em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O JSPlotly acima permite ver como uma <code>matriz 2×2</code> modifica um <code>vetor</code> no <code>plano cartesiano</code>, alterando sua direção, tamanho ou orientação. O ponto original e o ponto transformado aparecem no plano. Experimente mudar o valor de <code>x</code> e <code>y</code>, alterar os números da matriz, comparar o vetor original com o vetor transformado, e observar quando o ponto gira, estica, encolhe ou muda de direção.</p>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>O <em>app</em> funciona como uma visualização geométrica da multiplicação matricial.</p>
+<p>No <em>app</em>, altere os valores do ponto inicial:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>input_x</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>input_y</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois experimente modificar os elementos da matriz:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>input_a</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>input_b</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>input_c</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>input_d</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe como o vetor azul original é transformado em um novo vetor. Tente descobrir quais valores ampliam o vetor, quais refletem o vetor, quais trocam as coordenadas, quais deformam o plano, e quais praticamente não alteram nada. Em suma, tente perceber o comportamento geométrico da matriz. Você pode o <em>app</em> da seguinte forma:</p>
+<ol type="a">
+<li>Escolha um ponto inicial alterando:</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>input_x</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>input_y</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="a">
+<li>Modifique os elementos da matriz:</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>input_a</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>input_b</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>input_c</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>input_d</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe a direção do vetor, seu tamanho e orientação, bem como reflexões e deformações.</p>
+<ol start="3" type="a">
+<li><p>Compare o vetor original com o transformado.</p></li>
+<li><p>Tente prever o resultado antes de rodar novamente.</p></li>
+</ol>
+<p>Seguem também alguns cenários para você experimentar.</p>
+<ol type="1">
+<li><em>Ampliação horizontal</em>. O eixo <em>x</em> é ampliado.</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Ampliação vertical</em>. O eixo <em>y</em> cresce.</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">2</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Reflexão vertical</em>. O vetor é espelhado no eixo <em>y</em>.</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Reflexão horizontal</em>. O vetor é espelhado no eixo <em>x</em>.</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Troca entre coordenadas</em>. As posições <em>x</em> e <em>y</em> trocam de lugar.</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Inclinação do plano</em>. O plano sofre uma deformação inclinada.</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Agora mais alguns cenários, dessa vez muito usados em computação e engenharias, e que remetem a conceitos utilizados na organização de dados e solução de sistemas complexos. Eles falam sobre alguns “tipos de matrizes” que produzem comportamentos geométricos diferentes no plano. Um exemplo é a modelagem que ajusta pontos experimentais a uma linha (<code>regressão linear</code>) ou a uma curva (<code>regressão não linear</code>). Seguem esses cenários.</p>
+<p>Considere inicialmente a matriz:</p>
+<p><span id="eq-matrRef"><span class="math display">\[
+\begin{bmatrix}
+1 &amp; 2 \\
+-1 &amp; 1
+\end{bmatrix}
+\tag{7.1}\]</span></span></p>
+<ol type="1">
+<li><em>Matriz identidade</em>. Nada muda no vetor transformado. A matriz atua como “não fazer nada”. Apesar disso, esse tipo de matriz é essencial para resolver <code>sistemas de equações lineares</code> e transformações geométricas envolvidas com matriz inversa.</li>
+</ol>
+<p><span id="eq-matrizIdentidade"><span class="math display">\[
+\begin{bmatrix}
+1 &amp; 0 \\
+0 &amp; 1
+\end{bmatrix}
+\tag{7.2}\]</span></span></p>
+<p>No script fica assim:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="8" type="1">
+<li><em>Matriz simétrica</em>. Os elementos fora da diagonal principal são iguais. Esse tipo de matriz aparece muito em Física, computação gráfica e análise de dados, especialmente em sistemas onde as relações entre variáveis são recíprocas.</li>
+</ol>
+<p><span id="eq-matrizSimetrica"><span class="math display">\[
+\begin{bmatrix}
+1 &amp; 2 \\
+2 &amp; 1
+\end{bmatrix}
+\tag{7.3}\]</span></span></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="10" type="1">
+<li><em>Matriz nula</em>. Todos os elementos são zero. Nesse caso, qualquer vetor é transformado no vetor nulo, fazendo com que o ponto desapareça na origem. <span id="eq-matrizNula"><span class="math display">\[
+\begin{bmatrix}
+0 &amp; 0 \\
+0 &amp; 0
+\end{bmatrix}
+\tag{7.4}\]</span></span></li>
+</ol>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">0</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="11" type="1">
+<li><em>Matriz transposta</em>. A transposta é obtida trocando linhas por colunas. Compare essa matriz com sua versão original, e observe como pequenas mudanças reorganizam completamente a transformação geométrica.</li>
+</ol>
+<p><span id="eq-matrizTransposta"><span class="math display">\[
+\begin{bmatrix}
+1 &amp; -1 \\
+2 &amp; 1
+\end{bmatrix}
+\tag{7.5}\]</span></span></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="12" type="1">
+<li><em>Matriz diagonal</em>. Apenas os elementos da diagonal principal são diferentes de zero. Essas matrizes normalmente ampliam ou comprimem os eixos independentemente.</li>
+</ol>
+<p><span id="eq-matrizDiagonal"><span class="math display">\[
+\begin{bmatrix}
+3 &amp; 0 \\
+0 &amp; 0.5
+\end{bmatrix}
+\tag{7.6}\]</span></span></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>input_d<span class="op">=</span> <span class="fl">0.5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="13" type="1">
+<li><em>Matriz inversa</em>. Algumas transformações podem ser desfeitas por outra matriz. A matriz inversa atua como um caminho de volta, restaurando a configuração original do vetor. Se a matriz ampliou o eixo <em>x</em> por 2, a matriz inversa reduz o eixo <em>x</em> pela metade, retornando o vetor à escala original. Essa matriz é usada em modelagem linear (quando se tem pontos que parecem desenhar um reta) e não linear (quando se tem pontos que parecem desenhar uma curva). Considerando a matriz original abaixo:</li>
+</ol>
+<p><span id="eq-matrinvOr"><span class="math display">\[
+\begin{bmatrix}
+2 &amp; 0 \\
+0 &amp; 1
+\end{bmatrix}
+\tag{7.7}\]</span></span></p>
+<p>Ela amplia o eixo x por um fator 2. Então sua matriz inversa faz o caminho contrário:</p>
+<p><span id="eq-matrinv"><span class="math display">\[
+\begin{bmatrix}
+0.5 &amp; 0 \\
+0 &amp; 1
+\end{bmatrix}
+\tag{7.8}\]</span></span></p>
+<p>No script:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Esse cenários todos reproduzem de forma simplificada algumas transformações matriciais que são comumente observadas em vários campos, tais como computação gráfica, modelagem 3D, jogos digitais, inteligência artificial, robótica, Engenharia, Física, processamento de imagens e animações. Toda vez que um objeto gira, muda de escala ou se move em ambientes digitais, existe uma grande chance de matrizes estarem trabalhando silenciosamente por trás.</p>
+<p>Essas transformações acima são denominadas por <code>transformações lineares</code>, e são comumente utilizadas para representar uma ação sobre um objeto. O efeito final permite que o objeto experimente <em>rotação</em>, <em>ampliação</em>, <em>redução</em>, <em>reflexão</em>, <em>cisalhamento</em> (corte ou deformação), <em>mistura</em>, <em>troca</em>, <em>fluxo</em>, <em>propagação</em> e <em>dependência</em> entre variáveis.</p>
+</section>
+<section id="por-dentro-do-script" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script">Por dentro do script</h4>
+<p>Uma matriz pode ser entendida como uma regra matemática que recebe um vetor e devolve outro. Pode-se considerar o vetor original como:</p>
+<p><span id="eq-vet"><span class="math display">\[
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+\tag{7.9}\]</span></span></p>
+<p>e a matriz como:</p>
+<p><span id="eq-matr"><span class="math display">\[
+\begin{bmatrix}
+a &amp; b \\
+c &amp; d
+\end{bmatrix}
+\tag{7.10}\]</span></span></p>
+<p>Por exemplo, se no script está escrito:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>input_a <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>input_b <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>input_c <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>input_d <span class="op">=</span> <span class="dv">3</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>a matriz utilizada será:</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+2 &amp; 1 \\
+0 &amp; 3
+\end{bmatrix}
+\]</span></p>
+<p>Essa matriz é a que será aplicada ao vetor original do plano cartesiano durante a transformação. Então o novo vetor será:</p>
+<p><span id="eq-newvet"><span class="math display">\[
+\begin{bmatrix}
+a &amp; b \\
+c &amp; d
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+=
+\begin{bmatrix}
+ax+by \\
+cx+dy
+\end{bmatrix}
+\tag{7.11}\]</span></span></p>
+<p>Portanto, a nova coordenada <em>x</em> depende da combinação entre <em>x</em> e <em>y</em>. Já a nova coordenada <em>y</em> passa a depender dessa mistura, e com ambas as tranformações controladas pela matriz. Quer saber como funciona essa transformação no código da <a href="#fig-matriz" class="quarto-xref">Figura&nbsp;<span>7.2</span></a> ?</p>
+<p>O script apresenta dois vetores, um original e outro transformado pela matriz. A transformação ocorre pelas equações:</p>
+<p><span id="eq-vetxTrans"><span class="math display">\[
+x'=ax+by
+\tag{7.12}\]</span></span></p>
+<p><span id="eq-vetyTrans"><span class="math display">\[
+y'=cx+dy
+\tag{7.13}\]</span></span></p>
+<p>Cada elemento da matriz possui uma função geométrica. Alguns valores ampliam o vetor, outros comprimem, alguns refletem, e outros misturam os eixos <em>x</em> e <em>y</em>. O interessante é que o plano inteiro pode ser deformado usando apenas quatro números.</p>
+<p>No código, o trecho abaixo faz exatamente a multiplicação da matriz pelo vetor.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x2 <span class="op">=</span> a <span class="op">*</span> x <span class="op">+</span> b <span class="op">*</span> y<span class="op">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y2 <span class="op">=</span> c <span class="op">*</span> x <span class="op">+</span> d <span class="op">*</span> y<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A linha que segue desenha o vetor original saindo da origem.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x<span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> x]<span class="op">,</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>y<span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> y]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Já a próxima, desenha o vetor transformado.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>x<span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> x2]<span class="op">,</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>y<span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> y2]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O <em>app</em> da seção anterior possibilitou perceber que uma <code>matriz 2×2</code> pode transformar um ponto ou vetor no plano. Mas imagine se, em vez de transformar apenas um vetor, você pudesse transformar uma figura inteira ! A ideia é a mesma, mas aplicada a todos os pontos que formam o quadrado. Fica então mais fácil perceber como rotações, ampliações e cisalhamentos podem ser descritos por matrizes. E esse é o objetivo do próximo script.</p>
+<div id="fig-matriz2b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-matriz2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/matriz2b.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matriz2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.3: Quando uma matriz transforma todos os pontos de uma figura, ela transforma a aparência da figura. Clique com o botão direito neste <a href="apps/matriz2b.html">LINK</a> e abra o aplicativo em nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>No <em>app</em>, altere primeiro o tipo de transformação. Você pode usar “rotacao”, “escala” ou “cisalhamento”:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"rotacao"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois modifique os valores de:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>input_angulo</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>input_escala</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe como o quadrado original é transformado. Tente perceber quais transformações preservam a forma, quais alteram o tamanho e quais deformam a figura.</p>
+<ol type="a">
+<li>Escolha o tipo de transformação:</li>
+</ol>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"rotacao"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="a">
+<li>Se escolher rotação, altere:</li>
+</ol>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="a">
+<li>Se escolher escala ou cisalhamento, altere:</li>
+</ol>
+<div class="sourceCode" id="cb26"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="fl">1.5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="a">
+<li><p>Compare o quadrado original com o transformado.</p></li>
+<li><p>Observe se a figura apenas gira, aumenta, diminui ou se deforma.</p></li>
+<li><p>Tente prever o resultado antes de executar novamente.</p></li>
+</ol>
+<p>Para ajudar diretamente nessas transformações, seguem alguns cenários interessantes.</p>
+<ol type="1">
+<li><em>Rotação suave</em>. O quadrado gira ao redor da origem, mas mantém seu tamanho e sua forma.</li>
+</ol>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"rotacao"</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="fl">1.5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Rotação de 90 graus</em>. A figura gira um quarto de volta no plano cartesiano.</li>
+</ol>
+<div class="sourceCode" id="cb28"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"rotacao"</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">90</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="fl">1.5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Rotação negativa</em>. O quadrado gira no sentido horário.</li>
+</ol>
+<div class="sourceCode" id="cb29"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"rotacao"</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="op">-</span><span class="dv">45</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="fl">1.5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Rotação completa</em>. A figura retorna praticamente à posição original após uma volta inteira.</li>
+</ol>
+<div class="sourceCode" id="cb30"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"rotacao"</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">360</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="fl">1.5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Ampliação uniforme</em>. O quadrado aumenta de tamanho sem deformar sua geometria.</li>
+</ol>
+<div class="sourceCode" id="cb31"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"escala"</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="dv">2</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Redução uniforme</em>. A figura diminui, mas preserva a forma original.</li>
+</ol>
+<div class="sourceCode" id="cb32"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"escala"</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="fl">0.5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="7" type="1">
+<li><em>Escala negativa</em>. A figura sofre inversão geométrica juntamente com mudança de tamanho.</li>
+</ol>
+<div class="sourceCode" id="cb33"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"escala"</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="8" type="1">
+<li><em>Cisalhamento moderado</em>. O quadrado começa a inclinar lateralmente.</li>
+</ol>
+<div class="sourceCode" id="cb34"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"cisalhamento"</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="9" type="1">
+<li><em>Cisalhamento intenso</em>. A deformação lateral se torna bastante evidente.</li>
+</ol>
+<div class="sourceCode" id="cb35"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"cisalhamento"</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="dv">2</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="10" type="1">
+<li><em>Cisalhamento negativo</em>. A inclinação ocorre para o lado oposto.</li>
+</ol>
+<div class="sourceCode" id="cb36"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"cisalhamento"</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="11" type="1">
+<li><em>Quase uma reta</em>. Um cisalhamento extremo começa a deformar fortemente a figura.</li>
+</ol>
+<div class="sourceCode" id="cb37"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"cisalhamento"</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="dv">5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="12" type="1">
+<li><em>Rotação pequena</em>. Pequenos ângulos produzem transformações discretas, úteis em animações suaves.</li>
+</ol>
+<div class="sourceCode" id="cb38"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"rotacao"</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="fl">1.5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="13" type="1">
+<li><em>Ampliação extrema</em>. A figura cresce muito rapidamente.</li>
+</ol>
+<div class="sourceCode" id="cb39"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"escala"</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="dv">3</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="14" type="1">
+<li><em>Figura espelhada e ampliada</em>. A escala negativa combinada com módulo maior que 1 cria inversão e ampliação simultaneamente.</li>
+</ol>
+<div class="sourceCode" id="cb40"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"escala"</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="op">-</span><span class="dv">2</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="15" type="1">
+<li><em>Sem transformação</em>. A figura permanece praticamente inalterada.</li>
+</ol>
+<div class="sourceCode" id="cb41"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>input_tipo <span class="op">=</span> <span class="st">"escala"</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>input_angulo <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>input_escala <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="por-dentro-do-script-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-1">Por dentro do script</h4>
+<p>No JSPlotly anterior, a matriz era preenchida diretamente com os valores <code>a</code>, <code>b</code>, <code>c</code> e <code>d</code>. Agora, esses valores são calculados automaticamente a partir do tipo de transformação escolhido.</p>
+<p>Para uma rotação, por exemplo, a matriz é:</p>
+<p><span id="eq-matrizRotacao"><span class="math display">\[
+\begin{bmatrix}
+\cos(\theta) &amp; -\sin(\theta) \\
+\sin(\theta) &amp; \cos(\theta)
+\end{bmatrix}
+\tag{7.14}\]</span></span></p>
+<p>Para uma escala uniforme, a matriz é:</p>
+<p><span id="eq-matrizEscala"><span class="math display">\[
+\begin{bmatrix}
+s &amp; 0 \\
+0 &amp; s
+\end{bmatrix}
+\tag{7.15}\]</span></span></p>
+<p>Para um cisalhamento horizontal, a matriz é:</p>
+<p><span id="eq-matrizCisalhamento"><span class="math display">\[
+\begin{bmatrix}
+1 &amp; k \\
+0 &amp; 1
+\end{bmatrix}
+\tag{7.16}\]</span></span></p>
+<p>Em todos os casos, a regra geral continua sendo a mesma:</p>
+$$
+<span class="math display">\[\begin{bmatrix}
+x' \\
+y'
+\end{bmatrix}\]</span>
+<p>=</p>
+<span class="math display">\[\begin{bmatrix}
+a &amp; b \\
+c &amp; d
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}\]</span>
+<p>$${#eq-transformacaoGeral2}</p>
+<p>A diferença é que agora essa transformação é aplicada a vários pontos da figura, um por vez.</p>
+<p>O quadrado inicial é formado por listas de coordenadas:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span>]<span class="op">;</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada par <code>(x[i], y[i])</code> representa um vértice do quadrado, e o último ponto repete o primeiro para fechar a figura. O trecho abaixo cria listas vazias para guardar os novos pontos transformados:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x2 <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y2 <span class="op">=</span> []<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Em seguida, um laço (<em>loop</em>) percorre todos os pontos do quadrado:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> x<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  x2<span class="op">.</span><span class="fu">push</span>(a<span class="op">*</span>x[i] <span class="op">+</span> b<span class="op">*</span>y[i])<span class="op">;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  y2<span class="op">.</span><span class="fu">push</span>(c<span class="op">*</span>x[i] <span class="op">+</span> d<span class="op">*</span>y[i])<span class="op">;</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Esse último trecho é o coração do script. Ele aplica a matriz de transformação em cada vértice da figura. Assim, a mesma multiplicação matricial que antes transformava um ponto, agora transforma uma figura completa.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Em muitos problemas do mundo real, matrizes vão muito além de mudar posições no espaço. Elas descrevem como sistemas inteiros podem evoluir ao longo do tempo. Crescimento populacional, propagação de epidemias, predição por redes neurais, transporte e sinalização de trânsito (semáforos), circulação de dinheiro entre setores econômicos, redes de comunicação, e mesmo algoritmos de inteligência artificial são modelados por matrizes. Nesses casos, cada multiplicação matricial representa uma nova etapa do sistema, permitindo acompanhar tendências, equilíbrios, explosões de crescimento ou colapsos dinâmicos.</p>
+<p>O próximo script propõe isso, usar matriz para transformar o estado de um sistema ao longo do tempo.</p>
+<div id="fig-matriz3b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-matriz3b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/matriz3b.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matriz3b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.4: Matrizes e modelagem dinâmica: pequenas regras de interação podem produzir grandes mudanças ao longo do tempo. Clique neste <a href="apps/matriz3b.html">LINK</a> para abrir em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O script mostra como uma matriz pode representar a evolução de um sistema ao longo do tempo. A ideia é simples:</p>
+<p><span class="math display">\[
+estado(t+1) = A \cdot estado(t)
+\]</span></p>
+<p>Ou seja, o estado futuro depende do estado atual e de uma matriz de transformação. Essa matriz define como duas partes do sistema influenciam uma à outra. Dependendo do cenário escolhido, essas partes podem representar duas espécies, dois setores econômicos, suscetíveis e infectados, dois nós de uma rede, e tantos outros pares.</p>
+<p>O gráfico da esquerda mostra a evolução temporal. Ele responde perguntas como se A ou B crescem ou diminuem, se o total se conserva, ou se o sistema explode ou estabiliza. Já o gráfico da direita mostra a trajetória no espaço de estados, e em que cada ponto representa uma combinação entre A e B.</p>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>Execute o script com algum <code>cenario</code> como “população”, “economia”, “epidemia”, ou “rede”.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cenario <span class="op">=</span> <span class="st">"populacao"</span><span class="op">;</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> passos <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> intensidade <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inicialA <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inicialB <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois altere o cenário e observe como a mesma estrutura matemática produz comportamentos diferentes. Em seguida, altere a <code>intensidade</code> (0.3; 1.5, por exemplo). E veja como a força das interações muda a trajetória do sistema.</p>
+<p>A matriz <code>A</code> determina o que acontece com cada componente do sistema.</p>
+<p>Por exemplo:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>novoA <span class="op">=</span> A[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">*</span> estado[<span class="dv">0</span>] <span class="op">+</span> A[<span class="dv">0</span>][<span class="dv">1</span>] <span class="op">*</span> estado[<span class="dv">1</span>]<span class="op">;</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>novoB <span class="op">=</span> A[<span class="dv">1</span>][<span class="dv">0</span>] <span class="op">*</span> estado[<span class="dv">0</span>] <span class="op">+</span> A[<span class="dv">1</span>][<span class="dv">1</span>] <span class="op">*</span> estado[<span class="dv">1</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso significa que o novo valor de <code>A</code> depende de quanto <code>A</code> preserva de si mesmo, e de quanto <code>B</code> influencia <code>A</code>. Já o novo valor de <code>B</code> depende de quanto <code>A</code> influencia <code>B</code>, e de quanto <code>B</code> preserva de si mesmo.</p>
+<p>Você pode usar o <em>app</em> seguindo o rápido tutorial abaixo.</p>
+<ol type="1">
+<li>Rode o script com <code>cenario = "populacao"</code>;</li>
+<li>Observe as curvas de A, B e Total no gráfico da esquerda;</li>
+<li>Observe a trajetória no espaço de estados no gráfico da direita;</li>
+<li>Troque para <code>cenario = "economia"</code>;</li>
+<li>Veja se o total cresce, diminui ou se estabiliza;</li>
+<li>Troque para <code>cenario = "epidemia"</code>;</li>
+<li>Observe como suscetíveis e infectados se relacionam;</li>
+<li>Troque para <code>cenario = "rede"</code>;</li>
+<li>Compare o fluxo entre os dois nós;</li>
+<li>Aumente <code>intensidade</code>;</li>
+<li>Veja como as interações ficam mais fortes;</li>
+<li>Altere <code>inicialA</code> e <code>inicialB</code>;</li>
+<li>Observe como o ponto de partida muda toda a trajetória.</li>
+</ol>
+<p>Perceba nessa <em>“brincadeira”</em> que, em adição a seus valores iniciais, o sistema muda por causa da matriz que governa as relações. Seguem alguns cenários interessantes, também.</p>
+<ol type="1">
+<li><em>População com interação fraca</em>. Quando as interações são fracas, cada componente mantém mais seu próprio comportamento ?</li>
+</ol>
+<div class="sourceCode" id="cb47"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cenario <span class="op">=</span> <span class="st">"populacao"</span><span class="op">;</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> intensidade <span class="op">=</span> <span class="fl">0.3</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>População com interação forte</em>. Uma pequena influência entre espécies pode se amplificar ao longo do tempo ?</li>
+</ol>
+<div class="sourceCode" id="cb48"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cenario <span class="op">=</span> <span class="st">"populacao"</span><span class="op">;</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> intensidade <span class="op">=</span> <span class="fl">1.8</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Economia entre setores</em>. Um setor mais forte no início altera o fluxo econômico futuro ?</li>
+</ol>
+<div class="sourceCode" id="cb49"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cenario <span class="op">=</span> <span class="st">"economia"</span><span class="op">;</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inicialA <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inicialB <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Propagação simplificada</em>. Como a interação entre suscetíveis e infectados altera a evolução do sistema ?</li>
+</ol>
+<div class="sourceCode" id="cb50"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cenario <span class="op">=</span> <span class="st">"epidemia"</span><span class="op">;</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> intensidade <span class="op">=</span> <span class="fl">1.2</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Rede de conexões</em>. Em uma rede, o ponto inicial muda o caminho da informação ou do fluxo ?</li>
+</ol>
+<div class="sourceCode" id="cb51"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cenario <span class="op">=</span> <span class="st">"rede"</span><span class="op">;</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inicialA <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inicialB <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="7" type="1">
+<li><em>Muitos passos</em>. O comportamento de longo prazo revela crescimento, queda, equilíbrio ou explosão ?</li>
+</ol>
+<div class="sourceCode" id="cb52"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> passos <span class="op">=</span> <span class="dv">80</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="por-dentro-do-script-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-2">Por dentro do script</h4>
+<p>O script começa escolhendo um cenário:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cenario <span class="op">=</span> <span class="st">"populacao"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada cenário define uma matriz diferente. No caso populacional, por exemplo:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  [<span class="fl">1.05</span><span class="op">,</span> <span class="fl">0.10</span> <span class="op">*</span> intensidade]<span class="op">,</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  [<span class="fl">0.05</span> <span class="op">*</span> intensidade<span class="op">,</span> <span class="fl">0.95</span>]</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Essa matriz indica que:</p>
+<ul>
+<li>a espécie A cresce um pouco por si mesma;</li>
+<li>a espécie B influencia A;</li>
+<li>a espécie A influencia B;</li>
+<li>a espécie B diminui levemente por si mesma.</li>
+</ul>
+<p>Depois o script define o estado inicial:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> estado <span class="op">=</span> [inicialA<span class="op">,</span> inicialB]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Em seguida, aplica repetidamente a matriz ao estado atual:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> novoA <span class="op">=</span> A[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">*</span> estado[<span class="dv">0</span>] <span class="op">+</span> A[<span class="dv">0</span>][<span class="dv">1</span>] <span class="op">*</span> estado[<span class="dv">1</span>]<span class="op">;</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> novoB <span class="op">=</span> A[<span class="dv">1</span>][<span class="dv">0</span>] <span class="op">*</span> estado[<span class="dv">0</span>] <span class="op">+</span> A[<span class="dv">1</span>][<span class="dv">1</span>] <span class="op">*</span> estado[<span class="dv">1</span>]<span class="op">;</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>estado <span class="op">=</span> [novoA<span class="op">,</span> novoB]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada repetição representa um novo passo no tempo e, por isso, uma matriz simples consegue gerar uma trajetória inteira.</p>
+</section>
+</div>
+</div>
+<hr>
+<!--SCRIPT 2 — Transformações clássicas com interação.
+
+Neste segundo script, a matriz deixa de agir apenas sobre um ponto e passa a transformar uma figura inteira. Isso ajuda a visualizar algo fundamental:
+
+> se uma matriz transforma todos os pontos de uma figura, ela transforma a própria forma geométrica.
+
+### Modo de usar
+
+Troque o tipo de transformação:
+
+- `"rotacao"`
+- `"escala"`
+- `"cisalhamento"`
+
+Ajuste os parâmetros:
+
+- `angulo`
+- `escala`
+
+Observe:
+
+- o que acontece com o quadrado original;
+- como a figura transformada muda;
+- quando a transformação preserva o tamanho;
+- quando a transformação deforma a figura;
+- quando a matriz altera a orientação do espaço.
+
+### Leitura guiada
+
+Na rotação, a matriz muda a direção da figura sem necessariamente alterar seu tamanho.
+
+Na escala, a matriz amplia ou reduz distâncias.
+
+No cisalhamento, a matriz inclina a figura, como se uma camada do espaço fosse empurrada em relação à outra.
+
+Essas transformações aparecem em:
+
+- computação gráfica;
+- animações;
+- jogos;
+- robótica;
+- imagens digitais;
+- modelagem física;
+- engenharia;
+- visualização científica.
+
+Agora sim…
+
+👉 Matrizes não são “conteúdo escolar”.
+
+São usadas em:
+
+- IA, especialmente em redes neurais;
+- economia, para representar fluxos;
+- ecologia, para estudar populações;
+- física, para transformar coordenadas;
+- computação gráfica, para mover objetos;
+- redes, para representar conexões.
+
+### Conectando ideias
+
+Quando você mexe no script, não está apenas “testando valores”.
+
+Você está investigando perguntas como:
+
+- O que permanece igual depois da transformação?
+- O que muda?
+- A área aumenta ou diminui?
+- A figura mantém sua forma?
+- A matriz transforma o espaço suavemente ou drasticamente?
+- A transformação pode ser desfeita? -->
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Agora é hora de ir além….além até mesmo do bom senso ! Mas é pra isso que serve essa seção, certo ? Para refletir com pé no chão, mas permitindo-se colocar a cabeça nas nuvens.</p>
+<ul>
+<li>E se aumentar o ângulo de rotação fizesse a figura “girar” exatamente como um objeto em um jogo ou aplicativo ?</li>
+<li>E se ampliar a escala fosse parecido com usar <em>zoom</em> em uma imagem, mas controlado por uma matriz ?</li>
+<li>E se um pequeno cisalhamento fosse suficiente para deformar completamente uma figura após várias transformações ?</li>
+<li>E se a mesma matriz pudesse transformar tanto desenhos geométricos quanto populações, epidemias e redes ?</li>
+<li>E se uma pequena mudança na intensidade das interações alterasse completamente o futuro de um sistema ?</li>
+<li>E se duas espécies começassem quase iguais, mas terminassem muito diferentes após vários passos da simulação ?</li>
+<li>E se um pequeno número inicial de infectados acabasse dominando o sistema inteiro ?</li>
+<li>E se redes sociais, trânsito ou fluxo de informações funcionassem de modo parecido com os modelos do script ?</li>
+<li>E se o “estado atual” de um sistema influenciasse continuamente o próximo estado, como acontece em hábitos, economia ou estudos ?</li>
+<li>E se matrizes fossem uma forma de descrever mudanças que acontecem no tempo e no espaço ao mesmo tempo ?</li>
+<li>E se o trajeto mostrado no espaço de estados fosse parecido com acompanhar a evolução de escolhas ao longo da vida ?</li>
+<li>E se transformar figuras no plano e prever comportamentos futuros fossem apenas duas faces da mesma matemática ?</li>
+</ul>
+</div>
+</div>
+<hr>
+<!-- - E se fosse possível simular cidades, ecossistemas ou redes neurais inteiras usando apenas multiplicações matriciais repetidas ?
+- ## E se...? ![](figuras/icons/flor_bg.png){width=8%}
+
+- E se aplicarmos várias matrizes em sequência sobre o mesmo objeto ?
+- Uma rotação seguida de uma escala produz o mesmo resultado que uma escala seguida de uma rotação 
+- E se uma transformação for aplicada centenas de vezes consecutivas?
+- O que acontece quando pequenas deformações se acumulam ao longo do tempo?
+- É possível uma matriz “destruir” completamente uma figura?
+- Como videogames usam matrizes para mover personagens e cenários em tempo real?
+- Como aplicativos de imagem realizam rotações, ampliações e distorções?
+- Como sistemas de inteligência artificial utilizam matrizes para transformar informações?
+- E se o sistema possuir dezenas, centenas ou milhares de variáveis ao mesmo tempo?
+- Como epidemias, economias e redes sociais podem ser descritas usando matrizes?
+- O que acontece quando uma matriz possui autovalores muito grandes?
+- Algumas transformações podem gerar equilíbrio? Oscilações? Crescimento infinito?
+- Como pequenas mudanças nos coeficientes alteram completamente o comportamento de um sistema?
+- E se combinarmos geometria, tempo e interação em um único modelo matricial?
+
+
+Uma matriz também pode representar a evolução de um sistema no tempo.
+
+Nesse caso, ela não transforma apenas pontos geométricos. Ela transforma estados.
+
+Por exemplo:
+
+$$
+estado_{t+1} = A \cdot estado_t
+$$
+
+Isso significa:
+
+> o estado futuro depende do estado atual e das relações descritas pela matriz.
+
+SCRIPT 3 — Modelo dinâmico com matrizes.
+
+Neste script, a matriz representa interações entre duas variáveis. Dependendo do cenário escolhido, essas variáveis podem representar populações, setores econômicos, grupos em uma epidemia ou nós de uma rede.
+
+### Modo de usar
+
+Altere o cenário:
+
+- `"populacao"`
+- `"economia"`
+- `"epidemia"`
+- `"rede"`
+
+Ajuste:
+
+- `input_passos`
+- `input_intensidade`
+- `input_inicialA`
+- `input_inicialB`
+
+Observe dois gráficos:
+
+1. a evolução das variáveis ao longo do tempo;
+2. a trajetória do sistema no espaço de estados.
+
+### Cenário 1 — Populações interagindo
+
+Pergunta:
+
+O que acontece quando duas populações influenciam uma à outra?
+
+Explore:
+
+- uma espécie favorece a outra?
+- uma cresce enquanto a outra diminui?
+- as duas crescem?
+- o sistema estabiliza?
+- o sistema explode?
+
+### Cenário 2 — Fluxo econômico
+
+Pergunta:
+
+Como setores de uma economia trocam recursos entre si?
+
+Explore:
+
+- o setor 1 alimenta o setor 2?
+- o setor 2 devolve recursos ao setor 1?
+- o total aumenta?
+- o total diminui?
+- há equilíbrio?
+
+### Cenário 3 — Epidemia simplificada
+
+Pergunta:
+
+Como uma mudança em um grupo pode afetar outro grupo?
+
+Explore:
+
+- o crescimento dos infectados depende dos suscetíveis?
+- a intensidade da interação acelera a propagação?
+- o sistema estabiliza?
+- o modelo é suficiente ou simplificado demais?
+
+### Cenário 4 — Rede de conexões
+
+Pergunta:
+
+Como uma informação, energia ou influência circula em uma rede?
+
+Explore:
+
+- um nó domina o outro?
+- a rede distribui o fluxo?
+- há concentração?
+- o sistema converge?
+
+**E mais !!**
+
+- E se a matriz representar uma epidemia?
+- E se representar fluxo financeiro?
+- E se tiver estabilidade?
+- E se divergir?
+- E se uma pequena mudança inicial gerar grande diferença depois?
+- E se o sistema parecer previsível no começo, mas mudar rapidamente?
+
+👉 Aqui nasce pesquisa científica.
+
+E se a matriz representar uma epidemia?
+E se representar fluxo financeiro?
+E se tiver estabilidade?
+E se divergir?
+
+👉 Aqui nasce pesquisa científica
+
+Agora é hora de ir além.
+
+SCRIPT 3 — Modelo dinâmico (nível absurdo++)
+Agora entramos na modelagem de sistemas
+
+![Script mais completo Clique neste [LINK](apps/matriz3.html) para abrir em nova aba.](figuras/matriz3.png){#fig-matriz2}
+
+SCRIPT 3b — Modelo dinâmico com matrizes
+
+![Script mais completo Clique neste [LINK](apps/matriz3b.html) para abrir em nova aba.](figuras/matriz3b.png){#fig-matriz3b}
+
+Controles sugeridos no JSPlotly
+input_cenario = "populacao"
+// opcoes: "populacao", "economia", "epidemia", "rede"
+
+input_passos = 30
+input_intensidade = 1.0
+input_inicialA = 10
+input_inicialB = 5
+
+
+
+
+### Em síntese
+
+O mesmo padrão matemático pode modelar muitos mundos diferentes.
+
+Muda o contexto.
+
+Muda a interpretação.
+
+Mas a estrutura permanece:
+
+$$
+novo\ estado = matriz \times estado\ atual
+$$
+
+--->
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Você já deve ter percebido, pelos parágrafos anteriores, que não há propriamente um conjunto ou outro de aplicações para matrizes. Quem sabe a limitação para seu uso seja aquela ditada pela criatividade humana, somente. Imagine, por exemplo, um desses aplicativos de celular ou computador que modificam um rosto ou uma paisagem. Uma imagem digital pode ser pensada como uma matriz de pixels, onde cada número representa uma intensidade de cor ou luminosidade. Modificar essa matriz pode clarear a imagem, escurecer a imagem, inverter cores, detectar bordas, borrar regiões, ou realçar detalhes. Isso é a “alma” dos manipuladores de imagens !</p>
+<p>Uma rede social também pode ser representada por uma matriz de conexões. Se duas pessoas estão conectadas, a matriz registra essa relação, permitindo estudar influência, grupos, centralidade, propagação de informação e formação de comunidades. Em jogos e animações digitais as matrizes ajudam a mover personagens, girar objetos, alterar perspectiva, simular câmeras e transformar mundos 2D e 3D.</p>
+<p>Em inteligência artificial, redes neurais usam muitas operações matriciais. Dados entram como vetores ou matrizes, pesos são organizados em matrizes, e o resultado é uma sequência de transformações, fazendo da <em>IA</em> uma grande cadeia de transformações matemáticas. Também em Ecologia matrizes podem ser empregadas para representar reprodução, mortalidade, competição, migração, e transição entre fases da vida. Isso permite projetar cenários para o crescimento da população, como sua estabilização, colapso ou explosão.</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nessa seção, damos sequência a um aprendizado panorâmico em <em>JavaScript</em>, voltado ou não à edição de objetos com JSPlotly, como realizado no capítulo anterior. Nesse sentido, segue um pouco sobre a estrutura de <em>JS</em> para aritmética e <em>arrays</em> (vetores).</p>
+<p>E agora um truque bem bacana !!! <strong>Você poderá treinar a linguagem JavaScript utilizando um JSPlotly específico para isso !</strong>. Esse JSPlotly personalizado está disponível na <a href="#fig-JSPlotly_treinoJS" class="quarto-xref">Figura&nbsp;<span>7.5</span></a> abaixo. Abra-o num navegador e deixe-o quietinho lá. <em>Quando quiser rodar algum trecho desses treinamentos, basta copiar, colar o trecho no campo “ÁREA PARA DIGITAR COMANDOS”, e rodá-lo</em>. Muito legal, não ?!</p>
+<div id="fig-JSPlotly_treinoJS" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-JSPlotly_treinoJS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/JSPlotly_treinoJS.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-JSPlotly_treinoJS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.5: JSPlotly personalizado para treinamento da linguagem <em>JavaScript</em> <a href="apps/JSPlotly_treinoJS.html">JSPlotly_treinoJS.html</a>. Basta clicar com o botão direito do mouse para abri-lo em outra janela do navegador. Deixe-o quietinho lá. Quando quiser executar algum trecho de código ao longo desse treinamento, basta copiar, colar no campo “ÁREA PARA DIGITAR COMANDOS”, e rodar no JSPlotly personalizado.
+</figcaption>
+</figure>
+</div>
+<section id="aritmética" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="aritmética">Aritmética</h3>
+<p>Diversas operações matemáticas são possíveis, quer pelo <em>JS</em> puro, quer pela instalação de bibliotecas específicas, tais como <em>Plotly.js</em> utilizada no JSPlotly, <em>mathjs</em> ou <em>numjs</em>. Segue abaixo uma lista de operações aritméticas realizadas com a linguagem:</p>
+<ol type="1">
+<li>+ : adição de números ou concatenação de texto (<em>strings</em>);</li>
+<li>- : subtração;</li>
+<li>* : multiplicação;</li>
+<li>/ : divisão;</li>
+<li>% : módulo;</li>
+<li>++ : incremento de valor;</li>
+<li>-- : decremento;</li>
+<li>** : exponenciação.</li>
+</ol>
+<p><em>Obs: </em> o operador de módulo <em>%</em> divide o primeiro operando pelo segundo operando e retorna o resto.</p>
+<p>Os exemplos a seguir ilustram o uso desses operadores aritméticos, bem como de algumas constantes matemáticas. Para testá-los, cole no <em>JSPlotly</em> customizado, como informado acima. Você pode experimentá-los separadamente ou em bloco.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> resultado <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="dv">5</span> <span class="op">+</span> <span class="dv">3</span><span class="op">;</span>                 <span class="fu">print</span>(<span class="st">"5 + 3 = "</span><span class="op">,</span> resultado)<span class="op">;</span>          <span class="co">// 8</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="dv">10</span> <span class="op">-</span> <span class="dv">4</span><span class="op">;</span>                <span class="fu">print</span>(<span class="st">"10 - 4 = "</span><span class="op">,</span> resultado)<span class="op">;</span>          <span class="co">// 6</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="dv">6</span> <span class="op">*</span> <span class="dv">7</span><span class="op">;</span>                 <span class="fu">print</span>(<span class="st">"6 * 7 = "</span><span class="op">,</span> resultado)<span class="op">;</span>           <span class="co">// 42</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="dv">20</span> <span class="op">/</span> <span class="dv">5</span><span class="op">;</span>                <span class="fu">print</span>(<span class="st">"20 / 5 = "</span><span class="op">,</span> resultado)<span class="op">;</span>          <span class="co">// 4</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="dv">17</span> <span class="op">%</span> <span class="dv">3</span><span class="op">;</span>                <span class="fu">print</span>(<span class="st">"17 % 3 = "</span><span class="op">,</span> resultado)<span class="op">;</span>          <span class="co">// 2</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="dv">2</span> <span class="op">**</span> <span class="dv">3</span><span class="op">;</span>                <span class="fu">print</span>(<span class="st">"2 ** 3 = "</span><span class="op">,</span> resultado)<span class="op">;</span>          <span class="co">// 8</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contador <span class="op">=</span> <span class="dv">5</span><span class="op">;</span> contador<span class="op">++;</span>      <span class="fu">print</span>(<span class="st">"contador++ = "</span><span class="op">,</span> contador)<span class="op">;</span>       <span class="co">// 6</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> decrementar <span class="op">=</span> <span class="dv">8</span><span class="op">;</span> decrementar<span class="op">--;</span><span class="fu">print</span>(<span class="st">"decrementar-- = "</span><span class="op">,</span> decrementar)<span class="op">;</span> <span class="co">// 7</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> soma <span class="op">=</span> <span class="dv">10</span><span class="op">;</span> soma <span class="op">+=</span> <span class="dv">5</span><span class="op">;</span>          <span class="fu">print</span>(<span class="st">"soma += 5 = "</span><span class="op">,</span> soma)<span class="op">;</span>            <span class="co">// 15</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> diferenca <span class="op">=</span> <span class="dv">20</span><span class="op">;</span> diferenca <span class="op">-=</span> <span class="dv">7</span><span class="op">;</span><span class="fu">print</span>(<span class="st">"diferença -= 7 = "</span><span class="op">,</span> diferenca)<span class="op">;</span>   <span class="co">// 13</span></span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> produto <span class="op">=</span> <span class="dv">3</span><span class="op">;</span> produto <span class="op">*=</span> <span class="dv">4</span><span class="op">;</span>     <span class="fu">print</span>(<span class="st">"produto *= 4 = "</span><span class="op">,</span> produto)<span class="op">;</span>       <span class="co">// 12</span></span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> quociente <span class="op">=</span> <span class="dv">24</span><span class="op">;</span> quociente <span class="op">/=</span> <span class="dv">3</span><span class="op">;</span><span class="fu">print</span>(<span class="st">"quociente /= 3 = "</span><span class="op">,</span> quociente)<span class="op">;</span>   <span class="co">// 8</span></span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(<span class="dv">25</span>)<span class="op">;</span>         <span class="fu">print</span>(<span class="st">"sqrt(25) = "</span><span class="op">,</span> resultado)<span class="op">;</span>         <span class="co">// 5</span></span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(<span class="op">-</span><span class="dv">15</span>)<span class="op">;</span>         <span class="fu">print</span>(<span class="st">"abs(-15) = "</span><span class="op">,</span> resultado)<span class="op">;</span>         <span class="co">// 15</span></span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="fl">7.8</span>)<span class="op">;</span>       <span class="fu">print</span>(<span class="st">"floor(7.8) = "</span><span class="op">,</span> resultado)<span class="op">;</span>       <span class="co">// 7</span></span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">ceil</span>(<span class="fl">7.2</span>)<span class="op">;</span>        <span class="fu">print</span>(<span class="st">"ceil(7.2) = "</span><span class="op">,</span> resultado)<span class="op">;</span>        <span class="co">// 8</span></span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(<span class="fl">9.4</span>)<span class="op">;</span>       <span class="fu">print</span>(<span class="st">"round(9.4) = "</span><span class="op">,</span> resultado)<span class="op">;</span>       <span class="co">// 9</span></span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">42</span><span class="op">,</span> <span class="dv">27</span>)<span class="op">;</span>      <span class="fu">print</span>(<span class="st">"max(42,27) = "</span><span class="op">,</span> resultado)<span class="op">;</span>       <span class="co">// 42</span></span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="dv">42</span><span class="op">,</span> <span class="dv">27</span>)<span class="op">;</span>      <span class="fu">print</span>(<span class="st">"min(42,27) = "</span><span class="op">,</span> resultado)<span class="op">;</span>       <span class="co">// 27</span></span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(<span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span><span class="op">/</span><span class="dv">2</span>)<span class="op">;</span>   <span class="fu">print</span>(<span class="st">"sin(π/2) = "</span><span class="op">,</span> resultado)<span class="op">;</span> </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="arrays" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="arrays">Arrays</h3>
+<p>Um <em>array</em> em <em>JavaScript</em> representa uma estrutura de dados para armazenamento de elementos ordenados. Esses elementos podem envolver qualquer tipo de dado, como números, strings, objetos, etc. Na prática, um <em>array</em> pode ser criado, acessado, filtrado, ou mapeado. Seguem exemplos:</p>
+<section id="criação" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="criação">Criação</h4>
+<div class="sourceCode" id="cb58"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> numeros <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cores <span class="op">=</span> [<span class="st">'vermelho'</span><span class="op">,</span> <span class="st">'verde'</span><span class="op">,</span> <span class="st">'azul'</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="acesso" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="acesso">Acesso</h4>
+<div class="sourceCode" id="cb59"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(numeros[<span class="dv">0</span>])<span class="op">;</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cores[<span class="dv">2</span>])<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ou seja, para você acessar o <em>array</em> <code>numeros</code>, por exemplo, basta colar e rodar o seguinte trecho no JSPlotly de treinamento:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> numeros <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cores <span class="op">=</span> [<span class="st">'vermelho'</span><span class="op">,</span> <span class="st">'verde'</span><span class="op">,</span> <span class="st">'azul'</span>]<span class="op">;</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(numeros[<span class="dv">0</span>])<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="mapeamento-map" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="mapeamento-map">Mapeamento (<code>map</code>)</h4>
+<div class="sourceCode" id="cb61"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> numeros <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> quadrados <span class="op">=</span> numeros<span class="op">.</span><span class="fu">map</span>(numero <span class="kw">=&gt;</span> numero <span class="op">*</span> numero)<span class="op">;</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(quadrados)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="uma-palavrinha-sobre-métodos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="uma-palavrinha-sobre-métodos">Uma palavrinha sobre métodos</h3>
+<p>Observe que, diferente do que já foi explicitado, agora aparece um comando múltiplo, como <em>“numeros.map”</em>. Existe uma infinidade de comandos com esta sintaxe em <em>JS</em>. Ele representa a função que será aplicada a cada elemento do array <em>numeros</em> pelo <em>método map</em>. Além disso, surge a sintaxe <em>“=&gt;”</em> ou sintaxe de <em>arrow function</em> (função de seta), uma forma concisa de atribuir um mapeamento. Assim, o comando inteiro:</p>
+<p>Em <em>JavaScript</em> <em>objetos</em> são tratados como no mundo real, ou seja, possuem <em>atributos</em> e <em>comportamentos</em>. Atributos descrevem as características que um objeto possui, e os comportamentos as ações que podem realizar. A notação em <em>JS</em> para referenciar as propriedades de um objeto podem ser, alternativamente:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>objeto<span class="op">.</span><span class="at">propriedade</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>ou<span class="op">...</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>objeto[propriedade]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="line-block">&nbsp;&nbsp;Voltando ao exemplo acima e esmiuçando-o um pouquinho mais, o <em>método map()</em> (<code>numeros.map</code>) é chamado no <em>array numeros</em> (um <em>Array.prototype</em>). O <em>protótipo</em> permite transmitir propriedades e métodos para um objeto <em>JS</em>. No caso, o <em>método map()</em> itera sobre cada elemento do array original, aplica uma função a cada um deles e retorna um novo array com os resultados. Assim, <em>numero =&gt; numero </em> numero* é a <em>função de seta</em>. E nesse caso, <em>numero</em> é o parâmetro de entrada da função, um atalho para o elemento atual do <em>array</em> sendo processado pelo <em>map</em>. Em adição, <em>“=&gt;”</em> representa o separador entre o(s) parâmetro(s) e o corpo da função. Finalmente, <em>“numero * numero”</em> é a expressão que é executada, com o resultado sendo retornado pela função. Seguem outros exemplos para arrays e mapeamento:</div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a> <span class="kw">const</span> x <span class="op">=</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">;</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">const</span> y <span class="op">=</span> x<span class="op">.</span><span class="fu">map</span>(valor <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="dv">2</span><span class="op">,</span> valor))</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">print</span>(y)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Vmax <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Km <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> S_values <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">10</span>}<span class="op">,</span> (_<span class="op">,</span> i) <span class="kw">=&gt;</span> i <span class="op">*</span> <span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> V_values <span class="op">=</span> S_values<span class="op">.</span><span class="fu">map</span>(S <span class="kw">=&gt;</span> (Vmax <span class="op">*</span> S) <span class="op">/</span> (Km <span class="op">+</span> S))<span class="op">;</span></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Valores de S:"</span><span class="op">,</span> S_values)<span class="op">;</span></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Valores de V:"</span><span class="op">,</span> V_values)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="javascript-uma-linguagem-orientada-a-objetos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="javascript-uma-linguagem-orientada-a-objetos">JavaScript, uma linguagem orientada a objetos</h3>
+<div class="line-block">&nbsp;&nbsp;Ainda que o esforço para traduzir os comandos acima possa auxliar como funciona a linguagem, é por óbvio esperar uma certa confusão de termos. Sendo assim, vamos subindo de nível ….!</div>
+<div class="line-block">&nbsp;&nbsp;Como diz o título acima, <em>JS</em> é uma linguagem orientada a objetos. Isso significa que o código é organizado em torno de <em>objetos</em>, que combinam dados (<em>propriedades</em>) e comportamentos (<em>métodos</em>) para modelar entidades do mundo real. Isso permite um código mais modular, reutilizável e fácil de gerenciar, ao organizar a lógica em <em>“partes”</em> menores e mais compreensíveis (<em>pensamento computacional</em>).</div>
+<section id="objetos-propriedades-e-métodos" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="objetos-propriedades-e-métodos">Objetos, propriedades, e métodos</h4>
+<div class="line-block">&nbsp;&nbsp;Um <em>objeto</em> é uma estrutura que agrupa dados e comportamentos. Os dados ficam guardados em <em>propriedades</em>, e os comportamentos são implementados por <em>métodos</em> (funções dentro do objeto). Assim, propriedade são pares nome–valor armazenados dentro de um objeto, podendo variar como números, textos, arrays, e outros objetos. Já os métodos são funções associadas a um objeto, e que descrevem ações que ele pode executar.</div>
+<div class="line-block">&nbsp;&nbsp;Objetos em <em>JS</em> <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Working_with_objects">“podem ser comparados a objetos da vida real”</a>, e guardam informações relacionadas entre si. Por exemplo, o objeto <em>“ponto”</em> abaixo representa um ponto no plano:</div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ponto <span class="op">=</span> { <span class="dt">x</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">5</span> }<span class="op">;</span>  <span class="co">// objeto com duas propriedades</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assim, as propriedades são as características do objeto:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ponto<span class="op">.</span><span class="at">x</span>)<span class="op">;</span>  <span class="co">// mostra 2</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ponto<span class="op">.</span><span class="at">y</span>)<span class="op">;</span>  <span class="co">// mostra 5</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="line-block">&nbsp;&nbsp;<a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Working_with_objects">“Propriedades de objetos são basicamente as mesmas que variáveis normais em JavaScript, exceto pelo fato de estarem ligadas a objetos”</a>. Propriedades podem ser acessadas por colchetes, <em>[…]</em>.</div>
+<div class="line-block">&nbsp;&nbsp;Assim, um objeto pode ser encarado como um <em>“pacote”</em> contendo nome, conteúdo e ferramentas próprias. Virtualmente, tudo em <em>JavaScript</em> — arrays, funções, strings, números — é, de alguma forma, um objeto com suas propriedades e métodos. Segue um exemplo:</div>
+<p><br>
+</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> carro <span class="op">=</span> {</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marca</span><span class="op">:</span> <span class="st">"Toyota"</span><span class="op">,</span>        <span class="co">// propriedade (dado)</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">ano</span><span class="op">:</span> <span class="dv">2022</span><span class="op">,</span>              <span class="co">// propriedade</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">ligar</span><span class="op">:</span> <span class="kw">function</span>() {     <span class="co">// método (ação)</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">"O carro está ligado!"</span>)<span class="op">;</span></span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>carro<span class="op">.</span><span class="fu">ligar</span>()<span class="op">;</span>            <span class="co">// chama o método</span></span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(carro<span class="op">.</span><span class="at">marca</span>)<span class="op">;</span> <span class="co">// acessa a propriedade</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Reforçando (não custa nada…), um objeto <em>JavaScript</em> envolve uma coleção de propriedades, onde cada propriedade é definida por um par chave-valor, permitindo uma representação ordenada de elementos. Objetos podem conter diferentes tipos de dados como valores, como números, strings, booleanos, arrays, outras funções e até mesmo outros objetos. Objetos criados são facilmente acessados por seus atributos. Seguem exemplos para testes.</p>
+</section>
+<section id="criação-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="criação-1">Criação</h4>
+<div class="sourceCode" id="cb68"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> pessoa <span class="op">=</span> {</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">nome</span><span class="op">:</span> <span class="st">'João'</span><span class="op">,</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">idade</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">cidade</span><span class="op">:</span> <span class="st">'São Paulo'</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="acesso-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="acesso-1">Acesso</h4>
+<div class="sourceCode" id="cb69"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pessoa<span class="op">.</span><span class="at">nome</span>)<span class="op">;</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pessoa[<span class="st">'idade'</span>])<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="atributos" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="atributos">Atributos</h4>
+<div class="sourceCode" id="cb70"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>pessoa<span class="op">.</span><span class="at">profissao</span> <span class="op">=</span> <span class="st">'Engenheiro'</span><span class="op">;</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pessoa)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para um exemplo fechado de objetos:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pessoa <span class="op">=</span> {</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">nome</span><span class="op">:</span> <span class="st">"João"</span><span class="op">,</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">idade</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">profissao</span><span class="op">:</span> <span class="st">"Desenvolvedor"</span><span class="op">,</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">hobbies</span><span class="op">:</span> [<span class="st">"leitura"</span><span class="op">,</span> <span class="st">"música"</span><span class="op">,</span> <span class="st">"jogos"</span>]<span class="op">,</span></span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">endereco</span><span class="op">:</span> {</span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">rua</span><span class="op">:</span> <span class="st">"Rua Principal, 123"</span><span class="op">,</span></span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">cidade</span><span class="op">:</span> <span class="st">"São Paulo"</span><span class="op">,</span></span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">saudacao</span><span class="op">:</span> <span class="kw">function</span> () {</span>
+<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"Olá, meu nome é "</span> <span class="op">+</span> <span class="kw">this</span><span class="op">.</span><span class="at">nome</span>)<span class="op">;</span></span>
+<span id="cb71-12"><a href="#cb71-12" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb71-13"><a href="#cb71-13" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb71-14"><a href="#cb71-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-15"><a href="#cb71-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pessoa<span class="op">.</span><span class="at">nome</span>)<span class="op">;</span> <span class="co">// Saída: "João"</span></span>
+<span id="cb71-16"><a href="#cb71-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pessoa<span class="op">.</span><span class="at">hobbies</span>[<span class="dv">0</span>])<span class="op">;</span> <span class="co">// Saída: "leitura"</span></span>
+<span id="cb71-17"><a href="#cb71-17" aria-hidden="true" tabindex="-1"></a>pessoa<span class="op">.</span><span class="fu">saudacao</span>()<span class="op">;</span> <span class="co">// Saída: "Olá, meu nome é João"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E por aí vai !! No próximo capítulo esse seção irá explorar um pouco sobre <code>variáveis</code> e <code>funções</code>.</p>
+</section>
+</section>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<!-- 
+Isso escala para:
+
+Sistemas maiores
+Machine learning
+Simulações complexas
+🎯 Fechamento pedagógico
+
+Esse capítulo é ouro puro porque:
+
+👉 conecta álgebra → geometria → sistemas → mundo real
+👉 prepara terreno pra IA, física e economia
+👉 transforma “conta” em pensamento estruturado
+
+A semente computacional deste capítulo é a multiplicação matriz-vetor.
+
+Em pseudocódigo:
+
+```text
+resultado[i] = soma(matriz[i][j] * vetor[j])
+
+Em JavaScript, a ideia aparece assim:
+
+let novoA = A[0][0] * estado[0] + A[0][1] * estado[1];
+let novoB = A[1][0] * estado[0] + A[1][1] * estado[1];
+
+Isso parece pequeno.
+
+Mas escala para:
+
+sistemas maiores;
+simulações complexas;
+modelos econômicos;
+modelos ecológicos;
+computação gráfica;
+machine learning;
+redes neurais;
+processamento de imagens.
+Fechamento pedagógico
+
+Esse capítulo é especialmente poderoso porque:
+
+👉 conecta álgebra → geometria → sistemas → mundo real;
+👉 prepara terreno para IA, física, economia e ecologia;
+👉 transforma “conta” em pensamento estruturado;
+👉 mostra que modelar é escolher relações;
+👉 revela que matrizes são formas compactas de pensar sistemas.
+
+Em vez de perguntar apenas “como calcular uma matriz?”, a pergunta passa a ser:
+
+que relações do mundo essa matriz está representando? -->
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./financ.html" class="pagination-link" aria-label="Crescimento, Tempo e Decisão: Matemática Financeira">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Crescimento, Tempo e Decisão: Matemática Financeira</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./calc.html" class="pagination-link" aria-label="Cálculo Diferencial e Integral - Quando o mundo começa a mudar, e você aprende a medir essa mudança">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Cálculo Diferencial e Integral - Quando o mundo começa a mudar, e você aprende a medir essa mudança</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

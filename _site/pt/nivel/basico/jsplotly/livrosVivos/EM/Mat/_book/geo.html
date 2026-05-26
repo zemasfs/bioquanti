@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Geometria integrada: do plano ao espaço e às coordenadas – Matemática &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./prob.html" rel="next">
+<link href="./fun.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./geo.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geometria integrada: do plano ao espaço e às coordenadas</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Matemática &amp; JSPlotly</a> 
+        <div class="sidebar-tools-main">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.docx">
+              <i class="bi bi-file-word pe-1"></i>
+            Download Docx
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fun.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Padrões de Mudança: como funções descrevem o comportamento do mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geo.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geometria integrada: do plano ao espaço e às coordenadas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilidade e Estatística: quando o acaso revela padrões</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trig.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Quando o movimento se repete: trigonometria, periodicidade e números complexos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./financ.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Crescimento, Tempo e Decisão: Matemática Financeira</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matriz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Matrizes e modelagem - Transformando relações em sistemas manipuláveis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Cálculo Diferencial e Integral - Quando o mundo começa a mudar, e você aprende a medir essa mudança</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geometria integrada: do plano ao espaço e às coordenadas</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uma caixa, um prédio, um copo, uma planta baixa, um mapa. Esses objetos são bastante distintos entre si, embora compartilhem em comum a <code>forma</code>. Formas são igualmente diferentes, umas se apresentando no <em>plano</em> e outras no <em>espaço</em>. Algumas parecem apenas um <em>contorno</em>, enquanto outras um <em>conjunto de pontos</em>, ou um <em>objeto</em> inteiro. Outra coisa: formas não são estáticas, podendo alterar-se por giro (<em>rotação</em>, <em>translação</em>), deslocamento, ou crescimento, entre outros.</p>
+<p>Ilustrando, uma caixa de presente possui faces planas, ocupa espaço e pode ser descrita por algumas medidas. Já uma quadra esportiva pode ser vista como um retângulo no plano, mas também como um conjunto de pontos em um sistema de coordenadas. Um prédio pode ser desenhado por figuras simples, modelado como sólido e localizado por posições no espaço. Assim, uma forma pode mudar deixando de ser apenas um desenho, passando a ocupar o espaço, ou ainda ser descrita somente por coordenadas.</p>
+<p>Esse é o objeto deste capítulo, que busca explicar o tronco da Geometria em três ramos principais: geometria plana, espacial, e analítica. A <em>geometria plana</em> permite reconhecer formas, medidas e relações em duas dimensões. A <em>geometria espacial</em> torna possível conceber como figuras planas podem gerar sólidos e volumes. E a <em>geometria analítica</em> propõe descrever essas formas por pontos, distâncias e posições no plano cartesiano.</p>
+<div id="fig-gizz_geo" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_geo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_geo.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_geo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.1: O mundo não separa as geometrias, mas as integra entre forma, espaço e coordenadas.
+</figcaption>
+</figure>
+</div>
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> reconhecer como uma figura plana pode originar um sólido<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> relacionar área, volume e altura em construções geométricas<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar figuras por suas coordenadas no plano cartesiano<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> perceber que forma, medida e posição contam a mesma história geométrica<span class="kw">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> usar visualizações interativas para explorar as diferentes geometrias.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Embora seja comum estudar figuras planas, sólidos e coordenadas em momentos separados nos livros, no mundo real essas ideias aparecem juntas. Uma mesma forma pode ser vista como contorno no plano, transformada em objeto tridimensional, descrita por <code>vértices</code>, <code>eixos</code>, distâncias e equações. Essa integração aparece em plantas em 2D e construções em 3D da arquitetura e engenharia, em montagem de embalagens, nas coordenadas de um mapa geográfico, e na modelagem digital em jogos de videogame, por exemplo. Ou seja, o mundo não separa geometria plana, espacial e analítica. Somos nós que fazemos essa separação para compreender melhor como essas formas se apresentam no mundo.</p>
+<p>A seguir é apresentado um JSPlotly que convida você a explorar essas conexões. Antes de qualquer definição formal, experimente-o. Sem pressa. Sem decorar fórmulas.</p>
+<div id="fig-geo" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-geo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/geo.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.2: Aplicativo de JSPlotly para explorar base plana, sólidos e volumes. A área pertence à base plana, enquanto que o volume surge quando essa base ganha altura. Em muitos sólidos, o volume é dado pela relação área da base X altura. Clique com o botão direito do mouse neste <a href="apps/geo.html">LINK</a> para abri-lo em uma nova janela, ou use a tela capacitiva de seu dispositivo móvel.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>O <em>app</em> mostra como uma <em>figura plana</em> pode gerar um <em>sólido geométrico</em> quando recebe uma <em>altura de extrusão</em> (ou de <em>camada</em>). Sem calcular nada ainda, observe o que acontece quando você muda valores simples ligados à forma escolhida e à altura do sólido gerado. Experimente variar o tipo de figura plana, as medidas da base, e a altura. E veja que o gráfico responde com área da base e volume do sólido. Verifique então o que muda no desenho plano e no sólido gerado.</p>
+<p>Ao invés de decorar fórmulas, siga as intruções abaixo para alterar esses valores no código.</p>
+<ol type="1">
+<li><p>Escolha a forma da base. Altere a linha:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> forma <span class="op">=</span> <span class="st">"circulo"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Você pode usar <code>"quadrado"</code>, <code>"retangulo"</code>, <code>"circulo"</code>, e <code>"triangulo"</code>.</p></li>
+<li><p>Altere as medidas da base. Modifique:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O significado de <code>a</code> e <code>b</code> depende da forma escolhida:</p>
+<ul>
+<li>no quadrado, <code>a</code> é o lado;</li>
+<li>no retângulo, <code>a</code> e <code>b</code> são as dimensões da base;</li>
+<li>no círculo, <code>a</code> é o raio;</li>
+<li>no triângulo, <code>a</code> é a base e <code>b</code> é a altura do triângulo.</li>
+</ul></li>
+<li><p>Altere a altura do sólido. Modifique:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> h <span class="op">=</span> <span class="dv">6</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+<p>Essa altura transforma a figura plana em um sólido. Observe o gráfico de barras. O <em>app</em> mostra área da base e volume do sólido.</p>
+<ol start="4" type="1">
+<li><p>Compare diferentes formas. Teste, por exemplo:</p>
+<ul>
+<li>quadrado com lado 4;</li>
+<li>retângulo com base 4 e largura 2;</li>
+<li>círculo com raio 4;</li>
+<li>triângulo com base 4 e altura 2.</li>
+</ul></li>
+<li><p>Teste a mesma base com alturas diferentes. Mantenha a forma e as medidas da base, mas altere <code>h</code>.</p></li>
+</ol>
+<p>Perceba então o que pertence à geometria plana e o que passa a pertencer à geometria espacial. E tente responder às perguntas que seguem, mesmo sem ter estudado o conteúdo:</p>
+<ul>
+<li>A área da base muda quando apenas a altura do sólido muda ?</li>
+<li>Dois sólidos podem ter a mesma altura, mas volumes diferentes ?</li>
+<li>O volume pode mudar sem mudar a área da base ?</li>
+<li>Quais medidas crescem mais rapidamente ?</li>
+<li>O volume cresce mais por causa da base ou da altura ?</li>
+<li>Toda figura plana pode gerar um <em>sólido por extrusão</em>, ou seja, um objeto 3D criado por adição de uma 3a. dimensão a uma forma plana, criando um volume ?</li>
+<li>Se duas bases tiverem a mesma área, seus sólidos terão o mesmo volume para a mesma altura ?</li>
+<li>Aumentar a altura muda a área da base ?</li>
+<li>O que muda primeiro quando alteramos uma figura: o contorno, a área ou o volume do sólido associado ?</li>
+<li>A altura pertence à geometria plana, espacial ou ajuda a conectar as duas ?</li>
+<li>Quando colocamos uma figura no plano cartesiano, estamos mudando a forma ou apenas a maneira de descrevê-la ?</li>
+<li>Uma mesma forma pode parecer diferente e ainda conservar propriedades geométricas importantes ?</li>
+<li>Como localizar os <em>vértices</em> de uma figura usando <em>coordenadas</em> ?</li>
+</ul>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Na <em>geometria plana</em>, uma figura pode ser descrita por suas medidas: lados, ângulos, área. Ao adicionar uma altura, surge a <em>geometria espacial</em>, um sólido, no caso. Existem diversos tipos de sólidos, sendo bem comuns o <code>cubo</code>, que surge de um quadrado, o <code>paralelepípedo</code>, que surge de um retângulo, ou o <code>prisma</code> triangular, que surge de um triângulo.</p>
+<p>Em adição, cada ponto da figura pode ser representado por coordenadas (x, y), e que também são apresentadas no centro da figura. Alterar essas coordenadas resulta no deslocamento da figura, enquanto que girar a figura muda sua orientação, mas não sua forma. É disso que trata a <em>geometria analítica</em>, que permite descrever a forma sem depender apenas do desenho.</p>
+<section id="geometria-plana-como-descrever-a-forma" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="geometria-plana-como-descrever-a-forma"><span class="header-section-number">3.1</span> Geometria plana: como descrever a forma</h2>
+<p>A geometria plana estuda figuras em duas dimensões. Nela aparecem comprimentos, perímetros, áreas, ângulos e relações entre lados. <em>Triângulos, retângulos, quadrados, paralelogramos, trapézios e circunferências</em> são exemplos clássicos desse universo. Quando mudamos uma medida em uma figura plana, não alteramos apenas seu tamanho. Alteramos também relações como área, inclinação, diagonal e simetria. As equações abaixo exemplificam como calcular a <code>área</code> (A) e o <code>perímetro</code> (P) para algumas figuras planas comuns.</p>
+<p><strong>Triângulo:</strong> <span class="math display">\[
+A = \frac{b \cdot h}{2}
+\]</span></p>
+<p><span class="math display">\[
+P = a + b + c
+\]</span></p>
+<p><strong>Quadrado</strong></p>
+<p><span class="math display">\[
+A = l^2
+\]</span></p>
+<p><span class="math display">\[
+P = 4l
+\]</span></p>
+<p><strong>Retângulo</strong></p>
+<p><span class="math display">\[
+A = b \cdot h
+\]</span></p>
+<p><span class="math display">\[
+P = 2(b + h)
+\]</span></p>
+<p><strong>Paralelogramo</strong></p>
+<p><span class="math display">\[
+A = b \cdot h
+\]</span></p>
+<p><strong>Losango</strong></p>
+<p><span class="math display">\[
+A = \frac{D \cdot d}{2}
+\]</span></p>
+<p><strong>Trapézio</strong></p>
+<p><span class="math display">\[
+A = \frac{(B + b) \cdot h}{2}
+\]</span></p>
+<p><strong>Círculo</strong></p>
+<p><span class="math display">\[
+A = \pi r^2
+\]</span></p>
+<p><span class="math display">\[
+C = 2\pi r \text{,    circunferência}
+\]</span></p>
+</section>
+<section id="geometria-espacial-como-a-forma-ocupa-espaço" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="geometria-espacial-como-a-forma-ocupa-espaço"><span class="header-section-number">3.2</span> Geometria espacial: como a forma ocupa espaço</h2>
+<p>Quando uma figura plana ganha profundidade, surge um sólido. Um retângulo pode gerar um paralelepípedo, enquanto que um círculo pode gerar um cilindro, e um triângulo, um prisma triangular. Nesse momento, a geometria deixa de tratar apenas de superfície e passa a considerar também volume, faces, arestas e vértices. Nesse caso, a área total do objeto é multiplicada a partir de sua base, surgindo o volume. As relações abaixo ilustam o volume e área de superfície para alguns sólidos.</p>
+<p><strong>Cubo</strong></p>
+<p><span class="math display">\[
+V = a^3
+\]</span></p>
+<p><span class="math display">\[
+A = 6a^2
+\]</span></p>
+<p><strong>Paralelepípedo (Prisma Retangular)</strong></p>
+<p><span class="math display">\[
+V = a \cdot b \cdot c
+\]</span></p>
+<p><span class="math display">\[
+A = 2(ab + bc + ac)
+\]</span></p>
+<p><strong>Prisma (geral)</strong></p>
+<p><span class="math display">\[
+V = A_b \cdot h
+\]</span></p>
+<p><strong>Pirâmide</strong></p>
+<p><span class="math display">\[
+V = \frac{A_b \cdot h}{3}
+\]</span></p>
+<p><strong>Cilindro</strong></p>
+<p><span class="math display">\[
+V = \pi r^2 h
+\]</span></p>
+<p><span class="math display">\[
+A = 2\pi r(h + r)
+\]</span></p>
+<p><strong>Cone</strong></p>
+<p><span class="math display">\[
+V = \frac{1}{3}\pi r^2 h
+\]</span></p>
+<p><span class="math display">\[
+A = \pi r(r + g)
+\]</span></p>
+<p><strong>Esfera</strong></p>
+<p><span class="math display">\[
+V = \frac{4}{3}\pi r^3
+\]</span></p>
+<p><span class="math display">\[
+A = 4\pi r^2
+\]</span></p>
+</section>
+<section id="geometria-analítica-como-descrever-por-coordenadas" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="geometria-analítica-como-descrever-por-coordenadas"><span class="header-section-number">3.3</span> Geometria analítica: como descrever por coordenadas</h2>
+<p>Uma figura também pode ser representada por pontos em um sistema cartesiano. Nesse caso, cada vértice passa a ter coordenadas, e relações geométricas podem ser estudadas por distâncias, inclinações, equações e transformações. Assim, uma mesma forma pode ser vista de três maneiras complementares: como <em>desenho e medida</em>, como <em>objeto no espaço</em>, e como um <em>conjunto de pontos e relações algébricas</em>.</p>
+<p>Observando as fórmulas para volume de sólidos acima, você seria capaz de responder, por exemplo:</p>
+<ul>
+<li>se dobrar <code>h</code> dobra-se o volume ?</li>
+<li>no círculo, o que acontece quando o raio dobra ?</li>
+<li>qual forma gera maior volume com mesma altura ?</li>
+<li>o triângulo tem sempre volume menor que o retângulo com mesma base e mesma altura da base ?</li>
+</ul>
+<p>Bom, relaxe ! Nos próximos passos, essa história se tornará mais paupável.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Volte às situações iniciais. Uma planta baixa usa geometria plana para representar paredes, portas e pisos. Uma maquete usa geometria espacial para transformar esse desenho em volume. Um programa de desenho técnico usa geometria analítica para localizar cada ponto e cada segmento com precisão. E adivinhe só o que fazem os jogos de videogame ?!! O que diferencia esses casos não é o objeto em si, mas o modo de descrevê-lo. Assim, se a forma é observada como contorno, estamos mais próximos da geometria plana. Se por outro lado a forma ganha profundidade, entramos na geometria espacial. E se a forma é descrita por coordenadas, então usamos a geometria analítica.</p>
+<p>Hora de ir além !!!</p>
+<p>Agora experimente o JSPlotly customizado abaixo para integrar esses conhecimentos para geometria plana, espacial, e analítica.</p>
+<div id="fig-geo2b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-geo2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/geo2b.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geo2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.3: Aplicativo JSPlotly para estudo de geometria. Formas em contorno (plana), sólido (espacial), e pontos no plano (analítica). Clique neste <a href="apps/geo2b.html">LINK</a> para uma nova aba para “rodá-lo”.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>Agora você pode <em>“brincar”</em> à vontade com figuras planas e sólidos !! O <em>app</em> conecta geometria plana com analítica, espacial, transformação, e volume. Você pode escolher a figura da base, alterar a altura de extrusão, e deslocar a figura no plano em <em>x</em> e <em>y</em>. E também pode girar a figura, mostrar ou esconder vértices, seu centro, e diagonal principal, bem como comparar a base no plano com a ideia de sólido gerado. Abra o <em>app</em> e explore-o livremente, com calma. Troque o cenário (forma, posição, rotação), altere a altura, ligue e desligue o centro e a diagonal.</p>
+<p>O <em>app</em> integra três dimensões da geometria: plana (formas no plano cartesiano), analítica (coordenadas, distâncias, centroide), e espacial (volume por extrusão). Tudinho em um único ambiente manipulável.</p>
+<p>O script possui três níveis de interação:</p>
+<ul>
+<li>Menu <em>dropdown</em> (forma) - escolhe a base geométrica;</li>
+<li>Botões - liga/desliga centro, e liga/desliga diagonal</li>
+<li>Barra deslizante (<em>slider</em>) - controla a altura, gerando a animação</li>
+</ul>
+<p>Você começa escolhendo uma forma plana (quadrado, retângulo ou triângulo). Essa forma pode ser <em>rotacionada</em> (giro), <em>transladada</em> (arraste), ter sua <em>área calculada automaticamente</em>, ou gerar um <em>sólido ao ser “esticada” na altura</em>. Traduzindo:</p>
+<p><span class="math display">\[
+\text{Volume} = \text{Área da base} \times \text{Altura}
+\]</span></p>
+<ol type="1">
+<li><p>Ao rodar o script escolha uma forma no menu (Quadrado, Retângulo, Triângulo).</p></li>
+<li><p>Observe os vértices no plano, o centro da figura, e a diagonal (ou lado no triângulo).</p></li>
+<li><p>Use a barra deslizante (<em>slider</em>) para controlar a altura da extrusão.</p></li>
+</ol>
+<p>Procedendo dessa forma, você verá que a área permanece constante, mas o volume cresce proporcionalmente. Isso ocorre porque o script usa alguns conceitos da geometria para transformações geométricas. Cada ponto da figura sofre uma rotação e uma translação. Essas transformações são aplicadas pelo seguinte trecho do código:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rotacionarPonto</span>(x<span class="op">,</span> y<span class="op">,</span> ang)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">transformarPontos</span>(pontos<span class="op">,</span> ang<span class="op">,</span> dx<span class="op">,</span> dy)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Área:</em></p>
+<p>A área é calculada automaticamente pelos vértices:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">areaPoligono</span>(pontos)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Cálculo da área:</em></p>
+<p>A área é calculada automaticamente pelos vértices:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">areaPoligono</span>(pontos)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Matematicamente:</p>
+<p><span class="math display">\[
+A = \frac{1}{2} \left| \sum x_i y_{i+1} - x_{i+1} y_i \right|
+\]</span></p>
+<p>Nessa equação, “<span class="math inline">\(\sum\)</span>” é o símbolo para somatória.</p>
+<p><em>Centroide:</em></p>
+<p>O centro da figura é obtido pela média dos pontos:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centroideSimples</span>(pontos)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Distâncias:</em></p>
+<p>Para a diagonal:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">distancia</span>(p1<span class="op">,</span> p2)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Volume por extrusão:</em></p>
+<p>A mágica final:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>volume <span class="op">=</span> area <span class="op">*</span> h</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ou seja:</p>
+<p><span class="math display">\[
+V = A_b \cdot h
+\]</span></p>
+<p>Também é possível explorar alguns contextos com o aplicativo da <a href="#fig-geo2b" class="quarto-xref">Figura&nbsp;<span>3.3</span></a>. Assim você verá com seus próprios olhos como pontos viram formas e que, quando transformadas, ocupam espaço e volume.</p>
+<p><em>O que acontece quando mudamos a figura, sua posição, sua escala, sua rotação e sua altura?</em></p>
+<ol type="1">
+<li><p><em>Área constante, volume variável</em>: fixe a forma e varie a altura. Perceba que a área não muda, mas o volume cresce linearmente.</p></li>
+<li><p><em>Comparando formas</em>: Troque o quadrado pra triângulo. Com essa mesma altura, qual gera maior volume ?</p></li>
+<li><p><em>Transformação sem mudança física</em>: Imagine rotacionar ou transladar a figura. E observe que embora a posição mude, sua área e volume não se alteram.</p></li>
+<li><p><em>Coordenadas e distâncias</em>: Observe as coordenadas dos vértices, o centro e a diagonal. Isso é geometria analítica.</p></li>
+</ol>
+<p>Perceba também a diferença entre os objetos interativos da <a href="#fig-geo" class="quarto-xref">Figura&nbsp;<span>3.2</span></a> e da <a href="#fig-geo2b" class="quarto-xref">Figura&nbsp;<span>3.3</span></a>. No primeiro você escolhe a forma, algumas medidas e o sólido correspondente. Nesse segundo você estabelece uma figura no plano cartesiano, e explora sua transformação geométrica, extrusão, área, perímetro, volume, vértices, diagonais e centro geométrico.</p>
+<p>Se desejar avançar um pouco mais, utilize (ou não) os aplicativos de JSPlotly, e tente responder as questões que seguem.</p>
+<ol type="1">
+<li>Ao transformar uma figura plana em sólido, o que surge além da área ?</li>
+<li>Como uma figura no plano pode gerar um sólido no espaço ?</li>
+<li>Para que servem as coordenadas ao estudar uma figura geométrica ?</li>
+<li>Uma translação altera a forma ou apenas a posição da figura ?</li>
+<li>A rotação muda a forma ou apenas sua orientação ?</li>
+<li>O que permanece invariável quando uma figura se move (translação ou rotação) ?</li>
+<li>Como área, volume e distância aparecem juntos em uma construção geométrica ?</li>
+<li>Como o volume depende da área da base e da altura ?</li>
+<li>É possível manter a área e obter volumes diferentes ?</li>
+<li>Dois sólidos com mesmo volume precisam ter a mesma forma ?</li>
+<li>O que significa altura zero do ponto de vista geométrico ?</li>
+<li>Como as coordenadas dos vértices mudam após uma transformação ?</li>
+<li>Por que descrever uma figura por coordenadas não elimina sua interpretação visual ?</li>
+<li>Como a diagonal se comporta em diferentes figuras ?</li>
+<li>Qual elemento é mais determinante: base, altura ou posição no plano ?</li>
+</ol>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se você acha que as perguntas acima já exauriram o tema…engana-se !!! Geometria é um campo aberto sem fim ! São múltiplas as divagações possíveis nessa área, como as exemplificadas abaixo.</p>
+<ul>
+<li>E se a altura aumentar e a base permanece fixa ?</li>
+<li>E se a altura do sólido for zero ?</li>
+<li>E se o formato permanecer o mesmo, mas as coordenadas mudarem, o que isso revela sobre a geometria ?</li>
+<li>E se a figura for transformada, o seu centro sofre alteração ?</li>
+<li>E se aumentarmos a escala e a altura, o que acontece quando girarmos a figura ?</li>
+<li>E se duas figuras planas tiverem a mesma área, mas formatos diferentes, o que isso sugere sobre os sólidos obtidos ao extrudá-las com a mesma altura ?</li>
+<li>E se um sólido tiver a altura dobrada e a base mantida, o que acontece com o volume ?</li>
+<li>E se duas bases ocupam posições diferentes no plano, mas têm mesma forma e mesma área, o que isso revela sobre a diferença entre localização e medida ?</li>
+<li>E se uma figura plana for ampliada, rotacionada e extrudada ao mesmo tempo, o que acontece com a figura final ?</li>
+<li>E se eu mover uma figura no plano, estou mudando a geometria da forma ou apenas sua localização ?</li>
+</ul>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A mesma logica geométrica apresentada no capítulo também aparece em diversos contextos. Ilustrando, em plantas baixas e maquetes arquitetônicas, embalagens, caixas e recipientes, modelagem 3D e impressao tridimensional, mapas, quadras e terrenos no plano cartesiano, desenho técnico, engenharia e <code>design</code>, bem como em jogos, interfaces e ambientes virtuais.</p>
+<p>Nesse sentido, faz-se interessante contemplar uma aprendizagem adicional, desta vez para objetos em 3D. Alguns cálculos para esses objetos são comumente utilizados na academia e indústria, como representar uma reta entre dois pontos, calcular a distância entre dois vértices, ou escrever uma figura apenas por equações. Para valorizar seu aprendizado, segue outro <em>script</em> de JSPlotly para um <em>app</em> autônomo visando uma abordagem da geometria espacial 3D.</p>
+<div id="fig-geo3d" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-geo3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/geo3d.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geo3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.4: JSPlotly ao estudo de geometria espacial 3D. A mesma estrutura matemática funcionando em múltiplas representações (gráfico, numérica, algébrica, e espacial). Abra o <em>app</em> clicando neste <a href="apps/geo3d.html">LINK</a> com o botão direito para <em>“brincar”</em> em uma nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O script explora a geometria em 2D, 3D, e equações correlatas, tudo ao mesmo tempo. Agora você pode escolher a forma da base, ver a base no plano (2D), ver o sólido gerado (3D), visualizar vértices, a reta entre dois pontos, a distância entre pontos, bem como alterar a altura (extrusão).</p>
+<p>E como prêmio por sua dedicação ímpar, você recebe geometria plana (forma de base e vértices), geometria analítica (equação da reta, distância entre pontos, e interpretação geométrica da reta), e geometria espacial (extrusão real em 3D, sólido visível, e relação base × altura). Ufa !</p>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>Como o <em>app</em> da <a href="#fig-geo3d" class="quarto-xref">Figura&nbsp;<span>3.4</span></a>, você começa com uma figura no plano. A partir dela, o script constrói uma reta entre dois pontos, calcula a distância entre esses pontos, e cria um sólido tridimensional gerado por extrusão. A relação matemática para distância e volume por detrás disso é bem clássica (<code>Distância Euclidiana</code>):</p>
+<p><span class="math display">\[
+\text{Distância} = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+\]</span></p>
+<p><span class="math display">\[
+\text{Volume} = \text{Área da base} \cdot \text{Altura}
+\]</span></p>
+<p>Ao rodar o script, observe três camadas: plano (2D; figura base e uma reta ligando dois vértices), álgebra (equação da reta e distância entre pontos), e espaço 3D (aparecimento do sólido). Parece chique mas, no fundo, é a mesma estrutura em três linguagens diferentes. Veja como acontece:</p>
+<ol type="1">
+<li><em>Construção da figura</em>. Os pontos são definidos como coordenadas da geometria analítica:</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> bases <span class="op">=</span> {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">quadrado</span><span class="op">:</span> [[<span class="op">-</span><span class="dv">1</span><span class="op">,-</span><span class="dv">1</span>]<span class="op">,</span>[<span class="dv">1</span><span class="op">,-</span><span class="dv">1</span>]<span class="op">,</span>[<span class="dv">1</span><span class="op">,</span><span class="dv">1</span>]<span class="op">,</span>[<span class="op">-</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span>]]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Reta entre dois pontos.</em></li>
+</ol>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">equacaoReta</span>(p1<span class="op">,</span>p2)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Se a reta não for vertical:</p>
+<p><span class="math display">\[
+y = mx + b
+\]</span></p>
+<p>Mas se a reta for vertical:</p>
+<p><span class="math display">\[
+x = c
+\]</span></p>
+<ol start="3" type="1">
+<li><em>Distância.</em></li>
+</ol>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">distancia</span>(p1<span class="op">,</span>p2)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math display">\[
+d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}
+\]</span></p>
+<hr>
+<ol start="4" type="1">
+<li><em>Construção do sólido.</em> O script duplica a base no eixo z:</li>
+</ol>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> <span class="dv">0</span>   → base  </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> altura → topo</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E conecta:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>linhasLaterais</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso gera a extrusão.</p>
+<hr>
+<p>Então observe que a reta pertence ao plano. Além disso, o sólido nasce do plano. E a distância continua válida mesmo no espaço. Agora procure modificar o script para buscar cenários diferentes, como abaixo.</p>
+<ol type="1">
+<li><p><em>Mudança de forma</em>. Troque quadrado para triângulo, e desse para retângulo, e observe como muda a equação da reta.</p></li>
+<li><p><em>Distância fixa vs forma variável</em>. Compare lados em diferentes figuras, e perceba que a distância depende dos pontos, não da forma inteira da figura.</p></li>
+<li><p><em>Plano vira espaço</em>. Observe a base 2D e o sólido 3D, e verifique o que muda e o que permanece.</p></li>
+<li><p><em>Reta no espaço</em> (conceito implícito). A reta está no plano, mas poderia existir no 3D. Isso está além deste texto, mas diz respeito ao estudo de <code>vetores</code> e de <code>parametrização</code>.</p></li>
+</ol>
+<p>Exercitando-se no <em>app</em> você perceberá uma conexão direta entre campos distintos da Matemática, como <code>álgebra</code>(equação de reta), <code>geometria</code> (forma e distância), espaço (volume), e…por que não dizer… <code>computação</code> (construção dinâmica de figuras 2D e 3D).</p>
+<p>E se estiver gostando da <em>“brincadeira”</em>, que tal um último script, na base do <em>“tudo junto e misturado”</em>, com geometria espacial 3D e analítica embutida ?</p>
+<div id="fig-geo3d_din" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-geo3d_din-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/geo3d_din.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geo3d_din-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.5: JSPlotly para geometria espacial 3D, geometria plana e geometria analítica. Três formas de descrever a mesma realidade. Clique neste <a href="apps/geo3d_din.html">LINK</a> para acessá-lo.
+</figcaption>
+</figure>
+</div>
+<p>Com esse último script é possível criar cenários aproximados aos de situações do cotidiano. Por exemplo:</p>
+<ol type="1">
+<li><em>Crie uma embalagem</em>. Uma caixa começa como uma forma plana. Observe a base no plano cartesiano, aumente a altura, e relacione com embalagens do cotidiano. Como a área da base e a altura influenciam o volume da embalagem ?</li>
+<li><em>Arquitetura e construção</em>. Uma planta baixa é uma representação 2D de um objeto 3D. Assim, escolha um retângulo, observe seus vértices, e compare com o sólido gerado.</li>
+<li><em>Mapas e localização</em>. No plano cartesiano, cada ponto representa uma posição. Observe as coordenadas dos vértices de uma figura de sua escolha, desloque mentalmente a figura e a compare com a ideia de um mapa.</li>
+<li><em>Engenharia e medidas</em>. Segmentos representam distâncias reais. Observe um segmento destacado. Compare com outros segmentos em diferentes cenas.</li>
+<li><em>Modelagem digital (3D)</em>. Objetos digitais são construídos a partir de pontos. Observe um sólido no painel 3D e relacione com softwares de modelagem.–</li>
+</ol>
+<p>Enfim, perceba que, em todos os casos, estamos vendo que uma forma pode ser descrita, medida e transformada. A geometria plana fornece a base, a espacial mostra a ocupação do espaco, e a analítica organiza tudo por coordenadas.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nos 4 scripts do capitulo, a ideia central foi a mesma: partir de uma base plana e observar como ela pode ser descrita, transformada e estendida. No primeiro script, você altera diretamente variáveis simples no editor. Isso ajuda a compreender a lógica do código sem excesso de recursos, observando de forma clara a relacao entre o tipo de figura, as medidas da base, altura do sólido, a área e o volume.</p>
+<p>No segundo script entram controles mais ricos, como menu, botões, controle deslizante (<em>slider</em>) e caixa de checagem (<em>checkbox</em>). Em ambos os casos, o objetivo não foi apenas desenhar figuras bonitas, mas transformar uma pergunta geométrica em modelo visual e manipulável.</p>
+<p>Essa mesma semente pode ser reaproveitada em varios contextos, como arquitetura, design, modelagem, física, computação gráfica e problemas de localização.</p>
+<p>No script da <a href="#fig-geo3d" class="quarto-xref">Figura&nbsp;<span>3.4</span></a>, por exemplo, <em>app</em> busca integrar três ideias: uma forma plana, definida por vértices, uma descrição analítica, baseada em coordenadas, e uma interpretação espacial, obtida pela extrusão (altura).</p>
+<p>Internamente, a <em>lógica de programação</em> envolvida é:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> a figura é construída a partir de pontos <span class="er">(</span><span class="ex">x,</span> y<span class="kw">);</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> transformações como rotação e translação alteram esses pontos<span class="kw">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> a área da base é calculada<span class="kw">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> o volume surge ao multiplicar pela altura.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./fun.html" class="pagination-link" aria-label="Padrões de Mudança: como funções descrevem o comportamento do mundo">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Padrões de Mudança: como funções descrevem o comportamento do mundo</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./prob.html" class="pagination-link" aria-label="Probabilidade e Estatística: quando o acaso revela padrões">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilidade e Estatística: quando o acaso revela padrões</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

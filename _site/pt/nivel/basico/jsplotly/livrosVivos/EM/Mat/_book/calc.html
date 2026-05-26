@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8&nbsp; Cálculo Diferencial e Integral - Quando o mundo começa a mudar, e você aprende a medir essa mudança – Matemática &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./matriz.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./calc.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Cálculo Diferencial e Integral - Quando o mundo começa a mudar, e você aprende a medir essa mudança</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Matemática &amp; JSPlotly</a> 
+        <div class="sidebar-tools-main">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.docx">
+              <i class="bi bi-file-word pe-1"></i>
+            Download Docx
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fun.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Padrões de Mudança: como funções descrevem o comportamento do mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geometria integrada: do plano ao espaço e às coordenadas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilidade e Estatística: quando o acaso revela padrões</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trig.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Quando o movimento se repete: trigonometria, periodicidade e números complexos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./financ.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Crescimento, Tempo e Decisão: Matemática Financeira</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matriz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Matrizes e modelagem - Transformando relações em sistemas manipuláveis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calc.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Cálculo Diferencial e Integral - Quando o mundo começa a mudar, e você aprende a medir essa mudança</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Cálculo Diferencial e Integral - Quando o mundo começa a mudar, e você aprende a medir essa mudança</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Você já notou que quase tudo que é importante muda com o tempo ? A velocidade aumenta ou diminui, a temperatura sobe e desce, a população cresce, o dinheiro rende (ou some), a energia se transforma. Sem contar aquele tempo que passa rápido quando você está jogando, mas se arrasta quando a semana é de provas.</p>
+<p>Independentemente da situação, é desejável medir essas mudanças em tempo real, “capturar” um instantâneo dessas mudanças, ou ainda somar infinitas partes desses instantâneos para obter o todo.</p>
+<p>Neste capítulo você verá que essas coisas estão ligadas a taxas de variação (<code>derivadas</code>) que se convertem em quantidades acumuladas (<code>integrais</code>), ou vice-versa. Possum em comum uma base conceitual clara (<code>limites</code>), e estão juntas tanto a funções como a dados coletados no mundo. Assim nasce o <code>Cálculo</code> !</p>
+<div id="fig-gizz_calc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_calc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_calc.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_calc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.1: A derivada mede o ritmo de mudança em um único instante, enquanto a integral acumula todos esses instantes.
+</figcaption>
+</figure>
+</div>
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar derivadas como taxas de variação instantânea em fenômenos matemáticos, físicos, químicos, biológicos e econômicos<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> compreender integrais como processos de acumulação, soma contínua e área sob uma curva<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> relacionar função, derivada e integral como três formas complementares de descrever o mesmo fenômeno<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> usar visualizações interativas para explorar limites, aproximações, inclinações e áreas<span class="kw">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> reconhecer cuidados importantes na modelagem, como domínio da função, escala do gráfico e interpretação das unidades<span class="kw">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> conectar cálculo diferencial e integral a situações reais envolvendo movimento, energia, crescimento, consumo e dados experimentais.</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> simular situações do Cálculo por meio de aplicações interativas computacionais.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de qualquer definição formal, experimente o JSPlotly abaixo sobre taxas de variação.</p>
+<div id="fig-calc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-calc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/calc.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-calc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.2: A derivada é o limite da taxa média. Clique com o botão direito neste <a href="apps/calc.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<!-- Modo de usar
+Diminua h → observe a reta “grudando” na curva
+Troque a função → veja comportamentos diferentes
+Ajuste x0 → explore diferentes pontos
+💡 Conceito-chave
+
+
+🌱 Cenários
+velocidade instantânea
+crescimento populacional
+inclinação de terreno
+análise de gráficos reais -->
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>O JSPlotly que inicia esse capítulo mostra como medir mudança em um ponto. O gráfico apresenta uma função <code>f(x)</code>, com dois pontos próximos e uma reta que corta a função (<code>secante</code>) ligando esses pontos (taxa média). Observando o gráfico, você pode notar que quando os pontos se aproximam (<code>h $\rightarrow$ 0</code>), a taxa média vira taxa instantânea e a secante transforma-se na <code>derivada</code>, a inclinação da curva nesse ponto.</p>
+<p>Inicialmente, execute o script com:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> funcao <span class="op">=</span> (x) <span class="kw">=&gt;</span> x<span class="op">*</span>x<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> x0 <span class="op">=</span> <span class="fl">1.5</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> h <span class="op">=</span> <span class="fl">0.8</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Agora reduza o valor de <code>h</code> e observe o que acontece com a reta secante.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> h <span class="op">=</span> <span class="fl">0.4</span><span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> h <span class="op">=</span> <span class="fl">0.1</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> h <span class="op">=</span> <span class="fl">0.01</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois, troque a função e compare os comportamentos. Você pode utilizar algumas, como as que foram apresentadas na seção sobre <em>JavaScript</em> do capítulo anterior, como “x**3” (o mesmo que x<span class="math inline">\(^3\)</span>), “Math.sqrt(x)” (o mesmo que <span class="math inline">\(\sqrt{x}\)</span>), ou a função que segue, por exemplo.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> funcao <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(x)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Perceba que medir uma velocidade é achar a mudança exatamente em um ponto. A taxa média mede a variação entre dois pontos, ou seja, “quanto mudou dividido pelo intervalo”. Mas a taxa de mudança em um único ponto é medida quando esses pontos estão tão próximos que você não percebe a distância entre eles, parecendo que são um só. É esse processo que leva à <em>derivada</em>. Siga o modo de usar abaixo para o <em>app</em>.</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Observe a curva f(x);</li>
+<li>Veja os dois pontos marcados;</li>
+<li>Observe a reta secante;</li>
+<li>Diminua <code>h</code>;</li>
+<li>Veja os pontos se aproximando;</li>
+<li>Observe a reta mudando de inclinação;</li>
+<li>Continue diminuindo <code>h</code>;</li>
+<li>Perceba que a reta “encosta” na curva;</li>
+<li>Esse é o comportamento da tangente.</li>
+</ol>
+<p>Veja que a tangente ou derivada nada mais são do que a inclinação de uma reta quando os dois pontos se tornam praticamente o mesmo. A ideia do <em>app</em> é mostrar de forma intuitiva e geométrica uma primeira noção do <code>Cálculo</code>, a de que uma taxa de variação ocorre quando uma <code>secante</code> (uma taxa média) vira uma <code>tangente</code> (uma taxa instantânea).</p>
+<p>Que tal explorar alguns cenários agora ?</p>
+<ol type="1">
+<li><em>Distância grande</em>. A reta representa bem a inclinação local ?</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> h <span class="op">=</span> <span class="fl">1.5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Pergunta:</p>
+<ol start="2" type="1">
+<li><em>Aproximação</em>. A reta começa a representar melhor a curva ?</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> h <span class="op">=</span> <span class="fl">0.3</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Quase no ponto</em>. A reta parece tocar a curva em apenas um ponto ?</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> h <span class="op">=</span> <span class="fl">0.01</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Função diferente</em>. a ideia funciona para qualquer função ?</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> funcao <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">tan</span>(x)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Mudando o ponto</em>. A inclinação depende do ponto escolhido ?</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> x0 <span class="op">=</span> <span class="op">-</span><span class="dv">2</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Portanto, observe que quando h $$ 0, a secante vira tangente. Sua representação clássica como derivada é dada abaixo:</p>
+<p><span id="eq-deriv"><span class="math display">\[
+f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h} \text{;     derivada}
+\tag{8.1}\]</span></span> ​</p>
+</section>
+<section id="por-dentro-do-script" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script">Por dentro do script</h4>
+<p>O script começa definindo a função:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> funcao <span class="op">=</span> (x) <span class="kw">=&gt;</span> x<span class="op">*</span>x<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois escolhe um ponto:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> x0 <span class="op">=</span> <span class="fl">1.5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E uma pequena variação:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> h <span class="op">=</span> <span class="fl">0.8</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Os dois pontos são:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>xA <span class="op">=</span> x0</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>xB <span class="op">=</span> x0 <span class="op">+</span> h</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A inclinação da secante é calculada como uma taxa média:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> (yB <span class="op">-</span> yA) <span class="op">/</span> (xB <span class="op">-</span> xA)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois o script desenha a reta secante. Quando <code>h</code> diminui, essa reta começa a “encostar” na curva, fazendo surgir a derivada nesse limite.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os conceitos do JSPlotly da <a href="#fig-calc" class="quarto-xref">Figura&nbsp;<span>8.2</span></a> acima aparecem em muitos contextos. Sempre que algo muda, é possível se determinar quão rápido está mudando num tempo específico. O outro “lado da moeda” no Cálculo é a <code>integral</code>, a soma das pequenas partes. Enquanto a derivada mede a mudança, a integral acumula essa mudança. O <em>app</em> que segue busca apresentar um pouco essa ideia, também de forma geométrica.</p>
+<div id="fig-calc2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-calc2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/calc2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-calc2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.3: Uma integral pode ser entendida como o acúmulo de pequenas contribuições. Clique com o botão direito neste <a href="apps/calc2.html">LINK</a> e abra o <em>app</em> em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>Agora o aplicativo mostra como calcular a área sob uma curva usando retângulos, um procedimento chamado <code>Soma de Riemann</code>. O gráfico mostra a função <code>f(x)</code> e vários retângulos dispostos ao longo do intervalo de <code>x</code>. A soma total das áreas desses retângulos aproxima o valor da integral da função. Quanto menor o intervalo, maior o número de retângulos e, quanto maior esse número, mais próxima estará a soma das áreas do valor da integral de f(x).</p>
+<p>Execute o script com:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> funcao <span class="op">=</span> (x) <span class="kw">=&gt;</span> x<span class="op">*</span>x<span class="op">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> n <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Agora aumente o número de retângulos para 20, 50, e 100, e observe como a aproximação melhora.</p>
+<p>Depois teste outras funções, como feito para a <a href="#fig-calc" class="quarto-xref">Figura&nbsp;<span>8.2</span></a>, e compare os resultados. Segue um exemplo:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> funcao <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(x)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para retângulos simples, sabemos calcular a área (vide capítulo sobre geometria). Mas, e para curvas ? A solução é dividir a região em partes pequenas, cada pedaço sendo aproximado por um retângulo. Somando todas as áreas temos a integral. Observe que a integral se aproxima da área de uma região com uma borda curva quanto menor for a distância entre os intervalos dessa curva. Ou seja, quanto menor o intervalo, mais precisa fica a aproximação. Segue um modo de usar para o <em>app</em>.</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Observe a curva f(x);</li>
+<li>Veja os retângulos;</li>
+<li>Observe o valor da área;</li>
+<li>Aumente <code>n</code>;</li>
+<li>Veja os retângulos ficarem mais finos;</li>
+<li>Compare a área calculada;</li>
+<li>Continue aumentando <code>n</code>;</li>
+<li>Observe a aproximação melhorar;</li>
+<li>Teste outra função.</li>
+</ol>
+<p>O aplicativo mostra então o que acontece com a soma quando os retângulos ficam cada vez menores. Alguns contextos para você explorar um pouco mais:</p>
+<ol type="1">
+<li><em>Poucos retângulos</em>. A aproximação é boa ou grosseira ?</li>
+</ol>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> n <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><p><em>Mais subdivisões</em>. Mude agora o valor <code>n</code> para 30 retângulos. A área parece mais próxima da curva ?</p></li>
+<li><p><em>Muitas subdivisões</em>. Agora vá para 100 retângulos. A soma parece estabilizar em um valor ?</p></li>
+<li><p><em>Intervalo diferente</em>. A área depende do intervalo escolhido ?</p></li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Outra função</em>. O método funciona para qualquer função ?</li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> funcao <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(x)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A curva representa a função e os retângulos as aproximações locais da área. A soma dessas áreas é a integral. Quanto menor o <code>dx</code>, melhor a aproximação. Traduzindo para o bom português, a integral representa a soma de infinitas partes pequenas. Ou, na forma de uma equação clássica:</p>
+<p><span id="eq-int"><span class="math display">\[
+\int_a^b f(x)\,dx \text{;     integral}
+\tag{8.2}\]</span></span></p>
+<p>Nessa <a href="#eq-int" class="quarto-xref">Equação&nbsp;<span>8.2</span></a>, o símbolo <span class="math inline">\(\int\)</span> representa a integral entre os limites <code>a</code> e <code>b</code>.</p>
+<section id="por-dentro-do-script-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-1">Por dentro do script</h4>
+<p>O script começa definindo a função:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> funcao <span class="op">=</span> (x) <span class="kw">=&gt;</span> x<span class="op">*</span>x<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E o intervalo:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois define o número de subdivisões:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> n <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A largura de cada retângulo é:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dx <span class="op">=</span> (b <span class="op">-</span> a) <span class="op">/</span> n<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para cada retângulo:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> xi <span class="op">=</span> a <span class="op">+</span> i<span class="op">*</span>dx<span class="op">;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> yi <span class="op">=</span> <span class="fu">funcao</span>(xi)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A área é aproximada por:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>soma <span class="op">+=</span> yi <span class="op">*</span> dx<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assim, o script constrói a integral como uma soma.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Depois de experimentar os JSPlotly das <a href="#fig-calc" class="quarto-xref">Figura&nbsp;<span>8.2</span></a> (<code>derivação</code>) e <a href="#fig-calc2" class="quarto-xref">Figura&nbsp;<span>8.3</span></a> (<code>integração</code>), você deve ter percebido que se tratam de operações inversas, uma levando à outra, e com a função f(x) no meio. Essa é a base do chamado <code>Teorema Fundamental do Cálculo</code>. Dessa forma, função, derivada e integral <em>“são farinhas do mesmo saco”</em>, três formas de se observar uma mesma mudança. Que tal avançar então um bocadinho nessa integração ?</p>
+<div id="fig-calc3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-calc3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/calc3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-calc3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.4: Derivar é observar a mudança, enquanto integrar é observar seu acúmulo. Clique com o botão direito neste <a href="apps/calc3.html">LINK</a> e abra o <em>app</em> em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>Depois de explorar a derivada como taxa de variação e a integral como soma acumulada, o <em>app</em> da <a href="#fig-calc3" class="quarto-xref">Figura&nbsp;<span>8.4</span></a> coloca as duas ideias lado a lado. Agora, a mesma função pode ser observada de três jeitos diferentes: seu valor, sua mudança e seu acúmulo.</p>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>O script compara três curvas: a função original <code>f(x)</code>, sua derivada aproximada <code>f'(x)</code>, e sua integral acumulada <code>∫f(x)dx</code>. A ideia é que uma função pode ser estudada pelo que ela vale (a função, propriamente dita), por como ela muda (derivada) e pelo que ela acumula (integral). Execute o script com:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(x)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use os botões <code>Função</code>, <code>Derivada</code>, <code>Integral</code>, ou <code>Tudo</code>. Depois, teste outras funções:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> (x) <span class="kw">=&gt;</span> x<span class="op">*</span>x<span class="op">;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(x)<span class="op">;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="fl">0.2</span><span class="op">*</span>x)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe como a derivada e a integral mudam junto com a função original, mostrando que há uma relação entre uma função, sua taxa de mudança e seu acúmulo. A derivada mostra como a função está mudando em cada ponto, enquanto que a integral mostra quanto a função acumulou desde o início do intervalo. Resumindo, enquanto a <em>função</em> mostra o estado atual, a <em>derivada</em> mostra a velocidade da mudança e a <em>integral</em> o histórico acumulado. Segue um modo de usar o <em>app</em>:</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Clique em <code>Função</code>;</li>
+<li>Observe apenas a curva original;</li>
+<li>Clique em <code>Derivada</code>;</li>
+<li>Compare onde a função sobe e onde a derivada é positiva;</li>
+<li>Clique em <code>Integral</code>;</li>
+<li>Observe como o acúmulo cresce ou diminui;</li>
+<li>Clique em <code>Tudo</code>;</li>
+<li>Compare as três curvas juntas;</li>
+<li>Troque a função original;</li>
+<li>Repita a comparação.</li>
+</ol>
+<p>Aqui tem uma desfecho bem bacana, que é quando você percebe que a derivada e a integral revelam o que a função sozinha não mostra. Vamos para alguns cenários ?</p>
+<ol type="1">
+<li><em>Função seno</em>. Por que a derivada parece deslocada em relação à função original ?</li>
+</ol>
+<div class="sourceCode" id="cb28"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(x)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Função quadrática</em>. Por que a derivada cresce de forma mais simples que a função ?</li>
+</ol>
+<div class="sourceCode" id="cb29"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> (x) <span class="kw">=&gt;</span> x<span class="op">*</span>x<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Função cosseno</em>. Como a derivada muda quando a curva começa no valor máximo ?</li>
+</ol>
+<div class="sourceCode" id="cb30"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(x)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Crescimento exponencial</em>. Por que crescimento exponencial também produz derivada crescente ?</li>
+</ol>
+<div class="sourceCode" id="cb31"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="fl">0.2</span><span class="op">*</span>x)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Tudo ao mesmo tempo</em>. Use o botão <code>Tudo</code>. As três curvas contam a mesma história ou histórias diferentes sobre a mudança ?</li>
+</ol>
+<p>A função mostra o comportamento original, a derivada mostra a inclinação local, e a integral mostra o acúmulo ao longo do caminho. Quando a função está positiva, a integral tende a crescer. Quando a função está negativa, a integral pode diminuir. Quando a função sobe rapidamente, a derivada fica maior. Quando a função atinge máximos ou mínimos, a derivada se aproxima de zero. Por conseguinte, o cálculo permite olhar para o mesmo fenômeno de formas diferentes: estado, mudança e acúmulo.</p>
+</section>
+<section id="por-dentro-do-script-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-2">Por dentro do script</h4>
+<p>O script começa definindo a função:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> (x) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(x)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois percorre o intervalo de 0 a 10:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> <span class="dv">10</span><span class="op">;</span> i <span class="op">+=</span> dx)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Em cada ponto, calcula o valor da função:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> yi <span class="op">=</span> <span class="fu">f</span>(i)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A derivada é aproximada por uma diferença pequena:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> d <span class="op">=</span> (<span class="fu">f</span>(i<span class="op">+</span>dx) <span class="op">-</span> <span class="fu">f</span>(i)) <span class="op">/</span> dx<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Essa expressão mede quanto a função mudou em um intervalo pequeno. A integral acumulada é construída somando pequenas áreas:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>soma <span class="op">+=</span> yi <span class="op">*</span> dx<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assim, o script combina os dois processos centrais do cálculo, aproximando as inclinações e acumulando as áreas.</p>
+<p>Função, derivada e integral, ainda que sejam interligados, tem lá seu grau de abstração para a compreensão dos conceitos envolvidos. Nessa linha, o JSPlotly que segue busca diminuir esse desconforto, apresentando uma <em>animação</em> que junta os três objetos de estudo num movimento simultâneo, e permitindo que o cálculo ganhe vida.</p>
+<div id="fig-calc4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-calc4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/calc4.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-calc4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.5: Função, derivada e integral são três modos de se observar a mesma trajetória. Clique com o botão direito neste <a href="apps/calc4.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O script mostra o cálculo como um processo dinâmico, onde é possível se observar simultaneamente a função <code>f(x)</code>, sua derivada <code>f'(x)</code>, sua integral acumulada, uma partícula se movendo ao longo do eixo <code>x</code>, e a área sendo construída em tempo real.</p>
+</section>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>No gráfico, o topo representa a função (estado atual), o meio representa a derivada (inclinção) e a base representa a integral (acúmulo). E a área preenchida mostra a integral sendo construída.</p>
+<p>Execute o script e clique em <code>Play</code>. Observe o ponto se movendo na função, a inclinação mudando na derivada e a área crescendo na integral. Agora altere para uma das funções matemáticas abaixo:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoFuncao <span class="op">=</span> <span class="st">"sin"</span><span class="op">;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoFuncao <span class="op">=</span> <span class="st">"poly"</span><span class="op">;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoFuncao <span class="op">=</span> <span class="st">"exp"</span><span class="op">;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoFuncao <span class="op">=</span> <span class="st">"gauss"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E teste:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> normalizar <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Compare os comportamentos e observe como a função, sua taxa de mudança e seu acúmulo evoluem juntos. À medida que o ponto avança, a função mostra “onde estamos”, a derivada mostra “como estamos mudando” e a integral mostra “quanto já acumulamos”. Isso sugere que derivar e integrar são duas formas complementares de descrever o mesmo processo. Segue um tutorial de uso para o script:</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Clique em <code>Play</code>;</li>
+<li>Observe o ponto se movendo na função;</li>
+<li>Veja a derivada mudando ao longo do caminho;</li>
+<li>Observe a área sendo construída;</li>
+<li>Pause a animação;</li>
+<li>Analise um ponto específico;</li>
+<li>Troque a função;</li>
+<li>Compare comportamentos;</li>
+<li>Ative/desative <code>normalizar</code>;</li>
+<li>Use os botões “Só função”, “Só derivada”, “Só integral”, ou “Ver tudo”.</li>
+</ol>
+<p>E agora alguns cenários <em>“derivados”</em> e <em>“integrados”</em> à cena.</p>
+<ol type="1">
+<li><em>Oscilação (seno)</em>. Por que a integral sobe e desce ao longo do tempo ?</li>
+</ol>
+<div class="sourceCode" id="cb39"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoFuncao <span class="op">=</span> <span class="st">"sin"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Crescimento contínuo</em>. Por que derivada e função crescem juntas ?</li>
+</ol>
+<div class="sourceCode" id="cb40"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoFuncao <span class="op">=</span> <span class="st">"exp"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Pico central (gaussiana)</em>. Essa curva é característica da <code>distribuição normal</code> observada na distribuição estatística dos fenômenos naturais. Por que a derivada muda de sinal no centro ?</li>
+</ol>
+<div class="sourceCode" id="cb41"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoFuncao <span class="op">=</span> <span class="st">"gauss"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Polinômio</em>. Como a forma da curva afeta a derivada ?</li>
+</ol>
+<div class="sourceCode" id="cb42"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoFuncao <span class="op">=</span> <span class="st">"poly"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Normalização</em>. Por que comparar formas pode ser mais útil que comparar valores absolutos ?</li>
+</ol>
+<div class="sourceCode" id="cb43"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> normalizar <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Velocidade da animação</em>. O que você percebe melhor quando a animação desacelera ?</li>
+</ol>
+<div class="sourceCode" id="cb44"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> passoFrame <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Veja que o ponto que se move conecta tudo, a posição, a inclinação, e o acúmulo (<em>histórico</em>).</p>
+</section>
+<section id="por-dentro-do-script-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-3">Por dentro do script</h4>
+<p>O script começa escolhendo o tipo de função:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoFuncao <span class="op">=</span> <span class="st">"gauss"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois constrói o domínio:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> dx <span class="op">=</span> (xmax <span class="op">-</span> xmin) <span class="op">/</span> (N <span class="op">-</span> <span class="dv">1</span>)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A função é definida dinamicamente:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">f</span>(x)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A derivada é aproximada numericamente:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">f</span>(x2) <span class="op">-</span> <span class="fu">f</span>(x1)) <span class="op">/</span> (x2 <span class="op">-</span> x1)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A integral acumulada é construída por <code>soma trapezoidal</code>:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>soma <span class="op">+=</span> ((yAnterior <span class="op">+</span> yi) <span class="op">/</span> <span class="dv">2</span>) <span class="op">*</span> dx<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A animação acontece aqui:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>frames<span class="op">.</span><span class="fu">push</span>({</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Por fim, cada <code>frame</code> move o ponto e atualiza a posição na função, o valor da derivada e a área acumulada.</p>
+</section>
+</div>
+</div>
+<hr>
+<!-- ::: {.callout-caution}
+## Volta pro mundo  ![](figuras/icons/galho_bg.png){width=10%}
+
+
+
+
+Script 3 — DERIVADA × INTEGRAL (KRYPTONITE)
+Comparação dinâmica: função, derivada e área acumulada.
+
+
+
+Modo de usar
+Compare gráficos simultaneamente
+Veja como:
+derivada = inclinação
+integral = acumulação
+💡 Conexão fundamental
+
+
+### Conectando ideias
+
+Cálculo liga tudo:
+
+Física → movimento, energia
+Química → cinética, variação
+Biologia → crescimento, metabolismo
+Economia → juros contínuos
+Computação → otimização, IA
+
+Expansões possíveis (sementes)
+otimização (máximos e mínimos)
+equações diferenciais
+séries e aproximações
+cálculo numérico -->
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Agora é hora de ir além. Mas antes, que tal um último JSPlotly ? Só pra mostrar como a derivada e a integral agem como ferramentas para explicar o mundo real.</p>
+<div id="fig-calc5" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-calc5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/calc5.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-calc5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.6: Velocidade e distância percorrida constituem um revezamento entre derivada e integral. Clique com o botão direito neste <a href="apps/calc5.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>Esse último JSPlotly da <a href="#fig-calc5" class="quarto-xref">Figura&nbsp;<span>8.6</span></a> mostra o cálculo aplicado para descrever movimento, velocidade e distância.</p>
+<section id="agite-antes-de-usar-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-3">Agite antes de usar</h4>
+<p>O script mostra três grandezas fundamentais: posição s(t), velocidade v(t), e distância acumulada. A ideia é que a derivada mede como a posição muda, enquanto que a integral mede quanto se percorreu. Observe como os gráficos mudam juntos e verifique como posição, velocidade e distância estão conectadas.</p>
+<p>Execute o script com:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoMovimento <span class="op">=</span> <span class="st">"acelera_freia"</span><span class="op">;</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> intensidade <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tempoFinal <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Agora explore outros movimentos, como:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoMovimento <span class="op">=</span> <span class="st">"uniforme"</span><span class="op">;</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoMovimento <span class="op">=</span> <span class="st">"acelerado"</span><span class="op">;</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoMovimento <span class="op">=</span> <span class="st">"oscilatorio"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E altere:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> intensidade <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tempoFinal <span class="op">=</span> <span class="dv">15</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A posição mostra “onde está”, enquanto que a velocidade mostra “como está se movendo”, e a distância o “quanto já percorreu”. Matematicamente falando, a <code>velocidade é a derivada da posição</code> e a <code>distância é a integral da velocidade</code> (em módulo). Segue um tutorial rápido para uso do <em>app</em>.</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Observe o gráfico de posição;</li>
+<li>Veja como ele evolui no tempo;</li>
+<li>Ative “Só velocidade”;</li>
+<li>Compare com a inclinação da posição;</li>
+<li>Ative “Só distância”;</li>
+<li>Veja o acúmulo ao longo do tempo;</li>
+<li>Clique em “Ver tudo”;</li>
+<li>Observe os três juntos;</li>
+<li>Troque o tipo de movimento;</li>
+<li>Compare os comportamentos;</li>
+<li>Aumente a intensidade.</li>
+</ol>
+<p>Com algumas experiências acima, você deve verificar que a velocidade explica a forma da posição e da distância. Vão alguns cenários bem <em>“movimentados”</em> agora.</p>
+<ol type="1">
+<li><em>Movimento uniforme</em>. Por que a velocidade é constante ?</li>
+</ol>
+<div class="sourceCode" id="cb54"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoMovimento <span class="op">=</span> <span class="st">"uniforme"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Movimento acelerado. Por que a velocidade cresce ao longo do tempo ?</li>
+</ol>
+<div class="sourceCode" id="cb55"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoMovimento <span class="op">=</span> <span class="st">"acelerado"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Movimento oscilatório</em>. Por que a velocidade muda de sinal ?</li>
+</ol>
+<div class="sourceCode" id="cb56"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoMovimento <span class="op">=</span> <span class="st">"oscilatorio"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Acelera e freia</em>. Como a combinação de movimentos altera o comportamento ?</li>
+</ol>
+<div class="sourceCode" id="cb57"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tipoMovimento <span class="op">=</span> <span class="st">"acelera_freia"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Intensidade maior</em>. O movimento muda só de escala ou de comportamento ?</li>
+</ol>
+<div class="sourceCode" id="cb58"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> intensidade <span class="op">=</span> <span class="fl">2.5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Matematicamente, a velocidade pode ser formulada como na <a href="#eq-veloc" class="quarto-xref">Equação&nbsp;<span>8.3</span></a>, e a posição, como na <a href="#eq-posic" class="quarto-xref">Equação&nbsp;<span>8.4</span></a> abaixo:</p>
+<p><span id="eq-veloc"><span class="math display">\[
+v(t) = \frac{ds}{dt}
+\tag{8.3}\]</span></span></p>
+<p>e</p>
+<p><span id="eq-posic"><span class="math display">\[
+d(t) = \int_0^t |v(\tau)|\,d\tau
+\tag{8.4}\]</span></span></p>
+</section>
+<section id="por-dentro-do-script-4" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-4">Por dentro do script</h3>
+<p>O script começa definindo a posição:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">s</span>(t)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada tipo de movimento cria um comportamento diferente. Depois calcula a velocidade numericamente:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> (pos[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">-</span> pos[i <span class="op">-</span> <span class="dv">1</span>]) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> dt)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso aproxima a derivada. A distância é calculada acumulando a velocidade:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>distanciaAcumulada <span class="op">+=</span> ((<span class="op">|</span>v1<span class="op">|</span> <span class="op">+</span> <span class="op">|</span>v2<span class="op">|</span>)<span class="op">/</span><span class="dv">2</span>) <span class="op">*</span> dt<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso corresponde à integral da velocidade em módulo. No final, o script calcula o deslocamento total, a distância percorrida e a velocidade média, tudo aparecendo como anotação no gráfico.</p>
+<p>Bom ! A gente só não pode se esquecer de que essa é aquela seção cujo título remonta a “como divagar sem culpa”. Então, segue uma “penca” dessas divagações !!</p>
+<ul>
+<li>E se a velocidade de um carro não fosse mostrada no painel, mas você tivesse que deduzi-la apenas observando como a posição muda com o tempo ?</li>
+<li>E se um motorista acelerasse suavemente — como isso apareceria na derivada do movimento ?</li>
+<li>E se dois trajetos diferentes levassem ao mesmo destino, mas com velocidades completamente distintas ao longo do caminho ?</li>
+<li>E se a distância percorrida fosse muito maior que o deslocamento final — o que isso diria sobre o percurso ?</li>
+<li>E se o gráfico da posição fosse conhecido, mas a velocidade fosse um mistério — você conseguiria reconstruí-la ?</li>
+<li>E se a área sob o gráfico de velocidade fosse a única informação disponível — você conseguiria descobrir o caminho percorrido ?</li>
+<li>E se o movimento fosse irregular, com acelerações e frenagens constantes — o cálculo ainda daria conta ?</li>
+<li>E se o tempo fosse observado em câmera lenta — você perceberia melhor a relação entre função, derivada e integral ?</li>
+<li>E se cada instante do movimento fosse uma fotografia — como reconstruir o filme completo ?</li>
+<li>E se o cálculo fosse, na verdade, uma linguagem para descrever mudanças contínuas ?</li>
+<li>E se, em outro planeta, a gravidade fosse diferente — como isso mudaria os gráficos de posição e velocidade ?</li>
+<li>E se na estrela Betelgeuse o tempo fluísse de forma diferente — a derivada ainda faria sentido ?</li>
+<li>E se o espaço fosse curvo — como interpretar posição, velocidade e área ?</li>
+<li>E se o movimento não fosse em linha reta, mas em múltiplas dimensões — como generalizar esses gráficos ?</li>
+<li>E se a própria noção de “taxa de variação” mudasse — o cálculo continuaria válido ?</li>
+<li>E se a função descrevesse não posição, mas energia — o que a derivada representaria ?</li>
+<li>E se a integral não fosse área, mas quantidade acumulada de matéria ou informação ?</li>
+<li>E se partículas subatômicas não tivessem trajetórias definidas — o que significaria derivar algo ?</li>
+<li>E se o universo fosse discreto, e não contínuo — o cálculo ainda funcionaria ?</li>
+<li>E se o tempo tivesse começo e fim — como ficariam as integrais ?</li>
+<li>E se o crescimento de uma população seguisse uma função — o que sua derivada revelaria ?</li>
+<li>E se a taxa de reação química variasse ao longo do tempo — como prever o total transformado ?</li>
+<li>E se o coração fosse um gráfico — qual seria sua derivada ?</li>
+<li>E se o cérebro funcionasse como um sistema de sinais — o cálculo ajudaria a interpretá-lo ?</li>
+<li>E se o mercado financeiro fosse analisado como uma função — o que a derivada indicaria ?</li>
+<li>E se o aprendizado fosse acumulativo — qual seria sua integral ?</li>
+<li>E se tudo que muda no mundo pudesse ser descrito por uma função ?</li>
+<li>E se tudo que muda pudesse ser medido por uma derivada ?</li>
+<li>E se tudo que se acumula pudesse ser descrito por uma integral ?</li>
+<li>E se o cálculo não fosse apenas matemática, mas uma forma de enxergar o próprio universo ?</li>
+</ul>
+</section>
+</div>
+</div>
+<!-- Este script reúne, em uma única cena interativa, três ideias centrais do cálculo:
+
+- a função original, que descreve o comportamento de uma grandeza;
+- a derivada, que mostra como essa grandeza está mudando;
+- a integral acumulada, que mostra quanto foi acumulado ao longo do percurso.
+
+A animação desloca um ponto sobre a função e, ao mesmo tempo, acompanha o ponto correspondente na derivada e na integral. Assim, o estudante percebe que o cálculo não é apenas um conjunto de fórmulas, mas uma forma de enxergar movimento, transformação e acúmulo.
+
+#### Modo de usar
+
+1. Execute primeiro com a função `sin`.
+2. Observe o ponto se deslocando sobre a curva.
+3. Compare o que acontece na derivada quando a função sobe, desce ou atinge máximos e mínimos.
+4. Observe a integral acumulada crescendo, diminuindo ou se estabilizando conforme a área positiva ou negativa se acumula.
+5. Troque `tipoFuncao` para `exp`, `log`, `poly`, `cos` ou `gauss`.
+6. Use `normalizar = true` quando quiser comparar formas gerais sem que uma curva esconda a outra por causa da escala.
+
+#### Atenção didática
+
+Funções diferentes exigem cuidados diferentes.
+
+A função exponencial cresce muito rapidamente. Por isso, se o eixo vertical estiver em escala real, ela pode achatar visualmente a derivada e a integral.
+
+A função logarítmica só existe para valores positivos de `x`. Por isso, o script usa automaticamente um domínio seguro quando `tipoFuncao = "log"`.
+
+Esse cuidado é importante porque mostra aos estudantes que visualizar matemática também exige respeitar as propriedades da função estudada.
+
+#### Cenário 1 — Movimento
+
+Pergunta:
+
+> Se `f(x)` representa a posição de um objeto, o que a derivada representa?
+
+Exploração:
+
+A derivada passa a representar a velocidade. Quando a função posição cresce rapidamente, a velocidade é positiva e maior. Quando a função diminui, a velocidade é negativa. Quando a função atinge um ponto de máximo ou mínimo, a velocidade se aproxima de zero.
+
+#### Cenário 2 — Energia acumulada
+
+Pergunta:
+
+> Se `f(x)` representa uma potência ao longo do tempo, o que a integral representa?
+
+Exploração:
+
+A integral representa energia acumulada. Mesmo que a potência varie, a área sob a curva indica o total acumulado no intervalo.
+
+#### Cenário 3 — Crescimento biológico
+
+Pergunta:
+
+> Se `f(x)` representa o tamanho de uma população, o que a derivada mostra?
+
+Exploração:
+
+A derivada mostra a taxa de crescimento. Uma população pode continuar aumentando, mas com crescimento cada vez menor. Essa distinção ajuda o estudante a separar valor absoluto de taxa de variação.
+
+#### Cenário 4 — Dados experimentais
+
+Pergunta:
+
+> O que aconteceria se, em vez de uma função perfeita, usássemos dados reais de um sensor?
+
+Exploração:
+
+A derivada poderia mostrar mudanças bruscas, ruídos e oscilações. A integral poderia suavizar parte dessas variações ao acumular o comportamento ao longo do tempo. Isso conecta cálculo, instrumentação, Arduino, física, química e biologia experimental.
+
+**E mais !!**
+
+- Comparar escala real com escala normalizada.
+- Discutir por que `log(x)` exige `x > 0`.
+- Mostrar que a integral acumulada depende do ponto inicial.
+- Relacionar derivada com velocidade, inclinação, tendência e sensibilidade.
+- Relacionar integral com área, soma, consumo, distância, energia e quantidade total.
+
+
+
+### Em síntese
+
+O cálculo diferencial e integral nasce da tentativa de compreender o mundo em transformação.
+
+A derivada responde à pergunta:
+
+> quão rápido algo está mudando agora?
+
+A integral responde à pergunta:
+
+> quanto foi acumulado ao longo do caminho?
+
+O limite permite transformar aproximações em ideias precisas. A função organiza o fenômeno estudado. A visualização torna visível aquilo que, muitas vezes, parece abstrato demais quando aparece apenas como fórmula.
+
+Por isso, o cálculo não é apenas uma técnica matemática. Ele é uma linguagem para estudar movimento, crescimento, energia, mudança, tendência e acumulação.
+
+👉 O cálculo é a linguagem da mudança.
+Derivada → como algo muda
+Integral → quanto algo acumulou
+Limite → como aproximamos o infinito
+Função → quem está sendo estudado
+
+👉 O cálculo é a linguagem da mudança. -->
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tanto a derivada como a integral aparecem em cenários do mundo real de formas tão distintas que não dá para abraça-las além de uma pequena fração. Derivada, por exemplo, está presente nas medidas de velocidade instantânea, como aquela que o radar mede nas estradas, no crescimento populacional, na variação de temperatura, nas taxas de crescimento da Economia, e nos movimentos e forças da Física.</p>
+<p>A integral, por sua vez, se apresenta na distância percorrida a partir da velocidade, na energia acumulada, na área sob gráficos experimentais, na Economia (acúmulo de lucro) e na Biologia (crescimento ao longo do tempo). Sempre que você acumula algo ao longo de um intervalo, sem percerber, está fazendo uma integral.</p>
+<p>Função, derivada e integral se conectam também em diversos aspectos do mundo, como na aceleração e frenagem de carros, em ondas e vibrações, no fluxo de energia e em reações químicas ao longo do tempo.</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="separação-de-comandos-inserção-de-comentários-e-boas-práticas" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="separação-de-comandos-inserção-de-comentários-e-boas-práticas">Separação de comandos, inserção de comentários, e boas práticas</h4>
+<p>Os comandos em <em>JS</em> são separados por <em>ponto e vírgula, “;”</em>. Já os <em>comentários</em> constituem trechos não interpretados, comumente utilizados em programação. Comentários são tremendamente úteis quando se deseja colocar um título no <em>script</em> de código, por exemplo, para explicar quem é quem nas variáveis ou determinada ação no código, e apontar uma futura melhoria, entre muitos (lista <em>ToDo</em>, ou “para fazer”). Em <em>JS</em>, os comentários são alternativamente inseridos por <em>” // “</em> antes de cada comando, ou por <em>” /</em>….<em>/ “</em>, para comentários mais extensos.</p>
+<p>Códigos em <em>JS</em> podem ser inseridos também junto à páginas web (HTML) com seus comandos intercalados pela notação que segue (etiquetas ou <em>tags</em>:</p>
+<div class="cell">
+<script>
+<script>  // abre para inserção
+
+...comandos JavaScript
+
+</script>
+</div>
+<p>Uma característica interessante no <em>JS</em> é que tanto faz colocar ou não espaços entre os comandos, pois a linguagem não interpreta esses espaços. Contudo, dentro das <em>boas práticas em programação</em>, é aconselhável separar blocos de comandos por <em>identação</em> de 2 espaços, de modo a facilitar a leitura do código. Outro cuidado que deve ser apreciado diz respeito ao uso de fonte maiúscula ou minúscula. <em>JS</em> interpreta diferentemente termos em caixa alta ou baixa do teclado, então é bom prestar atenção pra não incorrer em erro na interpretação.</p>
+</section>
+<section id="declaração-de-variáveis" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="declaração-de-variáveis">Declaração de variáveis</h4>
+<p>Entre os diversos tipos de variáveis, duas são frequentemente utilizadas: <em>const</em> e <em>let</em>. A variável <em>const</em> é utilizada para se atribuir um valor fixo a uma variável no código, enquanto a variável <em>let</em> é empregada quando se deseja reatribuir um valor a ela, por meio de algum cálculo ou <code>laço</code> iterativo. Exemplificando, quando se deseja variáveis de controle que mudam ao longo do tempo (<em>sliders</em>, passos, intervalos).</p>
+<p><em>Obs: </em> em versões antigas de <em>JS</em> é também empregado <em>var</em>, hoje em desuso.</p>
+</section>
+<section id="botando-a-mão-na-massa" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="botando-a-mão-na-massa">“Botando a mão na massa”</h4>
+<p>Como esse treinamento envolve instruir o algoritmo com uma <em>entrada</em> para que sua interpretação resulte numa <em>saída</em>, aqui propomos essa última pelo comando <code>print</code>, como segue.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="op">-</span><span class="fl">0.2</span><span class="op">;</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para esse treinamento, use o <em>JSPlotly</em> personalizado do capítulo anterior. Assim, teste a atribuição da variável <em>const</em> e do comando <code>print</code> por cópia do trecho acima e cola no campo de texto <em>ÁREA PARA DIGITAR COMANDOS</em> do script. Existem outros comandos de saída para <em>JS</em>, como <code>console.log()</code> e <code>document.body.appendChild()</code>, mas não utilizáveis pelo JSPlotly.</p>
+<p>Pode-se atribuir também um texto para apresentar a constante, veja:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="op">-</span><span class="fl">0.2</span><span class="op">;</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"constante:"</span><span class="op">,</span>a)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="dv">5</span><span class="op">;</span> <span class="co">// variável constante (não se altera ao longo do código)</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> <span class="dv">10</span><span class="op">;</span> <span class="co">// variável que pode alterar seu valor no código</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a<span class="op">*</span>b)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Outro exemplo, com inserção de texto antes do resultado:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> a <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> resultado <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Soma de a + b:"</span><span class="op">,</span> resultado)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>####<em>const</em> versus <em>let</em></p>
+<p>Pode parecer que <em>const</em> e <em>let</em> são distintas apenas na aparência, já que operam de modo intercambiável. Contudo, para explicitar a diferença entre os dois comandos, apague o ecrã gráfico (<em>clean</em>) e substitua a linha de código da seção anterior pela que segue na <em>ÁREA PARA DIGITAR COMANDOS</em> do script:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> passo <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span>          <span class="co">// usuário pode alterar</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x0 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>      <span class="co">// domínios dinâmicos</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(passo<span class="op">,</span> x0) </span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="co">// ... mais tarde:</span></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>passo <span class="op">=</span> <span class="fl">0.2</span><span class="op">;</span> x0 <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(passo<span class="op">,</span> x0)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Aparentemente, o resultado sugere que na prática nada muda, sendo a diferença mais centrada na clareza e segurança do código. Mas não é bem assim. Experimente agora trocar o campo pra executar o código abaixo:</p>
+<p>Agora substitua a variável do <em>“contador”</em> para <em>const</em> ao invés de <em>let</em>. O resultado incorrerá no erro abaixo:</p>
+<div id="fig-erroConst" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-erroConst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/erroConst.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-erroConst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.7: Erro gerado quando se substitui a variável <em>let</em> por <em>const</em> num trecho de reatribuição de valor.
+</figcaption>
+</figure>
+</div>
+<p>Resumindo: para constantes, use <em>const</em> e para variável reatribuível use <em>let</em>.</p>
+</section>
+<section id="tipos-de-dados" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="tipos-de-dados">Tipos de dados</h4>
+<p>Como é comum também em outras linguagens, <em>JavaScript</em> possui alguns tipos comuns para definição de dados. Para uso de <code>Plotly.js</code>, são bem significativos:</p>
+<p>Seguem alguns exemplos práticos. Experimente trocar cada um na saída <code>print</code>:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Numbers:</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> comprimento <span class="op">=</span> <span class="dv">116</span><span class="op">;</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> peso <span class="op">=</span> <span class="dv">75</span><span class="op">;</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Strings:</span></span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> color <span class="op">=</span> <span class="st">"Yellow"</span><span class="op">;</span></span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> lastName <span class="op">=</span> <span class="st">"Johnson"</span><span class="op">;</span></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a><span class="co">// Booleans</span></span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Object:</span></span>
+<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> membro <span class="op">=</span> {<span class="dt">firstName</span><span class="op">:</span><span class="st">"John"</span><span class="op">,</span> <span class="dt">lastName</span><span class="op">:</span><span class="st">"Doe"</span>}<span class="op">;</span></span>
+<span id="cb67-15"><a href="#cb67-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-16"><a href="#cb67-16" aria-hidden="true" tabindex="-1"></a><span class="co">// Array object:</span></span>
+<span id="cb67-17"><a href="#cb67-17" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> carros <span class="op">=</span> [<span class="st">"Saab"</span><span class="op">,</span> <span class="st">"Volvo"</span><span class="op">,</span> <span class="st">"BMW"</span>]<span class="op">;</span></span>
+<span id="cb67-18"><a href="#cb67-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-19"><a href="#cb67-19" aria-hidden="true" tabindex="-1"></a><span class="co">// Date object:</span></span>
+<span id="cb67-20"><a href="#cb67-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> datas <span class="op">=</span> <span class="kw">new</span> <span class="bu">Date</span>(<span class="st">"2022-03-25"</span>)<span class="op">;</span></span>
+<span id="cb67-21"><a href="#cb67-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-22"><a href="#cb67-22" aria-hidden="true" tabindex="-1"></a><span class="co">// Saídas:</span></span>
+<span id="cb67-23"><a href="#cb67-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(comprimento)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="constantes" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="constantes">Constantes</h4>
+<p>Por vezes, é necessária a inserção de constantes matemáticas em equações para construção de gráficos ou para fazer cálculos. Seguem alguns exemplos. Para a saída no <em>JSPlotly</em> customizado abaixo, basta o bom e velho <code>print</code> que segue ao também bom e velho <em>clean</em>.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span> <span class="op">-</span> valor <span class="fu">de</span> (pi)<span class="op">,</span> aproximadamente <span class="fl">3.14159</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">E</span> <span class="op">-</span> valor da constante de Euler<span class="op">,</span> aproximadamente <span class="fl">2.71828</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">LN2</span> <span class="op">-</span> logaritmo natural de <span class="dv">2</span><span class="op">,</span> aproximadamente <span class="fl">0.693</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">LN10</span> <span class="op">-</span> logaritmo natural de <span class="dv">10</span><span class="op">,</span> aproximadamente <span class="fl">2.302</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">LOG2E</span> <span class="op">-</span> logaritmo de e na base <span class="dv">2</span><span class="op">,</span> aproximadamente <span class="fl">1.442</span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="bu">Math</span><span class="op">.</span><span class="cn">LOG10E</span> <span class="op">-</span> logaritmo de e na base <span class="dv">10</span><span class="op">,</span> aproximadamente <span class="fl">0.434</span></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="bu">Number</span><span class="op">.</span><span class="cn">MAX_VALUE</span> <span class="op">-</span> maior número positivo</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a><span class="bu">Number</span><span class="op">.</span><span class="cn">MIN_VALUE</span> <span class="op">-</span> menor número positivo<span class="op">...</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para constantes naturais, contudo, é necessário defini-las antecipadamente, como em:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Definindo constantes físico-químicas comuns</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Avogadro <span class="op">=</span> <span class="fl">6.02214076e23</span><span class="op">;</span>  <span class="co">// Número de Avogadro (mol⁻¹)</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Boltzmann <span class="op">=</span> <span class="fl">1.380649e-23</span><span class="op">;</span>  <span class="co">// Constante de Boltzmann (J/K)</span></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Planck <span class="op">=</span> <span class="fl">6.62607015e-34</span><span class="op">;</span>   <span class="co">// Constante de Planck (J·s)</span></span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> gas <span class="op">=</span> <span class="fl">8.31446</span><span class="op">;</span>    <span class="co">// Constante dos gases ideais (J/(mol·K))</span></span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> luz <span class="op">=</span> <span class="dv">299792458</span><span class="op">;</span> <span class="co">// Velocidade da luz no vácuo (m/s)</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="funções" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="funções">Funções</h4>
+<p>Funções constituem um bloco de códigos para efetuar alguma ação. Em <em>JavaScript</em> uma função possui a seguinte sintaxe:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">nome</span>(parâmetro1<span class="op">,</span> parâmetro2<span class="op">,</span> parâmetro3) {</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// código para execução</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Seguem alguns exemplos de funções para testes.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">soma</span>(a) { <span class="co">// define o nome e os "parâmetros" da função</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a> <span class="cf">return</span> a <span class="op">+</span> a <span class="co">// define os argumentos da função (no caso, a*a),</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>            <span class="co">// pra retorna dos valores</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Teste</span></span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x <span class="op">=</span> <span class="fu">soma</span>(<span class="dv">7</span>)<span class="op">;</span> <span class="co">// aplica parâmetros</span></span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x) <span class="co">// saída da função</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Obs: </em> O comando <em>return</em>, por vezes omitido, se apresenta útil quando se deseja que o “retorno” seja concluído somente ao final do fluxo do script, sem resultados intermediários.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">expoente</span>(a<span class="op">,</span> b) { <span class="co">// define o nome e os "parâmetros" da função</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> a <span class="op">**</span> b<span class="op">;</span>  <span class="co">// define os argumentos da função (no caso, a^b),</span></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>                  <span class="co">// pra retorna dos valores</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Teste da função</span></span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x <span class="op">=</span> <span class="fu">expoente</span>(<span class="dv">4</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span> <span class="co">// aplica parâmetros</span></span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)<span class="op">;</span>         <span class="co">// saída da função</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">indexa</span>(vetor){</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a> <span class="cf">return</span> vetor <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> vetor <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">indexa</span>(vetor))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">Celsius</span>(Fahrenheit) {</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> (<span class="dv">5</span><span class="op">/</span><span class="dv">9</span>) <span class="op">*</span> (Fahrenheit<span class="op">-</span><span class="dv">32</span>)<span class="op">;</span></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> conversao <span class="op">=</span> <span class="fu">Celsius</span>(<span class="dv">115</span>)<span class="op">;</span></span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(conversao)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="funções-de-seta-arrow-functions" class="level5">
+<h5 class="anchored" data-anchor-id="funções-de-seta-arrow-functions">Funções de seta (<em>arrow functions</em>)</h5>
+<div class="line-block">&nbsp;&nbsp;Como visto anteriormente, uma notação alternativa é a função <em>arrow</em>, que abrevia a sintaxe de funções. Segue um exemplo:</div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> multiplica <span class="op">=</span> (a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">*</span> b<span class="op">;</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">multiplica</span>(<span class="dv">4</span><span class="op">,</span> <span class="dv">6</span>))<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Se gostou até aqui…não perca as <strong>estruturas de controle</strong> do capítulo final desta obra.</p>
+</section>
+</section>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<!-- 
+Um Script 5 final/aplicado fecha o capítulo com cara de “agora entendi pra que serve”. Sugestão: movimento real — posição, velocidade e distância percorrida.
+
+Script 5 — Aplicação prática: movimento, velocidade e distância
+
+### Script 5 — Aplicação prática: movimento, velocidade e distância
+
+![Script aplicado. Clique com o botão direito neste [LINK](apps/calc5.html) e abra em nova aba.](figuras/calc5.png){#fig-calc5}
+
+Este script mostra uma aplicação direta do cálculo em uma situação física: o movimento de um objeto.
+
+A posição `s(t)` indica onde o objeto está em cada instante. A derivada dessa função fornece a velocidade `v(t)`, mostrando como a posição muda com o tempo. A integral do módulo da velocidade fornece a distância total percorrida.
+
+Assim, o estudante visualiza três perguntas fundamentais:
+
+- onde o objeto está?
+- com que velocidade ele está mudando de posição?
+- quanto caminho ele percorreu ao todo?
+
+#### Modo de usar
+
+1. Execute o script com `tipoMovimento = "acelera_freia"`.
+2. Observe o gráfico da posição.
+3. Compare com o gráfico da velocidade.
+4. Veja que a velocidade aumenta quando a posição cresce mais rapidamente.
+5. Observe a distância acumulada crescendo ao longo do tempo.
+6. Troque `tipoMovimento` para `"uniforme"`, `"acelerado"` ou `"oscilatorio"`.
+7. Altere `intensidade` para simular movimentos mais suaves ou mais intensos.
+8. Altere `tempoFinal` para observar o efeito de intervalos maiores ou menores.
+
+#### Cenário 1 — Movimento uniforme
+
+Pergunta:
+
+> O que acontece com a velocidade quando a posição cresce sempre no mesmo ritmo?
+
+Exploração:
+
+No movimento uniforme, a posição cresce em linha reta e a velocidade permanece constante. A distância acumulada cresce de forma regular.
+
+#### Cenário 2 — Movimento acelerado
+
+Pergunta:
+
+> Como aparece, no gráfico, um objeto que se move cada vez mais rápido?
+
+Exploração:
+
+A posição deixa de crescer em linha reta e passa a curvar para cima. A velocidade aumenta ao longo do tempo. A distância acumulada cresce cada vez mais depressa.
+
+#### Cenário 3 — Movimento oscilatório
+
+Pergunta:
+
+> Um objeto pode se mover muito e, mesmo assim, terminar perto do ponto inicial?
+
+Exploração:
+
+Sim. No movimento oscilatório, o deslocamento final pode ser pequeno, mas a distância total percorrida pode ser grande. Isso ajuda a diferenciar deslocamento de distância percorrida.
+
+#### Cenário 4 — Acelera e freia
+
+Pergunta:
+
+> Como o cálculo ajuda a enxergar mudanças de ritmo?
+
+Exploração:
+
+Quando a curva da posição fica mais inclinada, a velocidade aumenta. Quando a curva fica menos inclinada, a velocidade diminui. A derivada mostra essa mudança com clareza.
+
+#### Conectando ideias
+
+Este script permite discutir uma das aplicações mais clássicas do cálculo:
+
+- posição é a função original;
+- velocidade é a derivada da posição;
+- distância percorrida é obtida por integração da velocidade.
+
+
+
+A primeira expressão mostra a mudança instantânea. A segunda mostra o acúmulo ao longo do tempo.
+
+#### E mais !!
+
+- Usar o script para comparar distância e deslocamento.
+- Relacionar inclinação da posição com velocidade.
+- Relacionar área sob a velocidade com distância.
+- Discutir por que usamos o módulo da velocidade para calcular distância percorrida.
+- Adaptar a ideia para dados reais de sensores, como carrinhos, celulares ou Arduino.
+
+#### Síntese
+
+Este script transforma derivada e integral em ferramentas concretas.
+
+A derivada revela o ritmo da mudança.  
+A integral revela o total acumulado.  
+A posição conta a história.  
+A velocidade mostra como a história muda.  
+A distância mostra quanto caminho foi realmente percorrido.
+
+👉 Aqui, o cálculo deixa de ser apenas fórmula e vira leitura do movimento.
+
+
+
+ -->
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./matriz.html" class="pagination-link" aria-label="Matrizes e modelagem - Transformando relações em sistemas manipuláveis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Matrizes e modelagem - Transformando relações em sistemas manipuláveis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
