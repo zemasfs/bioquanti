@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSPlotly</title>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.20.0/plotly.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.1/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-statistics@7.8.3/dist/simple-statistics.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ml-regression@6.0.0/dist/ml-regression.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/ml-levenberg-marquardt@3.3.0/dist/ml-levenberg-marquardt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.5/jstat.min.js"></script>
+
+ <!---<body style="margin:0; padding:0;">--->
+
+
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { display: flex; justify-content: space-between; align-items: flex-start; }
+        #grafico { width: 55%; height: 500px; }
+        #editor-container { width: 40%; }
+        #editor { width: 100%; height: 350px; border: 1px solid #ccc; }
+
+.header-bar {
+    width: 100%;
+    height: 30px; 
+    background: linear-gradient(to right, #F5F5DC, #EDEAE0); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #5a4a42; /
+    letter-spacing: 2px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 40px;  
+}
+
+
+
+.license-info {
+  font-size: 12px;
+  color: gray;
+  font-family: Arial, sans-serif;
+  opacity: 0.8;
+  text-align: center;
+  margin: 30px auto 10px auto;
+}
+
+
+#toggleTheme {
+  position: relative;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  margin: -2px 0 0 10px; /* margem superior e esquerda */
+  display: inline-block;
+  z-index: 10;
+}
+
+
+
+.dev-info {
+    position: absolute;
+    top: 3px; 
+    left: 10px; 
+    font-size: 13px !important; 
+    color: #999; 
+    font-family: Arial, sans-serif;
+}
+
+.dev-info a {
+    text-decoration: none;
+    color: #888; 
+    font-weight: bold;
+}
+.dev-info a:hover {
+    text-decoration: underline;
+    color: #666; /
+}
+
+       
+.button-container { 
+    display: flex; 
+    gap: 10px; 
+    margin-top: 10px; 
+
+  position: relative;
+  z-index: 10;
+}
+
+button { 
+    padding: 10px; 
+    cursor: pointer; 
+    border: none; 
+    font-size: 14px; 
+    border-radius: 5px; 
+    transition: background 0.3s ease-in-out; 
+}
+
+
+/* Botão base */
+button {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.add-btn {
+  background: #e2f6e9;
+  color: #207a44;
+  border-color: #b1e2c3;
+}
+.add-btn:hover {
+  background: #ccf0dd;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(50, 150, 100, 0.3);
+}
+
+.remove-btn {
+  background: #fff8c6;
+  color: #887200;
+  border-color: #f0dc7d;
+}
+.remove-btn:hover {
+  background: #fdf2a8;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(200, 180, 20, 0.3);
+}
+
+.reset-btn {
+  background: #fce1e1;
+  color: #b42c2c;
+  border-color: #f4b6b6;
+}
+.reset-btn:hover {
+  background: #f8caca;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(200, 50, 50, 0.3);
+}
+
+.save-btn {
+  background: #fff1db;
+  color: #8a4b00;
+  border-color: #ffd9a2;
+}
+.save-btn:hover {
+  background: #ffe1ba;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(200, 120, 30, 0.3);
+}
+
+.clear-btn {
+  background: #f99;
+  color: white;
+  border-color: #d33;
+}
+.clear-btn:hover {
+  background: #e55;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(255, 80, 80, 0.5);
+}
+
+.save-html-btn {
+  background: #e6f1fb;
+  color: #125a8f;
+  border-color: #a8d0f0;
+}
+.save-html-btn:hover {
+  background: #d2e9fc;
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(50, 100, 200, 0.3);
+}
+
+
+.author-info { position: absolute; top: 60px; right: 20px; font-size: 14px; color: gray; }
+.logo { position: fixed; bottom: 10px; right: 20px; width: 100px; z-index: 10;} 
+.ascii-logo {
+ position: fixed;
+ bottom: 10px;
+ right: 20px;
+ font-family: monospace;
+ font-size: 2px;
+ white-space: pre;
+ text-align: right;
+ z-index: 10; 
+ }
+ 
+.save-project-btn {
+  background: linear-gradient(to bottom, #f3e6ff, #d3bdf0);
+  color: #5e2d91;
+  font-weight: normal;
+  border: 2px solid #b48ce3;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(140, 90, 200, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.save-project-btn:hover {
+  background: linear-gradient(to bottom, #e7d4ff, #c9aee8);
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(120, 60, 180, 0.5);
+}
+
+
+</style>
+
+
+<style>
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #grafico {
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+    #editor-container {
+      width: 100% !important;
+    }
+
+    #editor {
+      height: 300px !important;
+    }
+
+    .button-container {
+      flex-direction: column;
+      gap: 8px;
+    
+  position: relative;
+  z-index: 10;
+}
+
+    button {
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .header-bar {
+      font-size: 16px;
+    }
+
+    .popup {
+      width: 90%;
+    }
+
+    .external-link {
+      position: relative;
+      top: auto;
+      right: auto;
+      margin-top: 10px;
+      text-align: right;
+    }
+  }
+</style>
+
+
+<style>
+  body.dark-mode {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+
+  body.dark-mode .header-bar {
+    background: linear-gradient(to right, #2e2e2e, #1a1a1a);
+    color: #f0f0f0;
+  }
+
+  body.dark-mode .button-container button {
+    background: #333 !important;
+    color: #ddd !important;
+  }
+
+  body.dark-mode .clear-btn {
+    background-color: #a71d2a !important;
+    color: white !important;
+  }
+
+  body.dark-mode #editor {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+
+  body.dark-mode .popup {
+    background-color: #2b2b2b;
+    color: #eee;
+  }
+  
+</style>
+
+
+</head>
+
+
+<body>
+<div class="header-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 4px 10px;">
+  <button id="toggleTheme" onclick="alternarTema()" style="font-size: 18px; background: none; border: none; cursor: pointer;">
+    🌙
+  </button>
+
+  <div style="flex: 1; text-align: center; font-weight: bold; font-size: 16px;">
+    JSPlotly - Interactive Graphics
+  </div>
+
+  <div style="width: 30px;"><!-- espaço vazio para equilibrar com o botão da esquerda --></div>
+</div>
+
+
+
+<div class="external-link">
+  <a href="https://bioquanti.netlify.app/" target="_blank">🔗 Bioquanti</a>  
+</div>
+
+
+
+<div class="dev-info">
+    Developed with 
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JavaScript</a> 
+    and 
+    <a href="https://plotly.com/javascript/" target="_blank">Plotly.js</a>
+</div>
+
+<div class="container">
+
+ <div id="grafico"></div>
+
+<div id="popup" class="popup">
+    <p>Save as:</p>
+    <button onclick="salvarImagem('png')">PNG</button>
+    <button onclick="salvarImagem('svg')">SVG</button>
+    <button onclick="fecharPopup()">Cancelar</button>
+</div>
+
+<style>
+.popup {
+    display: none;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+.popup button {
+    margin: 5px;
+    padding: 8px;
+}
+
+.external-link {  
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+}
+
+.external-link a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.external-link a:hover {
+  text-decoration: underline;
+  color: #0077cc;
+}
+
+.save-html-btn {
+  background: linear-gradient(to bottom, #dff0f7, #add9e6);
+  color: #004b66;
+  font-weight: normal;
+  border: 2px solid #66b8d4;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.save-html-btn:hover {
+  background: linear-gradient(to bottom, #c4ecff, #8fd3ec);
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+}
+
+
+</style>
+
+  <div id="editor-container">
+  
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+  <input type="file" id="fileInput" accept=".js" onchange="carregarEquacaoAuto(event)">
+  
+  <span style="font-size: 13px; font-family: Arial, sans-serifbioq; color: #2e7d57; text-align: right;">
+    For easy code construction, try 
+    <a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly" 
+       target="_blank" 
+       style="color: #2e7d57 !important; font-weight: bold; text-decoration: underline;">
+      GSPlotly
+    </a>
+  </span>
+</div>
+
+
+
+
+
+       <div id="editor"></div>
+       <div class="button-container">
+       <button class="add-btn" onclick="adicionarCurva()">add</button>
+       <button class="remove-btn" onclick="removerUltimaCurva()">remove</button>
+       <button class="clear-btn" onclick="resetarGrafico()">clean</button> 
+       <button class="reset-btn" onclick="limparEditor()">delete</button>
+     <!---  <button class="save-html-btn" onclick="salvarHTML()">html</button> --->             
+       <button class="save-btn" onclick="salvarEquacao()">script</button> 
+       <button class="save-html-btn" onclick="salvarProjetoSomenteGrafico()">html</button>
+    <!---<button class="save-html-btn" onclick="salvarProjetoCompleto()">save project</button> --->
+       <button class="save-project-btn" onclick="salvarCloneJSPlotly()">clone</button>
+       
+    
+  </div>
+</div>
+    </div>
+    
+    
+<script>
+ var curvas = [];
+ var cores = ["red", "blue", "green", "purple", "orange", "brown", "pink", "gray"];
+ var corIndex = 0;
+ var editor = ace.edit("editor");
+ editor.setTheme("ace/theme/github");
+ editor.session.setMode("ace/mode/javascript");
+ editor.session.setUseWrapMode(true);
+ editor.setOptions({
+  fontSize: "14px",
+  wrap: true,
+  showPrintMargin: false
+});
+
+
+
+var customSaveButton = {
+    name: 'PNG or SVG',
+    icon: Plotly.Icons.disk,
+    click: function(gd) {
+        abrirPopup();
+    }
+};
+
+
+var config = {
+  modeBarButtonsToAdd: [
+    'toggleSpikelines',
+    'hoverCompareCartesian',
+    'drawline',
+    'drawopenpath',
+    'drawrect',
+    'drawcircle',
+    //'eraseshape',
+    customSaveButton,
+    {
+      name: 'change color',
+      icon: Plotly.Icons.camera,
+      click: function(gd) {
+        const ultima = curvas.length - 1;
+        const novaCor = cores[Math.floor(Math.random() * cores.length)];
+        Plotly.restyle(gd, { 'line.color': novaCor }, [ultima]);
+        curvas[ultima].line.color = novaCor;
+      }
+    },
+  {
+  name: 'Adicionar Texto',
+  icon: {
+    width: 1000,
+    height: 1000,
+    path: 'M200 800V160h600v80H540v560h-80V240H200z' // Ícone simples em forma de "T"
+  },
+  click: function(gd) {
+    // O clique no botão ativa o modo de anotação
+    const handler = function(eventData) {
+      const x = eventData.points[0].x;
+      const y = eventData.points[0].y;
+      const texto = prompt("Digite o texto a ser inserido:");
+      if (texto) {
+        Plotly.relayout(gd, {
+          annotations: (gd.layout.annotations || []).concat([{
+            x: x,
+            y: y,
+            text: texto,
+            showarrow: true,
+            arrowhead: 2
+          }])
+        });
+      }
+      gd.removeListener('plotly_click', handler);
+    };
+    gd.on('plotly_click', handler);
+  }
+}
+  ],
+  showEditInChartStudio: true,
+  plotlyServerURL: "https://chart-studio.plotly.com",
+  displaylogo: false,
+  displayModeBar: true,
+  responsive: true,
+  scrollZoom: true,
+  editable: true,
+  modeBarButtonsToRemove: [
+    'select2d',
+    'lasso2d',
+    'resetScale2d',
+    'zoomOut2d',
+    'zoomIn2d',
+    'toImage'
+  ]
+};
+ 
+
+function executarCodigo() {
+    try {
+        var codigoUsuario = editor.getValue().trim();
+        Plotly.purge('grafico'); 
+        eval(codigoUsuario);
+    } 
+
+catch (error) {
+           
+    }
+}
+
+function limparGrafico() {
+    Plotly.purge('grafico');
+}
+
+function carregarEquacaoAuto(event) {
+ const file = event.target.files[0];
+ if (file) {
+   const reader = new FileReader();
+         reader.onload = function(e) {
+         editor.setValue(e.target.result, -1);
+                 };
+         reader.readAsText(file);
+                 }
+           }
+
+function adicionarCurva() {
+  const codigoUsuario = editor.getValue();
+
+  let consoleSaida = [];
+  const logOriginal = console.log;
+  console.log = (...args) => {
+    consoleSaida.push(args.map(arg => typeof arg === "object" ? JSON.stringify(arg) : String(arg)).join(" "));
+  };
+
+  let resultado;
+  try {
+    const func = new Function(codigoUsuario + "\nreturn typeof output !== 'undefined' ? output : undefined;");
+    resultado = func();
+  } catch (e1) {
+    try {
+      const func = new Function(codigoUsuario);
+      resultado = func();
+    } catch (e2) {
+      console.log = logOriginal;
+      alert("Erro ao executar o código:\n" + e2.message);
+      return;
+    }
+  }
+
+  console.log = logOriginal;
+  if (!resultado) return;
+
+  const texto = consoleSaida.map(l => "> " + l).join("<br>");
+  const layout = resultado.layout || {};
+  layout.annotations = layout.annotations || [];
+
+  if (texto.trim()) {
+    layout.annotations.push({
+      text: `<div style="font-family: monospace; font-size: 14px; max-height: 200px; overflow-y: auto; background:#f9f9f9; padding:5px; border:1px solid #ccc;">${texto}</div>`,
+      showarrow: false,
+      xref: 'paper',
+      yref: 'paper',
+      x: 0,
+      y: 1,
+      align: 'left',
+      xanchor: 'left',
+      yanchor: 'top'
+    });
+  }
+
+
+
+
+  let data = [];
+  if (resultado.data) {
+    data = resultado.data;
+  } else if (resultado.trace) {
+    data = [resultado.trace];
+  } else if (resultado.traces) {
+    data = resultado.traces;
+  } else if (resultado.x_values && resultado.y_values) {
+    data = [{
+      x: resultado.x_values,
+      y: resultado.y_values,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: resultado.title || "Curva"
+    }];
+    if (resultado.x_range) layout.xaxis = { range: resultado.x_range, title: resultado.x_label || "" };
+    if (resultado.y_range) layout.yaxis = { range: resultado.y_range, title: resultado.y_label || "" };
+    layout.title = resultado.title || "";
+  }
+
+  curvas.push(...data);
+
+  Plotly.newPlot("grafico", curvas, layout, config).then(() => {
+    if (resultado.frames && resultado.frames.length > 0) {
+      Plotly.addFrames("grafico", resultado.frames);
+      Plotly.animate("grafico", null, {
+        frame: { duration: 80, redraw: true },
+        transition: { duration: 0 }
+      });
+    }
+  });
+}
+
+
+
+
+function resetarGrafico() {
+            curvas = [];
+            corIndex = 0;
+            Plotly.newPlot('grafico', [], {xaxis: { title: 'X' }, yaxis: {
+          zeroline: true,
+          zeroline: true, title: 'Y' } });
+        }
+
+function salvarEquacao() {
+    var blob = new Blob([editor.getValue()], { type: "text/javascript" });
+    var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "script.js";
+        document.body.appendChild(a);
+        a.click();
+            document.body.removeChild(a);
+       }
+
+        
+
+function salvarHTML() {
+    var plotlyData = JSON.parse(JSON.stringify(curvas));
+    var plotlyLayout = document.getElementById('grafico').layout;
+    var htmlContent = '<!DOCTYPE html>\n' +
+                '<html>\n' +
+                '<head>\n' +
+                '    <meta charset="UTF-8">\n' +
+                '    <title>Gráfico Salvo</title>\n' +
+                '    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.20.0/plotly.min.js"><\/script>\n' +
+                '</head>\n' +////
+                '<body>\n' +
+                '    <div id="grafico" style="width: 100%; height: 600px;"></div>\n' +
+                '    <script>\n' +
+                '        var data = ' + JSON.stringify(plotlyData) + ';\n' +
+                '        var layout = ' + JSON.stringify(plotlyLayout) + ';\n' +
+                '        Plotly.newPlot("grafico", data, layout);\n' +
+                '    <\/script>\n' +
+                '</body>\n' +
+                '</html>';
+
+function salvarAppCompleto() {
+  const htmlBase = document.documentElement.outerHTML;
+  const blob = new Blob([htmlBase], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "jsplotly_completo.html";
+  a.click();
+}
+
+
+var blob = new Blob([htmlContent], { type: 'text/html' });
+var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+//    a.download = 'grafico_interativo.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+        }
+
+function limparEditor() {
+    editor.setValue("", -1); 
+    }
+
+function removerUltimaCurva() {
+    if (curvas.length > 0) {
+    curvas.pop(); 
+    atualizarGrafico(); 
+        } else {
+        alert("No curves to remove!");
+      }
+    }
+
+
+function atualizarGrafico() {
+    Plotly.newPlot('grafico', curvas, {
+        title: 'Gráfico Interativo',
+        xaxis: { title: 'X' },
+        yaxis: {
+          zeroline: true,
+          zeroline: true, title: 'Y' },
+        showlegend: true
+    });
+}
+
+function abrirPopup() {
+    document.getElementById('popup').style.display = 'block';
+}
+
+function fecharPopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+
+function salvarImagem(formato) {
+    Plotly.downloadImage('grafico', {format: formato, filename: 'plot'});
+    fecharPopup();
+}
+
+
+function limparTudo() {
+   editor.setValue("", -1);
+     let graficoDiv = document.getElementById("grafico");
+     if (graficoDiv) {
+            Plotly.newPlot("grafico", [], {
+            xaxis: { title: "Eixo X" },
+            yaxis: {
+          zeroline: true,
+          zeroline: true, title: "Eixo Y" }
+        });
+        graficoDiv.data = [];
+    }
+}
+
+
+// Definir a equação quadrática padrão
+var codigoPadrao = `
+// =====================================================
+// SCRIPT 4 - FRACIONAMENTO CROMATOGRAFICO ANIMADO
+// Quimica Analitica - separacao, eluicao e coleta
+// JSPlotly / Ace
+// =====================================================
+//
+// Controles sugeridos:
+// input_mistura: "polar", "balanceada", "hidrofobica", "complexa"
+// input_solvente: 0.20 a 0.95
+// input_seletividade: 0.5 a 2.0
+// input_tempoColeta: 1 a 5
+// input_passoFrame: 1 a 4
+//
+
+const mistura = typeof input_mistura !== "undefined" ? input_mistura : "balanceada";
+const solvente = typeof input_solvente !== "undefined" ? Number(input_solvente) : 0.55;
+const seletividade = typeof input_seletividade !== "undefined" ? Number(input_seletividade) : 1.2;
+const tempoColeta = typeof input_tempoColeta !== "undefined" ? Number(input_tempoColeta) : 2;
+const passoFrame = typeof input_passoFrame !== "undefined" ? Number(input_passoFrame) : 2;
+
+const misturas = {
+  polar: [
+    { nome: "A polar", qtd: 0.90, hidro: 0.15 },
+    { nome: "B media", qtd: 0.45, hidro: 0.45 },
+    { nome: "C apolar", qtd: 0.20, hidro: 0.80 }
+  ],
+  balanceada: [
+    { nome: "A polar", qtd: 0.65, hidro: 0.20 },
+    { nome: "B media", qtd: 0.70, hidro: 0.50 },
+    { nome: "C apolar", qtd: 0.60, hidro: 0.78 }
+  ],
+  hidrofobica: [
+    { nome: "A polar", qtd: 0.20, hidro: 0.18 },
+    { nome: "B media", qtd: 0.45, hidro: 0.55 },
+    { nome: "C apolar", qtd: 0.95, hidro: 0.90 }
+  ],
+  complexa: [
+    { nome: "A polar", qtd: 0.55, hidro: 0.12 },
+    { nome: "B media 1", qtd: 0.70, hidro: 0.40 },
+    { nome: "C media 2", qtd: 0.50, hidro: 0.58 },
+    { nome: "D apolar", qtd: 0.75, hidro: 0.86 }
+  ]
+};
+
+const analitos = misturas[mistura] || misturas.balanceada;
+
+function clamp(v, min, max) {
+  return Math.max(min, Math.min(max, v));
+}
+
+function gauss(x, mu, sigma, amp) {
+  return amp * Math.exp(-0.5 * Math.pow((x - mu) / sigma, 2));
+}
+
+// Tempo total da simulação
+const tempoMax = 28;
+const dt = 0.2;
+
+let tempos = [];
+for (let t = 0; t <= tempoMax; t += dt) {
+  tempos.push(Number(t.toFixed(2)));
+}
+
+// Cálculo de retenção
+analitos.forEach(a => {
+  const retencao = 1 + seletividade * 8 * a.hidro * (1 - solvente);
+  a.tRet = 3 + retencao * 1.8;
+  a.largura = 0.45 + 0.75 * a.hidro * (1 - solvente);
+});
+
+// Cromatograma total
+let total = tempos.map(() => 0);
+let individuais = [];
+
+analitos.forEach(a => {
+  const pico = tempos.map(t => gauss(t, a.tRet, a.largura, a.qtd));
+  individuais.push(pico);
+  for (let i = 0; i < total.length; i++) total[i] += pico[i];
+});
+
+// Frações
+const nFracoes = Math.ceil(tempoMax / tempoColeta);
+let fracX = [];
+let fracY = [];
+let fracTexto = [];
+
+for (let f = 0; f < nFracoes; f++) {
+  const inicio = f * tempoColeta;
+  const fim = inicio + tempoColeta;
+
+  let conteudo = 0;
+  let composicao = [];
+
+  analitos.forEach((a, idx) => {
+    let soma = 0;
+    tempos.forEach((t, i) => {
+      if (t >= inicio && t < fim) soma += individuais[idx][i] * dt;
+    });
+
+    conteudo += soma;
+    if (soma > 0.03) composicao.push(a.nome + ": " + soma.toFixed(2));
+  });
+
+  fracX.push("F" + (f + 1));
+  fracY.push(conteudo);
+  fracTexto.push(
+    "Tempo: " + inicio.toFixed(1) + "-" + fim.toFixed(1) +
+    "<br>" + (composicao.length ? composicao.join("<br>") : "quase vazio")
+  );
+}
+
+// Posição das bandas na coluna
+function posicaoBanda(a, tempoAtual) {
+  const progresso = clamp(tempoAtual / a.tRet, 0, 1.15);
+  return 0.82 - progresso * 0.68;
+}
+
+function tracesColuna(tempoAtual) {
+  let traces = [];
+
+  analitos.forEach(a => {
+    const y = posicaoBanda(a, tempoAtual);
+    const visivel = y > 0.10 && y < 0.88;
+
+    traces.push({
+      x: visivel ? [0.18] : [null],
+      y: visivel ? [y] : [null],
+      type: "scatter",
+      mode: "markers+text",
+      text: [a.nome],
+      textposition: "middle right",
+      marker: {
+        size: 22 + 18 * a.qtd,
+        opacity: 0.75
+      },
+      name: a.nome,
+      xaxis: "x",
+      yaxis: "y",
+      showlegend: false
+    });
+  });
+
+  return traces;
+}
+
+function cromatogramaAte(tempoAtual) {
+  let xs = [];
+  let ys = [];
+
+  tempos.forEach((t, i) => {
+    if (t <= tempoAtual) {
+      xs.push(t);
+      ys.push(total[i]);
+    }
+  });
+
+  return { xs, ys };
+}
+
+function fracaoAtual(tempoAtual) {
+  return Math.floor(tempoAtual / tempoColeta);
+}
+
+function barrasFracoesAte(tempoAtual) {
+  const atual = fracaoAtual(tempoAtual);
+
+  return {
+    x: fracX,
+    y: fracY.map((v, i) => i <= atual ? v : 0),
+    text: fracTexto
+  };
+}
+
+const inicio = 0;
+const crom0 = cromatogramaAte(inicio);
+const frac0 = barrasFracoesAte(inicio);
+
+let data = [
+  // Coluna: paredes
+  {
+    x: [0.12, 0.12, 0.24, 0.24, 0.12],
+    y: [0.10, 0.88, 0.88, 0.10, 0.10],
+    type: "scatter",
+    mode: "lines",
+    name: "Coluna",
+    line: { width: 4 },
+    xaxis: "x",
+    yaxis: "y",
+    showlegend: false
+  },
+
+  // Leito da coluna
+  {
+    x: [0.13, 0.23, 0.23, 0.13, 0.13],
+    y: [0.15, 0.80, 0.15, 0.15, 0.15],
+    type: "scatter",
+    mode: "lines",
+    fill: "toself",
+    name: "Fase estacionaria",
+    opacity: 0.25,
+    xaxis: "x",
+    yaxis: "y",
+    showlegend: false
+  },
+
+  ...tracesColuna(inicio),
+
+  // Cromatograma
+  {
+    x: crom0.xs,
+    y: crom0.ys,
+    type: "scatter",
+    mode: "lines",
+    name: "Sinal do detector",
+    line: { width: 4 },
+    xaxis: "x2",
+    yaxis: "y2"
+  },
+
+  // Frações
+  {
+    x: frac0.x,
+    y: frac0.y,
+    type: "bar",
+    name: "Frações coletadas",
+    text: frac0.text,
+    hovertemplate: "%{x}<br>Quantidade: %{y:.2f}<br>%{text}<extra></extra>",
+    xaxis: "x3",
+    yaxis: "y3"
+  }
+];
+
+let frames = [];
+
+for (let k = 0; k < tempos.length; k += passoFrame) {
+  const tAtual = tempos[k];
+  const crom = cromatogramaAte(tAtual);
+  const frac = barrasFracoesAte(tAtual);
+
+  frames.push({
+    name: "t" + k,
+    data: [
+      {},
+      {},
+      ...tracesColuna(tAtual),
+      {
+        x: crom.xs,
+        y: crom.ys
+      },
+      {
+        x: frac.x,
+        y: frac.y,
+        text: frac.text
+      }
+    ],
+    layout: {
+      annotations: [
+        {
+          xref: "paper",
+          yref: "paper",
+          x: 0.02,
+          y: 1.08,
+          showarrow: false,
+          align: "left",
+          text:
+            "Mistura: " + mistura +
+            " | Solvente: " + solvente.toFixed(2) +
+            " | Seletividade: " + seletividade.toFixed(2) +
+            " | Tempo: " + tAtual.toFixed(1)
+        },
+        {
+          xref: "paper",
+          yref: "paper",
+          x: 0.18,
+          y: 0.02,
+          showarrow: false,
+          text: "Coluna"
+        },
+        {
+          xref: "paper",
+          yref: "paper",
+          x: 0.57,
+          y: 0.02,
+          showarrow: false,
+          text: "Cromatograma"
+        },
+        {
+          xref: "paper",
+          yref: "paper",
+          x: 0.87,
+          y: 0.02,
+          showarrow: false,
+          text: "Frações coletadas"
+        }
+      ]
+    }
+  });
+}
+
+const maxTotal = Math.max(...total);
+const maxFrac = Math.max(...fracY);
+
+const layout = {
+  title: "Fracionamento cromatografico: separar, detectar e coletar",
+
+  height: 720,
+
+  xaxis: {
+    domain: [0.02, 0.30],
+    range: [0, 0.35],
+    showgrid: false,
+    zeroline: false,
+    showticklabels: false
+  },
+  yaxis: {
+    domain: [0.18, 0.92],
+    range: [0, 1],
+    showgrid: false,
+    zeroline: false,
+    showticklabels: false
+  },
+
+  xaxis2: {
+    domain: [0.38, 0.73],
+    title: "Tempo / volume de eluicao",
+    range: [0, tempoMax]
+  },
+  yaxis2: {
+    domain: [0.18, 0.92],
+    title: "Sinal",
+    range: [0, maxTotal * 1.25]
+  },
+
+  xaxis3: {
+    domain: [0.80, 0.98],
+    title: "Frações"
+  },
+  yaxis3: {
+    domain: [0.18, 0.92],
+    title: "Quantidade",
+    range: [0, maxFrac * 1.25]
+  },
+
+  annotations: [
+    {
+      xref: "paper",
+      yref: "paper",
+      x: 0.02,
+      y: 1.08,
+      showarrow: false,
+      align: "left",
+      text:
+        "Mistura: " + mistura +
+        " | Solvente: " + solvente.toFixed(2) +
+        " | Seletividade: " + seletividade.toFixed(2) +
+        " | Tempo: 0.0"
+    },
+    {
+      xref: "paper",
+      yref: "paper",
+      x: 0.18,
+      y: 0.02,
+      showarrow: false,
+      text: "Coluna"
+    },
+    {
+      xref: "paper",
+      yref: "paper",
+      x: 0.57,
+      y: 0.02,
+      showarrow: false,
+      text: "Cromatograma"
+    },
+    {
+      xref: "paper",
+      yref: "paper",
+      x: 0.87,
+      y: 0.02,
+      showarrow: false,
+      text: "Frações coletadas"
+    }
+  ],
+
+  updatemenus: [
+    {
+      type: "buttons",
+      direction: "left",
+      x: 0.50,
+      y: -0.08,
+      xanchor: "center",
+      buttons: [
+        {
+          label: "Play",
+          method: "animate",
+          args: [
+            null,
+            {
+              frame: { duration: 90, redraw: true },
+              transition: { duration: 0 },
+              fromcurrent: true,
+              mode: "immediate"
+            }
+          ]
+        },
+        {
+          label: "Pause",
+          method: "animate",
+          args: [
+            [null],
+            {
+              frame: { duration: 0, redraw: false },
+              transition: { duration: 0 },
+              mode: "immediate"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
+  margin: { l: 50, r: 30, t: 95, b: 90 },
+
+  showlegend: true,
+  legend: {
+    orientation: "h",
+    x: 0,
+    y: -0.18
+  }
+};
+
+const config = {
+  responsive: true,
+  displayModeBar: true
+};
+
+return {
+  data: data,
+  layout: layout,
+  frames: frames,
+  config: config
+};
+
+`;
+
+
+window.onload = function() {
+    editor.setValue(codigoPadrao, -1);
+    resetarGrafico();
+};
+
+   
+</script>
+
+
+<div class="license-info">
+  <p>
+    Licence under 
+    <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" style="color: gray; text-decoration: none;">
+      CC BY-NC-SA 4.0
+    </a>
+    © 2025 José Maurício Schneedorf FS
+  </p>
+</div>
+
+
+</div>
+
+<script>
+  function alternarTema() {
+  document.body.classList.toggle("dark-mode");
+
+  const isDark = document.body.classList.contains("dark-mode");
+  const botao = document.getElementById("toggleTheme");
+  botao.textContent = isDark ? "☀️" : "🌙";
+  editor.setTheme(isDark ? "ace/theme/monokai" : "ace/theme/github");
+  const layoutEscuro = {
+    plot_bgcolor: "#1e1e1e",
+    paper_bgcolor: "#1e1e1e",
+    font: { color: "#e0e0e0" },
+    xaxis: { color: "#e0e0e0", gridcolor: "#444" },
+    yaxis: {
+          zeroline: true,
+          zeroline: true, color: "#e0e0e0", gridcolor: "#444" }
+  };
+
+  const layoutClaro = {
+    plot_bgcolor: "#ffffff",
+    paper_bgcolor: "#ffffff",
+    font: { color: "#000000" },
+    xaxis: { color: "#000", gridcolor: "#ccc" },
+    yaxis: {
+          zeroline: true,
+          zeroline: true, color: "#000", gridcolor: "#ccc" }
+  };
+
+  const layoutNovo = isDark ? layoutEscuro : layoutClaro;
+
+  Plotly.relayout("grafico", layoutNovo);
+}
+
+</script>
+
+<script>
+function salvarAppCompleto() {
+  const gd = document.getElementById("grafico");
+  const curvasAtuais = JSON.stringify(gd.data);
+  const layoutAtual = JSON.stringify(gd.layout || {});
+
+  let htmlCompleto = document.documentElement.outerHTML;
+
+  // Script que será injetado no HTML salvo para redesenhar o gráfico
+  const scriptPlotly = `
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const data = ${curvasAtuais};
+        const layout = ${layoutAtual};
+        Plotly.newPlot("grafico", data, layout);
+      });
+    <\\/script>
+  `;
+
+</script>
+
+
+<script>
+function salvarProjetoCompleto() {
+  const gd = document.getElementById("grafico");
+  const curvasStr = JSON.stringify(gd.data);
+  const layoutStr = JSON.stringify(gd.layout || {});
+  const codigoStr = JSON.stringify(editor.getValue());
+  const temaEscuro = document.body.classList.contains("dark-mode");
+
+  let htmlContent = ''
+    + '<!DOCTYPE html>\n'
+    + '<html lang="pt">\n'
+    + '<head>\n'
+    + '  <meta charset="UTF-8">\n'
+    + '  <title>JSPlotly Projeto Salvo</title>\n'
+    + '  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"><\/script>\n'
+    + '  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"><\/script>\n'
+    + '  <style>\n'
+    + '    body { font-family: Arial, sans-serif; margin: 20px; }\n'
+    + '    .container { display: flex; justify-content: space-between; align-items: flex-start; }\n'
+    + '    #grafico { width: 55%; height: 500px; }\n'
+    + '    #editor-container { width: 40%; }\n'
+    + '    #editor { width: 100%; height: 350px; border: 1px solid #ccc; }\n'
+    + '  </style>\n'
+    + '</head>\n'
+    + '<body>\n'
+    + '  <h2>JSPlotly - Projeto Salvo</h2>\n'
+    + '  <div class="container">\n'
+    + '    <div id="grafico"></div>\n'
+    + '    <div id="editor-container">\n'
+    + '      <div id="editor"></div>\n'
+    + '    </div>\n'
+    + '  </div>\n'
+    + '  <script>\n'
+    + '    const curvas = ' + curvasStr + ';\n'
+    + '    const layout = ' + layoutStr + ';\n'
+    + '    const codigo = ' + codigoStr + ';\n'
+    + '    const temaEscuro = ' + JSON.stringify(temaEscuro) + ';\n'
+    + '    const editor = ace.edit("editor");\n'
+    + '    editor.setTheme(temaEscuro ? "ace/theme/monokai" : "ace/theme/github");\n'
+    + '    editor.session.setMode("ace/mode/javascript");\n'
+    + '    editor.setValue(codigo, -1);\n'
+    + '    layout.editable = true;\n'
+    + '    Plotly.newPlot("grafico", curvas, layout);\n'
+    + '    document.body.classList.toggle("dark-mode", temaEscuro);\n'
+    + '    document.getElementById("grafico").on("plotly_click", function(data) {\n'
+    + '      const y = data.points[0].y;\n'
+    + '      const ctx = new (window.AudioContext || window.webkitAudioContext)();\n'
+    + '      const osc = ctx.createOscillator();\n'
+    + '      const gain = ctx.createGain();\n'
+    + '      osc.type = "sine";\n'
+    + '      osc.frequency.setValueAtTime(y, ctx.currentTime);\n'
+    + '      osc.connect(gain);\n'
+    + '      gain.connect(ctx.destination);\n'
+    + '      osc.start();\n'
+    + '      osc.stop(ctx.currentTime + 0.4);\n'
+    + '    });\n'
+    + '  <\/script>\n'
+    + '</body>\n'
+    + '</html>';
+
+  const blob = new Blob([htmlContent], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "jsplotly_projeto.html";
+  a.click();
+}
+</script>
+
+<script>
+function salvarProjetoSomenteGrafico() {
+  const gd = document.getElementById("grafico");
+  const curvasStr = JSON.stringify(gd.data);
+  const layoutStr = JSON.stringify(gd.layout || {});
+  const framesData = gd._transitionData && gd._transitionData._frames;
+  const framesStr = JSON.stringify(framesData || []);
+  const temaEscuro = document.body.classList.contains("dark-mode");
+
+  let htmlContent = ''
+    + '<!DOCTYPE html>\n'
+    + '<html lang="pt">\n'
+    + '<head>\n'
+    + '  <meta charset="UTF-8">\n'
+    + '  <title>JSPlotly Gráfico Exportado</title>\n'
+    + '  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"><\/script>\n'
+    + '  <style>\n'
+    + '    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: ' + (temaEscuro ? '#1e1e1e' : '#ffffff') + '; color: ' + (temaEscuro ? '#e0e0e0' : '#000000') + '; }\n'
+    + '    #grafico { width: 100vw; height: 100vh; }\n'
+    + '  </style>\n'
+    + '</head>\n'
+    + '<body>\n'
+    + '  <div id="grafico"></div>\n'
+    + '  <script>\n'
+    + '    const data = ' + curvasStr + ';\n'
+    + '    const layout = ' + layoutStr + ';\n'
+    + '    const frames = ' + framesStr + ';\n'
+    + '    layout.editable = false;\n'
+    + '    Plotly.newPlot("grafico", data, layout).then(function() {\n'
+    + '      if (frames && frames.length > 0) {\n'
+    + '        Plotly.addFrames("grafico", frames);\n'
+    + '        Plotly.animate("grafico", null, { frame: { duration: 500, redraw: true }, transition: { duration: 300 } });\n'
+    + '      }\n'
+    + '    });\n'
+    + '    document.getElementById("grafico").on("plotly_click", function(data) {\n'
+    + '      const y = data.points[0].y;\n'
+    + '      const ctx = new (window.AudioContext || window.webkitAudioContext)();\n'
+    + '      const osc = ctx.createOscillator();\n'
+    + '      const gain = ctx.createGain();\n'
+    + '      osc.type = "sine";\n'
+    + '      osc.frequency.setValueAtTime(y, ctx.currentTime);\n'
+    + '      osc.connect(gain);\n'
+    + '      gain.connect(ctx.destination);\n'
+    + '      osc.start();\n'
+    + '      osc.stop(ctx.currentTime + 0.4);\n'
+    + '    });\n'
+    + '  <\/script>\n'
+    + '</body>\n'
+    + '</html>';
+
+  const blob = new Blob([htmlContent], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "play.html";
+  a.click();
+}
+</script>
+
+
+
+
+<script>
+function salvarCloneJSPlotly() {
+  // Captura o código do usuário e escapa com segurança
+  const codigoNovo = editor.getValue()
+    .replace(/\\/g, '\\\\')
+    .replace(/`/g, '\\`')
+    .replace(/\$/g, '\\$');
+
+  // Substitui diretamente o valor da variável codigoPadrao na string
+  const novaDefinicao = 'var codigoPadrao = `' + codigoNovo + '`;';
+  
+  // Extrai o HTML original em partes
+  const htmlOriginal = document.documentElement.outerHTML;
+
+  const htmlAtualizado = htmlOriginal.replace(
+    /var codigoPadrao = `([\s\S]*?)`;/,
+    novaDefinicao
+  );
+
+  const blob = new Blob([htmlAtualizado], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "JSPlotly.html";
+  a.click();
+}
+
+function abrirNoChartStudio() {
+  const gd = document.getElementById('grafico');
+  if (!gd || !gd.data || gd.data.length === 0) {
+    alert("Não há gráfico para enviar. Clique em 'add' primeiro.");
+    return;
+  }
+
+  const dataStr   = JSON.stringify(gd.data || []);
+  const layoutStr = JSON.stringify(gd.layout || {});
+
+  // Tenta GET quando o payload é pequeno (URLs muito grandes podem falhar)
+  const urlBase = "https://chart-studio.plotly.com/create/";
+  const urlGET  = urlBase
+    + "?plotlyData="   + encodeURIComponent(dataStr)
+    + "&plotlyLayout=" + encodeURIComponent(layoutStr);
+
+  if ((dataStr.length + layoutStr.length) < 1500) {
+    window.open(urlGET, "_blank");
+    return;
+  }
+
+  // Fallback: POST via form oculto (evita limite de URL)
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = urlBase;     // Editor do Chart Studio
+  form.target = "_blank";
+
+  const inpData = document.createElement("input");
+  inpData.type = "hidden";
+  inpData.name = "plotlyData";
+  inpData.value = dataStr;
+
+  const inpLayout = document.createElement("input");
+  inpLayout.type = "hidden";
+  inpLayout.name = "plotlyLayout";
+  inpLayout.value = layoutStr;
+
+  form.appendChild(inpData);
+  form.appendChild(inpLayout);
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+}
+
+
+</script>
+
+
+
+</body>
+</html>
+
+

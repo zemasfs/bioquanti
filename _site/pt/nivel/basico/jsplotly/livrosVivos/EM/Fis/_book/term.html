@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Transformações Invisíveis: Termodinâmica, Gases e Soluções – Física &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./radio.html" rel="next">
+<link href="./gravFlui.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./term.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Transformações Invisíveis: Termodinâmica, Gases e Soluções</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Física &amp; JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mecanica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mecânica: Por que as coisas se movem ?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Eletricidade e Magnetismo: forças sem contato que moldam o mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ondas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Ondas: do movimento ao som e à luz</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gravFlui.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gravitação e Fluidos — quando a gravidade molda a matéria</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./term.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Transformações Invisíveis: Termodinâmica, Gases e Soluções</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./radio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radioatividade, Energia Nuclear e Impactos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./modern.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Relatividade e Quântica — Quando espaço, tempo, energia e matéria deixam de ser intuitivos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./jsp3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">JSPlotly e construção de objetos interativos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./plotly.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">A Biblioteca Plotly</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Transformações Invisíveis: Termodinâmica, Gases e Soluções</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- 
+três níveis que quase nunca aparecem juntos:
+
+Macroscópico (o que vemos)
+pressão, volume, temperatura, concentração
+Microscópico (o que acontece de verdade)
+movimento das partículas, colisões, interações
+Energia (o que governa tudo)
+calor, trabalho, entropia
+
+E aí vem o ouro pedagógico:
+
+💡 gases → sistema simples idealizado
+💡 soluções → sistema real, com interações
+
+🌳 Tronco pro livro vivo (visão geral)
+
+TERMODINÂMICA: GASES E SOLUÇÕES
+
+🔹 Galho 1 — Gases
+Leis dos gases (Boyle, Charles, Gay-Lussac)
+Equação geral
+Modelo cinético
+Compressão e expansão
+Transformações (isotérmica, isobárica, etc.)
+🔹 Galho 2 — Termodinâmica
+Calor vs trabalho
+1ª Lei (conservação de energia)
+Energia interna
+Processos reversíveis/irreversíveis
+Introdução à entropia
+🔹 Galho 3 — Soluções
+Concentração
+Interações soluto–solvente
+Dissolução (energética)
+Propriedades coligativas (nível médio)
+Diferença entre ideal e real
+🎯 A sacada integradora (fruto 🍎)
+
+Aqui tá o coração do capítulo:
+
+O que muda quando saímos de um gás ideal para uma solução real?
+
+Isso permite perguntas absurdamente boas:
+
+Por que um gás responde “certinho” às equações…
+mas uma solução não?
+O que acontece com a energia quando algo dissolve?
+Por que algumas dissoluções esfriam e outras aquecem?
+💡 Ideia de Script (já pensando no seu padrão)
+🧪 Script 1 (simples – Ace)
+
+Um modelo tipo:
+
+PV = nRT
+aluno mexe em:
+temperatura
+volume
+quantidade de gás
+
+E vê:
+
+gráfico P vs V
+comportamento mudando
+
+👉 objetivo:
+aprender função + física ao mesmo tempo
+
+⚙️ Script 2 (interativo com widgets)
+
+Aqui vem o diferencial absurdo:
+
+Simulador integrado:
+
+Parte 1: gás ideal (slider T, V, n)
+Parte 2: solução (slider concentração, interação)
+
+E o aluno vê:
+
+energia do sistema
+“calor liberado/absorvido”
+comparação lado a lado
+🚀 Script 3 (nível “absurdo++”)
+
+Um sistema tipo:
+
+partículas animadas (gás vs solução)
+colisões
+intensidade de movimento (temperatura)
+“ligação” entre partículas na solução
+
+👉 Isso conecta:
+
+física + química + visualização
+🔥 Ideia para abertura (já no seu estilo)
+
+Você pode abrir assim:
+
+Você já percebeu que:
+
+o ar esquenta quando comprimido?
+o gelo pode “queimar” ao dissolver?
+e que algumas misturas parecem “roubar calor” do ambiente?
+
+E aí vem o conceito-chave:
+
+energia não desaparece — ela muda de forma -->
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Você já percebeu que uma bomba de bicicleta esquenta quando o ar é comprimido, ou que um spray aerossol fica gelado enquanto é usado, e também que algumas substâncias parecem “desaparecer” na água, alterando a temperatura da mistura ?</p>
+<p>Mágica ?! Não, Termodinâmica. Um conceito que se traduz como energia se transformando o tempo todo. A Termodinâmica estuda como calor, pressão, volume, temperatura e matéria se relacionam em sistemas físicos e químicos. Ela aparece em motores, geladeiras, pneus, atmosferas planetárias, metabolismo celular, cozimento de alimentos, mudanças climáticas e até no funcionamento do próprio corpo humano.</p>
+<p>Neste capítulo, você irá explorar esses mundos invisíveis. Como a pressão e volume se relacionam em gases, como partículas reais diferem de modelos ideais, como diferentes condições alteram cenários termodinâmicos, e como processos físicos podem ser visualizados em movimento. E isso lhe permitirá enxergar a matéria como um sistema dinâmico de partículas, colisões, energia e transformações.</p>
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> reconhecer como pressão, volume e temperatura se relacionam em sistemas gasosos<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar a equação dos gases ideais como uma forma condensada de várias regularidades experimentais<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> distinguir calor, temperatura, energia interna e trabalho sem reduzi-los a sinônimos<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> perceber que um sistema pode trocar energia com o meio de modos diferentes<span class="kw">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> compreender que soluções envolvem interações entre partículas e, por isso, nem sempre seguem comportamentos ideais<span class="kw">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> comparar o comportamento mais livre de um gás com o comportamento mais interativo de uma solução<span class="kw">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar qualitativamente por que algumas dissoluções aquecem o meio, enquanto outras o resfriam<span class="kw">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> utilizar simulações computacionais para visualição interativa dos conceitos abordados.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-gases" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_gases.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.1: Energia, matéria e movimento estão constantemente se transformando.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O <em>app</em> de JSPlotly abaixo mostra a relação entre pressão e volume de um gás, uma das mais importantes da Termodinâmica.</p>
+<div id="fig-gases" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gases.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.2: Gás ideal: quando apertar o espaço muda a pressão. Clique neste <a href="apps/gases.html">LINK</a> para abrir o aplicativo em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>Ao alterar o espaço disponível para as partículas, a pressão muda automaticamente, o que revela no gráfico que pressões maiores levam a volumes menores. Essa é a famosa relação inversa entre pressão e volume descrita pela <code>Lei de Boyle</code>:</p>
+<p><span id="eq-boyle"><span class="math display">\[
+P_1*V_1=P_2*V_2
+\tag{6.1}\]</span></span></p>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>Execute o script original e depois o altere para diferentes temperaturas <code>T</code> (200, 500, 800, por ex). Observe as diferenças.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> T <span class="op">=</span> <span class="dv">300</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> n <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Altere agora a quantidade de matéria <code>n</code> e veja como a pressão responde (0.5, 2, por ex).</p>
+<p>O script usa a <code>Equação Geral dos Gases Ideais</code>, um conceito teórico aplicado a vários temas e áreas, desde a Física clássica até o metabolismo celular:</p>
+<p><span id="eq-ideal"><span class="math display">\[
+PV=nRT
+\tag{6.2}\]</span></span></p>
+<p>Para calcular a pressão, basta reorganizar a equação:</p>
+<p><span id="eq-Pideal"><span class="math display">\[
+P=\frac{nRT}{V}
+\tag{6.3}\]</span></span></p>
+<p>O gráfico resultante forma uma hipérbole, mostrando uma relação inversa entre as variáveis. Isso significa que a pressão aumenta quando o volume diminui, e vice-versa. E também informa que a temperatura e a quantidade de gás influenciam positivamente a pressão.</p>
+<p>Para o <em>app</em>, o script percorre diferentes valores de volume:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">let</span> v <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> v <span class="op">&lt;=</span> <span class="dv">20</span><span class="op">;</span> v <span class="op">+=</span> <span class="fl">0.5</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para cada valor de volume, calcula-se a pressão:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>P<span class="op">.</span><span class="fu">push</span>((n <span class="op">*</span> R <span class="op">*</span> T) <span class="op">/</span> v)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Os valores são armazenados em listas:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>V<span class="op">.</span><span class="fu">push</span>(v)<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>P<span class="op">.</span><span class="fu">push</span>(<span class="op">...</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A lógica de programação envolve a escolha de um volume, o cálculo da pressão corresponedente, o armazenamento do resultado, um <code>laço de repetição (*loop*)</code> para criar novos pontos do gráfico, e o desenho final da curva.</p>
+<p>Você pode seguir esse pequeno tutorial para utilizar o aplicativo.</p>
+<ol type="1">
+<li>Rode o script com os valores originais;</li>
+<li>Observe o formato da curva;</li>
+<li>Diminua a temperatura;</li>
+<li>Veja como a curva “abaixa”;</li>
+<li>Aumente a temperatura;</li>
+<li>Observe o aumento da pressão;</li>
+<li>Altere a quantidade de matéria (<code>n</code>);</li>
+<li>Compare diferentes cenários;</li>
+<li>Observe especialmente o comportamento em pequenos volumes.</li>
+</ol>
+<p>Exercitando-se acima, você compreenderá rapidamente que comprimir um gás aumenta muito sua pressão. A seguir, alguns cenários para você se divertir…<em>“sem pressão”</em>.</p>
+<ol type="1">
+<li><em>Compressão intensa</em>. Na condição térmica abaixo, observe os menores volumes do gráfico. Por que pequenas reduções de volume aumentam tanto a pressão ?</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> T <span class="op">=</span> <span class="dv">300</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Gás quente</em>. Suba a temperatura para 700. Por que gases mais quentes exercem maior pressão ?</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> T <span class="op">=</span> <span class="dv">700</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Poucas partículas</em>. Menos partículas significam menos colisões ?</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> n <span class="op">=</span> <span class="fl">0.3</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Muito gás em pouco espaço</em>. Por que recipientes fechados podem se tornar perigosos quando aquecidos ?</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> n <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> T <span class="op">=</span> <span class="dv">500</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ainda que o mecanismo seja invisível, o gráfico simula colisões microscópicas que ocorrem quando há variação de volume. Quando esse diminui, as partículas ficam mais próximas, as colisões aumentam, e a pressão cresce. Já quando a temperatura aumenta, as partículas se movem mais rapidamente, as colisões ficam mais intensas, e a pressão aumenta ainda mais. Assim, a curva traduz o comportamento coletivo de bilhões de partículas invisíveis.</p>
+<p>Ou até bem mais do que isso, já que o <code>mol</code>, a unidade do Sistema Internacional para quantidade, representa 6,02 x 10 <span class="math inline">\(^{23}\)</span> moléculas. Ou a bagatela de <em>seissecentos e dois sextilhões</em> de moléculas…ou ainda <em>602.000.000.000.000.000.000.000 moléculas</em> !! Ou ainda…e essa poucos sabem, praticamente o mesmo valor do peso de Marte, em kilogramas (útil isso, não ?!).</p>
+<p>O que acha de dar uma incrementada na representação da <a href="#fig-gases" class="quarto-xref">Figura&nbsp;<span>6.2</span></a> ? Não para acrescentar conceitos teóricos, mas dar um <em>“charme”</em> à visualização, além de <em>usabilidade</em>, e estilo ! Veja na <a href="#fig-gases_1b" class="quarto-xref">Figura&nbsp;<span>6.3</span></a> como uma mesma ideia pode ser vista de formas distintas usando linguagem de programação.</p>
+<div id="fig-gases_1b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gases_1b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gases_1b.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gases_1b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.3: Uma nova roupagem para a equação geral dos gases da <a href="#fig-gases" class="quarto-xref">Figura&nbsp;<span>6.2</span></a>. Clique com o botão direito neste <a href="apps/gases_1b.html">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>A equação do gases ideais é a mesma da <a href="#eq-Pideal" class="quarto-xref">Equação&nbsp;<span>6.3</span></a>. Mas agora você tem um cilindro comprimível com um pistão, algumas partículas em seu interior, um botão para <code>animar</code> e outro para <code>pausar</code> uma animação, e um controle deslizante (<em>slider</em>) para selecionar o volume do cilindro. Ao deslocar o <em>slider</em>, perceba que o cilindro comprime ou expande auxiliado por um pistão (o retângulo cinza superior), simulando exatamente o efeito de variação interna da pressão pela <a href="#eq-Pideal" class="quarto-xref">Equação&nbsp;<span>6.3</span></a>. Aqui não é necessário um tutorial, pois você já sabe o que fazer. Além de ajustar o <em>slider</em>, pode também alterar os valores de <code>n</code> e <code>T</code> no editor códigos. Como um todo, divirta-se com essa versão animada e visual da equação geral dos gases.</p>
+</section>
+</div>
+</div>
+<!-- 
+
+
+Modo de usar (Script 1)
+mude T → curva sobe/desce
+mude n → sistema escala
+observe: curva hiperbólica
+🎯 Cenários
+dobrar temperatura
+reduzir volume pela metade
+comparar diferentes quantidades de gás
+
+
+
+
+Abra o Script 1.
+
+- Aumente a temperatura.
+- Diminua o volume.
+- Observe o que acontece com a pressão.
+
+Agora tente:
+
+- manter temperatura constante;
+- variar o volume lentamente.
+
+> O sistema responde de forma previsível… mas por quê?
+
+---
+
+## Onde está a pergunta?
+
+Se gases obedecem regras tão “bonitas”…
+
+> por que soluções não se comportam da mesma forma?
+
+- O que muda quando há interação entre partículas?
+- Para onde vai a energia quando algo dissolve?
+- Por que algumas dissoluções esfriam… e outras aquecem? --->
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A equação dos gases ideais da <a href="#fig-gases" class="quarto-xref">Figura&nbsp;<span>6.2</span></a> propõe uma situação no mínimo muito curiosa, e já traduzida pelo próprio nome: gases ideais. Um <em>gás ideal</em> é um conceito físico e não material. Ou seja, ele não existe no mundo real, pois a condição <em>ideal</em> pressupõe limitações impossíveis de acontecer. Isso porque um gás ideal é formado por partículas tão pequenas que não possuem massa, são muito afastadas uma das outras e não interagem entre si.</p>
+<p>Por conseguinte, um gás ideal é um modelo teórico simplificado para explicar as relações de pressão, volume, temperatura e quantidade num gás <em>“perfeito”</em> (<a href="#eq-ideal" class="quarto-xref">Equação&nbsp;<span>6.2</span></a>). Mas o mundo costuma ser menos perfeito. Quando se assume que o gás possui partículas reais capazes de interagir entre si, o conceito deixa de ser ideal e cai no mundo real… ou do gás real. Uma maneira de compreender como o <em>gás real</em> se comporta em relação ao <em>gás ideal</em> está ilustrada pelo <em>app</em> de JSPlotly da <a href="#fig-gases2b" class="quarto-xref">Figura&nbsp;<span>6.4</span></a>.</p>
+<div id="fig-gases2b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gases2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gases2b.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gases2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.4: Gás real: quando as partículas deixam ser ser “perfeitas”. Clique com o botão direito neste <a href="apps/gases2b.html">LINK</a> e acesse o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<p>Nesse modelo de <em>gases reais</em>, partículas podem se atrair, se repelir ou trocar energia de maneiras que o modelo ideal não representa completamente. Também no script você compara um gás ideal com um gás real, esse um sistema com interação entre partículas, e observa o que muda quando as partículas deixam de se comportar como pontos independentes.</p>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>Execute o script com os valores originais e depois altere a <code>const interacao</code> para valores de 0.05, 0.30, e 0.60.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> V <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> n <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interacao <span class="op">=</span> <span class="fl">0.20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois use o <em>slider</em> para alterar a <code>temperatura absoluta</code> (em graus <code>Kelvin</code>, K). Observe como a diferença entre o gás ideal e o sistema com interação muda em cada cenário. Contrastando com a <a href="#eq-Pideal" class="quarto-xref">Equação&nbsp;<span>6.3</span></a> para um gás ideal, no sistema com interação a variação da pressão conta com um fator associado à interação:</p>
+<p><span class="math display">\[
+P_{\text{interação}} = P_{\text{ideal}}(1 - \text{interação})
+\]</span></p>
+<p>Essa é uma simplificação didática, apenas. Ela não pretende reproduzir todos os detalhes de um gás real, mas ajuda a visualizar que interações entre partículas podem modificar o comportamento previsto pelo modelo ideal.</p>
+<p>A função principal do script é:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">calcularEstado</span>(T) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> P_ideal <span class="op">=</span> (n <span class="op">*</span> R <span class="op">*</span> T) <span class="op">/</span> V<span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> P_real <span class="op">=</span> P_ideal <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> interacao)<span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> E_ideal <span class="op">=</span> T<span class="op">;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> E_real <span class="op">=</span> T <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> interacao)<span class="op">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">T</span><span class="op">:</span> T<span class="op">,</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">pressao</span><span class="op">:</span> [P_ideal<span class="op">,</span> P_real]<span class="op">,</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">energia</span><span class="op">:</span> [E_ideal<span class="op">,</span> E_real]</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Mas se você achar interessante conhecer também a <code>Equação de van der Waals</code> que modela os gases reais, segue abaixo:</p>
+<p><span id="eq-real"><span class="math display">\[
+\left( P + \frac{n^2 a}{V^2} \right) (V - nb) = nRT
+\tag{6.4}\]</span></span></p>
+<p>Nessa <a href="#eq-real" class="quarto-xref">Equação&nbsp;<span>6.4</span></a>, <span class="math inline">\(V_{m}\)</span> é o volume molar, <span class="math inline">\(T\)</span> é a temperatura, <span class="math inline">\(R\)</span> é a constante universal dos gases - 8,31 <span class="math inline">\(J*mol^{-1}K^{-1}\)</span> - <span class="math inline">\(a\)</span> é um parâmetro de atração, e <span class="math inline">\(b\)</span> um parâmetro de volume.</p>
+<p>Voltando para o script da <a href="#fig-gases2b" class="quarto-xref">Figura&nbsp;<span>6.4</span></a>, para cada temperatura o código calcula a pressão do gás ideal, a pressão do sistema com interação, a energia relativa do gás ideal, e a energia relativa do sistema com interação. Depois, esses valores aparecem em barras comparativas. O <em>slider</em> muda a temperatura e os botões alternam entre pressão e energia relativa. Se quiser um tutorial rápido para mexer no <em>app</em>:</p>
+<ol type="1">
+<li>Rode o script com os valores originais;</li>
+<li>Observe as barras de pressão;</li>
+<li>Use o slider para mudar a temperatura;</li>
+<li>Veja que a pressão aumenta quando a temperatura aumenta;</li>
+<li>Clique em <em>Energia relativa</em>;</li>
+<li>Compare o gás ideal com o sistema com interação;</li>
+<li>Volte para <em>Pressão</em>;</li>
+<li>Altere <code>interacao</code> no código;</li>
+<li>Rode novamente;</li>
+<li>Observe como o aumento da interação amplia a diferença entre os modelos.</li>
+</ol>
+<p>Veja que o modelo ideal deixa de descrever bem o sistema quando as partículas interagem muito. Alguns cenários são também propostos para seu estudo.</p>
+<ol type="1">
+<li><em>Interação quase desprezível</em>. Quando a interação é muito pequena, o sistema se aproxima do gás ideal ?</li>
+</ol>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interacao <span class="op">=</span> <span class="fl">0.02</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><p><em>Interação moderada</em>. Mude <code>interacao</code> para 0.2. A diferença entre ideal e interativo já é visível ?</p></li>
+<li><p><em>Interação intensa</em>. Agora mude <code>interacao</code> para 0.6. O modelo ideal começa a falhar de forma evidente ?</p></li>
+<li><p><em>Temperatura baixa</em>. Use o slider em 200 K. Em temperaturas menores, a energia relativa reduzida fica mais evidente ?</p></li>
+<li><p><em>Temperatura alta</em>. Agora mude para 500 K. A temperatura aumenta os dois modelos da mesma forma ou mantém diferenças proporcionais ?</p></li>
+</ol>
+<p>O gráfico mostra que modelos científicos são aproximações. O gás ideal é útil porque simplifica o sistema. Mas essa simplicidade depende de algumas condições, tais como partículas muito afastadas, baixa interação entre moléculas, pressões moderadas, e temperaturas suficientemente altas. Quando essas condições deixam de valer, interações microscópicas passam a influenciar grandezas macroscópicas, como pressão e energia. A título de curiosidade, uma forma de se enxergar a diferença entre gás, líquido e sólido se dá pela proximidade de suas partículas constituintes.</p>
+<p>O script usa dois recursos importantes da biblioteca <code>Plotly.js</code> de <em>JavaScript</em>: <code>frames</code> e <code>updatemenus</code>. Os <code>frames</code> guardam diferentes estados do gráfico:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> framesPressao <span class="op">=</span> estados<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(est<span class="op">,</span> i) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">"P"</span> <span class="op">+</span> i<span class="op">,</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">data</span><span class="op">:</span> [<span class="op">...</span>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada frame representa uma temperatura diferente. Os botões escolhem o tipo de variável mostrada, e o slider escolhe a temperatura, permitindo uma visão comparativa.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>label<span class="op">:</span> <span class="st">"Pressao"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>label<span class="op">:</span> <span class="st">"Energia relativa"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</div>
+</div>
+<hr>
+<!-- 
+
+### Gases
+
+A relação fundamental:
+
+\[
+PV = nRT
+\] 
+
+- pressão depende de colisões;
+- temperatura controla a energia das partículas;
+- volume define o espaço disponível.
+
+---
+
+### Termodinâmica
+
+A regra central:
+
+> **energia não desaparece**
+
+\[
+\Delta U = Q - W
+\]
+
+- calor (Q): energia trocada com o ambiente  
+- trabalho (W): energia usada para expandir/comprimir  
+
+---
+
+### Soluções
+
+Aqui surge o mundo real:
+
+- partículas interagem;
+- energia é absorvida ou liberada;
+- o comportamento deixa de ser ideal.
+
+--->
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Retomando o início desse capítulo, podemos afimar agora que os sprays gelam porque há uma expansão rápida (trabalho com perda de energia), o sal dissolve podendo esfriar ou aquecer, e que o ar esquenta ao ser comprimido. Quando falamos em gases, muitas vezes começamos por variáveis como pressão, volume e temperatura. Quando falamos em termodinâmica, o foco se desloca para calor, trabalho e energia interna. Quando falamos em soluções, surgem concentração, dissolução e interação entre partículas. Apesar de consistirem panoramas bastante distintos, todos possuem características em comum, já que dizem respeito à partículas que se organizam, se movimentam e trocam energia com o ambiente. Assim, de gases para soluções, a Termodinâmica emprega relações comuns para explicar o comportamento da matéria, e distintas apenas em complexidade crescente. E “jamais” abandona a constante universal <span class="math inline">\(R\)</span> dos gases !</p>
+<p>Assim como foi feito para a <a href="#fig-gases_1b" class="quarto-xref">Figura&nbsp;<span>6.3</span></a>, também é possível uma visualização mais clara para o comportamento de um gás real, o que é proposto no <em>app</em> da <a href="#fig-gases3b" class="quarto-xref">Figura&nbsp;<span>6.5</span></a> abaixo. Ele não realiza uma animação como a da <a href="#fig-gases_1b" class="quarto-xref">Figura&nbsp;<span>6.3</span></a>, mas propõe uma visão comparativa sem gráficos pelo editor.</p>
+<div id="fig-gases3b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gases3b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gases3b.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gases3b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.5: Gás real: quando as partículas deixam ser ser “perfeitas”. Clique com o botão direito neste <a href="apps/gases3b.html">LINK</a> e acesse o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<p>O código agora cria pequenos “mundos microscópicos” contendo partículas em movimento que dependem de temperatura, intensidade de interação, quantidade de partículas, bem como de condições iniciais aleatórias. Observe então padrões emergindo do movimento coletivo das partículas.</p>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>Execute o script original, depois altere os parâmetros e empilhe cenários diferentes pelo botão <code>add</code> do JSPlotly.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> T <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interacao <span class="op">=</span> <span class="fl">0.05</span><span class="op">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> N <span class="op">=</span> <span class="dv">60</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Por exemplo, alterando a temperatura (0.5, 1.5, 2.2) e observando as cores e a dispersão das partículas. Veja que a temperatura está ligada ao movimento das partículas. Quanto maior a temperatura, maiores as velocidades, colisões e a dispersão do sistema. Além disso, o parâmetro <code>interacao</code> controla forças simplificadas entre as partículas. Essa representação mostra como um sistema de pontos independentes visto para gases ideais passa a apresentar um comportamento coletivo de um sistema com interação para gases reais.</p>
+<p>Para ententer um pouco como funciona o script, as partículas começam em posições aleatórias:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x<span class="op">.</span><span class="fu">push</span>(<span class="dv">10</span> <span class="op">*</span> <span class="fu">rnd</span>())<span class="op">;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>y<span class="op">.</span><span class="fu">push</span>(<span class="dv">10</span> <span class="op">*</span> <span class="fu">rnd</span>())<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois recebem velocidades proporcionais à temperatura:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>vx<span class="op">.</span><span class="fu">push</span>((<span class="fu">rnd</span>() <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="fl">1.8</span> <span class="op">*</span> T)<span class="op">;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>vy<span class="op">.</span><span class="fu">push</span>((<span class="fu">rnd</span>() <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="fl">1.8</span> <span class="op">*</span> T)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Em seguida, o sistema evolui em pequenos passos:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>x[i] <span class="op">=</span> x[i] <span class="op">+</span> <span class="fl">0.08</span> <span class="op">*</span> vx[i]<span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>y[i] <span class="op">=</span> y[i] <span class="op">+</span> <span class="fl">0.08</span> <span class="op">*</span> vy[i]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Quando partículas ficam muito próximas, surgem interações:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> interacao <span class="op">/</span> d2<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso produz pequenas forças entre elas. A cor também muda continuamente com a temperatura, seguindo um padrão comum em Química. Para temperaturas menores os pontos ficam azulados, e para temperaturas maiores, os pontos ficam avermelhados (<code>termocromismo</code>). Essa é uma estratégia interessante para transformar números em comportamento visual. Globalmente, a lógica do algoritmo envolve uma geração pseudoaleatória de valor, atualização iterativa, colisões com paredes, forças simplificadas entre partículas, e o mapeamento contínuo de cor.</p>
+<p>Para usar o <em>app</em>, experimente esse pequeno tutorial:</p>
+<ol type="1">
+<li>Rode o script original;</li>
+<li>Observe a distribuição das partículas;</li>
+<li>Aumente a temperatura (<code>T</code>);</li>
+<li>Veja como as partículas ficam mais dispersas;</li>
+<li>Observe a mudança gradual de cor;</li>
+<li>Aumente <code>interacao</code>;</li>
+<li>Veja como o sistema se torna mais “organizado” ou perturbado;</li>
+<li>Aumente o número de partículas (<code>N</code>);</li>
+<li>Use o botão <em>add</em> para comparar cenários diferentes no mesmo gráfico;</li>
+<li>Experimente diferentes valores inciais em <code>seed</code> (semente).</li>
+</ol>
+<p>E no fundo, veja como o comportamento coletivo pode surgir apenas de regras simples entre partículas. Seguem alguns cenários para exploração do <em>app</em>.</p>
+<ol type="1">
+<li><em>Sistema frio</em>. Por que partículas frias parecem menos agitadas ?</li>
+</ol>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> T <span class="op">=</span> <span class="fl">0.4</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><p><em>Sistema quente</em>. Mude para T = 2.2. Como o aumento da energia altera a dispersão do sistema ?</p></li>
+<li><p><em>Pouca interação</em>. O sistema se aproxima de partículas independentes ?</p></li>
+</ol>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interacao <span class="op">=</span> <span class="fl">0.01</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><p><em>Forte interação</em>. Mude para <code>interacao</code> = 1.5. Interações intensas produzem padrões coletivos mais evidentes ?</p></li>
+<li><p><em>Muitas partículas</em>. O comportamento global muda quando o sistema fica mais “povoado” ?</p></li>
+</ol>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> N <span class="op">=</span> <span class="dv">150</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><em>Comparação empilhada</em>. Use T = 0.5 e sobreponha com T = 2.0 pelo botão <code>add</code>.</li>
+</ol>
+<p>Como um todo, o script aproxima a ideia de que em sistemas reais podem surgir comportamentos coletivos. Esse comportamentos são evidenciados pelas regiões mais dispersas ou mais concentradas, pelas diferenças associadas à temperatura, e pelos padrões relacionados à interação. Esse tipo de abordagem aparece em vários temas diferentes, também Física estatística, dinâmica molecular, simulação de fluidos, ciência dos materiais, biologia celular e modelagem climática. São os chamados <code>sistemas complexos</code>, e que podem surgir de regras microscópicas muito simples.</p>
+</section>
+<section id="uma-animação-para-gases-reais" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="uma-animação-para-gases-reais">Uma animação para gases reais</h3>
+<p>Vamos lá ! Confesse que o <em>app</em> da <a href="#fig-gases_1b" class="quarto-xref">Figura&nbsp;<span>6.3</span></a> para gases reais estava bem mais legal que o de gases reais da <a href="#fig-gases3b" class="quarto-xref">Figura&nbsp;<span>6.5</span></a> acima, não ? Então, por que não considerar uma animação também para o comportamento coletivo de interação desse último ?</p>
+<div id="fig-gases4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gases4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gases4.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gases4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.6: Gás real: quando a Termodinâmica ganha movimento. Clique com o botão direito neste <a href="apps/gases4.html">LINK</a> e acesse o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<p>O script transforma a Termodinâmica em uma animação dinâmica de partículas interagindo em tempo real. Elas se movem, colidem com as paredes, influenciam umas às outras e mudam de comportamento conforme a temperatura. Essa movimentação sob interação faz com que o comportamento microscópico coletivo produza propriedades macroscópicas observáveis.</p>
+<section id="agite-antes-de-usar-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-3">Agite antes de usar</h4>
+<p>Execute o script original e use os botões <code>Play</code> e <code>Pause</code> para observar o movimento das partículas. Assim como para o script da <a href="#fig-gases3b" class="quarto-xref">Figura&nbsp;<span>6.5</span></a>, altere depois a temperatura e o efeito de <code>interacao</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> T <span class="op">=</span> <span class="fl">1.2</span><span class="op">;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interacao <span class="op">=</span> <span class="fl">0.04</span><span class="op">;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> N <span class="op">=</span> <span class="dv">40</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe que o script tenta representar a ideia de que a temperatura está associada à <code>energia cinética média</code> das partículas. Quanto maior a temperatura, maior a velocidade média, as colisões e a agitação do sistema. Além disso, o parâmetro <code>interacao</code> introduz forças simplificadas entre partículas, permitindo mostrar o comportamento coletivo mais complexo para um gás real. A visualização ocorre na animação por movimento e cor. A cor muda conforme a temperatura: azul (sistema frio), passando por verde (moderado), laranja (quente), até vermelho (muito energético).</p>
+<p>Se quiser saber como o algoritmo produz a animação, as partículas começam em posições aleatórias:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>x<span class="op">.</span><span class="fu">push</span>(<span class="dv">10</span> <span class="op">*</span> <span class="fu">rnd</span>())<span class="op">;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>y<span class="op">.</span><span class="fu">push</span>(<span class="dv">10</span> <span class="op">*</span> <span class="fu">rnd</span>())<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois recebem velocidades relacionadas à temperatura:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>vx<span class="op">.</span><span class="fu">push</span>((<span class="fu">rnd</span>() <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="fl">1.6</span> <span class="op">*</span> T)<span class="op">;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>vy<span class="op">.</span><span class="fu">push</span>((<span class="fu">rnd</span>() <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="fl">1.6</span> <span class="op">*</span> T)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O sistema evolui em pequenos passos temporais:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>x[i] <span class="op">=</span> x[i] <span class="op">+</span> <span class="fl">0.10</span> <span class="op">*</span> vx[i]<span class="op">;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>y[i] <span class="op">=</span> y[i] <span class="op">+</span> <span class="fl">0.10</span> <span class="op">*</span> vy[i]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Quando partículas se aproximam, surgem interações:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> f <span class="op">=</span> interacao <span class="op">/</span> d2<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada quadro da animação é armazenado em:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>frames<span class="op">.</span><span class="fu">push</span>({<span class="op">...</span>})</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Isso permite ao JSPlotly reproduzir o sistema como uma animação contínua.</p>
+<p>Para <em>“brincar”</em> com a animação:</p>
+<ol type="1">
+<li><p>Rode o script original;</p></li>
+<li><p>Clique em <code>Play</code>;</p></li>
+<li><p>Observe o movimento coletivo;</p></li>
+<li><p>Use <code>Pause</code> para analisar um quadro específico;</p></li>
+<li><p>Aumente a temperatura <code>T</code>;</p></li>
+<li><p>Veja como as partículas ficam mais rápidas;</p></li>
+<li><p>Observe a mudança de cor associada à temperatura;</p></li>
+<li><p>Aumente <code>interacao</code>;</p></li>
+<li><p>Veja como o comportamento coletivo muda;</p></li>
+<li><p>Aumente o número de partículas <code>N</code>;</p></li>
+<li><p>Observe como o sistema se torna mais “denso”. Perceba que propriedades macroscópicas podem surgir apenas do movimento microscópico de partículas. Cenários ?</p></li>
+<li><p><em>Sistema frio</em>. Como partículas frias se comportam visualmente ?</p></li>
+</ol>
+<div class="sourceCode" id="cb29"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> T <span class="op">=</span> <span class="fl">0.4</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li><p><em>Sistema quente</em>. Mude T para 2.4. O aumento da energia torna o sistema mais caótico ?</p></li>
+<li><p><em>Interação quase nula</em>. O sistema se aproxima do comportamento de um gás ideal ?</p></li>
+</ol>
+<div class="sourceCode" id="cb30"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> interacao <span class="op">=</span> <span class="fl">0.01</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><p><em>Forte interação</em>. Mude <code>interacao</code> para 1.20. As partículas começam a influenciar fortemente umas às outras ?</p></li>
+<li><p><em>Sistema muito “povoado”</em>. Como o aumento do número de partículas altera colisões e padrões ?</p></li>
+</ol>
+<div class="sourceCode" id="cb31"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> N <span class="op">=</span> <span class="dv">120</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li><em>Comparação visual</em>. Compare T = 0.6 com T = 2.0. É possível sentir visualmente a diferença de temperatura apenas observando o movimento ?</li>
+</ol>
+<p>O script traz também um panorama interessante para temperatura, já que sua modificação impacta visualmente em velocidade, colisão, dispersão e agitação das partículas no simulador. Da mesma forma, a interação das partículas também gera um efeito coletivo.</p>
+</section>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para essa seção de divagações e descobertas, segue um elenco mais “real” do que “ideal”.</p>
+<ul>
+<li>E se o gás deixasse de ser ideal justamente quando a pressão se tornasse muito alta ?</li>
+<li>E se partículas começassem a interagir tão fortemente que o sistema passasse a se comportar mais como um líquido do que como um gás ?</li>
+<li>E se o aumento da temperatura fosse suficiente para reorganizar completamente o movimento coletivo das partículas ?</li>
+<li>E se pequenas diferenças microscópicas produzissem comportamentos macroscópicos gigantescos ?</li>
+<li>E se pressão, temperatura e volume fossem apenas manifestações visíveis de bilhões de colisões invisíveis acontecendo o tempo todo ?</li>
+<li>E se soluções líquidas escondessem processos semelhantes, com partículas dissolvidas alterando energia, organização e equilíbrio do sistema ?</li>
+<li>E se motores, atmosferas, metabolismo celular, mudanças climáticas e até o funcionamento do próprio corpo fossem consequência das mesmas ideias físicas exploradas nestes scripts ?</li>
+</ul>
+</div>
+</div>
+<hr>
+<!-- 
+Agora é hora de ir além.
+
+- E se aumentarmos muito a concentração?
+- E se as partículas se atraírem fortemente?
+- E se o sistema não puder trocar calor?
+
+👉 Explore isso no Script 2 e 3.
+
+![Script mais completo Clique neste [LINK](apps/gases2b.html) para abrir em nova aba.](figuras/gases2b.png){#fig-gases2b}
+
+Modo de usar (Script 2)
+slider interacao → simula forças entre partículas
+quanto maior → mais desvio do ideal
+compare gás vs solução
+🎯 Cenários
+interação zero → comportamento ideal
+interação alta → “mundo real”
+aumento de temperatura → compensação energética
+
+- E se a temperatura dobrar, mas o volume tambem dobrar?
+- E se o sistema estiver muito quente, mas houver interacao relevante?
+- E se o comportamento previsto pelo modelo ideal nao bater com o sistema observado?
+- E se dissolver uma substancia produzir resfriamento em vez de aquecimento?
+- E se as particulas interagirem mais do que o modelo admite?
+
+## Perguntas integradoras para o capitulo
+
+- Em que sentido pressao e uma medida macroscopica de eventos microscopicos?
+- Por que temperatura nao e simplesmente "quantidade de calor"?
+- O que diferencia calor de energia interna?
+- O que muda quando saimos de um gas idealizado para um sistema com interacoes?
+- Por que uma dissolucao pode ser compreendida como um processo termodinamico?
+- De que modo modelos simplificados ajudam, mesmo quando o real e mais complexo?
+
+## Outras possibilidades de expansao futura
+
+Este capitulo pode crescer, em versoes futuras, para incluir:
+
+- transformacoes isotermicas, isobaricas e isocoricas com mais detalhe;
+- primeira lei da termodinamica em estudos quantitativos;
+- entropia em nivel introdutorio;
+- propriedades coligativas;
+- solucoes ideais e nao ideais;
+- relacao entre energia, espontaneidade e equilibrio.
+
+
+
+### Cenário 1 — aquecimento com volume constante
+
+Pergunta:
+se a temperatura aumenta, mas o volume permanece praticamente o mesmo, o que tende a acontecer com a pressão e por quê?
+
+### Cenário 2 — expansão rápida de um gás
+
+Pergunta:
+quando um gás se expande rapidamente, que relação podemos imaginar entre trabalho realizado, energia interna e sensação térmica?
+
+### Cenário 3 — dissolução com resfriamento
+
+Pergunta:
+se uma substância dissolve e o recipiente esfria, o que isso sugere sobre o balanço energético do processo?
+
+### Cenário 4 — maior interação entre partículas
+
+Pergunta:
+em que sentido aumentar a interação entre partículas pode afastar o sistema de um comportamento ideal?
+
+### Cenário 5 — comparação entre estados pelo botão add
+
+Pergunta:
+o que fica mais fácil perceber quando colocamos vários cenários no mesmo painel, em vez de observar um único caso isolado?
+
+
+
+
+**E mais !!**
+
+- como um mesmo sistema pode parecer simples no nível macroscópico e complexo no nível microscópico;
+- por que modelos ideais são tão úteis mesmo quando o mundo real é mais rico do que eles;
+- como conectar linguagem física e linguagem química sem transformar o capítulo em dois capítulos separados;
+- de que modo temperatura, energia e interação entre partículas se cruzam em fenômenos do cotidiano;
+- como uma visualização computacional pode transformar fórmulas em perguntas investigáveis.
+
+**E mais !**
+
+
+
+Modo de usar (Script 3)
+T → velocidade (temperatura)
+interacao → força entre partículas
+🎯 Cenários
+T alta + interação baixa → gás ideal
+T baixa + interação alta → comportamento de solução
+observar formação de “aglomerados”
+
+Observação importante sobre o Script 3 e o botão add
+
+Do jeito que você sugeriu, a lógica fica ótima assim:
+
+Script 3 = comparação de cenários
+Script 4 = animação
+
+No Script 3, ao mudar input_T, a cor muda automaticamente:
+
+frio → azul
+intermediário → verde
+quente → laranja
+muito quente → vermelho
+
+Então o aluno pode empilhar cenários com add e comparar visualmente sem confusão.
+
+### Em síntese
+
+
+
+Ao explorar os scripts deste capítulo, o estudante não está apenas “vendo gráficos”. Ele está treinando um modo de pensar.
+
+Primeiro, identifica grandezas relevantes. Depois, altera parâmetros. Em seguida, observa padrões, compara cenários e tenta formular explicações. Esse caminho aproxima a experiência do estudante do trabalho real de investigação: levantar hipóteses, testar, rever, interpretar.
+
+É por isso que os scripts não são acessórios do texto. Eles fazem parte da própria construção conceitual. Em um capítulo como este, em que a matéria pode parecer abstrata à primeira vista, a possibilidade de manipular variáveis e observar respostas do sistema ajuda a converter fórmulas em fenômenos, e fenômenos em questões científicas. -->
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os conceitos desse capítulo podem ser revisitados em muitos outros contextos, como numa simples panela de pressão, por exemplo. Ao aumentar a pressão interna, a água pode atingir temperaturas maiores antes de entrar em ebulição intensa. Cilidros de ar comprimido também mostram que reduzir volume e elevar pressão envolve armazenamento de energia e exige cuidados de segurança. Já bolsas térmicas instantâneas funcionam porque certos processos de dissolução ou mistura absorvem energia, enquanto outros a liberam. E o que dizer de calibrar os pneus após rodar um bocado de estrada ? Com o pneu quente, a ar dentro da câmara está expandido, informando uma pressão errada no calibrador do posto de gasolina, já que essa decairá quando o pneu esfriar.</p>
+<p>Quando pensamos em animais e plantas, é possível perceber que gases, pressão parcial e difusão aparecem em processos biológicos fundamentais. Geladeiras e aparelhos de ar-condicionado também são exemplos muito ricos envolvidos nos conceitos de compressão, expansão, troca de calor e trabalho de forma articulada. Um último exemplo dessa seara inesgotável é a própria atmmosfera terrestre, a qual oferece um grande laboratório natural com constantes variações de compressão, expansão, temperatura e comportamento de gases em sistemas reais.</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ao longo desta obra, a essa seção tem sido dedicada a espelhar o <code>pensamento computacional</code> e a <code>lógica de programação</code> junto aos diversos scripts de JSPlotly, finalizando com um <code>pseudocódigo</code> voltado a um desses scripts em cada capítulo.</p>
+<p>Os scripts de JSPlotly utilizados nesse capítulo, por exemplo, miram numa compreensão progressiva para alguns conceitos da termodinâmica. Brevemente, a relação <em>P x V</em> de pressão de volume (Script no. 1), a comparação de um gás ideal com um sob interação (Script no. 2), a comparação de cenários microscópicos de partículas (Script no. 3), bem como algumas animações dinâmicas de sistemas coletivos (Script no. 4). Esses scripts estão munidos de alguns comandos e relações para aplicação de funções matemáticas (gases), conservação de energia (termodinâmica) e simulação de partículas.</p>
+<p>Mas você já deve ter percebido também que, ao longos dos capítulos deste trabalho, aquelas <code>competências digitais</code> passaram a integrar paulatinamente o próprio capítulo, diminuindo a necessidade de sua exclusividade para o tópico que se apresenta. A partir de agora, então, essa seção irá dedicar-se à <strong><code>verdadeira ferramenta</code></strong> por detrás de todos os scripts que podem ser feitos com o JSPlotly: a linguagem <strong><code>JavaScript</code></strong>.</p>
+<p>O entendimento de como opera essa ferramenta permitirá a você compreender e modificar qualquer código deste livro, ajustá-lo às suas preferências ou necessidades, bem como criar outros tantos que desejar. Além disso, poderá também entender o que há por detrás das páginas de internet e criar as suas próprias, como blogs e sites. Isso porque o JavaScript opera silenciosamente quando você clica num botão da tela de seu celular, preenche um formulário ou acompanha uma animação gráfica na internet. Por óbvio, entretanto, esta nanométrica seção não lhe dará condições de sair por aí programando em JavaScript. Mas lhe dará munição básica para que avance ao próximo nível nessa e em qualquer linguagem de programação.</p>
+<p><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript">JavaScript (JS)</a>, é uma linguagem de programação moderna, utilizada por grandes empresas e <em>big techs</em>, e focada na interatividade entre a página web e o usuário. Diferente de outras linguagens, <em>JavaScript</em> não precisa ser compilada separadamente por um programa, pois é interpretada a partir de máquinas homônimas presentes em navegadores comuns (<em>browser</em>), como Firefox, Chrome, Safari, Opera, Edge, etc.</p>
+<p>Assim, <em>Javacript (JS)</em> é uma linguagem para web. Ela completa a tríade essencial, <em>HTML-CSS-JS</em>. Enquanto <em>HTML</em> preocupa-se com o conteúdo e <em>CSS</em> com o estilo, <em>JavaScript</em> ocupa-se do comportamento, ou seja, da interatividade do usuário frente à uma página web. Vamos então chamá-la agora carinhosamente por <em>JS</em>, somente.</p>
+<p>Como ocorre com outras linguagens de programação, a linguagem <em>JS</em> possui bibliotecas, que são módulos independentes de códigos para cumprir certas funções. Nesse sentido, <em>JS</em> cumpre metade do nome do <em>JSPlotly</em>. A outra metade vem da principal biblioteca que é utilizada por esse para a construção de gráficos, mapas, e alguns outros objetos interativos, <a href="https://plotly.com/javascript/">Plotly.js</a>.</p>
+<section id="estrutura-de-js" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="estrutura-de-js"><span class="header-section-number">6.1</span> Estrutura de <em>JS</em></h2>
+<p>Uma linguagem de programação normalmente possui características estruturais comuns. Isso quer dizer que há comandos para declarar uma <code>variável</code> e seu <code>tipo</code>, a <code>entrada</code> e <code>saída</code> de dados (resultados), a criação e uso de <code>funções</code>, e <code>cálculos aritméticos</code>, por exemplo. E tal como outras linguagens de programação, JS opera com uma lógica similar de <code>declarações</code> (palavras-chave, operadores, valores, expressões). Em resumo, a gente dizer as declarações de JS compõem:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Palavras-chave: sintaxe da linguagem JS<span class="kw">;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Operadores: caracteres que realizam operações<span class="kw">;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Valores: texto, números, verdadeiro/falso <span class="er">(</span><span class="ex">variável</span> <span class="st">"booleana"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"não definido"</span>, <span class="st">"nulo"</span><span class="kw">;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> Expressões: trechos de código que produzem um único valor.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Do ponto de vista estrutural, por conseguinte, JS possui características que também são comuns a outras linguagens de programação:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Saída de dados<span class="kw">;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Declaração de variáveis<span class="kw">;</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Tipos de dados<span class="kw">;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> Constantes<span class="kw">;</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="ex">5.</span> Aritmética<span class="kw">;</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="ex">6.</span> Vetores<span class="kw">;</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="ex">7.</span> Funções<span class="kw">;</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="ex">8.</span> Geração de dados aleatórios<span class="kw">;</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="ex">9.</span> Objetos<span class="kw">;</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="ex">10.</span> Operadores<span class="kw">;</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="ex">11.</span> Estruturas de controle<span class="kw">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Por enquanto é só. Se quiser aprender um pouquinho mais de JS, basta vira a página !</p>
+</section>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<!-- 
+Em muitos livros, gases, termodinâmica e soluções aparecem em blocos separados. Isso ajuda na organização formal, mas também pode esconder uma continuidade importante:
+
+> em todos esses casos, estamos observando sistemas materiais em transformação e tentando entender como a energia circula, se redistribui e se manifesta.
+
+Quando um gás é comprimido, quando um recipiente é aquecido, quando um soluto se dissolve em um solvente, ou quando um sistema troca calor com o ambiente, há uma mesma pergunta de fundo:
+
+> o que muda no movimento, na organização e na energia das partículas?
+
+Essa pergunta permite costurar conceitos da Física e da Química de modo mais vivo, menos compartimentalizado e mais próximo de situações reais.
+
+## Modo de usar o Script 1
+
+O Script 1 foi pensado como uma porta de entrada suave. Ele privilegia a leitura da relacao entre grandezas e a modificacao direta do codigo.
+
+Sugestao de percurso:
+
+1. rode o script como esta;
+2. altere a temperatura;
+3. observe como a curva de pressao em funcao do volume se modifica;
+4. altere a quantidade de materia;
+5. compare os resultados.
+
+Perguntas orientadoras:
+
+- O que acontece com a pressao quando o volume aumenta?
+- O que muda quando a temperatura aumenta?
+- A curva obtida lembra uma reta ou outro tipo de funcao?
+- O efeito de aumentar a temperatura e o mesmo de aumentar a quantidade de gas?
+
+## Modo de usar o Script 2
+
+O Script 2 introduz uma passagem conceitual importante: sair do comportamento idealizado para um sistema com interacao.
+
+Ele permite trabalhar, ao menos em nivel introdutorio, a ideia de que:
+
+- o modelo ideal e util;
+- mas sistemas reais podem se afastar dele;
+- esse afastamento nao e um defeito do conhecimento, e sim parte da riqueza do mundo real.
+
+Percurso sugerido:
+
+1. mantenha a interacao em zero ou valor muito pequeno;
+2. observe a semelhanca entre os comportamentos;
+3. aumente a interacao progressivamente;
+4. compare a pressao prevista no caso ideal e no caso com interacao;
+5. troque a temperatura e veja se o padrao geral se mantem.
+
+Perguntas orientadoras:
+
+- O que significa dizer que um modelo e ideal?
+- Um modelo ideal esta "errado" ou apenas simplifica?
+- O que pode representar fisicamente esse parametro de interacao?
+- Em que sentido uma solucao real e mais complexa que um gas ideal?
+
+## Modo de usar o Script 3
+
+O Script 3 foi pensado para comparacao de cenarios.
+
+Aqui, o botao `add` ganha protagonismo. Em vez de substituir totalmente o grafico anterior, ele pode ser usado como recurso de construcao de contraste entre estados do sistema.
+
+Experimento sugerido:
+
+- rode primeiro com `input_T = 0.6`
+- clique em `add`
+- depois use `input_T = 1.2`
+- clique em `add`
+- depois use `input_T = 2.0`
+- clique em `add`
+
+Agora compare as nuvens de particulas e suas cores.
+
+O mesmo pode ser feito variando `input_interacao`.
+
+Leituras possíveis:
+
+- maior temperatura tende a produzir distribuicoes compativeis com movimento mais intenso;
+- maior interacao tende a alterar o comportamento coletivo;
+- comparar cenarios lado a lado pode ser mais pedagogico do que analisar apenas um caso isolado.
+
+## Modo de usar o Script 4
+
+![Script mais completo Clique neste [LINK](apps/gases4.html) para abrir em nova aba.](figuras/gases4.png){#fig-gases4}
+
+O Script 4 introduz a dimensão temporal de modo mais explicito.
+
+Nao se trata apenas de um estado final, mas de um processo em curso. Isso favorece perguntas como:
+
+- o sistema esta se reorganizando?
+- ha aglomeracao?
+- o movimento esta mais disperso ou mais contido?
+- qual diferenca qualitativa aparece ao mudar temperatura e interacao?
+
+Sugestao de uso:
+
+1. rode com temperatura moderada e interacao baixa;
+2. aperte `Play`;
+3. observe o padrao geral;
+4. depois mude apenas a temperatura;
+5. em seguida, volte e altere apenas a interacao;
+6. finalmente, combine temperatura alta com interacao maior.
+
+## Leituras guiadas possíveis
+
+### Leitura guiada 1 - compressao e expansao
+
+Peça ao estudante que imagine uma seringa com ar aprisionado.
+
+Perguntas:
+
+- o que acontece se empurrarmos o embolo?
+- o volume aumenta ou diminui?
+- a frequencia de colisao das particulas com as paredes muda?
+- como isso se relaciona com a pressao?
+
+### Leitura guiada 2 - spray, descompressao e resfriamento
+
+Situação:
+
+Ao usar um spray continuamente, o frasco pode ficar gelado.
+
+Perguntas:
+
+- houve expansao do gas?
+- houve realizacao de trabalho?
+- a energia interna pode ter mudado?
+- por que a temperatura percebida diminui?
+
+### Leitura guiada 3 - dissolucao e efeito termico
+
+Situação:
+
+Algumas dissoluções aquecem o recipiente, outras o resfriam.
+
+Perguntas:
+
+- dissolver e apenas "misturar"?
+- ha interacoes sendo rompidas e formadas?
+- por que o saldo energetico pode ser diferente em cada caso?
+- o ambiente percebe isso como aquecimento ou resfriamento?
+
+## Cenarios exploraveis
+
+### Cenario 1 - sistema quase ideal
+Use temperatura moderada e interacao muito pequena.
+
+Interpretacao:
+um bom ponto de partida para introduzir a simplicidade do modelo dos gases ideais.
+
+### Cenario 2 - aquecimento do sistema
+Aumente a temperatura mantendo os demais parametros.
+
+Interpretacao:
+as particulas tendem a apresentar movimento mais intenso, favorecendo a leitura microscopica da temperatura.
+
+### Cenario 3 - maior interacao
+Mantenha a temperatura e aumente a interacao.
+
+Interpretacao:
+bom para discutir por que solucoes e sistemas reais nem sempre se ajustam perfeitamente aos modelos ideais.
+
+### Cenario 4 - contraste entre estados
+Use o botao `add` para colocar no mesmo painel tres ou quatro cenarios.
+
+Interpretacao:
+o grafico deixa de ser apenas ilustrativo e passa a funcionar como comparador visual.
+
+### Cenario 5 - aproximacao entre Fisica e Quimica
+Compare um caso "mais gasoso" com um caso "mais interativo".
+
+Interpretacao:
+ajuda a dissolver a fronteira artificial entre assuntos ensinados como se fossem compartimentos fechados. -->
+<hr>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./gravFlui.html" class="pagination-link" aria-label="Gravitação e Fluidos — quando a gravidade molda a matéria">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Gravitação e Fluidos — quando a gravidade molda a matéria</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./radio.html" class="pagination-link" aria-label="Radioatividade, Energia Nuclear e Impactos">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radioatividade, Energia Nuclear e Impactos</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Crescimento, Tempo e Decisão: Matemática Financeira – Matemática &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./geo.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./financ.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Crescimento, Tempo e Decisão: Matemática Financeira</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Matemática &amp; JSPlotly</a> 
+        <div class="sidebar-tools-main">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Matemática---JSPlotly.docx">
+              <i class="bi bi-file-word pe-1"></i>
+            Download Docx
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fun.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Padrões de Mudança: como funções descrevem o comportamento do mundo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geometria integrada: do plano ao espaço e às coordenadas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./financ.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Crescimento, Tempo e Decisão: Matemática Financeira</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Crescimento, Tempo e Decisão: Matemática Financeira</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Você já percebeu que o dinheiro parece ter vida própria ?</p>
+<p>Ele cresce no banco (e quase sempre cresce ainda mais para o banco), aumenta em financiamentos, muda de valor com o tempo e, às vezes, parece desaparecer silenciosamente do seu bolso. Isso acontece porque o tempo transforma valores. Mas o tempo, sozinho, não é o verdadeiro responsável. O que realmente altera o dinheiro são processos variados, como <code>juros</code>, <code>inflação</code>, <code>investimentos</code>, <code>dívidas</code>, <code>consumo</code>, <code>aportes sucessivos</code>, e <code>crescimento acumulado</code>.</p>
+<p>Todos eles dependem da forma como pequenas variações se acumulam ao longo do tempo. Em alguns casos, o crescimento acontece de forma previsível e linear, e em outros, acontece de forma acelerada, e quase explosiva. É justamente por isso que duas pessoas podem começar com o mesmo dinheiro e terminar em situações completamente diferentes alguns anos depois.</p>
+<p>Neste capítulo, você tem a chance de explorar alguns mundos diferentes da Matemática Financeira, toda ela baseada em <code>juros simples</code> e <code>juros compostos</code>. Nos juros simples, o crescimento ocorre em linha reta e os juros são sempre calculados sobre o valor inicial. Já nos juros compostos, o valor cresce de modo acumulativo, com crescimento acelerado e exponencial, consistindo num dos fenômenos matemáticos mais importantes do mundo moderno.</p>
+<!-- No terceiro script, iremos além da matemática “limpa” dos livros e entraremos em um cenário mais próximo da vida real, incluindo:
+
+- aportes mensais;
+- inflação;
+- rendimento acumulado;
+- interpretação financeira;
+- ganho real versus ganho aparente.
+
+A ideia não é apenas aprender fórmulas.
+
+É perceber que 
+
+Porque, no fim das contas, quase toda escolha importante envolve três coisas:
+
+👉 tempo, crescimento e consequência.
+```
+
+
+Este capítulo conecta:
+
+- Matemática → função linear versus exponencial
+- Física → crescimento acumulativo, taxas e evolução temporal
+- Economia → investimento, dívida, inflação e poder de compra
+- Psicologia → impulso, adiamento, planejamento e tomada de decisão --->
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> diferenciar crescimento linear e exponencial<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar juros em situações concretas<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> compreender o papel do tempo, da taxa e dos aportes<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> perceber a diferença entre valor nominal e valor real<span class="kw">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> modelar situações financeiras simples com código<span class="kw">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> tomar decisões mais conscientes em contextos cotidianos<span class="kw">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> explorar a matemática financeira com auxílio de aplicações computacionais.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-gizz_financ" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_financ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_financ.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_financ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.1: Matemática financeira é uma forma de interpretar decisões humanas sobre dinheiro ao longo do tempo.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A proposta inicial neste capítulo é você observar como um capital evolui quando submetido a uma taxa fixa ao longo do tempo, bem como perceber os padrões associados a dívidas, financiamentos ou rendimentos sob essa regra. Antes de qualquer definição formal, experimente o JSPlotly que segue, para juros simples.</p>
+<div id="fig-financ" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-financ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/financ.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-financ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.2: Juros simples: quando o dinheiro cresce ou desaparece em linha reta. Clique com o botão direito neste <a href="apps/financ.html">LINK</a> para abrir o <em>app</em> em nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>Você pode alterar os valores iniciais do código aqui, executando em seguida o script (<code>add</code>):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> capitalInicial <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxa <span class="op">=</span> <span class="fl">0.05</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tempoMax <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Teste primeiro pequenas mudanças. Aumente o capital inicial, diminua a taxa, aumente o tempo máximo, e compare gráficos com taxas diferentes. Observe que, em juros simples, o crescimento do dinheiro não acelera. Isso acontece porque os juros são sempre calculados sobre o mesmo valor inicial.</p>
+<p>Se o capital inicial é <span class="math inline">\(C\)</span>, a taxa é <span class="math inline">\(i\)</span> e o tempo é <span class="math inline">\(t\)</span>, então o juro acumulado é:</p>
+<p><span id="eq-J"><span class="math display">\[
+J = C \cdot i \cdot t
+\tag{4.1}\]</span></span></p>
+<p>E o <code>montante</code> final, o dinheiro acumulado (investimento ou dívida) é:</p>
+<p><span id="eq-MCJ"><span class="math display">\[
+M = C + J
+\tag{4.2}\]</span></span></p>
+<p>Substituindo <span class="math inline">\(J\)</span>, temos:</p>
+<p><span id="eq-MCJ_it"><span class="math display">\[
+M = C \cdot (1 + i \cdot t)
+\tag{4.3}\]</span></span></p>
+<p>Perceba que, não importando as equações acima, há sempre uma relação linear entre <code>montante</code> e <code>tempo</code>.</p>
+<p>Dessa forma, o script constrói uma lista de tempos e calcula, para cada período, o montante correspondente nesse trecho:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">let</span> t <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> t <span class="op">&lt;=</span> tempoMax<span class="op">;</span> t<span class="op">++</span>) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> J <span class="op">=</span> capitalInicial <span class="op">*</span> taxa <span class="op">*</span> t<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> M <span class="op">=</span> capitalInicial <span class="op">+</span> J<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    tempo<span class="op">.</span><span class="fu">push</span>(t)<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    juros<span class="op">.</span><span class="fu">push</span>(J)<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    montante<span class="op">.</span><span class="fu">push</span>(M)<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nesse modelo, <code>t</code> representa o tempo, <code>J</code> os juros acumulados, e <code>M</code> o montante. O script então guarda os valores em listas para formar o gráfico. O resultado é uma reta crescente, pois o acréscimo a cada período é sempre o mesmo.</p>
+<p>Uma sugestão para mexer no <em>app</em> é dada abaixo.</p>
+<ol type="1">
+<li>Execute o script com os valores originais;</li>
+<li>Observe o formato da curva;</li>
+<li>Altere <code>taxa</code> para <code>0.02</code>, <code>0.05</code>, <code>0.10</code> e <code>0.20</code>;</li>
+<li>Compare a inclinação das retas;</li>
+<li>Altere <code>capitalInicial</code> para valores maiores ou menores;</li>
+<li>Observe que o gráfico muda de escala, mas continua linear;</li>
+<li>Aumente <code>tempoMax</code> e perceba que a reta se prolonga sem mudar de forma.</li>
+</ol>
+<p>Traduzindo…nos juros simples, o tempo aumenta o montante de forma proporcional e linear, quer seja um investimento de capital, quer seja uma dívida.</p>
+<p>Agora sim, alguns cenários para você explorar.</p>
+<ol type="1">
+<li><em>Pequena poupança</em>. Edite o código e responda quanto o dinheiro cresce em um ano com uma taxa pequena.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> capitalInicial <span class="op">=</span> <span class="dv">500</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxa <span class="op">=</span> <span class="fl">0.02</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tempoMax <span class="op">=</span> <span class="dv">12</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Empréstimo com taxa alta</em>. Quanto se paga ao final de 12 períodos ?</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> capitalInicial <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxa <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tempoMax <span class="op">=</span> <span class="dv">12</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Tempo longo</em>. Mesmo com juros simples, o tempo pode tornar uma dívida pesada ?</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> capitalInicial <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxa <span class="op">=</span> <span class="fl">0.05</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tempoMax <span class="op">=</span> <span class="dv">60</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Comparação de capitais</em>. Compare o <code>capitalInicial</code> acima com um de 5000. O capital inicial muda a forma do gráfico ou apenas sua escala ?</li>
+</ol>
+<p>O código usa uma estrutura muito comum em simulações matemáticas. Ele define valores iniciais, cria listas vazias, calcula resultados em um laço, e envia os dados para o gráfico. Essa mesma estrutura pode ser reutilizada em muitos outros modelos, como crescimento populacional, movimento uniforme, depreciação, consumo de energia e comparação de investimentos, por exemplo.</p>
+</section>
+</div>
+</div>
+<!-- ### Onde está a pergunta?
+
+- Por que um gráfico cresce em linha reta em alguns casos?
+- Por que em outros ele “encurva” e dispara?
+- O que acontece quando aumentamos a taxa?
+- O que acontece quando o tempo se prolonga?
+- Uma diferença pequena no começo continua pequena no final? -->
+<!-- ### Modo de usar — Script 1
+
+No editor Ace, altere valores como:
+
+- capital inicial;
+- taxa;
+- número de períodos;
+- eventualmente o tipo de crescimento, se o script estiver preparado para isso.
+
+Depois execute novamente e observe:
+
+- o formato da curva;
+- a inclinação;
+- a diferença entre os valores iniciais e finais;
+- o que muda quando só um parâmetro é alterado.
+
+### Primeiras leituras possíveis
+
+Ao manipular o script, o estudante pode perceber que nem todo crescimento é do mesmo tipo. Em alguns cenários, o acréscimo é sempre o mesmo; em outros, o próprio crescimento passa a crescer. Essa distinção é central para todo o capítulo.
+
+**E mais!!**
+
+- tente manter a taxa fixa e variar apenas o tempo;
+- tente manter o tempo fixo e variar apenas a taxa;
+- reduza a taxa para valores muito pequenos;
+- aumente a taxa para perceber quando o crescimento deixa de parecer “suave”;
+- compare capitais iniciais distintos sob a mesma taxa.
+
+--- -->
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Na vida real, muitos contratos financeiros não usam juros simples por longos períodos. Isso acontece porque bancos, financiamentos, cartões e aplicações geralmente usam <code>juros compostos</code>, nos quais os <em><code>juros passam a gerar novos juros</code></em>. Por isso, o primeiro script funciona para apresentar o caso mais simples, linear e previsível. Depois dele, fica mais fácil perceber por que os juros compostos podem crescer muito mais rapidamente.</p>
+<p>E também porque pequenas quantidades em dívidas ou investimentos crescem enormemente ao longo do tempo. Enquanto o <em>juro simples se aproxima de uma ideia linear</em>, <em>o juro composto se aproxima de uma ideia exponencial</em>. Essa é uma forma de ver a matemática financeira como uma aplicação direta de padrões de crescimento estudados em álgebra e funções.</p>
+<p>O aplicativo de JSPlotly a seguir trata exatamente disso, os juros compostos. No juro composto, cada novo período incorpora os aumentos anteriores, produzindo o conhecido <em>“juros sobre juros”</em>.</p>
+<div id="fig-financ2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-financ2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/financ2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-financ2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.3: Enquanto os juros simples caminham sobre o dinheiro, os juros compostos aprendem a voar. Clique neste <a href="apps/financ2.html">LINK</a> para abrir em nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>Execute o script original e observe as duas curvas. Depois altere os valores:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> C <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> i <span class="op">=</span> <span class="fl">0.10</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> nMax <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Teste diferentes taxas e tempos. Experimente taxas pequenas e altas, bem como tempos curtos e longos. E observe em que momento a curva composta começa a “disparar”. Nos juros simples, o crescimento acontece sempre pela mesma quantidade, como está na <a href="#eq-MCJ_it" class="quarto-xref">Equação&nbsp;<span>4.3</span></a>. Já nos juros compostos, os juros são incorporados ao capital a cada período, e a fórmula passa a ser:</p>
+<p><span id="eq-jComp"><span class="math display">\[
+M = C(1+i)^t
+\tag{4.4}\]</span></span></p>
+<p>Agora o crescimento deixa de ser linear e passa a ser exponencial. A diferença parece pequena no início, mas aumenta dramaticamente com o tempo. E isso pode ser demonstrado pelo trecho do script que calcula simultaneamente os dois modelos financeiros. Veja abaixo que os modelos mostram que o crescimento acumulativo muda completamente o comportamento do sistema.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Ms <span class="op">=</span> C <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> i <span class="op">*</span> n)<span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Mc <span class="op">=</span> C <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="dv">1</span> <span class="op">+</span> i<span class="op">,</span> n)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>No trecho de código acima, <code>Ms</code> representa o montante em juros simples e <code>Mc</code> o montante em juros compostos. A função de <em>JavaScript</em> <code>Math.pow()</code> calcula potências. Os resultados são armazenados em listas e enviados ao gráfico, permitindo comparar visualmente a reta linear com a curva exponencial. Assim, a lógica geral é calcular juros simples e compostos para cada instante de tempo, guardar os resultados, e desenhar ambas as curvas.</p>
+<p>Alguns cenários para você explorar o código.</p>
+<!-- Nesse segundo script você pode comparar os juros simples aos juros compostos num mesmo gráfico. Experimente alterar o capital inicial, a taxa, o tempo, e a situação analisada. Observe especialmente o ponto em que as curvas começam a se afastar, o efeito de taxas maiores, a aceleração da curva composta, bem como diferenças aparentemente pequenas se ampliam com o tempo.  -->
+<ol type="1">
+<li><em>Taxa pequena</em>. Crescimentos exponenciais ainda aparecem com taxas pequenas ?</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> i <span class="op">=</span> <span class="fl">0.02</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Tempo curto</em>. Por que juros simples e compostos parecem quase iguais no início ?</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> nMax <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Longo prazo</em>. Por que investimentos de longo prazo favorecem juros compostos ?</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> nMax <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Dívida explosiva</em>. O que acontece quando taxas altas se acumulam por muito tempo ?</li>
+</ol>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> i <span class="op">=</span> <span class="fl">0.25</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Comparação de capitais</em>. Rode o trecho abaixo e depois altere a constante para 10000. O capital inicial altera apenas a escala ou também altera o comportamento matemático ?</li>
+</ol>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> C <span class="op">=</span> <span class="dv">500</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Na mundo real, quase todos os sistemas financeiros modernos utilizam juros compostos, como financiamentos, cartões de crédito, investimentos, empréstimos e aplicações bancárias. Por isso, compreender crescimento exponencial é uma forma de interpretar decisões financeiras reais. Isso porque o tempo pode ser um aliado poderoso em investimentos, tanto quanto um inimigo perigoso em dívidas.</p>
+<!-- 
+1. *Poupança de curto prazo*. Em poucos períodos, a diferença entre juro simples e composto é realmente grande ?
+
+2. *Investimento de longo prazo*. O que acontece quando o tempo cresce muito, mesmo mantendo a mesma taxa ?
+
+3. *Empréstimo ou dívida*. Por que pequenas taxas mensais podem gerar valores finais tão altos ?
+
+4. *Taxa aparentemente inocente*. Uma taxa de 1, 2 ou ou 3% por período parece pequena. Continua parecendo pequena depois de muitos períodos ? -->
+</section>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Agora vem o impacto real ! Juros compostos fazem parte do nosso cotidiano toda a vez que existem parcelas e/ou tempo envolvidos. É assim com o cartão de crédito, onde os juros compostos jogam contra você, bem como com investimentos, quando os juros compostos conspiram a seu favor. O tempo também pode virar um aliado ou vilão, como nos financiamentos e na inflação.</p>
+<p>No mundo real, quase ninguém vive apenas com um capital parado. Em geral, há entradas sucessivas, parcelas, depósitos periódicos, reajustes, perdas inflacionárias e decisões tomadas sob incerteza. E é aí que a modelagem fica mais interessante. Que tal experimentar o script de JSPlotly na sequência, e que simula aportes, inflação e valor real ?</p>
+<div id="fig-financ3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-financ3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/financ3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-financ3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.4: Juros, aportes e inflação: quando o valor nominal não conta a história toda. Clique neste <a href="apps/financ3.html">LINK</a> para abrir em nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h3>
+<p>Nem todo crescimento de valor significa ganho real. Se o dinheiro aumenta, mas os preços também aumentam, parte desse ganho pode desaparecer. É aí que entra a <code>inflação</code>.</p>
+<p>O <em>app</em> acima busca aproximar a matemática financeira do mundo real, apresentando o efeito dos juros e dos aportes ou acréscimos, bem como a diferença entre <code>valor nominal</code> e <code>valor real</code>. Assim, é possível verificar quanto do crescimento observado representa um aumento verdadeiro de <code>poder de compra</code>.</p>
+<p>Execute o script com os valores originais abaixo.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> modo <span class="op">=</span> <span class="st">"investimento"</span><span class="op">;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> capitalInicial <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> aportePeriodo <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaJuros <span class="op">=</span> <span class="fl">0.01</span><span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaInflacao <span class="op">=</span> <span class="fl">0.004</span><span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> periodos <span class="op">=</span> <span class="dv">60</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe as quatro curvas resultantes para <code>saldo</code> (sem e com aportes), <code>valor real</code>, e total acumulado de entradas. Depois, altere a taxa de juros, a inflação e o valor dos aportes. Veja principalmente quando o <code>valor nominal</code> cresce bastante, mas o valor real cresce pouco.</p>
+<p>Em matemática financeira, é comum olhar apenas para o valor nominal. Mas o valor nominal mostra apenas a quantidade de dinheiro registrada. Já o valor real tenta responder o quanto esse dinheiro realmente vale em termos de poder de compra. No script, o valor real é calculado por um modelo simplista:</p>
+<p><span class="math display">\[
+\text{valor real} =
+\frac{\text{valor nominal}}{(1+\text{inflação})^t}
+\]</span></p>
+<p>Essa divisão desconta o efeito acumulado da inflação, permitindo perceber que ganhar dinheiro e ganhar poder de compra não são exatamente a mesma coisa.</p>
+<p>O código acompanha a evolução do saldo ao longo do tempo. A cada período, o saldo cresce pelos juros:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>saldoComAporte <span class="op">=</span> saldoComAporte <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> taxaJuros) <span class="op">+</span> aportePeriodo<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois, o script calcula o valor real:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> real <span class="op">=</span> saldoComAporte <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="dv">1</span> <span class="op">+</span> taxaInflacao<span class="op">,</span> n)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E a função <code>Math.pow()</code> calcula o efeito acumulado da inflação ao longo dos períodos. Com isso, o gráfico mostra que o valor nominal pode subir, enquanto o valor real cresce menos, ou até perde força. E você fica sabendo se o gráfico mostra crescimento verdadeiro ou apenas crescimento aparente. Um breve tutorial para uso do <em>app</em> é dado abaixo.</p>
+<ol type="1">
+<li>Rode o script no modo <code>investimento</code>;</li>
+<li>Observe a diferença entre saldo com aportes e saldo sem aportes;</li>
+<li>Compare o saldo com aportes com o total acumulado de entradas;</li>
+<li>Veja se os juros realmente geraram ganho acima do que foi depositado;</li>
+<li>Observe a curva de valor real;</li>
+<li>Aumente a inflação;</li>
+<li>Veja como o valor real se distancia do valor nominal;</li>
+<li>Aumente os aportes;</li>
+<li>Observe como pequenos depósitos recorrentes podem alterar muito o resultado final;</li>
+<li>Troque o modo para <code>divida</code> e interprete o <code>aportePeriodo</code> como novos acréscimos à dívida.</li>
+</ol>
+<p>A lógica do script é definir capital inicial, juros, inflação e aportes para cada período, atualizar saldo sem e com aporte, somar o total aportado, corrigir o saldo pela inflação, e desenhar as curvas no gráfico.</p>
+<p>Seguem alguns cenários econômicos para você <em>“brincar”</em> sem ferir o bolso (ou a Bolsa!).</p>
+<ol type="1">
+<li><em>Investimento conservador</em>. O rendimento supera a inflação com folga ou apenas mantém parte do poder de compra ?</li>
+</ol>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaJuros <span class="op">=</span> <span class="fl">0.006</span><span class="op">;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaInflacao <span class="op">=</span> <span class="fl">0.004</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Inflação alta</em>. É possível o dinheiro nominal crescer e, mesmo assim, perder valor real ?</li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaJuros <span class="op">=</span> <span class="fl">0.01</span><span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaInflacao <span class="op">=</span> <span class="fl">0.012</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Pequenos aportes constantes</em>. O tempo torna pequenos aportes relevantes?</li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> aportePeriodo <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> periodos <span class="op">=</span> <span class="dv">120</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Aportes maiores</em>. O resultado final depende mais da taxa, do tempo ou da disciplina de aportar ?</li>
+</ol>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> aportePeriodo <span class="op">=</span> <span class="dv">300</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Dívida com novos acréscimos</em>. O que acontece quando uma dívida recebe juros e ainda acumula novos gastos ?</li>
+</ol>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> modo <span class="op">=</span> <span class="st">"divida"</span><span class="op">;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> capitalInicial <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> aportePeriodo <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaJuros <span class="op">=</span> <span class="fl">0.03</span><span class="op">;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taxaInflacao <span class="op">=</span> <span class="fl">0.004</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Fica claro, portanto, ou deveria ficar, que o valor financeiro é mais uma interpretação que uma quantidade alta ou baixa de dinheiro. Um saldo ou dívida de R$ 10.000 hoje não significa a mesma coisa que R$ 10.000 daqui a muitos anos. Na vida real, investimentos, salários, dívidas, financiamentos e aposentadorias são afetados pela inflação. E isso decide junto ao saldo bancário quanto dinheiro você terá no futuro, e quanto desse dinheiro conseguirá comprar.</p>
+<p>Por isso, decisões financeiras precisam considerar tempo, taxa de juros, inflação, frequência dos aportes, objetivo da decisão, e a diferença entre ganho nominal e ganho real. Nesse sentido, a matemática financeira serve para ajudar você a tomar melhores decisões.</p>
+</section>
+</div>
+</div>
+<pre><code></code></pre>
+<!-- 
+
+================
+
+O *app* agora simula uma situação mais próxima do mundo real: um capital que cresce com o tempo, recebe aportes periódicos e precisa ser comparado com a inflação. No editor, altere variáveis como:
+
+- `modo` para simular investimento ou dívida;
+- `capitalInicial`;
+- `aportePeriodo`;
+- `taxaJuros`;
+- `taxaInflacao`;
+- `periodos`.
+
+Depois compare:
+
+- saldo sem aportes;
+- saldo com aportes;
+- total efetivamente colocado ao longo do tempo;
+- valor real, isto é, o valor corrigido pelo efeito da inflação.
+
+### O que observar no Script 3
+
+- Um valor nominal crescente nem sempre significa ganho real.
+- Pequenos aportes periódicos podem produzir grande diferença no longo prazo.
+- A inflação pode “comer” parte relevante do crescimento.
+- O tempo atua de modo duplo: amplia ganhos, mas também amplia erros, dívidas e perdas de poder de compra.
+
+### Cenários para exploração com o Script 3
+
+**Cenário 1 — Guardar pouco, mas sempre**
+
+Pergunta: o que pesa mais no longo prazo, um grande valor inicial ou pequenos aportes regulares?
+
+**Cenário 2 — Lucro aparente**
+
+Pergunta: se o valor nominal cresce, houve realmente ganho de poder de compra?
+
+**Cenário 3 — Inflação alta**
+
+Pergunta: até que ponto uma taxa de inflação mais intensa corrói os ganhos do investimento?
+
+**Cenário 4 — Dívida prolongada**
+
+Pergunta: o que acontece quando uma dívida cresce por muitos períodos, mesmo partindo de um valor inicial aparentemente administrável?
+
+### Conectando ideias
+
+Nesse ponto, o capítulo deixa de ser apenas “conta de juros” e passa a tratar de interpretação. O estudante pode comparar crescimento nominal e crescimento real, valor acumulado e valor aportado, crescimento financeiro e perda de poder de compra. Surge, então, uma matemática que não apenas calcula, mas ajuda a decidir.
+
+::: -->
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Acho que pra essa seção a gente precisaria de um consultor financeiro. Mas, na ausência de um, tente responder às questões apresentadas separadamente nos scripts do capítulo</p>
+<section id="script-1." class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="script-1.">Script 1.</h5>
+<ul>
+<li>E se a taxa fosse zero ?</li>
+<li>E se a taxa fosse negativa, representando perda de valor ?</li>
+<li>E se duas pessoas investissem o mesmo valor, mas por tempos diferentes ?</li>
+<li>E se o dinheiro crescesse não em linha reta, mas em curva ?</li>
+</ul>
+</section>
+<section id="script-2." class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="script-2.">Script 2.</h5>
+<ul>
+<li>E se houvesse depósitos mensais além do rendimento ?</li>
+<li>E se a inflação reduzisse o valor real do dinheiro ?</li>
+<li>E se o rendimento variasse ao longo do tempo ?</li>
+<li>E se duas aplicações tivessem a mesma taxa, mas aportes diferentes ?</li>
+<li>E se o crescimento financeiro fosse comparado ao crescimento populacional ou biológico ?</li>
+</ul>
+</section>
+<section id="script-3." class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="script-3.">Script 3.</h5>
+<ul>
+<li>E se os aportes aumentassem com o tempo ?</li>
+<li>E se a inflação variasse a cada período ?</li>
+<li>E se a taxa de juros fosse menor que a inflação ?</li>
+<li>E se você comparasse investimento, poupança, financiamento e dívida no mesmo gráfico ?</li>
+<li>E se uma decisão aparentemente pequena, repetida por muitos períodos, mudasse completamente o futuro ?</li>
+</ul>
+</section>
+</div>
+</div>
+<hr>
+<!-- 
+
+
+### E se a taxa for pequena, mas o tempo enorme?
+
+Uma taxa aparentemente modesta pode produzir grandes diferenças quando o horizonte temporal cresce.
+
+### E se o capital inicial for pequeno, mas houver disciplina nos aportes?
+
+Aportes periódicos permitem discutir constância, planejamento e formação gradual de patrimônio.
+
+### E se houver inflação próxima da taxa de rendimento?
+
+Nesse caso, o crescimento nominal pode mascarar um ganho real muito pequeno, ou até inexistente.
+
+### E se dois investimentos tiverem a mesma taxa final, mas regras diferentes?
+
+É possível discutir capitalização, periodicidade e leitura crítica de propaganda financeira.
+
+### E se a pessoa atrasar parcelas de uma dívida?
+
+Abre-se espaço para pensar acúmulo, penalização temporal e crescimento acelerado do saldo devedor.
+
+### E se o mesmo problema for descrito por tabela, gráfico e fórmula?
+
+Os três registros podem ser comparados, ajudando o aluno a transitar entre linguagens matemáticas distintas.
+
+### Mais explorações possíveis com os scripts
+
+- comparar curto e longo prazo;
+- testar taxas negativas ou nulas;
+- observar o efeito de interromper aportes;
+- comparar dois cenários com mesma duração e taxas diferentes;
+- discutir o ponto em que o crescimento composto se destaca claramente do simples;
+- pensar em quais situações um modelo linear ainda pode servir como aproximação inicial.
+
+### Em síntese
+
+A matemática financeira não trata apenas de dinheiro. Ela trata de crescimento, tempo, acúmulo, escolha e consequência. Por isso, este tema é fértil para integrar álgebra, funções, interpretação de gráficos, modelagem e educação para a vida. -->
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O modelo de juros simples ajuda a entender qualquer situação em que uma grandeza cresce sempre pela mesma quantidade. Por isso, essa lógica matemática vai além do dinheiro. Ela também representa cenários como a distância percorrida com velocidade constante, a produção diária de um bem, uma economia mensal fixa, o desgaste de um equipamento ou o aumento regular de uma dívida. A ideia por detrás permanece: todo o crescimento constante produz uma reta.</p>
+<p>Para juros compostos no mundo real, basta associar sua formulação a contextos em que ocorre crescimento exponencial. Alguns exemplos são o crescimento populacional, epidemias, proliferação bacteriana, reações químicas, propagação de informação por redes sociais (e <em>fake news</em>), e evolução tecnológica, entre muitos.</p>
+<p>Também é importante desdobrar os frutos desse capítulo dentro do mesmo mundo da Economia e de seu ramo de Finanças, para saber decidir da melhor forma sobre o futuro do seu dinheiro. Isso é válido em diversos panoramas, como a comparação entre compra à vista e parcelamento, a simulação de poupança para um objetivo futuro, a análise de empréstimos e financiamentos, e a discussão entre investir cedo ou investir mais tarde. Também é vital para discutir o efeito da inflação sobre salários e preços, para comparação entre guardar dinheiro em casa, aplicar com rendimento baixo ou aplicar com rendimento maior, bem como para ter uma leitura crítica da propaganda de bancos, cartões e financiamentos.</p>
+<p>Essas decisões fazem parte do cotidiano de todos nós. E uma parte dessas decisões está intimamente ligada ao destino que damos para nosso dinheiro quando temos o mínimo para investi-lo. Para fechar esse capítulo, que tal um último JSPlotly, para simular exatamente isso, ou seja, diferentes formas de investimento monetário ?</p>
+<p>A proposta é que você experimente diferentes formas de investimento em <code>renda fixa</code> (poupança, CDB, títulos públicos, letras de crédito) e em <code>renda variável</code> (fundos imobiliários, carteira de ações, câmbio, e criptomoeda), e verifique como risco, tempo, aportes, inflação e volatilidade podem mudar o resultado.</p>
+<div id="fig-financ4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-financ4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/financ4.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-financ4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.5: Renda fixa, renda variável e risco: mesmo dinheiro, futuros diferentes. Clique neste <a href="apps/financ4.html">LINK</a> para abrir em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>Nesse último script, os valores são hipotéticos e servem apenas para estudo. O objetivo não é recomendar investimentos, mas auxiliar você a compreender modelos de crescimento, risco e decisão.</p>
+<!-- 
+
+Estrutura do script:
+
+* **Poupança** → baixo risco, baixo retorno;
+* **CDB** → renda fixa um pouco maior;
+* **Tesouro/títulos públicos** → renda fixa estável;
+* **LCI/LCA/letras de crédito** → renda fixa intermediária;
+* **Fundos imobiliários** → renda variável moderada;
+* **Ações** → maior oscilação;
+* **Câmbio** → oscilação externa;
+* **Criptomoeda** → alta volatilidade.
+
+Com uma frase de segurança no próprio tutorial: 
+
+
+
+Eu faria o script com:
+
+* capital inicial;
+* aporte mensal;
+* inflação;
+* tempo;
+* opção de perfil: `"conservador"`, `"moderado"` ou `"agressivo"`;
+* curvas simuladas com variação aleatória controlada;
+* gráfico comparando valor nominal;
+* linha de valor real corrigido pela inflação;
+* ranking final dos investimentos.
+
+Título do capítulo ficaria ainda mais forte:
+
+> **Crescimento, Tempo e Decisão: Matemática Financeira**
+
+E o script saideira poderia fechar com a pergunta:
+
+> **Se todos começam com o mesmo dinheiro, por que chegam a futuros tão diferentes?**
+
+Posso montar o **Script 4 completo em JSPlotly/Ace** já no mesmo padrão dos anteriores. -->
+<section id="agite-antes-de-usar-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-3">Agite antes de usar</h4>
+<p>Imagine duas pessoas investindo, mas cada qual escolhendo um caminho diferente: <code>poupança</code>, <code>CDB</code> (<em>Certificado de Depósito Bancário</em>, um título de renda fixa emitido por bancos), <code>títulos públicos</code>, <code>letras de crédito</code> (títulos emitidos por bancos para financiar setores específicos), fundos imobiliários (investimento coletivo negociado na <em>Bolsa de Valores</em>), <code>ações</code> (pequenas frações do capital social de uma empresa), <code>câmbio</code> (operação de troca de uma moeda por outra) ou <code>criptomoedas</code> (moedas digitais descentralizadas para transações com segurança e criptografia).</p>
+<p>Depois de muitos períodos, os resultados podem ser muito diferentes. E aí permanece a dúvida em saber qual/se o maior resultado final significa a melhor decisão ! Decisões financeiras envolvem retorno, risco, tempo, inflação e comportamento.</p>
+<p>Execute o script com os valores originais, e depois altere os perfis para <code>conservador</code> ou <code>agressivo</code>. Observe como o aumento do risco muda a trajetória das curvas.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> capitalInicial <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> aportePeriodo <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> periodos <span class="op">=</span> <span class="dv">120</span><span class="op">;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inflacao <span class="op">=</span> <span class="fl">0.004</span><span class="op">;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> perfil <span class="op">=</span> <span class="st">"moderado"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Perceba que a questão não é saber qual investimento é o melhor, mas sim como diferentes combinações de risco e retorno produzem futuros diferentes.</p>
+<p>No script, a renda fixa foi representada com menor oscilação, enquanto que a renda variável foi representada com maior oscilação. Isso permite visualizar diversas coisas. O modelo mostra, por exemplo, que o retorno esperado não é garantia e que o risco significa incerteza. Também permite enxergar que a volatilidade produz subidas e quedas, que a inflação reduz o poder de compra e que o tempo aumenta o efeito das decisões repetidas.</p>
+<p>No código, cada investimento possui dois parâmetros principais: o <code>retorno</code>, que representa a tendência média de crescimento, e o <code>vol</code>, que representa a oscilação ao redor dessa tendência (volatilidade). A cada período, o script calcula:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>saldo <span class="op">=</span> saldo <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> taxaPeriodo) <span class="op">+</span> aportePeriodo<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assim, o dinheiro cresce pelos juros ou rendimento daquele período e recebe um novo aporte. No fim, o script também calcula o valor real, descontando o efeito acumulado da inflação.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>valorReal <span class="op">=</span> valorFinal <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="dv">1</span> <span class="op">+</span> inflacao<span class="op">,</span> periodos)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Você pode usar o aplicativo como abaixo:</p>
+<ol type="1">
+<li>Rode o script no perfil <code>"moderado"</code>;</li>
+<li>Observe quais curvas crescem de forma mais regular;</li>
+<li>Observe quais curvas oscilam mais;</li>
+<li>Compare renda fixa e renda variável;</li>
+<li>Aumente o tempo para <code>240</code>;</li>
+<li>Veja como o longo prazo amplia diferenças;</li>
+<li>Aumente a inflação;</li>
+<li>Observe como o valor real muda a interpretação;</li>
+<li>Troque o perfil para <code>"agressivo"</code>;</li>
+<li>Veja que maior risco pode gerar maiores ganhos, mas também trajetórias mais instáveis.</li>
+</ol>
+<p>Ao final, perceba que você está olhando também o caminho percorrido, e não somente o resultado final. Seguem alguns cenários <em>“econômicos”</em> para você testar.</p>
+<ol type="1">
+<li><em>Perfil conservador</em>. Uma menor oscilação torna a trajetória mais previsível ?</li>
+</ol>
+<div class="sourceCode" id="cb26"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> perfil <span class="op">=</span> <span class="st">"conservador"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Perfil agressivo</em>. Um maior risco sempre melhora o resultado final ?</li>
+</ol>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> perfil <span class="op">=</span> <span class="st">"agressivo"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Longo prazo</em>. O tempo favorece todos os investimentos da mesma forma ?</li>
+</ol>
+<div class="sourceCode" id="cb28"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> periodos <span class="op">=</span> <span class="dv">240</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Inflação mais alta</em>. Quais investimentos parecem bons nominalmente, mas perdem força em valor real ?</li>
+</ol>
+<div class="sourceCode" id="cb29"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inflacao <span class="op">=</span> <span class="fl">0.01</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Sem aportes</em>. Quanto da evolução vem do rendimento, e quanto vem da disciplina de aportar ?</li>
+</ol>
+<div class="sourceCode" id="cb30"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> aportePeriodo <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O script usa uma simulação com ruído controlado. Isso significa que algumas curvas não crescem de forma perfeitamente lisa. Elas oscilam, como acontece em muitos fenômenos reais. A lógica geral é definir capital, aportes, inflação e perfil de risco para cada investimento. Daí o código define o retorno médio e a volatilidade, simula período por período, aplica o rendimento, adiciona o aporte, corrige o valor final pela inflação, ordena os resultados por valor real, e finalmente desenha as curvas.</p>
+<p>Na mundo real, ninguém conhece exatamente o futuro. Por isso, a matemática financeira não elimina a incerteza mas ajuda a fazer perguntas melhores. Ao invés de querer saber quanto se vai ganhar, pode-se abrir o leque de perguntas para o quanto se pode perder no caminho ou o quanto a inflação pode corroer. E também o quanto depende dos aportes, quanto depende do tempo, e quanto depende do risco assumido. Esse é um jeito de pensar a matemática financeira como cidadania financeira.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ao longo desta obra, essa seção tem sido dedicada a espelhar o <code>pensamento computacional</code> e a <code>lógica de programação</code> junto aos diversos scripts de JSPlotly, finalizando com um <code>pseudocódigo</code> voltado a um desses scripts em cada capítulo.</p>
+<p>Nesse capítulo sobre Matemática Financeira, por exemplo, você observou os conceitos de juros simples no Script no. 1 e de juros compostos no Script no. 2. Aprendeu como a inflação e aportes financeiros podem ajustar valores no mundo real com o Script no. 3, e mesmo como comparar as diversas opções do mercado de investimentos no Script no. 4.</p>
+<p>Mas você já deve ter percebido também que, ao longos dos capítulos do livro, aquelas <code>competências digitais</code> passaram a integrar paulatinamente o próprio capítulo, diminuindo a necessidade de sua exclusividade para o tópico que se apresenta. A partir de agora, então, essa seção irá dedicar-se à <strong><code>verdadeira ferramenta</code></strong> por detrás de todos os scripts que podem ser feitos com o JSPlotly: a linguagem de programação<em><code>JavaScript</code></em>.</p>
+<p>O entendimento de como opera essa ferramenta permitirá que você compreenda e modifique qualquer código deste livro, ajustando-o às suas preferências ou necessidades, bem como crie outros tantos que desejar. Além disso, poderá entender também o que há por detrás das páginas de internet e criar as suas próprias, como <code>blogs</code> e <code>sites</code>. Isso porque o JavaScript opera silenciosamente quando você clica num botão da tela de seu celular, preenche um formulário ou acompanha uma animação gráfica na internet.</p>
+<p>Por óbvio, entretanto, esta “nanométrica” seção não lhe dará condições de sair por aí programando em JavaScript. Mas lhe dará munição básica para que você avance ao próximo nível nessa linguagem, bem como em qualquer outra linguagem de programação que desejar, como <code>Python</code>, <code>Go</code> ou <code>C++</code>. Isso porque o fluxo lógico e os componentes estruturais de qualquer linguagem de programação seguem o mesmo padrão universal.</p>
+<p><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript">JavaScript (JS)</a>, é uma linguagem de programação moderna, utilizada por grandes empresas e <em>big techs</em>, e focada na interatividade entre a página web e o usuário. Diferente de outras linguagens, <em>JavaScript</em> não precisa ser compilada separadamente por um programa, pois é interpretada a partir de máquinas homônimas presentes em navegadores comuns (<em>browser</em>), como Firefox, Chrome, Safari, Opera, Edge, etc.</p>
+<p>Assim, <em>Javacript (JS)</em> é uma linguagem para web. Ela completa a tríade essencial, <em>HTML-CSS-JS</em>. Enquanto <em>HTML</em> preocupa-se com o conteúdo e <em>CSS</em> com o estilo, <em>JavaScript</em> ocupa-se do comportamento, ou seja, da interatividade do usuário frente à uma página web. Vamos então chamá-la agora carinhosamente por <em>JS</em>, somente.</p>
+<p>Como ocorre com outras linguagens de programação, a linguagem <em>JS</em> possui bibliotecas, que são módulos independentes de códigos para cumprir certas funções. Nesse sentido, <em>JS</em> cumpre metade do nome do <em>JSPlotly</em>. A outra metade vem da principal biblioteca que é utilizada por esse para a construção de gráficos, mapas, e alguns outros objetos interativos, <a href="https://plotly.com/javascript/">Plotly.js</a>.</p>
+<section id="estrutura-de-js" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="estrutura-de-js"><span class="header-section-number">4.1</span> Estrutura de <em>JS</em></h2>
+<p>Uma linguagem de programação normalmente possui características estruturais comuns. Isso quer dizer que há comandos para declarar uma <code>variável</code> e seu <code>tipo</code>, a <code>entrada</code> e <code>saída</code> de dados (resultados), a criação e uso de <code>funções</code>, e <code>cálculos aritméticos</code>, por exemplo. E tal como outras linguagens de programação, JS opera com uma lógica similar de <code>declarações</code> (palavras-chave, operadores, valores, expressões). Em resumo, a gente dizer as declarações de JS compõem:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Palavras-chave: sintaxe da linguagem JS<span class="kw">;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Operadores: caracteres que realizam operações<span class="kw">;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Valores: texto, números, verdadeiro/falso <span class="er">(</span><span class="ex">variável</span> <span class="st">"booleana"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"não definido"</span>, <span class="st">"nulo"</span><span class="kw">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> Expressões: trechos de código que produzem um único valor.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Do ponto de vista estrutural, por conseguinte, JS possui características que também são comuns a outras linguagens de programação:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Saída de dados<span class="kw">;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Declaração de variáveis<span class="kw">;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Tipos de dados<span class="kw">;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> Constantes<span class="kw">;</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="ex">5.</span> Aritmética<span class="kw">;</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="ex">6.</span> Vetores<span class="kw">;</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="ex">7.</span> Funções<span class="kw">;</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="ex">8.</span> Geração de dados aleatórios<span class="kw">;</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="ex">9.</span> Objetos<span class="kw">;</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="ex">10.</span> Operadores<span class="kw">;</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="ex">11.</span> Estruturas de controle<span class="kw">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Por enquanto é só. Se quiser aprender um pouquinho mais de <code>JavaScript</code>, basta virar a página !</p>
+</section>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./geo.html" class="pagination-link" aria-label="Geometria integrada: do plano ao espaço e às coordenadas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geometria integrada: do plano ao espaço e às coordenadas</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
