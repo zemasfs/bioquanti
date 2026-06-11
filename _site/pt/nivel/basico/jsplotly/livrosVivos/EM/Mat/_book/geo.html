@@ -303,7 +303,7 @@ MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" st
 <div id="fig-geo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-geo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figuras/geo.png" class="img-fluid figure-img">
+<img src="figuras/geo_q.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;3.2: Aplicativo de JSPlotly para explorar base plana, sólidos e volumes. A área pertence à base plana, enquanto que o volume surge quando essa base ganha altura. Em muitos sólidos, o volume é dado pela relação área da base X altura. Clique com o botão direito do mouse neste <a href="apps/geo.html">LINK</a> para abri-lo em uma nova janela, ou use a tela capacitiva de seu dispositivo móvel.
@@ -495,7 +495,7 @@ VOLTA PRO MUNDO <img src="figuras/icons/galho_bg.png" class="img-fluid" style="w
 <div id="fig-geo2b" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-geo2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figuras/geo2b.png" class="img-fluid figure-img">
+<img src="figuras/geo2b_q.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geo2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;3.3: Aplicativo JSPlotly para estudo de geometria. Formas em contorno (plana), sólido (espacial), e pontos no plano (analítica). Clique neste <a href="apps/geo2b.html">LINK</a> para uma nova aba para “rodá-lo”.
@@ -620,7 +620,7 @@ MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fl
 <div id="fig-geo3d" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-geo3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figuras/geo3d.png" class="img-fluid figure-img">
+<img src="figuras/geo3d_q.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geo3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;3.4: JSPlotly ao estudo de geometria espacial 3D. A mesma estrutura matemática funcionando em múltiplas representações (gráfico, numérica, algébrica, e espacial). Abra o <em>app</em> clicando neste <a href="apps/geo3d.html">LINK</a> com o botão direito para <em>“brincar”</em> em uma nova aba.
@@ -686,7 +686,7 @@ d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}
 <div id="fig-geo3d_din" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-geo3d_din-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figuras/geo3d_din.png" class="img-fluid figure-img">
+<img src="figuras/geo3d_din_q.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geo3d_din-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;3.5: JSPlotly para geometria espacial 3D, geometria plana e geometria analítica. Três formas de descrever a mesma realidade. Clique neste <a href="apps/geo3d_din.html">LINK</a> para acessá-lo.
@@ -733,66 +733,6 @@ POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-flui
 
 
 </main> <!-- /main -->
-<style>
-  .qr-holder {
-    position: relative;
-    display: inline-block;
-  }
-
-  .qr-holder .jsplotly-qr {
-    position: absolute;
-    left: 14%;
-    top: 22%;
-    width: 16%;
-    min-width: 72px;
-    max-width: 135px;
-    padding: 5px;
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.25);
-    z-index: 10;
-  }
-
-  @media (max-width: 600px) {
-    .qr-holder .jsplotly-qr {
-      width: 22%;
-      left: 10%;
-      top: 18%;
-    }
-  }
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll("figure").forEach(function (fig) {
-    const captionLink = Array.from(fig.querySelectorAll("figcaption a[href]"))
-      .find(a => {
-        const href = a.getAttribute("href") || "";
-        return href.includes("apps/") && href.endsWith(".html");
-      });
-
-    if (!captionLink) return;
-
-    const mainImg = fig.querySelector("img.figure-img, p > img, img");
-    if (!mainImg) return;
-
-    const holder = mainImg.parentElement;
-    if (!holder || holder.querySelector(".jsplotly-qr")) return;
-
-    holder.classList.add("qr-holder");
-
-    const absoluteUrl = new URL(captionLink.getAttribute("href"), window.location.href).href;
-
-    const qr = document.createElement("img");
-    qr.className = "jsplotly-qr";
-    qr.alt = "QR Code para acessar o JSPlotly";
-    qr.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=1&data=" 
-             + encodeURIComponent(absoluteUrl);
-
-    holder.appendChild(qr);
-  });
-});
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
