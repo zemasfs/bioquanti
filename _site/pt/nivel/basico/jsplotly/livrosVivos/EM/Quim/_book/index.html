@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.22">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,14 +33,15 @@ ul.task-list li input[type="checkbox"] {
 <link href="./solEqkin.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-518f0a3b27cbfbac3ec4f5cf67fa12d9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -173,66 +174,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<style>
-  .qr-holder {
-    position: relative;
-    display: inline-block;
-  }
-
-  .qr-holder .jsplotly-qr {
-    position: absolute;
-    left: 14%;
-    top: 22%;
-    width: 16%;
-    min-width: 72px;
-    max-width: 135px;
-    padding: 5px;
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.25);
-    z-index: 10;
-  }
-
-  @media (max-width: 600px) {
-    .qr-holder .jsplotly-qr {
-      width: 22%;
-      left: 10%;
-      top: 18%;
-    }
-  }
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll("figure").forEach(function (fig) {
-    const captionLink = Array.from(fig.querySelectorAll("figcaption a[href]"))
-      .find(a => {
-        const href = a.getAttribute("href") || "";
-        return href.includes("apps/") && href.endsWith(".html");
-      });
-
-    if (!captionLink) return;
-
-    const mainImg = fig.querySelector("img.figure-img, p > img, img");
-    if (!mainImg) return;
-
-    const holder = mainImg.parentElement;
-    if (!holder || holder.querySelector(".jsplotly-qr")) return;
-
-    holder.classList.add("qr-holder");
-
-    const absoluteUrl = new URL(captionLink.getAttribute("href"), window.location.href).href;
-
-    const qr = document.createElement("img");
-    qr.className = "jsplotly-qr";
-    qr.alt = "QR Code para acessar o JSPlotly";
-    qr.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=1&data=" 
-             + encodeURIComponent(absoluteUrl);
-
-    holder.appendChild(qr);
-  });
-});
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -284,13 +225,14 @@ document.addEventListener("DOMContentLoaded", function () {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
