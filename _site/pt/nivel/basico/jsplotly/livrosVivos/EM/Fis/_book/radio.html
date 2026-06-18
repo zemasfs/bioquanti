@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Radioatividade e energia nuclear – Física &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./ondas.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c9c2bb176cc3f720e0e6b6dc6e612089.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./radio.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Radioatividade e energia nuclear</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Física &amp; JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mecanica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mecânica: objetos em movimento</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ondas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ondas: movimento, som e luz</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./radio.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Radioatividade e energia nuclear</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Radioatividade e energia nuclear</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- 
+
+
+Radioatividade, Energia Nuclear e Sociedade
+Quando o núcleo do átomo transforma matéria, energia e decisões humanas
+
+Ou, mais poético:
+
+O Poder do Núcleo
+Radioatividade, energia nuclear e impactos no mundo real
+
+Minha sugestão integrada:
+
+Tronco: Física Nuclear
+Ramos: Radioatividade + Energia Nuclear + Impactos
+Galhos:
+
+estrutura do núcleo atômico
+isótopos e instabilidade nuclear
+radiações alfa, beta e gama
+meia-vida e decaimento radioativo
+fissão nuclear
+energia nuclear e geração elétrica
+aplicações médicas e industriais
+riscos, acidentes e rejeitos
+comparação entre energia nuclear, fóssil e renováveis
+
+Para os scripts JSPlotly, eu pensaria em:
+
+Script 1 — 
+Slider de tempo, meia-vida e quantidade inicial.
+
+Script 2 — Tipos de radiação
+Comparação alfa, beta e gama: penetração, carga, massa e blindagem.
+
+Script 3 — Fissão nuclear e energia liberada
+Simulação visual de nêutron atingindo núcleo, fragmentação e liberação de energia.
+
+Script 4 Kryptonite — Energia nuclear: benefício × risco × impacto
+Widget integrado comparando produção de energia, emissão de CO₂, rejeitos, segurança e eficiência entre nuclear, carvão, gás, solar, eólica e hidrelétrica.
+
+Esse capítulo fecha Física muito forte, porque junta modelo atômico, energia, tecnologia, medicina, ambiente e sociedade
+
+Radioatividade, 
+
+Tronco: Física Nuclear  
+Ramos: Radioatividade + Energia Nuclear + Impactos   -->
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nem toda energia aparece como calor ou movimento. Algumas das transformações mais intensas do universo acontecem nas escalas invisíveis de dentro do átomo. A <code>radioatividade</code> mostra que a matéria não é completamente estável. Dentro dos átomos existe <code>energia nuclear</code> capaz de curar, medir, datar, e gerar eletricidade, mas também matar, exigindo responsabilidade ética, ambiental e social. Certos núcleos se transformam espontaneamente, emitindo partículas e energia. E essas transformações permitem datar fósseis e rochas, diagnosticar e tratar doenças, gerar energia elétrica, esterilizar materiais e estudar estruturas invisíveis.</p>
+<p>Por outro lado, a radioatividade também levanta questões ambientais, sociais e mesmo da sobrevivência da humanidade, como a gestão de resíduos radioativos e segurança, o impacto ambiental, decisões sociais e políticas, geração alternativa de energia, enriquecimento de isótopos para fins pacíficos e restrição ao emprego de ogivas e armas nucleares.</p>
+<p>O capítulo pretende fornecer uma visão panorâmica no tema de energia nuclear e impactos no mundo real, conectando ciência, tecnologia e sociedade, e apresentando alguns dos conceitos no tema. Ilustrando, a meia-vida radioativa, os tipos de radiação, fissão nuclear e energia liberada, e a discussão de riscos, benefícios e impactos da energia nuclear.</p>
+<div id="fig-gizz_radio" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_radio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_radio.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_radio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.1: O núcleo do átomo transforma matéria, energia e decisões humanas.
+</figcaption>
+</figure>
+</div>
+<p><strong>Ao final, você será capaz de:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> explicar o que torna um núcleo radioativo<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> diferenciar radiações alfa, beta e gama<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar curvas de decaimento e meia-vida<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> relacionar fissão nuclear com produção de energia<span class="kw">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> comparar benefícios e riscos da energia nuclear<span class="kw">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> discutir impactos ambientais, sociais e tecnológicos da radioatividade<span class="kw">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> investigar modelos computacionais para visualização interativa do tema<span class="kw">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Acesse o JSPlotly da <a href="#fig-radio" class="quarto-xref">Figura&nbsp;<span>4.2</span></a> abaixo para entender um pouco como uma amostra radioativa diminui ao longo do tempo.</p>
+<div id="fig-radio" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-radio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/radio_q.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-radio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.2: Meia-vida: a cada intervalo de tempo resta metade da quantidade anterior. Clique com o botão direito neste <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/livrosvivos/em/fis/_book/apps/radio">LINK</a> e abra o <em>app</em> em nova aba.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h2>
+<p>O gráfico compara diferentes valores de <code>meia-vida</code>, mostrando que alguns materiais decaem rapidamente, enquanto outros permanecem ativos por muito mais tempo. Execute o script e observe as curvas para as meia-vidas.</p>
+<p>Compare qual curva cai mais rápido.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> meiasVidas <span class="op">=</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">20</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois altere como abaixo. Observe que a forma do decaimento continua a mesma, mas a escala muda.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> quantidadeInicial <span class="op">=</span> <span class="dv">200</span><span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tempoMaximo <span class="op">=</span> <span class="dv">80</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Verifique que a radioatividade não desaparece toda de uma vez. O decaimento radioativo é probabilístico. Não sabemos exatamente quando um núcleo específico vai decair mas, quando observamos muitos núcleos juntos, aparece um padrão regular. Um tutorial para uso do <em>app</em> segue abaixo.</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Observe as quatro curvas;</li>
+<li>Veja qual delas cruza primeiro a linha da metade;</li>
+<li>Compare meia-vida curta e meia-vida longa;</li>
+<li>Aumente <code>tempoMaximo</code>;</li>
+<li>Observe o comportamento de longo prazo;</li>
+<li>Altere <code>quantidadeInicial</code>;</li>
+<li>Veja que o padrão relativo permanece;</li>
+<li>Modifique a lista <code>meiasVidas</code>;</li>
+<li>Compare novos materiais simulados.</li>
+</ol>
+<p>Observe que o que muda mais é o tempo necessário para a amostra decair, e não sua quantidade inicial, o que evidencia uma das aplicações mais práticas do cálculo de meia-vida: a datação de fósseis e artefatos antigos. Que tal explorar alguns cenários ?</p>
+<ol type="1">
+<li><em>Decaimento rápido</em>. Por que materiais com meia-vida curta desaparecem rapidamente ?</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> meiasVidas <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><em>Decaimento lento</em>. Por que materiais com meia-vida longa permanecem ativos por muito tempo?</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> meiasVidas <span class="op">=</span> [<span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">40</span><span class="op">,</span> <span class="dv">80</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><em>Tempo maior</em>. A quantidade chega exatamente a zero ou apenas se aproxima dele ?</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tempoMaximo <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><em>Quantidade inicial maior</em>. A meia-vida muda quando começamos com mais material ?</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> quantidadeInicial <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Comparação extrema</em>. Como curvas muito diferentes ajudam a entender risco, persistência e armazenamento ?</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> meiasVidas <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">50</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As curvas mostram decaimento exponencial. No início, a queda pode parecer rápida. Depois, a quantidade continua diminuindo, mas cada nova metade é calculada sobre o que ainda resta. Por isso, a curva se aproxima de zero gradualmente. Ou seja, meia-vida é o tempo que leva para restar metade de um material.</p>
+<section id="por-dentro-do-script" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script">Por dentro do script</h4>
+<p>O script usa uma função para calcular o decaimento:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">calculaDecaimento</span>(N0<span class="op">,</span> T12<span class="op">,</span> tempo) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> N0 <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="fl">0.5</span><span class="op">,</span> tempo <span class="op">/</span> T12)<span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Onde <code>N0</code> é a quantidade inicial, <code>T12</code> é a meia-vida, e <code>tempo</code> é o período transcorrido. Depois, o script calcula várias curvas:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> meiasVidas <span class="op">=</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">20</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada curva mostra uma amostra com meia-vida diferente. A linha tracejada marca metade da quantidade inicial, e ajuda a visualizar quando cada curva atinge sua primeira meia-vida.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>quantidadeInicial <span class="op">/</span> <span class="dv">2</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</div>
+</div>
+<!-- 
+
+Observe a curva.
+
+Ela não é linear.
+
+Ela diminui rapidamente no início e depois mais lentamente.
+
+👉 Esse comportamento é característico do decaimento radioativo.
+
+### Modo de usar
+
+- altere a meia-vida  
+- compare curvas  
+- observe quando a quantidade cai pela metade  
+- acompanhe múltiplas meias-vidas  
+
+### Ideia central
+
+A cada intervalo de tempo fixo (meia-vida), a quantidade reduz pela metade.
+
+### E mais !!
+
+- compare meia-vida curta e longa  
+- imagine aplicações médicas  
+- imagine rejeitos nucleares  
+- pense no tempo como fator físico real  
+
+Antes de qualquer definição formal, experimente.
+
+
+
+Ajuste a quantidade inicial de átomos radioativos.
+
+Depois, altere a meia-vida.
+
+Observe a curva.
+
+Ela não cai em linha reta.
+
+Ela diminui rapidamente no começo e depois mais lentamente.
+
+Essa é uma das marcas mais importantes do decaimento radioativo:
+
+👉 a cada meia-vida, resta metade da quantidade anterior.
+
+Não importa se há muito ou pouco material. O padrão matemático se repete.
+
+### Modo de usar
+
+1. Escolha uma quantidade inicial de núcleos radioativos.
+2. Ajuste o valor da meia-vida.
+3. Observe a quantidade restante ao longo do tempo.
+4. Compare curvas com meia-vida curta e longa.
+5. Procure o ponto em que resta metade da amostra.
+6. Depois procure o ponto em que resta um quarto.
+7. Observe que a curva nunca chega bruscamente a zero.
+
+### Questões para observar
+
+- O que acontece quando a meia-vida fica menor?
+- A curva fica mais inclinada ou menos inclinada?
+- Depois de uma meia-vida, quanto resta?
+- Depois de duas meias-vidas, quanto resta?
+- Por que a radioatividade não desaparece de uma vez?
+
+**E mais !!**
+
+- Experimente simular um radioisótopo de meia-vida curta.
+- Depois simule outro de meia-vida longa.
+- Compare o comportamento das curvas.
+- Imagine uma aplicação médica, na qual a radiação precisa desaparecer relativamente rápido.
+- Imagine um rejeito nuclear, que precisa permanecer isolado por muito tempo.
+- Pergunte: a mesma propriedade física pode ser útil e perigosa ao mesmo tempo? -->
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A equação de <code>decaimento radioativo</code> mostra quanto de uma substância radioativa ainda resta depois de certo tempo:</p>
+<p><span id="eq-radio"><span class="math display">\[
+N(t) = N_0 \cdot \left(\frac{1}{2}\right)^{t/T_{1/2}}
+\tag{4.1}\]</span></span></p>
+<p>Na <a href="#eq-radio" class="quarto-xref">Equação&nbsp;<span>4.1</span></a>, <span class="math inline">\(N(t)\)</span> representa a quantidade de material radioativo que resta no tempo <span class="math inline">\(t\)</span>, <span class="math inline">\(N_0\)</span> a quantidade inicial da substância radioativa, e <span class="math inline">\(T_{1/2}\)</span> a meia-vida.</p>
+<p>Assim, a quantidade restante pode ser entendida como a quantidade inicial multiplicada por metade elevada ao número de meias-vidas transcorridas. Chato, não ? Então, quem sabe um “corta pela metade, corta pela metade, corta pela metade,…”, e assim por diante. Na prática, um padrão que permite prever quanto material radioativo ainda resta depois de certo tempo.</p>
+<p>A radiação é conhecida por apresentar riscos à saúde em função de seu poder de penetração nos tecidos, chegando inclusive aos ossos. Existem alguns tipos de radiação, cada um interagindo com a matéria de forma diferente, em com diferentes níveis de impacto sobre a matéria. O JSPlotly a seguir apresenta uma forma mais descontraída para esse estudo.</p>
+<div id="fig-radio2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-radio2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/radio2_q.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-radio2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.3: Uma radiação mais penetrante não significa necessariamente mais perigosa. Clique com o botão direito neste <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/livrosvivos/em/fis/_book/apps/radio2">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O script compara três tipos de radiação: alfa (<span class="math inline">\(\alpha\)</span>), beta (<span class="math inline">\(\beta\)</span>) e gama (<span class="math inline">\(\gamma\)</span>). Você pode observar, simultaneamente, o poder de <code>penetração</code>, a capacidade de <code>ionização</code>, <code>massa relativa</code>, <code>carga elétrica</code> e tipo de <code>blindagem</code>.</p>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>Execute o script. As barras mostram penetração e ionização, enquanto os pontos mostram massa e carga. Observe qual radiação penetra mais, qual ioniza mais, e qual tem maior massa. Passe o mouse sobre as barras para ver a blindagem. E compare os tipos de radiação. Por exemplo, alfa vs beta, beta vs gama, e alfa vs gama.</p>
+<p>Apesar de transparecer que um tipo seja mais “forte” e mais perigoso do que outro, no mundo real não funciona assim. O risco depende de alguns fatores, como a penetração (até onde chega), a ionização (quanto dano local causa), e o contexto (externo ou interno ao corpo), além do tempo e da quantidade de exposição.</p>
+<p>Por exemplo, a alfa possui baixa penetração mas alta ionização, enquanto que a gama possui alta penetração mas menor ionização local. Isso quebra o mito de que quanto mais penetrante a radiação, mais perigosa ela se apresenta. Vai abaixo um modo de uso do script.</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Observe as barras de penetração;</li>
+<li>Compare com as de ionização;</li>
+<li>Observe os pontos de massa;</li>
+<li>Veja a carga elétrica;</li>
+<li>Passe o mouse para ver a blindagem;</li>
+<li>Compare os três tipos;</li>
+<li>Relacione massa e penetração;</li>
+<li>Relacione ionização e dano potencial;</li>
+<li>Interprete o conjunto como um sistema.</li>
+</ol>
+<p>Reflita qual tipo de radiação causa mais dano em diferentes situações. E siga os cenários abaixo para se apropriar do tema e <em>“brilhar no escuro”</em>.</p>
+<ol type="1">
+<li><p><em>Comparação direta</em>. Observe o gráfico completo. Qual radiação penetra mais ? qual ioniza mais ?</p></li>
+<li><p><em>Radiação alfa</em>. Foque em “Alfa”. Por que ela é facilmente bloqueada, mas ainda perigosa ?</p></li>
+<li><p><em>Radiação beta</em>. Foque em “Beta”. Por que ela representa um intermediário entre alfa e gama ?</p></li>
+<li><p><em>Radiação gama</em>. Agora foque em “Gama”. Por que ela exige materiais densos para blindagem, como chumbo ?</p></li>
+<li><p><em>Blindagem</em>. Observe os textos: * papel, <em>alumínio</em>, e <em>chumbo</em>. Por que materiais diferentes são necessários para cada tipo ?</p></li>
+<li><p><em>Interpretação integrada</em>. Compare tudo. Qual radiação é mais perigosa fora do corpo ? e dentro do corpo ?</p></li>
+</ol>
+<p>Comparando os tipos de radiação, podemos resumir como:</p>
+<ol type="1">
+<li>Alfa: alta massa, alta ionização, baixa penetração.</li>
+<li>Beta: massa pequena, penetração média, ionização intermediária.</li>
+<li>Gama: sem massa, alta penetração, menor ionização local.</li>
+</ol>
+<p>Concluindo, o tipo de interação importa mais do que sua “força” isolada.</p>
+</section>
+<section id="por-dentro-do-script-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-1">Por dentro do script</h4>
+<p>O script organiza os dados em uma lista:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> radiacoes <span class="op">=</span> [<span class="op">...</span>]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada tipo possui propriedades de massa, carga, penetração, ionização e blindagem. Depois separa os dados para o gráfico:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> penetracao <span class="op">=</span> radiacoes<span class="op">.</span><span class="fu">map</span>(r <span class="kw">=&gt;</span> r<span class="op">.</span><span class="at">penetracao</span>)<span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ionizacao <span class="op">=</span> radiacoes<span class="op">.</span><span class="fu">map</span>(r <span class="kw">=&gt;</span> r<span class="op">.</span><span class="at">ionizacao</span>)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>No gráfico as barras mostram penetração e ionização e os pontos massa e carga, reunindo várias dimensões em uma única visualização.</p>
+</section>
+</div>
+</div>
+<!-- ### Modo de usar
+
+- observe penetração e ionização  
+- compare massa e carga  
+- analise blindagens  
+
+### Ideia-chave
+
+👉 mais penetrante não significa sempre mais perigoso
+
+Tudo depende do contexto.
+
+### Síntese rápida
+
+- Alfa → baixa penetração, alta ionização  
+- Beta → intermediária  
+- Gama → alta penetração  
+
+
+A radioatividade não é uma coisa única.
+
+Existem diferentes tipos de emissão radioativa.
+
+As três formas mais comuns estudadas na Física são:
+
+- radiação alfa
+- radiação beta
+- radiação gama
+
+Cada uma possui características próprias.
+
+A radiação alfa tem maior massa e menor poder de penetração. Pode ser bloqueada por materiais simples, como papel ou a camada externa da pele.
+
+A radiação beta tem massa muito menor, maior penetração e pode atravessar materiais finos.
+
+A radiação gama é uma radiação eletromagnética de alta energia. Não possui carga elétrica nem massa de repouso, e tem grande poder de penetração.
+
+
+
+### Modo de usar
+
+1. Selecione o tipo de radiação.
+2. Observe carga, massa relativa e poder de penetração.
+3. Compare os materiais de blindagem.
+4. Repare que “mais perigoso” depende do contexto.
+5. Compare exposição externa e contaminação interna.
+6. Relacione cada radiação com sua interação com a matéria.
+
+### Ideia central
+
+A radiação não deve ser entendida apenas como “forte” ou “fraca”.
+
+O mais importante é perguntar:
+
+👉 que tipo de radiação é?  
+👉 onde está a fonte?  
+👉 qual material está entre a fonte e o organismo?  
+👉 qual tecido ou material recebe energia?  
+👉 por quanto tempo ocorre a exposição?
+
+Este script compara as radiações alfa, beta e gama de forma visual.
+
+As barras mostram duas propriedades principais:
+
+- **poder de penetração**
+- **capacidade de ionização**
+
+Os pontos indicam:
+
+- **massa relativa**
+- **carga elétrica**
+
+Comece observando a radiação alfa. Ela tem baixa penetração, mas alta ionização. Isso significa que ela não atravessa muitos materiais, mas pode transferir muita energia em uma região pequena.
+
+Depois observe a beta. Ela ocupa uma posição intermediária: penetra mais que a alfa, ioniza menos que a alfa e possui carga elétrica.
+
+Por fim, observe a gama. Ela tem grande poder de penetração, mas menor ionização relativa. Por isso exige blindagens mais densas, como chumbo ou concreto.
+
+A ideia central é:
+
+> uma radiação não é perigosa apenas porque “atravessa mais”.
+
+O risco depende do tipo de radiação, da distância, do tempo de exposição, da blindagem e da localização da fonte.
+
+### Cenários de exploração
+
+**Cenário 1 — Radiação alfa fora do corpo**
+
+Pergunta:  
+Por que uma folha de papel pode bloquear partículas alfa?
+
+**Cenário 2 — Radiação alfa dentro do corpo**
+
+Pergunta:  
+Por que a mesma radiação alfa pode ser perigosa se a fonte radioativa for ingerida ou inalada?
+
+**Cenário 3 — Radiação gama em ambiente externo**
+
+Pergunta:  
+Por que a radiação gama exige blindagens mais densas?
+
+**Cenário 4 — Comparação geral**
+
+Pergunta:  
+Qual radiação penetra mais? Qual ioniza mais? Essas duas respostas indicam o mesmo tipo de risco?
+
+### Em síntese
+
+A radiação alfa é pouco penetrante, mas muito ionizante.  
+A beta é intermediária.  
+A gama é muito penetrante, mas menos ionizante em comparação direta.
+
+Por isso, segurança radiológica não depende de medo genérico da palavra “radiação”, mas de análise física: tipo de emissão, energia, distância, tempo e blindagem. -->
+<hr>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O átomo possui duas regiões, o <code>núcleo</code> e a <code>eletrosfera</code>. O núcleo é a região central, extremamente compacta e densa, e que concentra praticamente toda a massa atômica. Nele ficam os <code>prótons</code> (com carga elétrica positiva) e os <code>nêutrons</code> (partículas sem carga que ajudam a estabilizar o núcleo). Ao redor desse centro, em um vasto espaço quase totalmente vazio, fica a eletrosfera, onde os elétrons (partículas de carga negativa e massa desprezível) “giram” em alta velocidade, atraídos pela carga positiva do núcleo.</p>
+<p>Diversas reações que ocorrem nos átomos podem liberar energia, como a <code>fusão nuclear</code>, que ocorre quando dois núcleos atômicos leves se unem para formar um único núcleo mais pesado, o que libera uma quantidade colossal de energia. E também a `fissão nuclear´, que envolve a divisão de um átomo pesado, também liberando grande quantidade de energia.</p>
+<p>Agora que você já aprendeu <em>“na prática”</em> um pouco sobre a meia-vida, o decaimento radioativo e os tipos de radiação, que tal simular um fenômeno do mundo real, a <code>fissão nuclear</code>, base para a produção de energia elétrica em usinas nucleares ? E melhor ainda…com uma animação !</p>
+<div id="fig-radio3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-radio3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/radio3_q.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-radio3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.4: A fissão nuclear transforma massa em energia e pode gerar reações em cadeia. Clique com o botão direito neste <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/livrosvivos/em/fis/_book/apps/radio3">LINK</a> e abra o <em>app</em> em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>A fissão nuclear libera energia quando o núcleo se rompe. Mais detalhadamente, pela divisão de um núcleo atômico pesado e instável (como o <code>Urânio-235</code>) em dois ou mais núcleos menores, liberando uma enorme quantidade de energia, nêutrons e radiação.</p>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>O script da <a href="#fig-radio3" class="quarto-xref">Figura&nbsp;<span>4.4</span></a> mostra uma <em>fissão nuclear animada</em>. Nela você pode acompanhar um nêutron incidente, o núcleo de U-235, a quebra em fragmentos menores, a emissão de novos nêutrons e a liberação de energia em ondas.</p>
+<p>Execute o script e clique em <code>Play</code>. Observe o nêutron se aproximando, o núcleo instável, a ruptura e a explosão de energia. Depois altere o valor de energia liberada, e observe como o efeito visual muda (ex: 100, 200, 400).</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> energiaLiberada <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Pense: o que muda mais, a forma da reação ou a intensidade da energia ?</p>
+<p>Quando o núcleo se divide, parte da massa é convertida em energia, novos nêutrons são liberados, e esses nêutrons podem atingir outros núcleos. Isso leva a um fenômeno de <code>reação em cadeia</code>, na qual uma única fissão pode gerar várias outras. Vai agora um modo de usar para o aplicativo.</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Clique em <code>Play</code>;</li>
+<li>Observe o nêutron incidente;</li>
+<li>Veja o núcleo antes da fissão;</li>
+<li>Observe o momento da ruptura;</li>
+<li>Veja os fragmentos se afastando;</li>
+<li>Observe os novos nêutrons;</li>
+<li>Veja as ondas de energia;</li>
+<li>Pause em diferentes momentos;</li>
+<li>Altere a energia liberada;</li>
+<li>Compare os efeitos.</li>
+</ol>
+<p>Perceba que mudanças iniciaipodem gerar grandes efeitos. Seguem também alguns cenários para você experimentar.</p>
+<ol type="1">
+<li><em>Baixa energia</em>. Por que o efeito parece mais “contido” ?</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> energiaLiberada <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><p><em>Energia intermediária</em>. Agora mude a <code>energiaLiberada</code> para 100. Quando o processo começa a parecer mais intenso ?</p></li>
+<li><p><em>Alta energia</em>. Suba então para 800. O que muda na propagação da energia ?</p></li>
+<li><p><em>Número de frames</em>. O que você percebe melhor com animação mais lenta ?</p></li>
+</ol>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> numeroFrames <span class="op">=</span> <span class="dv">80</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><em>Interpretação física</em>. Observe os três nêutrons liberados. Quantas novas fissões eles poderiam iniciar ?</li>
+</ol>
+<p>A fissão nuclear ocorre em etapas. O nêutron atinge o núcleo (colisão), o núcleo se deforma (instabilidade), ocorrendo a divisão em fragmentos (fragmentação), com a liberação de novos nêutrons (emissão) e a propagação de ondas (energia). Repare que a energia nuclear não é uma explosão “mágica” que surge de átomo fechado, mas o resultado de reorganização da matéria.</p>
+</section>
+<section id="por-dentro-do-script-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-2">Por dentro do script</h4>
+<p>O script começa definindo a energia:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> energiaLiberada <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Essa energia controla o efeito visual:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fatorEnergia <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(energiaLiberada <span class="op">/</span> <span class="dv">200</span>)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois, a animação é construída frame a frame:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> numeroFrames<span class="op">;</span> i<span class="op">++</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A simulação tem duas fases. A primeira é a <em>aproximação</em>, quando o nêutron se aproxima do núcleo.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>neutronX <span class="op">=</span> <span class="op">-</span><span class="dv">6</span> <span class="op">+</span> <span class="op">...</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E a segunda fase é a <em>fissão</em>, quando o núcleo se divide em Ba (bário), Kr (criptônio) e novos nêutrons.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> p <span class="op">=</span> (fase <span class="op">-</span> <span class="fl">0.35</span>) <span class="op">/</span> <span class="fl">0.65</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E a energia aparece como ondas, e que representam a energia liberada no processo.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ondaEnergia</span>(p<span class="op">,</span> <span class="op">...</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</div>
+</div>
+<!-- 
+---
+
+
+
+### Modo de usar
+
+- observe o nêutron atingindo o núcleo  
+- acompanhe a divisão  
+- veja surgirem fragmentos e novos nêutrons  
+- observe as ondas de energia  
+
+### Conectando ideias
+
+A fissão nuclear transforma:
+
+núcleo → energia térmica → vapor → turbina → eletricidade  
+
+### Ideia central
+
+Grande quantidade de energia pode surgir de pequenas transformações no núcleo.
+
+
+
+A energia nuclear aparece quando transformações no núcleo liberam grande quantidade de energia.
+
+Na fissão nuclear, um núcleo pesado pode se dividir em núcleos menores, liberando energia e nêutrons.
+
+Esses nêutrons podem atingir outros núcleos.
+
+Quando isso ocorre de forma controlada, tem-se um reator nuclear.
+
+Quando ocorre de forma descontrolada, há risco de reação em cadeia explosiva.
+
+
+
+### Modo de usar
+
+1. Observe o nêutron atingindo o núcleo.
+2. Acompanhe a divisão do núcleo em fragmentos menores.
+3. Veja a liberação de novos nêutrons.
+4. Relacione a quantidade de nêutrons com a possibilidade de reação em cadeia.
+5. Ajuste parâmetros como controle, absorção ou multiplicação.
+6. Compare uma reação controlada com uma reação descontrolada.
+
+### Conectando ideias
+
+A fissão nuclear conecta vários conceitos da Física:
+
+Energia de ligação nuclear  
+Conservação de energia  
+Interação entre partículas  
+Calor e geração de vapor  
+Transformação de energia térmica em energia elétrica  
+Controle tecnológico de processos naturais  
+
+Em uma usina nuclear, a energia liberada na fissão aquece um fluido. Esse calor produz vapor. O vapor movimenta turbinas. As turbinas acionam geradores elétricos.
+
+Ou seja:
+
+núcleo → calor → movimento → eletricidade
+
+A parte nuclear não “cria eletricidade diretamente”.
+
+Ela fornece calor de forma extremamente concentrada. -->
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como de praxe neste livro, um pouco de reflexão, ora ligada aos scripts de JSPlotly, ora não. Dividindo a seção por cada script visto:</p>
+<p><em>Script no.1</em></p>
+<ul>
+<li>E se você pudesse observar uma amostra radioativa desde o início — veria ela desaparecer de forma contínua ou em pequenos eventos invisíveis ?</li>
+<li>E se cada núcleo tivesse um “relógio próprio” imprevisível — como explicar o comportamento coletivo tão regular ?</li>
+<li>E se a meia-vida fosse diferente — quanto tempo levaria para um material deixar de ser perigoso ?</li>
+<li>E se uma pequena diferença na meia-vida mudasse completamente o destino de um ambiente contaminado ?</li>
+</ul>
+<p><em>Script no.2</em></p>
+<ul>
+<li>E se você pudesse reduzir seu corpo ao tamanho de um núcleo — como pareceria a colisão de um nêutron ?</li>
+<li>E se a fissão nuclear fosse visível a olho nu — você a veria como uma explosão… ou como uma reorganização da matéria ?</li>
+<li>E se cada nêutron liberado atingisse outro núcleo — quantas gerações de reações aconteceriam ?</li>
+<li>E se essa cadeia fosse controlada — o que mudaria em relação a uma reação descontrolada ?</li>
+<li>E se toda a energia de uma cidade viesse de reações como essa ?</li>
+</ul>
+<p><em>Script no.3</em></p>
+<ul>
+<li>E se a radiação fosse invisível, mas seus efeitos acumulados fossem inevitáveis — como medir o risco ?</li>
+<li>E se a radiação mais penetrante não fosse a mais perigosa — o que realmente define perigo ?</li>
+<li>E se o mesmo tipo de radiação pudesse curar (na medicina) e também causar danos ?</li>
+<li>E se o perigo dependesse mais da forma de interação do que da intensidade ?</li>
+</ul>
+<p><em>Script no.4</em></p>
+<p>Hahaaa !!! Isso mesmo. Questões certinhas e devaneios sobre um script de JSPlotly que você nem viu ainda ! Mas já vai se preparando, pois ele está na próxima seção do capítulo.</p>
+<ul>
+<li>E se você tivesse que decidir como produzir energia para uma cidade inteira ?</li>
+<li>E se escolher uma fonte significasse abrir mão de outra ?</li>
+<li>E se uma fonte fosse limpa, mas intermitente (irregular na oferta) ?</li>
+<li>E se outra fosse estável, mas gerasse resíduos ?</li>
+<li>E se a melhor decisão não fosse técnica, mas ética ?</li>
+</ul>
+<p><em>Script no. 5</em></p>
+<p>Hahaaa !!! Esse não existe… pegadinha ! Mas é pra você experimentar uma bilocação cerebral…parte dentro da caixa craniana, parte lá longe !</p>
+<ul>
+<li>E se mudássemos os critérios — e não a tecnologia — o resultado da escolha mudaria ?</li>
+<li>E se o “melhor” sistema energético dependesse da sociedade que o utiliza ?</li>
+<li>E se o futuro energético fosse uma combinação, e não uma única solução ?</li>
+<li>E se toda a energia nuclear viesse, no fundo, da reorganização de partículas invisíveis ?</li>
+<li>E se massa e energia fossem apenas duas faces da mesma coisa ?</li>
+<li>E se o que chamamos de “matéria estável” fosse apenas um equilíbrio temporário ?</li>
+<li>E se estivéssemos olhando para um pedaço de urânio…ou para a história energética da humanidade ?</li>
+<li>E se a energia que alimenta cidades fosse a mesma que pode destruir cidades ?</li>
+<li>E se o problema não fosse a física…as como escolhemos usá-la ?</li>
+<li>E se, em outra estrela, reações nucleares ocorressem continuamente em escalas gigantescas ?</li>
+<li>E se o Sol fosse apenas um reator nuclear natural ?</li>
+<li>E se a energia que chega até nós tivesse começado em processos como esses ?</li>
+<li>E se tudo isso — decaimento, radiação, fissão, energia — fosse parte de um mesmo padrão ?</li>
+<li>E se entender esse padrão fosse o primeiro passo para tomar decisões melhores ?</li>
+<li>E se aprender física nuclear não fosse apenas entender o átomo…mas entender responsabilidade ?</li>
+<li>E se o conhecimento não fosse só poder…mas também escolha ?</li>
+<li>E se agora, depois de tudo isso…você começasse a olhar para energia de outro jeito ?</li>
+</ul>
+</div>
+</div>
+<!-- 
+
+### Modo de usar
+
+- observe o índice geral  
+- selecione fontes no menu  
+- analise o radar  
+- compare critérios  
+
+1. Compare diferentes fontes de energia.
+2. Observe produção energética, emissão de carbono, resíduos, risco e área ocupada.
+3. Altere pesos de importância para cada critério.
+4. Verifique como a “melhor escolha” muda conforme o critério escolhido.
+5. Compare decisões baseadas em eficiência, ambiente, segurança e custo.
+6. Discuta por que decisões energéticas envolvem ciência e sociedade.
+Cenário 1 — Cidade com alta demanda elétrica
+
+Pergunta:  
+Qual fonte garante produção constante de energia com menor emissão direta de carbono?
+
+Cenário 2 — Região com risco ambiental elevado
+
+Pergunta:  
+Como o risco de acidente, a gestão de rejeitos e a segurança alteram a decisão energética?
+
+Cenário 3 — País com matriz energética dependente de combustíveis fósseis
+
+Pergunta:  
+A energia nuclear pode reduzir emissões sem substituir completamente outras fontes?
+
+Cenário 4 — Comunidade próxima a uma usina
+
+Pergunta:  
+Quais informações científicas e sociais devem ser consideradas antes de aceitar ou rejeitar uma instalação nuclear?
+
+**E mais !!**
+
+ - Compare nuclear, carvão, gás, solar, eólica e hidrelétrica.
+ - Altere o peso dado para emissão de carbono.
+ - Depois altere o peso dado para segurança.
+ - Depois altere o peso dado para custo.
+ - Observe que uma resposta técnica pode mudar quando os critérios mudam.
+ - Discuta por que energia não é apenas um problema de Física.
+
+**E mais !!**
+
+- altere critérios mentalmente  
+- compare decisões  
+- discuta escolhas energéticas  
+
+
+Script 4 — explicação para o aluno
+Modo de usar
+
+O Script 4 funciona como um painel de decisão energética.
+
+A pergunta não é:
+
+Qual fonte de energia é perfeita?
+
+A pergunta é:
+
+Qual fonte parece melhor quando escolhemos certos critérios?
+
+O gráfico da esquerda mostra um índice integrado. Esse índice mistura vários critérios:
+
+produção de energia
+confiabilidade
+baixa emissão de CO₂
+área ocupada
+resíduos
+risco percebido
+
+O gráfico da direita mostra o perfil da fonte selecionada, como se fosse uma “impressão digital energética”.
+
+Como explorar
+Comece olhando apenas a barra principal.
+Veja qual fonte aparece com maior índice.
+Use o menu para escolher uma fonte.
+Observe o radar da direita.
+Pergunte: essa fonte é forte em quê?
+Pergunte: essa fonte é fraca em quê?
+Clique em “Mostrar critérios”.
+Compare cada critério separadamente.
+Discuta por que a resposta muda quando o critério muda.
+Cenário 1 — Menor emissão de carbono
+
+Pergunta:
+
+Se o objetivo principal for reduzir CO₂, quais fontes ficam mais interessantes?
+
+Discussão esperada:
+
+Solar, eólica, hidrelétrica e nuclear tendem a ganhar importância. Carvão perde força. Gás fica em posição intermediária.
+
+Cenário 2 — Energia constante
+
+Pergunta:
+
+Se a cidade precisa de energia estável dia e noite, quais fontes parecem mais confiáveis?
+
+Discussão esperada:
+
+Nuclear, carvão, gás e hidrelétrica aparecem mais fortes em confiabilidade. Solar e eólica dependem mais das condições ambientais.
+
+Cenário 3 — Rejeitos e risco
+
+Pergunta:
+
+Se a maior preocupação for segurança e resíduos, a energia nuclear continua sendo uma boa escolha?
+
+Discussão esperada:
+
+Depende. Ela tem alta produção e baixo CO₂, mas exige cuidado com rejeitos, protocolos e confiança institucional.
+
+Cenário 4 — Nenhuma fonte perfeita
+
+Pergunta:
+
+Por que não basta escolher a fonte com maior barra?
+
+Discussão esperada:
+
+Porque a barra resume critérios diferentes. Uma fonte pode ser ótima em emissão de carbono e ruim em resíduos; outra pode ser confiável, mas poluente.
+
+Cenário 5 — Matriz energética combinada
+
+Pergunta:
+
+Em vez de escolher apenas uma fonte, que combinação faria mais sentido?
+
+Discussão esperada:
+
+Uma matriz energética pode combinar fontes constantes com fontes renováveis variáveis. O objetivo não é achar uma solução mágica, mas equilibrar produção, impacto e segurança.
+
+Em síntese para o aluno
+
+O Script 4 mostra que energia é um problema de Física, mas também de sociedade.
+
+A energia nuclear não deve ser tratada nem como vilã automática, nem como solução mágica.
+
+Ela é uma fonte potente, concentrada e de baixa emissão direta de CO₂, mas exige alto controle técnico, gestão de rejeitos e debate público responsável.
+
+### Em síntese
+
+Energia não é só Física.
+
+É também decisão social.
+
+
+A radioatividade não é apenas um fenômeno microscópico.
+
+Ela conecta o núcleo atômico ao corpo humano, à medicina, à arqueologia, à indústria, à energia elétrica, ao ambiente e às escolhas coletivas.
+
+O mesmo fenômeno que pode tratar doenças também pode gerar riscos.
+
+A mesma energia que abastece cidades também exige responsabilidade.
+
+Por isso, estudar radioatividade é estudar uma das ideias mais profundas da Física:
+
+👉 pequenas transformações no núcleo podem produzir grandes impactos no mundo.
+--->
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A radioatividade permeia nosso cotidiano o tempo todo, mesmo que não a percebamos. A pesquisa de matrizes energéticas, a medicina nuclear, a Arqueologia, as Ciências Naturais e outros tantos vértices da pesquisa e indústria desses tempos estão, de uma forma ou outra, envolvidos com radioatividade. Na medicina nuclear, com uso de radioisótopos em exames de imagem, rastreamento de processos fisiológicos e tratamentos específicos. Na datação por carbono, permitindo estimar a idade de materiais orgânicos, rochas e objetos arqueológicos por determinação da meia-vida. Na inspeção indústrial, sendo utilizada para se verificar soldas, medir espessuras, esterilizar materiais e acompanhar processos.</p>
+<p>A radioatividade também está presente na pesquisa de exploração espacial, pela maior exposição no vácuo a um fluxo constante de partículas ionizantes de alta energia, como a radiação solar, raios cósmicos e cinturões de radiação em redor dos planetas. Também está presente no meio ambiente, uma vez que rejeitos radioativos exigem isolamento, monitoramento e planejamento. E, como um todo, também na Sociedade, despertando debates intensos sobre o desenvolvimento e uso da energia nuclear, porque envolve ciência, risco, confiança pública, política energética e memória histórica.</p>
+<p>Em relação a esse último papel pertinente à decisões políticas e uso consciente de alternativas energéticas, segue um último JSPlotly (<a href="#fig-radio4" class="quarto-xref">Figura&nbsp;<span>4.5</span></a>). O aplicativo agora compara fontes de energia por critérios ponderados. Será que dá pra escolher uma fonte que agregue benefícios e exclua riscos ?</p>
+<div id="fig-radio4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-radio4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/radio4_q.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-radio4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.5: Escolher fonte de energia envolve decisão pública, ambiental e tecnológica. Clique com o botão direito neste <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/livrosvivos/em/fis/_book/apps/radio4">LINK</a> e abra em nova aba.
+</figcaption>
+</figure>
+</div>
+<p>O script compara diferentes fontes de energia: nuclear, carvão, gás, solar, eólica e hidrelétrica. A comparação considera vários critérios ao mesmo tempo, como produção de energia, confiabilidade, emissão de CO<span class="math inline">\(_2\)</span>, área ocupada, resíduos e risco percebido. Assim, decidir sobre energia exige comparar benefícios, riscos e impactos.</p>
+<section id="agite-antes-de-usar-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-3">Agite antes de usar</h4>
+<p>O gráfico de barras resume o índice integrado, enquanto que o gráfico radar mostra o perfil de cada fonte. Uma fonte com radar equilibrado tende a apresentar bom desempenho em vários critérios. Mas uma fonte com radar irregular pode ser muito forte em alguns aspectos e fraca em outros.</p>
+<p>Execute o script e observe o gráfico de barras. Depois use o menu suspenso para selecionar uma fonte:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Nuclear</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Carvão</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>Gás</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>Solar</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>Eólica</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>Hidrelétrica</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe o gráfico radar à direita e depois clique em:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Mostrar critérios</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Compare quais critérios favorecem ou desfavorecem cada fonte, e verifique se existe uma fonte de energia perfeita.</p>
+<p>A seguir, um pequeno tutorial para uso do <em>app</em>.</p>
+<ol type="1">
+<li>Rode o script;</li>
+<li>Observe o índice integrado de cada fonte;</li>
+<li>Veja qual fonte aparece melhor no ranking inicial;</li>
+<li>Use o menu suspenso à direita;</li>
+<li>Compare o perfil radar de cada fonte;</li>
+<li>Clique em <code>Mostrar critérios</code>;</li>
+<li>Observe quais critérios puxam cada fonte para cima ou para baixo;</li>
+<li>Compare nuclear com carvão;</li>
+<li>Compare nuclear com solar e eólica;</li>
+<li>Compare hidrelétrica com as demais;</li>
+<li>Reflita sobre o peso dos critérios;</li>
+<li>Pergunte o que mudaria se outro critério fosse mais importante. O script mostra que cada fonte possui vantagens e limitações. Uma fonte pode ter alta produção, mas gerar mais resíduos. Outra pode emitir pouco CO<span class="math inline">\(_2\)</span>, mas depender do clima. Outra ainda pode ser confiável, mas exigir grande área ou apresentar riscos específicos. Por isso, decisões energéticas não são técnicas apenas, mas envolvem farta discussão entre setores da sociedade, ambiente, economia e políticas públicas.</li>
+</ol>
+<p>Segue também alguns cenários para exploração.</p>
+<ol type="1">
+<li><p><em>Prioridade para baixo CO<span class="math inline">\(_2\)</span></em>. Quais fontes se destacam quando reduzir emissões é o principal objetivo ?</p></li>
+<li><p><em>Prioridade para confiabilidade</em>. Quais fontes parecem mais adequadas quando a energia precisa estar disponível continuamente ?</p></li>
+<li><p><em>Prioridade para baixo risco percebido</em>. Por que uma fonte tecnicamente eficiente pode enfrentar resistência social ?</p></li>
+<li><p><em>Comparação nuclear X carvão</em>. Como duas fontes de alta produção podem ter impactos ambientais muito diferentes ?</p></li>
+<li><p><em>Comparação nuclear X solar/eólica</em>. Como baixa emissão de CO<span class="math inline">\(_2\)</span> pode aparecer em fontes com perfis técnicos bem diferentes ?</p></li>
+<li><p><em>Alterando pesos</em>. No código, modifique:</p></li>
+</ol>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> pesoCO2 <span class="op">=</span> <span class="fl">2.5</span><span class="op">;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> pesoRisco <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> pesoConfiabilidade <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O ranking muda quando a sociedade decide valorizar outros critérios ?</p>
+<p>Energia nuclear costuma gerar muita eletricidade com baixa emissão direta de CO<span class="math inline">\(_2\)</span>, mas exige cuidado com rejeitos, segurança e percepção pública. Fontes fósseis podem ser confiáveis, mas emitem mais gases associados ao aquecimento global. Energias solar e eólica emitem pouco CO<span class="math inline">\(_2\)</span>, mas dependem de condições ambientais e sistemas de armazenamento. Por sua vez, hidrelétricas podem produzir muito, mas ocupam grandes áreas e alteram ecossistemas. Por isso, o futuro energético não depende de uma resposta simples.</p>
+<p>Decisão energética é uma comparação de compromissos. Questões como impacto, risco, custo, confiabilidade e consequências precisam ser levadas em conta para escolha de uma fonte energética, mesmo que isso não leva àquela que gera mais energia.</p>
+</section>
+<section id="por-dentro-do-script-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="por-dentro-do-script-3">Por dentro do script</h4>
+<p>O script começa definindo as fontes comparadas:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fontes <span class="op">=</span> [<span class="st">"Nuclear"</span><span class="op">,</span> <span class="st">"Carvao"</span><span class="op">,</span> <span class="st">"Gas"</span><span class="op">,</span> <span class="st">"Solar"</span><span class="op">,</span> <span class="st">"Eolica"</span><span class="op">,</span> <span class="st">"Hidreletrica"</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois atribui notas “didáticas” de 0 a 10 para cada critério. Aqui são estimativas, mas o barato é que você pode editá-las a seu critério, também.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> energia <span class="op">=</span> [<span class="dv">9</span><span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="dv">7</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="dv">8</span>]<span class="op">;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> confiabilidade <span class="op">=</span> [<span class="dv">9</span><span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="dv">7</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">7</span>]<span class="op">;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> baixoCO2 <span class="op">=</span> [<span class="dv">9</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">9</span><span class="op">,</span> <span class="dv">9</span><span class="op">,</span> <span class="dv">8</span>]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Em seguida, o script define pesos:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> pesoEnergia <span class="op">=</span> <span class="fl">1.2</span><span class="op">;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> pesoCO2 <span class="op">=</span> <span class="fl">1.4</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Esses pesos indicam quais critérios importam mais na decisão. O índice integrado é calculado pela média ponderada:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> (</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  energia[i] <span class="op">*</span> pesoEnergia <span class="op">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  confiabilidade[i] <span class="op">*</span> pesoConfiabilidade <span class="op">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  baixoCO2[i] <span class="op">*</span> pesoCO2 <span class="op">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  baixaArea[i] <span class="op">*</span> pesoArea <span class="op">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  baixoResiduo[i] <span class="op">*</span> pesoResiduo <span class="op">+</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  baixoRisco[i] <span class="op">*</span> pesoRisco</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>) <span class="op">/</span> somaPesos<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Por fim, o painel mostra as barras com o índice integrado, as curvas dos critérios, e o radar da fonte selecionada.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ao longo desta obra, a essa seção tem sido dedicada a espelhar o <code>pensamento computacional</code> e a <code>lógica de programação</code> junto aos diversos scripts de JSPlotly, finalizando com um <code>pseudocódigo</code> voltado a um desses scripts em cada capítulo.</p>
+<p>Os scripts de JSPlotly utilizados nesse capítulo, por exemplo, miram numa compreensão progressiva para alguns conceitos da termodinâmica. Brevemente, a relação que envolve a meia-vida radioativa (Script no. 1), os tipos de radiação (Script no. 2), uma animação para fissão nuclear (Script no. 3), bem como um painel de decisões sobre tipos energéticos (Script no. 4).</p>
+<p>Mas você já deve ter percebido também que, ao longos dos capítulos deste trabalho, aquelas <code>competências digitais</code> passaram a integrar paulatinamente o próprio capítulo, diminuindo a necessidade de sua exclusividade para o tópico que se apresenta. A partir de agora, então, essa seção irá dedicar-se à <strong><code>verdadeira ferramenta</code></strong> por detrás de todos os scripts que podem ser feitos com o JSPlotly: a linguagem <strong><code>JavaScript</code></strong>.</p>
+<p>O entendimento de como opera essa ferramenta permitirá a você compreender e modificar qualquer código deste livro, ajustá-lo às suas preferências ou necessidades, bem como criar outros tantos que desejar. Além disso, poderá também entender o que há por detrás das páginas de internet e criar as suas próprias, como blogs e sites. Isso porque o JavaScript opera silenciosamente quando você clica num botão da tela de seu celular, preenche um formulário ou acompanha uma animação gráfica na internet. Por óbvio, entretanto, esta nanométrica seção não lhe dará condições de sair por aí programando em JavaScript. Mas lhe dará munição básica para que avance ao próximo nível nessa e em qualquer linguagem de programação.</p>
+<p><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript">JavaScript (JS)</a>, é uma linguagem de programação moderna, utilizada por grandes empresas e <em>big techs</em>, e focada na interatividade entre a página web e o usuário. Diferente de outras linguagens, <em>JavaScript</em> não precisa ser compilada separadamente por um programa, pois é interpretada a partir de máquinas homônimas presentes em navegadores comuns (<em>browser</em>), como Firefox, Chrome, Safari, Opera, Edge, etc.</p>
+<p>Assim, <em>Javacript (JS)</em> é uma linguagem para web. Ela completa a tríade essencial, <em>HTML-CSS-JS</em>. Enquanto <em>HTML</em> preocupa-se com o conteúdo e <em>CSS</em> com o estilo, <em>JavaScript</em> ocupa-se do comportamento, ou seja, da interatividade do usuário frente à uma página web. Vamos então chamá-la agora carinhosamente por <em>JS</em>, somente.</p>
+<p>Como ocorre com outras linguagens de programação, a linguagem <em>JS</em> possui bibliotecas, que são módulos independentes de códigos para cumprir certas funções. Nesse sentido, <em>JS</em> cumpre metade do nome do <em>JSPlotly</em>. A outra metade vem da principal biblioteca que é utilizada por esse para a construção de gráficos, mapas, e alguns outros objetos interativos, <a href="https://plotly.com/javascript/">Plotly.js</a>.</p>
+<section id="estrutura-de-js" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="estrutura-de-js"><span class="header-section-number">4.1</span> Estrutura de <em>JS</em></h2>
+<p>Uma linguagem de programação normalmente possui características estruturais comuns. Isso quer dizer que há comandos para declarar uma <code>variável</code> e seu <code>tipo</code>, a <code>entrada</code> e <code>saída</code> de dados (resultados), a criação e uso de <code>funções</code>, e <code>cálculos aritméticos</code>, por exemplo. E tal como outras linguagens de programação, JS opera com uma lógica similar de <code>declarações</code> (palavras-chave, operadores, valores, expressões). Em resumo, a gente dizer as declarações de JS compõem:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Palavras-chave: sintaxe da linguagem JS<span class="kw">;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Operadores: caracteres que realizam operações<span class="kw">;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Valores: texto, números, verdadeiro/falso <span class="er">(</span><span class="ex">variável</span> <span class="st">"booleana"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"não definido"</span>, <span class="st">"nulo"</span><span class="kw">;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> Expressões: trechos de código que produzem um único valor.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Do ponto de vista estrutural, por conseguinte, JS possui características que também são comuns a outras linguagens de programação:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Saída de dados<span class="kw">;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Declaração de variáveis<span class="kw">;</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Tipos de dados<span class="kw">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> Constantes<span class="kw">;</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="ex">5.</span> Aritmética<span class="kw">;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="ex">6.</span> Vetores<span class="kw">;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="ex">7.</span> Funções<span class="kw">;</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="ex">8.</span> Geração de dados aleatórios<span class="kw">;</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="ex">9.</span> Objetos<span class="kw">;</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="ex">10.</span> Operadores<span class="kw">;</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="ex">11.</span> Estruturas de controle<span class="kw">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div style="page-break-after: always;"></div>
+<!-- SEÇÃO PARA QUANDO TIVER O FULL BOOK ABAIXO 
+### Separação de comandos, inserção de comentários, e boas práticas {.unnumbered}
+
+Os comandos em *JS* são separados por *ponto e vírgula, ";"*.  Já os *comentários* constituem trechos não interpretados, comumente utilizados em programação. Comentários são tremendamente úteis quando se deseja colocar um título no *script* de código, por exemplo, para explicar quem é quem nas variáveis ou determinada ação no código, e apontar uma futura melhoria, entre muitos (lista *ToDo*, ou "para fazer"). Em *JS*, os comentários são alternativamente inseridos por *" // "* antes de cada comando, ou por *" /*....*/ "*, para comentários mais extensos. 
+
+
+Códigos em *JS* podem ser inseridos também junto à páginas web (HTML) com seus comandos intercalados pela notação que segue (etiquetas ou *tags*:
+
+
+::: {.cell}
+<script>
+<script>  // abre para inserção
+
+...comandos JavaScript
+
+</script // fecha a inserção 
+</script>
+:::
+
+
+
+Uma característica interessante no *JS* é que tanto faz colocar ou não espaços entre os comandos, pois a linguagem não interpreta esses espaços. Contudo, dentro das *boas práticas em programação*, é aconselhável separar blocos de comandos por *identação* de 2 espaços, de modo a facilitar a leitura do código. Outro cuidado que deve ser apreciado diz respeito ao uso de fonte maiúscula ou minúscula. *JS* interpreta diferentemente termos em caixa alta ou baixa do teclado, então é bom prestar atenção pra não incorrer em erro na interpretação.
+
+### Declaração de variáveis {.unnumbered}
+
+Entre os diversos tipos de variáveis, duas são frequentemente utilizadas: *const* e *let*. A variável *const* é utilizada para se atribuir um valor fixo a uma variável no código, enquanto a variável *let* é empregada quando se deseja reatribuir um valor a ela, por meio de algum cálculo ou `laço` iterativo. Exemplificando, quando se deseja variáveis de controle que mudam ao longo do tempo (*sliders*, passos, intervalos). 
+
+*Obs: * em versões antigas de *JS* é também empregado *var*, hoje em desuso.
+
+
+### "Botando a mão na massa" {.unnumbered}
+
+Como esse treinamento envolve instruir o algoritmo com uma *entrada* para que sua interpretação resulte numa *saída*, aqui propomos essa última pelo comando `print`, como segue. 
+
+
+```js
+const a = -0.2;
+print(a)
+```
+
+Para esse treinamento, use o *JSPlotly* personalizado do capítulo anterior. Assim, teste a atribuição da variável *const* e do comando `print` por cópia do trecho acima e cola no campo de texto *ÁREA PARA DIGITAR COMANDOS* do script. Existem outros comandos de saída para *JS*, como `console.log()` e `document.body.appendChild()`, mas não utilizáveis pelo JSPlotly.
+
+Pode-se atribuir também um texto para apresentar a constante, veja:
+
+```js
+const a = -0.2;
+print("constante:",a)
+```
+
+```js
+const a = 5; // variável constante (não se altera ao longo do código)
+const b = 10; // variável que pode alterar seu valor no código
+print(a*b)
+```
+
+Outro exemplo, com inserção de texto antes do resultado:
+
+
+```js
+let a = 5;
+const b = 10;
+
+let resultado = a + b;
+print("Soma de a + b:", resultado);
+
+```
+
+###*const* versus *let* 
+
+Pode parecer que *const* e *let* são distintas apenas na aparência, já que operam de modo intercambiável. Contudo, para explicitar a diferença entre os dois comandos, apague o ecrã gráfico (*clean*) e substitua a linha de código da seção anterior pela que segue na *ÁREA PARA DIGITAR COMANDOS* do script:
+
+```js
+let passo = 0.5;          // usuário pode alterar
+let x0 = 0;      // domínios dinâmicos
+print(passo, x0) 
+
+// ... mais tarde:
+passo = 0.2; x0 = 30;
+print(passo, x0)
+```
+
+Aparentemente, o resultado sugere que na prática nada muda, sendo a diferença mais centrada na clareza e segurança do código. Mas não é bem assim. Experimente agora trocar o campo pra executar o código abaixo:
+
+
+
+::: {.cell}
+
+:::
+
+
+Agora substitua a variável do *"contador"* para *const* ao invés de *let*. O resultado incorrerá no erro abaixo:
+
+
+![Erro gerado quando se substitui a variável *let* por *const* num trecho de reatribuição de valor.](figuras/erroConst.png){#fig-erroConst}
+
+
+Resumindo: para constantes, use *const* e para variável reatribuível use *let*.
+
+
+
+### Tipos de dados {.unnumbered}
+
+Como é comum também em outras linguagens, *JavaScript* possui alguns tipos comuns para definição de dados. Para uso de `Plotly.js`, são bem significativos:
+
+
+::: {.cell}
+
+:::
+
+
+
+Seguem alguns exemplos práticos. Experimente trocar cada um na saída `print`:
+
+```js
+// Numbers:
+let comprimento = 116;
+let peso = 75;
+
+// Strings:
+let color = "Yellow";
+let lastName = "Johnson";
+
+// Booleans
+let x = true;
+let y = false;
+
+// Object:
+const membro = {firstName:"John", lastName:"Doe"};
+
+// Array object:
+const carros = ["Saab", "Volvo", "BMW"];
+
+// Date object:
+    const datas = new Date("2022-03-25");
+
+// Saídas:
+print(comprimento)
+```
+
+### Constantes {.unnumbered}
+
+Por vezes, é necessária a inserção de constantes matemáticas em equações para construção de gráficos ou para fazer cálculos. Seguem alguns exemplos. Para a saída no *JSPlotly* customizado abaixo, basta o bom e velho `print` que segue ao também bom e velho *clean*.
+
+
+```js
+Math.PI - valor de (pi), aproximadamente 3.14159
+Math.E - valor da constante de Euler, aproximadamente 2.71828
+Math.LN2 - logaritmo natural de 2, aproximadamente 0.693
+Math.LN10 - logaritmo natural de 10, aproximadamente 2.302
+Math.LOG2E - logaritmo de e na base 2, aproximadamente 1.442
+Math.LOG10E - logaritmo de e na base 10, aproximadamente 0.434
+Number.MAX_VALUE - maior número positivo
+Number.MIN_VALUE - menor número positivo...
+```
+
+Para constantes naturais, contudo, é necessário defini-las antecipadamente, como em:
+
+```js
+// Definindo constantes físico-químicas comuns
+const Avogadro = 6.02214076e23;  // Número de Avogadro (mol⁻¹)
+const Boltzmann = 1.380649e-23;  // Constante de Boltzmann (J/K)
+const Planck = 6.62607015e-34;   // Constante de Planck (J·s)
+const gas = 8.31446;    // Constante dos gases ideais (J/(mol·K))
+const luz = 299792458; // Velocidade da luz no vácuo (m/s)
+```
+
+### Funções {.unnumbered}
+
+Funções constituem um bloco de códigos para efetuar alguma ação. Em *JavaScript* uma função possui a seguinte sintaxe:
+
+```js
+function nome(parâmetro1, parâmetro2, parâmetro3) {
+  // código para execução
+}
+```
+
+
+Seguem alguns exemplos de funções para testes.
+
+
+```js
+function soma(a) { // define o nome e os "parâmetros" da função
+ return a + a // define os argumentos da função (no caso, a*a),
+            // pra retorna dos valores
+}
+
+// Teste
+let x = soma(7); // aplica parâmetros
+print(x) // saída da função
+```
+
+*Obs: * O comando *return*, por vezes omitido, se apresenta útil quando se deseja que o "retorno" seja concluído somente ao final do fluxo do script, sem resultados intermediários.
+
+
+```js
+
+function expoente(a, b) { // define o nome e os "parâmetros" da função
+  return a ** b;  // define os argumentos da função (no caso, a^b),
+                  // pra retorna dos valores
+}
+
+// Teste da função
+let x = expoente(4, 3); // aplica parâmetros
+print(x);         // saída da função
+
+```
+
+```js
+function indexa(vetor){
+ return vetor + 1
+}
+
+var vetor = [1, 2, 3, 4, 5];
+print(indexa(vetor))
+```
+
+
+```js
+function Celsius(Fahrenheit) {
+  return (5/9) * (Fahrenheit-32);
+}
+
+let conversao = Celsius(115);
+print(conversao)
+```
+
+
+#### Funções de seta (*arrow functions*)
+
+|   Como visto anteriormente, uma notação alternativa é a função *arrow*, que abrevia a sintaxe de funções. Segue um exemplo:
+
+
+```js
+const multiplica = (a, b) => a * b;
+print(multiplica(4, 6));
+```
+
+Se gostou até aqui...não perca as **estruturas de controle** do capítulo final desta obra.
+
+::: -->
+<!-- O decaimento radioativo segue uma lei exponencial:
+
+$$
+N(t) = N_0 \left(\frac{1}{2}\right)^{t/T_{1/2}}
+$$
+
+A lógica do script:
+
+- definir parâmetros  
+- calcular valores  
+- gerar gráficos  
+- permitir interação  
+
+A ideia não é apenas visualizar.
+
+👉 É pensar com o modelo.
+
+
+Os scripts deste capítulo usam modelos simplificados para tornar visíveis fenômenos que não podem ser observados diretamente.
+
+A semente matemática principal é o decaimento exponencial.
+
+A quantidade restante de material radioativo pode ser representada por:
+
+$$
+N(t) = N_0 \left(\frac{1}{2}\right)^{t/T_{1/2}}
+$$
+
+em que:
+
+$$
+N(t)
+$$
+
+é a quantidade restante no tempo considerado,
+
+$$
+N_0
+$$
+
+é a quantidade inicial,
+
+$$
+T_{1/2}
+$$
+
+é a meia-vida.
+
+Essa expressão mostra que o decaimento ocorre por frações sucessivas.
+
+Depois de uma meia-vida:
+
+$$
+N = \frac{N_0}{2}
+$$
+
+Depois de duas meias-vidas:
+
+$$
+N = \frac{N_0}{4}
+$$
+
+Depois de três meias-vidas:
+
+$$
+N = \frac{N_0}{8}
+$$
+
+A lógica computacional dos scripts segue uma estrutura simples:
+
+1. definir parâmetros iniciais;
+2. calcular valores para vários tempos;
+3. gerar curvas ou animações;
+4. atualizar o gráfico quando o usuário move sliders ou seleciona opções;
+5. transformar conceitos invisíveis em objetos manipuláveis.
+
+A semente conceitual é ainda mais ampla:
+
+modelo físico → simulação → interação → interpretação → decisão
+
+Em outras palavras, o objetivo não é apenas “ver um gráfico”.
+
+É usar o gráfico para pensar. -->
+
+
+</section>
+</div>
+</div>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./ondas.html" class="pagination-link" aria-label="Ondas: movimento, som e luz">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ondas: movimento, som e luz</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

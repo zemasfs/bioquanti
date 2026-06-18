@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Genética Mendeliana e Molecular – Biologia &amp; JSPlotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./fisio.html" rel="next">
+<link href="./eco.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5cd4c82f5794ab985b4ec67d486cba7b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="book.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gen.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Genética Mendeliana e Molecular</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Biologia &amp; JSPlotly</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eco.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ecologia: populações, interações e fluxo de energia</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gen.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Genética Mendeliana e Molecular</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fisio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Metabolismo e Fisiologia: energia, equilíbrio e vida</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Genética Mendeliana e Molecular</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O MUNDO TE CHAMA <img src="figuras/icons/tronco_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A genética está presente em situações muito concretas da vida cotidiana. Ela explica por que certas características aparecem em algumas pessoas, e não em outras. Também explica como doenças hereditárias podem atravessar gerações, ou o que permite identificar paternidade, rastrear ancestralidade ou prever riscos biológicos. O avanço das últimas décadas no uso de ferramentas para investigar o DNA (ácido desoxirribonucleico) tem permitido ir além da simples observação de padrões de herança, possibilitando intervenções e modificações diretamente no material genético.</p>
+<p>Durante muito tempo, a herança biológica foi observada apenas pelos seus efeitos visíveis. Plantas, animais e seres humanos exibiam traços que pareciam reaparecer segundo certas regularidades. A partir dessas observações, surgiram os primeiros modelos explicativos, especialmente os de Gregor <em>Mendel</em>, um frade agostiniano e biólogo, que mostrou que a transmissão de características não era aleatória. Mais tarde, a genética ganhou uma base molecular. Os genes passaram a ser entendidos como trechos de <em>DNA</em> (ácido desoxiribonucleico), capazes de armazenar informação, sofrer alterações e orientar a produção de proteínas.</p>
+<p>Hoje, esse campo se ampliou ainda mais. A genética já não trata apenas da transmissão de características, mas também da estrutura do DNA, da <code>expressão gênica</code>, das <code>mutações</code> e das biotecnologias que permitem copiar, detectar e editar <code>genes</code>. Assim, o estudo da genética começou com ervilhas e proporções simples, passou pela lógica molecular da vida e alcançou técnicas como <em>PCR</em>, clonagem e edição gênica (<em>CRISPR</em>).</p>
+<p>Dessa forma, a genética pode ser entendida em três planos que se complementam. O primeiro é o <em>plano mendeliano</em>, em que observamos padrões de herança a partir de características. O segundo é o <em>plano molecular</em>, em que investigamos a base física da informação genética. E o terceiro é o <em>plano biotecnológico</em>, em que o conhecimento acumulado passou a permitir intervenção prática sobre o material genético.</p>
+<p>A proposta desse capítulo é percorrer esses planos de forma integrada. Em vez de estudar separadamente herança, DNA e biotecnologia, você está convidado a enxergar esses temas como partes de uma mesma história científica: a passagem do fenótipo observável ao código molecular, e desse à intervenção tecnológica.</p>
+<p><strong>Depois de explorar, você consegue:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> compreender como características biológicas podem ser transmitidas entre gerações, relacionando genótipo, fenótipo e probabilidade de ocorrência<span class="kw">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> interpretar cruzamentos genéticos simples e duplos, reconhecendo padrões mendelianos e suas variações em diferentes contextos<span class="kw">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> explicar, em nível conceitual, como a informação genética está organizada no DNA e como ela é expressa na forma de proteínas<span class="kw">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> relacionar alterações na sequência de DNA, mutações, com possíveis efeitos sobre estruturas e funções biológicas<span class="kw">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> reconhecer que a herança genética é um processo probabilístico, sujeito a variações amostrais e influências múltiplas<span class="kw">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> analisar, de forma crítica, como técnicas de biotecnologia permitem identificar, modificar ou interromper sequências gênicas<span class="kw">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> conectar os níveis de organização da genética — do fenótipo observável ao DNA — compreendendo-os como partes de um mesmo sistema integrado<span class="kw">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> explorar situações-problema reais, como doenças genéticas, testes de paternidade e edição gênica, articulando conceitos científicos e implicações sociais<span class="kw">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> utilizar e interpretar simulações interativas voltadas à genética e biologia molecular.</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-gizz_gen" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gizz_gen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gizz_gen.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gizz_gen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.1: Como a informação hereditária é transmitida e expressa nos seres vivos.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MEXA ANTES DE ENTENDER <img src="figuras/icons/ramo_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de qualquer definição formal para a lógica de cruzamentos genéticos e proporções emergentes, experimente o aplicativo de JSPlotly abaixo.</p>
+<div id="fig-gen" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gen_q.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.2: A genética mendeliana não é determinística, mas uma ponte entre biologia e probabilidade. Clique com o botão direito neste <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/livrosvivos/em/bio/_book/apps/gen">LINK</a> e abra o JSPlotly personalizado em nova aba, seguido do botão <em>add</em>.
+</figcaption>
+</figure>
+</div>
+<p>Nesse <em>script</em> de JSPlotly você pode alterar o <code>genótipo</code> dos pais (“AA”, “Aa”, aa”) e o número de descendentes (<code>n</code>) e observar a distribuição de <code>fenótipos</code> emergentes, a variação estatística, bem como a diferença entre probabilidade teórica e simulação.</p>
+<section id="agite-antes-de-usar" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar">Agite antes de usar</h4>
+<p>Esse script simula um cruzamento mendeliano simples entre dois indivíduos (<em>monohíbrido</em>).</p>
+<p>O exemplo usado é:</p>
+<p><span id="eq-Aa"><span class="math display">\[
+Aa \times Aa
+\tag{3.1}\]</span></span></p>
+<p>A cada simulação, o código sorteia alelos dos pais e gera descendentes possíveis. No final, o gráfico mostra a frequência dos <code>fenótipos</code> (<em>dominante</em>, <em>recessivo</em>). Na genética mendeliana, cada indivíduo possui dois <code>alelos</code> para uma característica. No exemplo, <em>Aa</em>, o alelo <em>A</em> (maiúsculo) é <em>dominante</em> e o alelo <em>a</em> (minúsculo) é <code>recessivo</code>.</p>
+<p>Dessa forma:</p>
+<ul>
+<li><em>AA</em> <span class="math inline">\(\rightarrow\)</span> fenótipo dominante;</li>
+<li><em>Aa</em> <span class="math inline">\(\rightarrow\)</span> fenótipo dominante;</li>
+<li><em>aa</em> <span class="math inline">\(\rightarrow\)</span> fenótipo recessivo;</li>
+</ul>
+<p>Para <em>“se divertir”</em> com o código, comece primeiro alterando os genótipos dos pais.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pai <span class="op">=</span> <span class="st">"Aa"</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> mae <span class="op">=</span> <span class="st">"Aa"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Experimente variações, como <em>AA</em> ou <em>aa</em> para pai ou mãe, por exemplo. E modifique também o número de descendentes simulados no trecho abaixo (ex: 20 ou 1000):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> n <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O cruzamento no código é dado pela probabilidade dos genótipos gerados. Assim, para <em>Aa X Aa</em>, por exemplo, a proporção de genótipos é dada no código por:</p>
+<p><span id="eq-AaAa"><span class="math display">\[
+Aa \times Aa
+\tag{3.2}\]</span></span></p>
+<p>Dessa forma, a proporção esperada de genótipos é:</p>
+<p><span id="eq-propAA"><span class="math display">\[
+1AA : 2Aa : 1aa
+\tag{3.3}\]</span></span></p>
+<p>Já a proporção fenotípica esperada é:</p>
+<p><span id="eq-propF"><span class="math display">\[
+3 \text{ dominantes} : 1 \text{ recessivo}
+\tag{3.4}\]</span></span></p>
+<p>Mas como o script usa sorteios aleatórios, os resultados podem variar. Quanto maior o valor de <em>n</em>, mais o resultado tende a se aproximar da proporção esperada.</p>
+<p>Alguns cenários mostram-se interessantes para exploração do <em>script</em> da <a href="#fig-gen" class="quarto-xref">Figura&nbsp;<span>3.2</span></a>, tais como:</p>
+<ol type="1">
+<li><p><em>Dois heterozigotos</em>. Experimente <em>pai = “Aa”; mae = “Aa”</em>. E verifique se o gráfico aproxima-se da proporção 3:1 (dominante:recessivo).</p></li>
+<li><p><em>Dominante puro com recessivo puro</em>. Teste <em>pai = “AA”</em>; <em>mae = “aa”</em>. E veja que todos os descendentes apresentam fenótipo dominante.</p></li>
+<li><p><em>Heterozigoto com recessivo</em>. Faça <em>pai = “Aa”</em>; <em>mae = “aa”</em>. Observe que a proporção esperada é 1:1.</p></li>
+<li><p><em>Efeito do tamanho da amostra</em>. Compare <em>n</em> para 20 e para 1000 descendentes. E veja que, com poucos descendentes, o acaso pesa mais. Já com muitos descendentes, a proporção mendeliana aparece com mais clareza.</p></li>
+</ol>
+<p>Em termos técnicos, o <em>script</em> permite comparar cruzamentos entre homozigotos e heterozigotos, observar diferenças entre genótipo e fenótipo, relacionar probabilidades esperadas e resultados observados, e mesmo expandir esses conceitos de monoibridismo para diibridismo.</p>
+<p>Além disso, também mostra que a genética mendeliana combina regras de herança com probabilidade, aleatoriedade, e padrões estatísticos. Assim, o cruzamento genético pode ser visto como uma simulação probabilística, onde cada descendente nasce de um sorteio de alelos. Em outras palavras, Mendel observava proporções, mais do que indivíduos isolados.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FAZENDO APARECER <img src="figuras/icons/galho_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="genética-mendeliana-probabilidade-ao-invés-de-determinismo" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="genética-mendeliana-probabilidade-ao-invés-de-determinismo"><span class="header-section-number">3.1</span> Genética mendeliana: probabilidade ao invés de determinismo</h2>
+<p>Na lógica dos padrões de herança da genética clássica, a ideia é que determinadas características são influenciadas por fatores herdáveis, hoje chamados <code>genes</code>. Cada gene pode apresentar diferentes versões, os <code>alelos</code>. Em organismos <code>diploides</code>, cada indivíduo recebe um alelo de cada progenitor, formando assim seu <code>genótipo</code>. O <code>fenótipo</code> corresponde à manifestação observável dessa combinação, em interação com o ambiente.</p>
+<p>A <code>Primeira Lei de Mendel</code> mostra que os alelos de um mesmo gene se separam durante a formação dos gametas. Isso explica por que cruzamentos simples entre indivíduos heterozigotos produzem proporções genotípicas e fenotípicas características. Já a <code>Segunda Lei de Mendel</code> amplia esse raciocínio ao considerar a segregação independente de pares de genes diferentes, permitindo compreender cruzamentos diíbridos e combinações mais complexas.</p>
+<p>Embora estejam nos primórdios históricos da experimentação genética e com relevância significativa nos dias atuais, essas leis não esgotam a herança biológica. Há casos de dominância incompleta, <code>codominância</code>, <code>alelos múltiplos</code> e herança ligada ao sexo, entre outros. Ainda assim, o modelo mendeliano permanece como porta de entrada conceitual, pois ensina a pensar a herança como combinação de unidades discretas.</p>
+</section>
+<section id="genética-molecular-o-que-são-genes-afinal" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="genética-molecular-o-que-são-genes-afinal"><span class="header-section-number">3.2</span> Genética molecular: o que são genes, afinal?</h2>
+<p>A genética molecular aprofunda essa discussão ao identificar a base material da herança: o DNA, molécula que armazena informação em sua sequência de <code>nucleotídeos</code>. <em>Genes são regiões do DNA capazes de participar da síntese de produtos funcionais</em>, geralmente proteínas ou moléculas de RNA (ácido ribonucleico).</p>
+<p>A <code>replicação</code> permite que o DNA seja copiado antes da divisão celular. A <code>transcrição</code> converte trechos de DNA em RNA, enquanto a <code>tradução</code> utiliza essa informação para organizar aminoácidos em proteínas. Esse é o chamado <code>Dogma Central da Biologia Molecular</code>. Desse modo, a herança deixa de ser apenas um padrão estatístico observado em descendentes e passa a ser compreendida como fluxo de informação molecular.</p>
+<p>Essa passagem da genética mendeliana para a molecular é decisiva. Aquilo que Mendel inferiu indiretamente por meio de fenótipos foi, mais tarde, conectado a genes, <code>cromossomos</code>, DNA e mecanismos celulares. A herança biológica ganhou então uma base explicativa mais técnica.</p>
+<p>Para ilustrar essa passagem, utilize os próximos <em>app</em> de JSPlotly que seguem. O da <a href="#fig-genb" class="quarto-xref">Figura&nbsp;<span>3.3</span></a>, por exemplo, busca abordar a genética mendeliana um pouco mais avançada, na passagem do monoibridismo (uma característica herdada) para o <code>diibridismo</code>(duas características).</p>
+<div id="fig-genb" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-genb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/genb_q.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-genb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.3: A genética mendeliana como ferramenta de probabilidade. Embora haja incerteza sobre o resultado de um indivíduo, o padrão de muitos descendentes pode ser previsto. Clique neste <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/livrosvivos/em/bio/_book/apps/genb">LINK</a> para carregar o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-1">Agite antes de usar</h4>
+<p>O script simula um cruzamento envolvendo dois genes ao mesmo tempo. Você pode alterar os genótipos para <em>pai</em>, <em>mãe</em>, e <em>n</em>. Exemplos para os dois primeiros são “AaBb”, “AABB”, “Aabb”, “aaBb”, e “aabb”. O gráfico resultante compara a proporção <em>observada</em> na simulação com a proporção <em>esperada</em> pelas regras mendelianas. Isso permite mostrar que a heranca segue uma lógica probabilística, embora a amostra real possa oscilar, especialmente quando o valor de <em>n</em> é pequeno.</p>
+<p>No diibridismo, duas características são analisadas simultaneamente. Cada indivíduo possui dois pares de alelos, <code>AaBb</code>. Isso representa:</p>
+<ul>
+<li>gene A: <em>A</em> ou <em>a</em>;</li>
+<li>gene B: <em>B</em> ou <em>b</em>.</li>
+</ul>
+<p>Um indivíduo <em>AaBb</em> pode formar gametas como <em>AB</em>, <em>Ab</em>, <em>aB</em>, ou <em>ab</em>. Assim, no início do código, altere:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pai <span class="op">=</span> <span class="st">"AaBb"</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> mae <span class="op">=</span> <span class="st">"AaBb"</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> n <span class="op">=</span> <span class="dv">400</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Experimente “AABB”, “aabb”, “AaBb” ou “aabb”, bem como o tamanho <em>n</em> da amostra (50, 1000), e observe o resultado para um cruzamento clássico. Exemplificando, se o cruzamento for:</p>
+<p><span id="eq-cruz"><span class="math display">\[
+AaBb \times AaBb
+\tag{3.5}\]</span></span></p>
+<p>Então a proporção fenotípica esperada é 9:3:3:1. Ou seja:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">9</span><span class="er">A_B_</span> <span class="op">:</span> <span class="dv">3</span><span class="er">A_bb</span> <span class="op">:</span> <span class="dv">3</span><span class="er">aaB_</span> <span class="op">:</span> <span class="dv">1</span><span class="er">aabb</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O script calcula os dois conjuntos de valores, <em>observado</em> e <em>calculado</em>, como segue. O resultado dos sorteios simulados é dado por:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> filhos <span class="op">=</span> <span class="fu">cruzarDiibrido</span>(pai<span class="op">,</span> mae<span class="op">,</span> n)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Já o resultado teórico obtido a partir de todas as combinações possíveis de gametas, é dado por:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> espPct <span class="op">=</span> <span class="fu">proporcaoEsperada</span>(pai<span class="op">,</span> mae)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Diversos são os cenários passíveis de visualização com auxílio do JSPlotly da <a href="#fig-genb" class="quarto-xref">Figura&nbsp;<span>3.3</span></a> para ajudar-lhe a compreender melhor essas regras de cruzamento diíbrido. Ilustrando:</p>
+<ol type="1">
+<li><p><em>Cruzamento clássico</em>. Use <em>pai = “AaBb”</em> e *mae = “AaBb”. Observe se a proporção observada se aproxima de 9:3:3:1.</p></li>
+<li><p><em>Duplo homozigoto dominante com duplo recessivo</em>. Faça <em>pai = “AABB”</em> e <em>mae = “aabb”</em>. Dessa forma, espera-se que todos os descendentes serão <em>AaBb</em>.</p></li>
+<li><p><em>Cruzamento-teste (Testcross)</em>. Use <em>pai = “AaBb”</em> e <em>mae = “aabb”</em>. Observe a distribuição entre as quatro classes fenotípicas. Esse reste cruzado (<em>testcross</em>) foi introduzido por Mendel para determinar o genótipo de um indivíduo com fenótipo dominante (desconhecido), cruzando-o com um homozigoto recessivo.</p></li>
+<li><p><em>Tamanho da amostra</em>. Compara <em>n = 40</em> com <em>n = 4000</em>. Quanto maior o número de descendentes simulados, mais estável fica a proporção observada.</p></li>
+</ol>
+<p>Em síntese, acompanhamos uma característica apenas no monoibridismo, enquanto que no diibridismo, acompanhamos duas. O cruzamento diíbrido mostra como a herança mendeliana pode gerar padrões complexos também a partir de regras simples.</p>
+</section>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+VOLTA PRO MUNDO <img src="figuras/icons/folha_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A genética integrada ajuda a interpretar uma enorme variedade de situações reais. Questões familiares sobre herança de traços, testes de paternidade, doenças hereditárias e compatibilidade sanguínea aderem-se com praticidade à <code>genética mendeliana</code>. Já diagnósticos moleculares, identificação de mutações e compreensão de mecanismos celulares, por sua vez, dependem da <code>genética molecular</code>. E para essa, vacinas de RNA, testes baseados em DNA, transgênicos e terapias gênicas mostram o alcance biotecnológico desse campo.</p>
+<p>Perceba que a genética organiza modos distintos de se pensar o corpo, a herança, a diversidade biológica e o próprio futuro das intervenções biomédicas, um exemplo fértil no qual a ciência traduz observações em modelos, modelos em mecanismos e mecanismos em tecnologias.</p>
+<section id="mutações-e-variabilidade" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="mutações-e-variabilidade"><span class="header-section-number">3.3</span> Mutações e variabilidade</h2>
+<p>Se os genes são sequências de DNA, alterações nessas sequências podem modificar a informação biológica. Essas alterações são chamadas <code>mutações</code>. Algumas não produzem efeitos perceptíveis, outras modificam proteínas, alteram funções celulares ou contribuem para doenças genéticas. Em certos contextos, também, podem gerar variabilidade útil à evolução.</p>
+<p>As mutações ajudam a conectar o nível molecular ao nível fenotípico. Uma troca de uma <code>base nitrogenada</code>, por exemplo, pode alterar um <code>códon</code> (trinca de bases), modificar um <code>aminoácido</code> e influenciar a estrutura final de uma proteína. Assim, uma pequena alteração microscópica pode produzir grandes efeitos biológicos.</p>
+</section>
+<section id="biotecnologia-compreender-para-intervir" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="biotecnologia-compreender-para-intervir"><span class="header-section-number">3.4</span> Biotecnologia: compreender para intervir</h2>
+<p>Quando a genética passou a ser entendida em nível molecular, surgiram também ferramentas para manipular o DNA. A biotecnologia genética passou então a incluir estratégias como <code>PCR</code>, <code>DNA recombinante</code>, produção de <code>organismos transgênicos</code>, <code>clonagem</code> e <code>edição gênica</code>.</p>
+<p>Explicando, PCR (<em>Reação em Cadeia da Polimerase</em>) é uma técnica de biologia molecular que amplifica exponencialmente sequências específicas de DNA, facilitando análises e diagnósticos. A tecnologia do DNA recombinante tornou possível inserir genes em outros organismos. A clonagem mostrou que materiais genéticos podem ser copiados em contextos específicos. Mais recentemente, sistemas de edição como <code>CRISPR</code> (<em>Clustered Regularly Interspaced Short Palindromic Repeats</em>), ampliaram enormemente a capacidade de modificar sequências gênicas de forma direcionada, utlizando uma <em>“tesoura molecular”</em> (<code>sistema Cas9</code>) para cortar, inserir ou corrigir sequências específicas de DNA de forma rápida e precisa.</p>
+<p>Essas técnicas trazem aplicações promissoras em saúde, agricultura, pesquisa e indústria, mas também levantam questões éticas importantes, já que intervir no DNA deixou de ser uma “possibilidade” técnica para ser uma decisão social.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+E SE… <img src="figuras/icons/flor_bg.png" class="img-fluid" style="width:10.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dos <em>apps</em> apresentados acima, é possível abstrair um sem-número de reflexões sobre a genética mendeliana. Considerando o JSPlotly da <a href="#fig-gen" class="quarto-xref">Figura&nbsp;<span>3.2</span></a>, por exemplo:</p>
+<ul>
+<li>E se os dois pais forem homozigotos dominantes ?</li>
+<li>E se um dos pais for recessivo puro ?</li>
+<li>E se aumentarmos muito o número de descendentes simulados ?</li>
+<li>E se o resultado observado for diferente da proporção esperada ?</li>
+<li>E se quisermos contar também os genótipos, e não apenas os fenótipos ?</li>
+<li>E se uma característica não seguir exatamente o padrão dominante-recessivo ?</li>
+</ul>
+<p>Para o script da <a href="#fig-genb" class="quarto-xref">Figura&nbsp;<span>3.3</span></a>, por sua vez, também é possível perguntar:</p>
+<ul>
+<li>E se os dois pais forem duplo heterozigotos ?</li>
+<li>E se um dos pais for duplo recessivo ?</li>
+<li>E se aumentarmos muito o número de descendentes simulados ?</li>
+<li>E se a proporção observada não for exatamente igual à esperada ?</li>
+<li>E se os genes não fossem independentes ?</li>
+<li>E se quisermos comparar genótipo e fenótipo no mesmo gráfico ?</li>
+</ul>
+<p>Assim, perceba que nem toda herança segue o modelo mais simples apresentado por Mendel. Em alguns casos, os heterozigotos apresentam fenótipos intermediários, enquanto em outros, dois alelos se manifestam simultaneamente. Essas situações mostram que os modelos básicos são ponto de partida, mas não o ponto final.</p>
+<p><em>E se a ciência puder corrigir genes defeituosos ?</em> A edição gênica abre possibilidades de amplo espectro, como corrigir mutações associadas a doenças. Ao mesmo tempo, essa capacidade exige um debate ético: quais usos são justificáveis ? Quais limites devem existir ? Como a <code>Inteligência Artificial</code> entra nesse jogo ? Quem decide ?</p>
+<p><em>E se a herança genética não determinar tudo ?</em> Mesmo quando a herança genética influencia fortemente um fenótipo, o ambiente continua importante. A genética não deve ser vista como destino absoluto, mas como parte de uma rede de interações biológicas e ambientais.</p>
+<p><em>E se uma única mutação alterar uma proteína essencial ?</em> Uma pequena alteração em uma sequência de DNA pode não produzir efeito aparente, mas também pode comprometer a função de uma proteína importante. Esse tipo de raciocínio ajuda a conectar biologia molecular, fisiologia e saúde.</p>
+<p>Para essa última indagação, que tal explorar mais um JSPlotly ?!</p>
+<div id="fig-gen2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gen2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gen2_q.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gen2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.4: Pequenas mudanças no DNA podem alterar completamente o resultado biológico. Clique no <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/livrosvivos/em/bio/_book/apps/gen2">LINK</a> para carregar o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<section id="agite-antes-de-usar-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-2">Agite antes de usar</h4>
+<p>Esse script mostra o fluxo básico da informação genética (DNA <span class="math inline">\(\rightarrow\)</span> RNA <span class="math inline">\(\rightarrow\)</span> proteína), e permite observar como uma pequena alteração no DNA pode mudar o resultado final da <code>tradução</code>. Agora o foco está na ponte entre Mendel, genética molecular, e mutação. E em como uma mutação pode causar uma doença.</p>
+<p>No script é possível alterar a base (A, T, C, G) e a posição da mutação (<code>posMut</code>). Isso permite observar a mudança no DNA, o reflexo no RNA, e o impacto na proteína. A sequência inicial de DNA é dividida em <code>códons</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> dna <span class="op">=</span> <span class="st">"ATG GAA TTT CGA"</span><span class="op">.</span><span class="fu">split</span>(<span class="st">" "</span>)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada códon possui três bases. Na transcrição, o DNA é convertido em RNA pela troca:</p>
+<p><span class="math display">\[
+T \rightarrow U
+\]</span></p>
+<p>Ou seja, timina (T) do DNA é transcrita como uracila (U) no RNA. Depois, cada códon de RNA é traduzido em um aminoácido. O aplicativo começa sem mutações. Clique em <code>add</code> e veja que ele apresenta três linhas: uma para o DNA, outra para o RNA transcrito, e outra para a proteína traduzida.</p>
+<p>Agora, comece alterando a posição da mutação e da nova base. Por exemplo:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> posMut <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> novaBase <span class="op">=</span> <span class="st">"T"</span><span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Se a mutação gerar um códon conhecido na tabela, aparecerá um aminoácido. Se o códon não estiver na tabela simplificada, aparecerá uma interrogação <em>“?”</em> na linha do aminoácido correspondente.</p>
+<p>A transcrição acontece aqui:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>codon<span class="op">.</span><span class="fu">replace</span>(<span class="ss">/T/g</span><span class="op">,</span> <span class="st">"U"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Já a tradução usa uma tabela simplificada:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tabela <span class="op">=</span> {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AUG"</span><span class="op">:</span> <span class="st">"Met"</span><span class="op">,</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GAA"</span><span class="op">:</span> <span class="st">"Glu"</span><span class="op">,</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"UUU"</span><span class="op">:</span> <span class="st">"Phe"</span><span class="op">,</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CGA"</span><span class="op">:</span> <span class="st">"Arg"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E a mutação altera a primeira base de um códon escolhido:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>codon[<span class="dv">0</span>] <span class="op">=</span> base<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Perceba então que uma mutação pequena no DNA pode ou não alterar a proteína.</p>
+<p>Como para os demais <em>apps</em> desse livro, procure montar cenários para se apropriar dos conceitos envolvidos. Ilustrando:</p>
+<ul>
+<li>E se a mutação não alterar o aminoácido ?</li>
+<li>E se a mutação gerar um códon desconhecido pela tabela ?</li>
+<li>E se a mutação ocorrer no primeiro códon ?</li>
+<li>E se ampliarmos a tabela genética ?</li>
+</ul>
+<p>E para te auxiliar a responder essa última questão “E se…”, bem como ilustrar uma aplicação biotecnológica, que tal um último JSPlotly ?!</p>
+<div id="fig-gen2b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gen2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/gen2b_q.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gen2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.5: Edição gênica: o caminho reverso que vai do fenótipo ao genótipo, e desse à intervenção. Clique neste <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/livrosvivos/em/bio/_book/apps/gen2b">LINK</a> para carregar o <em>app</em>.
+</figcaption>
+</figure>
+</div>
+<p>A ideia desse script é mostrar uma sequência original, uma sequência mutada e o resultado de uma intervenção do tipo <code>CRISPR</code>.</p>
+</section>
+<section id="agite-antes-de-usar-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="agite-antes-de-usar-3">Agite antes de usar</h4>
+<p>Esse script permite mostrar que a biotecnologia atua sobre sequências concretas de DNA e com impacto potencial sobre uma proteina. Você pode alterar o <code>dnaOriginal</code>, o <code>dnaMutado</code>, o <code>alvo</code>, o <code>modo</code>, e o <code>novoCodon</code>.</p>
+<p>Os 3 modos possiveis são:</p>
+<ul>
+<li>“corrigir” - restaura o codon mutado ao estado original;</li>
+<li>“nocautear” - insere um codon <code>STOP</code> e interrompe a tradução. Aqui mora a ideia de terapia gênica corretiva (<em>knockout</em>).</li>
+<li>“substituir” - troca o codon por outro definido em <em>novoCodon</em>.</li>
+</ul>
+<p>Observe que é possível simular uma interrupção precoce da tradução ou uma relação com perda de funcão. Além disso, pode-se simular também uma substituição dirigida, com troca planejada de codons. Para isso use “GAA” ou “TAA” na linha de <em>let modo = “substituir”</em>. Essas ações ilustram a diferenca entre restaurar, alterar e desligar um gene.</p>
+<p>Outra ação possível no script envolve mudar o alvo. Para isso, modifique a linha <em>“let alvo = 0”</em> para 3. Isso mostra que a posição da alteração importa, e que mutações em pontos diferentes podem ter consequências distintas.</p>
+</section>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MESMO PADRÃO, OUTROS MUNDOS <img src="figuras/icons/fruto_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os JSPlotly trazidos nesse capítulo pretendem ilustrar a genética em múltiplas faces. Enquanto o JSPlotly da <a href="#fig-gen" class="quarto-xref">Figura&nbsp;<span>3.2</span></a> busca a percepção de regularidades simples, o da <a href="#fig-genb" class="quarto-xref">Figura&nbsp;<span>3.3</span></a> direciona-se para perguntar onde está essa informacao, ao passo que o da <a href="#fig-gen2" class="quarto-xref">Figura&nbsp;<span>3.4</span></a> amplia a discussão para dois genes e probabilidade, e o da <a href="#fig-gen2b" class="quarto-xref">Figura&nbsp;<span>3.5</span></a> mostra que hoje a genética pode ser editada.</p>
+<p>Assim, percebe-se que a genética pode ser estudada com um racional explicativo. Primeiro, reconhecem-se padrões de herança em fenótipos observáveis. Depois, identifica-se que esses padrões dependem de genes localizados no DNA. Em seguida, entende-se que a informação genética pode ser expressa, alterada e até manipulada tecnologicamente. As técnicas de DNA recombinante levam hoje a novas fronteiras de aplicação, como <em>CRISPR</em> em embriões humanos, células artificiais e biologia sintética, design de proteínas por inteligência artificial, edição genética <em>in vivo</em> e edição <code>epigenética</code> (ambiente e estilo de vida afetando genes sem alterar o DNA), entre muitas outras.</p>
+<p>Ao integrar genética mendeliana, molecular e biotecnologia, esse capítulo mostra que os padrões observados nos organismos se conectam a mecanismos moleculares que, por sua vez, contribuem para tecnologias capazes de transformar pesquisa, medicina e sociedade.</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+POR DENTRO DA FERRAMENTA <img src="figuras/icons/semente_bg.png" class="img-fluid" style="width:7.0%">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O capítulo utiliza duas propostas para o estudo interativo de genética, a <em>mendeliana</em>, que permite observar cruzamentos, proporções e padrões de herança de modo visual e manipulável, e a <em>molecular</em>, mostrando como alterações no DNA podem repercutir em produtos celulares, e como certas técnicas exploram essa lógica em aplicações reais.</p>
+<p>Para ilustrar um pouco mais do conteúdo da <em>“caixa-preta”</em> do script de JSPlotly da <a href="#fig-gen" class="quarto-xref">Figura&nbsp;<span>3.2</span></a>, segue uma explicação rápida para algumas <code>funções</code>.</p>
+<p>A função abaixo transforma o genótipo em gametas possíveis:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">gametas</span>(genotipo) {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> genotipo<span class="op">.</span><span class="fu">split</span>(<span class="st">""</span>)<span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assim:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="st">"Aa"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>vira:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>[<span class="st">"A"</span><span class="op">,</span> <span class="st">"a"</span>]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois, o script sorteia um alelo do pai e um alelo da mãe:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a1 <span class="op">=</span> gp[<span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> gp<span class="op">.</span><span class="at">length</span>)]<span class="op">;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a2 <span class="op">=</span> gm[<span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> gm<span class="op">.</span><span class="at">length</span>)]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O genótipo do filho é formado por:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> filho <span class="op">=</span> [a1<span class="op">,</span> a2]<span class="op">.</span><span class="fu">sort</span>()<span class="op">.</span><span class="fu">join</span>(<span class="st">""</span>)<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A função abaixo define o fenótipo:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">fenotipo</span>(gen) {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> gen<span class="op">.</span><span class="fu">includes</span>(<span class="st">"A"</span>) <span class="op">?</span> <span class="st">"Dominante"</span> <span class="op">:</span> <span class="st">"Recessivo"</span><span class="op">;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ou seja, se existir pelo menos um alelo dominante <em>A</em> o fenótipo será dominante. Assim, pode-se “transcrever” uma <em>lógica de código</em> para o script da <a href="#fig-gen" class="quarto-xref">Figura&nbsp;<span>3.2</span></a> como:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">genótipos</span> dos pais</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>      <span class="ex">↓</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">gametas</span> possíveis</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>      <span class="ex">↓</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">sorteio</span> de alelos</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">↓</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="ex">genótipo</span> dos filhos</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>      <span class="ex">↓</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="ex">fenótipo</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>      <span class="ex">↓</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="ex">gráfico</span> de frequências</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="pseudocódigo-e-outro-jsplotly" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="pseudocódigo-e-outro-jsplotly"><span class="header-section-number">3.5</span> Pseudocódigo e outro JSPlotly</h2>
+<p>Aqui vamos quebrar um pouco a estrutura da seção, e apresentar um trecho de um <em>pseudocódigo</em> para o 2o. script de JSPlotly (<a href="#fig-genb" class="quarto-xref">Figura&nbsp;<span>3.3</span></a>), para ilustrar como algoritmos um pouco mais elaborados podem ser traduzidos em <em>“linguagem humana”</em>. No código, a <code>função</code> abaixo separa o genótipo em dois pares de genes:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">separarGenotipo</span>(g) {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    g<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">,</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    g<span class="op">.</span><span class="fu">slice</span>(<span class="dv">2</span><span class="op">,</span> <span class="dv">4</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assim:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="st">"AaBb"</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>vira:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>[<span class="st">"Aa"</span><span class="op">,</span> <span class="st">"Bb"</span>]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois, o script gera todas as combinações possíveis de gametas:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">gametasDiibrido</span>(g) {</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>AaBb</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>os gametas possíveis são:</p>
+<pre class="text"><code>AB, Ab, aB, ab</code></pre>
+<p>A cada descendente, o script sorteia um gameta de cada progenitor:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> gp1[<span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> gp1<span class="op">.</span><span class="at">length</span>)]<span class="op">;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> gp2[<span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> gp2<span class="op">.</span><span class="at">length</span>)]<span class="op">;</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depois, combina os gametas para formar o genótipo do filho. O gráfico compara essa previsão com os resultados sorteados pela simulação. Com poucos descendentes, a proporção observada pode variar bastante. Com muitos descendentes, ela tende a se aproximar da proporção esperada.</p>
+<p>Uma proposta de <em>pseudocódigo</em> para esse script é:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">INÍCIO</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> 1. Definir genótipos dos pais</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="ex">definir</span> pai</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="ex">definir</span> mae</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="ex">definir</span> n <span class="er">(</span><span class="ex">número</span> de descendentes<span class="kw">)</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> 2. Separar genes em pares <span class="er">(</span><span class="ex">A</span> e B<span class="kw">)</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="ex">função</span> separarGenotipo<span class="er">(</span><span class="ex">genotipo</span><span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">retornar</span> [geneA, geneB]</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> 3. Gerar gametas possíveis</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="ex">função</span> gerarGametas<span class="er">(</span><span class="ex">genotipo</span><span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">separar</span> em dois pares <span class="er">(</span><span class="ex">geneA,</span> geneB<span class="kw">)</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">para</span> cada alelo de geneA:</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">para</span> cada alelo de geneB:</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>            <span class="ex">combinar</span> alelos → formar gameta</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">retornar</span> lista de gametas</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> 4. Combinar gametas para formar descendente</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="ex">função</span> combinarGametas<span class="er">(</span><span class="ex">gameta_pai,</span> gameta_mae<span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>    <span class="ex">formar</span> par para gene A</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">formar</span> par para gene B</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>    <span class="ex">organizar</span> <span class="er">(</span><span class="ex">dominante</span> antes de recessivo<span class="kw">)</span></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">retornar</span> genótipo completo</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> 5. Determinar fenótipo</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a><span class="ex">função</span> fenotipo<span class="er">(</span><span class="ex">genotipo</span><span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>    <span class="ex">verificar</span> presença de alelo dominante em A</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>    <span class="ex">verificar</span> presença de alelo dominante em B</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="ex">se</span> A dominante e B dominante → <span class="st">"A_B_"</span></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>    <span class="ex">se</span> A dominante e B recessivo → <span class="st">"A_bb"</span></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>    <span class="ex">se</span> A recessivo e B dominante → <span class="st">"aaB_"</span></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>    <span class="ex">se</span> ambos recessivos → <span class="st">"aabb"</span></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>    <span class="ex">retornar</span> classe fenotípica</span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> 6. Simular descendentes <span class="er">(</span><span class="ex">parte</span> probabilística<span class="kw">)</span></span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a><span class="ex">gerar</span> lista de gametas do pai</span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a><span class="ex">gerar</span> lista de gametas da mãe</span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a><span class="ex">criar</span> contador de fenótipos</span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a><span class="ex">PARA</span> i de 1 até n:</span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>    <span class="ex">sortear</span> gameta do pai</span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>    <span class="ex">sortear</span> gameta da mãe</span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>    <span class="ex">combinar</span> → formar descendente</span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a>    <span class="ex">identificar</span> fenótipo</span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a>    <span class="ex">incrementar</span> contador correspondente</span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a><span class="ex">FIM</span> PARA</span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> 7. Calcular proporção observada</span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a><span class="ex">converter</span> contagem em porcentagem</span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> 8. Calcular proporção esperada <span class="er">(</span><span class="ex">todas</span> as combinações<span class="kw">)</span></span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a><span class="ex">PARA</span> cada gameta do pai:</span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a>    <span class="ex">PARA</span> cada gameta da mãe:</span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a>        <span class="ex">combinar</span> gametas</span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a>        <span class="ex">determinar</span> fenótipo</span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a>        <span class="ex">contar</span> ocorrência</span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a>    <span class="ex">FIM</span></span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a><span class="ex">FIM</span></span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a><span class="ex">converter</span> contagem em porcentagem</span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> 9. Construir gráfico</span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a><span class="ex">plotar:</span></span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a>    <span class="ex">barras</span> → proporção observada</span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a>    <span class="ex">barras</span> → proporção esperada</span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a><span class="ex">FIM</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./eco.html" class="pagination-link" aria-label="Ecologia: populações, interações e fluxo de energia">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ecologia: populações, interações e fluxo de energia</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./fisio.html" class="pagination-link" aria-label="Metabolismo e Fisiologia: energia, equilíbrio e vida">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Metabolismo e Fisiologia: energia, equilíbrio e vida</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
