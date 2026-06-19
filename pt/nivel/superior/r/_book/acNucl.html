@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo7 Ácidos Nucleicos | Bioquímica Quantitativa &amp; R</title>
+  <meta name="description" content="não sei." />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo7 Ácidos Nucleicos | Bioquímica Quantitativa &amp; R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="não sei." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo7 Ácidos Nucleicos | Bioquímica Quantitativa &amp; R" />
+  
+  <meta name="twitter:description" content="não sei." />
+  
+
+<meta name="author" content="José Maurício Schneedorf FS" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Binding.html"/>
+<link rel="next" href="membranas.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bioquímica Quantitativa & R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i>Introdução</a></li>
+<li class="chapter" data-level="1" data-path="biomol.html"><a href="biomol.html"><i class="fa fa-check"></i><b>1</b> Biomoléculas e dimensões</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="biomol.html"><a href="biomol.html#conversão-de-unidades"><i class="fa fa-check"></i><b>1.1</b> Conversão de unidades</a></li>
+<li class="chapter" data-level="1.2" data-path="biomol.html"><a href="biomol.html#versatilidade-estrutural-em-biopolímeros"><i class="fa fa-check"></i><b>1.2</b> Versatilidade estrutural em biopolímeros</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html"><i class="fa fa-check"></i><b>2</b> Tampões biológicos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-acetato"><i class="fa fa-check"></i><b>2.1</b> Sistema acetato</a></li>
+<li class="chapter" data-level="2.2" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-bicarbonato"><i class="fa fa-check"></i><b>2.2</b> Sistema bicarbonato</a></li>
+<li class="chapter" data-level="2.3" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#sistema-fosfato"><i class="fa fa-check"></i><b>2.3</b> Sistema fosfato</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="tampões-biológicos.html"><a href="tampões-biológicos.html#titulação-de-sistemas-em-geral-com-programação-do-r"><i class="fa fa-check"></i><b>2.3.1</b> Titulação de sistemas em geral com programação do R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="AAcido.html"><a href="AAcido.html"><i class="fa fa-check"></i><b>3</b> Aminoácidos &amp; Peptídios</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="AAcido.html"><a href="AAcido.html#ponto-isoelétrico-aminoácidos"><i class="fa fa-check"></i><b>3.1</b> Ponto isoelétrico &amp; aminoácidos</a></li>
+<li class="chapter" data-level="3.2" data-path="AAcido.html"><a href="AAcido.html#ponto-isoiônico-biopolímeros"><i class="fa fa-check"></i><b>3.2</b> Ponto isoiônico &amp; biopolímeros</a></li>
+<li class="chapter" data-level="3.3" data-path="AAcido.html"><a href="AAcido.html#ponto-isoiônico-bibliotecas-do-r"><i class="fa fa-check"></i><b>3.3</b> Ponto isoiônico &amp; bibliotecas do R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Proteinas.html"><a href="Proteinas.html"><i class="fa fa-check"></i><b>4</b> Proteínas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Proteinas.html"><a href="Proteinas.html#composição-de-aminoácidos"><i class="fa fa-check"></i><b>4.1</b> Composição de aminoácidos</a></li>
+<li class="chapter" data-level="4.2" data-path="Proteinas.html"><a href="Proteinas.html#tabela-de-purificação-de-proteínas-r-como-planilha-eletrônica"><i class="fa fa-check"></i><b>4.2</b> Tabela de Purificação de Proteínas &amp; R como planilha eletrônica</a></li>
+<li class="chapter" data-level="4.3" data-path="Proteinas.html"><a href="Proteinas.html#interação-de-oxigênio-com-mioglobina-e-hemoglobina"><i class="fa fa-check"></i><b>4.3</b> Interação de oxigênio com mioglobina e hemoglobina</a></li>
+<li class="chapter" data-level="4.4" data-path="Proteinas.html"><a href="Proteinas.html#alguns-pacotes-do-r-para-estudo-de-proteínas"><i class="fa fa-check"></i><b>4.4</b> Alguns pacotes do R para estudo de proteínas</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Enzimas.html"><a href="Enzimas.html"><i class="fa fa-check"></i><b>5</b> Enzimas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Enzimas.html"><a href="Enzimas.html#obtenção-de-parâmetros-cinéticos-a-partir-de-dados-expermentais-simulados"><i class="fa fa-check"></i><b>5.1</b> Obtenção de parâmetros cinéticos a partir de dados expermentais simulados</a></li>
+<li class="chapter" data-level="5.2" data-path="Enzimas.html"><a href="Enzimas.html#linearizações-e-ajustes"><i class="fa fa-check"></i><b>5.2</b> Linearizações e ajustes</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="Enzimas.html"><a href="Enzimas.html#linearização-por-transformação-de-lineweaver-burk"><i class="fa fa-check"></i><b>5.2.1</b> Linearização por transformação de Lineweaver-Burk</a></li>
+<li class="chapter" data-level="5.2.2" data-path="Enzimas.html"><a href="Enzimas.html#linearização-por-transformação-de-eadie-hofstee"><i class="fa fa-check"></i><b>5.2.2</b> Linearização por transformação de Eadie-Hofstee</a></li>
+<li class="chapter" data-level="5.2.3" data-path="Enzimas.html"><a href="Enzimas.html#distribuição-de-erros-nas-linearizações-de-michaelis-mentem"><i class="fa fa-check"></i><b>5.2.3</b> Distribuição de erros nas linearizações de Michaelis-Mentem</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="Enzimas.html"><a href="Enzimas.html#ajuste-não-linear"><i class="fa fa-check"></i><b>5.3</b> Ajuste não-linear</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="Enzimas.html"><a href="Enzimas.html#ajuste-não-linear-da-equação-de-michaelis-mentem"><i class="fa fa-check"></i><b>5.3.1</b> Ajuste não-linear da equação de Michaelis-Mentem</a></li>
+<li class="chapter" data-level="5.3.2" data-path="Enzimas.html"><a href="Enzimas.html#algumas-vantagens-do-modelo-linear-sobre-o-não-linear"><i class="fa fa-check"></i><b>5.3.2</b> Algumas vantagens do modelo linear sobre o não-linear</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="Enzimas.html"><a href="Enzimas.html#enzimas-alostéricas"><i class="fa fa-check"></i><b>5.4</b> Enzimas alostéricas</a></li>
+<li class="chapter" data-level="5.5" data-path="Enzimas.html"><a href="Enzimas.html#inibição-enzimática"><i class="fa fa-check"></i><b>5.5</b> Inibição Enzimática</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="Enzimas.html"><a href="Enzimas.html#inibição-pelo-substrato"><i class="fa fa-check"></i><b>5.5.1</b> Inibição pelo substrato</a></li>
+<li class="chapter" data-level="5.5.2" data-path="Enzimas.html"><a href="Enzimas.html#modelos-de-inibição-enzimática"><i class="fa fa-check"></i><b>5.5.2</b> Modelos de inibição enzimática</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="Enzimas.html"><a href="Enzimas.html#diagnóstico-estatístico-de-inibição-enzimática"><i class="fa fa-check"></i><b>5.6</b> Diagnóstico estatístico de inibição enzimática</a></li>
+<li class="chapter" data-level="5.7" data-path="Enzimas.html"><a href="Enzimas.html#cinética-de-estado-pré-estacionário"><i class="fa fa-check"></i><b>5.7</b> Cinética de estado pré-estacionário</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Binding.html"><a href="Binding.html"><i class="fa fa-check"></i><b>6</b> Interação Bimolecular</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="Binding.html"><a href="Binding.html#modelos-de-interação-e-representações-lineares"><i class="fa fa-check"></i><b>6.1</b> Modelos de Interação e Representações Lineares</a></li>
+<li class="chapter" data-level="6.2" data-path="Binding.html"><a href="Binding.html#ajuste-não-linear-em-interação-ligante-proteína"><i class="fa fa-check"></i><b>6.2</b> Ajuste Não-Linear Em Interação Ligante-Proteína</a></li>
+<li class="chapter" data-level="6.3" data-path="Binding.html"><a href="Binding.html#sistemas-gráficos-no-r"><i class="fa fa-check"></i><b>6.3</b> Sistemas Gráficos no R</a></li>
+<li class="chapter" data-level="6.4" data-path="Binding.html"><a href="Binding.html#solução-numérica-para-o-equilíbrio-de-complexos-ligante-proteína"><i class="fa fa-check"></i><b>6.4</b> Solução Numérica Para o Equilíbrio de Complexos Ligante-Proteína</a></li>
+<li class="chapter" data-level="6.5" data-path="Binding.html"><a href="Binding.html#cinética-de-interação-ligante-proteína-e-solução-numérica"><i class="fa fa-check"></i><b>6.5</b> Cinética de Interação Ligante-Proteína e Solução Numérica</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="acNucl.html"><a href="acNucl.html"><i class="fa fa-check"></i><b>7</b> Ácidos Nucleicos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="acNucl.html"><a href="acNucl.html#análise-de-sequências"><i class="fa fa-check"></i><b>7.1</b> Análise de sequências</a></li>
+<li class="chapter" data-level="7.2" data-path="acNucl.html"><a href="acNucl.html#termoestabilidade-de-dna"><i class="fa fa-check"></i><b>7.2</b> Termoestabilidade de DNA</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="membranas.html"><a href="membranas.html"><i class="fa fa-check"></i><b>8</b> Membranas</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="membranas.html"><a href="membranas.html#concentração-micelar-crítica-cmc"><i class="fa fa-check"></i><b>8.1</b> Concentração micelar crítica (CMC)</a></li>
+<li class="chapter" data-level="8.2" data-path="membranas.html"><a href="membranas.html#transporte-em-membranas-e-teoria-quimiosmótica"><i class="fa fa-check"></i><b>8.2</b> Transporte em membranas e Teoria Quimiosmótica</a></li>
+<li class="chapter" data-level="8.3" data-path="membranas.html"><a href="membranas.html#proteínas-de-transporte-em-membranas"><i class="fa fa-check"></i><b>8.3</b> Proteínas de transporte em membranas</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Bioenerg.html"><a href="Bioenerg.html"><i class="fa fa-check"></i><b>9</b> Bioenergética</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Bioenerg.html"><a href="Bioenerg.html#solução-de-sistema-de-equações-lineares-no-r"><i class="fa fa-check"></i><b>9.1</b> Solução de sistema de equações lineares no R</a></li>
+<li class="chapter" data-level="9.2" data-path="Bioenerg.html"><a href="Bioenerg.html#matrizes-e-r"><i class="fa fa-check"></i><b>9.2</b> Matrizes e <code>R</code></a></li>
+<li class="chapter" data-level="9.3" data-path="Bioenerg.html"><a href="Bioenerg.html#solução-de-parâmetros-termodinâmicos-de-estabilidade-enzimática"><i class="fa fa-check"></i><b>9.3</b> Solução de parâmetros termodinâmicos de estabilidade enzimática</a></li>
+<li class="chapter" data-level="9.4" data-path="Bioenerg.html"><a href="Bioenerg.html#entalpia-de-reação-por-matrizes"><i class="fa fa-check"></i><b>9.4</b> Entalpia De Reação Por Matrizes</a></li>
+<li class="chapter" data-level="9.5" data-path="Bioenerg.html"><a href="Bioenerg.html#quantidades-termodinâmicas-por-ajuste-polinomial"><i class="fa fa-check"></i><b>9.5</b> Quantidades Termodinâmicas Por Ajuste Polinomial</a></li>
+<li class="chapter" data-level="9.6" data-path="Bioenerg.html"><a href="Bioenerg.html#estabilidade-termodinâmica-de-biopolímeros"><i class="fa fa-check"></i><b>9.6</b> Estabilidade Termodinâmica de Biopolímeros</a></li>
+<li class="chapter" data-level="9.7" data-path="Bioenerg.html"><a href="Bioenerg.html#relação-quantitativa-estrutura-função-qsar-e-ajuste-multilinear"><i class="fa fa-check"></i><b>9.7</b> Relação Quantitativa Estrutura-Função (QSAR) e Ajuste Multilinear</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="Bioenerg.html"><a href="Bioenerg.html#ajuste-linear-múltiplo-por-função-lm"><i class="fa fa-check"></i><b>9.7.1</b> Ajuste linear múltiplo por função <code>lm</code>:</a></li>
+<li class="chapter" data-level="9.7.2" data-path="Bioenerg.html"><a href="Bioenerg.html#ajuste-linear-múltiplo-por-matrizes"><i class="fa fa-check"></i><b>9.7.2</b> Ajuste linear múltiplo por matrizes:</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="Bioenerg.html"><a href="Bioenerg.html#rendimento-de-reação-planejamento-fatorial-22"><i class="fa fa-check"></i><b>9.8</b> Rendimento de Reação &amp; Planejamento Fatorial 2<span class="math inline">\(^{2}\)</span></a></li>
+<li class="chapter" data-level="9.9" data-path="Bioenerg.html"><a href="Bioenerg.html#metodologia-de-superfície-de-resposta-msr"><i class="fa fa-check"></i><b>9.9</b> Metodologia de Superfície de Resposta (MSR)</a>
+<ul>
+<li class="chapter" data-level="9.9.1" data-path="Bioenerg.html"><a href="Bioenerg.html#superfície-quadrática-de-resposta"><i class="fa fa-check"></i><b>9.9.1</b> Superfície Quadrática de Resposta</a></li>
+<li class="chapter" data-level="9.9.2" data-path="Bioenerg.html"><a href="Bioenerg.html#uma-palavra-sobre-matrizes-e-aplicações"><i class="fa fa-check"></i><b>9.9.2</b> Uma palavra sobre matrizes e aplicações</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Metabolismo.html"><a href="Metabolismo.html"><i class="fa fa-check"></i><b>10</b> Metabolismo</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="Metabolismo.html"><a href="Metabolismo.html#rotas-metabólicas-balanceamento-de-reações"><i class="fa fa-check"></i><b>10.1</b> Rotas metabólicas &amp; Balanceamento de Reações</a></li>
+<li class="chapter" data-level="10.2" data-path="Metabolismo.html"><a href="Metabolismo.html#operação-matricial"><i class="fa fa-check"></i><b>10.2</b> Operação matricial</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="Metabolismo.html"><a href="Metabolismo.html#obtenção-do-vetor-de-rota-metabólica-para-a-glicólise-aeróbia"><i class="fa fa-check"></i><b>10.2.1</b> Obtenção do vetor de rota metabólica para a glicólise aeróbia:</a></li>
+<li class="chapter" data-level="10.2.2" data-path="Metabolismo.html"><a href="Metabolismo.html#obtenção-do-balanceamento-de-atp-adp-pi-e-coenzimas-de-oxi-redução-na-glicólise"><i class="fa fa-check"></i><b>10.2.2</b> Obtenção do balanceamento de ATP, ADP, Pi e coenzimas de oxi-redução na glicólise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="redesMet.html"><a href="redesMet.html"><i class="fa fa-check"></i><b>11</b> Redes Metabólicas</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="redesMet.html"><a href="redesMet.html#solução-numérica-para-sistema-de-equações-diferenciais"><i class="fa fa-check"></i><b>11.1</b> Solução numérica para sistema de equações diferenciais</a></li>
+<li class="chapter" data-level="11.2" data-path="redesMet.html"><a href="redesMet.html#algumas-reações-do-metabolismo-da-glicose"><i class="fa fa-check"></i><b>11.2</b> Algumas reações do metabolismo da glicose</a></li>
+<li class="chapter" data-level="11.3" data-path="redesMet.html"><a href="redesMet.html#cinética-do-metabolismo-de-6-mercaptopurina"><i class="fa fa-check"></i><b>11.3</b> Cinética do metabolismo de 6-mercaptopurina</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referências.html"><a href="referências.html"><i class="fa fa-check"></i>Referências</a></li>
+<li class="chapter" data-level="" data-path="apêndice-a.html"><a href="apêndice-a.html"><i class="fa fa-check"></i>Apêndice A</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bioquímica Quantitativa &amp; R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="acNucl" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Capítulo7</span> Ácidos Nucleicos<a href="acNucl.html#acNucl" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><!-- - geração de sequência aleatória -->
+<!-- - matriz e cálculo de dG em sequência a partir de tabela de associação de dinucleotídios ou similar --></p>
+<div id="análise-de-sequências" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Análise de sequências<a href="acNucl.html#análise-de-sequências" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      Ácidos nucleicos podem ser considerados como sequências alfabéticas de 1 letra (bases), 2 letras (dinucleotídeo), ou de 3 letras (codon). Tomando-se o exemplo da lisozima de galinha:</div>
+<ol style="list-style-type: decimal">
+<li>Acessa-se o banco de dados do <em>NCBI - National Center for Biotechnology Information</em> <a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>;</li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Seleciona-se o banco de dados <em>Nucleotide</em>;</p></li>
+<li><p>Digita-se a sequência de interesse; ex: “hen egg” lysozyme”;</p></li>
+<li><p>Seleciona-se LYZF1 (ou a referência de sequência do NCBI: NM_205281.2);
+Obs: Com o número de referência é possível acessar o conteúdo desejado a partir de uma consulta simples no Google.</p></li>
+<li><p>Procura-se pela sequência referenciada em FASTA</p></li>
+<li><p>O sítio apresentará a sequência nucleotídica para a lisozima, que pode ser copiada/colada no <code>R</code>, ou exportada como arquivo em “Send to….File”.</p></li>
+</ol>
+<div class="line-block">      Agora precisa-se converter esta sequência de letras (<em>string</em>) em um vetor de bases que possa ser lido pelo <code>R</code>, e omitindo-se a quebra de linha. Isso pode ser agilizado com o pacote <code>seqinr</code> ou <code>TmCalculator</code> pela função <code>s2c</code> (converte <em>string</em> em vetor de <em>strings</em>; <code>c2s</code> faz o oposto). Ou também pelo pacote <code>stringr</code>:</div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="acNucl.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb222-2"><a href="acNucl.html#cb222-2" aria-hidden="true" tabindex="-1"></a>liso.nucl <span class="ot">&lt;-</span> <span class="st">&quot;GCAGTCCCGCTGTGTGTACGACACTGGCAACATGAGGTCTTTGCTAATCTTGGTGCTTTGCTTCCTGCCC</span></span>
+<span id="cb222-3"><a href="acNucl.html#cb222-3" aria-hidden="true" tabindex="-1"></a><span class="st">CTGGCTGCTCTGGGGAAAGTCTTTGGACGATGTGAGCTGGCAGCGGCTATGAAGCGTCACGGACTTGATA</span></span>
+<span id="cb222-4"><a href="acNucl.html#cb222-4" aria-hidden="true" tabindex="-1"></a><span class="st">ACTATCGGGGATACAGCCTGGGAAACTGGGTGTGTGCCGCAAAATTCGAGAGTAACTTCAACACCCAGGC</span></span>
+<span id="cb222-5"><a href="acNucl.html#cb222-5" aria-hidden="true" tabindex="-1"></a><span class="st">TACAAACCGTAACACCGATGGGAGTACCGACTACGGAATCCTACAGATCAACAGCCGCTGGTGGTGCAAC</span></span>
+<span id="cb222-6"><a href="acNucl.html#cb222-6" aria-hidden="true" tabindex="-1"></a><span class="st">GATGGCAGGACCCCAGGCTCCAGGAACCTGTGCAACATCCCGTGCTCAGCCCTGCTGAGCTCAGACATAA</span></span>
+<span id="cb222-7"><a href="acNucl.html#cb222-7" aria-hidden="true" tabindex="-1"></a><span class="st">CAGCGAGCGTGAACTGCGCGAAGAAGATCGTCAGCGATGGAAACGGCATGAACGCGTGGGTCGCCTGGCG</span></span>
+<span id="cb222-8"><a href="acNucl.html#cb222-8" aria-hidden="true" tabindex="-1"></a><span class="st">CAACCGCTGCAAGGGCACCGACGTCCAGGCGTGGATCAGAGGCTGCCGGCTGTGAGGAGCTGCCGCGCCC</span></span>
+<span id="cb222-9"><a href="acNucl.html#cb222-9" aria-hidden="true" tabindex="-1"></a><span class="st">GGCCCGCCCGCTGCACAGCCGGCCGCTTTGCGAGCGCGACGCTACCCGCTTGGCAGTTTTAAACGCATCC</span></span>
+<span id="cb222-10"><a href="acNucl.html#cb222-10" aria-hidden="true" tabindex="-1"></a><span class="st">CTCATTAAAACGACTATACGCAAACGCC&quot;</span></span>
+<span id="cb222-11"><a href="acNucl.html#cb222-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb222-12"><a href="acNucl.html#cb222-12" aria-hidden="true" tabindex="-1"></a>liso.nucl <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(liso.nucl, <span class="st">&quot;&quot;</span>)) <span class="co"># converte sequência gênica de uma palavra em nucleotídios separados</span></span>
+<span id="cb222-13"><a href="acNucl.html#cb222-13" aria-hidden="true" tabindex="-1"></a>liso.nucl[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>] <span class="co"># uma amostra do resultado</span></span></code></pre></div>
+<pre><code>##   [1] &quot;G&quot;  &quot;C&quot;  &quot;A&quot;  &quot;G&quot;  &quot;T&quot;  &quot;C&quot;  &quot;C&quot;  &quot;C&quot;  &quot;G&quot;  &quot;C&quot; 
+##  [11] &quot;T&quot;  &quot;G&quot;  &quot;T&quot;  &quot;G&quot;  &quot;T&quot;  &quot;G&quot;  &quot;T&quot;  &quot;A&quot;  &quot;C&quot;  &quot;G&quot; 
+##  [21] &quot;A&quot;  &quot;C&quot;  &quot;A&quot;  &quot;C&quot;  &quot;T&quot;  &quot;G&quot;  &quot;G&quot;  &quot;C&quot;  &quot;A&quot;  &quot;A&quot; 
+##  [31] &quot;C&quot;  &quot;A&quot;  &quot;T&quot;  &quot;G&quot;  &quot;A&quot;  &quot;G&quot;  &quot;G&quot;  &quot;T&quot;  &quot;C&quot;  &quot;T&quot; 
+##  [41] &quot;T&quot;  &quot;T&quot;  &quot;G&quot;  &quot;C&quot;  &quot;T&quot;  &quot;A&quot;  &quot;A&quot;  &quot;T&quot;  &quot;C&quot;  &quot;T&quot; 
+##  [51] &quot;T&quot;  &quot;G&quot;  &quot;G&quot;  &quot;T&quot;  &quot;G&quot;  &quot;C&quot;  &quot;T&quot;  &quot;T&quot;  &quot;T&quot;  &quot;G&quot; 
+##  [61] &quot;C&quot;  &quot;T&quot;  &quot;T&quot;  &quot;C&quot;  &quot;C&quot;  &quot;T&quot;  &quot;G&quot;  &quot;C&quot;  &quot;C&quot;  &quot;C&quot; 
+##  [71] &quot;\n&quot; &quot;C&quot;  &quot;T&quot;  &quot;G&quot;  &quot;G&quot;  &quot;C&quot;  &quot;T&quot;  &quot;G&quot;  &quot;C&quot;  &quot;T&quot; 
+##  [81] &quot;C&quot;  &quot;T&quot;  &quot;G&quot;  &quot;G&quot;  &quot;G&quot;  &quot;G&quot;  &quot;A&quot;  &quot;A&quot;  &quot;A&quot;  &quot;G&quot; 
+##  [91] &quot;T&quot;  &quot;C&quot;  &quot;T&quot;  &quot;T&quot;  &quot;T&quot;  &quot;G&quot;  &quot;G&quot;  &quot;A&quot;  &quot;C&quot;  &quot;G&quot;</code></pre>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="acNucl.html#cb224-1" aria-hidden="true" tabindex="-1"></a>liso.nucl <span class="ot">&lt;-</span> liso.nucl[liso.nucl <span class="sc">!=</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>] <span class="co"># elimina a quebra de linha do resultado anterior</span></span>
+<span id="cb224-2"><a href="acNucl.html#cb224-2" aria-hidden="true" tabindex="-1"></a>liso.nucl[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>] <span class="co"># uma amostra do resultado sem os &quot;\n&quot;</span></span></code></pre></div>
+<pre><code>##   [1] &quot;G&quot; &quot;C&quot; &quot;A&quot; &quot;G&quot; &quot;T&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;G&quot; &quot;C&quot; &quot;T&quot; &quot;G&quot; &quot;T&quot;
+##  [14] &quot;G&quot; &quot;T&quot; &quot;G&quot; &quot;T&quot; &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;A&quot; &quot;C&quot; &quot;A&quot; &quot;C&quot; &quot;T&quot; &quot;G&quot;
+##  [27] &quot;G&quot; &quot;C&quot; &quot;A&quot; &quot;A&quot; &quot;C&quot; &quot;A&quot; &quot;T&quot; &quot;G&quot; &quot;A&quot; &quot;G&quot; &quot;G&quot; &quot;T&quot; &quot;C&quot;
+##  [40] &quot;T&quot; &quot;T&quot; &quot;T&quot; &quot;G&quot; &quot;C&quot; &quot;T&quot; &quot;A&quot; &quot;A&quot; &quot;T&quot; &quot;C&quot; &quot;T&quot; &quot;T&quot; &quot;G&quot;
+##  [53] &quot;G&quot; &quot;T&quot; &quot;G&quot; &quot;C&quot; &quot;T&quot; &quot;T&quot; &quot;T&quot; &quot;G&quot; &quot;C&quot; &quot;T&quot; &quot;T&quot; &quot;C&quot; &quot;C&quot;
+##  [66] &quot;T&quot; &quot;G&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;T&quot; &quot;G&quot; &quot;G&quot; &quot;C&quot; &quot;T&quot; &quot;G&quot; &quot;C&quot;
+##  [79] &quot;T&quot; &quot;C&quot; &quot;T&quot; &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;G&quot; &quot;T&quot; &quot;C&quot;
+##  [92] &quot;T&quot; &quot;T&quot; &quot;T&quot; &quot;G&quot; &quot;G&quot; &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;A&quot;</code></pre>
+<div class="line-block">      Com a sequência gênica em mãos pode-se avaliar um extenso conjunto de propriedades ou manipular o vetor de bases, tal como referenciado em alguns pacotes do <code>R</code> (<code>seqinr</code>, <code>DNASeqtest</code>, <code>haplotypes</code>, <code>rDNAse</code>). Também pode-se proceder algum manuseio mais simples para o gene selecionado, como abaixo:</div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="acNucl.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(liso.nucl[liso.nucl <span class="sc">==</span> <span class="st">&quot;A&quot;</span>]) <span class="co"># quantifica as bases de purina na sequência</span></span></code></pre></div>
+<pre><code>## [1] 133</code></pre>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="acNucl.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(liso.nucl) <span class="co"># contagem de cada nucleotídio</span></span></code></pre></div>
+<pre><code>## liso.nucl
+##   A   C   G   T 
+## 133 173 174 108</code></pre>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="acNucl.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seqinr)</span>
+<span id="cb230-2"><a href="acNucl.html#cb230-2" aria-hidden="true" tabindex="-1"></a>liso.nucl2 <span class="ot">&lt;-</span> <span class="fu">tolower</span>(liso.nucl) <span class="co"># a biblioteca seqinr opera com letras minúsculas, havendo a necessidade de conversão das maiúsculas obtidas pelo FASTA</span></span>
+<span id="cb230-3"><a href="acNucl.html#cb230-3" aria-hidden="true" tabindex="-1"></a><span class="co"># seqinr::count(liso.nucl2,1) # a mesma operação acima, mas com a biblioteca seqinr, e outro formato de chamada</span></span>
+<span id="cb230-4"><a href="acNucl.html#cb230-4" aria-hidden="true" tabindex="-1"></a><span class="co"># seqinr:: count(liso.nucl2, 1 )</span></span>
+<span id="cb230-5"><a href="acNucl.html#cb230-5" aria-hidden="true" tabindex="-1"></a><span class="co"># seqinr::count(liso.nucl2,2) # teor de dinucleotídios</span></span>
+<span id="cb230-6"><a href="acNucl.html#cb230-6" aria-hidden="true" tabindex="-1"></a><span class="co"># seqinr::count(liso.nucl2,3) # teor de trinucleotídios</span></span></code></pre></div>
+<div class="line-block">  Outras manipulações da sequência, como o conteúdo de pares GC, gráfico da sequência de dinucleotídios, conversão da sequência de bases em uma sequência numérica e sua plotagem, e obtenção da sequência de bases complementar, por exemplo, podem ser obtidos por:</div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="acNucl.html#cb231-1" aria-hidden="true" tabindex="-1"></a>nucls <span class="ot">&lt;-</span> <span class="fu">table</span>(liso.nucl)</span>
+<span id="cb231-2"><a href="acNucl.html#cb231-2" aria-hidden="true" tabindex="-1"></a>GC <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> (nucls[<span class="dv">2</span>] <span class="sc">+</span> nucls[<span class="dv">3</span>]) <span class="sc">/</span> (nucls[<span class="dv">1</span>] <span class="sc">+</span> nucls[<span class="dv">2</span>] <span class="sc">+</span> nucls[<span class="dv">3</span>] <span class="sc">+</span> nucls[<span class="dv">4</span>])</span>
+<span id="cb231-3"><a href="acNucl.html#cb231-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;percentual de conteúdo GC em lisozima de galinha: &quot;</span>, <span class="fu">round</span>(GC, <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## percentual de conteúdo GC em lisozima de galinha:  59</code></pre>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="acNucl.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="fu">GC</span>(liso.nucl) <span class="sc">*</span> <span class="dv">100</span> <span class="co"># o mesmo comando anterior, mas com a biblioteca seqinr</span></span></code></pre></div>
+<pre><code>## [1] 59</code></pre>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="acNucl.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="co"># contag.liso &lt;- count(liso.nucl2,2)</span></span>
+<span id="cb235-2"><a href="acNucl.html#cb235-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb235-3"><a href="acNucl.html#cb235-3" aria-hidden="true" tabindex="-1"></a><span class="co"># barplot(sort(contag.liso)) # gráfico de barras do teor de dinucleotídios organizado por frequência</span></span>
+<span id="cb235-4"><a href="acNucl.html#cb235-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb235-5"><a href="acNucl.html#cb235-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Conversão de sequência nucleotídica em numérica</span></span>
+<span id="cb235-6"><a href="acNucl.html#cb235-6" aria-hidden="true" tabindex="-1"></a>liso.nucl.numer <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;4&quot;</span>, <span class="fu">gsub</span>(</span>
+<span id="cb235-7"><a href="acNucl.html#cb235-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;G&quot;</span>, <span class="st">&quot;3&quot;</span>,</span>
+<span id="cb235-8"><a href="acNucl.html#cb235-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">&quot;C&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="fu">gsub</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;1&quot;</span>, liso.nucl))</span>
+<span id="cb235-9"><a href="acNucl.html#cb235-9" aria-hidden="true" tabindex="-1"></a>)) <span class="co"># substitui bases por valores</span></span>
+<span id="cb235-10"><a href="acNucl.html#cb235-10" aria-hidden="true" tabindex="-1"></a>liso.nucl.numer2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(liso.nucl.numer)</span>
+<span id="cb235-11"><a href="acNucl.html#cb235-11" aria-hidden="true" tabindex="-1"></a>liso.nucl.numer2[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>] <span class="co"># 100 primeiros valores da sequência</span></span></code></pre></div>
+<pre><code>##   [1] 3 2 1 3 4 2 2 2 3 2 4 3 4 3 4 3 4 1 2 3 1 2 1 2 4 3
+##  [27] 3 2 1 1 2 1 4 3 1 3 3 4 2 4 4 4 3 2 4 1 1 4 2 4 4 3
+##  [53] 3 4 3 2 4 4 4 3 2 4 4 2 2 4 3 2 2 2 2 4 3 3 2 4 3 2
+##  [79] 4 2 4 3 3 3 3 1 1 1 3 4 2 4 4 4 3 3 1 2 3 1</code></pre>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="acNucl.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obs: também pode ser obtido pelas funções s2n e n2s do pacote seqinr</span></span>
+<span id="cb237-2"><a href="acNucl.html#cb237-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb237-3"><a href="acNucl.html#cb237-3" aria-hidden="true" tabindex="-1"></a>seq.liso <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(liso.nucl))</span>
+<span id="cb237-4"><a href="acNucl.html#cb237-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(seq.liso, <span class="fu">as.vector</span>(liso.nucl.numer2),</span>
+<span id="cb237-5"><a href="acNucl.html#cb237-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb237-6"><a href="acNucl.html#cb237-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">300</span>), <span class="at">main =</span> <span class="st">&quot;Sequência de bases entre  resíduos 100 a 300&quot;</span>, <span class="at">sub =</span> <span class="st">&quot;A=1;C=2;G=3;T=4&quot;</span></span>
+<span id="cb237-7"><a href="acNucl.html#cb237-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="acNucl.html#cb238-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenção de sequência complementar</span></span>
+<span id="cb238-2"><a href="acNucl.html#cb238-2" aria-hidden="true" tabindex="-1"></a>comp.liso.nucl <span class="ot">&lt;-</span> seqinr<span class="sc">::</span><span class="fu">comp</span>(liso.nucl)</span>
+<span id="cb238-3"><a href="acNucl.html#cb238-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(seqinr<span class="sc">::</span><span class="fu">c2s</span>(comp.liso.nucl), <span class="dv">50</span>) <span class="co"># apresenta os primeiros 50 nucleotídios complementares</span></span></code></pre></div>
+<pre><code>## [1] &quot;cgtcagggcgacacacatgctgtgaccgttgtactccagaaacgattagaaccacgaaacgaaggacggggaccgacgagacccctttcagaaacctgctacactcgaccgtcgccgatacttcgcagtgcctgaactattgatagcccctatgtcggaccctttgacccacacacggcgttttaagctctcattgaagttgtgggtccgatgtttggcattgtggctaccctcatggctgatgccttaggatgtctagttgtcggcgaccaccacgttgctaccgtcctggggtccgaggtccttggacacgttgtagggcacgagtcgggacgactcgagtctgtattgtcgctcgcacttgacgcgcttcttctagcagtcgctacctttgccgtacttgcgcacccagcggaccgcgttggcgacgttcccgtggctgcaggtccgcacctagtctccgacggccgacactcctcgacggcgcgggccgggcgggcgacgtgtcggccggcgaaacgctcgcgctgcgatgggcgaaccgtcaaaatttgcgtagggagtaattttgctgatatgcgtttgcgg&quot;</code></pre>
+</div>
+<div id="termoestabilidade-de-dna" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Termoestabilidade de DNA<a href="acNucl.html#termoestabilidade-de-dna" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="line-block">      Em relação à propriedades físico-químicas de ácidos nucleicos, é bem conhecida a relação entre a termoestabilidade de DNA duplex e o conteúdo de pares GC, tal como explicitado pela relação empírica <span class="citation">(<a href="#ref-creighton2010biophysical" role="doc-biblioref">Creighton et al. 2010</a>)</span>:</div>
+<span class="math display" id="eq:DNAgc">\[\begin{equation}
+Tm=(81,5+16,6*log(\frac{[Na^+]}{1+0,7*[Na^+]})+41*f_{GC}-\frac{500}{L}-0,63\%_f)
+\tag{7.1}
+\end{equation}\]</span>
+<div class="line-block">Onde [Na<span class="math inline">\(^{+}\)</span>] representa a concentração molar de sódio, f<span class="math inline">\(_{GC}\)</span> a fração de pares GC da sequência, <em>L</em> seu comprimento, e %<span class="math inline">\(_{f}\)</span> o teor de formamida.<br />
+      Dessa forma é possível prever o valor de <em>Tm</em> (“melting temperature”) que indexa a termoestabilidade de uma sequência polinucleotídica em função do teor salino. Ilustrando-se para uma comparação entre a sequência da lisozima de galinha e a humana (NCBI ref. NC_000012.12), na ausência de formamida:</div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="acNucl.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Para lisozima de galinha:</span></span>
+<span id="cb240-2"><a href="acNucl.html#cb240-2" aria-hidden="true" tabindex="-1"></a>gc.teor <span class="ot">&lt;-</span> seqinr<span class="sc">::</span><span class="fu">GC</span>(liso.nucl) <span class="co"># teor de pares GC da lisozima</span></span>
+<span id="cb240-3"><a href="acNucl.html#cb240-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-4"><a href="acNucl.html#cb240-4" aria-hidden="true" tabindex="-1"></a>Na.conc <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.005</span>, <span class="fl">0.2</span>, <span class="fl">0.001</span>) <span class="co"># concentração de NaCl, mmol/L</span></span>
+<span id="cb240-5"><a href="acNucl.html#cb240-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-6"><a href="acNucl.html#cb240-6" aria-hidden="true" tabindex="-1"></a>Tm.Na <span class="ot">&lt;-</span> (<span class="fl">81.5</span> <span class="sc">+</span> <span class="fl">16.6</span> <span class="sc">*</span> <span class="fu">log10</span>(Na.conc <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.7</span> <span class="sc">*</span> Na.conc)) <span class="sc">+</span> <span class="dv">41</span> <span class="sc">*</span> gc.teor <span class="sc">-</span> <span class="dv">500</span> <span class="sc">/</span> <span class="fu">length</span>(liso.nucl)) <span class="co"># valor de Tm para a de galinha</span></span>
+<span id="cb240-7"><a href="acNucl.html#cb240-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-8"><a href="acNucl.html#cb240-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Para a lisozima humana</span></span>
+<span id="cb240-9"><a href="acNucl.html#cb240-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-10"><a href="acNucl.html#cb240-10" aria-hidden="true" tabindex="-1"></a>liso.nucl.h <span class="ot">&lt;-</span> <span class="st">&quot;AGCCTAGCACTCTGACCTAGCAGTCAACATGAAGGCTCTCATTGTTCTGGGGCTTGTCCTCCTTTCTGTT</span></span>
+<span id="cb240-11"><a href="acNucl.html#cb240-11" aria-hidden="true" tabindex="-1"></a><span class="st">ACGGTCCAGGGCAAGGTCTTTGAAAGGTGTGAGTTGGCCAGAACTCTGAAAAGATTGGGAATGGATGGCT</span></span>
+<span id="cb240-12"><a href="acNucl.html#cb240-12" aria-hidden="true" tabindex="-1"></a><span class="st">ACAGGGGAATCAGCCTAGCAAACTGTAAGTCTACTCTCCATAATTCCAGAGAATTAGCTACGTATGGAAC</span></span>
+<span id="cb240-13"><a href="acNucl.html#cb240-13" aria-hidden="true" tabindex="-1"></a><span class="st">AGACACTAGGAGAGAAGGAAGAAGAAGAAGGGGCTTTGAGTGAATAGATGTTTTATTTCTTTGTGGGTTT</span></span>
+<span id="cb240-14"><a href="acNucl.html#cb240-14" aria-hidden="true" tabindex="-1"></a><span class="st">GTATACTTACAATGGCTAAAAACATCAGTTTGGTTCTTTATAACCAGAGATACCCGATAAAGGAATACGG</span></span>
+<span id="cb240-15"><a href="acNucl.html#cb240-15" aria-hidden="true" tabindex="-1"></a><span class="st">GCATGGCAGGGGAAAATTCCATTCTAAGTAAAACAGGACCTGTTGTACTGTTCTAGTGCTAGGAAGTTTG</span></span>
+<span id="cb240-16"><a href="acNucl.html#cb240-16" aria-hidden="true" tabindex="-1"></a><span class="st">CTGGGTGCCTGAGATTCAATGGCACATGTAAGCTGACTGAAAGATACATTTGAGGACCTGGCAGAGCTCT</span></span>
+<span id="cb240-17"><a href="acNucl.html#cb240-17" aria-hidden="true" tabindex="-1"></a><span class="st">CTCAAGTCCTTGGTATGTGACTCCAGTTATTTCCCATTTTGAACTTGGGCTCTGAGAGCCTAGAGTGATG</span></span>
+<span id="cb240-18"><a href="acNucl.html#cb240-18" aria-hidden="true" tabindex="-1"></a><span class="st">CAGTATTTTTCTTGTCTTCAAGTCCCCTGCCGTGATGTGGGATTTTTATTTTTATTTTTATTTTATTTTA</span></span>
+<span id="cb240-19"><a href="acNucl.html#cb240-19" aria-hidden="true" tabindex="-1"></a><span class="st">TTTTATTTTTAAAGACAGTCTCACTGTGTGGCCCAGGCTGGAGTGCAGTGGCATGATCTCAGCTCACTGC</span></span>
+<span id="cb240-20"><a href="acNucl.html#cb240-20" aria-hidden="true" tabindex="-1"></a><span class="st">AACCTCTGCCTTCTGGGCTCAAGTGATTCTCGTGCTTCAGCCTTCTGAGTAGCTGTGACTACAGGTGTGT</span></span>
+<span id="cb240-21"><a href="acNucl.html#cb240-21" aria-hidden="true" tabindex="-1"></a><span class="st">ACCACCACACCCAGCTAATTTTTTGTATTTTCAGTACAGATGGGGTTTCACCATGTTGGCCAAGCTGGTC</span></span>
+<span id="cb240-22"><a href="acNucl.html#cb240-22" aria-hidden="true" tabindex="-1"></a><span class="st">TTGAACTCCTGGCCTCAAATGATCTGCCCACCTCAGCCTCCCAAAGTGGTAGGATTACAGGTGTGAACCA</span></span>
+<span id="cb240-23"><a href="acNucl.html#cb240-23" aria-hidden="true" tabindex="-1"></a><span class="st">CTGCACCCAGCCGACATGGGATTTTTAACAGTGATGTTTTTAAAGAATATATTGAATTCCCTACACAAGA</span></span>
+<span id="cb240-24"><a href="acNucl.html#cb240-24" aria-hidden="true" tabindex="-1"></a><span class="st">GCAGTAGGAACCTAGTTCCCTTCAGTCACTCTTTGTATAGGATCCCAGAAACTCAGCATGAAATGTTTTA</span></span>
+<span id="cb240-25"><a href="acNucl.html#cb240-25" aria-hidden="true" tabindex="-1"></a><span class="st">TTATTTTTATCTACTCTACTTGATTAACTATCTTTCATTTTCTCCCACACAATTCAAGATGTGCCATGAG</span></span>
+<span id="cb240-26"><a href="acNucl.html#cb240-26" aria-hidden="true" tabindex="-1"></a><span class="st">GAAAAGTTATTTTATAGTTTAGTACATAGTTGTCGATGTAATAATCTCTGTAGTTTTCAGATTGAATTCA</span></span>
+<span id="cb240-27"><a href="acNucl.html#cb240-27" aria-hidden="true" tabindex="-1"></a><span class="st">GACATTTCCCCTCAATAGCTATTTTTGAATGAATGAGTGAAGGGATGAAATCACGGAATAGTCTTGTTTT</span></span>
+<span id="cb240-28"><a href="acNucl.html#cb240-28" aria-hidden="true" tabindex="-1"></a><span class="st">CAAGATTCTAACTTGATATCCAAATTCACCTTTAGATATTATAAGAAAATTTCTATCAGAAAATCCTTAT</span></span>
+<span id="cb240-29"><a href="acNucl.html#cb240-29" aria-hidden="true" tabindex="-1"></a><span class="st">GTTTTTCTGATTAAAAAAAGCATTTTTCCATCAGCCTATGTATCTGCTATGAATTTACAAAATCTACTCA</span></span>
+<span id="cb240-30"><a href="acNucl.html#cb240-30" aria-hidden="true" tabindex="-1"></a><span class="st">ACAGCTCTGTTGATTTTTCTGTTCTTGGCTGAATGTTGCCTGAGGGATGGGAGCACGGGAAGGGTAAAAG</span></span>
+<span id="cb240-31"><a href="acNucl.html#cb240-31" aria-hidden="true" tabindex="-1"></a><span class="st">CAATGGAACAAACATGTATTTTAATATTTTAAAAGTATGTTATATTGTTCGTTGGTGTTACAAGATGATT</span></span>
+<span id="cb240-32"><a href="acNucl.html#cb240-32" aria-hidden="true" tabindex="-1"></a><span class="st">TGCATTACAAAAGGATTCTCTTACAAGTCCCTTATCTTAACACTAAAGTGCTAAGATATTTTATAAGTAA</span></span>
+<span id="cb240-33"><a href="acNucl.html#cb240-33" aria-hidden="true" tabindex="-1"></a><span class="st">ATCTTTATACTTATAAAACAAATCAGTAAAATAGAAGTAGCTAAGTAGAACTGATTTTGCTATAGAGTAT</span></span>
+<span id="cb240-34"><a href="acNucl.html#cb240-34" aria-hidden="true" tabindex="-1"></a><span class="st">AAGTCACTTAGTGTTGCTGTTTATTACTAAAAATAAGTTCTTTTCAGGGATGTGTTTGGCCAAATGGGAG</span></span>
+<span id="cb240-35"><a href="acNucl.html#cb240-35" aria-hidden="true" tabindex="-1"></a><span class="st">AGTGGTTACAACACACGAGCTACAAACTACAATGCTGGAGACAGAAGCACTGATTATGGGATATTTCAGA</span></span>
+<span id="cb240-36"><a href="acNucl.html#cb240-36" aria-hidden="true" tabindex="-1"></a><span class="st">TCAATAGCCGCTACTGGTGTAATGATGGCAAAACCCCAGGAGCAGTTAATGCCTGTCATTTATCCTGCAG</span></span>
+<span id="cb240-37"><a href="acNucl.html#cb240-37" aria-hidden="true" tabindex="-1"></a><span class="st">TGGTAAGACAAGCTAATATTTGACCAATCTGGTTATACTTACAAGAATTGAGACTCAATACAAATGAAAA</span></span>
+<span id="cb240-38"><a href="acNucl.html#cb240-38" aria-hidden="true" tabindex="-1"></a><span class="st">AGCCTTGAAAGGTTCATGAGGGACCTAGAAAAACTACATCTCAACTTCCAGAAAGTCATTATTATTTTCC</span></span>
+<span id="cb240-39"><a href="acNucl.html#cb240-39" aria-hidden="true" tabindex="-1"></a><span class="st">TCATAATTCCCTGAGTAAGAAATTAAAGAAGTGGTATCATAAAAGGTTGATGTTTTTTAATATACAGAAG</span></span>
+<span id="cb240-40"><a href="acNucl.html#cb240-40" aria-hidden="true" tabindex="-1"></a><span class="st">TTTCTGGAATGACCTATTAATTTACTGTCAATGGCCTTACTGATGCTTTGTCCAGAACAATGCCATTGCT</span></span>
+<span id="cb240-41"><a href="acNucl.html#cb240-41" aria-hidden="true" tabindex="-1"></a><span class="st">CCTGCTTACTTTGGGGAGGTTTTGGGATAATTTAGTTGTATGGTCCTTTTTCAATTGTTTTACTTTTTTT</span></span>
+<span id="cb240-42"><a href="acNucl.html#cb240-42" aria-hidden="true" tabindex="-1"></a><span class="st">TTTATGAAATGTTCTAAATGTATAGAAAATTAGAGACATTAGTATAATAAACAGCCATATGCCCATTATG</span></span>
+<span id="cb240-43"><a href="acNucl.html#cb240-43" aria-hidden="true" tabindex="-1"></a><span class="st">CACTTTAAAAGTTGTTAACATTTTGCCATAGTTGCTTCTTCTATGCCTTTTTTTTTTTTTTTTTTTTTTT</span></span>
+<span id="cb240-44"><a href="acNucl.html#cb240-44" aria-hidden="true" tabindex="-1"></a><span class="st">TTTTTTTTTGCTGAGAGTTTTTTGTTTGGTTTTGTTTTGTTTTATTTTGAGACAGGGTCTCCCTGTCCCC</span></span>
+<span id="cb240-45"><a href="acNucl.html#cb240-45" aria-hidden="true" tabindex="-1"></a><span class="st">AGGCTGTAGTGCAGTGGCACCATCACAGCTCACTGCAGCCTCAAGTGATCATCCCACCACAGCCTCCCAA</span></span>
+<span id="cb240-46"><a href="acNucl.html#cb240-46" aria-hidden="true" tabindex="-1"></a><span class="st">GTAGCTGGGACTACAGGTGTGCACCACCATGCCTGGCAAATTTTTGAAATTTTTAGTACAGGCAAATTCT</span></span>
+<span id="cb240-47"><a href="acNucl.html#cb240-47" aria-hidden="true" tabindex="-1"></a><span class="st">GTGTTGCCCAGGCTGGTCTTGAACTCCTGAGTTCAAGCAATCTTCCCACCTCAGCCTCCTTAAGTGCTGG</span></span>
+<span id="cb240-48"><a href="acNucl.html#cb240-48" aria-hidden="true" tabindex="-1"></a><span class="st">AATTACAGGCGTTAGCCACTGTACCTGGCTACTGCTGAGAGACTTTTAAGTGAATTAGGAACATGATGAT</span></span>
+<span id="cb240-49"><a href="acNucl.html#cb240-49" aria-hidden="true" tabindex="-1"></a><span class="st">ATTCCATTTCTAAATTCTTTAGTTTACATCTTCAAAAAATACAGTTCCTGTAGAATTATTATTGTAAATA</span></span>
+<span id="cb240-50"><a href="acNucl.html#cb240-50" aria-hidden="true" tabindex="-1"></a><span class="st">ACAAATTAACTTAAGGATTTATTTATTTGGAGTGAAACAAATATTTTACTGAACTCATAAAAATAGAAAT</span></span>
+<span id="cb240-51"><a href="acNucl.html#cb240-51" aria-hidden="true" tabindex="-1"></a><span class="st">ACCATGTGGAATCCTCAGTGTCAAAAATATTGCAGAAATCTTGCAAAGTTGATATTATTAAATTGTTAAA</span></span>
+<span id="cb240-52"><a href="acNucl.html#cb240-52" aria-hidden="true" tabindex="-1"></a><span class="st">TATTAAAATTCCCAATAAAGAACATTAATCTTATTTCTAAAATCCAGTTAATTAAAAAAATTTATATTAT</span></span>
+<span id="cb240-53"><a href="acNucl.html#cb240-53" aria-hidden="true" tabindex="-1"></a><span class="st">ATAATAATATTTGGTCATTAAATAAAAATTAGAAAATACAAATAAGAAAAATAACACCCATAATCTTACT</span></span>
+<span id="cb240-54"><a href="acNucl.html#cb240-54" aria-hidden="true" tabindex="-1"></a><span class="st">ACCCAGAGGTTTATAACCATGGGTAAATTCTGGTATATATTCTTCCAGAATGTATATCAATCATGTGTAT</span></span>
+<span id="cb240-55"><a href="acNucl.html#cb240-55" aria-hidden="true" tabindex="-1"></a><span class="st">GAATGTTAAATTATATCATACACATATAAACCCACATACAAACATGTAAATACTGTGTGCTTTTGCAAAA</span></span>
+<span id="cb240-56"><a href="acNucl.html#cb240-56" aria-hidden="true" tabindex="-1"></a><span class="st">ATTAAATTGTATTATACACACGGCTTTACAATTTGCTTCTTATCACACAAAATTATTTGCATGTCAGCAA</span></span>
+<span id="cb240-57"><a href="acNucl.html#cb240-57" aria-hidden="true" tabindex="-1"></a><span class="st">ATACAAATCGGTTTTTAATGATCTTTTGCTCCATTTTCCAGATGAGAAAAAAATACAAATCTGTATCATC</span></span>
+<span id="cb240-58"><a href="acNucl.html#cb240-58" aria-hidden="true" tabindex="-1"></a><span class="st">ATTTTAAAAGAATGACTAGAATTTTAATATATGAATATTCTATAATTTACTGATCCAATTGTTACTATTG</span></span>
+<span id="cb240-59"><a href="acNucl.html#cb240-59" aria-hidden="true" tabindex="-1"></a><span class="st">AGCACTTAGGTTGTTTCCATTTTTCCCTCATAAATTGCTATGAATAGCTTTTTGTATACATCTTTGGGTG</span></span>
+<span id="cb240-60"><a href="acNucl.html#cb240-60" aria-hidden="true" tabindex="-1"></a><span class="st">CATTTCTTATTTCTTTTGGATAAATTTTCAATAATAGAACTGCTGAGTAAAATATCACTAGGTGTTTTTT</span></span>
+<span id="cb240-61"><a href="acNucl.html#cb240-61" aria-hidden="true" tabindex="-1"></a><span class="st">TACAGTGTCTAGTGCAAAGAAGACCTTTAATCATTTTGTTAATACTTCCAGAGCTTCCAATGACTTTGGT</span></span>
+<span id="cb240-62"><a href="acNucl.html#cb240-62" aria-hidden="true" tabindex="-1"></a><span class="st">AAATGAAGAAAAAAATGCTTCATTTCATGCTGAATGGGAGAGAATGAAGAGAGTTTTCCCCAACAATTAC</span></span>
+<span id="cb240-63"><a href="acNucl.html#cb240-63" aria-hidden="true" tabindex="-1"></a><span class="st">ACATATATGGACTCATAGAAAATAATATCTTACCATTCTTTCCACAGCCTAACAGAAAAAAGCTGGCTAA</span></span>
+<span id="cb240-64"><a href="acNucl.html#cb240-64" aria-hidden="true" tabindex="-1"></a><span class="st">ACCTAAATTTAAAATAAAATATCTATTAAAGTTTTTATTCCTTACCACCTGTCTTTCAGCTTTGCTGCAA</span></span>
+<span id="cb240-65"><a href="acNucl.html#cb240-65" aria-hidden="true" tabindex="-1"></a><span class="st">GATAACATCGCTGATGCTGTAGCTTGTGCAAAGAGGGTTGTCCGTGATCCACAAGGCATTAGAGCATGGT</span></span>
+<span id="cb240-66"><a href="acNucl.html#cb240-66" aria-hidden="true" tabindex="-1"></a><span class="st">ATGTTTTAAGTGTTAAAAGGGAAAACTATCTTACTCTACTGTTGATATATACAATGAGAGCAGACTTTTA</span></span>
+<span id="cb240-67"><a href="acNucl.html#cb240-67" aria-hidden="true" tabindex="-1"></a><span class="st">AAGACCAAAGTATGCTAATGACACCTCAAAATTGCAGCTTTTGGCTTATGCTAAATGATGTATTACCTAC</span></span>
+<span id="cb240-68"><a href="acNucl.html#cb240-68" aria-hidden="true" tabindex="-1"></a><span class="st">ATCCTTGAAGAAACAATCTACTTTAACTGATCCAGAATCTTACTCTTTTACTCCTCAATTTATTTTAGGG</span></span>
+<span id="cb240-69"><a href="acNucl.html#cb240-69" aria-hidden="true" tabindex="-1"></a><span class="st">GATTTCTAGAGTTTTAAGATGCTTCACACTCTATCAGTTCCTTGTCATATCTTGAAATTCTTTTTAGAAT</span></span>
+<span id="cb240-70"><a href="acNucl.html#cb240-70" aria-hidden="true" tabindex="-1"></a><span class="st">AAGTAAGTGTGGGCCGGGCACAGTGGCTCACGCCTGTAATCCCAGCACTTTGGGAGACCGAGGCAGATGG</span></span>
+<span id="cb240-71"><a href="acNucl.html#cb240-71" aria-hidden="true" tabindex="-1"></a><span class="st">ATCACCTGAGGTCAGGAGTTCGAGACCAGCCTGCCTAACATGGCAAAACCCCATCTCCACTAAAAATACA</span></span>
+<span id="cb240-72"><a href="acNucl.html#cb240-72" aria-hidden="true" tabindex="-1"></a><span class="st">AAAAATTAGCTGGGTGTGGTGGCAGGTGCCTGTAATCCCAGCCACTCGGGAGGCTGAGGCAGGAGACTTG</span></span>
+<span id="cb240-73"><a href="acNucl.html#cb240-73" aria-hidden="true" tabindex="-1"></a><span class="st">CTTGAACCCGGGAGGTGGAGGTTGCAGAGGATTGCGCCATTGTACTTCAGCCTGGGCGACAGAGTGAGAC</span></span>
+<span id="cb240-74"><a href="acNucl.html#cb240-74" aria-hidden="true" tabindex="-1"></a><span class="st">TCTGTCTCAAATAAATACATAAAAAATAAATGTGGAATTCACTTTGCAGTTGCTGCTGTACAACGCACAT</span></span>
+<span id="cb240-75"><a href="acNucl.html#cb240-75" aria-hidden="true" tabindex="-1"></a><span class="st">TACTCAATCTTTATGTTCGGCATTCTATGCTCTACTGAGAAATTTGGGTAGGAGTGAAGTATTTTGTATA</span></span>
+<span id="cb240-76"><a href="acNucl.html#cb240-76" aria-hidden="true" tabindex="-1"></a><span class="st">CATATCTTCATTTAATAAATAGCAATAGCTGGGTCTATCTTACTATTTTATCTATTGATAAAATATTTTG</span></span>
+<span id="cb240-77"><a href="acNucl.html#cb240-77" aria-hidden="true" tabindex="-1"></a><span class="st">TTTCCCCAAGGAGTGCGAAGTATGTATATTACAATGAAGATATGTTTTAACCTTTCACCATTTGCTTCAT</span></span>
+<span id="cb240-78"><a href="acNucl.html#cb240-78" aria-hidden="true" tabindex="-1"></a><span class="st">CTTTTTCTACAGGGTGGCATGGAGAAATCGTTGTCAAAACAGAGATGTCCGTCAGTATGTTCAAGGTTGT</span></span>
+<span id="cb240-79"><a href="acNucl.html#cb240-79" aria-hidden="true" tabindex="-1"></a><span class="st">GGAGTGTAACTCCAGAATTTTCCTTCTTCAGCTCATTTTGTCTCTCTCACATTAAGGGAGTAGGAATTAA</span></span>
+<span id="cb240-80"><a href="acNucl.html#cb240-80" aria-hidden="true" tabindex="-1"></a><span class="st">GTGAAAGGTCACACTACCATTATTTCCCCTTCAAACAAATAATATTTTTACAGAAGCAGGAGCAAAATAT</span></span>
+<span id="cb240-81"><a href="acNucl.html#cb240-81" aria-hidden="true" tabindex="-1"></a><span class="st">GGCCTTTCTTCTAAGAGATATAATGTTCACTAATGTGGTTATTTTACATTAAGCCTACAACATTTTTCAG</span></span>
+<span id="cb240-82"><a href="acNucl.html#cb240-82" aria-hidden="true" tabindex="-1"></a><span class="st">TTTGCAAATAGAACTAATACTGGTGAAAATTTACCTAAAACCTTGGTTATCAAATACATCTCCAGTACAT</span></span>
+<span id="cb240-83"><a href="acNucl.html#cb240-83" aria-hidden="true" tabindex="-1"></a><span class="st">TCCGTTCTTTTTTTTTTTGAGACAGTCTCGCTCTGTCGCCCAGGCTGGAGTGCAGTGGCGCAATCTCGGC</span></span>
+<span id="cb240-84"><a href="acNucl.html#cb240-84" aria-hidden="true" tabindex="-1"></a><span class="st">TCACTGCAACCTCCACCTCCCGGGTTCACGCCATTCTCCTGCCTCAGCCTCCCGAGTAGCTGGGATTACG</span></span>
+<span id="cb240-85"><a href="acNucl.html#cb240-85" aria-hidden="true" tabindex="-1"></a><span class="st">GGCGCCCGCCACCACGCCCGGCTAATTTTTTGTATTTTTAGTAGAGACAGGGTTTCACCGTGTTAGCCAG</span></span>
+<span id="cb240-86"><a href="acNucl.html#cb240-86" aria-hidden="true" tabindex="-1"></a><span class="st">GATGGTCTCGATCTCCTGACCTTGTGATCCACCCACCTCGGCCTCCCAAAGTGCTGGGATTACAGGCGTG</span></span>
+<span id="cb240-87"><a href="acNucl.html#cb240-87" aria-hidden="true" tabindex="-1"></a><span class="st">AGCCACTGCGCCCGGCCACATTCAGTTCTTATCAAAGAAATAACCCAGACTTAATCTTGAATGATACGAT</span></span>
+<span id="cb240-88"><a href="acNucl.html#cb240-88" aria-hidden="true" tabindex="-1"></a><span class="st">TATGCCCAATATTAAGTAAAAAATATAAGAAAAGGTTATCTTAAATAGATCTTAGGCAAAATACCAGCTG</span></span>
+<span id="cb240-89"><a href="acNucl.html#cb240-89" aria-hidden="true" tabindex="-1"></a><span class="st">ATGAAGGCATCTGATGCCTTCATCTGTTCAGTCATCTCCAAAAACAGTAAAAATAACCACTTTTTGTTGG</span></span>
+<span id="cb240-90"><a href="acNucl.html#cb240-90" aria-hidden="true" tabindex="-1"></a><span class="st">GCAATATGAAATTTTTAAAGGAGTAGAATACCAAATGATAGAAACAGACTGCCTGAATTGAGAATTTTGA</span></span>
+<span id="cb240-91"><a href="acNucl.html#cb240-91" aria-hidden="true" tabindex="-1"></a><span class="st">TTTCTTAAAGTGTGTTTCTTTCTAAATTGCTGTTCCTTAATTTGATTAATTTAATTCATGTATTATGATT</span></span>
+<span id="cb240-92"><a href="acNucl.html#cb240-92" aria-hidden="true" tabindex="-1"></a><span class="st">AAATCTGAGGCAGATGAGCTTACAAGTATTGAAATAATTACTAATTAATCACAAATGTGAAGTTATGCAT</span></span>
+<span id="cb240-93"><a href="acNucl.html#cb240-93" aria-hidden="true" tabindex="-1"></a><span class="st">GATGTAAAAAATACAAACATTCTAATTAAAGGCTTTGCAACACA&quot;</span></span>
+<span id="cb240-94"><a href="acNucl.html#cb240-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-95"><a href="acNucl.html#cb240-95" aria-hidden="true" tabindex="-1"></a>liso.nucl.h <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(liso.nucl.h, <span class="st">&quot;&quot;</span>)) <span class="co"># converte sequência gênica de uma palavra em nucleotídios separados</span></span>
+<span id="cb240-96"><a href="acNucl.html#cb240-96" aria-hidden="true" tabindex="-1"></a>liso.nucl.h <span class="ot">&lt;-</span> liso.nucl.h[liso.nucl.h <span class="sc">!=</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>] <span class="co"># elimina a quebra de linha do resultado anterior</span></span>
+<span id="cb240-97"><a href="acNucl.html#cb240-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-98"><a href="acNucl.html#cb240-98" aria-hidden="true" tabindex="-1"></a>gc.teor.h <span class="ot">&lt;-</span> seqinr<span class="sc">::</span><span class="fu">GC</span>(liso.nucl.h) <span class="co"># teor de pares GC da lisozima hunana</span></span>
+<span id="cb240-99"><a href="acNucl.html#cb240-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-100"><a href="acNucl.html#cb240-100" aria-hidden="true" tabindex="-1"></a>Tm.Na.h <span class="ot">&lt;-</span> (<span class="fl">81.5</span> <span class="sc">+</span> <span class="fl">16.6</span> <span class="sc">*</span> <span class="fu">log10</span>(Na.conc <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.7</span> <span class="sc">*</span> Na.conc)) <span class="sc">+</span> <span class="dv">41</span> <span class="sc">*</span> gc.teor.h <span class="sc">-</span> <span class="dv">500</span> <span class="sc">/</span> <span class="fu">length</span>(liso.nucl.h)) <span class="co"># valor de Tm para a humana</span></span>
+<span id="cb240-101"><a href="acNucl.html#cb240-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-102"><a href="acNucl.html#cb240-102" aria-hidden="true" tabindex="-1"></a><span class="co"># Curvas de simulação</span></span>
+<span id="cb240-103"><a href="acNucl.html#cb240-103" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Na.conc, Tm.Na,</span>
+<span id="cb240-104"><a href="acNucl.html#cb240-104" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="dv">2</span>,</span>
+<span id="cb240-105"><a href="acNucl.html#cb240-105" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;[Na+], M&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Tm, oC&quot;</span></span>
+<span id="cb240-106"><a href="acNucl.html#cb240-106" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb240-107"><a href="acNucl.html#cb240-107" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(Na.conc, Tm.Na.h, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="dv">3</span>)</span>
+<span id="cb240-108"><a href="acNucl.html#cb240-108" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="fl">0.15</span>, <span class="at">y =</span> <span class="dv">75</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;galinha&quot;</span>, <span class="st">&quot;humana&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-58"></span>
+<img src="Bioqu%C3%ADmica-Quantitativa---R_files/figure-html/unnamed-chunk-58-1.png" alt="Comparação entre a curvas simuladas de Tm para a sequência nucleotídica da lisozima de galinha e lisozima humana, em função do teor de NaCl do meio." width="672" />
+<p class="caption">
+Figura 7.1: Comparação entre a curvas simuladas de Tm para a sequência nucleotídica da lisozima de galinha e lisozima humana, em função do teor de NaCl do meio.
+</p>
+</div>
+<div class="line-block">      Observe como a diferença no teor de GC tem efeito direto na termoestabilidade de fitas duplas de DNA. Uma observação: embora a faixa do valor de Tm relatado na literatura para a lisozima encontra-se em torno de 74<span class="math inline">\(^o\)</span>C, esse valor refere-se à desnaturação cooperativa da enzima em solução aquosa, e não ao desenovelamento de sua sequência gênica de DNA duplex.</div>
+
+<!-- Google tag (gtag.js)-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S1L73VGCG5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S1L73VGCG5');
+</script>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-creighton2010biophysical" class="csl-entry">
+Creighton, Thomas E et al. 2010. <em>Biophysical Chemistry of Nucleic Acids &amp; Proteins</em>. Distributed by Gardners Books.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="9">
+<li id="fn9"><p>NCBI. <a href="https://www.ncbi.nlm.nih.gov/protein" class="uri">https://www.ncbi.nlm.nih.gov/protein</a><a href="acNucl.html#fnref9" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Binding.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="membranas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Bioquímica Quantitativa & R.pdf", "Bioquímica Quantitativa & R.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
