@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Física &amp; JSPlotly</title>
+<title>Química &amp; JSPlotly</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./mecanica.html" rel="next">
+<link href="./solEqkin.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="book.css">
 </head>
@@ -97,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Física &amp; JSPlotly</a> 
+      <a href="./">Química &amp; JSPlotly</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -115,20 +144,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./mecanica.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mecânica: objetos em movimento</span></span></a>
+  <a href="./solEqkin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Soluções, equilíbrio, e cinética</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ondas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ondas: movimento, som e luz</span></span></a>
+  <a href="./materia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Arquitetura da matéria</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./radio.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Radioatividade e energia nuclear</span></span></a>
+  <a href="./ambEletroq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Química Ambiental e Eletroquímica</span></span></a>
   </div>
 </li>
     </ul>
@@ -142,7 +171,10 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#estrutura" id="toc-estrutura" class="nav-link active" data-scroll-target="#estrutura">Estrutura</a></li>
+  <li><a href="#conteúdo" id="toc-conteúdo" class="nav-link" data-scroll-target="#conteúdo">Conteúdo</a>
+  <ul class="collapse">
   <li><a href="#notas" id="toc-notas" class="nav-link" data-scroll-target="#notas">Notas</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -151,7 +183,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Física &amp; JSPlotly</h1>
+<h1 class="title">Química &amp; JSPlotly</h1>
 </div>
 
 
@@ -168,39 +200,38 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Este é um <strong><span style="color:green">livro diferente em desenvolvimento !</span></strong></p>
-<!--   -->
-<!-- Nele você não encontrará o conteúdo vasto e tampouco a cobertura completa para conceitos e definições comumente espelhados em obras didáticas da área. Também não poderá usufruir da diagramação artística ímpar que conteúdos afins convencionalmente apresentam, desde a formatação até a oferta de inúmeras figuras, gráficos, tabelas, diagramas, "boxes", textos marginais e outras formas de representação visual da informação, minuciosamente arranjadas para o melhor aproveitamento possível de seus conteúdos.
-
-Aqui você encontrará apenas um texto básico, com alguns conceitos principais e figuras ilustrativas em número reduzido para cada assunto, e distribuidos ao longo de poucos capítulos.
-
-Contudo, encontrará um **<span style="color:green">livro vivo</span>**.   -->
-<p>Foi pensado para oferecer uma <strong>experiência imersiva</strong> embasada numa trilha didática singular e pontuada por ilustrações <em>vivas</em> que endereçam à visualizações e simulações temáticas envolvendo <em>pensamento computacional</em>, <em>lógica e linguagem de programação</em>. Ou seja, <strong><span style="color:green">um livro vivo !</span></strong></p>
-<p>O material busca oferecer um conteúdo com figuras integradas ao programa <a href="https://bioquanti.netlify.app/pt/nivel/superior/jsplotly/jsplotly2">JSPlotly</a>, um aplicativo de livre distribuição e edição (licença CC BY-NC 4.0) para visualização e construção de objetos interativos em navegador por uso da linguagem <a href="developer.mozilla.org/pt-BR/docs/Web/JavaScript">JavaScript</a>. O programa integra um conjunto de ferramentas, tutoriais, vídeos, capítulos e livros presentes no site <a href="https://bioquanti.netlify.app/">Bioquanti</a>, uma iniciativa nacional para disponibilização de materiais voltados ao <em>ensino reprodutível</em> de <em>códigos para conteúdos</em> didático-científicos.</p>
-<p>Mediante a necessidade de <em>JavaScript</em> para o pleno uso do <em>app</em>, buscou-se desenvolver um bot personalizado, <a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly">GSPlotly</a>, para conversão de linguagem natural em códigos prontos para uso no programa. O código gerado pelo <em>GSPlotly</em> é executado por cópia/cola no <em>JSPlotly</em>, flexibilizando a simples reprodução para um objeto interativo, a visualização de novo objeto por modificação pontual de seu código e <em>feedback</em> imediato, e mesmo a reconstrução do código para outro interesse do usuário, características que coadunam para um <em>ensino reprodutível</em>, educação e ciência abertas, ao mesmo tempo em que estimulam lógica e linguagem de programação voltadas a conteúdos didáticos.</p>
-<p><em>JSPlotly</em> compartilha em sua tela única o objeto interativo juntamente a seu código para observação e edição, agregando valor simultâneo a competências digitais e aprendizagem significativa para determinado tema. Cada objeto interativo dentro desse material pode ser acessado por clique de mouse ou tela capacitiva de dispositivo móvel a partir da legenda em cada figura. Alternativamente, um JSPlotly para produção de <em>QRCodes</em> também foi utilizado para acesso de cada figura (<a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/eq/QRCode2">QRPlotly</a>), permitindo o leitor/espectador experimentar o objeto interativo à distância, como numa apresentação multímidia, por exemplo.</p>
-<p><span style="color:green">Para visualizar o tema gerado em cada <em>JSPlotly</em> ilustrado no material, basta clicar no botão <em><code>add</code></em>.</span></p>
-<p>Uma vez acessado, cada simulação é acompanhada por uma rápida instrução de uso e aplicações diversas que tangenciam o <em>mundo real</em>, no intuito de propiciar uma melhor absorção e apropriação em cada tema abordado. Dessa forma, o usuário <strong><code>lê</code></strong> um trecho, <strong><code>observa</code></strong> a figura pertinente, <strong><code>roda</code></strong> a simulação para gráficos e animações sobre seu conteúdo, e <strong><code>modifica</code></strong> o código e/ou ajusta um <em>widget</em> buscando visualizar um outro panorama interativo. Em suma, um ciclo virtuoso de <em>leitura, visualização interativa e interferência direta na exploração de conteúdos</em>.</p>
-<p>O material também acompanha algumas figuras contendo garatujas obtidas com outro <em>app</em> de JSPlotly, <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/eq/gizz14">Gizz</a>, esse voltado à simulação de uma lousa digital.</p>
+<p><strong><code>Este é um livro diferente</code></strong> <strong><span style="color:green">em desenvolvimento</span></strong>.</p>
+<p>Nele você não encontrará o conteúdo vasto e tampouco a cobertura completa para conceitos e definições comumente espelhados em livros didáticos da área. Também não poderá usufruir da diagramação artística ímpar que obras afins convencionalmente apresentam, desde a formatação até a oferta de inúmeras figuras, gráficos, tabelas, diagramas, “boxes”, textos marginais e outras formas de representação visual da informação, minuciosamente arranjadas para o melhor aproveitamento possível de seus conteúdos.</p>
+<p>Aqui você encontrará apenas um texto básico, com alguns conceitos principais e figuras ilustrativas em número reduzido para cada assunto, e distribuidos ao longo de poucos capítulos.</p>
+<p>Contudo, encontrará um <strong><span style="color:green">livro vivo</span></strong>.</p>
+<p>Foi pensado para oferecer uma <strong>experiência imersiva</strong> embasada numa trilha didática singular e pontuada por ilustrações <em>vivas</em> que endereçam à visualizações e simulações temáticas envolvidas em <em>pensamento computacional</em>, <em>lógica de programação</em> e linguagens homônimas.</p>
+<p>O material busca oferecer um conteúdo com figuras integradas ao programa <em>JSPlotly</em>, um aplicativo de livre distribuição e edição (licença CC BY-NC 4.0) para visualização e construção de objetos interativos em navegador para linguagem <a href="developer.mozilla.org/pt-BR/docs/Web/JavaScript">JavaScript</a> e biblioteca <a href="https://plotly.com/javascript/">Plotly.js</a> para a confecção de objetos interativos.</p>
+<p>Mediante a necessidade de <em>JavaScript</em> para o pleno uso de JSPlotly, buscou-se desenvolver um bot personalizado, <a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly">GSPlotly</a>, para conversão de linguagem natural em códigos prontos para uso no programa. O código gerado pelo <em>GSPlotly</em> é executado por cópia/cola no <em>JSPlotly</em>, flexibilizando a simples reprodução para um objeto interativo, a visualização de novo objeto por modificação pontual de seu código e <em>feedback</em> imediato, e mesmo a reconstrução do código para outro interesse do usuário, características que coadunam para um <em>ensino reprodutível</em>, educação e ciência abertas, ao mesmo tempo em que estimulam a lógica e linguagem de programação voltadas a conteúdos didáticos.</p>
+<p>Dessa forma, JSPlotly compartilha em sua tela única o objeto interativo juntamente a seu código <em>JavaScript</em> para observação e edição, agregando valor simultâneo a competências digitais e aprendizagem significativa para determinado tema. Cada objeto interativo dentro desse livro pode ser acessado por clique de mouse ou tela capacitiva de dispositivo móvel a partir da legenda em cada figura. Alternativamente, um JSPlotly para produção de <em>QRCodes</em> também foi utilizado para acesso em cada figura (<a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/eq/QRCode2">QRPlotly</a>), permitindo o leitor/espectador experimentar o objeto interativo à distância, como numa apresentação multímidia, por exemplo.</p>
+<p>Uma vez acessado, cada simulação é acompanhada por uma rápida instrução de uso e aplicações diversas que tangenciam o <em>mundo real</em>, no intuito de propiciar uma melhor absorção e apropriação em cada tema abordado. Rabiscos de <em>“lousa”</em> foram obtidos com o <em>app</em> de JSPlotly, <a href="https://bioquanti.netlify.app/pt/nivel/basico/jsplotly/eq/gizz14">Gizz</a>.</p>
+<p>Dessa forma, o usuário <strong><code>lê</code></strong> um trecho, <strong><code>observa</code></strong> a figura pertinente, <strong><code>roda</code></strong> a simulação para gráficos e animações sobre seu conteúdo, e <strong><code>modifica</code></strong> o código e/ou ajusta um <em>widget</em> buscando visualizar um outro panorama interativo. Em suma, um ciclo virtuoso de <em>leitura, visualização interativa e interferência direta na exploração de conteúdos</em>.</p>
 <section id="estrutura" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="estrutura">Estrutura</h3>
-<p>O <strong>livro vivo</strong> foi também pensado para apresentar uma estrutura arbórea, com símbolos iconificados ao início de cada seção. Assim, o <code>tronco</code> representa o tema principal da área, os <code>ramos</code> situações-problema levantadas ao início de cada capítulo, as <code>folhas</code> as indagações revestidas da teoria e uso de aplicações JSPlotly, as <code>flores</code> os questionamentos testáveis ou não com os aplicativos, os <code>frutos</code> as várias possibilidade de aplicação para os mesmos conceitos abordados e as <code>sementes</code>, a lógica de programação proposta para um <em>app</em> de JSPlotly.</p>
-<p>A trilha didática também é singular. Cada capítulo abre com a seção <strong><code>"O Mundo te Chama"</code></strong>, envolvendo situações para instigar o leitor à reflexão sobre o tema e encerrando alguns objetivos sob o título <em>“Depois de explorar, você consegue”</em>. O capítulo prossegue com <strong><code>"Mexa Antes de Entender"</code></strong>, uma seção para colocar o leitor em contato direto com o fenômeno abordado por meio de um JSPlotly convidativo, tutorado e despretencioso, para <em>tentativa, erro e descoberta</em>. Cada JSPlotly do material é acompanhado por uma exploração guiada sob o título <code>"Agite antes de usar"</code>. Segue-se <strong><code>"Fazendo Aparecer"</code></strong>, uma seção para apresentar o conteúdo formal junto a outras aplicações de JSPlotly e <strong><code>"E se..."</code></strong>, que provoca o leitor para situações de consolidação e abstração de conceitos. <strong><code>"Mesmo Padrão, Outros Mundos"</code></strong> sucede elencando outras realidades e aplicações com ideias semelhantes às tratadas, e <strong><code>"Por Dentro da Ferramenta"</code></strong> finaliza o capítulo apresentando <em>competências digitais</em> voltadas à <em>lógica de programação</em> para um JSPlotly selecionado. Por vezes também, um código é detalhado ao longo do capítulo junto à subseção <em>“Por dentro do script”</em>.</p>
-<p>Esse <strong>livro vivo</strong> está em desenvolvimento, por ora contemplando 3 capítulos voltados a temas comumente recorrentes na Física do ensino médio: o estudo de <code>Mecânica</code>, de <code>Ondas</code> e de <code>Radioatividade e energia nuclear</code>, e abordados junto a <em><code>11 apps de JSPlotly</code></em> específicos ao longo das seções e 146 questionamentos correlatos.</p>
-<p>Em suma….<strong><code>esse é um livro diferente</code></strong>.</p>
-<p>Outros capítulos em finalização envolvendo <em>códigos para conteúdos</em> em temas da área serão brevemente disponibilizados junto ao site <a href="https://bioquanti.netlify.app/">Bioquanti</a>.</p>
+<p>O <code>"livro vivo"</code> foi também pensado para apresentar uma estrutura arbórea, com símbolos iconificados ao início de cada seção. Assim, o <code>tronco</code> representa o tema principal da área, os <code>ramos</code> situações-problema levantadas ao início de cada capítulo, as <code>folhas</code> as indagações revestidas da teoria e uso de aplicações JSPlotly, as <code>flores</code> os questionamentos testáveis ou não com os aplicativos, os <code>frutos</code> as várias possibilidade de aplicação para os mesmos conceitos abordados e as <code>sementes</code>, a lógica de programação proposta para um <em>app</em> de JSPlotly.</p>
+<p>A trilha didática também é singular dentro do <em>livro vivo</em>. Cada capítulo abre com a seção <strong><code>"O Mundo te Chama"</code></strong>, envolvendo situações para instigar o leitor à reflexão sobre o tema e encerrando alguns objetivos sob o título <em>“Depois de explorar, você consegue”</em>. O capítulo prossegue com <strong><code>"Mexa Antes de Entender"</code></strong>, uma seção para colocar o leitor em contato direto com o fenômeno abordado por meio de um JSPlotly convidativo sob um guia tutorado e despretencioso, para <em>tentativa, erro e descoberta</em>. Cada JSPlotly do material é acompanhado por uma exploração guiada sob o título <code>"Agite antes de usar"</code>. Segue-se <strong><code>"Fazendo Aparecer"</code></strong>, uma seção para apresentar o conteúdo formal junto a outras aplicações de JSPlotly e <strong><code>"E se..."</code></strong>, que provoca o leitor para situações de consolidação e abstração de conceitos. <strong><code>"Mesmo Padrão, Outros Mundos"</code></strong> sucede elencando outras realidades e aplicações com ideias semelhantes às tratadas, e <strong><code>"Por Dentro da Ferramenta"</code></strong> finaliza o capítulo apresentando <em>competências digitais</em> voltadas à <em>lógica de programação</em> para um JSPlotly selecionado. Por vezes também, um código é detalhado ao longo do capítulo junto à subseção <em>“Por dentro do script”</em>.</p>
 </section>
+<section id="conteúdo" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="conteúdo">Conteúdo</h2>
+<p>Esse <code>"livro vivo"</code> está em desenvolvimento, por ora contemplando 3 capítulos voltados a temas comumente recorrentes na Química do ensino médio: o estudo de <code>Soluções, equilíbrio, e cinética</code>, de <code>Arquitetura da Matéria</code> e de <code>Química Ambiental e Eletroquímica</code>, e abordados junto a <em><code>11 apps de JSPlotly</code></em> específicos ao longo das seções.</p>
+<p>Adicionalmente, o capítulo sobre organização atômica da matéria (“Arquitetura da Matéria”) traz um <em>app</em> de JSPlotly voltado à visualização de modelos atômicos em <em>3D</em>, <a href="https://bioquanti.netlify.app/pt/nivel/superior/jsplotly/eq/zemol">ZeMol</a>. As instruções permitem a observação desde uma molécula simples, como o CO<span class="math inline">\(_{2}\)</span>, até complexos macromoleculares, por carregamento local ou link externo.</p>
+<p>Em suma….<strong><code>esse é um livro diferente</code></strong>.</p>
+<p>Outros capítulos em finalização envolvendo <strong>códigos para conteúdos</strong> em temas da área serão brevemente disponibilizados.</p>
 <section id="notas" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="notas">Notas</h3>
-<p><small></small></p><small>
 <ol type="1">
-<li><p>Os conteúdos, atividades e objetos interativos apresentados nesse material foram concebidos em consonância com as competências gerais e específicas previstas pela Base Nacional Comum Curricular (BNCC) para o Ensino Médio e anos finais do Ensino Fundamental, contemplando habilidades associadas à investigação científica, pensamento crítico, cultura digital, competências digitais e resolução de problemas.</p></li>
-<li><p>O livro vivo e seus objetos interativos são oferecidos com propósito educacional e experimental, buscando <em>estimular exploração, criatividade e aprendizagem ativa</em>. Apesar do cuidado empregado em seu desenvolvimento junto ao <em>JSPlotly</em> e assistentes de inteligência artificial, como o gerador de códigos por bot personalizado GSPlotly, o autor não garante ausência de falhas, interrupções ou inadequações para usos específicos. O uso das simulações, códigos e conteúdos é de responsabilidade do usuário, incluindo interpretação de resultados, adaptações e aplicações práticas. Por fim, o autor não se responsabiliza por usos indevidos, interpretações incorretas, danos diretos ou indiretos, perdas de dados, decisões técnicas, acadêmicas, profissionais ou educacionais tomadas a partir do uso do software, scripts, simulações ou materiais derivados.</p></li>
+<li><p>Os conteúdos, atividades e objetos interativos apresentados no livro foram concebidos em consonância com as competências gerais e específicas previstas pela <a href="https://basenacionalcomum.mec.gov.br/">Base Nacional Comum Curricular (BNCC)</a> para o Ensino Médio e anos finais do Ensino Fundamental, contemplando habilidades associadas à investigação científica, pensamento crítico, cultura digital, competências digitais e resolução de problemas. Nesse sentido, o livro incorpora modelos conceituais e quantitativos alinhados às competências da área por meio de simulações computacionais personalizáveis, permitindo visualizações dinâmicas e ambientes interativos para o desenvolvimento do pensamento computacional e da lógica de programação para uma formação integral dos estudantes, bem como para sua atuação em ambiente acadêmico, profissional e social contemporâneos.</p></li>
+<li><p>O livro e seus objetos interativos são oferecidos com propósito educacional e experimental, buscando <em>estimular exploração, criatividade e aprendizagem ativa</em>. Apesar do cuidado empregado em seu desenvolvimento junto ao JSPlotly e assistentes de inteligência artificial, como o gerador de códigos por bot personalizado <a href="https://chatgpt.com/g/g-6819fbb8d2d08191bf7d50a3dbeadb0d-gsplotly">GSPlotly</a>, o autor não garante ausência de falhas, interrupções ou inadequações para usos específicos. O uso das simulações, códigos e conteúdos é de responsabilidade do usuário, incluindo interpretação de resultados, adaptações e aplicações práticas. Por fim, o autor não se responsabiliza por usos indevidos, interpretações incorretas, danos diretos ou indiretos, perdas de dados, decisões técnicas, acadêmicas, profissionais ou educacionais tomadas a partir do uso do software, scripts, simulações ou materiais derivados.</p></li>
+<li><p>Se desejar saber mais sobre o JSPlotly e outras ferramentas que envolvem <em>códigos para conteúdos</em> didático-científicos, visite o site <a href="https://bioquanti.netlify.app/">Bioquanti</a>, uma iniciativa nacional para oferta de materiais voltados ao <em>ensino reprodutível</em> de <em>códigos para conteúdos</em>.</p></li>
 </ol>
-</small><p><small></small></p>
 <div style="page-break-after: always;"></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -607,8 +638,8 @@ Contudo, encontrará um **<span style="color:green">livro vivo</span>**.   -->
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./mecanica.html" class="pagination-link" aria-label="Mecânica: objetos em movimento">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mecânica: objetos em movimento</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./solEqkin.html" class="pagination-link" aria-label="Soluções, equilíbrio, e cinética">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Soluções, equilíbrio, e cinética</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
