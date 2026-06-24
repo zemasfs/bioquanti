@@ -1,0 +1,77 @@
+---
+title: "Corrida de Atletas"
+---
+
+::: {.callout-warning}
+O objetivo desse código é criar uma ferramenta visual e interativa para comparar o desempenho esportivo. Em vez de analisar planilhas complexas, o usuário tem um gráfico onde pode visualizar de forma clara a relação entre o tempo gasto e a velocidade média de diferentes atletas
+
+
+## Equação: 
+
+
+$$T_{\text{final}} = T_{\text{base}} \cdot \left( \frac{D_{\text{escolhida}}}{100} \right)$$
+
+
+$$v_{m} = \frac{\Delta s}{\Delta t}$$
+
+
+$T_{\text{base}}$: É a Constante
+$D_{\text{escolhida}}$ ($\Delta s$): A variável independente. É a nova distância (em metros) selecionada ativamente pelo usuário na interface do simulador.
+$T_{\text{final}}$ ($\Delta t$): A variável dependente primária. O tempo projetado que o atleta levará para concluir a nova distância estipulada.
+$v_{m}$: A variável dependente secundária. A velocidade média calculada com base na nova relação entre distância e tempo.
+
+
+## Como utilizar:
+
+
+[![Análise comparativa entre Tempo (s) e Velocidade (m/s) de atletas em diferentes distâncias.](FIS-MEC-CIN-02.png)](FIS-MEC-CIN-02-JS.html){target="_blank"}
+\
+
+* Clique no gráfico acima;
+
+* Clique em "add" e arraste a barra para diferentes resultados;
+* Para achar outros resultados, alterar os valores de: "const x_values" (nome de atletas), e "tempos_base_100m" (Alterar tempo de cada atletas)
+:::
+
+
+::: {.callout-tip}
+
+## Sugestão: 
+1: Introduzir variáveis de atrito (Clima, Terreno). É possivel ao cirar um parâmetro na função de tempo que simula uma correrida na areia, na chuva ou contra o vento, adicionando um multiplicador extra ao tempo final.
+2: Inverter: Mude de "Quanto tempo eles levam para correr X metros?" para "Quantos metros eles correm em X segundos?"
+
+
+:::
+
+
+::: {.callout-note}
+
+
+
+## Lógica do código
+1. Estabelecimento da "Verdade Absoluta", ou seja, valores inalteráveis
+
+2. Processamento: A lógica não guarda os dados de 200m, 400m ou 800m na memória.
+Recebe uma nova distância e descobre a proporção.
+É dependente da primeira. Primeiro manda a função de Tempo rodar para descobrir os segundos,  divide a distância solicitada por esse tempo, encontrando os metros por segundo.
+
+3. O Empacotamento Visual (Traces)
+O Plotly.js só entende coordenadas. A lógica neste passo é traduzir os cálculos para a linguagem do gráfico.
+O sistema cria dois "pacotes" de dados.
+Um pacote recebe a cor azul, a etiqueta "Tempo", os nomes no eixo X e os resultados do cálculo de tempo no eixo Y.
+O outro pacote faz o mesmo, mas com cor vermelha e os dados de velocidade.
+
+4. Slider (barra interativa de arrastar)
+A lógica não termina ao desenhar o gráfico; ela fica "escutando" o usuário.
+O controle deslizante (slider) é configurado com "passos" (100, 200, 400, 800).
+A Lógica de Gatilho: Quando o usuário move o controle para 400m, o slider dispara um comando interno.
+Esse comando diz ao gráfico: "Descarte as alturas das barras atuais. Volte ao Passo 2, insira o número 400 no motor de cálculo, pegue os novos resultados e substitua imediatamente nas barras que estão na tela".
+
+:::
+<!-- 
+**Autor:**
+Luiz Gabriel da Silva Cabrera, Ciência da Computação, Unifal-MG
+
+
+#### Código {.unnumbered}
+FIS-MEC-CIN-01 -->

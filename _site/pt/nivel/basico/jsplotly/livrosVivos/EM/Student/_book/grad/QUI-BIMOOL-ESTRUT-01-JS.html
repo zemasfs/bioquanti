@@ -1,0 +1,283 @@
+// ===== CONTAINER =====
+var container = document.createElement("div");
+
+// ===== TÍTULO =====
+var titulo = document.createElement("h2");
+titulo.innerHTML = "Montagem de Proteína 3D";
+container.appendChild(titulo);
+
+// ===== SLIDERS =====
+function criarSlider(nome, valor, min, max){
+
+    var div = document.createElement("div");
+
+    var label = document.createElement("span");
+    label.innerHTML = nome + ": " + valor;
+
+    var input = document.createElement("input");
+    input.type = "range";
+    input.min = min;
+    input.max = max;
+    input.value = valor;
+
+    input.oninput = function(){
+        label.innerHTML = nome + ": " + input.value;
+    };
+
+    div.appendChild(label);
+    div.appendChild(document.createElement("br"));
+    div.appendChild(input);
+
+    container.appendChild(div);
+
+    return input;
+}
+
+var amino = criarSlider(
+    "Número de aminoácidos",
+    50,
+    10,
+    200
+);
+
+var helices = criarSlider(
+    "Número de α-hélices",
+    2,
+    0,
+    10
+);
+
+var folhas = criarSlider(
+    "Número de folhas β",
+    1,
+    0,
+    10
+);
+
+// ===== TIPO =====
+var texto = document.createElement("h3");
+texto.innerHTML = "Tipo de proteína";
+container.appendChild(texto);
+
+var seletor = document.createElement("select");
+
+[
+"Hidrofóbica",
+"Hidrofílica",
+"Mista"
+].forEach(function(tipo){
+
+    var op = document.createElement("option");
+    op.text = tipo;
+    seletor.add(op);
+
+});
+
+container.appendChild(seletor);
+
+// ===== BOTÃO =====
+var botao = document.createElement("button");
+botao.innerHTML = "Montar proteína";
+container.appendChild(botao);
+
+// ===== GRÁFICO =====
+var grafico = document.createElement("div");
+grafico.id = "grafico";
+grafico.style.height = "700px";
+
+document.body.appendChild(container);
+document.body.appendChild(grafico);
+
+// ===== SIMULAÇÃO =====
+botao.onclick = function(){
+
+    var n = Number(amino.value);
+    var h = Number(helices.value);
+    var f = Number(folhas.value);
+
+    var tipo = seletor.value;
+
+    var x = [];
+    var y = [];
+    var z = [];
+
+    var fator;
+
+    if(tipo === "Hidrofóbica"){
+        fator = 0.35;
+    }
+    else if(tipo === "Hidrofílica"){
+        fator = 1.4;
+    }
+    else{
+        fator = 0.8;
+    }
+
+    for(var i=0;i<n;i++){
+
+        if(tipo === "Hidrofóbica"){
+
+            x.push(
+                Math.cos(i*0.3)
+                * 5
+            );
+
+            y.push(
+                Math.sin(i*0.3)
+                * 5
+            );
+
+            z.push(
+                i * fator * 0.3
+            );
+
+        }
+
+        else if(tipo === "Hidrofílica"){
+
+            x.push(
+                i * fator * 0.8
+            );
+
+            y.push(
+                Math.sin(i*0.2)
+                * 8
+            );
+
+            z.push(
+                Math.cos(i*0.2)
+                * 8
+            );
+
+        }
+
+        else{
+
+            x.push(
+                i * 0.4
+            );
+
+            y.push(
+                Math.sin(i*0.25)
+                * 5
+            );
+
+            z.push(
+                Math.cos(i*0.25)
+                * 5
+            );
+
+        }
+
+    }
+
+    var tamHelice =
+    Math.floor(n*0.15*h);
+
+    var tamFolha =
+    Math.floor(n*0.1*f);
+
+    Plotly.newPlot(
+
+        "grafico",
+
+        [
+
+        {
+            x:x,
+            y:y,
+            z:z,
+
+            type:"scatter3d",
+            mode:"markers",
+
+            marker:{
+                size:5,
+                color:"green"
+            }
+        },
+
+        {
+            x:x.slice(
+                0,
+                tamHelice
+            ),
+
+            y:y.slice(
+                0,
+                tamHelice
+            ),
+
+            z:z.slice(
+                0,
+                tamHelice
+            ),
+
+            type:"scatter3d",
+
+            mode:"lines",
+
+            line:{
+                width:10,
+                color:"red"
+            }
+        },
+
+        {
+            x:x.slice(
+                tamHelice,
+                tamHelice+tamFolha
+            ),
+
+            y:y.slice(
+                tamHelice,
+                tamHelice+tamFolha
+            ),
+
+            z:z.slice(
+                tamHelice,
+                tamHelice+tamFolha
+            ),
+
+            type:"scatter3d",
+
+            mode:"lines",
+
+            line:{
+                width:10,
+                color:"blue"
+            }
+        }
+
+        ],
+
+        {
+
+            title:
+            "Estrutura tridimensional simplificada da proteína",
+
+            showlegend:false,
+
+            scene:{
+
+                xaxis:{
+                    title:"X"
+                },
+
+                yaxis:{
+                    title:"Y"
+                },
+
+                zaxis:{
+                    title:"Z"
+                }
+
+            }
+
+        }
+
+    );
+
+};
+
+botao.onclick();
