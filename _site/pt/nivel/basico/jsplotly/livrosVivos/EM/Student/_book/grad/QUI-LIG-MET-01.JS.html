@@ -1,0 +1,162 @@
+   // ===== CONTAINER PRINCIPAL =====
+var container = document.createElement("div");
+
+// ===== TÍTULO =====
+var titulo = document.createElement("h2");
+titulo.innerHTML = "Condução Elétrica em Metais";
+container.appendChild(titulo);
+
+// ===== DESCRIÇÃO =====
+var descricao = document.createElement("p");
+descricao.innerHTML =
+"Selecione um metal e observe como a temperatura influencia a condução elétrica.";
+container.appendChild(descricao);
+
+// ===== SELEÇÃO DE METAIS =====
+var textoMetal = document.createElement("h3");
+textoMetal.innerHTML = "Selecionar metal";
+container.appendChild(textoMetal);
+
+var seletor = document.createElement("select");
+
+var metais = [
+    "Cobre",
+    "Alumínio",
+    "Prata",
+    "Ferro",
+    "Ouro"
+];
+
+for (var i = 0; i < metais.length; i++) {
+
+    var opcao = document.createElement("option");
+    opcao.text = metais[i];
+    seletor.add(opcao);
+}
+
+container.appendChild(seletor);
+
+// ===== SLIDER TEMPERATURA =====
+var divTemp = document.createElement("div");
+
+var textoTemp = document.createElement("span");
+textoTemp.innerHTML = "Temperatura: 25 °C";
+
+var sliderTemp = document.createElement("input");
+sliderTemp.type = "range";
+sliderTemp.min = 0;
+sliderTemp.max = 200;
+sliderTemp.value = 25;
+
+sliderTemp.oninput = function() {
+    textoTemp.innerHTML =
+        "Temperatura: " + sliderTemp.value + " °C";
+};
+
+divTemp.appendChild(textoTemp);
+divTemp.appendChild(document.createElement("br"));
+divTemp.appendChild(sliderTemp);
+
+container.appendChild(divTemp);
+
+// ===== BOTÃO =====
+var botao = document.createElement("button");
+botao.innerHTML = "Simular";
+container.appendChild(botao);
+
+// ===== TEXTO RESULTADO =====
+var resultado = document.createElement("h2");
+container.appendChild(resultado);
+
+// ===== GRÁFICO =====
+var grafico = document.createElement("div");
+grafico.id = "grafico";
+grafico.style.height = "500px";
+
+document.body.appendChild(container);
+document.body.appendChild(grafico);
+
+// ===== FUNÇÃO SIMULAÇÃO =====
+botao.onclick = function() {
+
+    var metal = seletor.value;
+    var temperatura = Number(sliderTemp.value);
+
+    // ===== CONDUTIVIDADE BASE =====
+    var base = 0;
+
+    if (metal == "Prata") {
+        base = 100;
+    }
+
+    if (metal == "Cobre") {
+        base = 95;
+    }
+
+    if (metal == "Ouro") {
+        base = 80;
+    }
+
+    if (metal == "Alumínio") {
+        base = 70;
+    }
+
+    if (metal == "Ferro") {
+        base = 50;
+    }
+
+    // ===== QUEDA COM TEMPERATURA =====
+    var conducao = base - (temperatura * 0.2);
+
+    if (conducao < 0) {
+        conducao = 0;
+    }
+
+    // ===== RESULTADO =====
+    resultado.innerHTML =
+        "Condutividade relativa: " +
+        conducao.toFixed(1);
+
+    // ===== GRÁFICO =====
+    Plotly.newPlot(
+
+        "grafico",
+
+        [
+
+        {
+            x: [temperatura],
+            y: [conducao],
+            mode: "markers+text",
+            text: [metal],
+            textposition: "top center",
+            marker: {
+                size: 18
+            },
+            name: metal
+        }
+
+        ],
+
+        {
+
+        title:
+            "Condução elétrica do metal selecionado",
+
+        xaxis: {
+            title: "Temperatura (°C)",
+            range: [0, 200]
+        },
+
+        yaxis: {
+            title: "Condutividade relativa",
+            range: [0, 110]
+        }
+
+        }
+
+    );
+};
+
+// ===== EXECUÇÃO INICIAL =====
+botao.onclick();
