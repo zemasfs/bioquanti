@@ -334,7 +334,7 @@ window.Quarto = {
   <li><a href="#regressão-linear-ponderada-e-dados-de-lineweaver-burk" id="toc-regressão-linear-ponderada-e-dados-de-lineweaver-burk" class="nav-link" data-scroll-target="#regressão-linear-ponderada-e-dados-de-lineweaver-burk"><span class="header-section-number">3.1</span> Regressão linear ponderada e dados de Lineweaver-Burk</a></li>
   <li><a href="#regressão-polinomial-e-curva-de-deltag-com-temperatura" id="toc-regressão-polinomial-e-curva-de-deltag-com-temperatura" class="nav-link" data-scroll-target="#regressão-polinomial-e-curva-de-deltag-com-temperatura"><span class="header-section-number">3.2</span> Regressão polinomial e curva de <span class="math inline">\(\Delta\)</span>G com temperatura</a></li>
   <li><a href="#regressão-multilinear-e-qsar-relação-quantitativa-estrutura-atividade" id="toc-regressão-multilinear-e-qsar-relação-quantitativa-estrutura-atividade" class="nav-link" data-scroll-target="#regressão-multilinear-e-qsar-relação-quantitativa-estrutura-atividade"><span class="header-section-number">3.3</span> Regressão multilinear e QSAR (Relação Quantitativa Estrutura-Atividade)</a></li>
-  <li><a href="#regressão-não-linear-por-gauss-e-cinética-enzimática" id="toc-regressão-não-linear-por-gauss-e-cinética-enzimática" class="nav-link" data-scroll-target="#regressão-não-linear-por-gauss-e-cinética-enzimática"><span class="header-section-number">3.4</span> Regressão não linear por Gauss e cinética enzimática</a></li>
+  <li><a href="#regressão-não-linear-por-gauss-newton-e-cinética-enzimática" id="toc-regressão-não-linear-por-gauss-newton-e-cinética-enzimática" class="nav-link" data-scroll-target="#regressão-não-linear-por-gauss-newton-e-cinética-enzimática"><span class="header-section-number">3.4</span> Regressão não linear por Gauss-Newton e cinética enzimática</a></li>
   <li><a href="#regressão-não-linear-por-newton-raphson-e-curva-de-michaelis-mentem" id="toc-regressão-não-linear-por-newton-raphson-e-curva-de-michaelis-mentem" class="nav-link" data-scroll-target="#regressão-não-linear-por-newton-raphson-e-curva-de-michaelis-mentem"><span class="header-section-number">3.5</span> Regressão não linear por Newton-Raphson e curva de Michaelis-Mentem</a></li>
   </ul></li>
   <li><a href="#estatística-descritiva" id="toc-estatística-descritiva" class="nav-link" data-scroll-target="#estatística-descritiva"><span class="header-section-number">4</span> Estatística descritiva</a>
@@ -383,8 +383,12 @@ window.Quarto = {
 <div class="line-block">&nbsp;&nbsp;Nesse sentido, seguem <em>alguns programas desenvolvidos</em> pelo autor junto ao modelo <a href="https://www.hp.com/latam/br/produtos/calculadoras/mod_aprendizado/cientistas/50gs.html">HP 50g</a>, lançado em 2006 pelo fabricante. A calculadora é programável em linguagem <a href="https://en.wikipedia.org/wiki/RPL_(programming_language)">RPL</a>, um misto de <em>RPN - Reverse Polish Notation</em> com <a href="https://pt.wikipedia.org/wiki/Lisp">Lisp</a>. Embora tenha sido descontinuada em 2015, se encontra até hoje tanto no comércio eletrônico, como nos apaixonados corações de seus admiradores, e dos quais esse humilde assecla compartilha o saudável vício (<em>heritage nerd</em>).</div>
 <p><br>
 </p>
-<p><img src="hp50.png" class="img-fluid" alt="Calculadora gráfica Hewlett-Packard HP 50g e impressora térmica com sensor infravermelho 82240B. A tela gráfica e sua impressão apresentam uma simulação para dados de isoterma de adsorção de Langmuir e ajuste não linear de Gauss-Newton a um complexo ligante-proteína. Fonte: Autor."><br>
-</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hp50.png" class="img-fluid figure-img"></p>
+<figcaption>Calculadora gráfica Hewlett-Packard HP 50g e impressora térmica com sensor infravermelho 82240B. A tela gráfica e sua impressão apresentam uma simulação para dados de isoterma de adsorção de Langmuir e ajuste não linear de Gauss-Newton a um complexo ligante-proteína. Brinquedos do autor.</figcaption>
+</figure>
+</div>
 <div class="line-block">&nbsp;&nbsp;Em anos próximos à descontinuidade da HP 50g, um grupo bastante ativo da rede mundial juntou-se para consolidar um novo <em>firmware</em> para a calculadora, culminando no projeto <a href="https://sourceforge.net/projects/newrpl/">newRPL</a>. O novo <em>firmware</em> foi desenvolvido em C/C++ e é voltado tanto para a calculadora original, como para sua sucessora, <a href="https://support.hp.com/br-pt/product/details/null/model/7298644">Prime</a>, como também para desktop e dispositivos móveis. Embora a versão atual seja desprovida de cálculo diferencial, distribuições estatísticas, e edição de gráficos, como a original, ressalta-se suas características de edição (desfazer/refazer de 8 níveis), 16 níveis de escala de cinza, variáveis locais em programação (LSTO), melhor edição de comandos, menu separado para matemática financeira (clonando funcionalidades da clássica <a href="https://www.hp.com/br-pt/shop/calculadora-financeira-hp-12c-f2230a.html">HP12C</a>), dois menus de ação independente, autocompletação de comandos, 2000 dígitos de precisão, limites numéricos extendidos (10<span class="math inline">\(^{-30000}\)</span> a 10<span class="math inline">\(^{30000}\)</span>), e velocidade de processamento muito mais rápida que o <em>firmware</em> original (192 MHz contra 75 Mhz, embora 10-12x mais rápida, segundo seus desenvolvedores).</div>
 <p><br>
 </p>
@@ -392,68 +396,68 @@ window.Quarto = {
 <h2 class="unnumbered anchored" data-anchor-id="programas-para-hp-50g">Programas para HP 50g:</h2>
 <!-- <span style="color:red">(em construção)</span>   -->
 <div class="line-block">&nbsp;&nbsp;Os programas abaixo foram desenvolvidos pelo autor ao longo de alguns anos. São reproduzíveis na versão física das calculadoras HP 49g e HP 50g, bem como em <em>versões</em> para <a href="https://www.hpcalc.org/hp49/pc/emulators/">desktop</a> ou <a href="https://sites.google.com/site/olivier2smet2/home/go49gp">dispositivos móveis</a>. Alguns programas estão na versão original do <em>firmware</em>, e outros na versão <em>newRPL</em> mais recente (2021).</div>
-<p><br>
+<p>&nbsp; Quase todos os programas abaixo encontram-se hospedados no portal <a href="https://www.hpcalc.org/">hpcalc.org</a>. Mantido por Eric Rechlin desde 1997, o site é considerado o maior arquivo digital dedicado a calculadoras programáveis da Hewlett-Packard.<br>
 </p>
 </section>
 <section id="biofísico-química" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="biofísico-química"><span class="header-section-number">1</span> Biofísico-química</h2>
 <section id="sistema-linear-e-determinação-simultânea-de-deltah-e-deltas-para-2-temperaturas-newrpl" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="sistema-linear-e-determinação-simultânea-de-deltah-e-deltas-para-2-temperaturas-newrpl"><span class="header-section-number">1.1</span> <a href="./nivel/superior/hp50/Therm/Therm.html">Sistema linear e determinação simultânea de <span class="math inline">\(\Delta\)</span>H e <span class="math inline">\(\Delta\)</span>S para 2 temperaturas (newRPL)</a></h3>
-<div class="line-block">&nbsp;&nbsp;Determinação de quantidades termodinâmicas por sistema linear para reações em temperaturas distintas.</div>
+<div class="line-block">&nbsp;&nbsp;Determinação de quantidades termodinâmicas por sistema linear para reações em temperaturas distintas. Programa hospedado no <a href="https://www.hpcalc.org/details/9809"><em>hpcalc</em></a>.</div>
 </section>
 <section id="sistema-de-equações-e-equilíbrio-de-binding" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="sistema-de-equações-e-equilíbrio-de-binding"><span class="header-section-number">1.2</span> <a href="./nivel/superior/hp50/Site1/Site1.html">Sistema de equações e equilíbrio de <em>binding</em></a></h3>
-<div class="line-block">&nbsp;&nbsp;Determinação de quantidades em interação bimolecular para um conjunto de sítios de mesma afinidade.</div>
+<h3 data-number="1.2" class="anchored" data-anchor-id="sistema-de-equações-e-equilíbrio-de-binding"><span class="header-section-number">1.2</span> <a href="nivel/superior/hp50/Site1/Site1.html">Sistema de equações e equilíbrio de <em>binding</em></a></h3>
+<div class="line-block">&nbsp;&nbsp;Determinação de quantidades em interação bimolecular para um conjunto de sítios de mesma afinidade. Programa hospedado no <a href="https://www.hpcalc.org/details/9810"><em>hpcalc</em></a>.</div>
 </section>
 <section id="solução-numérica-para-equações-diferenciais-ordinárias-ode-e-cinética-de-binding" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="solução-numérica-para-equações-diferenciais-ordinárias-ode-e-cinética-de-binding"><span class="header-section-number">1.3</span> <a href="./nivel/superior/hp50/kinSite/kinSite.html">Solução numérica para equações diferenciais ordinárias (ODE) e cinética de <em>binding</em></a></h3>
-<div class="line-block">&nbsp;&nbsp;Método de Runge-Kutta-Fehelberg para ODE e cinética de interação ligante-receptor com gráfico de quantidades no tempo.</div>
+<h3 data-number="1.3" class="anchored" data-anchor-id="solução-numérica-para-equações-diferenciais-ordinárias-ode-e-cinética-de-binding"><span class="header-section-number">1.3</span> <a href="nivel/superior/hp50/kinSite/kinSite.html">Solução numérica para equações diferenciais ordinárias (ODE) e cinética de <em>binding</em></a></h3>
+<div class="line-block">&nbsp;&nbsp;Método de Runge-Kutta-Fehelberg para ODE e cinética de interação ligante-receptor com gráfico de quantidades no tempo. Programa hospedado no <a href="https://www.hpcalc.org/details/9788"><em>hpcalc</em></a>.</div>
 </section>
 <section id="solução-numérica-para-equações-diferenciais-ordinárias-ode-e-cinética-enzimática" class="level3" data-number="1.4">
-<h3 data-number="1.4" class="anchored" data-anchor-id="solução-numérica-para-equações-diferenciais-ordinárias-ode-e-cinética-enzimática"><span class="header-section-number">1.4</span> <a href="./nivel/superior/hp50/kinMM/kinMM.html">Solução numérica para equações diferenciais ordinárias (ODE) e cinética enzimática</a></h3>
+<h3 data-number="1.4" class="anchored" data-anchor-id="solução-numérica-para-equações-diferenciais-ordinárias-ode-e-cinética-enzimática"><span class="header-section-number">1.4</span> <a href="nivel/superior/hp50/kinMM/kinMM.html">Solução numérica para equações diferenciais ordinárias (ODE) e cinética enzimática</a></h3>
 <div class="line-block">Método de Runge-Kutta-Fehelberg para ODE e cinética enzimática de Michaelis-Mentem com gráfico de quantidades no tempo.</div>
 </section>
 <section id="titulação-e-ponto-isoelétrico-de-peptídios-e-proteínas" class="level3" data-number="1.5">
 <h3 data-number="1.5" class="anchored" data-anchor-id="titulação-e-ponto-isoelétrico-de-peptídios-e-proteínas"><span class="header-section-number">1.5</span> <a href="./nivel/superior/hp50/qNet/qNet.html">Titulação e Ponto Isoelétrico de peptídios e proteínas</a></h3>
-<div class="line-block">&nbsp;&nbsp;Simulador para titulação de grupos ionizáveis em sequências de aminoácidos e determinação gráfica de ponto isoelétrico (pI).</div>
+<div class="line-block">&nbsp;&nbsp;Simulador para titulação de grupos ionizáveis em sequências de aminoácidos e determinação gráfica de ponto isoelétrico (pI). Programa hospedado no <a href="https://www.hpcalc.org/details/9787"><em>hpcalc</em></a>.</div>
 </section>
 </section>
 <section id="gráfico" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="gráfico"><span class="header-section-number">2</span> Gráfico</h2>
 <section id="simulador-de-função-com-erro-aleatório" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="simulador-de-função-com-erro-aleatório"><span class="header-section-number">2.1</span> <a href="./nivel/superior/hp50/PlotErr/PlotErr.html">Simulador de função com erro aleatório</a></h3>
-<div class="line-block">&nbsp;&nbsp;Gráfico de pontos com dispersão de erros por inserção de covariância percentual.</div>
+<h3 data-number="2.1" class="anchored" data-anchor-id="simulador-de-função-com-erro-aleatório"><span class="header-section-number">2.1</span> <a href="nivel/superior/hp50/PlotErr/PlotErr.html">Simulador de função com erro aleatório</a></h3>
+<div class="line-block">&nbsp;&nbsp;Gráfico de pontos com dispersão de erros por inserção de covariância percentual. Programa hospedado no <a href="https://www.hpcalc.org/details/9792"><em>hpcalc</em></a>.</div>
 </section>
 <section id="sobreposição-de-gráficos-com-variação-em-parâmetro-de-função" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="sobreposição-de-gráficos-com-variação-em-parâmetro-de-função"><span class="header-section-number">2.2</span> <a href="./nivel/superior/hp50/SimPlot/SimPlot.html">Sobreposição de gráficos com variação em parâmetro de função</a></h3>
-<div class="line-block">&nbsp;&nbsp;Visualização animada de gráficos de função inserida pelo usuário, variando-se um parâmetro da equação.</div>
+<h3 data-number="2.2" class="anchored" data-anchor-id="sobreposição-de-gráficos-com-variação-em-parâmetro-de-função"><span class="header-section-number">2.2</span> <a href="nivel/superior/hp50/SimPlot/SimPlot.html">Sobreposição de gráficos com variação em parâmetro de função</a></h3>
+<div class="line-block">&nbsp;&nbsp;Visualização animada de gráficos de função inserida pelo usuário, variando-se um parâmetro da equação. Programa hospedado no <a href="https://www.hpcalc.org/details/9811"><em>hpcalc</em></a>.</div>
 </section>
 <section id="visualização-de-gráfico-3d-com-variação-em-parâmetro-de-função" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="visualização-de-gráfico-3d-com-variação-em-parâmetro-de-função"><span class="header-section-number">2.3</span> <a href="./nivel/superior/hp50/SimPlot3D/SimPlot3D.html">Visualização de gráfico 3D com variação em parâmetro de função</a></h3>
-<div class="line-block">&nbsp;&nbsp;Animação de gráficos tridimensionais (<em>wireframe</em>) de função simulada com variação de parâmetro.</div>
+<h3 data-number="2.3" class="anchored" data-anchor-id="visualização-de-gráfico-3d-com-variação-em-parâmetro-de-função"><span class="header-section-number">2.3</span> <a href="nivel/superior/hp50/SimPlot3D/SimPlot3D.html">Visualização de gráfico 3D com variação em parâmetro de função</a></h3>
+<div class="line-block">&nbsp;&nbsp;Animação de gráficos tridimensionais (<em>wireframe</em>) de função simulada com variação de parâmetro. Programa hospedado no <a href="https://www.hpcalc.org/details/9812"><em>hpcalc</em></a>.</div>
 </section>
 </section>
 <section id="ajuste-de-dados" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="ajuste-de-dados"><span class="header-section-number">3</span> Ajuste de dados</h2>
 <section id="regressão-linear-ponderada-e-dados-de-lineweaver-burk" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="regressão-linear-ponderada-e-dados-de-lineweaver-burk"><span class="header-section-number">3.1</span> <a href="./nivel/superior/hp50/linFIT/linFIT.html">Regressão linear ponderada e dados de Lineweaver-Burk</a></h3>
-<div class="line-block">&nbsp;&nbsp;Ajuste por mínimos quadrados por álgebra matricial e inclusão de pesos nas estimativas. O programa apresenta resultados, gráfico, linha de regressão, e gráfico adicionado com novo conjunto de dados.</div>
+<div class="line-block">&nbsp;&nbsp;Ajuste por mínimos quadrados por álgebra matricial e inclusão de pesos nas estimativas. O programa apresenta resultados, gráfico, linha de regressão, e gráfico adicionado com novo conjunto de dados. Programa hospedado no <a href="https://www.hpcalc.org/details/9803"><em>hpcalc</em></a>.</div>
 </section>
 <section id="regressão-polinomial-e-curva-de-deltag-com-temperatura" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="regressão-polinomial-e-curva-de-deltag-com-temperatura"><span class="header-section-number">3.2</span> <a href="./nivel/superior/hp50/polFIT/polFIT.html">Regressão polinomial e curva de <span class="math inline">\(\Delta\)</span>G com temperatura</a></h3>
-<div class="line-block">&nbsp;&nbsp;Ajuste polinomial com inserção por listas e saída paramétrica e gráfica, e ilustrando situação em biotermodinâmica.</div>
+<div class="line-block">&nbsp;&nbsp;Ajuste polinomial com inserção por listas e saída paramétrica e gráfica, e ilustrando situação em biotermodinâmica. Programa hospedado no <a href="https://www.hpcalc.org/details/9791"><em>hpcalc</em></a>.</div>
 </section>
 <section id="regressão-multilinear-e-qsar-relação-quantitativa-estrutura-atividade" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="regressão-multilinear-e-qsar-relação-quantitativa-estrutura-atividade"><span class="header-section-number">3.3</span> <a href="./nivel/superior/hp50/mlFIT/mlFIT.html">Regressão multilinear e QSAR (Relação Quantitativa Estrutura-Atividade)</a></h3>
 <div class="line-block">&nbsp;&nbsp;Ajuste linear múltiplo por álgebra matricial e exemplo na área de quimioinformática.</div>
 </section>
-<section id="regressão-não-linear-por-gauss-e-cinética-enzimática" class="level3" data-number="3.4">
-<h3 data-number="3.4" class="anchored" data-anchor-id="regressão-não-linear-por-gauss-e-cinética-enzimática"><span class="header-section-number">3.4</span> <a href="./nivel/superior/hp50/nlFIT/nlFIT.html">Regressão não linear por Gauss e cinética enzimática</a></h3>
-<div class="line-block">&nbsp;&nbsp;Método de mínimos quadrados por álgebra linear usando-se algoritmo de Gauss-Newton, e ilustrado com dados de cinética enzimática com entrada por listas. O programa encontra-se depositado no portal <a href="https://www.hpcalc.org/details/9736">hpcalc.org</a>.</div>
+<section id="regressão-não-linear-por-gauss-newton-e-cinética-enzimática" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="regressão-não-linear-por-gauss-newton-e-cinética-enzimática"><span class="header-section-number">3.4</span> <a href="./nivel/superior/hp50/nlFIT/nlFIT.html">Regressão não linear por Gauss-Newton e cinética enzimática</a></h3>
+<div class="line-block">&nbsp;&nbsp;Método de mínimos quadrados por álgebra linear usando-se algoritmo de Gauss-Newton, e ilustrado com dados de cinética enzimática. A entrada é facilitada por listas e a saída fornece como resultados os parâmetros ajustados, erros, matriz de covariância e gráfico de pontos com ajuste sobreposto. O arquivo comprimido oferece exemplo para uso em cinética enzimática. Programa hospedado no <a href="https://www.hpcalc.org/details/9736"><em>hpcalc</em></a>.</div>
 </section>
 <section id="regressão-não-linear-por-newton-raphson-e-curva-de-michaelis-mentem" class="level3" data-number="3.5">
 <h3 data-number="3.5" class="anchored" data-anchor-id="regressão-não-linear-por-newton-raphson-e-curva-de-michaelis-mentem"><span class="header-section-number">3.5</span> <a href="./nivel/superior/hp50/nlFitNR/nlFitNR.html">Regressão não linear por Newton-Raphson e curva de Michaelis-Mentem</a></h3>
-<div class="line-block">&nbsp;&nbsp;Ajuste não linear com algoritmo distinto, plotagem, e controle da regressão (iterações e resultados), e ilustrado para curva de cinética enzimática.</div>
+<div class="line-block">&nbsp;&nbsp;Ajuste não linear com algoritmo distinto, plotagem, e controle da regressão (iterações e resultados), e ilustrado para curva de cinética enzimática. Programa hospedado no <a href="https://www.hpcalc.org/details/9785"><em>hpcalc</em></a>.</div>
 <p><br>
 </p>
 </section>
@@ -462,7 +466,7 @@ window.Quarto = {
 <h2 data-number="4" class="anchored" data-anchor-id="estatística-descritiva"><span class="header-section-number">4</span> Estatística descritiva</h2>
 <section id="sumário-estatístico" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="sumário-estatístico"><span class="header-section-number">4.1</span> <a href="./nivel/superior/hp50/var1/var1.html">Sumário estatístico</a></h3>
-<div class="line-block">&nbsp;&nbsp;Programa simples que calcula parâmetros estatísticos em lista numérica (média, desvio-padrão, coeficiente de variação).</div>
+<div class="line-block">&nbsp;&nbsp;Programa simples que calcula parâmetros estatísticos em lista numérica (média, desvio-padrão, coeficiente de variação). ). Programa hospedado no <a href="https://www.hpcalc.org/details/9801"><em>hpcalc</em></a>.</div>
 </section>
 </section>
 <section id="estatística-inferencial" class="level2" data-number="5">
@@ -471,62 +475,62 @@ window.Quarto = {
 <h3 data-number="5.1" class="anchored" data-anchor-id="análise-de-variância"><span class="header-section-number">5.1</span> Análise de Variância</h3>
 <section id="teste-de-bartlett-para-homogeneidade-de-variâncias" class="level4" data-number="5.1.1">
 <h4 data-number="5.1.1" class="anchored" data-anchor-id="teste-de-bartlett-para-homogeneidade-de-variâncias"><span class="header-section-number">5.1.1</span> <a href="./nivel/superior/hp50/Bart1matrix/Bart1matrix.html">Teste de Bartlett para homogeneidade de variâncias</a></h4>
-<div class="line-block">&nbsp;&nbsp;Teste para determinar a homo ou heterocedasticidade de uma amostra com dados em matriz.</div>
+<div class="line-block">&nbsp;&nbsp;Teste para determinar a homo ou heterocedasticidade de uma amostra com dados em matriz. Programa hospedado no <a href="https://www.hpcalc.org/details/9805"><em>hpcalc</em></a>.</div>
 </section>
 <section id="teste-de-levene-para-homogeneidade-de-variâncias" class="level4" data-number="5.1.2">
 <h4 data-number="5.1.2" class="anchored" data-anchor-id="teste-de-levene-para-homogeneidade-de-variâncias"><span class="header-section-number">5.1.2</span> <a href="./nivel/superior/hp50/Lev1matrix/Lev1matrix.html">Teste de Levene para homogeneidade de variâncias</a></h4>
-<div class="line-block">&nbsp;&nbsp;Teste alternativo para homogeneidade de variâncias com entrada de dados por 1 matriz.</div>
+<div class="line-block">&nbsp;&nbsp;Teste alternativo para homogeneidade de variâncias com entrada de dados por 1 matriz. Programa hospedado no <a href="https://www.hpcalc.org/details/9793"><em>hpcalc</em></a>.</div>
 </section>
 <section id="anava---um-critério" class="level4" data-number="5.1.3">
 <h4 data-number="5.1.3" class="anchored" data-anchor-id="anava---um-critério"><span class="header-section-number">5.1.3</span> <a href="./nivel/superior/hp50/1ANAVA1matrix/1ANAVA1matrix.html">ANAVA - um critério</a></h4>
-<div class="line-block">&nbsp;&nbsp;Análise de Variância inteiramente casualizada (unidirecional). A execução do programa exige apenas 1 matriz, gerando diversos resultados estatísticos.</div>
+<div class="line-block">&nbsp;&nbsp;Análise de Variância inteiramente casualizada (unidirecional). A execução do programa exige apenas 1 matriz, gerando diversos resultados estatísticos. Programa hospedado no <a href="https://www.hpcalc.org/details/9806"><em>hpcalc</em></a>.</div>
 </section>
 <section id="anava---dois-critérios" class="level4" data-number="5.1.4">
 <h4 data-number="5.1.4" class="anchored" data-anchor-id="anava---dois-critérios"><span class="header-section-number">5.1.4</span> <a href="./nivel/superior/hp50/2ANAVA1matrix/2ANAVA1matrix.html">ANAVA - dois critérios</a></h4>
-<div class="line-block">&nbsp;&nbsp;Análise de Variância por blocos casualizados. A entrada é realizada apenas por 1 matriz, e resulta em diversos parâmetros estatísticos da análise.</div>
+<div class="line-block">&nbsp;&nbsp;Análise de Variância por blocos casualizados. A entrada é realizada apenas por 1 matriz, e resulta em diversos parâmetros estatísticos da análise. Programa hospedado no <a href="https://www.hpcalc.org/details/9795"><em>hpcalc</em></a>.</div>
 </section>
 <section id="aic---critério-de-informação-de-akaike" class="level4" data-number="5.1.5">
 <h4 data-number="5.1.5" class="anchored" data-anchor-id="aic---critério-de-informação-de-akaike"><span class="header-section-number">5.1.5</span> <a href="./nivel/superior/hp50/AIC/AIC.html">AIC - Critério de Informação de Akaike</a></h4>
-<div class="line-block">&nbsp;&nbsp;Cálculo de AIC para <em>goodness-of-fit</em> voltado ao discernimento estatístico entre modelos não lineares de ajuste. O programa é ilustrado com dados de modelos de inibição enzimática.</div>
+<div class="line-block">&nbsp;&nbsp;Cálculo de AIC para <em>goodness-of-fit</em> voltado ao discernimento estatístico entre modelos não lineares de ajuste. O programa é ilustrado com dados de modelos de inibição enzimática. Programa hospedado no <a href="https://www.hpcalc.org/details/9808"><em>hpcalc</em></a>.</div>
 </section>
 </section>
 <section id="teste-de-hipóteses" class="level3" data-number="5.2">
 <h3 data-number="5.2" class="anchored" data-anchor-id="teste-de-hipóteses"><span class="header-section-number">5.2</span> Teste de hipóteses</h3>
 <section id="teste-t-independente" class="level4" data-number="5.2.1">
 <h4 data-number="5.2.1" class="anchored" data-anchor-id="teste-t-independente"><span class="header-section-number">5.2.1</span> <a href="./nivel/superior/hp50/testet1matrix/testet1matrix.html">teste-t independente</a></h4>
-<div class="line-block">&nbsp;&nbsp;Teste <em>t</em> de Student para comparação de duas amostras independentes com entrada de uma matriz de dados.</div>
+<div class="line-block">&nbsp;&nbsp;Teste <em>t</em> de Student para comparação de duas amostras independentes com entrada de uma matriz de dados. Programa hospedado no <a href="https://www.hpcalc.org/details/9802"><em>hpcalc</em></a>.</div>
 </section>
 <section id="teste-t-dependente" class="level4" data-number="5.2.2">
 <h4 data-number="5.2.2" class="anchored" data-anchor-id="teste-t-dependente"><span class="header-section-number">5.2.2</span> <a href="./nivel/superior/hp50/testetDep1matrix/testetDep1matrix.html">teste-t dependente</a></h4>
-<div class="line-block">&nbsp;&nbsp;Teste <em>t</em> de Student para comparação de duas amostras dependentes com entrada de uma matriz de dados.</div>
+<div class="line-block">&nbsp;&nbsp;Teste <em>t</em> de Student para comparação de duas amostras dependentes com entrada de uma matriz de dados. Programa hospedado no <a href="https://www.hpcalc.org/details/9789"><em>hpcalc</em></a>.</div>
 </section>
 <section id="teste-de-chi2" class="level4" data-number="5.2.3">
 <h4 data-number="5.2.3" class="anchored" data-anchor-id="teste-de-chi2"><span class="header-section-number">5.2.3</span> <a href="./nivel/superior/hp50/x2tst/x2tst.html">teste de <span class="math inline">\(\chi\)</span><span class="math inline">\(^{2}\)</span></a></h4>
-<div class="line-block">&nbsp;&nbsp;Teste para se verificar a dependência entre variáveis com resposta binomial (sim/não) comumente encontrado em pesquisa biomédica (tratamentos, drogas, etc).</div>
+<div class="line-block">&nbsp;&nbsp;Teste para se verificar a dependência entre variáveis com resposta binomial (sim/não) comumente encontrado em pesquisa biomédica (tratamentos, drogas, etc). Programa hospedado no <a href="https://www.hpcalc.org/details/9799"><em>hpcalc</em></a>.</div>
 </section>
 </section>
 <section id="teste-pos-hoc" class="level3" data-number="5.3">
 <h3 data-number="5.3" class="anchored" data-anchor-id="teste-pos-hoc"><span class="header-section-number">5.3</span> Teste <em>pos-hoc</em></h3>
 <section id="teste-de-fisher-lsd" class="level4" data-number="5.3.1">
 <h4 data-number="5.3.1" class="anchored" data-anchor-id="teste-de-fisher-lsd"><span class="header-section-number">5.3.1</span> <a href="./nivel/superior/hp50/Fish1matrix/Fish1matrix.html">Teste de Fisher-LSD</a></h4>
-<div class="line-block">&nbsp;&nbsp;Teste para mínima diferença significante entre pares de tratamentos em comparação múltipla de tratamentos. A entrada de dados é feita apenas com 1 matriz.</div>
+<div class="line-block">&nbsp;&nbsp;Teste para mínima diferença significante entre pares de tratamentos em comparação múltipla de tratamentos. A entrada de dados é feita apenas com 1 matriz. Programa hospedado no <a href="https://www.hpcalc.org/details/9794"><em>hpcalc</em></a>.</div>
 </section>
 <section id="teste-de-tukey" class="level4" data-number="5.3.2">
 <h4 data-number="5.3.2" class="anchored" data-anchor-id="teste-de-tukey"><span class="header-section-number">5.3.2</span> <a href="./nivel/superior/hp50/Tukey1matrix/Tukey1matrix.html">Teste de Tukey</a></h4>
-<div class="line-block">&nbsp;&nbsp;Teste de comparações múltiplas de Tukey a 5% de significância, e com entrada de dados com 1 matriz.</div>
+<div class="line-block">&nbsp;&nbsp;Teste de comparações múltiplas de Tukey a 5% de significância, e com entrada de dados com 1 matriz. Programa hospedado no <a href="https://www.hpcalc.org/details/9800"><em>hpcalc</em></a>.</div>
 <!-- #### [Teste de Sheffé](/nivel/superior/hp50/Shef1matrix/Shef1matrix.qmd) -->
 </section>
 <section id="teste-de-dunnet" class="level4" data-number="5.3.3">
 <h4 data-number="5.3.3" class="anchored" data-anchor-id="teste-de-dunnet"><span class="header-section-number">5.3.3</span> <a href="./nivel/superior/hp50/Dunnet1matrix/Dunnet1matrix.html">Teste de Dunnet</a></h4>
-<div class="line-block">&nbsp;&nbsp;Teste de Dunnet para comparação de tratamentos com grupo controle, conduzido com dados dispostos em 1 matriz.</div>
+<div class="line-block">&nbsp;&nbsp;Teste de Dunnet para comparação de tratamentos com grupo controle, conduzido com dados dispostos em 1 matriz. Programa hospedado no <a href="https://www.hpcalc.org/details/9807"><em>hpcalc</em></a>.</div>
 </section>
 <section id="teste-de-student-newman-keuls" class="level4" data-number="5.3.4">
 <h4 data-number="5.3.4" class="anchored" data-anchor-id="teste-de-student-newman-keuls"><span class="header-section-number">5.3.4</span> <a href="./nivel/superior/hp50/SNK1matrix/SNK1matrix.html">Teste de Student-Newman-Keuls</a></h4>
-<div class="line-block">&nbsp;&nbsp;Teste <em>pos-hoc</em> para comparação múltipla de tratamentos, e mais conservador que o teste de Tukey. Os dados são introduzidos por apenas 1 matriz.</div>
+<div class="line-block">&nbsp;&nbsp;Teste <em>pos-hoc</em> para comparação múltipla de tratamentos, e mais conservador que o teste de Tukey. Os dados são introduzidos por apenas 1 matriz. Programa hospedado no <a href="https://www.hpcalc.org/details/9790"><em>hpcalc</em></a>.</div>
 </section>
 <section id="teste-de-scheffé" class="level4" data-number="5.3.5">
 <h4 data-number="5.3.5" class="anchored" data-anchor-id="teste-de-scheffé"><span class="header-section-number">5.3.5</span> <a href="./nivel/superior/hp50/Schf1matrix/Schf1matrix.html">Teste de Scheffé</a></h4>
-<div class="line-block">&nbsp;&nbsp;Teste conservador para comparação de médias entre um grupo específico e os demais na amostra. Dados introduzidos unicamente por uma matriz.</div>
+<div class="line-block">&nbsp;&nbsp;Teste conservador para comparação de médias entre um grupo específico e os demais na amostra. Dados introduzidos unicamente por uma matriz. Programa hospedado no <a href="https://www.hpcalc.org/details/9786"><em>hpcalc</em></a>.</div>
 </section>
 </section>
 </section>
@@ -534,15 +538,15 @@ window.Quarto = {
 <h2 data-number="6" class="anchored" data-anchor-id="planejamento-fatorial"><span class="header-section-number">6</span> Planejamento fatorial</h2>
 <section id="fatorial-2²" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="fatorial-2²"><span class="header-section-number">6.1</span> <a href="./nivel/superior/hp50/22Fat1matrix/22Fat1matrix.html">fatorial 2²</a></h3>
-<div class="line-block">&nbsp;&nbsp;Delineamento estatístico experimental para estudo de 2 fatores com 2 níveis cada. A entrada de dados dá-se por 1 matriz.</div>
+<div class="line-block">&nbsp;&nbsp;Delineamento estatístico experimental para estudo de 2 fatores com 2 níveis cada. A entrada de dados dá-se por 1 matriz. Programa hospedado no <a href="https://www.hpcalc.org/details/9796"><em>hpcalc</em></a>.</div>
 </section>
 <section id="fatorial-2³" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="fatorial-2³"><span class="header-section-number">6.2</span> <a href="./nivel/superior/hp50/23Fat1matrix/23Fat1matrix.html">fatorial 2³</a></h3>
-<div class="line-block">&nbsp;&nbsp;Delineamento estatístico experimental para estudo de 3 fatores com 2 níveis cada. A entrada de dados dá-se por 1 matriz.</div>
+<div class="line-block">&nbsp;&nbsp;Delineamento estatístico experimental para estudo de 3 fatores com 2 níveis cada. A entrada de dados dá-se por 1 matriz. Programa hospedado no <a href="https://www.hpcalc.org/details/9797"><em>hpcalc</em></a>.</div>
 </section>
 <section id="fatorial-2⁴" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="fatorial-2⁴"><span class="header-section-number">6.3</span> <a href="./nivel/superior/hp50/24Fat1matrix/24Fat1matrix.html">fatorial 2⁴</a></h3>
-<div class="line-block">&nbsp;&nbsp;Delineamento estatístico experimental para estudo de 4 fatores com 2 níveis cada. A entrada de dados dá-se por 1 matriz.</div>
+<div class="line-block">&nbsp;&nbsp;Delineamento estatístico experimental para estudo de 4 fatores com 2 níveis cada. A entrada de dados dá-se por 1 matriz. Programa hospedado no <a href="https://www.hpcalc.org/details/9798"><em>hpcalc</em></a>.</div>
 
 
 </section>
